@@ -35,6 +35,14 @@
           </p>
         </div>
         <div class="header-actions">
+          <a
+            class="action-link coffee-link"
+            href="https://buymeacoffee.com/caspersimon"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Buy Me a Coffee
+          </a>
           <button id="goToSwipeBtn" class="ghost-btn" type="button">Swipe Mode</button>
           <button id="goToPreviewBtn" class="solid-btn" type="button">Preview & Export</button>
         </div>
@@ -221,5 +229,21 @@
     </aside>
 
     <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+
+    <div id="splashOverlay" class="splash-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="splashTitle">
+      <div class="splash-card">
+        <p class="splash-kicker">Welcome</p>
+        <h2 id="splashTitle">Build Your Python Midterm Cheat Sheet In Minutes</h2>
+        <p class="splash-lead">
+          This tool helps you quickly pick the most useful topics, questions, and examples from your course material, then export a compact 2-page A4 cheat sheet.
+        </p>
+        <ul class="splash-points">
+          <li>Swipe through topics and keep what matters.</li>
+          <li>Use AI summary blocks and key points as quick memory anchors.</li>
+          <li>Preview, reorder, and export as PDF or PNG.</li>
+        </ul>
+        <button id="getStartedBtn" class="solid-btn splash-start-btn" type="button">Get Started</button>
+      </div>
+    </div>
   </body>
 </html>

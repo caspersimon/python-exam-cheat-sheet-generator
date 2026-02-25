@@ -5,6 +5,10 @@ const EXAM_LABELS = {
   extra_practice: "Extra Practice",
 };
 
+const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture snippets, notebook snippets, and trap-pattern context.";
+const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
+const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v1";
+
 const state = {
   cards: [],
   filters: {
@@ -99,6 +103,8 @@ const refs = {
   letterSpacingValue: document.getElementById("letterSpacingValue"),
   cardGapValue: document.getElementById("cardGapValue"),
   cardPaddingValue: document.getElementById("cardPaddingValue"),
+  splashOverlay: document.getElementById("splashOverlay"),
+  getStartedBtn: document.getElementById("getStartedBtn"),
 };
 
 const drawerMap = {
@@ -114,6 +120,7 @@ async function init() {
   bindEvents();
   applyLayoutVariables();
   setLoadingState();
+  maybeShowSplash();
 
   try {
     const response = await fetch("./topic_cards.json");
@@ -177,11 +184,41 @@ function bindEvents() {
 
   refs.drawerBackdrop.addEventListener("click", () => closeDrawers());
 
+  if (refs.getStartedBtn) {
+    refs.getStartedBtn.addEventListener("click", dismissSplash);
+  }
+  if (refs.splashOverlay) {
+    refs.splashOverlay.addEventListener("click", (event) => {
+      if (event.target === refs.splashOverlay) {
+        dismissSplash();
+      }
+    });
+  }
+
   refs.cardHost.addEventListener("change", handleCardInputChange);
   refs.cardHost.addEventListener("click", handleCardClick);
+  refs.cardHost.addEventListener("mouseover", handleCardMouseOver);
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("#cardHost .info-chip")) {
+      return;
+    }
+    closeOpenInfoPopovers();
+  });
+  window.addEventListener("resize", () => {
+    refs.cardHost.querySelectorAll(".info-chip.open").forEach((chip) => positionInfoPopover(chip));
+  });
 
   document.addEventListener("keydown", (event) => {
+    if (isSplashVisible()) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dismissSplash();
+      }
+      return;
+    }
+
     if (event.key === "Escape") {
+      closeOpenInfoPopovers();
       closeDrawers();
       return;
     }
@@ -328,6 +365,47 @@ function bindEvents() {
 
 function setLoadingState() {
   refs.cardHost.innerHTML = `<div class="empty-state"><p>Loading topic cards...</p></div>`;
+}
+
+function maybeShowSplash() {
+  if (!refs.splashOverlay || !refs.getStartedBtn) {
+    return;
+  }
+  if (hasSeenSplash()) {
+    return;
+  }
+  refs.splashOverlay.classList.remove("hidden");
+  document.body.classList.add("splash-open");
+  window.setTimeout(() => refs.getStartedBtn?.focus(), 0);
+}
+
+function dismissSplash() {
+  if (!refs.splashOverlay) {
+    return;
+  }
+  refs.splashOverlay.classList.add("hidden");
+  document.body.classList.remove("splash-open");
+  markSplashSeen();
+}
+
+function isSplashVisible() {
+  return Boolean(refs.splashOverlay && !refs.splashOverlay.classList.contains("hidden"));
+}
+
+function hasSeenSplash() {
+  try {
+    return window.localStorage.getItem(SPLASH_STORAGE_KEY) === "1";
+  } catch {
+    return true;
+  }
+}
+
+function markSplashSeen() {
+  try {
+    window.localStorage.setItem(SPLASH_STORAGE_KEY, "1");
+  } catch {
+    // Ignore browsers that block storage.
+  }
 }
 
 function toggleDrawer(name) {
@@ -665,15 +743,19 @@ function renderSwipe() {
 
 function renderTopicCard(card, draft) {
   const weeksText = card.weeks.length ? card.weeks.map((week) => `W${week}`).join(" • ") : "Week unknown";
-  const examBySource = Object.entries(card.exam_stats.by_exam || {})
+  const examSources = Object.entries(card.exam_stats.by_exam || {})
     .map(([exam, count]) => `${formatExamLabel(exam)} × ${count}`)
-    .join(" • ");
+    .join(", ");
   const split = getSourceSplit(card);
   const keyPointGroupsForCard = keyPointGroups(card);
   const keyPointItemCount = keyPointGroupsForCard.reduce((count, group) => count + 1 + group.details.length, 0);
+  const examSourceInfo = examSources || "No detailed exam-source mapping is available yet.";
 
   const totalHitsPill = card.exam_stats.total_hits > 0
-    ? `<span class="pill hot">${card.exam_stats.total_hits} exam hit${card.exam_stats.total_hits === 1 ? "" : "s"}</span>`
+    ? `<span class="pill hot exam-count-pill">
+         <span>${card.exam_stats.total_hits} exam question${card.exam_stats.total_hits === 1 ? "" : "s"}</span>
+         ${renderInfoChip("?", "Exam question sources", `Questions sourced from: ${examSourceInfo}`, "help")}
+       </span>`
     : `<span class="pill">Not tested in exams</span>`;
 
   return `
@@ -684,9 +766,7 @@ function renderTopicCard(card, draft) {
           <div class="meta-pill-row">
             <span class="pill">${escapeHtml(weeksText)}</span>
             ${totalHitsPill}
-            <span class="pill ai">AI ready</span>
           </div>
-          <p class="exam-breakdown">${examBySource ? escapeHtml(examBySource) : "No practice exam occurrences yet."}</p>
         </div>
         <div class="meta-column">
           <span>Swipe / arrow keys to decide</span>
@@ -707,10 +787,10 @@ function renderTopicCard(card, draft) {
           </select>
         </label>
         <div class="section-toggle-grid">
-          ${renderSectionToggle("aiSummary", "AI Summary", 1, draft.sections.aiSummary, true)}
-          ${renderSectionToggle("aiQuestions", "AI Common Questions", (card.sections.ai_common_questions?.bullets || []).length, draft.sections.aiQuestions, true)}
+          ${renderSectionToggle("aiSummary", "Summary", 1, draft.sections.aiSummary, true)}
+          ${renderSectionToggle("aiQuestions", "Common Questions", (card.sections.ai_common_questions?.bullets || []).length, draft.sections.aiQuestions, true)}
           ${renderSectionToggle("keyPoints", "Key Points for Reference", keyPointItemCount, draft.sections.keyPoints, true)}
-          ${renderSectionToggle("aiExamples", "AI Examples", usefulAIExamples(card).length, draft.sections.aiExamples, true)}
+          ${renderSectionToggle("aiExamples", "Code Examples", usefulAIExamples(card).length, draft.sections.aiExamples, true)}
           ${renderSectionToggle("recommended", "Recommended for Cheat Sheet", split.recommended.length, draft.sections.recommended)}
           ${renderSectionToggle("additional", "Additional Snippets", split.additional.length, draft.sections.additional)}
         </div>
@@ -727,11 +807,42 @@ function renderTopicCard(card, draft) {
 }
 
 function renderSectionToggle(section, label, count, checked, isAI = false) {
+  void isAI;
   return `
     <label>
       <input type="checkbox" data-role="section-toggle" data-section="${section}" ${checked ? "checked" : ""} />
-      <span>${escapeHtml(label)} (${count})${isAI ? " • AI" : ""}</span>
+      <span>${escapeHtml(label)} (${count})</span>
     </label>
+  `;
+}
+
+function renderInfoChip(iconHtml, label, text, variant = "") {
+  const variantClass = variant ? ` ${variant}` : "";
+  return `
+    <span class="info-chip${variantClass}">
+      <button type="button" class="info-icon-btn" data-role="toggle-info" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">
+        <span aria-hidden="true">${iconHtml}</span>
+      </button>
+      <span class="info-popover" role="tooltip">${escapeHtml(text)}</span>
+    </span>
+  `;
+}
+
+function renderSparkleInfo(text, label = "AI-generated details") {
+  return renderInfoChip("&#10024;", label, text, "sparkle");
+}
+
+function renderSectionHeader(title, countText = "", sparkleText = "", sparkleLabel = "AI-generated details") {
+  const hasTitle = Boolean(title);
+  const countHtml = countText ? `<span class="section-count">${escapeHtml(countText)}</span>` : "";
+  return `
+    <div class="section-header ${hasTitle ? "" : "section-header-meta-only"}">
+      <div class="section-title-row">
+        ${hasTitle ? `<strong>${escapeHtml(title)}</strong>` : ""}
+        ${sparkleText ? renderSparkleInfo(sparkleText, sparkleLabel) : ""}
+      </div>
+      ${countHtml}
+    </div>
   `;
 }
 
@@ -740,9 +851,8 @@ function renderAISummarySection(card, draft) {
   const hiddenClass = draft.sections.aiSummary ? "" : "hidden";
   return `
     <section class="section-block ${hiddenClass}" data-section-block="aiSummary">
-      <div class="section-header">
-        <strong>AI Summary</strong>
-        <span class="pill ai">generated</span>
+      <div class="summary-meta">
+        ${renderSparkleInfo(AI_GENERATION_NOTE, "How this summary was generated")}
       </div>
       <div class="section-items">
         <p class="section-paragraph">${renderInlineCode(summary)}</p>
@@ -757,10 +867,7 @@ function renderAIQuestionsSection(card, draft) {
 
   return `
     <section class="section-block ${hiddenClass}" data-section-block="aiQuestions">
-      <div class="section-header">
-        <strong>AI Common Questions</strong>
-        <span>${bullets.length}</span>
-      </div>
+      ${renderSectionHeader("Common Questions", String(bullets.length), AI_GENERATION_NOTE, "How these questions were generated")}
       <div class="section-items">
         <ul class="plain-bullets">
           ${bullets.map((bullet) => `<li>${renderInlineCode(bullet)}</li>`).join("")}
@@ -838,10 +945,7 @@ function renderKeyPointsSection(card, draft) {
 
   return `
     <section class="section-block ${hiddenClass}" data-section-block="keyPoints">
-      <div class="section-header">
-        <strong>Key Points for Reference</strong>
-        <span>${selectedCount}/${totalCount} selected</span>
-      </div>
+      ${renderSectionHeader("Key Points for Reference", `${selectedCount}/${totalCount} selected`, KEY_POINTS_GENERATION_NOTE, "How these key points were generated")}
       <div class="section-items">${pointHtml}</div>
     </section>
   `;
@@ -881,7 +985,7 @@ function renderAIExamplesSection(card, draft) {
                   data-item-id="${escapeHtml(item.id)}"
                   ${checked ? "checked" : ""}
                 />
-                <strong>${escapeHtml(kindLabel)} • ${renderInlineCode(item.title || "AI example")}</strong>
+                <strong>${escapeHtml(kindLabel)} • ${renderInlineCode(item.title || "Code example")}</strong>
               </label>
               <pre>${escapeHtml(item.code || "")}</pre>
               <p class="item-note">${renderInlineCode(item.why || "")}</p>
@@ -889,14 +993,11 @@ function renderAIExamplesSection(card, draft) {
           `;
         })
         .join("")
-    : `<p class="muted">No AI examples available.</p>`;
+    : `<p class="muted">No code examples available.</p>`;
 
   return `
     <section class="section-block ${hiddenClass}" data-section-block="aiExamples">
-      <div class="section-header">
-        <strong>AI Examples</strong>
-        <span>${draft.selected.aiExamples.length}/${items.length} selected</span>
-      </div>
+      ${renderSectionHeader("Code Examples", `${draft.selected.aiExamples.length}/${items.length} selected`, AI_GENERATION_NOTE, "How these examples were generated")}
       <div class="section-items">${itemHtml}</div>
     </section>
   `;
@@ -934,10 +1035,7 @@ function renderSourceSection(card, draft, sectionKey, title, items) {
 
   return `
     <section class="section-block ${hiddenClass}" data-section-block="${sectionKey}">
-      <div class="section-header">
-        <strong>${escapeHtml(title)}</strong>
-        <span>${selectedCount}/${items.length} selected</span>
-      </div>
+      ${renderSectionHeader(title, `${selectedCount}/${items.length} selected`)}
       <div class="section-items">${itemHtml}</div>
     </section>
   `;
@@ -1282,6 +1380,26 @@ function handleCardInputChange(event) {
 }
 
 function handleCardClick(event) {
+  const infoTrigger = event.target.closest("[data-role='toggle-info']");
+  if (infoTrigger) {
+    event.preventDefault();
+    const infoChip = infoTrigger.closest(".info-chip");
+    if (!infoChip) {
+      return;
+    }
+    const shouldOpen = !infoChip.classList.contains("open");
+    closeOpenInfoPopovers();
+    if (shouldOpen) {
+      infoChip.classList.add("open");
+      positionInfoPopover(infoChip);
+    }
+    return;
+  }
+
+  if (!event.target.closest(".info-chip")) {
+    closeOpenInfoPopovers();
+  }
+
   const trigger = event.target.closest("[data-role='toggle-card-settings']");
   if (!trigger) {
     return;
@@ -1295,6 +1413,40 @@ function handleCardClick(event) {
   const draft = ensureDraft(currentCard);
   draft.ui.settingsOpen = !Boolean(draft.ui?.settingsOpen);
   rerenderCurrentCard();
+}
+
+function handleCardMouseOver(event) {
+  const infoChip = event.target.closest(".info-chip");
+  if (!infoChip || !refs.cardHost.contains(infoChip)) {
+    return;
+  }
+  positionInfoPopover(infoChip);
+}
+
+function positionInfoPopover(infoChip) {
+  const popover = infoChip.querySelector(".info-popover");
+  if (!popover) {
+    return;
+  }
+
+  popover.style.setProperty("--popover-shift-x", "0px");
+  const rect = popover.getBoundingClientRect();
+  const viewportPadding = 8;
+  const maxRight = window.innerWidth - viewportPadding;
+  let shiftX = 0;
+
+  if (rect.left < viewportPadding) {
+    shiftX += viewportPadding - rect.left;
+  }
+  if (rect.right > maxRight) {
+    shiftX -= rect.right - maxRight;
+  }
+
+  popover.style.setProperty("--popover-shift-x", `${Math.round(shiftX)}px`);
+}
+
+function closeOpenInfoPopovers() {
+  refs.cardHost.querySelectorAll(".info-chip.open").forEach((chip) => chip.classList.remove("open"));
 }
 
 function rerenderCurrentCard() {
@@ -1528,14 +1680,14 @@ function buildPreviewCard(card, selection) {
   const sectionHtml = [];
 
   if (selection.sections.aiSummary && card.sections.ai_summary?.content) {
-    sectionHtml.push(`<div class="section-title">AI Summary</div>`);
+    sectionHtml.push(`<div class="section-title">Summary</div>`);
     sectionHtml.push(`<p>${renderInlineCode(trimWords(card.sections.ai_summary.content, 55))}</p>`);
   }
 
   if (selection.sections.aiQuestions) {
     const bullets = (card.sections.ai_common_questions?.bullets || []).slice(0, 4);
     if (bullets.length) {
-      sectionHtml.push(`<div class="section-title">AI Common Questions</div>`);
+      sectionHtml.push(`<div class="section-title">Common Questions</div>`);
       sectionHtml.push(`<ul>${bullets.map((item) => `<li>${renderInlineCode(trimWords(item, 16))}</li>`).join("")}</ul>`);
     }
   }
@@ -1551,7 +1703,7 @@ function buildPreviewCard(card, selection) {
   if (selection.sections.aiExamples) {
     const aiExamples = usefulAIExamples(card).filter((item) => selection.selected.aiExamples.includes(item.id));
     if (aiExamples.length) {
-      sectionHtml.push(`<div class="section-title">AI Examples</div>`);
+      sectionHtml.push(`<div class="section-title">Code Examples</div>`);
       aiExamples.slice(0, 2).forEach((item) => {
         sectionHtml.push(`<p><strong>${escapeHtml(item.kind === "incorrect" ? "Incorrect" : "Correct")}</strong> ${renderInlineCode(trimWords(item.title || "Example", 12))}</p>`);
         sectionHtml.push(`<pre>${escapeHtml(trimLines(item.code || "", 5))}</pre>`);
@@ -1587,7 +1739,7 @@ function buildPreviewCard(card, selection) {
   const weeksText = card.weeks.length ? card.weeks.map((week) => `W${week}`).join(", ") : "W?";
   cardElement.innerHTML = `
     <h4>${escapeHtml(humanizeTopic(card.topic))}</h4>
-    <div class="tiny-meta">${escapeHtml(weeksText)} • ${card.exam_stats.total_hits} exam hit${card.exam_stats.total_hits === 1 ? "" : "s"}</div>
+    <div class="tiny-meta">${escapeHtml(weeksText)} • ${card.exam_stats.total_hits} exam question${card.exam_stats.total_hits === 1 ? "" : "s"}</div>
     <div class="preview-body">${sectionHtml.join("")}</div>
   `;
 
