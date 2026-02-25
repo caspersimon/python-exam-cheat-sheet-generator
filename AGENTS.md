@@ -15,14 +15,19 @@ Technical handoff for coding agents and contributors working on this repository.
 - `topic_cards.json`: **28 total cards**
 - Default exam deck (`only exam topics`): **21 cards**
 - Duplicate normalized topic labels: **0**
+- Exam-topic key points: **198**
+- Exam-topic key points with optional details: **198/198**
+- Optional key-point detail blocks: **247**
 
 Curation state:
 
 - All 21 exam-topic cards were curated using an evidence-driven pass over exam + lecture + notebook + trap data.
 - `key_points_to_remember` and `ai_examples` are intentionally **variable-length** by topic based on evidence coverage.
 - There is no fixed per-topic cap for key points/examples.
+- Optional key-point `details` are enabled and intentionally selectable in the UI (example/table/explanation/commands).
 - Exact duplicate key-point text and exact duplicate example code blocks across exam topics were removed.
-- Example code blocks for exam topics were syntax-checked.
+- Example code blocks for exam topics and key-point detail code blocks were syntax-checked.
+- A parallel Gemini generation+audit pass plus manual review was used to improve optional detail coverage and quality.
 
 ## App Behavior
 
@@ -85,9 +90,21 @@ When editing `topic_cards.json`:
 - Use evidence-driven inclusion from course materials and exams.
 - Do not enforce arbitrary fixed counts across all topics.
 - Keep only important, exam-relevant content.
+- Prefer full key-point detail coverage when details materially improve understanding (do not skip useful detail because of arbitrary limits).
 - Remove duplicates/near-duplicates.
 - Keep example code coherent and syntactically valid.
 - Keep `recommended_ids` valid against card-local source snippet IDs.
+- If a detail is correct and useful general Python knowledge but weakly represented in source snippets, keep it only when it does not conflict with course material.
+
+## GenAI QA Workflow (Current)
+
+- Generate optional key-point details from card-local evidence (`exam_questions`, `lecture_snippets`, `notebook_snippets`, traps).
+- Audit generated details for:
+  - alignment to evidence
+  - completeness
+  - quality
+- Re-generate flagged cards with audit feedback.
+- Manually review remaining flagged details instead of blindly deleting all weakly linked items.
 
 ## Validation Checklist
 
@@ -152,6 +169,26 @@ for card in cards:
         ast.parse((ex.get('code') or '').strip())
 
 print('example parse checks passed')
+PY
+```
+
+Detail coverage check (exam topics):
+
+```bash
+python3 - <<'PY'
+import json
+
+with open('topic_cards.json') as f:
+    cards = [c for c in json.load(f)['cards'] if c['exam_stats']['total_hits'] > 0]
+
+kp_total = sum(len(c['sections']['key_points_to_remember']) for c in cards)
+kp_with_details = sum(1 for c in cards for kp in c['sections']['key_points_to_remember'] if kp.get('details'))
+detail_total = sum(len(kp.get('details') or []) for c in cards for kp in c['sections']['key_points_to_remember'])
+
+print('exam cards:', len(cards))
+print('exam key points:', kp_total)
+print('key points with details:', kp_with_details)
+print('detail blocks:', detail_total)
 PY
 ```
 

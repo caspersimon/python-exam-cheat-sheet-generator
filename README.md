@@ -2,6 +2,14 @@
 
 This app helps students in the Intro to Python course build a focused, printable cheat sheet from real course/exam topics.
 
+## Current Content Snapshot
+
+- Total topic cards: `28`
+- Exam-topic cards in default deck: `21`
+- Exam-topic key points: `198`
+- Key points with optional detail blocks: `198`
+- Optional detail blocks (examples/tables/explanations): `247`
+
 ## Who This Is For
 
 - Students preparing for the course exam/midterm
@@ -11,6 +19,7 @@ This app helps students in the Intro to Python course build a focused, printable
 
 - Shows topic cards you can keep or reject quickly
 - Lets you choose which key points and code examples you want
+- Provides optional extra detail under key points (mini examples, tables, explanations) that you can include or skip
 - Builds a 2-page A4 cheat sheet preview
 - Lets you drag/resize cards in the preview
 - Exports your final sheet via Print, PNG, or PDF
@@ -20,9 +29,10 @@ This app helps students in the Intro to Python course build a focused, printable
 
 1. Open the app.
 2. Swipe or click to keep/reject topics.
-3. For kept topics, pick the points/examples you want on your sheet.
-4. Open preview and arrange cards on the A4 pages.
-5. Export as Print/PNG/PDF.
+3. For kept topics, pick the key points/examples you want.
+4. Expand optional key-point details and include only the ones you need.
+5. Open preview and arrange cards on the A4 pages.
+6. Export as Print/PNG/PDF.
 
 ## Run It Locally
 
@@ -37,6 +47,8 @@ No npm install is required.
 
 - Topic cards are built from lectures, notebooks, and exam material.
 - Exam-topic key points/examples are curated to keep important exam-relevant items.
+- Curation is evidence-driven and does not use fixed per-topic caps.
+- Some details may be general Python clarifications kept for usefulness, even if a matching source snippet is indirect.
 - Content can still have occasional mistakes or overlap, so please report anything suspicious.
 
 ## If You Notice A Problem
@@ -51,7 +63,7 @@ Include:
 - topic/card name (if relevant)
 - browser + OS
 - screenshot or screen recording (if possible)
-- for content issues: paste the exact key point/example and explain why it is wrong (ideally with course reference)
+- for content issues: paste the exact topic name + key point/example text and explain why it is wrong (ideally with course reference)
 
 ## Common Problems
 
@@ -65,3 +77,5 @@ Include:
 - `styles.css` - styling
 - `app.js` - app logic and state
 - `topic_cards.json` - topic data used by the UI
+- `TOPIC_MERGING_GUIDELINES.md` - curation workflow for maintainers
+- `AGENTS.md` - technical handoff for coding agents/contributors

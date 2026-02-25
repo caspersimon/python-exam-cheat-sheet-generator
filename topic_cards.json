@@ -17,7 +17,9 @@
       "Generated key_points_to_remember and recommended_ids via gemini-cli.",
       "Post-processed key_points_to_remember to remove question-style/low-value lines.",
       "Replaced generic fallback key points with topic-specific references for scope/exam/execution cards.",
-      "Added optional key point detail blocks (tables/examples/explanations) for reference usage."
+      "Added optional key point detail blocks (tables/examples/explanations) for reference usage.",
+      "Added optional key point detail blocks (tables/examples/explanations) for reference usage.",
+      "Expanded optional key-point details via parallel Gemini generation with Gemini audit checks for alignment/completeness/quality (2026-02-25)."
     ]
   },
   "cards": [
@@ -792,7 +794,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Basic Iteration",
+                "text": "",
+                "code": "numbers = [1, 3, 5, 2, 7]\nresult = []\nfor num in numbers:\n    if num % 2 == 0:\n        result.append(num)\nprint(result)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -800,7 +811,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "explanation",
+                "title": "Exiting a Loop",
+                "text": "The `break` statement immediately terminates the loop's execution. Control flows to the statement immediately following the loop.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-2-d2",
+                "kind": "example",
+                "title": "Break in While Loop",
+                "text": "",
+                "code": "total = 0\nwhile True:\n    number = int(input('give a number, or 100 to stop '))\n    if number == 100:\n        break\n    total += number\nprint(total)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -808,7 +836,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "explanation",
+                "title": "Skipping an Iteration",
+                "text": "The `continue` statement skips the rest of the current iteration and proceeds to the next iteration of the loop.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-3-d2",
+                "kind": "example",
+                "title": "Continue Example",
+                "text": "",
+                "code": "total = 0\nfor number in [1, 2, '3', 3, 5, 7]:\n    if type(number) == str:\n        continue\n    total += number\nprint(total)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -816,7 +861,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "explanation",
+                "title": "Unused Loop Variable",
+                "text": "Using `_` as a variable name signals that the iterated item is not needed within the loop body, improving readability.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-4-d2",
+                "kind": "example",
+                "title": "Underscore for Ignored Variable",
+                "text": "",
+                "code": "for _ in range(5):\n    print('Hello') # prints Hello 5 times",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -824,7 +886,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Enumerate Basic Use",
+                "text": "",
+                "code": "fruits = ['apple', 'banana', 'cherry']\nfor i, fruit in enumerate(fruits):\n    print(i, fruit)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -832,7 +903,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Enumerate with Start Index",
+                "text": "",
+                "code": "lst = ['a', 'b', 'c']\nfor i, v in enumerate(lst, start=1):\n    print(i, v)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -840,7 +920,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "Iterating with Zip",
+                "text": "",
+                "code": "names = ['Alice', 'Bob', 'Charlie']\nscores = [85, 92, 78]\nfor name, score in zip(names, scores):\n    print(f'{name}: {score}')",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -848,7 +937,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "explanation",
+                "title": "Range Stop Exclusivity",
+                "text": "The `stop` value in `range(start, stop, step)` is not included in the generated sequence, similar to slicing behavior.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-8-d2",
+                "kind": "example",
+                "title": "Range with Step",
+                "text": "",
+                "code": "print(list(range(3,6,2))) # Output: [3, 5]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -856,7 +962,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "example",
+                "title": "Range Defaults",
+                "text": "",
+                "code": "print(list(range(6))) # Output: [0, 1, 2, 3, 4, 5]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-10",
@@ -864,7 +979,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-10-d1",
+                "kind": "explanation",
+                "title": "While Loop Condition",
+                "text": "A `while` loop continues to execute as long as its condition evaluates to `True`. The condition is checked before each iteration.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-10-d2",
+                "kind": "example",
+                "title": "Basic While Loop",
+                "text": "",
+                "code": "n = 1\nwhile n < 32:\n    n *= 2\nprint(n) # Output: 32",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-11",
@@ -872,7 +1004,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-11-d1",
+                "kind": "explanation",
+                "title": "When to Use While Loops",
+                "text": "While loops are best suited for situations where the number of iterations required is not known in advance, for example, waiting for a user input or a specific state.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-12",
@@ -880,7 +1021,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-12-d1",
+                "kind": "explanation",
+                "title": "Direct Dictionary Iteration",
+                "text": "Iterating directly over a dictionary (e.g., `for key in my_dict:`) will yield its keys.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-12-d2",
+                "kind": "example",
+                "title": "Iterate Over Keys Directly",
+                "text": "",
+                "code": "capitals = {'Andorra': 'Andorra la Vella', 'Belgium': 'Brussels'}\nfor country in capitals:\n    print(f\"The country is {country}\")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-13",
@@ -888,7 +1046,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-13-d1",
+                "kind": "explanation",
+                "title": ".keys() Method",
+                "text": "The `.keys()` method returns a view object that displays a list of all the keys in the dictionary.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-13-d2",
+                "kind": "example",
+                "title": "Using .keys()",
+                "text": "",
+                "code": "capitals = {'Andorra': 'Andorra la Vella', 'Belgium': 'Brussels'}\nfor key in capitals.keys():\n    print(f\"The country is {key}\")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-14",
@@ -896,7 +1071,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-14-d1",
+                "kind": "explanation",
+                "title": ".values() Method",
+                "text": "The `.values()` method returns a view object that displays a list of all the values in the dictionary.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-14-d2",
+                "kind": "example",
+                "title": "Using .values()",
+                "text": "",
+                "code": "capitals = {'Andorra': 'Andorra la Vella', 'Belgium': 'Brussels'}\nfor value in capitals.values():\n    print(f\"The capital is {value}\")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-15",
@@ -904,7 +1096,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-15-d1",
+                "kind": "explanation",
+                "title": ".items() Method",
+                "text": "The `.items()` method returns a view object that displays a list of a dictionary\u2019s key-value tuple pairs.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-15-d2",
+                "kind": "example",
+                "title": "Using .items()",
+                "text": "",
+                "code": "capitals = {'Andorra': 'Andorra la Vella', 'Belgium': 'Brussels'}\nfor country, city in capitals.items():\n    print(f\"{country=} and {city=} \")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-16",
@@ -912,7 +1121,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-16-d1",
+                "kind": "explanation",
+                "title": "'in' Operator for Dictionary Keys",
+                "text": "When the `in` operator is used with a dictionary, it checks for the presence of a key, not a value.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-16-d2",
+                "kind": "example",
+                "title": "Checking Key Presence",
+                "text": "",
+                "code": "d = {'a': 1, 'b': 2, 'c': 3}\nprint('d' in d) # Output: False\nprint('a' in d) # Output: True",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -1508,7 +1734,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Define & Call Function",
+                "text": "",
+                "code": "def greet(name):\n    return f\"Hello, {name}!\"\n\nmessage = greet(\"Alice\")\nprint(message)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -1516,7 +1751,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "explanation",
+                "title": "Function Definition Structure",
+                "text": "A Python function definition includes the 'def' keyword, the function name, parameters within parentheses, a colon, and an indented block for the function body.",
+                "code": "def adder(n1, n2): # def, name, params, colon\n    total = n1 + n2    # indented body\n    return total",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -1524,7 +1768,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Function Return Values",
+                "text": "",
+                "code": "def multiply(a, b):\n    return a * b\n\nresult = multiply(4, 5) # Assign return value to 'result'\nprint(multiply(2, 3) + 1) # Use return value in expression",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -1532,7 +1785,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "TypeError: Incorrect Call Syntax",
+                "text": "Calling a function with square brackets `[]` instead of parentheses `()` will result in a TypeError.",
+                "code": "def my_function():\n    pass\n\ntry:\n    my_function[1, 2]\nexcept TypeError as e:\n    print(f\"Error: {e}\")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -1540,7 +1802,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Common Built-in Functions",
+                "text": "",
+                "code": "x = [1, 2, 3]\nprint(f\"Length: {len(x)}\")\nprint(f\"Type: {type(x)}\")\nprint(f\"ID: {id(x)}\")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -1548,7 +1819,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "len() Function Usage",
+                "text": "`len()` works on sequences and collections, but not direct numeric or boolean types.",
+                "code": "print(len([1, 2, 3]))    # List\nprint(len('hello'))     # String\nprint(len({'a': 1, 'b': 2})) # Dictionary\n\ntry:\n    print(len(123))  # TypeError\nexcept TypeError as e:\n    print(f\"Error for int: {e}\")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -1556,7 +1836,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "Basic Lambda Function",
+                "text": "",
+                "code": "add_two = lambda x, y: x + y\nprint(add_two(5, 3)) # Output: 8",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -1564,7 +1853,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "example",
+                "title": "map() with Lambda",
+                "text": "",
+                "code": "numbers = [1, 2, 3, 4, 5]\nsquared = list(map(lambda x: x**2, numbers))\nprint(squared) # Output: [1, 4, 9, 16, 25]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -1572,7 +1870,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "example",
+                "title": "filter() with Lambda",
+                "text": "",
+                "code": "numbers = [1, 2, 3, 4, 5, 6]\neven = list(filter(lambda x: x % 2 == 0, numbers))\nprint(even) # Output: [2, 4, 6]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-10",
@@ -1580,7 +1887,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-10-d1",
+                "kind": "example",
+                "title": "reduce() for Cumulative Operations",
+                "text": "Note: `reduce` is in the `functools` module.",
+                "code": "from functools import reduce\nnumbers = [1, 2, 3, 4, 5]\nproduct = reduce(lambda x, y: x * y, numbers)\nprint(product) # Output: 120",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-11",
@@ -1588,7 +1904,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-11-d1",
+                "kind": "example",
+                "title": "Nested Function Scope",
+                "text": "",
+                "code": "def outer():\n    x = 10\n    def inner():\n        print(x) # inner can access x from outer\n    inner()\nouter() # Output: 10",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-12",
@@ -1596,7 +1921,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-12-d1",
+                "kind": "example",
+                "title": "Function Factory (Closure)",
+                "text": "",
+                "code": "def make_multiplier(n):\n    def multiplier(x):\n        return x * n\n    return multiplier\n\ntimes3 = make_multiplier(3)\nprint(times3(5)) # Output: 15",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-13",
@@ -1604,7 +1938,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-13-d1",
+                "kind": "example",
+                "title": "nonlocal Keyword",
+                "text": "",
+                "code": "def counter():\n    count = 0\n    def increment():\n        nonlocal count # Allows modifying count in enclosing scope\n        count += 1\n        return count\n    return increment\n\nc = counter()\nprint(c()) # Output: 1\nprint(c()) # Output: 2",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-14",
@@ -1612,7 +1955,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-14-d1",
+                "kind": "example",
+                "title": "Calling a Method",
+                "text": "Methods are called using dot notation on an object.",
+                "code": "my_string = \"hello world\"\nprint(my_string.upper()) # Output: HELLO WORLD",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-15",
@@ -1620,7 +1972,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-15-d1",
+                "kind": "example",
+                "title": "Immutable Object Methods",
+                "text": "Methods on immutable objects (like strings) return a new value. You must reassign the variable to capture the change.",
+                "code": "s1 = 'python'\ns1_upper = s1.upper() # New string is returned and captured\nprint(s1)        # Output: python (original unchanged)\nprint(s1_upper)  # Output: PYTHON",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-16",
@@ -1628,7 +1989,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-16-d1",
+                "kind": "explanation",
+                "title": "Mutable Object Methods",
+                "text": "Some methods on mutable objects (e.g., lists) modify the object in place and return `None`, while others return a new value without modifying the original.",
+                "code": "my_list = [3, 1, 2]\nmy_list.sort() # Modifies my_list in place, returns None\nprint(my_list) # Output: [1, 2, 3]\n\nindex_of_2 = my_list.index(2) # Returns a value, does not modify my_list\nprint(index_of_2) # Output: 1",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-17",
@@ -1636,7 +2006,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-17-d1",
+                "kind": "example",
+                "title": "Variable Number of Arguments (*args)",
+                "text": "",
+                "code": "def sum_all(*args):\n    total = 0\n    for num in args:\n        total += num\n    return total\n\nprint(sum_all(1, 2, 3))    # Output: 6\nprint(sum_all(10, 20, 30, 40)) # Output: 100",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -2185,7 +2564,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "explanation",
+                "title": "Unordered Nature",
+                "text": "Dictionaries are unordered, meaning the order of insertion does not affect their equality.",
+                "code": "print({1:1, 2:2} == {2:2, 1:1}) # True",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "explanation",
+                "title": "Immutable Keys",
+                "text": "Keys must be immutable (hashable). Mutable objects like lists cannot be used as keys.",
+                "code": "a = 1\nb = {1:1}\ntry:\n    print({b:a})\nexcept Exception as e:\n    print(e) # Output: TypeError: unhashable type: 'dict'",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -2193,7 +2589,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Checking for Keys",
+                "text": "The 'in' operator checks for the presence of a key, not a value, in a dictionary.",
+                "code": "d = {1: 4, 2: 3}\nprint(1 in d) # True (1 is a key)\nprint(4 in d) # False (4 is a value, not a key)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -2201,7 +2606,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Equality Comparison",
+                "text": "Dictionaries are equal if they contain the same key-value pairs, regardless of their order.",
+                "code": "dict1 = {1: 1, 2: 2}\ndict2 = {2: 2, 1: 1}\nprint(dict1 == dict2) # True",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -2209,7 +2623,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Creating Empty Dictionaries",
+                "text": "Both curly braces and the dict() constructor create an empty dictionary.",
+                "code": "empty_dict1 = {}\nempty_dict2 = dict()\nprint(empty_dict1) # {}\nprint(empty_dict2) # {}",
+                "table": null
+              },
+              {
+                "id": "kp-4-d2",
+                "kind": "explanation",
+                "title": "Empty Dict vs. Set",
+                "text": "Note that `{}` creates an empty dictionary, not an empty set. To create an empty set, use `set()`.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -2217,7 +2648,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Accessing Values",
+                "text": "Access values using square bracket notation with the corresponding key.",
+                "code": "capitals = {'Belgium': 'Brussels', 'France': 'Paris'}\nprint(capitals['Belgium']) # Brussels",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -2225,7 +2665,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Adding and Updating",
+                "text": "Assigning a value to a key adds a new pair or updates an existing one.",
+                "code": "d = {'a': 1, 'b': 2}\nd['c'] = 3 # Add new key-value pair\nd['a'] = 10 # Update existing value\nprint(d) # {'a': 10, 'b': 2, 'c': 3}",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -2233,7 +2682,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "Batch Update with update()",
+                "text": "The `update()` method merges a dictionary with new key-value pairs, adding new keys or overwriting existing ones.",
+                "code": "squares = {1:1, 2:4}\nsquares.update({3:9, 4:16})\nprint(squares) # {1: 1, 2: 4, 3: 9, 4: 16}",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -2241,7 +2699,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "example",
+                "title": "Deleting Key-Value Pairs",
+                "text": "The `del` statement removes a key-value pair from the dictionary.",
+                "code": "d = {'x': 1, 'y': 2, 'z': 3}\ndel d['y']\nprint(d) # {'x': 1, 'z': 3}",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -2249,7 +2716,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "example",
+                "title": "Constructing from Sequences",
+                "text": "Use `dict(zip(keys, values))` to create a dictionary from two lists.",
+                "code": "keys_list = [1, 2, 3]\nvalues_list = [1, 4, 9]\nsquares_dict = dict(zip(keys_list, values_list))\nprint(squares_dict) # {1: 1, 2: 4, 3: 9}",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-10",
@@ -2257,7 +2733,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-10-d1",
+                "kind": "example",
+                "title": "Looping Over Keys",
+                "text": "Direct iteration over a dictionary loops through its keys.",
+                "code": "capitals = {'Andorra': 'Andorra la Vella', 'Belgium': 'Brussels'}\nfor key in capitals:\n    print(key)\n# Output:\n# Andorra\n# Belgium",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-11",
@@ -2265,7 +2750,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-11-d1",
+                "kind": "example",
+                "title": "Getting All Keys",
+                "text": "The `.keys()` method returns a view of all keys. This can be converted to a list.",
+                "code": "capitals = {'Estonia': 'Tallinn', 'Belgium': 'Brussels'}\nall_keys = list(capitals.keys())\nprint(all_keys) # ['Estonia', 'Belgium']",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-12",
@@ -2273,7 +2767,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-12-d1",
+                "kind": "example",
+                "title": "Getting All Values",
+                "text": "The `.values()` method returns a view of all values. This can be converted to a list.",
+                "code": "capitals = {'Estonia': 'Tallinn', 'Belgium': 'Brussels'}\nall_values = list(capitals.values())\nprint(all_values) # ['Tallinn', 'Brussels']",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-13",
@@ -2281,7 +2784,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-13-d1",
+                "kind": "example",
+                "title": "Getting Key-Value Pairs",
+                "text": "The `.items()` method returns a view of all key-value pairs as tuples.",
+                "code": "capitals = {'France': 'Paris', 'Germany': 'Berlin'}\nall_items = list(capitals.items())\nprint(all_items) # [('France', 'Paris'), ('Germany', 'Berlin')]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-14",
@@ -2289,7 +2801,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-14-d1",
+                "kind": "explanation",
+                "title": "Avoid Concurrent Modification",
+                "text": "Modifying a dictionary (adding or deleting items) while iterating over it can lead to a `RuntimeError`.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-15",
@@ -2297,7 +2818,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-15-d1",
+                "kind": "example",
+                "title": "Getting Dictionary Size",
+                "text": "The `len()` function returns the number of key-value pairs in the dictionary.",
+                "code": "d = {'a': 1, 'b': 2, 'c': 3}\nprint(len(d)) # 3",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -2679,7 +3209,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Basic Forward Indexing",
+                "text": "",
+                "code": "my_list = ['a', 'b', 'c']\nprint(my_list[0])",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "explanation",
+                "title": "First Element Equivalence",
+                "text": "The first element can be accessed using index 0 or by using negative indexing with the length of the sequence.",
+                "code": "l1 = ['A', 'B', 'C']\nprint(l1[0] == l1[-len(l1)])",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -2687,7 +3234,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Basic Negative Indexing",
+                "text": "",
+                "code": "lst = [10, 20, 30, 40, 50]\nprint(lst[-2])",
+                "table": null
+              },
+              {
+                "id": "kp-2-d2",
+                "kind": "example",
+                "title": "Last Element Access",
+                "text": "",
+                "code": "s = 'Python'\nprint(s[-1])",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -2695,7 +3259,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Basic Slicing",
+                "text": "Slicing extracts elements from `start` up to, but not including, `end`.",
+                "code": "s = 'Python'\nprint(s[1:4]) # Output: yth",
+                "table": null
+              },
+              {
+                "id": "kp-3-d2",
+                "kind": "example",
+                "title": "Negative Slicing",
+                "text": "Negative indices can also be used for slicing.",
+                "code": "x = 'Hello, World!'\nprint(x[-6:-1]) # Output: World",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -2703,7 +3284,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "IndexError Demonstration",
+                "text": "Accessing an index equal to or greater than the sequence length causes an IndexError.",
+                "code": "my_list = ['a', 'b', 'c']\ntry:\n    print(my_list[len(my_list)])\nexcept IndexError as e:\n    print(e) # Output: list index out of range",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -2711,7 +3301,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "List within Dictionary",
+                "text": "Accessing an item in a list that is a value in a dictionary.",
+                "code": "my_dict = {'a': [1, 2], 'b': [3, 4]}\nprint(my_dict['a'][1]) # Output: 2",
+                "table": null
+              },
+              {
+                "id": "kp-5-d2",
+                "kind": "example",
+                "title": "Tuple within List",
+                "text": "Accessing an item in a tuple that is an element of a list.",
+                "code": "my_list = ['str', [1], (10, 20), {}]\nprint(my_list[2][0]) # Output: 10",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -3097,7 +3704,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Local variable hides global",
+                "text": "Assignment inside a function, without 'global', creates a new local variable. The global variable of the same name remains unaffected.",
+                "code": "x = 10\ndef modify():\n    x = 20\n    print(x) # Prints 20 (local x)\nmodify()\nprint(x) # Prints 10 (global x unchanged)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -3105,7 +3721,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "UnboundLocalError",
+                "text": "If a variable is assigned to anywhere in a function, Python treats it as local throughout. Accessing it before assignment leads to 'UnboundLocalError'.",
+                "code": "x = 5\ndef func():\n    print(x) # Causes UnboundLocalError\n    x = 10\nfunc()",
+                "table": null
+              },
+              {
+                "id": "kp-2-d2",
+                "kind": "explanation",
+                "title": "Python's Local Scope Rule",
+                "text": "Python determines a variable's scope (local or global) at compile time. If a variable is assigned inside a function, it's local for the entire function, even before the assignment line is executed.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -3113,7 +3746,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Using 'global' keyword",
+                "text": "To modify a global variable from inside a function, you must explicitly declare it using the 'global' keyword.",
+                "code": "count = 0\ndef increment():\n    global count\n    count += 1\nincrement()\nincrement()\nprint(count) # Prints 2",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -3121,7 +3763,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Closures (Nested Functions)",
+                "text": "Nested functions (inner functions) can access variables from their enclosing (outer, non-global) function's scope. This forms a closure.",
+                "code": "def outer():\n    x = 10\n    def inner():\n        print(x) # inner() accesses x from outer()'s scope\n    inner()\nouter() # Prints 10",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -3129,7 +3780,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Function parameters are local",
+                "text": "Any parameters passed to a function are treated as local variables within that function's scope and cannot be accessed from outside.",
+                "code": "def adder(n1, n2):\n    return n1 + n2\n\nadder(1, 2)\n# print(n1) # NameError: name 'n1' is not defined",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -3137,7 +3797,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Mutable argument side effects",
+                "text": "When a mutable object (like a list or dictionary) is passed as an argument, modifications to it inside the function affect the original object outside, as both refer to the same object in memory.",
+                "code": "def modify_list(lst_arg):\n    lst_arg.append(4)\n    print(f\"Inside function: {lst_arg}\")\n\nmy_list = [1, 2, 3]\nmodify_list(my_list)\nprint(f\"Outside function: {my_list}\")\n# Output:\n# Inside function: [1, 2, 3, 4]\n# Outside function: [1, 2, 3, 4]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -3145,7 +3814,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "Preventing mutable argument modification",
+                "text": "To prevent a function from altering the original mutable object passed as an argument, create an explicit copy of the object inside the function.",
+                "code": "def modify_list_safe(lst_arg):\n    local_list = list(lst_arg) # Create a copy of the list\n    local_list.append(4)\n    print(f\"Inside function: {local_list}\")\n\nmy_list = [1, 2, 3]\nmodify_list_safe(my_list)\nprint(f\"Outside function: {my_list}\")\n# Output:\n# Inside function: [1, 2, 3, 4]\n# Outside function: [1, 2, 3]",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -3599,7 +4277,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Dictionary Creation & Access",
+                "text": "",
+                "code": "capitals = {'Andorra': 'Andorra la Vella', 'Belgium': 'Brussels'}\nprint(capitals['Belgium'])",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "explanation",
+                "title": "Empty Dictionaries",
+                "text": "An empty dictionary can be created using curly braces or the dict() constructor.",
+                "code": "squares = {}\nprint(squares)\nsquares = dict()\nprint(squares)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -3607,7 +4302,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "explanation",
+                "title": "Immutable Keys",
+                "text": "Dictionary keys must be hashable. Immutable types (numbers, strings, tuples) work as keys. Mutable types (lists, other dictionaries) cannot be used as keys.",
+                "code": "a = 1\nb = {1:1}\nprint({a:b}) # Works: 1 is immutable\ntry:\n    print({b:a}) # Fails: b is a dict (mutable)\nexcept Exception as e:\n    print(e)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -3615,7 +4319,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "'in' Operator Checks Keys",
+                "text": "",
+                "code": "d = {'a': 1, 'b': 2, 'c': 3}\nprint('a' in d) # True\nprint(1 in d)  # False (1 is a value, not a key)\nprint('d' in d) # False",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -3623,7 +4336,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Add/Update with Assignment",
+                "text": "",
+                "code": "capitals = {'Belgium': 'Brussels'}\ncapitals['Netherlands'] = 'Amsterdam' # Add new key-value\ncapitals['Belgium'] = 'BXL' # Update existing key's value\nprint(capitals)",
+                "table": null
+              },
+              {
+                "id": "kp-4-d2",
+                "kind": "example",
+                "title": "Add/Update with .update()",
+                "text": "",
+                "code": "squares = {1:1, 2:4}\nsquares.update({3:9, 4:16}) # Add multiple new pairs\nsquares.update({2:5, 1:1}) # Update existing, add new if not present\nprint(squares)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -3631,7 +4361,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "`del` Statement",
+                "text": "",
+                "code": "d = {'x': 1, 'y': 2, 'z': 3}\ndel d['y']\nprint(d)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -3639,7 +4378,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Getting Dictionary Size",
+                "text": "",
+                "code": "d = {'a': 1, 'b': 2}\nd['c'] = 3\nprint(len(d))",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -3647,7 +4395,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "Unordered Equality",
+                "text": "",
+                "code": "d1 = {1:1, 2:2}\nd2 = {2:2, 1:1}\nprint(d1 == d2)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -3655,7 +4412,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "example",
+                "title": "Dictionary Views",
+                "text": "",
+                "code": "capitals = {'Estonia': 'Tallinn', 'Belgium': 'Brussels'}\nprint(list(capitals.keys()))   # ['Estonia', 'Belgium']\nprint(list(capitals.values())) # ['Tallinn', 'Brussels']\nprint(list(capitals.items()))  # [('Estonia', 'Tallinn'), ('Belgium', 'Brussels')]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -3663,7 +4429,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "explanation",
+                "title": "Unique, Immutable Elements",
+                "text": "Sets store only unique values, and elements must be immutable (hashable).",
+                "code": "s = {1, 2, 3, 2, 1}\nprint(s) # Output: {1, 2, 3}",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-10",
@@ -3671,7 +4446,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-10-d1",
+                "kind": "example",
+                "title": "Duplicate Elimination",
+                "text": "",
+                "code": "s = {1, 2, 3, 2, 1}\nprint(len(s)) # Length is 3 due to duplicates being removed",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-11",
@@ -3679,7 +4463,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-11-d1",
+                "kind": "example",
+                "title": "Empty Set vs. Empty Dict",
+                "text": "",
+                "code": "empty_set = set()      # Correct way to create an empty set\nempty_dict = {}        # Creates an empty dictionary, NOT a set\nprint(type(empty_set))\nprint(type(empty_dict))",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-12",
@@ -3687,7 +4480,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-12-d1",
+                "kind": "explanation",
+                "title": "No Indexing for Sets",
+                "text": "Since sets are unordered, individual elements cannot be accessed using an index or slicing.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-13",
@@ -3695,7 +4497,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-13-d1",
+                "kind": "example",
+                "title": "Set Modification Methods",
+                "text": "",
+                "code": "countries = {'Andorra', 'Belgium'}\ncountries.add('Greece')          # Add a single element\ncountries.remove('Andorra')      # Remove an element\ncountries.update({'Spain', 'Italy'}) # Add multiple elements\nprint(countries)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-14",
@@ -3703,7 +4514,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-14-d1",
+                "kind": "example",
+                "title": "Ordered Sequence Comparison",
+                "text": "",
+                "code": "print([1,2] == [2,1])  # False (order matters for lists)\nprint((1,2) == (2,1))  # False (order matters for tuples)\nprint('12' == '21')    # False (order matters for strings)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-15",
@@ -3711,7 +4531,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-15-d1",
+                "kind": "explanation",
+                "title": "Check for Duplicates with Sets",
+                "text": "Converting a sequence to a set removes duplicates. Comparing its length to the original can detect duplicates.",
+                "code": "my_list_with_dupes = [1, 2, 2, 3]\nmy_list_no_dupes = [1, 2, 3]\n\ndef has_duplicates(l):\n    return len(l) != len(set(l))\n\nprint(has_duplicates(my_list_with_dupes)) # True\nprint(has_duplicates(my_list_no_dupes))  # False",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -4025,7 +4854,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "explanation",
+                "title": "Type of *args",
+                "text": "`*args` collects arguments into a tuple, allowing functions to accept a variable number of positional arguments.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "example",
+                "title": "Using *args to sum numbers",
+                "text": "",
+                "code": "def adder(*args):\n    result = 0\n    for number in args:\n        result += number\n    return result\nprint(adder(1, 2, 3, 4, 5))",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -4033,7 +4879,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Mixing positional arguments and *args",
+                "text": "",
+                "code": "def adder(n1, n2, *args):\n    result = n1 + n2\n    for number in args:\n        result += number\n    return result\nprint(adder(1, 2, 3, 4, 5))",
+                "table": null
+              },
+              {
+                "id": "kp-2-d2",
+                "kind": "explanation",
+                "title": "Order of argument processing",
+                "text": "When `*args` is combined with explicit parameters, Python first fills the explicit parameters in order, then collects any remaining positional arguments into the `*args` tuple.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -4041,7 +4904,47 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "table",
+                "title": "Parameter order template",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Segment",
+                    "Example"
+                  ],
+                  "rows": [
+                    [
+                      "Positional params",
+                      "def f(a, b, ...)"
+                    ],
+                    [
+                      "*args",
+                      "def f(a, b, *args, ...)"
+                    ],
+                    [
+                      "Keyword-only params",
+                      "def f(a, *args, c=0, ...)"
+                    ],
+                    [
+                      "**kwargs",
+                      "def f(a, *args, c=0, **kwargs)"
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "kp-3-d2",
+                "kind": "example",
+                "title": "Valid signature and call",
+                "text": "",
+                "code": "def f(a, b, *args, c=0, **kwargs):\n    return a, b, args, c, kwargs\n\nprint(f(1, 2, 3, 4, c=5, x=6))\n# (1, 2, (3, 4), 5, {'x': 6})",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -4049,7 +4952,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "explanation",
+                "title": "Collecting Keyword Arguments with **kwargs",
+                "text": "The `**kwargs` parameter collects all extra keyword arguments passed to a function into a dictionary, where keys are argument names and values are their corresponding argument values.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-4-d2",
+                "kind": "example",
+                "title": "Using **kwargs",
+                "text": "",
+                "code": "def greet(**kwargs):\n    for key, value in kwargs.items():\n        print(f'{key}: {value}')\ngreet(name='Alice', age=30)",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -4509,7 +5429,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Basic Slicing Syntax",
+                "text": "Slicing uses `sequence[start:end:step]`. All parts are optional.",
+                "code": "my_list = [0, 1, 2, 3, 4, 5]\nprint(my_list[1:5:2]) # Output: [1, 3]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -4517,7 +5446,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "explanation",
+                "title": "Inclusive Start, Exclusive End",
+                "text": "The `start` index is included in the slice, but the `end` index is not. The slice goes up to, but does not include, the element at `end`.",
+                "code": "s = 'abcdef'\nprint(s[2:5]) # Output: 'cde' (elements at indices 2, 3, 4)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -4525,7 +5463,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Omitting Start/End for Full Copy",
+                "text": "When `start` and `end` are omitted, and `step` is default (1), the entire sequence is copied.",
+                "code": "my_list = [10, 20, 30]\nprint(my_list[::]) # Output: [10, 20, 30]",
+                "table": null
+              },
+              {
+                "id": "kp-3-d2",
+                "kind": "example",
+                "title": "Omitting Start/End with Custom Step",
+                "text": "You can use a custom `step` while omitting `start` and `end` to process the entire sequence with that step.",
+                "code": "lst = [10, 20, 30, 40, 50]\nprint(lst[::2]) # Output: [10, 30, 50]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -4533,7 +5488,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "explanation",
+                "title": "Reversing with Negative Step",
+                "text": "A negative `step` reverses the order of elements in the slice. `[::-1]` is a common idiom to reverse a sequence entirely.",
+                "code": "l1 = [1, 2, 3, 4, 5, 6, 7, 8]\nprint(l1[::-1]) # Output: [8, 7, 6, 5, 4, 3, 2, 1]\nprint(l1[5:1:-2]) # Output: [6, 4]",
+                "table": null
+              },
+              {
+                "id": "kp-4-d2",
+                "kind": "example",
+                "title": "Negative Indices",
+                "text": "Negative indices count from the end of the sequence (-1 is the last element, -2 is the second to last, etc.). They can be used for `start` or `end`.",
+                "code": "x = 'Hello, World!'\nprint(x[-6:-1]) # Output: 'World'",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -4541,7 +5513,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Slicing Creates a New Object",
+                "text": "Slicing always returns a *new* object, which is a shallow copy of the specified portion of the original sequence. It is not a view into the original.",
+                "code": "original_list = [1, 2, 3]\nnew_slice = original_list[::]\nprint(original_list is new_slice) # Output: False\nnew_slice.append(4)\nprint(original_list) # Output: [1, 2, 3]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -4549,7 +5530,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Slicing on Strings",
+                "text": "Slicing operations on strings (or tuples) always produce a *new* string (or tuple) object. The original object remains unchanged.",
+                "code": "s = 'hello'\ns_slice = s[1:4]\nprint(s_slice) # Output: 'ell'\nprint(s is s_slice) # Output: False (distinct objects)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -4557,7 +5547,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "explanation",
+                "title": "Assignment to a Slice",
+                "text": "Assigning an iterable to a slice replaces the elements within that range. If the assigned iterable has a different length than the slice it's replacing, the list's total length will adjust accordingly.",
+                "code": "my_list = [1, 2, 3, 4, 5]\nmy_list[1:3] = [10, 11, 12] # Replaces [2, 3] with [10, 11, 12]\nprint(my_list) # Output: [1, 10, 11, 12, 4, 5]\n\nmy_list = ['a', 'b', 'c']\nmy_list[1:] = [] # Removes elements from index 1 to end\nprint(my_list) # Output: ['a']",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -4565,7 +5564,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "example",
+                "title": "Slicing Beyond Bounds",
+                "text": "Python does not raise an `IndexError` if slice indices extend beyond the sequence's actual length. Out-of-bounds indices are simply adjusted to the sequence's limits.",
+                "code": "l1 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']\nprint(l1[1:17]) # Output: ['B', 'C', 'D', 'E', 'F', 'G', 'H']\nprint(l1[:100]) # Output: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -4573,7 +5581,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "explanation",
+                "title": "Empty Slices from Invalid Ranges",
+                "text": "If `start` is greater than or equal to `end` (with a positive `step`), or if the `step` moves past the `end` index without encountering elements, the resulting slice will be empty.",
+                "code": "my_list = [1, 2, 3, 4]\nprint(my_list[3:1]) # Output: []\nprint(my_list[2:2]) # Output: []",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-10",
@@ -4581,7 +5598,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-10-d1",
+                "kind": "example",
+                "title": "Complex Negative Step Slicing",
+                "text": "Combining slices, especially with negative steps, can lead to different results depending on the order of operations. Understand what each slicing operation does independently.",
+                "code": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n# All three produce [10, 8, 6, 4, 2]\nsubset_a = numbers[-1::-2]\nsubset_b = numbers[::-2]\nsubset_c = numbers[::-1][::2]\n\n# This produces [9, 7, 5, 3, 1]\nsubset_d = numbers[::2][::-1]\n\nprint(f\"A: {subset_a}\") # A: [10, 8, 6, 4, 2]\nprint(f\"D: {subset_d}\") # D: [9, 7, 5, 3, 1]",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -5115,7 +6141,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "explanation",
+                "title": "Implicit Boolean Conversion",
+                "text": "Python automatically evaluates values as True or False in conditional contexts. Understanding which values are 'falsy' (evaluate to False) and which are 'truthy' (evaluate to True) is crucial.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -5123,7 +6158,67 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "table",
+                "title": "Common Falsy Values",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Type",
+                    "Example"
+                  ],
+                  "rows": [
+                    [
+                      "Empty List",
+                      "[]"
+                    ],
+                    [
+                      "Empty Tuple",
+                      "()"
+                    ],
+                    [
+                      "Empty Dictionary",
+                      "{}"
+                    ],
+                    [
+                      "Empty Set",
+                      "set()"
+                    ],
+                    [
+                      "Empty String",
+                      "''"
+                    ],
+                    [
+                      "Zero Integer",
+                      "0"
+                    ],
+                    [
+                      "Zero Float",
+                      "0.0"
+                    ],
+                    [
+                      "Empty Range",
+                      "range(0)"
+                    ],
+                    [
+                      "None Type",
+                      "None"
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "kp-2-d2",
+                "kind": "example",
+                "title": "Falsy in Action",
+                "text": "",
+                "code": "x = 0\nif x:\n    print('truthy')\nelse:\n    print('falsy')\n# Output: falsy",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -5131,7 +6226,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "explanation",
+                "title": "Truthiness Rule",
+                "text": "If a value is not explicitly listed as falsy, it is considered truthy. This includes non-empty collections and non-zero numbers, even if they contain falsy elements.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-3-d2",
+                "kind": "example",
+                "title": "Truthiness Example",
+                "text": "",
+                "code": "bool([0]) # Evaluates to True because the list is not empty\nbool(' ') # Evaluates to True because the string is not empty",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -5139,7 +6251,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "explanation",
+                "title": "Flow Control",
+                "text": "Conditional statements (if, elif, else) direct program execution based on the truthiness of expressions.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-4-d2",
+                "kind": "example",
+                "title": "Basic Conditional",
+                "text": "",
+                "code": "a = 3\nif a > 1 and a < 5:\n    print('a between 2 and 5')\nelse:\n    print('a not between 2 and 5')\n# Output depends on 'a', for a=3: 'a between 2 and 5'",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -5147,7 +6276,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "explanation",
+                "title": "Indentation Defines Blocks",
+                "text": "Python uses indentation to delineate code blocks. All statements within an `if`, `elif`, or `else` block must have the same level of indentation.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -5155,7 +6293,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "explanation",
+                "title": "Conditional Structure",
+                "text": "A standard conditional structure begins with an `if`, can have zero or more `elif` (else if) clauses, and may optionally end with a single `else` clause.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -5163,7 +6310,32 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "Ternary Operator (Conditional Expression)",
+                "text": "",
+                "code": "x = 7\nresult = 'odd' if x % 2 != 0 else 'even'\nprint(result)\n# Output: odd",
+                "table": null
+              },
+              {
+                "id": "kp-7-d2",
+                "kind": "explanation",
+                "title": "Concise Assignment",
+                "text": "The ternary operator provides a compact way to assign a value based on a condition, replacing a simple `if/else` block for assignment.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-7-d3",
+                "kind": "example",
+                "title": "Ternary vs. If/Else",
+                "text": "",
+                "code": "# if/else statement form:\n# if a > 0: b = a\n# else: b = 0\n\n# Ternary expression form:\nb = a if a > 0 else 0",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -5171,7 +6343,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "explanation",
+                "title": "Boolean Operators Overview",
+                "text": "Python uses `and`, `or`, and `not` to combine or invert boolean conditions. These are distinct from bitwise operators `&&` and `||` in other languages.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -5179,7 +6360,44 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "table",
+                "title": "`and` Operator Truth Table",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Operand 1",
+                    "Operand 2",
+                    "Result (Operand 1 and Operand 2)"
+                  ],
+                  "rows": [
+                    [
+                      "True",
+                      "True",
+                      "True"
+                    ],
+                    [
+                      "True",
+                      "False",
+                      "False"
+                    ],
+                    [
+                      "False",
+                      "True",
+                      "False"
+                    ],
+                    [
+                      "False",
+                      "False",
+                      "False"
+                    ]
+                  ]
+                }
+              }
+            ]
           },
           {
             "id": "kp-10",
@@ -5187,7 +6405,44 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-10-d1",
+                "kind": "table",
+                "title": "`or` Operator Truth Table",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Operand 1",
+                    "Operand 2",
+                    "Result (Operand 1 or Operand 2)"
+                  ],
+                  "rows": [
+                    [
+                      "True",
+                      "True",
+                      "True"
+                    ],
+                    [
+                      "True",
+                      "False",
+                      "True"
+                    ],
+                    [
+                      "False",
+                      "True",
+                      "True"
+                    ],
+                    [
+                      "False",
+                      "False",
+                      "False"
+                    ]
+                  ]
+                }
+              }
+            ]
           },
           {
             "id": "kp-11",
@@ -5195,7 +6450,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-11-d1",
+                "kind": "example",
+                "title": "`not` Operator",
+                "text": "",
+                "code": "print(not True)   # Output: False\nprint(not False)  # Output: True",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-12",
@@ -5203,7 +6467,47 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-12-d1",
+                "kind": "explanation",
+                "title": "Operator Precedence",
+                "text": "Comparisons are evaluated first, then `not`, then `and`, and finally `or`. This order is crucial for correctly interpreting complex expressions.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-12-d2",
+                "kind": "table",
+                "title": "Boolean Precedence (High to Low)",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Operator Type",
+                    "Operators"
+                  ],
+                  "rows": [
+                    [
+                      "Comparisons",
+                      "==, !=, <, >, <=, >="
+                    ],
+                    [
+                      "Negation",
+                      "not"
+                    ],
+                    [
+                      "Conjunction",
+                      "and"
+                    ],
+                    [
+                      "Disjunction",
+                      "or"
+                    ]
+                  ]
+                }
+              }
+            ]
           },
           {
             "id": "kp-13",
@@ -5211,7 +6515,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-13-d1",
+                "kind": "example",
+                "title": "Using Parentheses to Control Order",
+                "text": "Parentheses clarify the order of evaluation, making complex boolean expressions more readable and preventing precedence traps.",
+                "code": "a=1; b=3\n# Without parentheses (precedence trap):\n# print(a==1 or a==2 and b==1 or b==2) # True (unexpected if you thought 'or' binds first)\n\n# With parentheses (correct logic):\nprint((a==1 or a==2) and (b==1 or b==2)) # False",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-14",
@@ -5219,7 +6532,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-14-d1",
+                "kind": "explanation",
+                "title": "Comparison Operators Result",
+                "text": "Comparison operators always yield a boolean `True` or `False` value, representing the outcome of the comparison.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-14-d2",
+                "kind": "example",
+                "title": "Basic Comparisons",
+                "text": "",
+                "code": "print(3 == 2)  # False\nprint(3 < 4)   # True\nprint(3 != 4)  # True",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-15",
@@ -5227,7 +6557,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-15-d1",
+                "kind": "example",
+                "title": "Floating-Point Precision Issue",
+                "text": "Direct equality comparison (`==`) of floating-point numbers can be unreliable due to how they are represented in binary.",
+                "code": "print(1.1 + 2.2 == 3.3) # Output: False (unexpected but common)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-16",
@@ -5235,7 +6574,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-16-d1",
+                "kind": "example",
+                "title": "Chained Comparisons",
+                "text": "Python allows chaining comparison operators, which is syntactic sugar for combining multiple comparisons with `and`.",
+                "code": "x = 3\n# Chained comparison:\nif 1 < x < 5:\n    print('x is between 1 and 5') # Output: x is between 1 and 5\n\n# Equivalent to:\n# if 1 < x and x < 5:",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-17",
@@ -5243,7 +6591,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-17-d1",
+                "kind": "example",
+                "title": "`in` Operator for Membership",
+                "text": "The `in` operator efficiently checks if an item is present within a sequence (like a list, tuple, or string) or if a key exists in a dictionary.",
+                "code": "print(1 in [1,2,3])    # True\nprint('a' in 'apple')  # True\nprint(1 in {1: 'one', 2: 'two'}) # True (checks keys)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-18",
@@ -5251,7 +6608,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-18-d1",
+                "kind": "example",
+                "title": "Sequence Comparison",
+                "text": "Sequences are compared element by element. The comparison stops at the first differing element. If one sequence is a prefix of another, the shorter one is considered 'less'.",
+                "code": "print([1, 2, 3] < [1, 2, 3, 0]) # True (shorter prefix is less)\nprint([2] < [1, 2, 3, 0])    # False (2 is not < 1)\nprint('abc' < 'abc ')        # True ('abc' is shorter prefix)",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -5535,7 +6901,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "explanation",
+                "title": "Default Evaluation",
+                "text": "Default argument values are determined only once when the function is defined, not each time the function is called. This can lead to unexpected behavior with mutable defaults.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "example",
+                "title": "Default Argument Evaluation",
+                "text": "",
+                "code": "def func(x, y=10):\n    return x + y\nprint(func(5)) # y is 10\ndef func_redefined(x, y=20):\n    return x + y\nprint(func(5)) # y is still 10, func_redefined's default doesn't affect func",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -5543,7 +6926,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Mutable Default Pitfall",
+                "text": "Using a mutable object (like a list) as a default argument means all calls without explicitly providing that argument will share the *same* list, leading to persistent changes.",
+                "code": "def add_to_list(item, data_list=[]):\n    data_list.append(item)\n    return data_list\n\nprint(add_to_list(1)) # Output: [1]\nprint(add_to_list(2)) # Output: [1, 2] - The same list from the first call is modified.\nprint(add_to_list(3, [])) # Output: [3] - A new list is provided, so it's not affected.",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -5551,7 +6943,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Correcting Mutable Defaults",
+                "text": "To prevent shared mutable defaults, use `None` as the default and initialize the mutable object inside the function only if `None` was received.",
+                "code": "def add_to_list_safe(item, data_list=None):\n    if data_list is None:\n        data_list = []\n    data_list.append(item)\n    return data_list\n\nprint(add_to_list_safe(1)) # Output: [1]\nprint(add_to_list_safe(2)) # Output: [2] - A new list is created each time.",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -5559,7 +6960,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "In-Function Modification",
+                "text": "When a mutable object is passed as an argument and modified directly (e.g., using `append()`, `del`), the changes are reflected in the original object outside the function.",
+                "code": "def modify_list_in_place(lst):\n    lst.append(4)\n    return lst\n\nmy_original_list = [1, 2, 3]\nreturned_list = modify_list_in_place(my_original_list)\nprint(f\"Original list after call: {my_original_list}\") # Output: Original list after call: [1, 2, 3, 4]\nprint(f\"Returned list: {returned_list}\") # Output: Returned list: [1, 2, 3, 4]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -5567,7 +6977,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Rebinding vs. Modifying",
+                "text": "If a local variable inside a function is *reassigned* to a new object (e.g., `lst = new_list`), it creates a new local reference and does not modify the original object passed into the function.",
+                "code": "def rebind_list(lst):\n    lst = [5, 6, 7] # This creates a new local list, 'lst' now refers to it.\n    return lst\n\nmy_list_outside = [1, 2, 3]\nnew_list_ref = rebind_list(my_list_outside)\nprint(f\"Original list outside: {my_list_outside}\") # Output: Original list outside: [1, 2, 3] (unmodified)\nprint(f\"New list reference: {new_list_ref}\") # Output: New list reference: [5, 6, 7]",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -5816,7 +7235,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "explanation",
+                "title": "Core Functionality",
+                "text": "`enumerate()` streamlines iteration by pairing each item in a sequence with its corresponding index.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "example",
+                "title": "Basic Usage",
+                "text": "",
+                "code": "fruits = ['apple', 'banana', 'cherry']\nfor i, fruit in enumerate(fruits):\n    print(i, fruit)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -5824,7 +7260,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Default 0-based Indexing",
+                "text": "By default, `enumerate()` starts counting from 0, returning (index, value) tuples.",
+                "code": "fruits = ['apple', 'banana', 'cherry']\nfor i, fruit in enumerate(fruits):\n    print(i, fruit)\n# Expected output:\n# 0 apple\n# 1 banana\n# 2 cherry",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -5832,7 +7277,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Custom Start Index",
+                "text": "Use the `start` argument to begin indexing from a number other than 0.",
+                "code": "lst = ['a', 'b', 'c']\nfor i, v in enumerate(lst, start=1):\n    print(i, v)\n# Expected output:\n# 1 a\n# 2 b\n# 3 c",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -6118,7 +7572,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "explanation",
+                "title": "Definition",
+                "text": "Lambda functions are indeed anonymous, one-line functions that do not require a `def` keyword.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -6126,7 +7589,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Basic Syntax",
+                "text": "The result of the expression is implicitly returned.",
+                "code": "lambda parameters: expression",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -6134,7 +7606,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Assigning to a Variable",
+                "text": "",
+                "code": "double = lambda x: x * 2\nprint(double(5)) # Output: 10",
+                "table": null
+              },
+              {
+                "id": "kp-3-d2",
+                "kind": "example",
+                "title": "Multi-argument assignment",
+                "text": "",
+                "code": "multiply_and_double = lambda x, y: 2 * x * y\nprint(multiply_and_double(1, 3)) # Output: 6",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -6142,7 +7631,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Immediate Invocation",
+                "text": "",
+                "code": "print((lambda x, y: 2 * x * y)(4, 3)) # Output: 24",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -6150,7 +7648,32 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Using with `map()`",
+                "text": "",
+                "code": "l1 = [1, 2, 3]\nmapped_list = list(map(lambda x: x * 2, l1))\nprint(mapped_list) # Output: [2, 4, 6]",
+                "table": null
+              },
+              {
+                "id": "kp-5-d2",
+                "kind": "example",
+                "title": "Using with `filter()`",
+                "text": "",
+                "code": "l1 = [1, 2, 3, 4, 5, 6]\nfiltered_list = list(filter(lambda x: not x % 2, l1))\nprint(filtered_list) # Output: [2, 4, 6]",
+                "table": null
+              },
+              {
+                "id": "kp-5-d3",
+                "kind": "example",
+                "title": "Using with `sorted()`",
+                "text": "Sorts a list of tuples based on the second element of each tuple.",
+                "code": "pairs = [(1, 3), (2, 1), (3, 2)]\nsorted_pairs = sorted(pairs, key=lambda x: x[1])\nprint(sorted_pairs) # Output: [(2, 1), (3, 2), (1, 3)]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -6158,7 +7681,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Conditional Logic",
+                "text": "This lambda returns the larger of the two arguments `x` and `y`.",
+                "code": "f = lambda x, y: x if x > y else y\nprint(f(3, 7)) # Output: 7",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -6166,7 +7698,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "explanation",
+                "title": "Iterator Conversion",
+                "text": "Functions like `map` and `filter` return iterator objects. To view or use their contents as a list, you must explicitly convert them, typically using `list()`.",
+                "code": "data = [1, 2, 3]\nmapped_iterator = map(lambda x: x*2, data)\nprint(mapped_iterator) # Output: <map object at ...>\nprint(list(mapped_iterator)) # Output: [2, 4, 6]",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -6382,7 +7923,31 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "table",
+                "title": "Common Types Overview",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Type",
+                    "Mutability"
+                  ],
+                  "rows": [
+                    [
+                      "int, float, str, bool, tuple",
+                      "Immutable"
+                    ],
+                    [
+                      "list, dict, set",
+                      "Mutable"
+                    ]
+                  ]
+                }
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -6390,7 +7955,35 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "table",
+                "title": "Common mutable types",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Type",
+                    "Example mutation"
+                  ],
+                  "rows": [
+                    [
+                      "list",
+                      "lst.append(4)"
+                    ],
+                    [
+                      "dict",
+                      "d[\"k\"] = 10"
+                    ],
+                    [
+                      "set",
+                      "s.add(5)"
+                    ]
+                  ]
+                }
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -6398,7 +7991,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Mutable In-place Change",
+                "text": "Modifying a mutable object's content does not change its memory address.",
+                "code": "my_list = [1, 2, 3]\noriginal_id = id(my_list)\nmy_list[0] = 99\nprint(my_list) # Output: [99, 2, 3]\nprint(id(my_list) == original_id) # Output: True",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -6406,7 +8008,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Shared Mutable References",
+                "text": "When two variables reference the same mutable object, changes through one affect both.",
+                "code": "x = [1, 2, 3]\ny = x\ny.append(4)\nprint(x) # Output: [1, 2, 3, 4]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -6414,7 +8025,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Immutable Reassignment",
+                "text": "Operations on immutable objects like strings create a new object, changing its memory address.",
+                "code": "my_str = \"hello\"\noriginal_id = id(my_str)\nmy_str = my_str + \" world\"\nprint(my_str) # Output: hello world\nprint(id(my_str) == original_id) # Output: False",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -6422,7 +8042,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "TypeError for Immutable Modification",
+                "text": "Attempting to change an immutable object (e.g., tuple element) will raise a TypeError.",
+                "code": "my_tuple = (1, 2, 3)\ntry:\n    my_tuple[0] = 10\nexcept TypeError as e:\n    print(e) # Output: 'tuple' object does not support item assignment",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -6702,7 +8331,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Shared Reference Example",
+                "text": "When a mutable object is assigned to another variable, both variables reference the same object. Modifications through one variable affect the other.",
+                "code": "x = [1, 2, 3]\ny = x\ny.append(4)\nprint(x)\n# Output: [1, 2, 3, 4]",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "explanation",
+                "title": "Object Identity",
+                "text": "The `id()` function can be used to confirm that multiple variables refer to the same object in memory.",
+                "code": "var_1 = [100]\nvar_2 = var_1\nprint(id(var_1) == id(var_2))\n# Output: True",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -6710,7 +8356,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Tuple Immutability",
+                "text": "Attempting to change an element of a tuple results in a TypeError.",
+                "code": "t = (1, 2, 3)\nt[0] = 10\n# Output: TypeError: 'tuple' object does not support item assignment",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -6718,7 +8373,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "In-place List Modification",
+                "text": "Lists are mutable and can be modified in-place.",
+                "code": "l1 = [1, 2, 3]\nl1[2] = 4\nprint(l1)\n# Output: [1, 2, 4]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -6726,7 +8390,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "explanation",
+                "title": "Common Immutable Types",
+                "text": "Integers, floats, strings, booleans, and tuples are fundamental immutable types in Python. Their values cannot be changed after creation.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -6734,7 +8407,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "explanation",
+                "title": "Common Mutable Types",
+                "text": "Lists, dictionaries, and sets are core mutable types, allowing their contents to be altered after they are initialized.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -6742,7 +8424,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Mutable Object Identity",
+                "text": "Modifying a mutable object in-place does not change its memory address (object ID).",
+                "code": "my_list = [1, 2]\nid1 = id(my_list)\nmy_list.append(3)\nid2 = id(my_list)\nprint(id1 == id2)\n# Output: True",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -6750,7 +8441,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "Immutable Object Identity",
+                "text": "Reassigning an immutable type like an integer or string creates a new object in memory, changing its object ID.",
+                "code": "my_int = 100\nid1 = id(my_int)\nmy_int = 110\nid2 = id(my_int)\nprint(id1 == id2)\n# Output: False",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -6758,7 +8458,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "explanation",
+                "title": "Valid Naming Characters",
+                "text": "Variable names in Python can include lowercase letters (a-z), uppercase letters (A-Z), digits (0-9), and underscores (_).",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -6766,7 +8475,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "example",
+                "title": "Invalid vs valid identifiers",
+                "text": "Names cannot begin with a digit; use a leading letter or underscore.",
+                "code": "# invalid: starts with a digit\n# 2value = 10\n\nvalue2 = 10\n_value = 20\nprint(value2, _value)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-10",
@@ -6774,7 +8492,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-10-d1",
+                "kind": "explanation",
+                "title": "Case-Sensitivity",
+                "text": "Python treats variable names as case-sensitive. `myVar` and `myvar` are considered two distinct variables.",
+                "code": "myVar = 10\nmyvar = 20\nprint(myVar, myvar)\n# Output: 10 20",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-11",
@@ -6782,7 +8509,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-11-d1",
+                "kind": "explanation",
+                "title": "Avoiding Reserved Words",
+                "text": "Do not use Python's reserved keywords (e.g., `list`, `print`, `for`, `if`) as variable names to prevent unexpected behavior or errors.",
+                "code": "",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -7071,7 +8807,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "explanation",
+                "title": "Implicit None Return",
+                "text": "If a function finishes execution without an explicit `return` statement being hit, Python automatically returns `None`.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "example",
+                "title": "Conditional Return & Implicit None",
+                "text": "If a condition for a return is not met, the function can implicitly return None.",
+                "code": "def func(x):\n    if x > 0:\n        return x\nprint(func(-1)) # Output: None",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -7079,7 +8832,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Basic Return Value",
+                "text": "A `return` statement sends a value back to where the function was called and ends the function's execution.",
+                "code": "def add(a, b):\n    return a + b\nresult = add(5, 3)\nprint(result) # Output: 8",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -7087,7 +8849,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "explanation",
+                "title": "Multiple Returns as Tuple",
+                "text": "When you return multiple values separated by commas, Python automatically packs them into a single tuple.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-3-d2",
+                "kind": "example",
+                "title": "Returning and Unpacking Tuples",
+                "text": "",
+                "code": "def powers(n):\n    return n**2, n**3\n\n# The returned tuple can be unpacked directly\npower2, power3 = powers(3)\nprint(f'{power2=}, {power3=}') # Output: power2=9, power3=27\n\n# Or captured as a single tuple variable\nresult_tuple = powers(2)\nprint(f'{result_tuple=}') # Output: result_tuple=(4, 8)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -7095,7 +8874,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "explanation",
+                "title": "Local Scope Destruction",
+                "text": "Variables created inside a function are local to that function. They are destroyed and become inaccessible once the function has completed execution.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -7103,7 +8891,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Uncaptured Return Value is Lost",
+                "text": "If a function's return value is not assigned to a variable or used immediately, it is lost.",
+                "code": "def get_greeting():\n    return 'Hello'\n\nget_greeting() # Return value 'Hello' is not captured\n# The value is gone and cannot be accessed later.",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -7111,7 +8908,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "explanation",
+                "title": "Print vs. Return",
+                "text": "`print()` displays output to the console; `return` sends a value back to the caller for further use. Functions intended to provide data should use `return`.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-6-d2",
+                "kind": "example",
+                "title": "Common Error: Print Instead of Return",
+                "text": "",
+                "code": "def func_prints(x):\n    print(x * 2)\n\ndef func_returns(x):\n    return x * 2\n\nresult_print = func_prints(5) # Prints 10, but result_print is None\nprint(f'{result_print=}')    # Output: result_print=None\n\nresult_return = func_returns(5)\nprint(f'{result_return=}') # Output: result_return=10",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -7119,7 +8933,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "explanation",
+                "title": "`is not None` vs `!= None`",
+                "text": "When checking for `None`, `is not None` is generally preferred over `!= None`. `is` checks for identity (if it's the *exact* `None` object), while `!=` checks for equality.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-7-d2",
+                "kind": "example",
+                "title": "Checking for None Appropriately",
+                "text": "",
+                "code": "def safe_divide(numerator, denominator):\n    if denominator == 0:\n        return None\n    return numerator / denominator\n\nresult = safe_divide(10, 0)\n\nif result is not None:\n    print(f'Result: {result}')\nelse:\n    print('Cannot divide by zero')",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -7429,7 +9260,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Basic Type Conversions",
+                "text": "",
+                "code": "print(str(1))\nprint(int('1'))\nprint(float('1.0'))\nprint(tuple([1,2,3]))\nprint(list(range(1,5,2)))",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -7437,7 +9277,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "String to Numeric Conversion",
+                "text": "Valid string representations can be converted to integers or floats.",
+                "code": "print(int('42'))\nprint(float('3.5'))\nprint(int('42') + float('3.5'))",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -7445,7 +9294,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "explanation",
+                "title": "ValueError on Invalid Conversion",
+                "text": "Attempting to convert a non-numeric string to an integer or float will raise a ValueError.",
+                "code": "try:\n    print(int('1a'))\nexcept ValueError as e:\n    print(e)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -7453,7 +9311,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Dict to Collection (Keys Only)",
+                "text": "Converting a dictionary to a tuple, list, or set will result in a collection of its keys.",
+                "code": "my_dict = {1:3, 2:4}\nprint(tuple(my_dict))\nprint(list(my_dict))\nprint(set(my_dict))",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -7461,7 +9328,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "dict() Constructor Requirements",
+                "text": "The dict() constructor needs an iterable of key-value pairs (tuples or lists).",
+                "code": "print(dict([(1,3),(2,4)]))\ntry:\n    print(dict([1, 2]))\nexcept ValueError as e:\n    print(e)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -7469,7 +9345,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "explanation",
+                "title": "Booleans as Numbers",
+                "text": "In numeric contexts, True is treated as 1 and False as 0.",
+                "code": "print(1 + True) # Output: 2\nprint(1.0 + False) # Output: 1.0\nprint(True + False) # Output: 1\nprint(1 == True) # Output: True\nprint(0 == False) # Output: True",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -7477,7 +9362,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "String Repetition with Booleans",
+                "text": "Multiplying a string by a boolean repeats the string, treating True as 1 and False as 0.",
+                "code": "print('1' * 2) # Output: '11'\nprint('1' * True) # Output: '1'\nprint('1' * False) # Output: ''",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -7485,7 +9379,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "explanation",
+                "title": "TypeError: String + Number",
+                "text": "Directly adding a string and a numeric type without explicit conversion raises a TypeError.",
+                "code": "try:\n    print('1' + 2)\nexcept TypeError as e:\n    print(e)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -7493,7 +9396,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "example",
+                "title": "Set Conversion Removes Duplicates",
+                "text": "Converting an iterable to a set automatically removes duplicate elements, keeping only unique values.",
+                "code": "integer_list = [1, 2, 3, 1]\nprint(set(integer_list))\ninteger_tuple = (1, 2, 3, 1)\nprint(set(integer_tuple))",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -7712,7 +9624,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Object Properties",
+                "text": "Use `id()`, `type()`, and direct access to view an object's unique identifier, type, and value.",
+                "code": "a = 10\nprint(f\"ID: {id(a)}\")\nprint(f\"Type: {type(a)}\")\nprint(f\"Value: {a}\")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -7720,7 +9641,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "explanation",
+                "title": "Type & Mutability",
+                "text": "An object's type dictates the kind of values it can store and whether its contents can be altered after creation (mutable) or not (immutable).",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -7728,7 +9658,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Multiple Names, One Object",
+                "text": "Multiple variables can refer to the same object in memory. Modifications made through one name will be visible via all names referencing that object.",
+                "code": "x = [1, 2]\ny = x\ny.append(3)\nprint(x) # Output: [1, 2, 3]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -7736,7 +9675,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Assignment Creates Objects",
+                "text": "An assignment statement like `variable = value` is a fundamental way to create an object and bind a name (the variable) to it.",
+                "code": "my_string = \"Python Exam\"",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -7744,7 +9692,55 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "table",
+                "title": "8 Core Built-in Types",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Type",
+                    "Example"
+                  ],
+                  "rows": [
+                    [
+                      "int",
+                      "10"
+                    ],
+                    [
+                      "float",
+                      "10.5"
+                    ],
+                    [
+                      "str",
+                      "'hello'"
+                    ],
+                    [
+                      "bool",
+                      "True"
+                    ],
+                    [
+                      "tuple",
+                      "(1, 2)"
+                    ],
+                    [
+                      "list",
+                      "[1, 2]"
+                    ],
+                    [
+                      "dict",
+                      "{'a': 1}"
+                    ],
+                    [
+                      "set",
+                      "{1, 2}"
+                    ]
+                  ]
+                }
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -7752,7 +9748,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "explanation",
+                "title": "Value and Type Distinction",
+                "text": "While `5 == 5.0` (numerical equality) is True, `5` (an `int`) and `5.0` (a `float`) are distinct objects with different types. The `is` operator confirms they are not the same object: `5 is 5.0` is False.",
+                "code": "print(type(5) == type(5.0)) # False\nprint(5 == 5.0)          # True\nprint(5 is 5.0)          # False",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -7760,7 +9765,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "example",
+                "title": "Integer Interning Range",
+                "text": "Python often 'interns' small integers (typically -5 to 256), meaning identical literals refer to the same object. Outside this range, new objects might be created, making `is` return `False`.",
+                "code": "x = 257\ny = 257\nprint(x is y) # Often False\n\na = 10\nb = 10\nprint(a is b) # True",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -7768,7 +9782,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "example",
+                "title": "Slicing vs. Assignment Copying",
+                "text": "Direct assignment (`l2 = l1`) makes a new name point to the existing object. Slicing (`l3 = l1[:]`) creates a new, independent (shallow) copy of the object.",
+                "code": "l1 = [1, 2, 3]\nl2 = l1       # l2 and l1 refer to the same list\nl3 = l1[:]    # l3 is a new list with same elements as l1\n\nprint(l1 is l2) # True\nprint(l1 is l3) # False",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -7948,7 +9971,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Basic Positional Pairing",
+                "text": "Elements are paired based on their position from each input sequence.",
+                "code": "names = ['Alice', 'Bob', 'Charlie']\nscores = [85, 92, 78]\nfor name, score in zip(names, scores):\n    print(f'{name}: {score}')\n# Output:\n# Alice: 85\n# Bob: 92\n# Charlie: 78",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -7956,7 +9988,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "explanation",
+                "title": "Combining Different Data Types",
+                "text": "`zip()` can combine sequences of different data types, such as strings and integers as demonstrated in the basic pairing example for `names` and `scores`.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -7964,7 +10005,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Zipping More Than Two Sequences",
+                "text": "The `zip()` function can accept and combine any number of input sequences, not just two.",
+                "code": "names = ['Alice', 'Bob']\nages = [25, 30]\ncities = ['New York', 'London']\nfor name, age, city in zip(names, ages, cities):\n    print(f'{name} ({age}) lives in {city}')\n# Output:\n# Alice (25) lives in New York\n# Bob (30) lives in London",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -7972,7 +10022,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Unequal Sequence Lengths",
+                "text": "When input sequences have different lengths, `zip()` stops pairing elements once the shortest sequence is exhausted. Elements from longer sequences beyond this point are ignored.",
+                "code": "short_list = [1, 2]\nlong_list = ['a', 'b', 'c', 'd']\nfor num, char in zip(short_list, long_list):\n    print(f'{num}: {char}')\n# Output:\n# 1: a\n# 2: b",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -7980,7 +10039,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Iterative Dictionary Construction",
+                "text": "`zip()` is useful for iterating over two sequences (e.g., keys and values) to build a dictionary programmatically.",
+                "code": "students = ['A', 'B', 'C']\ngrades = [9, 10, 9]\nstudent_grades = {}\nfor student, grade in zip(students, grades):\n    student_grades[student] = grade\nprint(student_grades)\n# Output: {'A': 9, 'B': 10, 'C': 9}",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -8252,7 +10320,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "explanation",
+                "title": "Assignment Process",
+                "text": "Python evaluates the RHS, creates a new object, infers its type, then binds the LHS name to that object.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-1-d2",
+                "kind": "example",
+                "title": "Basic Assignment",
+                "text": "",
+                "code": "name_1 = 300\nprint(name_1)\nprint(type(name_1))\nprint(id(name_1))",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -8260,7 +10345,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "explanation",
+                "title": "Shorthand",
+                "text": "Augmented assignment `a OP= b` is a shorthand for `a = a OP b`.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -8268,7 +10362,59 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "table",
+                "title": "Augmented Operators",
+                "text": "",
+                "code": "",
+                "table": {
+                  "headers": [
+                    "Operator",
+                    "Long Form"
+                  ],
+                  "rows": [
+                    [
+                      "+=",
+                      "a = a + b"
+                    ],
+                    [
+                      "-=",
+                      "a = a - b"
+                    ],
+                    [
+                      "*=",
+                      "a = a * b"
+                    ],
+                    [
+                      "/=",
+                      "a = a / b"
+                    ],
+                    [
+                      "//=",
+                      "a = a // b"
+                    ],
+                    [
+                      "%=",
+                      "a = a % b"
+                    ],
+                    [
+                      "**=",
+                      "a = a ** b"
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "kp-3-d2",
+                "kind": "example",
+                "title": "Augmented Operator Use",
+                "text": "",
+                "code": "a = 10\na += 5  # a becomes 15\na *= 2  # a becomes 30\nprint(a)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -8276,7 +10422,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "explanation",
+                "title": "Floor Division Assignment",
+                "text": "`//=` performs integer division, discarding the fractional part.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-4-d2",
+                "kind": "example",
+                "title": "Floor Division Example",
+                "text": "",
+                "code": "x = 10\nx //= 3\nprint(x) # Output: 3",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -8284,7 +10447,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "explanation",
+                "title": "Single Object Binding",
+                "text": "Chained assignment binds all variables to the *exact same* object in memory.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-5-d2",
+                "kind": "example",
+                "title": "Chained Assignment Identity",
+                "text": "",
+                "code": "a = b = c = 300\nprint(a is b is c) # True (same object)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -8292,7 +10472,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Unpacking with Multiple Assignment",
+                "text": "",
+                "code": "a, b, c = 10, 20, 30\nprint(f'{a=}, {b=}, {c=}')",
+                "table": null
+              },
+              {
+                "id": "kp-6-d2",
+                "kind": "example",
+                "title": "Swapping Variables",
+                "text": "",
+                "code": "x = 10\ny = 20\nx, y = y, x # Swaps values\nprint(f'{x=}, {y=}')",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -8300,7 +10497,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "explanation",
+                "title": "Separate Object Creation",
+                "text": "Assigning equal values separately often creates distinct objects, especially for larger integers or mutable types.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-7-d2",
+                "kind": "example",
+                "title": "Distinct Object IDs",
+                "text": "",
+                "code": "name_1 = 300\nname_2 = 300\nprint(name_1 == name_2) # True (values are equal)\nprint(id(name_1) != id(name_2)) # True (likely different objects)",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -8579,7 +10793,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Initializing empty lists",
+                "text": "",
+                "code": "squares = []\nprint(squares)\nsquares = list()\nprint(squares)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -8587,7 +10810,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Initializing with elements",
+                "text": "",
+                "code": "squares = [1, 4, 9, 16]\nprint(squares)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -8595,7 +10827,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Using append()",
+                "text": "Adds elements to the end of the list.",
+                "code": "squares = [1, 4, 9, 16]\nsquares.append(25)\nprint(squares) # Output: [1, 4, 9, 16, 25]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -8603,7 +10844,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Modifying elements by index",
+                "text": "",
+                "code": "squares = [1, 4, 8, 15]\nsquares[2] = 9\nsquares[3] = 16\nprint(squares) # Output: [1, 4, 9, 16]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -8611,7 +10861,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Inserting elements with insert()",
+                "text": "Adds an element at a specific index, shifting others.",
+                "code": "squares = [4, 9, 16]\nsquares.insert(0, 1)\nprint(squares) # Output: [1, 4, 9, 16]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -8619,7 +10878,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Removing elements with del",
+                "text": "The `del` statement removes an element by its index.",
+                "code": "squares = [1, 4, 5, 9, 16]\ndel(squares[2])\nprint(squares) # Output: [1, 4, 9, 16]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -8627,7 +10895,24 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "explanation",
+                "title": "Shallow Copy with Slicing",
+                "text": "Using `[:]` creates a new list with references to the original elements. Changes to the new list's elements won't affect the original if elements are immutable, but if elements are mutable (e.g., nested lists), modifying them in the copy will affect the original.",
+                "code": "",
+                "table": null
+              },
+              {
+                "id": "kp-7-d2",
+                "kind": "example",
+                "title": "Shallow Copy Example",
+                "text": "",
+                "code": "lst = [1, 2, 3]\nlst2 = lst[:]\nlst2.append(4)\nprint(lst)  # Output: [1, 2, 3]\nprint(lst2) # Output: [1, 2, 3, 4]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-8",
@@ -8635,7 +10920,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "example",
+                "title": "Slicing to insert/replace",
+                "text": "",
+                "code": "squares = [4, 16]\nsquares = squares[:1] + [9] + squares[1:]\nprint(squares) # Output: [4, 9, 16]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-9",
@@ -8643,7 +10937,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "example",
+                "title": "Extending with +=",
+                "text": "The `+=` operator extends the list by concatenating another iterable (e.g., another list).",
+                "code": "squares = [1, 4, 9, 16]\nsquares += [25, 36]\nprint(squares) # Output: [1, 4, 9, 16, 25, 36]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-10",
@@ -8651,7 +10954,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-10-d1",
+                "kind": "example",
+                "title": "Checking presence with 'in'",
+                "text": "The `in` operator returns `True` if an element exists in the list, `False` otherwise.",
+                "code": "squares = [1, 4, 9]\nif 4 in squares:\n    print('4 is in squares')\nif 5 not in squares:\n    print('5 is not in squares')\n# Output:\n# 4 is in squares\n# 5 is not in squares",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-11",
@@ -8659,7 +10971,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-11-d1",
+                "kind": "explanation",
+                "title": "Basic for-loop syntax",
+                "text": "A `for` loop processes each item in a sequence (like a list, tuple, or string) one by one.",
+                "code": "total = 0\nfor number in [1, 2, 3, 3, 5, 7]:\n    total += number\nprint(total) # Output: 21",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-12",
@@ -8667,7 +10988,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-12-d1",
+                "kind": "explanation",
+                "title": "Using 'break' in loops",
+                "text": "The `break` statement immediately stops the execution of the loop and exits it. Control flow resumes at the statement immediately after the loop.",
+                "code": "",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-13",
@@ -8675,7 +11005,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-13-d1",
+                "kind": "example",
+                "title": "Using 'continue' in loops",
+                "text": "The `continue` statement skips the rest of the current iteration's code block and proceeds to the next iteration of the loop.",
+                "code": "total = 0\nfor number in [1, 2, '3', 3, 5, 7]:\n    if type(number) == str:\n        continue # Skip non-numeric values\n    total += number\nprint(total) # Output: 18 (skips '3')",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-14",
@@ -8683,7 +11022,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-14-d1",
+                "kind": "example",
+                "title": "Underscore for unused variables",
+                "text": "Use `_` as a placeholder variable when the loop element itself is not needed inside the loop body.",
+                "code": "for _ in range(3):\n    print('Hello')\n# Output:\n# Hello\n# Hello\n# Hello",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-15",
@@ -8691,7 +11039,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-15-d1",
+                "kind": "example",
+                "title": "Removing duplicates with set conversion",
+                "text": "Converting a list to a `set` automatically removes all duplicate elements. Converting back to a list preserves the unique elements.",
+                "code": "squares = [1, 4, 9, 16, 9, 4, 25]\nunique_squares = list(set(squares))\nprint(unique_squares) # Output (order may vary): [1, 4, 9, 16, 25]",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-16",
@@ -8699,7 +11056,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-16-d1",
+                "kind": "example",
+                "title": "Adding elements to a set",
+                "text": "The `add()` method inserts a single element into a set. If the element already exists, the set remains unchanged.",
+                "code": "my_set = {1, 2, 3}\nmy_set.add(4)\nmy_set.add(2) # Already exists, no change\nprint(my_set) # Output (order may vary): {1, 2, 3, 4}",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [
@@ -8981,7 +11347,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-1-d1",
+                "kind": "example",
+                "title": "Defining Strings",
+                "text": "",
+                "code": "my_single_quote_string = 'Hello'\nmy_double_quote_string = \"World\"",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-2",
@@ -8989,7 +11364,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-2-d1",
+                "kind": "example",
+                "title": "Concatenation with '+'",
+                "text": "",
+                "code": "s1 = 'Hello'\ns2 = ' World'\ncombined = s1 + s2\nprint(combined) # Output: Hello World",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-3",
@@ -8997,7 +11381,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "F-string Syntax",
+                "text": "Embed variables directly using an 'f' prefix.",
+                "code": "name = 'Alice'\nage = 30\nmessage = f'My name is {name} and I am {age} years old.'\nprint(message)",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-4",
@@ -9005,7 +11398,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "explanation",
+                "title": "String Slicing",
+                "text": "Slicing `s[start:end]` includes characters from `start` up to, but not including, `end`.",
+                "code": "s = 'Python'\nsubstring = s[1:4]\nprint(substring) # Output: yth",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-5",
@@ -9013,7 +11415,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "example",
+                "title": "Nesting Quotes",
+                "text": "Use different quote types to avoid escaping.",
+                "code": "print(\"This is a 'quote' inside double quotes.\")\nprint('This is a \"quote\" inside single quotes.')",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-6",
@@ -9021,7 +11432,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-6-d1",
+                "kind": "example",
+                "title": "Escaping Quotes",
+                "text": "Use a backslash to include the same quote type.",
+                "code": "print('She said, \\'Hello!\\'')\nprint(\"He shouted, \\\"Look out!\\\"\")",
+                "table": null
+              }
+            ]
           },
           {
             "id": "kp-7",
@@ -9029,7 +11449,16 @@
             "status": "evidence_curated_gemini_reviewed",
             "model": "gemini-2.5-flash",
             "generator": "parallel_gemini_evidence_curation_2026_02_25",
-            "details": []
+            "details": [
+              {
+                "id": "kp-7-d1",
+                "kind": "explanation",
+                "title": "String Immutability",
+                "text": "String methods return new strings; they don't change the original. Reassign the variable to store the new string.",
+                "code": "s = 'hello'\nupper_s = s.upper() # s is still 'hello'\nprint(s) # Output: hello\nprint(upper_s) # Output: HELLO\n\ns = s.upper() # Now s is 'HELLO'",
+                "table": null
+              }
+            ]
           }
         ],
         "recommended_ids": [

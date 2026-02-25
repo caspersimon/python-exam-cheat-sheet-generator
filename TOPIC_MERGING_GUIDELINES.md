@@ -19,8 +19,10 @@ At the time this guide was written:
 - `topic_cards.json` has **28** cards.
 - default swipe deck (`only exam topics`) has **21** cards.
 - exact duplicate normalized topic labels are **0**.
+- exam-topic key points have optional detail coverage (examples/tables/explanations) and should stay selectable in UI.
 
 Important: even with exact duplicates removed, semantic overlap can still exist.
+Important: curation should be evidence-driven; do not force fixed per-topic item counts.
 
 ## Quality Bar
 
@@ -110,19 +112,20 @@ When merging cards manually, curate each section intentionally:
 
 #### `sections.ai_common_questions.bullets`
 
-- keep 5-8 strong exam-style questions.
+- keep all strong exam-style questions that are distinct and useful.
 - remove duplicates and vague wording.
 
 #### `sections.key_points_to_remember`
 
-- keep 5-10 concrete points.
+- keep all concrete points that are important and non-redundant for the exam.
 - each point should be testable and specific.
-- keep only useful details (`code`, `table`, `explanation`), remove weak filler.
+- keep only useful details (`code`, `table`, `explanation`, `commands`), remove weak filler.
+- maintain optional details where they materially help student understanding; avoid dropping useful detail because of arbitrary count limits.
 - reassign IDs sequentially: `kp-1`, `kp-1-d1`, etc.
 
 #### `sections.ai_examples`
 
-- target 4-6 examples.
+- include all important examples/traps needed for exam understanding (no fixed cap).
 - include both `correct` and `incorrect`.
 - prefer examples that explain common traps clearly.
 - ensure every example has `title`, `code`, `why`, `kind`.
@@ -230,6 +233,7 @@ Aim for a practical deck size where students can review without fatigue.
 - do not keep stale `recommended_ids` that point to removed snippets.
 - do not preserve low-quality generated text just because it already exists.
 - do not change IDs casually for cards that users may already have decisions on unless necessary.
+- do not enforce arbitrary per-topic limits when evidence supports additional useful material.
 
 ## Handoff Checklist for Next Agent
 
