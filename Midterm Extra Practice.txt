@@ -1,0 +1,436 @@
+Question 1
+
+Suppose you have the following function:
+
+def func1(l1):
+    return len(list(l1))==len(set(l1))
+
+Which of the functions below returns the same values as the function above,
+if we call it in any of the following ways?
+
+func1(l1 = [1,2,3])
+func1(l1 = [1,2,2])
+func1(l1 = (1,2,2))
+
+a) 
+def func1(l1):
+    counter = 0
+    for element in l1:
+        if l1.count(element)>1:
+            counter += 1
+    return (counter == 0)
+
+b)
+def func1(l1):
+    counter = []
+    for element in l1:
+        if element in l1[l1.index(element)+1:]:
+            counter.append(element)       
+    return (len(counter) == 0)
+
+c) Neither function returns the same values.
+d) Both functions return the same values.
+
+==========================================================================
+
+Question 2
+
+val = 2
+def func():
+    val = 3
+    print(val)
+func()
+print(val)
+
+Which of the following code snippets produces the same output as the above code snippet?
+
+a)
+val1 = 2
+def func1():
+    val1 = val1 + 1
+    print(val1)
+func1()
+print(val1)
+
+b)
+val2 = 2
+def func2():
+    global val2
+    val2 = val2 + 1
+    print(val2)
+func2()
+print(val2)
+
+c)
+val3 = 2
+def func3():
+    val3 = 3
+    def innerfunc():
+        val3 = 2
+        print(val3)
+    print(val3)
+func3()
+print(val3)
+
+d)
+val4 = 2
+def func4():
+    val4 = 3
+    def innerfunc():
+        val4 = 2
+        print(val4)
+    print(val4)
+func4()
+innerfunc()
+
+==========================================================================
+
+Question 3
+
+Adelbrecht and Hortensia competed in a game. You have a dictionary with
+two subdictionaries, containing their scores in each attempt:
+
+results = {'Adelbrecht' :{'attempt1':3, 'attempt2':2, 'attempt3':6},'Hortensia' :{'attempt1':1, 'attempt2':6}}
+
+You would like to create a dictionary in which the keys are the highest
+and the lowest scores and the values are a list of names of the players
+that attained the corresponding scores.
+
+Which of the following code snippets implements this?
+
+a)
+allscores = []
+for scorelist in results.values():
+    for score in scorelist.values():
+        allscores.append(score)
+highscore = max(allscores)
+lowscore = min(allscores)
+outcomes = {}
+winners = []
+losers = []
+for person, scorelist in results.items():
+    for score in scorelist.values():
+        if score == highscore:
+            winners.append(person)
+        if score == lowscore:
+            losers.append(person)
+outcomes['winner(s) with score '+ str(highscore)] = winners
+outcomes['loser(s) with score '+ str(lowscore)] = losers
+print(outcomes)
+
+b)
+maximum = results['Adelbrecht']['attempt1']
+minimum = maximum
+for scorelist in results.values():
+    maximum = max(max(scorelist.values()),maximum)
+    minimum = min(min(scorelist.values()),minimum)
+outcomes = {}
+winners = []
+losers = []
+for person, scorelist in results.items():
+    for score in scorelist.values():
+        if score == maximum:
+            winners.append(person)
+        if score == minimum:
+            losers.append(person)
+outcomes['winner(s) with score '+ str(maximum)] = winners
+outcomes['loser(s) with score '+ str(minimum)] = losers
+print(outcomes)
+
+c)
+Both code snippets will work as intended.
+
+d) 
+Neither code snippet will work as intended.
+
+==========================================================================
+
+Question 4
+
+You have a dictionary that represents the scores of students in a math competition:
+
+math_scores = {'John': 85, 'Sarah': 92, 'Michael': 78, 'Emma': 90, 'David': 82}
+
+You want to find and print the names of the students who scored above the average score.
+
+Which of the following code segments will work as intended?
+
+a)
+average_score = sum(math_scores.values())/len(math_scores) 
+	for student in math_scores.keys(): 
+		if math_scores[student] > average_score: 
+			print(student)
+
+b)
+for student in math_scores: 
+	if math_scores[student] > (sum(math_scores.values())/len(math_scores)): 
+		print(student)
+
+c)
+Both code segments will work as intended.
+
+d)
+Neither code segment will work as intended.
+
+==========================================================================
+
+Question 5
+
+You are given two lists, called students and grades:
+The students list contains strings representing the names of students.
+The grades list contains integers representing the students' corresponding grade levels.
+
+You need to create a dictionary called grade_counts that counts the number of students 
+in each grade level. That is, the keys of the dictionary are the grade levels and 
+the values are the number of students in that grade.
+
+For example, if you have:
+
+students = ['A', 'B', 'C', 'D', 'E', 'F'] 
+grades = [9, 10, 9, 11, 10, 9]
+
+then the created dictionary grade_counts should be:
+
+{9: 3, 10: 2, 11: 1}
+
+Which of the following code segments will work as intended?
+
+a)
+grade_counts = {} 
+for grade in grades: 
+	if grade not in grade_counts: 
+		grade_counts[grade] = 0 
+	grade_counts[grade] += 1
+
+b)
+grade_counts = {} 
+for student, grade in zip(students, grades): 
+	if grade in grade_counts: 
+		grade_counts[grade].append(student) 
+	else: 
+		grade_counts[grade] = [student]
+
+c)
+Both of the given options will work as intended.
+
+d)
+Neither of the given options will work as intended.
+
+==========================================================================
+
+Question 6
+
+Suppose you have a list called numbers:
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+Which of the following lines of code will not create a list with 
+the name subset, and the value[10, 8, 6, 4, 2]?
+
+a)
+subset = numbers[-1::-2]
+
+b)
+subset = numbers[::-2]
+
+c)
+subset = numbers[::-1][::2]
+
+d)
+subset = numbers[::2][::-1]
+
+==========================================================================
+
+Question 7
+
+What will be printed by the following program:
+
+def multiply(num1, num2): 
+	global result 
+	result = num1 * num2
+
+print(multiply (2, 3))
+print(result)
+
+a)
+6
+6
+
+b)
+None 
+6
+
+c)
+6
+None
+
+d)
+None
+None
+
+==========================================================================
+
+Question 8
+
+Suppose you have a dictionary called x containing lists, as follows:
+x = {'a': [1, 2], 'b':[3, 4], 'c':[5, 6], 'd':[7, 8]}
+
+Which of the following lines of code will print True?
+
+a)
+print(x['a'][1] * x['b'][0] == x['c'][1])
+
+b)
+print(x['b'][0] + x['c'][0] == x['d'][1])
+
+c)
+print(x['d'][0] - x['c'][0] == x['a'][1])
+
+d) 
+All of the above.
+
+==========================================================================
+
+Question 9
+
+Assume you already have a function called sum_even_in_list, 
+that accepts a list with values, that filters out all the 
+non-integers and sums all the even integers.
+
+def sum_even_in_list(l1): 
+	result = 0 
+	for x in l1: 
+		if type(x) == int and x%2 == 0: 
+			result += x 
+	return result
+
+Now you want to write a function called sum_even_integers. This function has to work the same as sum_even_in_list,
+but has to accept a flexible amount of arguments.
+
+For example:
+if sum_even_integers is called as:
+
+sum_even_integers(1,'2', 3.0, 4))
+
+It should return:
+4
+
+Which of the following function definitions will work as intended?
+
+a)
+def sum_even_integers(*args): 
+	return sum_even_in_list(args)
+
+b)
+def sum_even_integers(*args): 
+	return sum([x for x in args if type(x) == int and x%2 == 0])
+
+c)
+def sum_even_integers(*args): 
+	result = 0 
+	for x in args: 
+		if type(x) == int and x%2 == 0: 
+			result += x 
+	return result
+
+d)
+All of the above.
+
+==========================================================================
+
+Question 10
+
+You need to write a function called main, which takes two positional arguments: 
+(i) target_num -- an integer, and (ii) list_num -- a list of integers.
+Your function should return a list of all unique pairs of numbers that add up 
+to the target number. Each pair of number are stored in a tuple. The order of the 
+numbers in the tuple does not matter.
+
+For example:
+If we call the function as
+main(11, [4, 5, 6, 9, 3, 7, 2, 8])
+the function should return
+[(5, 6), (4, 7), (9, 2), (3, 8)]
+
+Note that in the example above, pairs such as (6, 5) or (2, 9) are not included 
+in the final list as (5, 6) and (9, 2) are already found.
+
+Which of the following code snippet achieve what you want?
+
+a)
+def main(target_num, list_num): 
+	output = [] 
+	for i1 in list_num: 
+		for i2 in list_num: 
+			if i1 + i2 == target_num: 
+				output.append((i1, i2)) 
+	return output
+
+b)
+def main(target_num,list_num):
+	result = []
+	for numb in range(target_num//2+1):
+		if numb in list_num and target_num-numb in list_num:
+			result.append((numb,target_num-numb))
+	return result
+
+c)
+Both work.
+
+d)
+Neither works.
+
+==========================================================================
+
+Question 11
+
+Assume you have a variable called x, which contains a list of different 
+types of variables as follows:
+
+x = ["abc", [[]], (1, 2), {}, True, 3.0, 4]
+
+What is the output of the following code snippet?
+
+print(type(float(x[2][0] + x[2][1])) == type(x[-2]))
+
+a)
+SyntaxError
+
+b)
+IndexError: list index out of range
+
+c)
+False
+
+d)
+True
+
+==========================================================================
+
+Question 12
+
+Suppose you have the following function which take a list of 
+numerical strings as an argument. 
+
+def counter(y): 
+	x = {} 
+	for index, element in enumerate(y): 
+		if index != int(element) and int(element) % 2 == 0: 
+			x[element] = len(element) 
+	return x
+
+What will this function return, when we call the function as follows:
+
+counter(['12345678', '1', '123', '1234', '12345', '12', '6', '1', '123456'])
+
+a)
+{'12345678': 8, '1234': 4, '12': 2, '123456': 6}
+
+b)
+{'12345678': 8, '123': 3, '1234': 4, '12345': 5, '12': 2, '6': 1, '1': 1, '123456': 6}
+
+c)
+{'123': 3, '12345': 5, '1': 1}
+
+d)
+{'12345678': 8, '1': 1, '1234': 4, '12': 2, '6': 1, '123456': 6}
