@@ -8,6 +8,7 @@ const EXAM_LABELS = {
 const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture snippets, notebook snippets, and trap-pattern context.";
 const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v1";
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v1";
 
 const state = {
   cards: [],
@@ -114,6 +115,9 @@ const drawerMap = {
   order: refs.orderDrawer,
 };
 
+let persistTimer = 0;
+let lastPersistedPayload = "";
+
 init();
 
 async function init() {
@@ -129,6 +133,9 @@ async function init() {
     }
     const data = await response.json();
     state.cards = Array.isArray(data.cards) ? data.cards : [];
+    hydratePersistedState();
+    syncFilterControls();
+    applyLayoutVariables();
     renderAll();
   } catch (error) {
     refs.cardHost.innerHTML = `<div class="empty-state">
@@ -405,6 +412,193 @@ function markSplashSeen() {
     window.localStorage.setItem(SPLASH_STORAGE_KEY, "1");
   } catch {
     // Ignore browsers that block storage.
+  }
+}
+
+function resetSplashIntro() {
+  try {
+    window.localStorage.removeItem(SPLASH_STORAGE_KEY);
+  } catch {
+    // Ignore browsers that block storage.
+  }
+  maybeShowSplash();
+}
+
+function hydratePersistedState() {
+  const raw = getPersistedRawState();
+  if (!raw || typeof raw !== "object") {
+    return;
+  }
+
+  const cardIds = new Set(state.cards.map((card) => card.id));
+
+  if (raw.preferences && typeof raw.preferences === "object") {
+    const mode = raw.preferences.sourceAutoSelectMode;
+    if (mode === "recommended" || mode === "none") {
+      state.preferences.sourceAutoSelectMode = mode;
+    }
+  }
+
+  if (raw.layout && typeof raw.layout === "object") {
+    const allowedFonts = new Set(["'Space Grotesk', sans-serif", "'DM Sans', sans-serif", "'Source Serif 4', serif"]);
+    if (allowedFonts.has(raw.layout.fontFamily)) {
+      state.layout.fontFamily = raw.layout.fontFamily;
+    }
+    if (Number.isFinite(raw.layout.fontSize)) {
+      state.layout.fontSize = clamp(Number(raw.layout.fontSize), 7, 14);
+    }
+    if (Number.isFinite(raw.layout.lineHeight)) {
+      state.layout.lineHeight = clamp(Number(raw.layout.lineHeight), 0.9, 1.5);
+    }
+    if (Number.isFinite(raw.layout.letterSpacing)) {
+      state.layout.letterSpacing = clamp(Number(raw.layout.letterSpacing), -0.2, 1.2);
+    }
+    if (Number.isFinite(raw.layout.cardGap)) {
+      state.layout.cardGap = clamp(Number(raw.layout.cardGap), 2, 18);
+    }
+    if (Number.isFinite(raw.layout.cardPadding)) {
+      state.layout.cardPadding = clamp(Number(raw.layout.cardPadding), 4, 16);
+    }
+    if (typeof raw.layout.autoGrid === "boolean") {
+      state.layout.autoGrid = raw.layout.autoGrid;
+    }
+    if (Number.isFinite(raw.layout.gridColumns)) {
+      state.layout.gridColumns = clamp(Number(raw.layout.gridColumns), 1, 4);
+    }
+    if (Number.isFinite(raw.layout.gridRows)) {
+      state.layout.gridRows = clamp(Number(raw.layout.gridRows), 3, 14);
+    }
+  }
+
+  if (raw.filters && typeof raw.filters === "object") {
+    state.filters.search = typeof raw.filters.search === "string" ? raw.filters.search : state.filters.search;
+    if (typeof raw.filters.onlyExam === "boolean") {
+      state.filters.onlyExam = raw.filters.onlyExam;
+    }
+    if (Number.isFinite(raw.filters.minHits)) {
+      state.filters.minHits = clamp(Number(raw.filters.minHits), 0, 3);
+    }
+    if (Array.isArray(raw.filters.weeks)) {
+      const validWeeks = raw.filters.weeks
+        .map((value) => Number(value))
+        .filter((value) => [1, 2, 3].includes(value));
+      if (validWeeks.length) {
+        state.filters.weeks = new Set(validWeeks);
+      }
+    }
+  }
+
+  if (raw.decisions && typeof raw.decisions === "object") {
+    const hydratedDecisions = {};
+    Object.entries(raw.decisions).forEach(([cardId, entry]) => {
+      if (!cardIds.has(cardId) || !entry || typeof entry !== "object") {
+        return;
+      }
+      if (entry.status === "accepted" && entry.selection && typeof entry.selection === "object") {
+        hydratedDecisions[cardId] = {
+          status: "accepted",
+          selection: deepClone(entry.selection),
+        };
+        return;
+      }
+      if (entry.status === "rejected") {
+        hydratedDecisions[cardId] = { status: "rejected" };
+      }
+    });
+    state.decisions = hydratedDecisions;
+  }
+
+  if (raw.drafts && typeof raw.drafts === "object") {
+    const hydratedDrafts = {};
+    Object.entries(raw.drafts).forEach(([cardId, draft]) => {
+      if (!cardIds.has(cardId) || !draft || typeof draft !== "object") {
+        return;
+      }
+      hydratedDrafts[cardId] = deepClone(draft);
+    });
+    state.drafts = hydratedDrafts;
+  }
+
+  if (Array.isArray(raw.acceptedOrder)) {
+    const seen = new Set();
+    state.acceptedOrder = raw.acceptedOrder.filter((cardId) => {
+      if (!cardIds.has(cardId) || seen.has(cardId)) {
+        return false;
+      }
+      if (state.decisions[cardId]?.status !== "accepted") {
+        return false;
+      }
+      seen.add(cardId);
+      return true;
+    });
+
+    Object.entries(state.decisions).forEach(([cardId, decision]) => {
+      if (decision?.status === "accepted" && !seen.has(cardId)) {
+        state.acceptedOrder.push(cardId);
+        seen.add(cardId);
+      }
+    });
+  }
+}
+
+function getPersistedRawState() {
+  try {
+    const raw = window.localStorage.getItem(APP_STATE_STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function syncFilterControls() {
+  refs.searchInput.value = state.filters.search;
+  refs.onlyExamToggle.checked = state.filters.onlyExam;
+  refs.minHitsSelect.value = String(state.filters.minHits);
+  refs.weekChecks.forEach((checkbox) => {
+    const week = Number(checkbox.value);
+    checkbox.checked = state.filters.weeks.has(week);
+  });
+}
+
+function schedulePersistState() {
+  if (persistTimer) {
+    window.clearTimeout(persistTimer);
+  }
+  persistTimer = window.setTimeout(() => {
+    persistTimer = 0;
+    persistAppState();
+  }, 120);
+}
+
+function persistAppState() {
+  if (!state.cards.length) {
+    return;
+  }
+  const payload = {
+    filters: {
+      search: state.filters.search,
+      onlyExam: state.filters.onlyExam,
+      minHits: state.filters.minHits,
+      weeks: [...state.filters.weeks],
+    },
+    drafts: state.drafts,
+    decisions: state.decisions,
+    acceptedOrder: state.acceptedOrder,
+    preferences: state.preferences,
+    layout: state.layout,
+  };
+  const serialized = JSON.stringify(payload);
+  if (serialized === lastPersistedPayload) {
+    return;
+  }
+  try {
+    window.localStorage.setItem(APP_STATE_STORAGE_KEY, serialized);
+    lastPersistedPayload = serialized;
+  } catch {
+    // Ignore storage quota/privacy mode errors.
   }
 }
 
@@ -793,6 +987,9 @@ function renderTopicCard(card, draft) {
           ${renderSectionToggle("aiExamples", "Code Examples", usefulAIExamples(card).length, draft.sections.aiExamples, true)}
           ${renderSectionToggle("recommended", "Recommended for Cheat Sheet", split.recommended.length, draft.sections.recommended)}
           ${renderSectionToggle("additional", "Additional Snippets", split.additional.length, draft.sections.additional)}
+        </div>
+        <div class="settings-footer">
+          <button type="button" class="text-link-btn" data-role="reset-splash">Reset intro</button>
         </div>
       </section>
 
@@ -1396,6 +1593,13 @@ function handleCardClick(event) {
     return;
   }
 
+  const resetIntroTrigger = event.target.closest("[data-role='reset-splash']");
+  if (resetIntroTrigger) {
+    event.preventDefault();
+    resetSplashIntro();
+    return;
+  }
+
   if (!event.target.closest(".info-chip")) {
     closeOpenInfoPopovers();
   }
@@ -1457,6 +1661,7 @@ function rerenderCurrentCard() {
   const draft = ensureDraft(currentCard);
   refs.cardHost.innerHTML = renderTopicCard(currentCard, draft);
   attachCardSwipeHandlers();
+  schedulePersistState();
 }
 
 function ensureSectionHasSelection(card, draft, section) {
@@ -1618,6 +1823,7 @@ function renderPreview() {
     refs.page2Content.innerHTML = `<div class="empty-state" style="grid-column:1/-1;grid-row:1/-1;"><p>Page 2 is empty.</p></div>`;
     refs.overflowNotice.classList.add("hidden");
     syncGridControls(grid);
+    schedulePersistState();
     return;
   }
 
@@ -1657,6 +1863,7 @@ function renderPreview() {
   }
 
   syncGridControls(grid);
+  schedulePersistState();
 }
 
 function syncGridControls(effectiveGrid) {
