@@ -16,8 +16,8 @@ Use this guide when you need to:
 
 At the time this guide was written:
 
-- `topic_cards.json` has **37** cards.
-- default swipe deck (`only exam topics`) has **27** cards.
+- `topic_cards.json` has **28** cards.
+- default swipe deck (`only exam topics`) has **21** cards.
 - exact duplicate normalized topic labels are **0**.
 
 Important: even with exact duplicates removed, semantic overlap can still exist.

@@ -19,8 +19,8 @@ Create a personalized, print-ready Python exam cheat sheet by swiping through to
 
 ## Current Snapshot (2026-02-25)
 
-- `topic_cards.json` currently contains **37 total cards**.
-- With default filter `only exam topics`, swipe mode currently shows **27 cards**.
+- `topic_cards.json` currently contains **28 total cards**.
+- With default filter `only exam topics`, swipe mode currently shows **21 cards**.
 - Duplicate visible topic labels were collapsed in a broad merge pass.
 
 ## Known Data-Curation Flaw (Important Handoff)
@@ -30,6 +30,12 @@ The broad duplicate-topic merge pass was **not** fully manual for every topic.
 What this means:
 
 - `Dictionaries` was manually curated in detail.
+- Additional manual curation was completed for these bundles:
+  - `For Loops` + `Range()`
+  - condition cards (`Conditions`, `truthy_falsy`, `Boolean operators`, `comparison_operators`)
+  - `*args` variants (`*args`, `*args / **kwargs`, undefined-positional `*args`)
+  - default/mutable default cards (`Default arguments`, `mutable args`, `mutable_default`)
+  - `Dictionaries` + `dict / average`
 - Many other merged topic cards were combined via a quality-scored merge process (source union + dedupe + best-content selection), not line-by-line manual editing.
 
 Risk:
