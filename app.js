@@ -390,6 +390,63 @@ function resetSplashIntro() {
   maybeShowSplash();
 }
 
+function resetAppProgress() {
+  const confirmed = window.confirm(
+    "Reset all progress?\n\nThis will permanently remove your saved decisions, selections, filters, layout settings, and preview positions."
+  );
+  if (!confirmed) {
+    return;
+  }
+
+  if (persistTimer) {
+    window.clearTimeout(persistTimer);
+    persistTimer = 0;
+  }
+
+  finishPreviewPointerAction();
+  closeOpenInfoPopovers();
+  closeDrawers();
+
+  try {
+    window.localStorage.removeItem(APP_STATE_STORAGE_KEY);
+  } catch {
+    // Ignore browsers that block storage.
+  }
+  lastPersistedPayload = "";
+
+  state.filters.search = "";
+  state.filters.onlyExam = true;
+  state.filters.minHits = 0;
+  state.filters.weeks = new Set([1, 2, 3]);
+
+  state.drafts = {};
+  state.decisions = {};
+  state.acceptedOrder = [];
+  state.history = [];
+  state.openDrawer = "";
+  state.previewCards = {};
+  state.previewZCounter = 1;
+  state.preferences = {
+    sourceAutoSelectMode: "none",
+  };
+  state.layout = {
+    fontFamily: "'Space Grotesk', sans-serif",
+    fontSize: 9.5,
+    lineHeight: 1.1,
+    letterSpacing: 0,
+    cardGap: 6,
+    cardPadding: 7,
+    autoGrid: true,
+    gridColumns: 2,
+    gridRows: 6,
+  };
+
+  syncFilterControls();
+  applyLayoutVariables();
+  setView("swipe");
+  renderAll();
+}
+
 function hydratePersistedState() {
   const raw = getPersistedRawState();
   if (!raw || typeof raw !== "object") {
@@ -1186,6 +1243,7 @@ function renderTopicCard(card, draft) {
         </div>
         <div class="settings-footer">
           <button type="button" class="text-link-btn" data-role="reset-splash">Reset intro</button>
+          <button type="button" class="text-link-btn danger-link-btn" data-role="reset-progress">Reset progress</button>
         </div>
       </section>
 
@@ -1793,6 +1851,13 @@ function handleCardClick(event) {
   if (resetIntroTrigger) {
     event.preventDefault();
     resetSplashIntro();
+    return;
+  }
+
+  const resetProgressTrigger = event.target.closest("[data-role='reset-progress']");
+  if (resetProgressTrigger) {
+    event.preventDefault();
+    resetAppProgress();
     return;
   }
 

@@ -283,6 +283,8 @@ h1 {
 .settings-footer {
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .text-link-btn {
@@ -301,6 +303,15 @@ h1 {
   transform: none;
   color: var(--ink-1);
   background: rgba(40, 52, 48, 0.07);
+}
+
+.text-link-btn.danger-link-btn {
+  color: var(--danger);
+}
+
+.text-link-btn.danger-link-btn:hover {
+  color: #6e1f2a;
+  background: var(--danger-soft);
 }
 
 .section-toggle-grid label {
