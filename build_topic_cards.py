@@ -44,6 +44,10 @@ STOP_WORDS = {
     "example",
 }
 
+TOKEN_ALIASES = {
+    "dict": "dictionary",
+}
+
 LOW_VALUE_PHRASES = {
     "below you will find",
     "the following",
@@ -73,8 +77,15 @@ def token_set(value: str) -> set[str]:
     tokens = [t for t in text.split(" ") if t and t not in STOP_WORDS]
     cleaned = []
     for token in tokens:
-        if token.endswith("s") and len(token) > 4:
+        if token.endswith("ies") and len(token) > 4:
+            token = token[:-3] + "y"
+        elif token.endswith("es") and len(token) > 4 and (
+            token.endswith(("ses", "xes", "zes", "ches", "shes"))
+        ):
+            token = token[:-2]
+        elif token.endswith("s") and len(token) > 4 and not token.endswith("ss"):
             token = token[:-1]
+        token = TOKEN_ALIASES.get(token, token)
         cleaned.append(token)
     return set(cleaned)
 

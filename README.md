@@ -1,222 +1,225 @@
-# Python Midterm Cheat Sheet Builder
+# Python Exam Cheat Sheet Generator
 
-This project is a **Tinder-style web app** for building a personalized, two-page (double-sided A4) Python midterm cheat sheet.
+Create a personalized, print-ready Python exam cheat sheet by swiping through topic cards, selecting only what you want, and exporting to A4 pages.
 
-The app lets students swipe through topic cards, select only the snippets they want, and export a compact print-ready sheet.
+## What This App Does
 
-## Important file rename
-
-The previous dataset-focused README has been preserved as:
-
-- `DATASET_INFO.md`
-
-If you need deep details about the original extracted dataset (`study_data.json`), read that file first.
-
-## Current status (as of 2026-02-25)
-
-Implemented and working:
-
-- Minimal swipe UI with hidden drawers/panels (clean main interface)
-- Swipe decisions via drag, buttons, and left/right arrow keys
-- Card metadata: lecture week(s), exam hit frequency, exam-source breakdown
-- Sections visible by default (no nested collapse interactions)
-- Low-value one-line notebook/lecture snippets filtered out
-- AI sections at top of each card:
-  - AI Summary
-  - AI Common Questions
+- Presents Python topics as swipeable cards.
+- Lets students keep/reject topics quickly (drag, buttons, arrow keys).
+- Shows focused content blocks per topic:
+  - Summary
+  - Common Questions
   - Key Points for Reference
-  - AI Examples
-- Source split sections:
+  - Code Examples
   - Recommended for Cheat Sheet
   - Additional Snippets
-- Per-item checkboxes with live `x/y selected` counters
-- Gear settings on card for:
-  - section visibility toggles
-  - default source selection mode (`manual` or `auto-select recommended`)
-- Default behavior now selects **nothing** unless user enables auto-select recommended
-- Preview mode with 2 A4 pages, drag-to-reorder cards, auto grid density + manual row/column overrides
-- Export options: Print, PNG, PDF
-- Exam question rendering fixes:
-  - preserves multiline formatting
-  - splits prompt vs code into `<p>` and `<pre>`
-  - keeps options readable and code-like options in `<pre>`
+- Lets users choose exactly which items to include.
+- Builds a fixed-size 2-page A4 preview with free-position, resizable cards.
+- Exports via Print, PNG, or PDF.
 
-## Quick start
+## Current Snapshot (2026-02-25)
 
-Run the app locally as a static site:
+- `topic_cards.json` currently contains **37 total cards**.
+- With default filter `only exam topics`, swipe mode currently shows **27 cards**.
+- Duplicate visible topic labels were collapsed in a broad merge pass.
+
+## Known Data-Curation Flaw (Important Handoff)
+
+The broad duplicate-topic merge pass was **not** fully manual for every topic.
+
+What this means:
+
+- `Dictionaries` was manually curated in detail.
+- Many other merged topic cards were combined via a quality-scored merge process (source union + dedupe + best-content selection), not line-by-line manual editing.
+
+Risk:
+
+- Some merged cards may still mix loosely related subtopics or contain uneven phrasing/detail quality.
+
+Next-agent handoff:
+
+- Use [`TOPIC_MERGING_GUIDELINES.md`](./TOPIC_MERGING_GUIDELINES.md) to do strict manual topic curation and semantic merge cleanup.
+- Treat current `topic_cards.json` as a good baseline, but not final gold-standard curation.
+
+## New UX Features
+
+- First-open splash screen with a large `Get Started` button.
+- Header link to [Buy Me a Coffee](https://buymeacoffee.com/caspersimon).
+- `Reset intro` action in card settings (gear menu) to show splash again.
+- Cleaner UI with fewer separator lines and higher section-header hierarchy.
+- AI/source info popovers on `?` and sparkle icons.
+- Cheat sheet cards now focus on essentials (no summary/common-questions/week-hit metadata in exported cards).
+
+## Progress Persistence (Important)
+
+Progress now survives hard refreshes via `localStorage`.
+
+Persisted state includes:
+
+- decisions (accepted/rejected)
+- accepted card order
+- card draft selections/toggles
+- filters (search, min hits, week filters)
+- layout settings (font, grid, spacing)
+- source auto-select preference
+- preview card geometry (position, size, z-order)
+
+Storage keys:
+
+- `python_midterm_app_state_v1`
+- `python_midterm_splash_seen_v1`
+
+## Folder / Repo Rename
+
+You can safely rename the project folder to:
+
+- `python-exam-cheat-sheet-generator`
+
+No code path depends on the local folder name. This is a static app with relative asset paths.
+
+## Quick Start (Local)
 
 ```bash
-cd "/Users/juliuseikmans/Desktop/Studies/2025-2026/intro to python/claude database"
 python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-No npm install is required for runtime. Frontend libraries are loaded via CDN in `index.html`.
+No npm install is needed for runtime.
 
-## Project structure
+## Project Structure
 
 - `index.html`
-  - app shell, swipe/preview views, drawer containers, control IDs
+  - app shell, splash overlay, swipe/preview views, drawer containers
 - `styles.css`
-  - modern visual theme and flattened section styling
+  - visual design, section hierarchy, splash/overlay styles
 - `app.js`
-  - all state, rendering, interaction handlers, preview/export logic
-- `study_data.json`
-  - base extracted course/exam dataset
+  - app state, rendering, interactions, persistence, preview/export logic
 - `topic_cards.json`
-  - app-ready cards consumed by UI
+  - card data consumed by the UI
+- `study_data.json`
+  - source dataset
 - `build_topic_cards.py`
-  - transforms `study_data.json` -> `topic_cards.json` skeleton + placeholders
+  - builds base card skeleton from source data (now includes better token normalization for dictionary/dictionaries)
 - `generate_ai_sections.py`
-  - fills AI Summary / AI Common Questions / AI Examples using Gemini
+  - generates summary/common-questions/code-examples content
 - `generate_key_points_and_recommendations.py`
-  - fills Key Points + Recommended IDs using Gemini
+  - generates key points + recommended IDs
 - `enrich_key_point_details.py`
-  - adds optional key-point detail blocks (examples/tables/explanations) for selective inclusion
+  - adds optional key-point detail blocks
+- `TOPIC_MERGING_GUIDELINES.md`
+  - detailed manual workflow for semantic merge/curation handoff
+- `.github/workflows/pages.yml`
+  - GitHub Actions workflow for automatic GitHub Pages deploy
 - `DATASET_INFO.md`
-  - detailed dataset documentation from the previous README
+  - deeper dataset provenance/docs
 
-## Data flow
+## Data Pipeline
 
-1. Build base topic cards:
+Run scripts in order when regenerating content:
 
 ```bash
 python3 build_topic_cards.py
-```
-
-2. Generate AI summary/common questions/examples:
-
-```bash
 python3 generate_ai_sections.py
-```
-
-3. Generate key points + recommended snippet IDs:
-
-```bash
 python3 generate_key_points_and_recommendations.py
-```
-
-4. Add optional key-point detail blocks:
-
-```bash
 python3 enrich_key_point_details.py
 ```
 
-All scripts read/write `topic_cards.json` in place.
+All scripts update `topic_cards.json` in place.
 
-## `topic_cards.json` schema (what the UI expects)
+Important:
 
-Top-level:
+- Re-running the generation pipeline can reintroduce topic overlaps or quality drift.
+- After regeneration, always run the manual merge/curation workflow in [`TOPIC_MERGING_GUIDELINES.md`](./TOPIC_MERGING_GUIDELINES.md).
 
-- `meta`
-- `cards[]`
+## Deployment
 
-Per card:
+### Recommended: GitHub Pages (Free)
 
-- `id`
-- `topic`
-- `canonical_topic`
-- `weeks[]`
-- `exam_stats`
-  - `total_hits`
-  - `by_exam`
-  - `coverage_count`
-- `related_topics[]`
-- `trap_patterns[]`
-- `sections`
-  - `lecture_snippets[]`
-  - `exam_questions[]`
-  - `notebook_snippets[]`
-  - `ai_summary`
-  - `ai_common_questions`
-  - `ai_examples[]`
-  - `key_points_to_remember[]`
-    - each key point can include optional `details[]` entries:
-      - `kind`: `example` | `table` | `explanation` | `commands`
-      - `title`
-      - optional `text`
-      - optional `code`
-      - optional `table` with `headers[]` and `rows[][]`
-  - `recommended_ids[]`
+This repo already includes a workflow:
 
-### UI section mapping
+- `.github/workflows/pages.yml`
 
-In `app.js`, card selections are stored in draft state with keys:
+What to do:
 
-- `aiExamples`
-- `keyPoints`
-- `recommended`
-- `additional`
+1. Push to GitHub (`main` or `master`).
+2. In repo settings, open `Pages`.
+3. Set source to **GitHub Actions**.
+4. The `Deploy To GitHub Pages` workflow will publish the site.
 
-If you add/remove sections in data, update:
+### Alternative: Vercel (Free Hobby tier)
 
-- `ensureDraft(...)`
-- `sectionToSelectionKey(...)`
-- card render functions
-- preview render functions
+Also works well for static sites.
 
-## UX constraints from user requests (preserve these)
+1. Import the repo in Vercel.
+2. Framework preset: `Other`.
+3. Build command: leave empty.
+4. Output directory: leave empty (root static files).
 
-These were explicit user preferences and should remain unless asked otherwise:
+Important:
 
-- Keep main UI minimal (hide controls behind drawers/buttons)
-- Avoid nested scroll regions and stacked box-inside-box visuals
-- Show content sections directly; use section headers, not heavy containers
-- Keep the old top chip/toggle strip hidden behind card settings (gear)
-- Keep `x/y selected` counters accurate in real time
-- Do not auto-select snippets by default
-- Provide setting to auto-select Recommended snippets
-- Keep exam/code formatting readable (multiline + code blocks)
-- Filter out low-value one-line snippets without useful code/content
+- Vercel Hobby is for personal, non-commercial use.
+- If your usage is commercial, use Vercel Pro (or another commercial-friendly plan).
 
-## Important implementation details
+## Does GitHub Pages Allow Cookies / localStorage?
 
-### Source split logic
+Yes for browser-side usage:
 
-`app.js` constructs combined source items from exam/lecture/notebook snippets, then splits into:
+- `localStorage` works normally.
+- JS-managed cookies (`document.cookie`) also work.
 
-- `recommended`: from `sections.recommended_ids` (with runtime fallback if missing)
-- `additional`: everything else
+This app uses `localStorage` for persistence (no backend required).
 
-### Key points placement
+Note:
 
-Rendered directly below AI Common Questions and above AI Examples.
+- GitHub Pages is static hosting and not a backend runtime.
+- GitHub Pages also has usage policy/limits (for example, it is not meant as a general free commercial/SaaS host).
 
-### Formatting safeguards
+## Validation Checklist
 
-Question rendering functions (`renderQuestionContent`, `splitPromptAndCode`, `isCodeBlockLikely`) are critical for not flattening code into one line.
-
-## Known caveats
-
-- `topic_cards.json` currently has 87 cards.
-- Most cards have `recommended_ids`; runtime fallback handles cards where it is missing/empty.
-- Gemini-generated text is useful but not perfect; quality varies by topic.
-
-## Validation checklist after edits
-
-Run these before handing off:
+Before sharing:
 
 ```bash
 node --check app.js
-python3 -m py_compile build_topic_cards.py generate_ai_sections.py generate_key_points_and_recommendations.py
+python3 -m py_compile build_topic_cards.py generate_ai_sections.py generate_key_points_and_recommendations.py enrich_key_point_details.py
 ```
 
-Then manually smoke-test in browser:
+Dataset integrity check:
 
-1. Swipe mode loads and shows card sections in correct order.
-2. Gear opens settings; default selection mode changes behavior for new cards.
-3. `x/y selected` counts update when toggling checkboxes.
-4. Exam questions show multiline code in `<pre>` (not flattened).
-5. Preview shows accepted cards with selected sections.
-6. Auto-grid/manual rows+columns both work.
-7. Print/PNG/PDF actions trigger without JS errors.
+```bash
+python3 - <<'PY'
+import json, re
+from collections import Counter
+with open("topic_cards.json") as f:
+    cards = json.load(f)["cards"]
+ids = [c["id"] for c in cards]
+assert len(ids) == len(set(ids)), "Duplicate card IDs found"
+def norm_topic(s):
+    s = (s or "").lower().replace("_", " ").replace("-", " ")
+    s = re.sub(r"\s+", " ", s).strip()
+    if s.endswith("ies") and len(s) > 4:
+        s = s[:-3] + "y"
+    elif s.endswith("s") and len(s) > 4 and not s.endswith("ss"):
+        s = s[:-1]
+    return s
+dups = [k for k, v in Counter(norm_topic(c["topic"]) for c in cards).items() if v > 1]
+print("cards:", len(cards), "duplicate-normalized-topics:", len(dups))
+PY
+```
 
-## If you are the next model continuing work
+Then manual smoke test:
 
-Recommended first steps:
+1. First open shows splash once.
+2. `Get Started` dismisses splash.
+3. Gear menu contains `Reset intro`, which reopens splash.
+4. Refresh keeps progress/selections.
+5. Swipe interactions and counts still work.
+6. Preview drag + resize works, and card positions persist after refresh.
+7. Topic counts in UI match `topic_cards.json`.
+8. Print/PNG/PDF export runs without console errors.
 
-1. Read this README.
-2. Read `DATASET_INFO.md` if you need dataset provenance details.
-3. Inspect `app.js` render/state functions before changing schema.
-4. Use targeted changes (avoid broad refactors unless requested).
-5. Re-run the validation checklist.
+## Notes For Contributors
+
+- Keep UI changes in `app.js` + `styles.css` aligned.
+- If changing card schema, update render + draft + preview mapping together.
+- If you intentionally break persisted-state compatibility, bump storage key versions in `app.js`.
+- If touching topic curation, update both `topic_cards.json` and the process notes in `TOPIC_MERGING_GUIDELINES.md`.

@@ -9,6 +9,8 @@ const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture s
 const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v1";
 const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v1";
+const DEFAULT_PAGE_INNER_WIDTH = 758;
+const DEFAULT_PAGE_INNER_HEIGHT = 1079;
 
 const state = {
   cards: [],
@@ -24,7 +26,8 @@ const state = {
   history: [],
   view: "swipe",
   openDrawer: "",
-  previewDragId: null,
+  previewCards: {},
+  previewZCounter: 1,
   preferences: {
     sourceAutoSelectMode: "none",
   },
@@ -117,6 +120,21 @@ const drawerMap = {
 
 let persistTimer = 0;
 let lastPersistedPayload = "";
+const previewPointerState = {
+  active: false,
+  pointerId: null,
+  mode: "",
+  cardId: "",
+  cardEl: null,
+  startX: 0,
+  startY: 0,
+  startLeft: 0,
+  startTop: 0,
+  startWidth: 0,
+  startHeight: 0,
+  grabOffsetX: 0,
+  grabOffsetY: 0,
+};
 
 init();
 
@@ -211,9 +229,11 @@ function bindEvents() {
     }
     closeOpenInfoPopovers();
   });
-  window.addEventListener("resize", () => {
-    refs.cardHost.querySelectorAll(".info-chip.open").forEach((chip) => positionInfoPopover(chip));
-  });
+  const repositionOpenPopovers = () => {
+    document.querySelectorAll(".info-chip.open").forEach((chip) => positionInfoPopover(chip));
+  };
+  window.addEventListener("resize", repositionOpenPopovers);
+  window.addEventListener("scroll", repositionOpenPopovers, true);
 
   document.addEventListener("keydown", (event) => {
     if (isSplashVisible()) {
@@ -310,64 +330,10 @@ function bindEvents() {
   refs.exportPngBtn.addEventListener("click", exportPng);
   refs.exportPdfBtn.addEventListener("click", exportPdf);
 
-  refs.sheetStage.addEventListener("dragstart", (event) => {
-    const card = event.target.closest(".preview-card");
-    if (!card) {
-      return;
-    }
-    state.previewDragId = card.dataset.cardId;
-    event.dataTransfer.effectAllowed = "move";
-  });
-
-  refs.sheetStage.addEventListener("dragover", (event) => {
-    const targetCard = event.target.closest(".preview-card");
-    if (!targetCard || !state.previewDragId) {
-      return;
-    }
-    event.preventDefault();
-    refs.sheetStage.querySelectorAll(".preview-card.drag-over").forEach((el) => el.classList.remove("drag-over"));
-    if (targetCard.dataset.cardId !== state.previewDragId) {
-      targetCard.classList.add("drag-over");
-    }
-  });
-
-  refs.sheetStage.addEventListener("dragleave", (event) => {
-    const targetCard = event.target.closest(".preview-card");
-    if (targetCard) {
-      targetCard.classList.remove("drag-over");
-    }
-  });
-
-  refs.sheetStage.addEventListener("drop", (event) => {
-    event.preventDefault();
-    const targetCard = event.target.closest(".preview-card");
-    refs.sheetStage.querySelectorAll(".preview-card.drag-over").forEach((el) => el.classList.remove("drag-over"));
-
-    if (!targetCard || !state.previewDragId) {
-      state.previewDragId = null;
-      return;
-    }
-
-    const draggedId = state.previewDragId;
-    const targetId = targetCard.dataset.cardId;
-    state.previewDragId = null;
-
-    if (draggedId === targetId) {
-      return;
-    }
-
-    const from = state.acceptedOrder.indexOf(draggedId);
-    const to = state.acceptedOrder.indexOf(targetId);
-    if (from === -1 || to === -1) {
-      return;
-    }
-
-    const updated = [...state.acceptedOrder];
-    updated.splice(from, 1);
-    updated.splice(to, 0, draggedId);
-    state.acceptedOrder = updated;
-    renderPreview();
-  });
+  refs.sheetStage.addEventListener("pointerdown", handlePreviewPointerDown);
+  document.addEventListener("pointermove", handlePreviewPointerMove);
+  document.addEventListener("pointerup", finishPreviewPointerAction);
+  document.addEventListener("pointercancel", finishPreviewPointerAction);
 }
 
 function setLoadingState() {
@@ -539,6 +505,28 @@ function hydratePersistedState() {
       }
     });
   }
+
+  if (raw.previewCards && typeof raw.previewCards === "object") {
+    const hydratedLayouts = {};
+    Object.entries(raw.previewCards).forEach(([cardId, layout]) => {
+      if (!cardIds.has(cardId) || !layout || typeof layout !== "object") {
+        return;
+      }
+      hydratedLayouts[cardId] = {
+        page: layout.page === 2 ? 2 : 1,
+        x: Number(layout.x) || 0,
+        y: Number(layout.y) || 0,
+        width: Number(layout.width) || 260,
+        height: Number(layout.height) || 220,
+        z: Number(layout.z) || 1,
+      };
+    });
+    state.previewCards = hydratedLayouts;
+  }
+
+  if (Number.isFinite(raw.previewZCounter)) {
+    state.previewZCounter = clamp(Number(raw.previewZCounter), 1, 99999);
+  }
 }
 
 function getPersistedRawState() {
@@ -589,6 +577,8 @@ function persistAppState() {
     acceptedOrder: state.acceptedOrder,
     preferences: state.preferences,
     layout: state.layout,
+    previewCards: state.previewCards,
+    previewZCounter: state.previewZCounter,
   };
   const serialized = JSON.stringify(payload);
   if (serialized === lastPersistedPayload) {
@@ -600,6 +590,212 @@ function persistAppState() {
   } catch {
     // Ignore storage quota/privacy mode errors.
   }
+}
+
+function getPreviewPageContent(page) {
+  return page === 2 ? refs.page2Content : refs.page1Content;
+}
+
+function getPreviewPageNumberForClientPoint(clientX, clientY) {
+  const page1Rect = refs.page1Content.getBoundingClientRect();
+  if (clientX >= page1Rect.left && clientX <= page1Rect.right && clientY >= page1Rect.top && clientY <= page1Rect.bottom) {
+    return 1;
+  }
+  const page2Rect = refs.page2Content.getBoundingClientRect();
+  if (clientX >= page2Rect.left && clientX <= page2Rect.right && clientY >= page2Rect.top && clientY <= page2Rect.bottom) {
+    return 2;
+  }
+  return 0;
+}
+
+function getPreviewPageSize(page) {
+  const pageContent = getPreviewPageContent(page);
+  return {
+    width: pageContent.clientWidth || DEFAULT_PAGE_INNER_WIDTH,
+    height: pageContent.clientHeight || DEFAULT_PAGE_INNER_HEIGHT,
+  };
+}
+
+function sanitizePreviewCardLayout(rawLayout, fallback = {}) {
+  const page = rawLayout?.page === 2 ? 2 : 1;
+  const pageSize = getPreviewPageSize(page);
+  const widthRaw = Number(rawLayout?.width ?? fallback.width ?? 260);
+  const heightRaw = Number(rawLayout?.height ?? fallback.height ?? 220);
+  const width = clamp(Number.isFinite(widthRaw) ? widthRaw : 260, 170, pageSize.width);
+  const height = clamp(Number.isFinite(heightRaw) ? heightRaw : 220, 130, pageSize.height);
+  const xRaw = Number(rawLayout?.x ?? fallback.x ?? 0);
+  const yRaw = Number(rawLayout?.y ?? fallback.y ?? 0);
+  const x = clamp(Number.isFinite(xRaw) ? xRaw : 0, 0, Math.max(0, pageSize.width - width));
+  const y = clamp(Number.isFinite(yRaw) ? yRaw : 0, 0, Math.max(0, pageSize.height - height));
+  const zRaw = Number(rawLayout?.z ?? fallback.z ?? 1);
+  const z = clamp(Number.isFinite(zRaw) ? zRaw : 1, 1, 9999);
+  return { page, x, y, width, height, z };
+}
+
+function ensurePreviewCardLayout(cardId, fallback) {
+  const existing = state.previewCards[cardId];
+  if (existing) {
+    const sanitized = sanitizePreviewCardLayout(existing, fallback);
+    state.previewCards[cardId] = sanitized;
+    state.previewZCounter = Math.max(state.previewZCounter, sanitized.z + 1);
+    return sanitized;
+  }
+  const next = sanitizePreviewCardLayout(
+    {
+      ...fallback,
+      z: state.previewZCounter,
+    },
+    fallback
+  );
+  state.previewCards[cardId] = next;
+  state.previewZCounter = Math.max(state.previewZCounter, next.z + 1);
+  return next;
+}
+
+function prunePreviewCardLayouts(validCardIds) {
+  Object.keys(state.previewCards).forEach((cardId) => {
+    if (!validCardIds.has(cardId)) {
+      delete state.previewCards[cardId];
+    }
+  });
+}
+
+function bringPreviewCardToFront(cardId) {
+  const layout = state.previewCards[cardId];
+  if (!layout) {
+    return;
+  }
+  layout.z = state.previewZCounter;
+  state.previewZCounter += 1;
+}
+
+function applyPreviewCardLayout(cardElement, layout) {
+  cardElement.style.left = `${layout.x}px`;
+  cardElement.style.top = `${layout.y}px`;
+  cardElement.style.width = `${layout.width}px`;
+  cardElement.style.height = `${layout.height}px`;
+  cardElement.style.zIndex = String(layout.z || 1);
+}
+
+function handlePreviewPointerDown(event) {
+  if (state.view !== "preview" || event.button !== 0) {
+    return;
+  }
+  const card = event.target.closest(".preview-card");
+  if (!card) {
+    return;
+  }
+
+  let mode = "";
+  if (event.target.closest("[data-role='preview-resize-corner']")) {
+    mode = "resize-corner";
+  } else if (event.target.closest("[data-role='preview-resize-bottom']")) {
+    mode = "resize-bottom";
+  } else if (event.target.closest(".preview-card-head")) {
+    mode = "drag";
+  } else {
+    return;
+  }
+
+  const cardId = card.dataset.cardId;
+  const layout = state.previewCards[cardId];
+  if (!cardId || !layout) {
+    return;
+  }
+
+  event.preventDefault();
+  bringPreviewCardToFront(cardId);
+  applyPreviewCardLayout(card, layout);
+
+  const pageContent = getPreviewPageContent(layout.page);
+  const pageRect = pageContent.getBoundingClientRect();
+
+  previewPointerState.active = true;
+  previewPointerState.pointerId = event.pointerId;
+  previewPointerState.mode = mode;
+  previewPointerState.cardId = cardId;
+  previewPointerState.cardEl = card;
+  previewPointerState.startX = event.clientX;
+  previewPointerState.startY = event.clientY;
+  previewPointerState.startLeft = layout.x;
+  previewPointerState.startTop = layout.y;
+  previewPointerState.startWidth = layout.width;
+  previewPointerState.startHeight = layout.height;
+  previewPointerState.grabOffsetX = event.clientX - pageRect.left - layout.x;
+  previewPointerState.grabOffsetY = event.clientY - pageRect.top - layout.y;
+
+  card.classList.add(mode === "drag" ? "dragging" : "resizing");
+  card.setPointerCapture?.(event.pointerId);
+}
+
+function handlePreviewPointerMove(event) {
+  if (!previewPointerState.active || previewPointerState.pointerId !== event.pointerId) {
+    return;
+  }
+
+  const layout = state.previewCards[previewPointerState.cardId];
+  const cardElement = previewPointerState.cardEl;
+  if (!layout || !cardElement) {
+    return;
+  }
+
+  if (previewPointerState.mode === "drag") {
+    const hoveredPage = getPreviewPageNumberForClientPoint(event.clientX, event.clientY) || layout.page;
+    layout.page = hoveredPage;
+    const pageContent = getPreviewPageContent(layout.page);
+    const pageRect = pageContent.getBoundingClientRect();
+    const pageSize = getPreviewPageSize(layout.page);
+    const nextX = event.clientX - pageRect.left - previewPointerState.grabOffsetX;
+    const nextY = event.clientY - pageRect.top - previewPointerState.grabOffsetY;
+    layout.x = clamp(nextX, 0, Math.max(0, pageSize.width - layout.width));
+    layout.y = clamp(nextY, 0, Math.max(0, pageSize.height - layout.height));
+
+    if (cardElement.parentElement !== pageContent) {
+      pageContent.appendChild(cardElement);
+    }
+    applyPreviewCardLayout(cardElement, layout);
+    return;
+  }
+
+  const pageSize = getPreviewPageSize(layout.page);
+  const dx = event.clientX - previewPointerState.startX;
+  const dy = event.clientY - previewPointerState.startY;
+
+  if (previewPointerState.mode === "resize-corner") {
+    const maxWidth = Math.max(170, pageSize.width - layout.x);
+    const maxHeight = Math.max(130, pageSize.height - layout.y);
+    layout.width = clamp(previewPointerState.startWidth + dx, 170, maxWidth);
+    layout.height = clamp(previewPointerState.startHeight + dy, 130, maxHeight);
+  } else if (previewPointerState.mode === "resize-bottom") {
+    const maxHeight = Math.max(130, pageSize.height - layout.y);
+    layout.height = clamp(previewPointerState.startHeight + dy, 130, maxHeight);
+  }
+
+  applyPreviewCardLayout(cardElement, layout);
+}
+
+function finishPreviewPointerAction(event) {
+  if (!previewPointerState.active) {
+    return;
+  }
+  if (event && previewPointerState.pointerId !== event.pointerId) {
+    return;
+  }
+
+  const cardElement = previewPointerState.cardEl;
+  if (cardElement) {
+    cardElement.classList.remove("dragging", "resizing");
+    if (previewPointerState.pointerId !== null && cardElement.hasPointerCapture?.(previewPointerState.pointerId)) {
+      cardElement.releasePointerCapture(previewPointerState.pointerId);
+    }
+  }
+
+  previewPointerState.active = false;
+  previewPointerState.pointerId = null;
+  previewPointerState.mode = "";
+  previewPointerState.cardId = "";
+  previewPointerState.cardEl = null;
+  schedulePersistState();
 }
 
 function toggleDrawer(name) {
@@ -1044,7 +1240,7 @@ function renderSectionHeader(title, countText = "", sparkleText = "", sparkleLab
 }
 
 function renderAISummarySection(card, draft) {
-  const summary = card.sections.ai_summary?.content || "";
+  const summary = normalizeTruncatedDisplayText(card.sections.ai_summary?.content || "");
   const hiddenClass = draft.sections.aiSummary ? "" : "hidden";
   return `
     <section class="section-block ${hiddenClass}" data-section-block="aiSummary">
@@ -1634,19 +1830,32 @@ function positionInfoPopover(infoChip) {
   }
 
   popover.style.setProperty("--popover-shift-x", "0px");
-  const rect = popover.getBoundingClientRect();
-  const viewportPadding = 8;
-  const maxRight = window.innerWidth - viewportPadding;
-  let shiftX = 0;
+  popover.style.setProperty("--popover-shift-y", "0px");
 
-  if (rect.left < viewportPadding) {
-    shiftX += viewportPadding - rect.left;
-  }
-  if (rect.right > maxRight) {
-    shiftX -= rect.right - maxRight;
-  }
+  window.requestAnimationFrame(() => {
+    const rect = popover.getBoundingClientRect();
+    const viewportPadding = 8;
+    const maxRight = window.innerWidth - viewportPadding;
+    const maxBottom = window.innerHeight - viewportPadding;
+    let shiftX = 0;
+    let shiftY = 0;
 
-  popover.style.setProperty("--popover-shift-x", `${Math.round(shiftX)}px`);
+    if (rect.left < viewportPadding) {
+      shiftX += viewportPadding - rect.left;
+    }
+    if (rect.right > maxRight) {
+      shiftX -= rect.right - maxRight;
+    }
+    if (rect.bottom > maxBottom) {
+      shiftY -= rect.bottom - maxBottom;
+    }
+    if (rect.top + shiftY < viewportPadding) {
+      shiftY += viewportPadding - (rect.top + shiftY);
+    }
+
+    popover.style.setProperty("--popover-shift-x", `${Math.round(shiftX)}px`);
+    popover.style.setProperty("--popover-shift-y", `${Math.round(shiftY)}px`);
+  });
 }
 
 function closeOpenInfoPopovers() {
@@ -1789,9 +1998,35 @@ function getEffectiveGridSettings(totalCards) {
   };
 }
 
+function getDefaultPreviewLayout(index, grid) {
+  const columns = Math.max(1, Number(grid.columns) || 1);
+  const rows = Math.max(1, Number(grid.rows) || 1);
+  const capacityPerPage = columns * rows;
+  const page = index < capacityPerPage ? 1 : 2;
+  const localIndex = index % capacityPerPage;
+  const col = localIndex % columns;
+  const row = Math.floor(localIndex / columns);
+
+  const pageSize = getPreviewPageSize(page);
+  const gap = clamp(Number(state.layout.cardGap) || 0, 0, 24);
+  const cellWidth = (pageSize.width - gap * (columns - 1)) / columns;
+  const cellHeight = (pageSize.height - gap * (rows - 1)) / rows;
+
+  return {
+    page,
+    x: Math.round(col * (cellWidth + gap)),
+    y: Math.round(row * (cellHeight + gap)),
+    width: Math.round(cellWidth),
+    height: Math.round(cellHeight),
+    z: index + 1,
+  };
+}
+
 function renderPreview() {
   refs.page1Content.innerHTML = "";
   refs.page2Content.innerHTML = "";
+  refs.page1Content.classList.remove("is-empty");
+  refs.page2Content.classList.remove("is-empty");
 
   refs.previewOrderList.innerHTML = "";
   state.acceptedOrder.forEach((cardId) => {
@@ -1809,55 +2044,62 @@ function renderPreview() {
     .filter((card) => card && state.decisions[card.id]?.status === "accepted");
 
   const grid = getEffectiveGridSettings(acceptedCards.length);
-
-  refs.page1Content.style.setProperty("--grid-cols", String(grid.columns));
-  refs.page1Content.style.setProperty("--grid-rows", String(grid.rows));
-  refs.page2Content.style.setProperty("--grid-cols", String(grid.columns));
-  refs.page2Content.style.setProperty("--grid-rows", String(grid.rows));
-
-  const capacityPerPage = grid.columns * grid.rows;
-  const totalCapacity = capacityPerPage * 2;
+  const capacityPerPage = Math.max(1, grid.columns * grid.rows);
 
   if (!acceptedCards.length) {
-    refs.page1Content.innerHTML = `<div class="empty-state" style="grid-column:1/-1;grid-row:1/-1;"><p>No accepted topics yet.</p><p>Go to Swipe Mode and add cards first.</p></div>`;
-    refs.page2Content.innerHTML = `<div class="empty-state" style="grid-column:1/-1;grid-row:1/-1;"><p>Page 2 is empty.</p></div>`;
+    prunePreviewCardLayouts(new Set());
+    refs.page1Content.classList.add("is-empty");
+    refs.page2Content.classList.add("is-empty");
+    refs.page1Content.innerHTML = `<div class="empty-state"><p>No accepted topics yet.</p><p>Go to Swipe Mode and add cards first.</p></div>`;
+    refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
     refs.overflowNotice.classList.add("hidden");
     syncGridControls(grid);
     schedulePersistState();
     return;
   }
 
-  const page1Cards = acceptedCards.slice(0, capacityPerPage);
-  const page2Cards = acceptedCards.slice(capacityPerPage, capacityPerPage * 2);
-  const overflowCards = acceptedCards.slice(totalCapacity);
+  const validCardIds = new Set(acceptedCards.map((card) => card.id));
+  prunePreviewCardLayouts(validCardIds);
 
-  page1Cards.forEach((card) => {
+  let renderedCount = 0;
+  acceptedCards.forEach((card, index) => {
     const selection = state.decisions[card.id]?.selection;
     if (!selection) {
       return;
     }
-    refs.page1Content.appendChild(buildPreviewCard(card, selection));
+    const fallback = getDefaultPreviewLayout(index, grid);
+    const layout = ensurePreviewCardLayout(card.id, fallback);
+    const cardElement = buildPreviewCard(card, selection);
+    applyPreviewCardLayout(cardElement, layout);
+    const pageContent = getPreviewPageContent(layout.page);
+    pageContent.appendChild(cardElement);
+    renderedCount += 1;
   });
 
-  page2Cards.forEach((card) => {
-    const selection = state.decisions[card.id]?.selection;
-    if (!selection) {
-      return;
-    }
-    refs.page2Content.appendChild(buildPreviewCard(card, selection));
-  });
-
-  if (!page1Cards.length) {
-    refs.page1Content.innerHTML = `<div class="empty-state" style="grid-column:1/-1;grid-row:1/-1;"><p>Page 1 is empty.</p></div>`;
+  if (!renderedCount) {
+    refs.page1Content.classList.add("is-empty");
+    refs.page2Content.classList.add("is-empty");
+    refs.page1Content.innerHTML = `<div class="empty-state"><p>No accepted topics yet.</p><p>Go to Swipe Mode and add cards first.</p></div>`;
+    refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
+    refs.overflowNotice.classList.add("hidden");
+    syncGridControls(grid);
+    schedulePersistState();
+    return;
   }
 
-  if (!page2Cards.length) {
-    refs.page2Content.innerHTML = `<div class="empty-state" style="grid-column:1/-1;grid-row:1/-1;"><p>Page 2 is empty.</p></div>`;
+  if (!refs.page1Content.querySelector(".preview-card")) {
+    refs.page1Content.classList.add("is-empty");
+    refs.page1Content.innerHTML = `<div class="empty-state"><p>Page 1 is empty.</p></div>`;
+  }
+  if (!refs.page2Content.querySelector(".preview-card")) {
+    refs.page2Content.classList.add("is-empty");
+    refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
   }
 
-  if (overflowCards.length) {
+  const overflowCards = Math.max(0, acceptedCards.length - capacityPerPage * 2);
+  if (overflowCards > 0) {
     refs.overflowNotice.classList.remove("hidden");
-    refs.overflowNotice.textContent = `${overflowCards.length} topic(s) do not fit in 2 A4 pages at current rows/columns. Reduce selected cards or increase grid density.`;
+    refs.overflowNotice.textContent = `${overflowCards} topic(s) exceed the default grid. They were added on page 2 and may overlap; drag/resize to arrange.`;
   } else {
     refs.overflowNotice.classList.add("hidden");
   }
@@ -1886,21 +2128,8 @@ function syncGridControls(effectiveGrid) {
 function buildPreviewCard(card, selection) {
   const sectionHtml = [];
 
-  if (selection.sections.aiSummary && card.sections.ai_summary?.content) {
-    sectionHtml.push(`<div class="section-title">Summary</div>`);
-    sectionHtml.push(`<p>${renderInlineCode(trimWords(card.sections.ai_summary.content, 55))}</p>`);
-  }
-
-  if (selection.sections.aiQuestions) {
-    const bullets = (card.sections.ai_common_questions?.bullets || []).slice(0, 4);
-    if (bullets.length) {
-      sectionHtml.push(`<div class="section-title">Common Questions</div>`);
-      sectionHtml.push(`<ul>${bullets.map((item) => `<li>${renderInlineCode(trimWords(item, 16))}</li>`).join("")}</ul>`);
-    }
-  }
-
   if (selection.sections.keyPoints) {
-    const groups = getSelectedKeyPointGroups(card, selection).slice(0, 3);
+    const groups = getSelectedKeyPointGroups(card, selection);
     if (groups.length) {
       sectionHtml.push(`<div class="section-title">Key Points for Reference</div>`);
       sectionHtml.push(renderPreviewKeyPoints(groups));
@@ -1911,15 +2140,19 @@ function buildPreviewCard(card, selection) {
     const aiExamples = usefulAIExamples(card).filter((item) => selection.selected.aiExamples.includes(item.id));
     if (aiExamples.length) {
       sectionHtml.push(`<div class="section-title">Code Examples</div>`);
-      aiExamples.slice(0, 2).forEach((item) => {
-        sectionHtml.push(`<p><strong>${escapeHtml(item.kind === "incorrect" ? "Incorrect" : "Correct")}</strong> ${renderInlineCode(trimWords(item.title || "Example", 12))}</p>`);
-        sectionHtml.push(`<pre>${escapeHtml(trimLines(item.code || "", 5))}</pre>`);
+      aiExamples.forEach((item) => {
+        const kindLabel = item.kind === "incorrect" ? "Incorrect" : "Correct";
+        sectionHtml.push(`<p><strong>${escapeHtml(kindLabel)} • ${renderInlineCode(item.title || "Code example")}</strong></p>`);
+        sectionHtml.push(`<pre>${escapeHtml(item.code || "")}</pre>`);
+        if (item.why) {
+          sectionHtml.push(`<p>${renderInlineCode(normalizeTruncatedDisplayText(item.why))}</p>`);
+        }
       });
     }
   }
 
   if (selection.sections.recommended) {
-    const recommended = getSelectedSourceItemsForPreview(card, selection, "recommended").slice(0, 2);
+    const recommended = getSelectedSourceItemsForPreview(card, selection, "recommended");
     if (recommended.length) {
       sectionHtml.push(`<div class="section-title">Recommended</div>`);
       recommended.forEach((sourceItem) => {
@@ -1929,7 +2162,7 @@ function buildPreviewCard(card, selection) {
   }
 
   if (selection.sections.additional) {
-    const additional = getSelectedSourceItemsForPreview(card, selection, "additional").slice(0, 1);
+    const additional = getSelectedSourceItemsForPreview(card, selection, "additional");
     if (additional.length) {
       sectionHtml.push(`<div class="section-title">Additional</div>`);
       additional.forEach((sourceItem) => {
@@ -1938,16 +2171,22 @@ function buildPreviewCard(card, selection) {
     }
   }
 
+  if (!sectionHtml.length) {
+    sectionHtml.push(`<p class="preview-empty-copy">No selected details for this topic.</p>`);
+  }
+
   const cardElement = document.createElement("article");
   cardElement.className = "preview-card";
-  cardElement.draggable = true;
   cardElement.dataset.cardId = card.id;
 
-  const weeksText = card.weeks.length ? card.weeks.map((week) => `W${week}`).join(", ") : "W?";
   cardElement.innerHTML = `
-    <h4>${escapeHtml(humanizeTopic(card.topic))}</h4>
-    <div class="tiny-meta">${escapeHtml(weeksText)} • ${card.exam_stats.total_hits} exam question${card.exam_stats.total_hits === 1 ? "" : "s"}</div>
+    <div class="preview-card-head" title="Drag to move this card">
+      <h4>${escapeHtml(humanizeTopic(card.topic))}</h4>
+      <span class="preview-drag-hint" aria-hidden="true">&#8942;&#8942;</span>
+    </div>
     <div class="preview-body">${sectionHtml.join("")}</div>
+    <button type="button" class="preview-resize-bottom" data-role="preview-resize-bottom" aria-label="Resize card height"></button>
+    <button type="button" class="preview-resize-corner" data-role="preview-resize-corner" aria-label="Resize card"></button>
   `;
 
   return cardElement;
@@ -1982,11 +2221,11 @@ function renderPreviewKeyPoints(groups) {
   const blocks = groups
     .map((group) => {
       const title = group.pointSelected
-        ? `<p class="preview-kp-main">${renderInlineCode(trimWords(group.text, 16))}</p>`
-        : `<p class="preview-kp-main"><span class="preview-kp-ref">Ref:</span> ${renderInlineCode(trimWords(group.text, 12))}</p>`;
+        ? `<p class="preview-kp-main">${renderInlineCode(group.text)}</p>`
+        : `<p class="preview-kp-main"><span class="preview-kp-ref">Reference:</span> ${renderInlineCode(group.text)}</p>`;
 
       const detailHtml = group.selectedDetails.length
-        ? `<div class="preview-kp-details">${group.selectedDetails.slice(0, 2).map((detail) => renderPreviewKeyPointDetail(detail)).join("")}</div>`
+        ? `<div class="preview-kp-details">${group.selectedDetails.map((detail) => renderPreviewKeyPointDetail(detail)).join("")}</div>`
         : "";
 
       return `<div class="preview-kp-group">${title}${detailHtml}</div>`;
@@ -1997,41 +2236,54 @@ function renderPreviewKeyPoints(groups) {
 
 function renderPreviewKeyPointDetail(detail) {
   if (detail.table) {
-    const headers = detail.table.headers.join(" / ");
-    const firstRow = (detail.table.rows[0] || []).join(" / ");
-    return `<p class="preview-kp-detail"><strong>${escapeHtml(trimWords(detail.title || "Table", 6))}:</strong> ${renderInlineCode(trimWords(`${headers}: ${firstRow}`, 14))}</p>`;
+    return `
+      <div class="preview-kp-detail-block">
+        <p class="preview-kp-detail-title"><strong>${escapeHtml(detail.title || "Table detail")}</strong></p>
+        ${renderPreviewTable(detail.table)}
+      </div>
+    `;
   }
   if (detail.code) {
-    return `<pre>${escapeHtml(trimLines(detail.code, 3))}</pre>`;
+    return `
+      <div class="preview-kp-detail-block">
+        <p class="preview-kp-detail-title"><strong>${escapeHtml(detail.title || "Code detail")}</strong></p>
+        <pre>${escapeHtml(detail.code)}</pre>
+      </div>
+    `;
   }
-  const text = detail.text || detail.title || "Optional detail";
-  return `<p class="preview-kp-detail">${renderInlineCode(trimWords(text, 14))}</p>`;
+  const text = normalizeTruncatedDisplayText(detail.text || detail.title || "Optional detail");
+  return `
+    <p class="preview-kp-detail">
+      ${detail.title ? `<strong>${escapeHtml(detail.title)}:</strong> ` : ""}
+      ${renderInlineCode(text)}
+    </p>
+  `;
+}
+
+function renderPreviewTable(table) {
+  const headHtml = table.headers.map((header) => `<th>${renderInlineCode(header)}</th>`).join("");
+  const rowsHtml = table.rows
+    .map((row) => `<tr>${row.map((cell) => `<td>${renderInlineCode(cell)}</td>`).join("")}</tr>`)
+    .join("");
+
+  return `
+    <div class="preview-table-wrap">
+      <table class="preview-table">
+        <thead><tr>${headHtml}</tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    </div>
+  `;
 }
 
 function renderPreviewSourceItem(sourceItem) {
-  const item = sourceItem.item;
-
-  if (sourceItem.sourceType === "exam") {
-    let html = `<p><strong>${renderInlineCode(trimWords(sourceItem.header, 10))}:</strong> ${renderInlineCode(trimWords(item.question || "", 24))}</p>`;
-    if (item.correct) {
-      html += `<p>Correct: <strong>${escapeHtml(String(item.correct))}</strong></p>`;
-    }
-    return html;
-  }
-
-  if (sourceItem.sourceType === "lecture") {
-    let html = "";
-    if (item.explanation) {
-      html += `<p>${renderInlineCode(trimWords(item.explanation, 22))}</p>`;
-    }
-    const firstCode = (item.code_examples || [])[0];
-    if (firstCode?.code) {
-      html += `<pre>${escapeHtml(trimLines(firstCode.code, 5))}</pre>`;
-    }
-    return html || `<p>${renderInlineCode(trimWords(sourceItem.header, 16))}</p>`;
-  }
-
-  return `<pre>${escapeHtml(trimLines(item.source || "", 5))}</pre>`;
+  const body = renderSourceItemBody(sourceItem);
+  return `
+    <div class="preview-source-item">
+      <p class="preview-source-title"><strong>${escapeHtml(sourceItem.header)}</strong></p>
+      ${body}
+    </div>
+  `;
 }
 
 function applyLayoutVariables() {
@@ -2156,6 +2408,22 @@ function getNonEmptyPageElements() {
 
 function formatExamLabel(label) {
   return EXAM_LABELS[label] || label || "Unknown exam";
+}
+
+function normalizeTruncatedDisplayText(text) {
+  const value = normalizeNewlines(String(text || "")).trim();
+  if (!value) {
+    return "";
+  }
+
+  if (!/(?:\.\.\.|…)\s*$/.test(value)) {
+    return value;
+  }
+
+  let trimmed = value.replace(/(?:\.\.\.|…)\s*$/, "").trim();
+  trimmed = trimmed.replace(/\b(a|an|the|to|of|for|in|on|at|by|with|and|or|but|if|when|while|before|after|via|into|from)\s*$/i, "").trim();
+
+  return trimmed || value;
 }
 
 function trimWords(text, maxWords) {
