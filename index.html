@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Midterm Cheat Sheet Builder</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23006d5b'/%3E%3Ctext x='50' y='64' font-size='56' text-anchor='middle' fill='white'%3EP%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  </head>
+  <body>
+    <div class="background-shape shape-1"></div>
+    <div class="background-shape shape-2"></div>
+    <div class="background-shape shape-3"></div>
+
+    <div class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Midterm Assistant</p>
+          <h1>Swipe Your Python Cheat Sheet</h1>
+          <p class="subtitle">
+            Tinder-style selection for Python study cards, then export a dense 2-page A4 sheet.
+          </p>
+        </div>
+        <div class="header-actions">
+          <button id="goToSwipeBtn" class="ghost-btn" type="button">Swipe Mode</button>
+          <button id="goToPreviewBtn" class="solid-btn" type="button">Preview & Export</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="swipeView" class="view active" aria-labelledby="swipeHeading">
+          <div class="panel compact-toolbar">
+            <div>
+              <h2 id="swipeHeading">Topic Deck</h2>
+              <p id="progressText" class="muted"></p>
+            </div>
+            <div class="toolbar-actions">
+              <button id="openFiltersBtn" class="ghost-btn" type="button">Filters</button>
+              <button id="openStatsBtn" class="ghost-btn" type="button">Selection</button>
+              <button id="skipToPreviewBtn" class="solid-btn" type="button">Preview</button>
+            </div>
+          </div>
+
+          <div class="panel card-panel">
+            <div id="cardHost" class="card-host"></div>
+
+            <div class="decision-row">
+              <button id="rejectBtn" class="danger-btn" type="button">No Thanks (←)</button>
+              <button id="undoBtn" class="ghost-btn" type="button">Undo</button>
+              <button id="acceptBtn" class="success-btn" type="button">Add (→)</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="previewView" class="view" aria-labelledby="previewHeading">
+          <div class="panel compact-toolbar">
+            <div>
+              <h2 id="previewHeading">2xA4 Cheat Sheet Preview</h2>
+              <p class="muted">Drag cards to reorder. Grid auto-scales, or set rows/columns manually.</p>
+            </div>
+            <div class="toolbar-actions">
+              <button id="openLayoutBtn" class="ghost-btn" type="button">Layout</button>
+              <button id="openOrderBtn" class="ghost-btn" type="button">Order</button>
+              <button id="printBtn" class="ghost-btn" type="button">Print</button>
+              <button id="exportPngBtn" class="ghost-btn" type="button">PNG</button>
+              <button id="exportPdfBtn" class="solid-btn" type="button">PDF</button>
+            </div>
+          </div>
+
+          <p id="overflowNotice" class="warning hidden"></p>
+
+          <div id="sheetStage" class="sheet-stage">
+            <article class="sheet-page" data-page="1">
+              <header class="page-label">Page 1</header>
+              <div id="page1Content" class="page-content"></div>
+            </article>
+            <article class="sheet-page" data-page="2">
+              <header class="page-label">Page 2</header>
+              <div id="page2Content" class="page-content"></div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <aside id="filtersDrawer" class="panel drawer hidden" aria-label="Filters">
+      <div class="drawer-head">
+        <h3>Filters</h3>
+        <button class="ghost-btn close-drawer-btn" data-close-drawer="filters" type="button">Close</button>
+      </div>
+
+      <label class="field">
+        <span>Search topic</span>
+        <input id="searchInput" type="text" placeholder="e.g. slicing, scope, args" />
+      </label>
+
+      <label class="field inline-field">
+        <input id="onlyExamToggle" type="checkbox" checked />
+        <span>Only show topics seen in practice exams</span>
+      </label>
+
+      <label class="field">
+        <span>Minimum practice-exam hits</span>
+        <select id="minHitsSelect">
+          <option value="0">0+</option>
+          <option value="1">1+</option>
+          <option value="2">2+</option>
+          <option value="3">3+</option>
+        </select>
+      </label>
+
+      <div class="field week-filter">
+        <span>Weeks</span>
+        <label><input class="weekCheck" type="checkbox" value="1" checked />W1</label>
+        <label><input class="weekCheck" type="checkbox" value="2" checked />W2</label>
+        <label><input class="weekCheck" type="checkbox" value="3" checked />W3</label>
+      </div>
+    </aside>
+
+    <aside id="statsDrawer" class="panel drawer hidden" aria-label="Selection stats">
+      <div class="drawer-head">
+        <h3>Selection</h3>
+        <button class="ghost-btn close-drawer-btn" data-close-drawer="stats" type="button">Close</button>
+      </div>
+
+      <div class="stat-grid">
+        <div>
+          <p class="stat-label">Accepted</p>
+          <p id="acceptedCount" class="stat-value">0</p>
+        </div>
+        <div>
+          <p class="stat-label">Rejected</p>
+          <p id="rejectedCount" class="stat-value">0</p>
+        </div>
+        <div>
+          <p class="stat-label">Remaining</p>
+          <p id="remainingCount" class="stat-value">0</p>
+        </div>
+      </div>
+
+      <h4>Accepted Topics</h4>
+      <ol id="acceptedTopicsList" class="compact-list"></ol>
+    </aside>
+
+    <aside id="layoutDrawer" class="panel drawer hidden" aria-label="Layout controls">
+      <div class="drawer-head">
+        <h3>Layout</h3>
+        <button class="ghost-btn close-drawer-btn" data-close-drawer="layout" type="button">Close</button>
+      </div>
+
+      <label class="field inline-field">
+        <input id="autoGridToggle" type="checkbox" checked />
+        <span>Auto-scale rows/columns</span>
+      </label>
+
+      <label class="field">
+        <span>Columns per page: <strong id="gridColumnsValue">2</strong></span>
+        <input id="gridColumnsRange" type="range" min="1" max="4" step="1" value="2" />
+      </label>
+
+      <label class="field">
+        <span>Rows per page: <strong id="gridRowsValue">6</strong></span>
+        <input id="gridRowsRange" type="range" min="3" max="14" step="1" value="6" />
+      </label>
+
+      <label class="field">
+        <span>Font family</span>
+        <select id="fontFamilySelect">
+          <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+          <option value="'DM Sans', sans-serif">DM Sans</option>
+          <option value="'Source Serif 4', serif">Source Serif 4</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Base font size: <strong id="fontSizeValue">9.5</strong>px</span>
+        <input id="fontSizeRange" type="range" min="7" max="14" step="0.5" value="9.5" />
+      </label>
+
+      <label class="field">
+        <span>Line height: <strong id="lineHeightValue">1.1</strong></span>
+        <input id="lineHeightRange" type="range" min="0.9" max="1.5" step="0.05" value="1.1" />
+      </label>
+
+      <label class="field">
+        <span>Letter spacing: <strong id="letterSpacingValue">0</strong>px</span>
+        <input id="letterSpacingRange" type="range" min="-0.2" max="1.2" step="0.05" value="0" />
+      </label>
+
+      <label class="field">
+        <span>Card gap: <strong id="cardGapValue">6</strong>px</span>
+        <input id="cardGapRange" type="range" min="2" max="18" step="1" value="6" />
+      </label>
+
+      <label class="field">
+        <span>Card padding: <strong id="cardPaddingValue">7</strong>px</span>
+        <input id="cardPaddingRange" type="range" min="4" max="16" step="1" value="7" />
+      </label>
+    </aside>
+
+    <aside id="orderDrawer" class="panel drawer hidden" aria-label="Card order">
+      <div class="drawer-head">
+        <h3>Card Order</h3>
+        <button class="ghost-btn close-drawer-btn" data-close-drawer="order" type="button">Close</button>
+      </div>
+      <p class="muted">Drag cards in the preview to reorder this list.</p>
+      <ol id="previewOrderList" class="compact-list"></ol>
+    </aside>
+
+    <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+  </body>
+</html>
