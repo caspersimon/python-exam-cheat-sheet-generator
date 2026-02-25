@@ -24,7 +24,7 @@ Implemented and working:
 - AI sections at top of each card:
   - AI Summary
   - AI Common Questions
-  - Key Points to Remember
+  - Key Points for Reference
   - AI Examples
 - Source split sections:
   - Recommended for Cheat Sheet
@@ -206,4 +206,3 @@ Recommended first steps:
 3. Inspect `app.js` render/state functions before changing schema.
 4. Use targeted changes (avoid broad refactors unless requested).
 5. Re-run the validation checklist.
-

@@ -1,0 +1,105 @@
+{
+  "model": "gemini-2.5-flash",
+  "rules": {
+    "max_chars": 220,
+    "min_words": 5,
+    "banned_starter_regex": "^(understand|remember|know|be aware|make sure|it is important|always)\\b",
+    "low_value_prefix_regex": "^(watch for this exam pattern|pay attention to this|this is important)\\b"
+  },
+  "summary": {
+    "total_candidates": 434,
+    "kept": 422,
+    "rejected": 12,
+    "cards_with_rejections": 7,
+    "cards_using_fallback_points": 3
+  },
+  "rejections_by_reason": {
+    "no_concrete_signal": 12
+  },
+  "sample_rejections": [
+    {
+      "card_id": "topic-scope",
+      "topic": "scope",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Function parameters and variables assigned inside a function are local to that function; variables defined outside all functions are global."
+    },
+    {
+      "card_id": "topic-scope",
+      "topic": "scope",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "When local and global variables share a name, the local variable takes precedence and shadows the global one within the function's scope."
+    },
+    {
+      "card_id": "topic-scope",
+      "topic": "scope",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Variables passed as arguments to a function become local parameters within that function's scope."
+    },
+    {
+      "card_id": "topic-factorie-function-nested",
+      "topic": "fun_example",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Nested functions are defined inside another function and form a closure, allowing them to access variables from the enclosing function's scope."
+    },
+    {
+      "card_id": "topic-return",
+      "topic": "return / None",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Variables defined inside a function are local to its scope and are destroyed upon function completion."
+    },
+    {
+      "card_id": "topic-closure-factory-function",
+      "topic": "fun_example",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Closures maintain the state of variables from their definition context, facilitating stateful functions."
+    },
+    {
+      "card_id": "topic-exam",
+      "topic": "Exam question types",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Practice tracing code execution step-by-step to predict variable states and printed values."
+    },
+    {
+      "card_id": "topic-exam",
+      "topic": "Exam question types",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Carefully evaluate all multiple-choice options before selecting the best fit."
+    },
+    {
+      "card_id": "topic-name-naming-rule-variable",
+      "topic": "names",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Variable names must start with a letter or underscore, followed by letters, digits, or underscores."
+    },
+    {
+      "card_id": "topic-execution-python",
+      "topic": "Python execution model",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Python executes code sequentially, line by line, from top to bottom."
+    },
+    {
+      "card_id": "topic-execution-python",
+      "topic": "Python execution model",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "An unhandled error terminates script execution immediately; subsequent lines are skipped."
+    },
+    {
+      "card_id": "topic-execution-python",
+      "topic": "Python execution model",
+      "source": "model",
+      "reason": "no_concrete_signal",
+      "text": "Syntax errors, logic errors, or runtime exceptions can halt program execution."
+    }
+  ]
+}

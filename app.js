@@ -645,7 +645,7 @@ function renderTopicCard(card, draft) {
         <div class="section-toggle-grid">
           ${renderSectionToggle("aiSummary", "AI Summary", 1, draft.sections.aiSummary, true)}
           ${renderSectionToggle("aiQuestions", "AI Common Questions", (card.sections.ai_common_questions?.bullets || []).length, draft.sections.aiQuestions, true)}
-          ${renderSectionToggle("keyPoints", "Key Points to Remember", points.length, draft.sections.keyPoints, true)}
+          ${renderSectionToggle("keyPoints", "Key Points for Reference", points.length, draft.sections.keyPoints, true)}
           ${renderSectionToggle("aiExamples", "AI Examples", usefulAIExamples(card).length, draft.sections.aiExamples, true)}
           ${renderSectionToggle("recommended", "Recommended for Cheat Sheet", split.recommended.length, draft.sections.recommended)}
           ${renderSectionToggle("additional", "Additional Snippets", split.additional.length, draft.sections.additional)}
@@ -735,7 +735,7 @@ function renderKeyPointsSection(card, draft) {
   return `
     <section class="section-block ${hiddenClass}" data-section-block="keyPoints">
       <div class="section-header">
-        <strong>Key Points to Remember</strong>
+        <strong>Key Points for Reference</strong>
         <span>${draft.selected.keyPoints.length}/${points.length} selected</span>
       </div>
       <div class="section-items">${pointHtml}</div>
@@ -1402,7 +1402,7 @@ function buildPreviewCard(card, selection) {
   if (selection.sections.keyPoints) {
     const points = keyPoints(card).filter((item) => selection.selected.keyPoints.includes(item.id)).slice(0, 3);
     if (points.length) {
-      sectionHtml.push(`<div class="section-title">Key Points to Remember</div>`);
+      sectionHtml.push(`<div class="section-title">Key Points for Reference</div>`);
       sectionHtml.push(`<ul>${points.map((point) => `<li>${escapeHtml(trimWords(point.text, 16))}</li>`).join("")}</ul>`);
     }
   }

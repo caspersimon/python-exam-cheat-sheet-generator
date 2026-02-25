@@ -9,8 +9,30 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent
 CARDS_FILE = ROOT / "topic_cards.json"
 MODEL = "gemini-2.5-flash"
-CHUNK_SIZE = 8
+CHUNK_SIZE = 3
 RETRY_LIMIT = 2
+MAX_KEY_POINT_CHARS = 220
+FILTER_AUDIT_FILE = ROOT / "key_point_filter_audit.json"
+
+BANNED_KEY_POINT_START_RE = re.compile(
+    r"^(understand|remember|know|be aware|make sure|it is important|always)\b",
+    re.IGNORECASE,
+)
+
+LOW_VALUE_KEY_POINT_RE = re.compile(
+    r"^(watch for this exam pattern|pay attention to this|this is important|exam pattern)\b",
+    re.IGNORECASE,
+)
+
+CONCRETE_KEYWORD_RE = re.compile(
+    r"\b("
+    r"list|dict|set|tuple|str|string|int|float|bool|none|true|false|"
+    r"mutable|immutable|slice|slicing|index|loop|range|for|while|if|elif|else|"
+    r"break|continue|pass|return|lambda|append|extend|insert|pop|sort|sorted|"
+    r"reverse|len|type|print|enumerate|zip|in|not"
+    r")\b",
+    re.IGNORECASE,
+)
 
 
 def compact(text: str, limit: int = 260) -> str:
@@ -31,11 +53,104 @@ def normalize_newlines(text: str) -> str:
     return str(text or "").replace("\r\n", "\n").replace("\r", "\n")
 
 
+def normalize_space(text: str) -> str:
+    return re.sub(r"\s+", " ", str(text or "")).strip()
+
+
+def normalize_key_point_text(text: Any) -> str:
+    value = normalize_space(str(text or ""))
+    value = re.sub(r"^[\-\*\u2022\d\.\)\(]+\s*", "", value)
+    return compact(value, MAX_KEY_POINT_CHARS).strip()
+
+
+def has_concrete_signal(text: str) -> bool:
+    if not text:
+        return False
+    if "`" in text:
+        return True
+    if re.search(r"\b\d+\b", text):
+        return True
+    if re.search(r"(->|=>|==|!=|<=|>=|\[|\]|\(|\)|\{|\}|:|\|)", text):
+        return True
+    return bool(CONCRETE_KEYWORD_RE.search(text))
+
+
+def key_point_rejection_reason(text: str) -> str | None:
+    value = normalize_space(text)
+    if not value:
+        return "empty"
+    if len(value.split()) < 5:
+        return "too_short"
+    if "?" in value:
+        return "question_style"
+    if BANNED_KEY_POINT_START_RE.match(value):
+        return "banned_starter"
+    if LOW_VALUE_KEY_POINT_RE.match(value):
+        return "generic_prefix"
+    if not has_concrete_signal(value):
+        return "no_concrete_signal"
+    return None
+
+
+def is_low_value_key_point(text: str) -> bool:
+    return key_point_rejection_reason(text) is not None
+
+
+def init_filter_audit() -> dict[str, Any]:
+    return {
+        "model": MODEL,
+        "rules": {
+            "max_chars": MAX_KEY_POINT_CHARS,
+            "min_words": 5,
+            "banned_starter_regex": BANNED_KEY_POINT_START_RE.pattern,
+            "low_value_prefix_regex": LOW_VALUE_KEY_POINT_RE.pattern,
+        },
+        "summary": {
+            "total_candidates": 0,
+            "kept": 0,
+            "rejected": 0,
+            "cards_with_rejections": 0,
+            "cards_using_fallback_points": 0,
+        },
+        "rejections_by_reason": {},
+        "sample_rejections": [],
+    }
+
+
+def record_filter_decisions(
+    audit: dict[str, Any],
+    *,
+    card_id: str,
+    topic: str,
+    source: str,
+    kept: list[str],
+    rejected: list[dict[str, str]],
+) -> None:
+    summary = audit["summary"]
+    summary["total_candidates"] += len(kept) + len(rejected)
+    summary["kept"] += len(kept)
+    summary["rejected"] += len(rejected)
+
+    for item in rejected:
+        reason = item["reason"]
+        audit["rejections_by_reason"][reason] = audit["rejections_by_reason"].get(reason, 0) + 1
+        if len(audit["sample_rejections"]) < 200:
+            audit["sample_rejections"].append(
+                {
+                    "card_id": card_id,
+                    "topic": topic,
+                    "source": source,
+                    "reason": reason,
+                    "text": item["text"],
+                }
+            )
+
+
 def snippet_candidates(card: dict[str, Any]) -> list[dict[str, str]]:
     sections = card.get("sections", {})
     out: list[dict[str, str]] = []
 
-    for snippet in sections.get("exam_questions", [])[:14]:
+    for snippet in sections.get("exam_questions", [])[:10]:
         out.append(
             {
                 "id": snippet.get("id", ""),
@@ -46,7 +161,7 @@ def snippet_candidates(card: dict[str, Any]) -> list[dict[str, str]]:
             }
         )
 
-    for snippet in sections.get("lecture_snippets", [])[:12]:
+    for snippet in sections.get("lecture_snippets", [])[:8]:
         code_lines = []
         for ex in (snippet.get("code_examples") or [])[:2]:
             code_lines.append(trim_lines(ex.get("code", ""), 5))
@@ -60,7 +175,7 @@ def snippet_candidates(card: dict[str, Any]) -> list[dict[str, str]]:
             }
         )
 
-    for snippet in sections.get("notebook_snippets", [])[:12]:
+    for snippet in sections.get("notebook_snippets", [])[:8]:
         out.append(
             {
                 "id": snippet.get("id", ""),
@@ -133,24 +248,51 @@ def run_gemini(prompt: str) -> str:
 
 
 def fallback_result(card: dict[str, Any]) -> dict[str, Any]:
-    sections = card.get("sections", {})
     traps = card.get("trap_patterns", [])
-    bullets = sections.get("ai_common_questions", {}).get("bullets", [])
+    topic_lower = normalize_space(str(card.get("topic", ""))).lower()
     fallback_points = []
 
     for trap in traps[:3]:
-        if trap.get("trap"):
-            fallback_points.append(compact(str(trap["trap"]), 170))
-
-    for b in bullets[:4]:
-        fallback_points.append(compact(f"Watch for this exam pattern: {b}", 170))
+        trap_text = normalize_space(str(trap.get("trap", "")))
+        pattern_text = normalize_space(str(trap.get("pattern", "")))
+        if trap_text and pattern_text:
+            fallback_points.append(compact(f"{pattern_text}: {trap_text}", MAX_KEY_POINT_CHARS))
+        elif trap_text:
+            fallback_points.append(compact(f"Exam trap: {trap_text}", MAX_KEY_POINT_CHARS))
 
     if not fallback_points:
-        fallback_points = [
-            f"Trace {card.get('topic', 'the topic')} step by step and verify the exact output.",
-            "Check object mutation vs new-object creation before choosing an answer.",
-            "Confirm loop bounds and condition order before evaluating outputs.",
-        ]
+        if topic_lower == "scope":
+            fallback_points = [
+                "Assignment inside a function (e.g., `x = 10`) makes `x` local unless `global x` or `nonlocal x` is declared.",
+                "Reading a global name is allowed inside a function; rebinding that name requires `global name`.",
+                "`UnboundLocalError` occurs when Python marks a name local due to assignment, then that name is read before assignment.",
+                "Parameters are local names: changing `param` inside the function does not rebind the caller's variable name.",
+                "LEGB lookup order: Local -> Enclosing -> Global -> Builtins; closest scope wins for name resolution.",
+            ]
+        elif topic_lower == "exam question types":
+            fallback_points = [
+                "Output-tracing workflow: annotate each executed line as `(line -> variable updates -> printed text)`.",
+                "For loop questions, count iterations first: `range(n)` executes `n` times with values `0..n-1`.",
+                "For nested loops, total inner executions are cumulative/multiplicative; compute counts before evaluating output.",
+                "Type-check trap: `'3' + 2` raises `TypeError`, while `'3' * 2` repeats to `'33'`.",
+                "Method trap: in-place methods (e.g., `list.sort()`) return `None`; value-returning alternatives (e.g., `sorted(lst)`) return new objects.",
+            ]
+        elif topic_lower == "python execution model":
+            fallback_points = [
+                "Execution order is sequential: `line_n` must finish before Python runs `line_n+1`.",
+                "An uncaught exception (`NameError`, `TypeError`, etc.) stops execution immediately; later lines do not run.",
+                "`def name(...):` creates a function object now; the function body executes only when `name(...)` is called.",
+                "Name resolution follows LEGB order: Local -> Enclosing -> Global -> Builtins.",
+                "`if`/`while` evaluate the condition before running the body; a falsy condition skips the body.",
+            ]
+        else:
+            fallback_points = [
+                "Mutation check: `list.sort()` / `append()` mutate and return `None`; `sorted(lst)` or slicing create a new object.",
+                "Mini reference: `break` -> exit loop; `continue` -> skip current iteration; `pass` -> no-op placeholder.",
+                "Slicing rule: `[start:stop:step]` includes `start`, excludes `stop`; negative `step` iterates right-to-left.",
+                "Boolean precedence: `not` runs before `and`, and `and` runs before `or` unless parentheses override.",
+                "Trace loops with a tiny table `(iteration, key vars, output)` to catch off-by-one and stale-variable mistakes.",
+            ]
 
     candidates = snippet_candidates(card)
     exam_ids = [c["id"] for c in candidates if c.get("source") == "exam"]
@@ -165,10 +307,18 @@ def fallback_result(card: dict[str, Any]) -> dict[str, Any]:
 
 
 def sanitize_key_points(points: list[Any]) -> list[str]:
+    cleaned, _ = sanitize_key_points_with_audit(points)
+    return cleaned
+
+
+def sanitize_key_points_with_audit(points: list[Any]) -> tuple[list[str], list[dict[str, str]]]:
     cleaned = []
+    rejected: list[dict[str, str]] = []
     for point in points:
-        text = compact(str(point), 190).strip()
-        if not text:
+        text = normalize_key_point_text(point)
+        reason = key_point_rejection_reason(text)
+        if reason:
+            rejected.append({"text": text, "reason": reason})
             continue
         cleaned.append(text)
     uniq = []
@@ -179,7 +329,22 @@ def sanitize_key_points(points: list[Any]) -> list[str]:
             continue
         seen.add(key)
         uniq.append(item)
-    return uniq[:8]
+    return uniq[:8], rejected
+
+
+def normalize_key_points_no_filter(points: list[Any]) -> list[str]:
+    out: list[str] = []
+    seen = set()
+    for point in points:
+        text = normalize_key_point_text(point)
+        if not text:
+            continue
+        key = text.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(text)
+    return out[:8]
 
 
 def sanitize_recommended_ids(ids: list[Any], valid_ids: set[str]) -> list[str]:
@@ -223,7 +388,7 @@ You are helping produce exam-focused cheat sheet selections for an Intro Python 
 For EACH item in input, return one object with schema:
 {{
   "id": "same id",
-  "key_points_to_remember": ["3-7 short high-yield pitfalls/tricks that are actually tested"],
+  "key_points_to_remember": ["3-7 concise reference lines for fast exam lookup"],
   "recommended_ids": ["IDs from source_candidates that should be included in Recommended for cheat sheet"]
 }}
 
@@ -231,7 +396,17 @@ Selection rules:
 - Prefer snippets that generalize to many exam questions.
 - Prefer exam snippets that show common traps/output reasoning.
 - Keep recommended_ids between 3 and 8 when possible.
-- key_points should be concise, concrete, and exam-oriented.
+- key_points must be concrete reference content, not reminders.
+- Every key point must include an actionable rule/contrast/check with Python detail.
+- Do NOT start a key point with words like "Remember", "Understand", or "Know".
+- Keep each key point short (single sentence or compact "mini reference" line).
+- Good style examples:
+  - "`list.sort()` mutates in place and returns `None`; `sorted(lst)` returns a new list."
+  - "Mutable vs immutable: `list/dict/set` can mutate; `str/tuple/int` operations create new objects."
+  - "Mini reference: `break` -> exit loop; `continue` -> next iteration; `pass` -> no-op."
+- Bad style examples:
+  - "Understand how loops work."
+  - "Remember to be careful with variables."
 - Return ONLY JSON array in the same order as input.
 
 Input:
@@ -257,11 +432,15 @@ Input:
 def main() -> None:
     data = json.loads(CARDS_FILE.read_text(encoding="utf-8"))
     cards = data.get("cards", [])
+    card_by_id = {str(card.get("id")): card for card in cards if card.get("id")}
 
     contexts = [context_for_card(card) for card in cards]
     chunks = chunked(contexts, CHUNK_SIZE)
 
     generated: dict[str, dict[str, Any]] = {}
+    filter_audit = init_filter_audit()
+    cards_with_rejections: set[str] = set()
+    cards_using_fallback: set[str] = set()
 
     for idx, chunk in enumerate(chunks, start=1):
         print(f"Generating recommendations chunk {idx}/{len(chunks)} ({len(chunk)} topics)...", flush=True)
@@ -271,22 +450,48 @@ def main() -> None:
                 raise RuntimeError(f"Length mismatch expected {len(chunk)} got {len(out)}")
 
             for ctx, raw in zip(chunk, out):
-                card = next((c for c in cards if c.get("id") == ctx["id"]), None)
+                card_id = str(ctx.get("id") or "")
+                card = card_by_id.get(card_id)
                 if not card or not isinstance(raw, dict):
                     continue
 
                 valid_ids = {c.get("id") for c in ctx["source_candidates"] if c.get("id")}
                 fallback = fallback_result(card)
 
-                key_points = sanitize_key_points(raw.get("key_points_to_remember", []))
+                key_points, rejected = sanitize_key_points_with_audit(raw.get("key_points_to_remember", []))
+                record_filter_decisions(
+                    filter_audit,
+                    card_id=card_id,
+                    topic=str(card.get("topic", "")),
+                    source="model",
+                    kept=key_points,
+                    rejected=rejected,
+                )
+                if rejected:
+                    cards_with_rejections.add(card_id)
+
                 if len(key_points) < 3:
-                    key_points = sanitize_key_points(fallback["key_points_to_remember"])
+                    fb_points, fb_rejected = sanitize_key_points_with_audit(fallback["key_points_to_remember"])
+                    record_filter_decisions(
+                        filter_audit,
+                        card_id=card_id,
+                        topic=str(card.get("topic", "")),
+                        source="fallback",
+                        kept=fb_points,
+                        rejected=fb_rejected,
+                    )
+                    if fb_rejected:
+                        cards_with_rejections.add(card_id)
+                    if len(fb_points) < 3:
+                        fb_points = normalize_key_points_no_filter(fallback["key_points_to_remember"])
+                    key_points = fb_points
+                    cards_using_fallback.add(card_id)
 
                 rec_ids = sanitize_recommended_ids(raw.get("recommended_ids", []), valid_ids)
                 if len(rec_ids) < 2:
                     rec_ids = sanitize_recommended_ids(fallback["recommended_ids"], valid_ids)
 
-                generated[ctx["id"]] = {
+                generated[card_id] = {
                     "key_points_to_remember": key_points,
                     "recommended_ids": rec_ids,
                 }
@@ -294,13 +499,28 @@ def main() -> None:
         except Exception as exc:  # noqa: BLE001
             print(f"Chunk {idx} failed ({exc}). Using fallback for this chunk.", flush=True)
             for ctx in chunk:
-                card = next((c for c in cards if c.get("id") == ctx["id"]), None)
+                card_id = str(ctx.get("id") or "")
+                card = card_by_id.get(card_id)
                 if not card:
                     continue
                 fb = fallback_result(card)
                 valid_ids = {c.get("id") for c in ctx["source_candidates"] if c.get("id")}
-                generated[ctx["id"]] = {
-                    "key_points_to_remember": sanitize_key_points(fb["key_points_to_remember"]),
+                fb_points, fb_rejected = sanitize_key_points_with_audit(fb["key_points_to_remember"])
+                record_filter_decisions(
+                    filter_audit,
+                    card_id=card_id,
+                    topic=str(card.get("topic", "")),
+                    source="fallback_chunk_failure",
+                    kept=fb_points,
+                    rejected=fb_rejected,
+                )
+                if fb_rejected:
+                    cards_with_rejections.add(card_id)
+                if len(fb_points) < 3:
+                    fb_points = normalize_key_points_no_filter(fb["key_points_to_remember"])
+                cards_using_fallback.add(card_id)
+                generated[card_id] = {
+                    "key_points_to_remember": fb_points,
                     "recommended_ids": sanitize_recommended_ids(fb["recommended_ids"], valid_ids),
                 }
 
@@ -330,8 +550,18 @@ def main() -> None:
     notes = data.setdefault("meta", {}).setdefault("notes", [])
     notes.append("Generated key_points_to_remember and recommended_ids via gemini-cli.")
 
+    filter_audit["summary"]["cards_with_rejections"] = len(cards_with_rejections)
+    filter_audit["summary"]["cards_using_fallback_points"] = len(cards_using_fallback)
+
     CARDS_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    FILTER_AUDIT_FILE.write_text(json.dumps(filter_audit, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Updated {CARDS_FILE} with key points and recommendation splits for {len(cards)} cards.")
+    print(
+        "Filter audit:",
+        f"{filter_audit['summary']['kept']} kept / {filter_audit['summary']['rejected']} rejected",
+        f"across {filter_audit['summary']['total_candidates']} candidates.",
+    )
+    print(f"Wrote filter audit to {FILTER_AUDIT_FILE}.")
 
 
 if __name__ == "__main__":
