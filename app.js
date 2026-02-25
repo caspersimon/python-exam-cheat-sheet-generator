@@ -436,13 +436,76 @@ function usefulAIExamples(card) {
   return (card.sections.ai_examples || []).filter((item) => (item.code || "").trim().length > 0);
 }
 
-function keyPoints(card) {
+function normalizeKeyPointDetails(baseId, details) {
+  return (details || [])
+    .map((detail, idx) => {
+      const id = String(detail?.id || `${baseId}-d${idx + 1}`).trim();
+      const kindRaw = String(detail?.kind || "example").trim().toLowerCase();
+      const kind = ["example", "table", "commands", "explanation"].includes(kindRaw) ? kindRaw : "example";
+      const title = String(detail?.title || "Optional detail").trim();
+      const text = String(detail?.text || "").trim();
+      const code = normalizeNewlines(detail?.code || "").trim();
+      const table = normalizeMiniTable(detail?.table);
+
+      if (!id || (!text && !code && !table)) {
+        return null;
+      }
+
+      return {
+        id,
+        kind,
+        title,
+        text,
+        code,
+        table,
+      };
+    })
+    .filter(Boolean);
+}
+
+function normalizeMiniTable(rawTable) {
+  if (!rawTable || typeof rawTable !== "object") {
+    return null;
+  }
+
+  const headers = Array.isArray(rawTable.headers)
+    ? rawTable.headers.map((value) => String(value || "").trim()).filter((value) => value.length > 0)
+    : [];
+
+  const rows = Array.isArray(rawTable.rows)
+    ? rawTable.rows
+        .map((row) => (Array.isArray(row) ? row.map((value) => String(value || "").trim()) : []))
+        .filter((row) => row.length > 0 && row.some((cell) => cell.length > 0))
+    : [];
+
+  if (!headers.length || !rows.length) {
+    return null;
+  }
+
+  return { headers, rows };
+}
+
+function keyPointGroups(card) {
   return (card.sections.key_points_to_remember || [])
     .filter((item) => item && (item.text || "").trim().length > 0)
-    .map((item) => ({
-      id: item.id,
-      text: String(item.text).trim(),
-    }));
+    .map((item, idx) => {
+      const id = String(item.id || `kp-${idx + 1}`).trim();
+      const text = String(item.text || "").trim();
+      return {
+        id,
+        text,
+        details: normalizeKeyPointDetails(id, item.details || []),
+      };
+    });
+}
+
+function keyPointSelectableIds(card) {
+  const ids = [];
+  keyPointGroups(card).forEach((group) => {
+    ids.push(group.id);
+    group.details.forEach((detail) => ids.push(detail.id));
+  });
+  return ids;
 }
 
 function buildSourceItems(card) {
@@ -518,7 +581,7 @@ function ensureDraft(card) {
   const recommendedIds = split.recommended.map((item) => item.id);
   const additionalIds = split.additional.map((item) => item.id);
   const aiExampleIds = usefulAIExamples(card).map((item) => item.id);
-  const keyPointIds = keyPoints(card).map((item) => item.id);
+  const keyPointIds = keyPointSelectableIds(card);
 
   const autoSelectRecommended = state.preferences.sourceAutoSelectMode === "recommended";
 
@@ -606,7 +669,8 @@ function renderTopicCard(card, draft) {
     .map(([exam, count]) => `${formatExamLabel(exam)} × ${count}`)
     .join(" • ");
   const split = getSourceSplit(card);
-  const points = keyPoints(card);
+  const keyPointGroupsForCard = keyPointGroups(card);
+  const keyPointItemCount = keyPointGroupsForCard.reduce((count, group) => count + 1 + group.details.length, 0);
 
   const totalHitsPill = card.exam_stats.total_hits > 0
     ? `<span class="pill hot">${card.exam_stats.total_hits} exam hit${card.exam_stats.total_hits === 1 ? "" : "s"}</span>`
@@ -645,7 +709,7 @@ function renderTopicCard(card, draft) {
         <div class="section-toggle-grid">
           ${renderSectionToggle("aiSummary", "AI Summary", 1, draft.sections.aiSummary, true)}
           ${renderSectionToggle("aiQuestions", "AI Common Questions", (card.sections.ai_common_questions?.bullets || []).length, draft.sections.aiQuestions, true)}
-          ${renderSectionToggle("keyPoints", "Key Points for Reference", points.length, draft.sections.keyPoints, true)}
+          ${renderSectionToggle("keyPoints", "Key Points for Reference", keyPointItemCount, draft.sections.keyPoints, true)}
           ${renderSectionToggle("aiExamples", "AI Examples", usefulAIExamples(card).length, draft.sections.aiExamples, true)}
           ${renderSectionToggle("recommended", "Recommended for Cheat Sheet", split.recommended.length, draft.sections.recommended)}
           ${renderSectionToggle("additional", "Additional Snippets", split.additional.length, draft.sections.additional)}
@@ -681,7 +745,7 @@ function renderAISummarySection(card, draft) {
         <span class="pill ai">generated</span>
       </div>
       <div class="section-items">
-        <p class="section-paragraph">${escapeHtml(summary)}</p>
+        <p class="section-paragraph">${renderInlineCode(summary)}</p>
       </div>
     </section>
   `;
@@ -699,7 +763,7 @@ function renderAIQuestionsSection(card, draft) {
       </div>
       <div class="section-items">
         <ul class="plain-bullets">
-          ${bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}
+          ${bullets.map((bullet) => `<li>${renderInlineCode(bullet)}</li>`).join("")}
         </ul>
       </div>
     </section>
@@ -707,25 +771,65 @@ function renderAIQuestionsSection(card, draft) {
 }
 
 function renderKeyPointsSection(card, draft) {
-  const points = keyPoints(card);
+  const groups = keyPointGroups(card);
   const hiddenClass = draft.sections.keyPoints ? "" : "hidden";
+  const selectedSet = new Set(draft.selected.keyPoints || []);
+  const selectableIds = new Set(keyPointSelectableIds(card));
+  const selectedCount = [...selectedSet].filter((id) => selectableIds.has(id)).length;
+  const totalCount = selectableIds.size;
 
-  const pointHtml = points.length
-    ? points
-        .map((point) => {
-          const checked = draft.selected.keyPoints.includes(point.id);
+  const pointHtml = groups.length
+    ? groups
+        .map((group) => {
+          const checked = selectedSet.has(group.id);
+          const detailsHtml = group.details.length
+            ? `
+              <div class="key-point-details">
+                ${group.details
+                  .map((detail) => {
+                    const detailChecked = selectedSet.has(detail.id);
+                    const kindLabel = detail.kind.charAt(0).toUpperCase() + detail.kind.slice(1);
+                    return `
+                      <div class="kp-detail-item">
+                        <label class="item-select kp-detail-select">
+                          <input
+                            type="checkbox"
+                            data-role="item-toggle"
+                            data-section="keyPoints"
+                            data-item-id="${escapeHtml(detail.id)}"
+                            ${detailChecked ? "checked" : ""}
+                          />
+                          <span class="kp-detail-label">
+                            <strong>${escapeHtml(detail.title)}</strong>
+                            <span class="kp-detail-kind">${escapeHtml(kindLabel)}</span>
+                          </span>
+                        </label>
+                        <div class="kp-detail-body">
+                          ${detail.text ? `<p class="item-note">${renderInlineCode(detail.text)}</p>` : ""}
+                          ${detail.table ? renderMiniTable(detail.table) : ""}
+                          ${detail.code ? `<pre>${escapeHtml(detail.code)}</pre>` : ""}
+                        </div>
+                      </div>
+                    `;
+                  })
+                  .join("")}
+              </div>
+            `
+            : "";
+
           return `
-            <div class="item-card">
+            <div class="item-card key-point-group">
               <label class="item-select">
                 <input
                   type="checkbox"
                   data-role="item-toggle"
                   data-section="keyPoints"
-                  data-item-id="${escapeHtml(point.id)}"
+                  data-item-id="${escapeHtml(group.id)}"
                   ${checked ? "checked" : ""}
                 />
-                <strong>${escapeHtml(point.text)}</strong>
+                <strong>${renderInlineCode(group.text)}</strong>
               </label>
+              ${detailsHtml}
             </div>
           `;
         })
@@ -736,10 +840,25 @@ function renderKeyPointsSection(card, draft) {
     <section class="section-block ${hiddenClass}" data-section-block="keyPoints">
       <div class="section-header">
         <strong>Key Points for Reference</strong>
-        <span>${draft.selected.keyPoints.length}/${points.length} selected</span>
+        <span>${selectedCount}/${totalCount} selected</span>
       </div>
       <div class="section-items">${pointHtml}</div>
     </section>
+  `;
+}
+
+function renderMiniTable(table) {
+  const headHtml = table.headers.map((header) => `<th>${renderInlineCode(header)}</th>`).join("");
+  const rowsHtml = table.rows
+    .map((row) => `<tr>${row.map((cell) => `<td>${renderInlineCode(cell)}</td>`).join("")}</tr>`)
+    .join("");
+  return `
+    <div class="kp-mini-table-wrap">
+      <table class="kp-mini-table">
+        <thead><tr>${headHtml}</tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    </div>
   `;
 }
 
@@ -762,10 +881,10 @@ function renderAIExamplesSection(card, draft) {
                   data-item-id="${escapeHtml(item.id)}"
                   ${checked ? "checked" : ""}
                 />
-                <strong>${escapeHtml(kindLabel)} • ${escapeHtml(item.title || "AI example")}</strong>
+                <strong>${escapeHtml(kindLabel)} • ${renderInlineCode(item.title || "AI example")}</strong>
               </label>
               <pre>${escapeHtml(item.code || "")}</pre>
-              <p class="item-note">${escapeHtml(item.why || "")}</p>
+              <p class="item-note">${renderInlineCode(item.why || "")}</p>
             </div>
           `;
         })
@@ -831,7 +950,7 @@ function renderSourceItemBody(sourceItem) {
       ${renderQuestionContent(item.question, item.code_context)}
       ${renderOptions(item.options)}
       ${item.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(item.correct))}</p>` : ""}
-      ${item.explanation ? `<p>${escapeHtml(item.explanation)}</p>` : ""}
+      ${item.explanation ? `<p>${renderInlineCode(item.explanation)}</p>` : ""}
     `;
   }
 
@@ -839,7 +958,7 @@ function renderSourceItemBody(sourceItem) {
     const codeExamples = (item.code_examples || [])
       .map(
         (example) => `
-          <p><strong>${escapeHtml(example.description || "Code")}</strong></p>
+          <p><strong>${renderInlineCode(example.description || "Code")}</strong></p>
           <pre>${escapeHtml(example.code || "")}</pre>
         `
       )
@@ -854,7 +973,7 @@ function renderSourceItemBody(sourceItem) {
       : "";
 
     return `
-      ${item.explanation ? `<p>${escapeHtml(item.explanation)}</p>` : ""}
+      ${item.explanation ? `<p>${renderInlineCode(item.explanation)}</p>` : ""}
       ${lectureQ}
       ${codeExamples}
     `;
@@ -900,7 +1019,7 @@ function renderOptionValue(value) {
     return `<pre class="option-code">${escapeHtml(text)}</pre>`;
   }
 
-  return `<span class="option-text">${escapeHtml(text)}</span>`;
+  return `<span class="option-text">${renderInlineCode(text)}</span>`;
 }
 
 function renderQuestionContent(question, codeContext = "", label = "") {
@@ -909,7 +1028,7 @@ function renderQuestionContent(question, codeContext = "", label = "") {
 
   if (parsed.prompt) {
     const labelPrefix = label ? `<strong>${escapeHtml(label)}:</strong> ` : "";
-    parts.push(`<p class="question-text">${labelPrefix}${escapeWithBreaks(parsed.prompt)}</p>`);
+    parts.push(`<p class="question-text">${labelPrefix}${renderInlineCode(parsed.prompt)}</p>`);
   }
 
   const codeBlocks = [];
@@ -929,7 +1048,7 @@ function renderQuestionContent(question, codeContext = "", label = "") {
   if (!parts.length) {
     const fallback = normalizeNewlines(question || "").trim();
     if (fallback) {
-      parts.push(`<p class="question-text">${escapeWithBreaks(fallback)}</p>`);
+      parts.push(`<p class="question-text">${renderInlineCode(fallback)}</p>`);
     }
   }
 
@@ -1015,8 +1134,30 @@ function normalizeNewlines(text) {
   return String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
-function escapeWithBreaks(text) {
-  return escapeHtml(normalizeNewlines(text)).replace(/\n/g, "<br />");
+function renderInlineCode(text) {
+  const value = normalizeNewlines(closeUnbalancedBackticks(text || ""));
+  if (!value) {
+    return "";
+  }
+
+  const chunks = value.split("`");
+  return chunks
+    .map((chunk, idx) => {
+      if (idx % 2 === 1) {
+        return `<code class="inline-code">${escapeHtml(chunk)}</code>`;
+      }
+      return escapeHtml(chunk).replace(/\n/g, "<br />");
+    })
+    .join("");
+}
+
+function closeUnbalancedBackticks(text) {
+  const value = String(text || "");
+  const ticks = (value.match(/`/g) || []).length;
+  if (ticks % 2 === 1) {
+    return `${value}\``;
+  }
+  return value;
 }
 
 function attachCardSwipeHandlers() {
@@ -1388,22 +1529,22 @@ function buildPreviewCard(card, selection) {
 
   if (selection.sections.aiSummary && card.sections.ai_summary?.content) {
     sectionHtml.push(`<div class="section-title">AI Summary</div>`);
-    sectionHtml.push(`<p>${escapeHtml(trimWords(card.sections.ai_summary.content, 55))}</p>`);
+    sectionHtml.push(`<p>${renderInlineCode(trimWords(card.sections.ai_summary.content, 55))}</p>`);
   }
 
   if (selection.sections.aiQuestions) {
     const bullets = (card.sections.ai_common_questions?.bullets || []).slice(0, 4);
     if (bullets.length) {
       sectionHtml.push(`<div class="section-title">AI Common Questions</div>`);
-      sectionHtml.push(`<ul>${bullets.map((item) => `<li>${escapeHtml(trimWords(item, 16))}</li>`).join("")}</ul>`);
+      sectionHtml.push(`<ul>${bullets.map((item) => `<li>${renderInlineCode(trimWords(item, 16))}</li>`).join("")}</ul>`);
     }
   }
 
   if (selection.sections.keyPoints) {
-    const points = keyPoints(card).filter((item) => selection.selected.keyPoints.includes(item.id)).slice(0, 3);
-    if (points.length) {
+    const groups = getSelectedKeyPointGroups(card, selection).slice(0, 3);
+    if (groups.length) {
       sectionHtml.push(`<div class="section-title">Key Points for Reference</div>`);
-      sectionHtml.push(`<ul>${points.map((point) => `<li>${escapeHtml(trimWords(point.text, 16))}</li>`).join("")}</ul>`);
+      sectionHtml.push(renderPreviewKeyPoints(groups));
     }
   }
 
@@ -1412,7 +1553,7 @@ function buildPreviewCard(card, selection) {
     if (aiExamples.length) {
       sectionHtml.push(`<div class="section-title">AI Examples</div>`);
       aiExamples.slice(0, 2).forEach((item) => {
-        sectionHtml.push(`<p><strong>${escapeHtml(item.kind === "incorrect" ? "Incorrect" : "Correct")}</strong> ${escapeHtml(trimWords(item.title || "Example", 12))}</p>`);
+        sectionHtml.push(`<p><strong>${escapeHtml(item.kind === "incorrect" ? "Incorrect" : "Correct")}</strong> ${renderInlineCode(trimWords(item.title || "Example", 12))}</p>`);
         sectionHtml.push(`<pre>${escapeHtml(trimLines(item.code || "", 5))}</pre>`);
       });
     }
@@ -1460,11 +1601,59 @@ function getSelectedSourceItemsForPreview(card, selection, sectionKey) {
   return bucket.filter((item) => selectedIds.has(item.id));
 }
 
+function getSelectedKeyPointGroups(card, selection) {
+  const selectedIds = new Set(selection.selected.keyPoints || []);
+  return keyPointGroups(card)
+    .map((group) => {
+      const selectedDetails = group.details.filter((detail) => selectedIds.has(detail.id));
+      const pointSelected = selectedIds.has(group.id);
+      if (!pointSelected && !selectedDetails.length) {
+        return null;
+      }
+      return {
+        ...group,
+        pointSelected,
+        selectedDetails,
+      };
+    })
+    .filter(Boolean);
+}
+
+function renderPreviewKeyPoints(groups) {
+  const blocks = groups
+    .map((group) => {
+      const title = group.pointSelected
+        ? `<p class="preview-kp-main">${renderInlineCode(trimWords(group.text, 16))}</p>`
+        : `<p class="preview-kp-main"><span class="preview-kp-ref">Ref:</span> ${renderInlineCode(trimWords(group.text, 12))}</p>`;
+
+      const detailHtml = group.selectedDetails.length
+        ? `<div class="preview-kp-details">${group.selectedDetails.slice(0, 2).map((detail) => renderPreviewKeyPointDetail(detail)).join("")}</div>`
+        : "";
+
+      return `<div class="preview-kp-group">${title}${detailHtml}</div>`;
+    })
+    .join("");
+  return `<div class="preview-kp-list">${blocks}</div>`;
+}
+
+function renderPreviewKeyPointDetail(detail) {
+  if (detail.table) {
+    const headers = detail.table.headers.join(" / ");
+    const firstRow = (detail.table.rows[0] || []).join(" / ");
+    return `<p class="preview-kp-detail"><strong>${escapeHtml(trimWords(detail.title || "Table", 6))}:</strong> ${renderInlineCode(trimWords(`${headers}: ${firstRow}`, 14))}</p>`;
+  }
+  if (detail.code) {
+    return `<pre>${escapeHtml(trimLines(detail.code, 3))}</pre>`;
+  }
+  const text = detail.text || detail.title || "Optional detail";
+  return `<p class="preview-kp-detail">${renderInlineCode(trimWords(text, 14))}</p>`;
+}
+
 function renderPreviewSourceItem(sourceItem) {
   const item = sourceItem.item;
 
   if (sourceItem.sourceType === "exam") {
-    let html = `<p><strong>${escapeHtml(trimWords(sourceItem.header, 10))}:</strong> ${escapeHtml(trimWords(item.question || "", 24))}</p>`;
+    let html = `<p><strong>${renderInlineCode(trimWords(sourceItem.header, 10))}:</strong> ${renderInlineCode(trimWords(item.question || "", 24))}</p>`;
     if (item.correct) {
       html += `<p>Correct: <strong>${escapeHtml(String(item.correct))}</strong></p>`;
     }
@@ -1474,13 +1663,13 @@ function renderPreviewSourceItem(sourceItem) {
   if (sourceItem.sourceType === "lecture") {
     let html = "";
     if (item.explanation) {
-      html += `<p>${escapeHtml(trimWords(item.explanation, 22))}</p>`;
+      html += `<p>${renderInlineCode(trimWords(item.explanation, 22))}</p>`;
     }
     const firstCode = (item.code_examples || [])[0];
     if (firstCode?.code) {
       html += `<pre>${escapeHtml(trimLines(firstCode.code, 5))}</pre>`;
     }
-    return html || `<p>${escapeHtml(trimWords(sourceItem.header, 16))}</p>`;
+    return html || `<p>${renderInlineCode(trimWords(sourceItem.header, 16))}</p>`;
   }
 
   return `<pre>${escapeHtml(trimLines(item.source || "", 5))}</pre>`;

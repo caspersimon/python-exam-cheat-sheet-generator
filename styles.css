@@ -318,6 +318,10 @@ h1 {
   border-top: 1px dashed rgba(40, 52, 48, 0.16);
 }
 
+.key-point-group {
+  padding-bottom: 8px;
+}
+
 .item-select {
   display: flex;
   align-items: center;
@@ -335,8 +339,101 @@ h1 {
   line-height: 1.4;
 }
 
+.key-point-details {
+  margin: 0 0 2px 28px;
+  padding: 4px 0 0 10px;
+  border-left: 2px solid rgba(0, 109, 91, 0.22);
+}
+
+.kp-detail-item {
+  margin: 0;
+  padding: 6px 0 4px;
+}
+
+.kp-detail-item + .kp-detail-item {
+  border-top: 1px dashed rgba(40, 52, 48, 0.15);
+}
+
+.kp-detail-select {
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  padding-bottom: 2px;
+}
+
+.kp-detail-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.kp-detail-kind {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(40, 52, 48, 0.18);
+  background: #edf3f1;
+  color: #36504a;
+  padding: 2px 6px;
+  font-size: 0.68rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.kp-detail-body {
+  margin-left: 24px;
+}
+
+.kp-detail-body .item-note {
+  margin-bottom: 4px;
+}
+
+.kp-mini-table-wrap {
+  overflow-x: auto;
+}
+
+.kp-mini-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin: 0 0 6px;
+}
+
+.kp-mini-table th,
+.kp-mini-table td {
+  border: 1px solid rgba(40, 52, 48, 0.16);
+  padding: 4px 6px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.kp-mini-table th {
+  background: #f2f7f5;
+  font-weight: 650;
+}
+
 .item-body p {
   margin: 0 0 6px;
+}
+
+code,
+.inline-code {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.92em;
+  background: #f2f5f7;
+  border: 1px solid rgba(40, 52, 48, 0.16);
+  border-radius: 5px;
+  padding: 0 4px;
+}
+
+.preview-card code,
+.preview-card .inline-code {
+  font-size: 0.84em;
+  padding: 0 2px;
+  border-color: rgba(40, 52, 48, 0.12);
+  background: #f6f8f9;
 }
 
 pre {
@@ -645,6 +742,35 @@ input[type="range"] {
 .preview-card ul {
   margin: 0 0 3px 12px;
   padding: 0;
+}
+
+.preview-kp-list {
+  margin: 0 0 4px;
+}
+
+.preview-kp-group {
+  margin: 0 0 3px;
+  padding: 0 0 0 6px;
+  border-left: 2px solid rgba(0, 109, 91, 0.2);
+}
+
+.preview-kp-main {
+  margin: 0 0 1px;
+}
+
+.preview-kp-ref {
+  font-size: 0.86em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #4e6962;
+}
+
+.preview-kp-details {
+  margin-left: 6px;
+}
+
+.preview-kp-detail {
+  margin: 0 0 1px;
 }
 
 .preview-card pre {

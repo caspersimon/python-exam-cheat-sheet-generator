@@ -71,6 +71,8 @@ No npm install is required for runtime. Frontend libraries are loaded via CDN in
   - fills AI Summary / AI Common Questions / AI Examples using Gemini
 - `generate_key_points_and_recommendations.py`
   - fills Key Points + Recommended IDs using Gemini
+- `enrich_key_point_details.py`
+  - adds optional key-point detail blocks (examples/tables/explanations) for selective inclusion
 - `DATASET_INFO.md`
   - detailed dataset documentation from the previous README
 
@@ -92,6 +94,12 @@ python3 generate_ai_sections.py
 
 ```bash
 python3 generate_key_points_and_recommendations.py
+```
+
+4. Add optional key-point detail blocks:
+
+```bash
+python3 enrich_key_point_details.py
 ```
 
 All scripts read/write `topic_cards.json` in place.
@@ -123,6 +131,12 @@ Per card:
   - `ai_common_questions`
   - `ai_examples[]`
   - `key_points_to_remember[]`
+    - each key point can include optional `details[]` entries:
+      - `kind`: `example` | `table` | `explanation` | `commands`
+      - `title`
+      - optional `text`
+      - optional `code`
+      - optional `table` with `headers[]` and `rows[][]`
   - `recommended_ids[]`
 
 ### UI section mapping
