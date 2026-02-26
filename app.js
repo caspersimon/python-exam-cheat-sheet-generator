@@ -2373,6 +2373,30 @@ function applyLayoutVariables() {
   refs.cardPaddingValue.textContent = String(state.layout.cardPadding);
 }
 
+/**
+ * html2canvas workaround: inline <code> / .inline-code elements with a
+ * background-color cause surrounding text to disappear when the inline
+ * element wraps across multiple lines (html2canvas #1497 / #2739 / #3180).
+ *
+ * Fix: in the cloned DOM that html2canvas renders, strip the background
+ * from every inline code element and replace it with a subtle outline so
+ * the visual intent is preserved without triggering the bug.
+ */
+function fixInlineCodeForCapture(clonedDoc) {
+  const codeEls = clonedDoc.querySelectorAll("code, .inline-code");
+  codeEls.forEach((el) => {
+    const style = el.style;
+    // Remove the background that causes the rendering bug
+    style.backgroundColor = "transparent";
+    // Keep a visible border so code spans are still distinguishable
+    style.border = "1px solid rgba(40, 52, 48, 0.18)";
+    style.borderRadius = "3px";
+    // Ensure correct box model for multi-line wrapping
+    style.boxDecorationBreak = "clone";
+    style.webkitBoxDecorationBreak = "clone";
+  });
+}
+
 async function exportPng() {
   setView("preview");
 
@@ -2398,6 +2422,7 @@ async function exportPng() {
         scale: 2,
         useCORS: true,
         backgroundColor: "#ffffff",
+        onclone: fixInlineCodeForCapture,
       });
 
       const url = canvas.toDataURL("image/png");
@@ -2440,6 +2465,7 @@ async function exportPdf() {
         scale: 2,
         useCORS: true,
         backgroundColor: "#ffffff",
+        onclone: fixInlineCodeForCapture,
       });
       const imageData = canvas.toDataURL("image/png");
 
