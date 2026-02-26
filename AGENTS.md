@@ -6,7 +6,7 @@ Technical handoff for coding agents and contributors working on this repository.
 
 `python-exam-cheat-sheet-generator` is a static web app for building exam cheat sheets from curated Python topic cards.
 
-- Frontend only (`index.html`, `styles.css`, `app.js`)
+- Frontend only (`index.html`, `app/*.js`, `styles.css` + `styles/*.css`)
 - No backend/runtime services required
 - Source dataset and generated card data are JSON files in repo
 
@@ -46,8 +46,9 @@ Storage keys:
 ## Core Files
 
 - `index.html`: app shell and major sections
-- `styles.css`: all styling
-- `app.js`: state, rendering, persistence, interactions, preview/export
+- `app/`: split frontend logic modules (loaded in order via deferred scripts)
+- `styles.css`: import root for split style modules in `styles/`
+- `styles/`: split CSS by concern
 - `topic_cards.json`: curated card dataset consumed by UI
 - `study_data.json`: source dataset
 
@@ -57,6 +58,14 @@ Generation/processing scripts:
 - `generate_ai_sections.py`
 - `generate_key_points_and_recommendations.py`
 - `enrich_key_point_details.py`
+
+Pipeline modules:
+
+- `pipelines/topic_cards/`
+- `pipelines/ai_sections/`
+- `pipelines/key_points/`
+- `pipelines/key_point_details/`
+- `pipelines/shared/` (shared text/json/LLM/chunk utilities)
 
 Guides/docs:
 
@@ -109,8 +118,11 @@ When editing `topic_cards.json`:
 ## Validation Checklist
 
 ```bash
-node --check app.js
+node --check app/*.js
 python3 -m py_compile build_topic_cards.py generate_ai_sections.py generate_key_points_and_recommendations.py enrich_key_point_details.py
+python3 -m py_compile $(find pipelines -name '*.py' -type f)
+python3 scripts/check_file_lengths.py
+python3 -m unittest discover -s tests -v
 ```
 
 Integrity check:
@@ -204,7 +216,7 @@ PY
 
 ## Contributor Notes
 
-- Keep `app.js` and `styles.css` changes aligned.
+- Keep `app/` and `styles/` changes aligned.
 - If schema changes, update rendering + draft selection + preview mapping together.
-- If localStorage schema changes are intentional, bump storage key versions in `app.js`.
+- If localStorage schema changes are intentional, bump storage key versions in `app/state-and-init.js`.
 - If you adjust topic curation policy, update both this file and `TOPIC_MERGING_GUIDELINES.md`.

@@ -8,3 +8,6 @@ __pycache__/
 # Local env files
 .env
 .env.*
+
+# Local smoke artifacts
+docs/smoke-preview.png

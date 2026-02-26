@@ -43,6 +43,14 @@ python3 -m http.server 8000
 
 No npm install is required.
 
+## Validate Changes
+
+```bash
+make validate
+```
+
+This runs JS/Python syntax checks, file-length policy checks, and test suites.
+
 ## Study Content Quality
 
 - Topic cards are built from lectures, notebooks, and exam material.
@@ -71,11 +79,16 @@ Include:
 - Export layout odd: refresh preview and re-position cards before exporting.
 - Counts look off: check active filters (search/min hits/week filters).
 
-## Repo Files (Quick Reference)
+## Repo Layout (Quick Reference)
 
-- `index.html` - page structure
-- `styles.css` - styling
-- `app.js` - app logic and state
+- `index.html` - page structure and script/style boot order
+- `app/` - split frontend logic modules (ordered classic scripts)
+- `styles.css` + `styles/` - import root + split style modules
+- `pipelines/` - split Python generation/enrichment modules
 - `topic_cards.json` - topic data used by the UI
+- `scripts/check_file_lengths.py` - max-500-lines policy enforcement
+- `tests/` - automated validation tests
+- `docs/ARCHITECTURE.md` - module boundaries and responsibilities
+- `docs/TESTING.md` - validation workflow and command reference
 - `TOPIC_MERGING_GUIDELINES.md` - curation workflow for maintainers
 - `AGENTS.md` - technical handoff for coding agents/contributors

@@ -1,0 +1,142 @@
+.drawer {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: min(420px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  z-index: 25;
+  padding: 12px;
+}
+
+.drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 14px;
+}
+
+.stat-label {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--ink-2);
+}
+
+.stat-value {
+  margin: 2px 0 0;
+  font-size: 1.24rem;
+  font-weight: 700;
+}
+
+.compact-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  max-height: 280px;
+  overflow: auto;
+  font-size: 0.86rem;
+  color: var(--ink-1);
+}
+
+.compact-list li {
+  margin-bottom: 5px;
+}
+
+@media (max-width: 1220px) {
+  .app-shell {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    padding: 14px;
+  }
+
+  .app-header {
+    flex-direction: column;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .splash-card {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .splash-start-btn {
+    width: 100%;
+  }
+
+  .card-host {
+    max-height: none;
+    min-height: 0;
+  }
+
+  .meta-column > span {
+    display: none;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .background-shape,
+  .app-header,
+  #swipeView,
+  .compact-toolbar,
+  #overflowNotice,
+  .page-label,
+  .preview-drag-hint,
+  .preview-resize-bottom,
+  .preview-resize-corner,
+  .drawer,
+  .drawer-backdrop,
+  .splash-overlay {
+    display: none !important;
+  }
+
+  .app-shell {
+    max-width: none;
+    padding: 0;
+  }
+
+  #previewView {
+    display: block !important;
+  }
+
+  .sheet-stage {
+    display: block;
+  }
+
+  .sheet-page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    page-break-after: always;
+    overflow: hidden;
+  }
+
+  .sheet-page:last-child {
+    page-break-after: auto;
+  }
+
+  .page-content {
+    padding: 26px 18px 18px;
+  }
+}
