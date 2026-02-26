@@ -1,81 +1,94 @@
-# Python Exam Cheat Sheet Web App
+# Python Exam Cheat Sheet Generator
 
-This app helps students in the Intro to Python course build a focused, printable cheat sheet from real course/exam topics.
+> **[🚀 Open the app](https://caspersimon.github.io/python-exam-cheat-sheet-generator/)** — no installation needed, runs in your browser.
 
-## Current Content Snapshot
+A free web tool that helps you build a personalised, printable cheat sheet for your Python exam — in just a few minutes.
 
-- Total topic cards: `28`
-- Exam-topic cards in default deck: `21`
-- Exam-topic key points: `198`
-- Key points with optional detail blocks: `198`
-- Optional detail blocks (examples/tables/explanations): `247`
+---
 
-## Who This Is For
+## What is this?
 
-- Students preparing for the course exam/midterm
-- Anyone who wants a compact, personalized review sheet from class materials
+Preparing for a Python exam and want a compact reference sheet you can actually bring into the exam?
 
-## What The App Does
+This tool shows you all the important Python topics (taken from real lecture notes, notebooks, and past exam questions) one at a time. You swipe through them like a card deck, keeping what you want and skipping what you already know. At the end you get a neat 2-page A4 cheat sheet you can print or export as a PDF.
 
-- Shows topic cards you can keep or reject quickly
-- Lets you choose which key points and code examples you want
-- Provides optional extra detail under key points (mini examples, tables, explanations) that you can include or skip
-- Builds a 2-page A4 cheat sheet preview
-- Lets you drag/resize cards in the preview
-- Exports your final sheet via Print, PNG, or PDF
-- Saves your progress in your browser so refresh does not lose work
+**No sign-up. No install. Works in any modern browser.**
 
-## How It Works
+---
 
-1. Open the app.
-2. Swipe or click to keep/reject topics.
-3. For kept topics, pick the key points/examples you want.
-4. Expand optional key-point details and include only the ones you need.
-5. Open preview and arrange cards on the A4 pages.
-6. Export as Print/PNG/PDF.
+## How to use it
 
-## Run It Locally
+1. **Open the app** — [caspersimon.github.io/python-exam-cheat-sheet-generator](https://caspersimon.github.io/python-exam-cheat-sheet-generator/)
+2. **Swipe through topic cards** — click "Add (→)" to keep a topic or "No Thanks (←)" to skip it.
+3. **Customise each card** — for every kept topic, tick the key points and code examples you actually want on your sheet. You can also expand optional detail blocks (tables, mini-examples, explanations) and include only what's useful.
+4. **Preview your sheet** — click "Preview & Export" to see a live 2-page A4 layout. Drag and resize cards to arrange them exactly how you like.
+5. **Export** — hit Print, PNG, or PDF to save your finished cheat sheet.
+
+Your progress is saved automatically in your browser, so you can close the tab and come back later without losing anything.
+
+---
+
+## Features at a glance
+
+| Feature | Details |
+|---|---|
+| Topic cards | 28 topics drawn from lectures, notebooks, and past exam questions |
+| Default exam deck | 21 topics that appeared in practice exams |
+| Filters | Filter by week, minimum exam appearances, or search by keyword |
+| Key points | 198 curated key points with optional expandable detail blocks |
+| Export formats | Print, PNG, PDF |
+| Data persistence | Saved in your browser's local storage — no account needed |
+
+---
+
+## Running it locally (optional)
+
+You don't need to install anything to use the app — just open the link above.
+
+If you want to run it on your own machine:
 
 ```bash
+# 1. Clone this repository
+git clone https://github.com/caspersimon/python-exam-cheat-sheet-generator.git
+cd python-exam-cheat-sheet-generator
+
+# 2. Start a local web server
 python3 -m http.server 8000
-# then open http://localhost:8000
+
+# 3. Open http://localhost:8000 in your browser
 ```
 
-No npm install is required.
+---
 
-## Study Content Quality
+## Something looks wrong?
 
-- Topic cards are built from lectures, notebooks, and exam material.
-- Exam-topic key points/examples are curated to keep important exam-relevant items.
-- Curation is evidence-driven and does not use fixed per-topic caps.
-- Some details may be general Python clarifications kept for usefulness, even if a matching source snippet is indirect.
-- Content can still have occasional mistakes or overlap, so please report anything suspicious.
+Content mistakes, broken features, layout bugs — all welcome in the [Issues tab](https://github.com/caspersimon/python-exam-cheat-sheet-generator/issues).
 
-## If You Notice A Problem
+When reporting, please include:
 
-Please submit an issue in this repository’s GitHub **Issues** tab.
+- What you expected to happen and what actually happened
+- The topic or key-point name (if it's a content issue)
+- Your browser and operating system
+- A screenshot if possible
 
-Include:
+**Common fixes:**
+- *Lost my progress* — check if you were in private/incognito mode, or if browser storage was cleared.
+- *Export looks odd* — try refreshing the preview and re-positioning the cards before exporting.
+- *Card count looks wrong* — check the active filters (search box, week filter, minimum hits).
 
-- clear title
-- what you expected vs what happened
-- exact steps to reproduce
-- topic/card name (if relevant)
-- browser + OS
-- screenshot or screen recording (if possible)
-- for content issues: paste the exact topic name + key point/example text and explain why it is wrong (ideally with course reference)
+---
 
-## Common Problems
+## Repo overview (for contributors)
 
-- Lost progress: check whether browser storage was cleared/private mode used.
-- Export layout odd: refresh preview and re-position cards before exporting.
-- Counts look off: check active filters (search/min hits/week filters).
+| File | Purpose |
+|---|---|
+| `index.html` | App structure |
+| `styles.css` | All styling |
+| `app.js` | App logic, state management, persistence |
+| `topic_cards.json` | The topic data consumed by the UI |
+| `AGENTS.md` | Technical handoff for coding agents / contributors |
+| `TOPIC_MERGING_GUIDELINES.md` | Curation guidelines for maintainers |
 
-## Repo Files (Quick Reference)
+---
 
-- `index.html` - page structure
-- `styles.css` - styling
-- `app.js` - app logic and state
-- `topic_cards.json` - topic data used by the UI
-- `TOPIC_MERGING_GUIDELINES.md` - curation workflow for maintainers
-- `AGENTS.md` - technical handoff for coding agents/contributors
+If this saved you time, consider [buying me a coffee ☕](https://buymeacoffee.com/caspersimon).

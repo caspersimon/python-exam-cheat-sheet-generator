@@ -761,6 +761,17 @@ button:active,
   background: #ffeac1;
 }
 
+.github-link {
+  border-color: #c8d1da;
+  background: #f6f8fa;
+  color: #24292f;
+  font-weight: 650;
+}
+
+.github-link:hover {
+  background: #e8edf2;
+}
+
 .danger-btn {
   background: var(--danger-soft);
   color: var(--danger);
