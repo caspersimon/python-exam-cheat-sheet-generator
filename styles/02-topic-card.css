@@ -353,7 +353,8 @@ code,
 
 .preview-card code,
 .preview-card .inline-code {
-  display: inline;
+  display: inline-block;
+  max-width: 100%;
   font-size: 0.84em;
   padding: 0 2px;
   border-color: rgba(40, 52, 48, 0.12);
