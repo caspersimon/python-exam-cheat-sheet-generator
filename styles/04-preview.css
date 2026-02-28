@@ -13,10 +13,8 @@
 }
 
 .preview-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4px;
+  position: relative;
+  display: block;
   padding: 1px 3px 1px;
   border-bottom: 0;
   background: none;
@@ -34,17 +32,30 @@
 
 .preview-card h4 {
   margin: 0;
+  padding-right: 0;
   font-size: 0.9em;
   line-height: 1.04;
   letter-spacing: 0;
+  pointer-events: none;
 }
 
 .preview-drag-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 14px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.94);
   color: #69847d;
   line-height: 1;
   user-select: none;
   font-size: 0.82em;
   opacity: 0.68;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.84),
+    0 5px 9px rgba(14, 38, 33, 0.18);
 }
 
 .preview-card.is-locked .preview-drag-hint {

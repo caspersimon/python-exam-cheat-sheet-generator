@@ -35,7 +35,7 @@ function handlePreviewEditingClick(event) {
   const editItemBtn = event.target.closest("[data-role='preview-edit-item']");
   if (editItemBtn) {
     event.preventDefault();
-    editPreviewItem(
+    void editPreviewItem(
       editItemBtn.dataset.cardId || "",
       editItemBtn.dataset.itemType || "",
       editItemBtn.dataset.itemId || "",
@@ -132,7 +132,7 @@ function deletePreviewItem(cardId, itemType, itemId, section) {
   renderPreview();
 }
 
-function editPreviewItem(cardId, itemType, itemId, section) {
+async function editPreviewItem(cardId, itemType, itemId, section) {
   const resolvedCardId = cardId;
   if (!resolvedCardId || !itemId) {
     return;
@@ -151,11 +151,24 @@ function editPreviewItem(cardId, itemType, itemId, section) {
       return;
     }
     const current = getPreviewKeyPointOverride(selection, itemId, group.text);
-    const next = window.prompt("Edit key point text:", current);
-    if (next === null) {
+    const values = await requestPreviewEditValues({
+      title: "Edit Key Point",
+      subtitle: humanizeTopic(card.topic),
+      fields: [
+        {
+          id: "text",
+          label: "Key point text",
+          prompt: "Edit key point text:",
+          value: current,
+          multiline: true,
+          rows: 6,
+        },
+      ],
+    });
+    if (!values) {
       return;
     }
-    const trimmed = next.trim();
+    const trimmed = String(values.text || "").trim();
     if (!trimmed) {
       deletePreviewItem(resolvedCardId, itemType, itemId, section);
       return;
@@ -173,11 +186,25 @@ function editPreviewItem(cardId, itemType, itemId, section) {
     }
     const fallback = detail.code || detail.text || detail.title || "";
     const current = getPreviewKeyPointDetailOverride(selection, itemId) || fallback;
-    const next = window.prompt("Edit detail text:", current);
-    if (next === null) {
+    const values = await requestPreviewEditValues({
+      title: "Edit Key Point Detail",
+      subtitle: humanizeTopic(card.topic),
+      fields: [
+        {
+          id: "text",
+          label: "Detail text",
+          prompt: "Edit detail text:",
+          value: current,
+          multiline: true,
+          rows: detail.code ? 9 : 7,
+          kind: detail.code ? "code" : "text",
+        },
+      ],
+    });
+    if (!values) {
       return;
     }
-    const trimmed = next.trim();
+    const trimmed = String(values.text || "").trim();
     pushPreviewHistorySnapshot(`Edit key point detail in "${humanizeTopic(card.topic)}"`);
     if (!trimmed) {
       delete overrides.keyPointDetails[itemId];
@@ -194,23 +221,43 @@ function editPreviewItem(cardId, itemType, itemId, section) {
       return;
     }
     const current = getPreviewAIExampleOverride(selection, itemId, item);
-    const title = window.prompt("Edit example title:", current.title || "");
-    if (title === null) {
-      return;
-    }
-    const code = window.prompt("Edit example code:", current.code || "");
-    if (code === null) {
-      return;
-    }
-    const why = window.prompt("Edit explanation:", current.why || "");
-    if (why === null) {
+    const values = await requestPreviewEditValues({
+      title: "Edit Example",
+      subtitle: humanizeTopic(card.topic),
+      fields: [
+        {
+          id: "title",
+          label: "Example title",
+          prompt: "Edit example title:",
+          value: current.title || "",
+        },
+        {
+          id: "code",
+          label: "Example code",
+          prompt: "Edit example code:",
+          value: current.code || "",
+          multiline: true,
+          rows: 11,
+          kind: "code",
+        },
+        {
+          id: "why",
+          label: "Explanation",
+          prompt: "Edit explanation:",
+          value: current.why || "",
+          multiline: true,
+          rows: 6,
+        },
+      ],
+    });
+    if (!values) {
       return;
     }
     pushPreviewHistorySnapshot(`Edit example in "${humanizeTopic(card.topic)}"`);
     overrides.aiExamples[itemId] = {
-      title: title.trim(),
-      code,
-      why: why.trim(),
+      title: String(values.title || "").trim(),
+      code: String(values.code || ""),
+      why: String(values.why || "").trim(),
     };
     renderPreview();
     return;
@@ -224,18 +271,34 @@ function editPreviewItem(cardId, itemType, itemId, section) {
     const currentOverride = getPreviewSourceOverride(selection, itemId, sourceItem.header);
     const headerDefault = currentOverride?.header || sourceItem.header;
     const bodyDefault = currentOverride?.body || sourceItemToEditableText(sourceItem);
-    const header = window.prompt("Edit snippet title:", headerDefault);
-    if (header === null) {
-      return;
-    }
-    const body = window.prompt("Edit snippet content:", bodyDefault);
-    if (body === null) {
+    const values = await requestPreviewEditValues({
+      title: "Edit Snippet",
+      subtitle: humanizeTopic(card.topic),
+      fields: [
+        {
+          id: "header",
+          label: "Snippet title",
+          prompt: "Edit snippet title:",
+          value: headerDefault,
+        },
+        {
+          id: "body",
+          label: "Snippet content",
+          prompt: "Edit snippet content:",
+          value: bodyDefault,
+          multiline: true,
+          rows: 12,
+          kind: "code",
+        },
+      ],
+    });
+    if (!values) {
       return;
     }
     pushPreviewHistorySnapshot(`Edit snippet in "${humanizeTopic(card.topic)}"`);
     overrides.sources[itemId] = {
-      header: header.trim(),
-      body,
+      header: String(values.header || "").trim(),
+      body: String(values.body || ""),
     };
     renderPreview();
   }
