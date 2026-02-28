@@ -1,0 +1,349 @@
+.info-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.info-icon-btn {
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(40, 52, 48, 0.2);
+  background: #fff;
+  color: #38514a;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.info-chip.sparkle .info-icon-btn {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  border-color: #9bc8bb;
+  background: #e9f8f3;
+  color: #1d6d57;
+  font-size: 0.82rem;
+}
+
+.info-chip.help .info-icon-btn {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.info-popover {
+  --popover-shift-x: 0px;
+  --popover-shift-y: 0px;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(340px, calc(100vw - 16px));
+  border: 1px solid rgba(40, 52, 48, 0.16);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(10, 22, 20, 0.12);
+  color: var(--ink-1);
+  font-size: 0.79rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+  padding: 8px 9px;
+  opacity: 0;
+  transform: translate(var(--popover-shift-x), calc(var(--popover-shift-y) - 4px));
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 4;
+}
+
+.info-chip:hover .info-popover,
+.info-chip:focus-within .info-popover,
+.info-chip.open .info-popover {
+  opacity: 1;
+  transform: translate(var(--popover-shift-x), var(--popover-shift-y));
+  pointer-events: auto;
+}
+
+.item-note {
+  margin: 0;
+  color: var(--ink-1);
+  line-height: 1.42;
+}
+
+.question-text {
+  margin: 0 0 6px;
+  line-height: 1.45;
+}
+
+.question-code {
+  margin-bottom: 8px;
+}
+
+.option-list {
+  margin: 0 0 6px 16px;
+  padding: 0;
+}
+
+.option-item {
+  margin-bottom: 5px;
+}
+
+.option-text {
+  margin-left: 4px;
+}
+
+.option-code {
+  margin: 5px 0 4px;
+}
+
+.answer-chip {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid #96c7b6;
+  background: #def5ec;
+  color: #13513e;
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+}
+
+.decision-row {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+button,
+.action-link {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 0.87rem;
+  font-weight: 560;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+button:hover,
+.action-link:hover {
+  transform: translateY(-1px);
+}
+
+button:active,
+.action-link:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.56;
+  cursor: not-allowed;
+}
+
+button:disabled:hover,
+button:disabled:active {
+  transform: none;
+}
+
+.ghost-btn {
+  border-color: var(--line);
+  background: #fff;
+  color: var(--ink-1);
+}
+
+.compact-btn {
+  padding: 6px 10px;
+  font-size: 0.78rem;
+}
+
+.icon-btn {
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.solid-btn {
+  background: var(--accent);
+  color: #fff;
+}
+
+.coffee-link {
+  border-color: #efcb8d;
+  background: #fff3de;
+  color: #74491a;
+  font-weight: 650;
+}
+
+.github-link {
+  border-color: #b7c3be;
+  background: #f2f5f4;
+  color: #1f3530;
+  font-weight: 620;
+}
+
+.github-link:hover {
+  background: #e7edeb;
+}
+
+.coffee-link:hover {
+  background: #ffeac1;
+}
+
+.danger-btn {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: #d8a8af;
+}
+
+.success-btn {
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: #93ceb9;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.88rem;
+}
+
+.field > span {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.inline-field {
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+}
+
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  padding: 9px 11px;
+  color: var(--ink-1);
+  font: inherit;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+.week-filter {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 6px;
+  align-items: center;
+}
+
+.week-filter > span {
+  grid-column: 1 / -1;
+}
+
+.week-filter label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.muted {
+  color: var(--ink-2);
+  margin: 0;
+  font-size: 0.84rem;
+}
+
+.empty-state {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  color: var(--ink-2);
+  background: #fafcfb;
+}
+
+.sheet-stage {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 4px;
+}
+
+.sheet-page {
+  flex: 0 0 auto;
+  width: var(--a4-width);
+  height: var(--a4-height);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 12px 26px rgba(10, 23, 19, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-label {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #74817d;
+}
+
+.page-content {
+  width: 100%;
+  height: 100%;
+  padding: 26px 18px 18px;
+  font-family: var(--sheet-font, "Space Grotesk", sans-serif);
+  font-size: var(--sheet-font-size, 9.5px);
+  line-height: var(--sheet-line-height, 1.1);
+  letter-spacing: var(--sheet-letter-spacing, 0px);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-content.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-content.is-empty .empty-state {
+  width: 100%;
+  margin: 0;
+}

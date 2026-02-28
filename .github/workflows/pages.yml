@@ -26,7 +26,9 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p dist
-          cp index.html app.js styles.css topic_cards.json dist/
+          cp index.html styles.css topic_cards.json dist/
+          cp -R app styles dist/
+          if [ -f app.js ]; then cp app.js dist/; fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

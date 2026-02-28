@@ -8,3 +8,11 @@ __pycache__/
 # Local env files
 .env
 .env.*
+
+# Local smoke artifacts
+docs/smoke-preview.png
+docs/smoke-export-preview.png
+data/test_reports/
+
+# Local AI curation reports
+data/curation_reports/*.json

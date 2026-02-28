@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_from": "study_data.json",
+    "generated_from": "data/study_db.json",
     "generator": "build_topic_cards.py",
     "course": "Introduction to Python",
     "weeks_covered": [
@@ -10,7 +10,7 @@
     ],
     "total_cards": 37,
     "notes": [
-      "Sections (1) lecture snippets, (2) exam Q&A, and (4) notebook snippets are sourced from study_data.json.",
+      "Sections (1) lecture snippets, (2) exam Q&A, and (4) notebook snippets are sourced from the canonical study database.",
       "Low-value one-line notebook/heading snippets are filtered out automatically.",
       "AI sections are generated separately (summary, common questions, examples).",
       "AI summary/common-questions/examples generated with gemini-cli and validated.",
@@ -1668,14 +1668,6 @@
             "title": "Function Factory (Closure)",
             "code": "def make_multiplier(n):\n    def multiplier(x):\n        return x * n\n    return multiplier\n\ntimes3 = make_multiplier(3)\nprint(times3(5))",
             "why": "`make_multiplier` returns a nested function `multiplier`. `times3` becomes a closure that remembers `n=3` from its creation, allowing it to multiply by 3.",
-            "status": "evidence_curated_gemini_reviewed"
-          },
-          {
-            "id": "ex-11",
-            "kind": "correct",
-            "title": "Accessing Enclosing Scope (Closure)",
-            "code": "def outer():\n    x = 10\n    def inner():\n        print(x)\n    inner()\n\nouter()",
-            "why": "The inner function `inner()` forms a closure, accessing the variable `x` from its enclosing scope (`outer()`).",
             "status": "evidence_curated_gemini_reviewed"
           },
           {

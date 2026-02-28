@@ -16,7 +16,20 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
-    <script defer src="./app.js"></script>
+    <script defer src="./app/state-and-init.js"></script>
+    <script defer src="./app/splash-storage.js"></script>
+    <script defer src="./app/preview-pointer.js"></script>
+    <script defer src="./app/view-and-data.js"></script>
+    <script defer src="./app/render-card-sections.js"></script>
+    <script defer src="./app/text-render-utils.js"></script>
+    <script defer src="./app/card-interactions.js"></script>
+    <script defer src="./app/preview-render.js"></script>
+    <script defer src="./app/preview-card-render.js"></script>
+    <script defer src="./app/preview-history.js"></script>
+    <script defer src="./app/preview-editing.js"></script>
+    <script defer src="./app/layout-export-utils.js"></script>
+    <script defer src="./app/pdf-export-utils.js"></script>
+    <script defer src="./app/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   </head>
@@ -35,6 +48,14 @@
           </p>
         </div>
         <div class="header-actions">
+          <a
+            class="action-link github-link"
+            href="https://github.com/caspersimon/python-exam-cheat-sheet-generator"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
           <a
             class="action-link coffee-link"
             href="https://buymeacoffee.com/caspersimon"
@@ -82,6 +103,9 @@
             <div class="toolbar-actions">
               <button id="openLayoutBtn" class="ghost-btn" type="button">Layout</button>
               <button id="openOrderBtn" class="ghost-btn" type="button">Order</button>
+              <button id="previewUndoBtn" class="ghost-btn" type="button" title="Undo preview edit/delete (Ctrl/Cmd+Z)">
+                Undo Edit
+              </button>
               <button id="printBtn" class="ghost-btn" type="button">Print</button>
               <button id="exportPngBtn" class="ghost-btn" type="button">PNG</button>
               <button id="exportPdfBtn" class="solid-btn" type="button">PDF</button>

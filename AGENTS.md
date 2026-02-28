@@ -6,11 +6,11 @@ Technical handoff for coding agents and contributors working on this repository.
 
 `python-exam-cheat-sheet-generator` is a static web app for building exam cheat sheets from curated Python topic cards.
 
-- Frontend only (`index.html`, `styles.css`, `app.js`)
+- Frontend only (`index.html`, `app/*.js`, `styles.css` + `styles/*.css`)
 - No backend/runtime services required
 - Source dataset and generated card data are JSON files in repo
 
-## Current Snapshot (2026-02-25)
+## Current Snapshot (2026-02-27)
 
 - `topic_cards.json`: **28 total cards**
 - Default exam deck (`only exam topics`): **21 cards**
@@ -34,7 +34,11 @@ Curation state:
 - Swipe workflow for keep/reject topic cards
 - Detail selection per card (key points, examples, snippets)
 - 2-page A4 preview with draggable/resizable cards
-- Export via print / PNG / PDF
+- Preview editing controls for card/item edit+delete with undo (`Undo Edit`, `Ctrl/Cmd+Z`)
+- Preview card lock/unlock control to freeze position/size while editing
+- `Print` generates a PDF first and then prints that generated PDF
+- Support prompt appears after PDF export and generated-PDF print
+- Export via generated print / PNG / PDF
 - First-open splash screen + `Reset intro`
 - Progress persistence in `localStorage`
 
@@ -46,10 +50,20 @@ Storage keys:
 ## Core Files
 
 - `index.html`: app shell and major sections
-- `styles.css`: all styling
-- `app.js`: state, rendering, persistence, interactions, preview/export
+- `app/`: split frontend logic modules (loaded in order via deferred scripts)
+- `scripts/smoke_ui_playwright.js`: browser smoke test (isolated Playwright install workflow)
+- `scripts/stress_layout_playwright.js`: exhaustive layout stress test workflow
+- `scripts/gemini_test_protocol.py`: complete automated UI QA protocol (hard gates + Gemini micro-audits)
+- `scripts/gemini_capability_benchmark.py`: capability checks across JSON/code/vision/formatting tasks
+- `scripts/gemini_prompt_experiments.py`: prompt-variant experiments for reliable Gemini code delegation
+- `scripts/gemini_model_health.py`: lightweight model availability/quota checks before heavy Gemini runs
+- `scripts/quality_dashboard.py`: aggregate health/status report across maintenance and Gemini QA artifacts
+- `scripts/maintenance_audit.py`: leave-it-better maintenance audit and report generator
+- `styles.css`: import root for split style modules in `styles/`
+- `styles/`: split CSS by concern
 - `topic_cards.json`: curated card dataset consumed by UI
-- `study_data.json`: source dataset
+- `data/study_db.json`: canonical structured source database
+- `materials/`: raw lectures/notebooks/exam files
 
 Generation/processing scripts:
 
@@ -58,10 +72,23 @@ Generation/processing scripts:
 - `generate_key_points_and_recommendations.py`
 - `enrich_key_point_details.py`
 
+Pipeline modules:
+
+- `pipelines/topic_cards/`
+- `pipelines/ai_sections/`
+- `pipelines/key_points/`
+- `pipelines/key_point_details/`
+- `pipelines/shared/` (shared text/json/LLM/chunk utilities)
+  - `pipelines/shared/model_defaults.py` central Gemini model aliases (`fast gemini agent`, `smart gemini agent`)
+
 Guides/docs:
 
-- `TOPIC_MERGING_GUIDELINES.md`
-- `DATASET_INFO.md`
+- `docs/curation/TOPIC_MERGING_GUIDELINES.md`
+- `docs/data/DATASET_INFO.md`
+- `docs/MAINTENANCE_PROTOCOL.md`
+- `docs/ROADMAP.md`
+- `docs/GEMINI_PLAYBOOK.md`
+- `docs/specs/`
 
 Deploy:
 
@@ -80,8 +107,20 @@ python3 enrich_key_point_details.py
 
 After regeneration:
 
-- Re-run manual semantic curation (see `TOPIC_MERGING_GUIDELINES.md`)
+- Re-run manual semantic curation (see `docs/curation/TOPIC_MERGING_GUIDELINES.md`)
 - Re-check overlaps and quality drift
+
+Week ingestion (AI-first curation):
+
+```bash
+python3 scripts/add_week_material.py --week-file data/templates/week_template.json
+```
+
+Useful flags:
+
+- `--dry-run`: validate+curate and emit report without writing `data/study_db.json`
+- `--allow-missing-sources`: bypass strict source-path existence checks
+- `--replace-existing`: replace an existing week entry
 
 ## Curation Rules (Important)
 
@@ -95,6 +134,7 @@ When editing `topic_cards.json`:
 - Keep example code coherent and syntactically valid.
 - Keep `recommended_ids` valid against card-local source snippet IDs.
 - If a detail is correct and useful general Python knowledge but weakly represented in source snippets, keep it only when it does not conflict with course material.
+- New week integration must run Gemini curation (`scripts/add_week_material.py`) and review the generated curation report before merge.
 
 ## GenAI QA Workflow (Current)
 
@@ -106,11 +146,55 @@ When editing `topic_cards.json`:
 - Re-generate flagged cards with audit feedback.
 - Manually review remaining flagged details instead of blindly deleting all weakly linked items.
 
+## Leave-It-Better Protocol (Mandatory)
+
+Every implementation task must include a cleanup/improvement pass, not only the requested change.
+
+Required sequence:
+
+1. Implement the requested change.
+2. Add at least one improvement from one category:
+   - QoL
+   - testing
+   - structure/refactor
+   - reliability bug fix
+   - docs alignment
+   - data quality cleanup
+   - roadmap/spec planning for deferred larger issues
+3. Run the matching validation command set:
+   - non-UI tasks: `make leave-better`
+   - UI/export tasks: `make leave-better-ui`
+4. If a larger issue cannot be solved in-scope, add/update:
+   - `docs/ROADMAP.md`
+   - spec file under `docs/specs/`
+5. Summarize both:
+   - what was requested and delivered
+   - what was additionally improved
+
+Reference docs:
+
+- `docs/MAINTENANCE_PROTOCOL.md`
+- `docs/ROADMAP.md`
+- `docs/specs/SPEC_TEMPLATE.md`
+
 ## Validation Checklist
 
 ```bash
-node --check app.js
+node --check app/*.js
 python3 -m py_compile build_topic_cards.py generate_ai_sections.py generate_key_points_and_recommendations.py enrich_key_point_details.py
+python3 -m py_compile $(find pipelines -name '*.py' -type f)
+python3 scripts/check_file_lengths.py
+python3 scripts/maintenance_audit.py
+python3 -m unittest discover -s tests -v
+make smoke-ui
+make stress-layout-ui
+make gemini-ui-protocol
+make gemini-benchmark
+make gemini-prompt-experiments
+make gemini-health
+make quality-dashboard
+make leave-better
+make leave-better-ui
 ```
 
 Integrity check:
@@ -200,11 +284,16 @@ PY
 4. Refresh preserves progress
 5. Swipe counts and filters behave correctly
 6. Preview drag/resize persists
-7. Print/PNG/PDF export works without console errors
+7. Preview edit/delete actions can be undone via button and `Ctrl/Cmd+Z`
+8. `Print` generates and prints a PDF (not raw page print)
+9. PDF export/print both show support prompt
+10. Exported cheat sheet view has no wasted chrome: no edit/delete/resize controls and no oversized title bars.
+11. Gemini protocol report (`data/test_reports/gemini_ui_test_report.json`) is green and has no fail checks.
 
 ## Contributor Notes
 
-- Keep `app.js` and `styles.css` changes aligned.
+- Keep `app/` and `styles/` changes aligned.
 - If schema changes, update rendering + draft selection + preview mapping together.
-- If localStorage schema changes are intentional, bump storage key versions in `app.js`.
-- If you adjust topic curation policy, update both this file and `TOPIC_MERGING_GUIDELINES.md`.
+- If localStorage schema changes are intentional, bump storage key versions in `app/state-and-init.js`.
+- If you adjust topic curation policy, update both this file and `docs/curation/TOPIC_MERGING_GUIDELINES.md`.
+- If you defer a larger issue, track it in `docs/ROADMAP.md` and add/update a spec in `docs/specs/`.
