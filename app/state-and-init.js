@@ -257,15 +257,14 @@ function bindEvents() {
         !event.altKey &&
         !event.shiftKey &&
         event.key.toLowerCase() === "z";
-      if (state.view === "preview" && isUndoShortcut) {
+      if (state.view === "preview" && isUndoShortcut && !isEditableKeyTarget(event.target) && !isPreviewEditModalOpen()) {
         event.preventDefault();
         undoLastPreviewChange();
       }
       return;
     }
 
-    const activeTag = document.activeElement?.tagName;
-    if (["INPUT", "TEXTAREA", "SELECT"].includes(activeTag)) {
+    if (isEditableKeyTarget(event.target)) {
       return;
     }
 
@@ -350,4 +349,15 @@ function bindEvents() {
   document.addEventListener("pointermove", handlePreviewPointerMove);
   document.addEventListener("pointerup", finishPreviewPointerAction);
   document.addEventListener("pointercancel", finishPreviewPointerAction);
+}
+
+function isEditableKeyTarget(target) {
+  if (!(target instanceof Element)) {
+    return false;
+  }
+  return Boolean(target.closest("input, textarea, select, [contenteditable='true']"));
+}
+
+function isPreviewEditModalOpen() {
+  return document.body.classList.contains("preview-edit-modal-open");
 }

@@ -293,5 +293,29 @@
         </form>
       </div>
     </div>
+
+    <div
+      id="supportPromptOverlay"
+      class="support-prompt-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="supportPromptTitle"
+      aria-describedby="supportPromptText"
+    >
+      <div class="support-prompt-card panel">
+        <button id="supportPromptCloseBtn" class="support-prompt-close" type="button" aria-label="Close support prompt">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <p class="support-prompt-kicker">One Last Thing</p>
+        <h3 id="supportPromptTitle">I hope I helped you with this tool.</h3>
+        <p id="supportPromptText" class="support-prompt-text">
+          If so, consider buying me a coffee. Your support helps me keep improving this free study helper.
+        </p>
+        <div class="support-prompt-actions">
+          <button id="supportPromptAcceptBtn" class="solid-btn" type="button">Of course!</button>
+          <button id="supportPromptDeclineBtn" class="ghost-btn support-prompt-decline" type="button">No, I'd rather not</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

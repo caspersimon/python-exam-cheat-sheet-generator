@@ -54,7 +54,8 @@ body.export-snapshot-mode .preview-item-actions,
 body.export-snapshot-mode .preview-resize-bottom,
 body.export-snapshot-mode .preview-resize-corner,
 body.export-snapshot-mode .preview-drag-hint,
-body.export-snapshot-mode .preview-edit-modal {
+body.export-snapshot-mode .preview-edit-modal,
+body.export-snapshot-mode .support-prompt-overlay {
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
@@ -125,6 +126,7 @@ body.export-snapshot-mode .preview-card .inline-code {
   .preview-resize-bottom,
   .preview-resize-corner,
   .preview-edit-modal,
+  .support-prompt-overlay,
   .drawer,
   .drawer-backdrop,
   .splash-overlay {

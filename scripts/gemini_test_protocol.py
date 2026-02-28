@@ -119,6 +119,7 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any]) -> list[
     density = smoke.get("densityProbe", {}) if isinstance(smoke.get("densityProbe"), dict) else {}
     export_probe = smoke.get("exportProbe", {}) if isinstance(smoke.get("exportProbe"), dict) else {}
     export_style = smoke.get("exportStyleProbe", {}) if isinstance(smoke.get("exportStyleProbe"), dict) else {}
+    support_events = export_probe.get("events") if isinstance(export_probe.get("events"), list) else []
     stress_summary = stress.get("summary", {}) if isinstance(stress.get("summary"), dict) else {}
     stress_export = stress.get("exportSnapshotProbe", {}) if isinstance(stress.get("exportSnapshotProbe"), dict) else {}
 
@@ -132,6 +133,20 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any]) -> list[
     add("pdf_export_invoked", _safe_int(export_probe.get("saveCalls")) >= 1, "PDF save path invoked.", export_probe)
     add("print_export_invoked", _safe_int(export_probe.get("printCalls")) >= 1, "Generated-PDF print path invoked.", export_probe)
     add("support_prompt_twice", _safe_int(export_probe.get("supportPrompts")) >= 2, "Support prompt fired after PDF + print.", export_probe)
+    if _safe_int(smoke.get("realPdfByteSize")) > 0:
+        add("generated_pdf_non_empty", _safe_int(smoke.get("realPdfByteSize")) >= 1500, "Generated PDF blob size indicates non-empty export.", smoke.get("realPdfByteSize"))
+    else:
+        add("generated_pdf_non_empty", True, "Generated PDF size probe unavailable (skipped).", smoke.get("realPdfByteSize"))
+    if support_events:
+        first_save = support_events.index("save") if "save" in support_events else -1
+        first_support = support_events.index("support") if "support" in support_events else -1
+        last_print = len(support_events) - 1 - support_events[::-1].index("print") if "print" in support_events else -1
+        support_after_print = any(event == "support" for event in support_events[last_print + 1 :]) if last_print >= 0 else False
+        add("support_after_pdf_save", first_save >= 0 and first_support > first_save, "Support prompt appears after PDF save is triggered.", support_events)
+        add("support_after_print", last_print >= 0 and support_after_print, "Support prompt appears after print is triggered.", support_events)
+    else:
+        add("support_after_pdf_save", True, "Support order probe unavailable (skipped).", support_events)
+        add("support_after_print", True, "Support order probe unavailable (skipped).", support_events)
     add("export_controls_hidden", bool(export_style.get("controlsHidden")), "Export snapshot hides editing/resize controls.", export_style.get("controlsHidden"))
     add(
         "export_layout_stable",

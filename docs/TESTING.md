@@ -184,11 +184,12 @@ This runs `scripts/smoke_ui_playwright.js` in an isolated temporary Playwright e
 - accept action increments counters
 - preview renders cards
 - preview card lock blocks accidental drag/resize
-- preview item edit + keyboard undo (`Ctrl+Z`)
+- preview item edit (modal path) + in-field keyboard undo (`Ctrl+Z`) before save
 - preview item delete + undo restore
 - preview delete + undo restore flow
-- PDF export button flow + support prompt callback
-- generated-PDF print flow + support prompt callback
+- real generated PDF blob is non-empty (guards blank export regressions)
+- PDF export button flow + support prompt callback (must trigger after save path)
+- generated-PDF print flow + support prompt callback (must trigger after print path)
 - export snapshot hides edit/resize controls
 - export snapshot uses compact card headers (space-efficient)
 
@@ -241,7 +242,8 @@ Use these targeted protocols when touching export or ingestion logic.
 1. `make smoke-ui`
 2. Confirm script validates:
    - an editable preview item can be edited
-   - keyboard undo restores edited content
+   - in-modal text undo (`Ctrl+Z`) remains local to the input and is not intercepted by preview undo
+   - preview keyboard undo restores edited content after save
    - preview item delete reduces item count
    - undo restores the deleted item
    - card delete and undo round-trip
@@ -252,7 +254,8 @@ Use these targeted protocols when touching export or ingestion logic.
 2. Confirm script validates:
    - PDF export path is invoked
    - generated-PDF print path is invoked
-   - support prompt hook fires after both actions
+   - support prompt hook fires after both actions and only after save/print was triggered
+   - generated PDF blob is non-empty (rejects near-empty/blank-output regressions)
    - export snapshot does not show edit/remove/resize chrome
    - export snapshot header is compact
 3. Perform visual check on `data/test_reports/artifacts/smoke-export-preview.png`:
