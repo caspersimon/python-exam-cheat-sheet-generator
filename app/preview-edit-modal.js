@@ -12,7 +12,13 @@ const previewEditModalState = {
 };
 
 function shouldUseNativePromptEditing() {
-  return Boolean(window.__useNativePromptEditing) || Boolean(window.navigator?.webdriver);
+  if (window.__useNativePromptEditing === true) {
+    return true;
+  }
+  if (window.__useNativePromptEditing === false) {
+    return false;
+  }
+  return Boolean(window.navigator?.webdriver);
 }
 
 function ensurePreviewEditModal() {

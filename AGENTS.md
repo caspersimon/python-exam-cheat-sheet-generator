@@ -284,9 +284,9 @@ PY
 4. Refresh preserves progress
 5. Swipe counts and filters behave correctly
 6. Preview drag/resize persists
-7. Preview edit/delete actions can be undone via button and `Ctrl/Cmd+Z`
+7. Preview edit/delete actions can be undone via button and `Ctrl/Cmd+Z`; modal text edits keep native in-field undo behavior
 8. `Print` generates and prints a PDF (not raw page print)
-9. PDF export/print both show support prompt
+9. PDF export/print both show custom support prompt only after successful save/print trigger (not before)
 10. Exported cheat sheet view has no wasted chrome: no edit/delete/resize controls and no oversized title bars.
 11. Gemini protocol report (`data/test_reports/gemini_ui_test_report.json`) is green and has no fail checks.
 

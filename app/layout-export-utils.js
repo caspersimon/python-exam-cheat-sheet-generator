@@ -39,10 +39,9 @@ async function exportPng() {
   refs.exportPngBtn.disabled = true;
 
   try {
-    const renderOptions = getExportRenderOptions();
     for (let idx = 0; idx < pages.length; idx += 1) {
       const page = pages[idx];
-      const canvas = await window.html2canvas(page, renderOptions);
+      const canvas = await renderExportPageToCanvas(page);
 
       const url = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -70,17 +69,70 @@ function getNonEmptyPageElements() {
   return pages;
 }
 
-function getExportRenderOptions() {
+function getExportRenderOptions(options = {}) {
+  const scale = Number(options.scale);
   return {
-    scale: 2,
+    scale: Number.isFinite(scale) && scale > 0 ? scale : 2,
     useCORS: true,
     backgroundColor: "#ffffff",
-    foreignObjectRendering: true,
+    logging: false,
+    foreignObjectRendering: options.useForeignObject !== false,
     removeContainer: true,
     onclone: (clonedDoc) => {
       clonedDoc.body.classList.add("export-snapshot-mode");
     },
   };
+}
+
+function isCanvasLikelyBlank(canvas) {
+  if (!canvas || canvas.width < 8 || canvas.height < 8) {
+    return true;
+  }
+
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) {
+    return false;
+  }
+
+  const sampleCols = 18;
+  const sampleRows = 24;
+  const minX = Math.max(0, Math.floor(canvas.width * 0.02));
+  const minY = Math.max(0, Math.floor(canvas.height * 0.02));
+  const maxX = Math.max(minX + 1, Math.ceil(canvas.width * 0.98));
+  const maxY = Math.max(minY + 1, Math.ceil(canvas.height * 0.98));
+  const stepX = Math.max(1, Math.floor((maxX - minX) / sampleCols));
+  const stepY = Math.max(1, Math.floor((maxY - minY) / sampleRows));
+
+  for (let y = minY; y < maxY; y += stepY) {
+    for (let x = minX; x < maxX; x += stepX) {
+      const [r, g, b, a] = ctx.getImageData(x, y, 1, 1).data;
+      if (a > 8 && (r < 246 || g < 246 || b < 246)) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+async function renderExportPageToCanvas(page, options = {}) {
+  if (!page) {
+    throw new Error("Export page element is missing.");
+  }
+  if (typeof window.html2canvas !== "function") {
+    throw new Error("html2canvas is not available.");
+  }
+
+  const primary = await window.html2canvas(page, getExportRenderOptions({ ...options, useForeignObject: true }));
+  if (!isCanvasLikelyBlank(primary)) {
+    return primary;
+  }
+
+  const fallback = await window.html2canvas(page, getExportRenderOptions({ ...options, useForeignObject: false }));
+  if (isCanvasLikelyBlank(fallback)) {
+    throw new Error("Export rendering resulted in a blank page.");
+  }
+  return fallback;
 }
 
 function formatExamLabel(label) {

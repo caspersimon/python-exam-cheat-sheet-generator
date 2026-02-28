@@ -75,38 +75,12 @@ async function acceptNextDialog(page, action) {
   ]);
 }
 
-async function promptNextDialog(page, promptValue, action) {
-  await Promise.all([
-    page.waitForEvent("dialog", { timeout: 7000 }).then((dialog) => {
-      if (dialog.type() !== "prompt") {
-        throw new Error(`Expected prompt dialog, got: ${dialog.type()}`);
-      }
-      return dialog.accept(promptValue);
-    }),
-    action(),
-  ]);
-}
-
-async function completePromptSequence(page, values, action) {
-  const prompts = [...values];
-  const dialogTask = (async () => {
-    while (prompts.length > 0) {
-      const dialog = await page.waitForEvent("dialog", { timeout: 7000 });
-      if (dialog.type() !== "prompt") {
-        throw new Error(`Expected prompt dialog, got: ${dialog.type()}`);
-      }
-      await dialog.accept(prompts.shift());
-    }
-  })();
-  await action();
-  await dialogTask;
-}
-
 async function installExportFlowStubs(page) {
   await page.evaluate(() => {
-    window.__smokeExport = { supportPrompts: 0, saveCalls: 0, printCalls: 0 };
+    window.__smokeExport = { supportPrompts: 0, saveCalls: 0, printCalls: 0, events: [] };
     window.showSupportPrompt = () => {
       window.__smokeExport.supportPrompts += 1;
+      window.__smokeExport.events.push("support");
     };
 
     window.html2canvas = async () => ({
@@ -118,8 +92,9 @@ async function installExportFlowStubs(page) {
     window.buildPdfDocumentFromPages = async () => ({
       save: () => {
         window.__smokeExport.saveCalls += 1;
+        window.__smokeExport.events.push("save");
       },
-      output: () => new Blob(["%PDF-1.4\n"], { type: "application/pdf" }),
+      output: () => new Blob([new Uint8Array(2400)], { type: "application/pdf" }),
     });
 
     const originalCreateElement = document.createElement.bind(document);
@@ -135,6 +110,7 @@ async function installExportFlowStubs(page) {
           focus() {},
           print() {
             window.__smokeExport.printCalls += 1;
+            window.__smokeExport.events.push("print");
           },
         },
       });
@@ -277,6 +253,8 @@ async function run() {
   fs.mkdirSync(artifactDir, { recursive: true });
   const { server, port } = await startStaticServer(ROOT);
   const url = `http://127.0.0.1:${port}/index.html`;
+  const modifierKey = process.platform === "darwin" ? "Meta" : "Control";
+  const undoShortcut = `${modifierKey}+z`;
   const consoleErrors = [];
 
   try {
@@ -357,22 +335,38 @@ async function run() {
     }
 
     const editedMarker = "[smoke] edited key point";
-    if (editableType === "aiExample") {
-      await completePromptSequence(page, [editedMarker, "print('smoke')", "edited explanation"], async () => {
-        await firstEditButton.click({ timeout: 5000 });
-      });
-    } else if (editableType === "sourceItem") {
-      await completePromptSequence(page, [editedMarker, "edited source body"], async () => {
-        await firstEditButton.click({ timeout: 5000 });
-      });
-    } else {
-      await promptNextDialog(page, editedMarker, async () => {
-        await firstEditButton.click({ timeout: 5000 });
-      });
+    await page.evaluate(() => {
+      window.__useNativePromptEditing = false;
+    });
+    await firstEditButton.click({ timeout: 5000 });
+    await page.waitForSelector("#previewEditModal:not(.hidden)", { timeout: 7000 });
+
+    const modalInput = page.locator("#previewEditModal [data-preview-edit-input='true']").first();
+    if ((await modalInput.count()) < 1) {
+      throw new Error("Preview edit modal did not render editable input fields.");
     }
+
+    const undoProbeSuffix = " [undo-probe]";
+    await modalInput.focus({ timeout: 3000 });
+    await page.keyboard.press("End");
+    await page.keyboard.type(undoProbeSuffix);
+    const typedValue = await modalInput.inputValue();
+    if (!typedValue.endsWith(undoProbeSuffix)) {
+      throw new Error("Preview edit modal input did not update before text undo check.");
+    }
+    await page.keyboard.press(undoShortcut);
+    await page.waitForTimeout(120);
+    const restoredValue = await modalInput.inputValue();
+    if (restoredValue === typedValue) {
+      throw new Error("Text undo inside preview edit modal was intercepted by app-level undo.");
+    }
+
+    await modalInput.fill(editedMarker);
+    await page.click("#previewEditModalSaveBtn", { timeout: 5000 });
+    await page.waitForSelector("#previewEditModal", { state: "hidden", timeout: 7000 });
     await page.waitForFunction((marker) => document.body.textContent.includes(marker), editedMarker, { timeout: 8000 });
 
-    await page.keyboard.press("Control+z");
+    await page.keyboard.press(undoShortcut);
     await page.waitForFunction((marker) => !document.body.textContent.includes(marker), editedMarker, { timeout: 8000 });
 
     const typedDeleteSelector = `[data-role='preview-delete-item'][data-item-type='${editableType}']`;
@@ -421,16 +415,19 @@ async function run() {
       throw new Error("Could not collect density probe from preview card.");
     }
 
+    const realPdfByteSize = await page.evaluate(async () => ((await buildPdfDocumentFromPages(getNonEmptyPageElements())).output("blob")?.size || 0));
+    if (realPdfByteSize < 1500) throw new Error(`Generated PDF blob looks empty (${realPdfByteSize} bytes).`);
+
     await installExportFlowStubs(page);
     await page.click("#exportPdfBtn", { timeout: 7000 });
     await page.waitForFunction(
-      () => window.__smokeExport && window.__smokeExport.saveCalls >= 1 && window.__smokeExport.supportPrompts >= 1,
+      () => { const p = window.__smokeExport; const e = p?.events || []; const i = e.indexOf("save"); return !!p && p.saveCalls >= 1 && p.supportPrompts >= 1 && i >= 0 && e.indexOf("support") > i; },
       { timeout: 12000 }
     );
 
     await page.click("#printBtn", { timeout: 7000 });
     await page.waitForFunction(
-      () => window.__smokeExport && window.__smokeExport.printCalls >= 1 && window.__smokeExport.supportPrompts >= 2,
+      () => { const p = window.__smokeExport; const e = p?.events || []; const i = e.lastIndexOf("print"); return !!p && p.printCalls >= 1 && p.supportPrompts >= 2 && i >= 0 && e.slice(i + 1).includes("support"); },
       { timeout: 12000 }
     );
 
@@ -476,6 +473,7 @@ async function run() {
           url,
           previewCards,
           densityProbe,
+          realPdfByteSize,
           exportProbe,
           exportStyleProbe,
           screenshotPath,
