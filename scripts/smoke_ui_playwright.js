@@ -1,10 +1,8 @@
 #!/usr/bin/env node
-
 const fs = require("fs");
 const path = require("path");
 const http = require("http");
 const { chromium } = require("playwright");
-
 const ROOT = path.resolve(__dirname, "..");
 
 const MIME = {
@@ -63,8 +61,7 @@ function startStaticServer(rootDir) {
 }
 
 function toInt(text) {
-  const value = String(text || "").trim();
-  const n = parseInt(value, 10);
+  const n = parseInt(String(text || "").trim(), 10);
   return Number.isFinite(n) ? n : 0;
 }
 
@@ -77,16 +74,21 @@ async function acceptNextDialog(page, action) {
 
 async function installExportFlowStubs(page) {
   await page.evaluate(() => {
-    window.__smokeExport = { supportPrompts: 0, saveCalls: 0, printCalls: 0, events: [] };
+    window.__smokeExport = { supportPrompts: 0, saveCalls: 0, printCalls: 0, events: [], html2canvasModes: [] };
     window.showSupportPrompt = () => {
       window.__smokeExport.supportPrompts += 1;
       window.__smokeExport.events.push("support");
     };
 
-    window.html2canvas = async () => ({
-      toDataURL: () =>
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADElEQVR4nGP4//8/AAX+Av5B7A7NAAAAAElFTkSuQmCC",
-    });
+    window.html2canvas = async (_node, options = {}) => {
+      window.__smokeExport.html2canvasModes.push(Boolean(options.foreignObjectRendering));
+      return {
+        width: 100,
+        height: 100,
+        getContext: () => ({ getImageData: () => ({ data: [0, 0, 0, 255] }) }),
+        toDataURL: () => "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADElEQVR4nGP4//8/AAX+Av5B7A7NAAAAAElFTkSuQmCC",
+      };
+    };
     window.jspdf = { jsPDF: function jsPDF() {} };
 
     window.buildPdfDocumentFromPages = async () => ({
@@ -419,6 +421,7 @@ async function run() {
     if (realPdfByteSize < 1500) throw new Error(`Generated PDF blob looks empty (${realPdfByteSize} bytes).`);
 
     await installExportFlowStubs(page);
+    await page.evaluate(async () => { const pages = getNonEmptyPageElements(); if (pages.length) await renderExportPageToCanvas(pages[0]); });
     await page.click("#exportPdfBtn", { timeout: 7000 });
     await page.waitForFunction(
       () => { const p = window.__smokeExport; const e = p?.events || []; const i = e.indexOf("save"); return !!p && p.saveCalls >= 1 && p.supportPrompts >= 1 && i >= 0 && e.indexOf("support") > i; },
@@ -430,6 +433,7 @@ async function run() {
       () => { const p = window.__smokeExport; const e = p?.events || []; const i = e.lastIndexOf("print"); return !!p && p.printCalls >= 1 && p.supportPrompts >= 2 && i >= 0 && e.slice(i + 1).includes("support"); },
       { timeout: 12000 }
     );
+    await page.waitForFunction(() => (window.__smokeExport?.html2canvasModes || []).includes(false), { timeout: 8000 });
 
     const screenshotPath = path.join(ROOT, "docs", "smoke-preview.png");
     await page.screenshot({ path: screenshotPath, fullPage: true });
