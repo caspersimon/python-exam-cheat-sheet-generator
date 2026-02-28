@@ -67,7 +67,8 @@ body.export-snapshot-mode .preview-card .inline-code {
   -webkit-box-decoration-break: clone;
   white-space: normal;
   word-break: normal;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 @media (max-width: 1220px) {

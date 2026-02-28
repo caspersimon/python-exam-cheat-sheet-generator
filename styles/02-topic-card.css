@@ -353,6 +353,7 @@ code,
 
 .preview-card code,
 .preview-card .inline-code {
+  display: inline;
   font-size: 0.84em;
   padding: 0 2px;
   border-color: rgba(40, 52, 48, 0.12);
@@ -360,7 +361,9 @@ code,
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   white-space: normal;
-  overflow-wrap: anywhere;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 pre {
