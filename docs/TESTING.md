@@ -143,15 +143,17 @@ This runs `scripts/gemini_test_protocol.py`:
 
 1. Runs `make smoke-ui` to generate deterministic UI/export probes and screenshots.
 2. Runs `make stress-layout-ui` to execute exhaustive layout scenarios (auto/manual grid + typography/spacing extremes).
-3. Applies hard pass/fail gates (export chrome hidden, compact header, support prompt hook, print/export flow invoked, stress overlap/bounds/utilization checks).
-4. Runs multiple small Gemini micro-audits (strict JSON schema per check):
+3. Runs `make export-canvas-guard-ui` to render real export canvases and detect clipping/top-only capture regressions.
+4. Applies hard pass/fail gates (export chrome hidden, compact header, support prompt hook, print/export flow invoked, stress overlap/bounds/utilization checks, export-canvas vertical coverage/bottom-ink checks).
+5. Runs multiple small Gemini micro-audits (strict JSON schema per check):
    - `density_auditor`
    - `export_cleanliness_auditor`
    - `protocol_completeness_auditor`
    - `preview_image_density_auditor` (real screenshot input)
    - `export_image_cleanliness_auditor` (real screenshot input)
    - `stress_worstcase_image_auditor` (real screenshot input)
-5. Writes reports:
+   - `export_canvas_clip_auditor` (real rendered export-canvas image input)
+6. Writes reports:
    - `data/test_reports/gemini_ui_test_report.json`
 
 Protocol status semantics:
@@ -192,6 +194,20 @@ This runs `scripts/smoke_ui_playwright.js` in an isolated temporary Playwright e
 - generated-PDF print flow + support prompt callback (must trigger after print path)
 - export snapshot hides edit/resize controls
 - export snapshot uses compact card headers (space-efficient)
+
+## Export Canvas Guard (Headless)
+
+```bash
+make export-canvas-guard-ui
+```
+
+This runs `scripts/export_canvas_guard_playwright.js` and hard-fails when rendered export canvases indicate clipping:
+
+- detects non-empty export pages
+- verifies minimum vertical content coverage on each rendered export canvas
+- verifies non-trivial lower-page content presence (bottom-ink ratio)
+- verifies wrapped inline-code export keeps surrounding plain text visible
+- writes canvas artifacts to `data/test_reports/artifacts/export-canvas-page-*.png`
 
 ## Playwright Workaround Protocol (No Project Node Setup Required)
 

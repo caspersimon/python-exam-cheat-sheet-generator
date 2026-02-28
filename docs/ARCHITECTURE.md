@@ -57,6 +57,7 @@ Week ingestion flow:
 Testing/QA automation:
 
 - `scripts/smoke_ui_playwright.js`: browser smoke flow + screenshot/probe generation.
+- `scripts/export_canvas_guard_playwright.js`: dedicated export-canvas clipping guard with artifact output.
 - `scripts/gemini_test_protocol.py`: deterministic gates + Gemini micro-audits for UI/export quality.
 - `scripts/gemini_capability_benchmark.py`: model capability checks for JSON/code/vision/format contracts.
 - `scripts/gemini_prompt_experiments.py`: prompt-variant A/B experiments for Gemini code delegation.

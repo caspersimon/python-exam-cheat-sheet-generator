@@ -27,6 +27,7 @@ DEFAULT_MODEL = SMART_GEMINI_AGENT
 DEFAULT_FALLBACK_MODEL = SMART_GEMINI_AGENT_FALLBACK
 DEFAULT_SMOKE_CMD = "make smoke-ui"
 DEFAULT_STRESS_CMD = "make stress-layout-ui"
+DEFAULT_CANVAS_CMD = "make export-canvas-guard-ui"
 DEFAULT_REPORT_DIR = ROOT / "data" / "test_reports"
 
 
@@ -38,8 +39,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fallback-model", default=DEFAULT_FALLBACK_MODEL)
     parser.add_argument("--smoke-cmd", default=DEFAULT_SMOKE_CMD)
     parser.add_argument("--stress-cmd", default=DEFAULT_STRESS_CMD)
+    parser.add_argument("--canvas-cmd", default=DEFAULT_CANVAS_CMD)
     parser.add_argument("--probe-json", type=Path, default=None, help="Optional smoke probe JSON path.")
     parser.add_argument("--stress-json", type=Path, default=None, help="Optional stress probe JSON path.")
+    parser.add_argument("--canvas-json", type=Path, default=None, help="Optional export-canvas probe JSON path.")
     parser.add_argument("--skip-gemini", action="store_true")
     parser.add_argument(
         "--strict-gemini",
@@ -86,6 +89,11 @@ def _run_json_command(command: str) -> dict[str, Any]:
 
 def _artifact_path(*candidates: Any) -> str:
     for value in candidates:
+        if isinstance(value, (list, tuple)):
+            nested = _artifact_path(*value)
+            if nested:
+                return nested
+            continue
         text = str(value or "").strip()
         if text and Path(text).exists():
             return text
@@ -115,13 +123,15 @@ def _stage_image_for_gemini(source_path: str, staging_dir: Path, check_id: str) 
     return str(target)
 
 
-def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any]) -> list[dict[str, Any]]:
+def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any], canvas: dict[str, Any]) -> list[dict[str, Any]]:
     density = smoke.get("densityProbe", {}) if isinstance(smoke.get("densityProbe"), dict) else {}
     export_probe = smoke.get("exportProbe", {}) if isinstance(smoke.get("exportProbe"), dict) else {}
     export_style = smoke.get("exportStyleProbe", {}) if isinstance(smoke.get("exportStyleProbe"), dict) else {}
     support_events = export_probe.get("events") if isinstance(export_probe.get("events"), list) else []
     stress_summary = stress.get("summary", {}) if isinstance(stress.get("summary"), dict) else {}
     stress_export = stress.get("exportSnapshotProbe", {}) if isinstance(stress.get("exportSnapshotProbe"), dict) else {}
+    canvas_probe = canvas.get("probe", {}) if isinstance(canvas.get("probe"), dict) else {}
+    inline_wrap_probe = canvas.get("inlineWrapProbe", {}) if isinstance(canvas.get("inlineWrapProbe"), dict) else {}
 
     checks: list[dict[str, Any]] = []
 
@@ -130,6 +140,7 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any]) -> list[
 
     add("smoke_ok", bool(smoke.get("ok")), "Smoke Playwright suite completed.", smoke.get("ok"))
     add("stress_ok", bool(stress.get("ok")), "Stress Playwright suite completed.", stress.get("ok"))
+    add("export_canvas_guard_ok", bool(canvas.get("ok")), "Export canvas guard suite completed.", canvas.get("ok"))
     add("pdf_export_invoked", _safe_int(export_probe.get("saveCalls")) >= 1, "PDF save path invoked.", export_probe)
     add("print_export_invoked", _safe_int(export_probe.get("printCalls")) >= 1, "Generated-PDF print path invoked.", export_probe)
     add("support_prompt_twice", _safe_int(export_probe.get("supportPrompts")) >= 2, "Support prompt fired after PDF + print.", export_probe)
@@ -194,6 +205,30 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any]) -> list[
         bool(stress_export.get("controlsHidden")),
         "Stress export snapshot hides controls.",
         stress_export.get("controlsHidden"),
+    )
+    add(
+        "export_canvas_pages_detected",
+        _safe_int(canvas_probe.get("pagesDetected")) >= 1,
+        "Export canvas probe detected at least one rendered page.",
+        canvas_probe.get("pagesDetected"),
+    )
+    add(
+        "export_canvas_min_bbox_height_ratio",
+        _safe_float(canvas_probe.get("minBBoxHeightRatio"), 0.0) >= 0.55,
+        "Export canvas content spans enough vertical area to reject top-only clipping.",
+        canvas_probe.get("minBBoxHeightRatio"),
+    )
+    add(
+        "export_canvas_min_bottom_ink_ratio",
+        _safe_float(canvas_probe.get("minBottomInkRatio"), 0.0) >= 0.02,
+        "Export canvas keeps meaningful content in the lower page region.",
+        canvas_probe.get("minBottomInkRatio"),
+    )
+    add(
+        "export_inline_wrap_probe_ok",
+        bool(inline_wrap_probe.get("ok")),
+        "Wrapped inline-code export keeps adjacent plain text visible.",
+        inline_wrap_probe,
     )
     return checks
 
@@ -278,6 +313,7 @@ Rules:
 def run_gemini_checks(
     smoke: dict[str, Any],
     stress: dict[str, Any],
+    canvas: dict[str, Any],
     hard_checks: list[dict[str, Any]],
     args: argparse.Namespace,
 ) -> list[dict[str, Any]]:
@@ -290,6 +326,8 @@ def run_gemini_checks(
         "smoke_density": smoke.get("densityProbe"),
         "smoke_export": smoke.get("exportStyleProbe"),
         "stress_summary": stress.get("summary"),
+        "canvas_summary": canvas.get("probe"),
+        "inline_wrap_probe": canvas.get("inlineWrapProbe"),
         "note": "Deterministic probes are primary evidence. Gemini adds secondary judgment.",
     }
 
@@ -321,6 +359,19 @@ def run_gemini_checks(
                 stress.get("exportSnapshotProbe", {}).get("screenshotPath"),
             ),
             "Stress-case screenshot: check that layout remains dense and readable without dead space.",
+        ),
+        (
+            "export_canvas_clip_auditor",
+            _artifact_path(
+                canvas.get("primaryArtifactPath"),
+                *canvas.get("artifactPaths", []),
+            ),
+            "Rendered export-canvas image: fail if content is visibly clipped to top or missing lower-page content.",
+        ),
+        (
+            "export_inline_wrap_text_auditor",
+            _artifact_path(canvas.get("inlineWrapArtifactPath"), canvas.get("inlineWrapProbe", {}).get("artifactPath")),
+            "Wrapped inline-code export image: verify plain text around inline code remains visible and is not replaced by one monolithic code bubble.",
         ),
     ]
     with tempfile.TemporaryDirectory(prefix="gemini_vision_", dir=ROOT) as tmp_dir:
@@ -381,11 +432,12 @@ def main() -> None:
     args = parse_args()
     smoke = _read_json(args.probe_json) if args.probe_json else _run_json_command(args.smoke_cmd)
     stress = _read_json(args.stress_json) if args.stress_json else _run_json_command(args.stress_cmd)
+    canvas = _read_json(args.canvas_json) if args.canvas_json else _run_json_command(args.canvas_cmd)
 
-    hard_checks = evaluate_hard_checks(smoke, stress)
+    hard_checks = evaluate_hard_checks(smoke, stress, canvas)
     gemini_checks: list[dict[str, Any]] = []
     if not args.skip_gemini:
-        gemini_checks = run_gemini_checks(smoke, stress, hard_checks, args)
+        gemini_checks = run_gemini_checks(smoke, stress, canvas, hard_checks, args)
 
     hard_failures = [item for item in hard_checks if item["status"] == "fail"]
     gemini_failures = [item for item in gemini_checks if item["status"] == "fail"]
@@ -414,6 +466,7 @@ def main() -> None:
         },
         "smoke_probe": smoke,
         "stress_probe": stress,
+        "export_canvas_probe": canvas,
         "hard_checks": hard_checks,
         "gemini_checks": gemini_checks,
         "summary": {

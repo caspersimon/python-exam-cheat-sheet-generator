@@ -14,11 +14,16 @@ class GeminiTestProtocolTests(unittest.TestCase):
         cls.root = Path(__file__).resolve().parents[1]
         cls.script = cls.root / "scripts" / "gemini_test_protocol.py"
 
-    def _run_protocol(self, probe_payload: dict[str, object]) -> subprocess.CompletedProcess[str]:
+    def _run_protocol(
+        self,
+        probe_payload: dict[str, object],
+        canvas_payload: dict[str, object] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         with tempfile.TemporaryDirectory() as tmp:
             temp_dir = Path(tmp)
             probe_path = temp_dir / "probe.json"
             stress_path = temp_dir / "stress.json"
+            canvas_path = temp_dir / "canvas.json"
             report_path = temp_dir / "report.json"
             probe_path.write_text(json.dumps(probe_payload, ensure_ascii=False, indent=2), encoding="utf-8")
             stress_payload = {
@@ -34,6 +39,24 @@ class GeminiTestProtocolTests(unittest.TestCase):
                 "exportSnapshotProbe": {"controlsHidden": True, "headerRatio": 0.05, "screenshotPath": ""},
             }
             stress_path.write_text(json.dumps(stress_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+            canvas_payload = canvas_payload or {
+                "ok": True,
+                "probe": {
+                    "pagesDetected": 1,
+                    "minBBoxHeightRatio": 0.72,
+                    "minBottomInkRatio": 0.18,
+                },
+                "inlineWrapProbe": {
+                    "ok": True,
+                    "fullInkRatio": 0.08,
+                    "topLeftInkRatio": 0.04,
+                    "bottomInkRatio": 0.03,
+                },
+                "inlineWrapArtifactPath": "",
+                "primaryArtifactPath": "",
+                "artifactPaths": [],
+            }
+            canvas_path.write_text(json.dumps(canvas_payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
             result = subprocess.run(
                 [
@@ -43,6 +66,8 @@ class GeminiTestProtocolTests(unittest.TestCase):
                     str(probe_path),
                     "--stress-json",
                     str(stress_path),
+                    "--canvas-json",
+                    str(canvas_path),
                     "--skip-gemini",
                     "--report-file",
                     str(report_path),
@@ -84,6 +109,36 @@ class GeminiTestProtocolTests(unittest.TestCase):
         self.assertNotEqual(0, result.returncode, msg="Expected non-zero exit for failing hard checks.")
         self.assertEqual("fail", result.report["summary"]["overall_status"])  # type: ignore[attr-defined]
         self.assertEqual("fail", result.report["summary"]["release_gate_status"])  # type: ignore[attr-defined]
+
+    def test_protocol_fails_when_export_canvas_metrics_indicate_clipping(self) -> None:
+        probe = {
+            "ok": True,
+            "densityProbe": {"iconButtonsOnly": True, "headerRatio": 0.11},
+            "exportProbe": {"supportPrompts": 2, "saveCalls": 1, "printCalls": 1},
+            "exportStyleProbe": {"controlsHidden": True, "compactHeader": True, "headerRatio": 0.08},
+            "screenshotPath": "docs/smoke-preview.png",
+            "exportScreenshotPath": "docs/smoke-export-preview.png",
+        }
+        clipped_canvas = {
+            "ok": False,
+            "probe": {
+                "pagesDetected": 1,
+                "minBBoxHeightRatio": 0.31,
+                "minBottomInkRatio": 0.001,
+            },
+            "inlineWrapProbe": {
+                "ok": False,
+                "fullInkRatio": 0.01,
+                "topLeftInkRatio": 0.001,
+                "bottomInkRatio": 0.0,
+            },
+            "inlineWrapArtifactPath": "",
+            "primaryArtifactPath": "",
+            "artifactPaths": [],
+        }
+        result = self._run_protocol(probe, canvas_payload=clipped_canvas)
+        self.assertNotEqual(0, result.returncode, msg="Expected non-zero exit for clipping-like canvas metrics.")
+        self.assertEqual("fail", result.report["summary"]["overall_status"])  # type: ignore[attr-defined]
 
 
 if __name__ == "__main__":
