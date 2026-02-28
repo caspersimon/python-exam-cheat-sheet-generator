@@ -1,13 +1,54 @@
-const SUPPORT_PAGE_URL = "https://buymeacoffee.com/caspersimon";
+const SUPPORT_PAGE_URL =
+  "https://buymeacoffee.com/caspersimon/?utm_source=cheatsheet_app&utm_medium=support_prompt&utm_campaign=post_export_support";
+const SUPPORT_PROMPT_SNOOZE_KEY = "python_midterm_support_prompt_snooze_v1";
+const SUPPORT_PROMPT_SNOOZE_DAYS = 14;
 
 const supportPromptState = {
   overlay: null,
   acceptBtn: null,
   declineBtn: null,
   closeBtn: null,
+  neverBtn: null,
   active: false,
   eventsBound: false,
 };
+
+function readSupportPromptSuppression() {
+  try {
+    return localStorage.getItem(SUPPORT_PROMPT_SNOOZE_KEY) || "";
+  } catch {
+    return "";
+  }
+}
+
+function writeSupportPromptSuppression(value) {
+  try {
+    localStorage.setItem(SUPPORT_PROMPT_SNOOZE_KEY, value);
+  } catch {
+    // Ignore write issues in private/incognito contexts.
+  }
+}
+
+function suppressSupportPromptForever() {
+  writeSupportPromptSuppression("never");
+}
+
+function suppressSupportPromptForDays(days) {
+  const ms = Math.max(1, Number(days) || 1) * 24 * 60 * 60 * 1000;
+  writeSupportPromptSuppression(String(Date.now() + ms));
+}
+
+function isSupportPromptSuppressed() {
+  const marker = readSupportPromptSuppression();
+  if (!marker) {
+    return false;
+  }
+  if (marker === "never") {
+    return true;
+  }
+  const until = Number(marker);
+  return Number.isFinite(until) && until > Date.now();
+}
 
 function isPdfExportReady() {
   return typeof window.html2canvas === "function" && !!window.jspdf && !!window.jspdf.jsPDF;
@@ -34,6 +75,9 @@ async function buildPdfDocumentFromPages(pages) {
 }
 
 function queueSupportPrompt() {
+  if (isSupportPromptSuppressed()) {
+    return;
+  }
   window.setTimeout(() => {
     if (typeof window.showSupportPrompt === "function") {
       window.showSupportPrompt();
@@ -211,7 +255,8 @@ function ensureSupportPromptModal() {
   const acceptBtn = document.getElementById("supportPromptAcceptBtn");
   const declineBtn = document.getElementById("supportPromptDeclineBtn");
   const closeBtn = document.getElementById("supportPromptCloseBtn");
-  if (!overlay || !acceptBtn || !declineBtn || !closeBtn) {
+  const neverBtn = document.getElementById("supportPromptNeverBtn");
+  if (!overlay || !acceptBtn || !declineBtn || !closeBtn || !neverBtn) {
     return null;
   }
 
@@ -219,11 +264,15 @@ function ensureSupportPromptModal() {
   supportPromptState.acceptBtn = acceptBtn;
   supportPromptState.declineBtn = declineBtn;
   supportPromptState.closeBtn = closeBtn;
+  supportPromptState.neverBtn = neverBtn;
 
   if (!supportPromptState.eventsBound) {
     supportPromptState.eventsBound = true;
 
-    const dismiss = () => hideSupportPrompt();
+    const dismiss = () => {
+      suppressSupportPromptForDays(SUPPORT_PROMPT_SNOOZE_DAYS);
+      hideSupportPrompt();
+    };
     closeBtn.addEventListener("click", dismiss);
     declineBtn.addEventListener("click", dismiss);
     overlay.addEventListener("click", (event) => {
@@ -233,8 +282,13 @@ function ensureSupportPromptModal() {
     });
 
     acceptBtn.addEventListener("click", () => {
-      dismiss();
+      suppressSupportPromptForever();
+      hideSupportPrompt();
       window.open(SUPPORT_PAGE_URL, "_blank", "noopener,noreferrer");
+    });
+    neverBtn.addEventListener("click", () => {
+      suppressSupportPromptForever();
+      hideSupportPrompt();
     });
 
     document.addEventListener("keydown", (event) => {
@@ -253,7 +307,7 @@ function ensureSupportPromptModal() {
 
 function showSupportPrompt() {
   const modal = ensureSupportPromptModal();
-  if (!modal || modal.active) {
+  if (!modal || modal.active || isSupportPromptSuppressed()) {
     return;
   }
 

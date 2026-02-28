@@ -317,8 +317,26 @@ body.support-prompt-open {
   max-width: 52ch;
 }
 
+.support-prompt-impact-list {
+  margin: 12px 0 0;
+  padding: 0 0 0 18px;
+  color: #253631;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.support-prompt-impact-list li + li {
+  margin-top: 5px;
+}
+
+.support-prompt-subtext {
+  margin: 12px 0 0;
+  font-size: 0.83rem;
+  color: #4b5f59;
+}
+
 .support-prompt-actions {
-  margin-top: 18px;
+  margin-top: 14px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -337,6 +355,20 @@ body.support-prompt-open {
   color: #4a5a56;
 }
 
+.support-prompt-never {
+  margin-top: 10px;
+  border: 0;
+  background: transparent;
+  color: #5d716a;
+  font-size: 0.77rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.support-prompt-never:hover {
+  color: #2f4740;
+}
+
 @media (max-width: 640px) {
   .support-prompt-card {
     width: min(100%, 100vw - 24px);
@@ -352,5 +384,10 @@ body.support-prompt-open {
   .support-prompt-actions .solid-btn,
   .support-prompt-actions .ghost-btn {
     width: 100%;
+  }
+
+  .support-prompt-never {
+    width: 100%;
+    text-align: center;
   }
 }
