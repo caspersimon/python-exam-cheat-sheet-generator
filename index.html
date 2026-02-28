@@ -26,6 +26,7 @@
     <script defer src="./app/preview-render.js"></script>
     <script defer src="./app/preview-card-render.js"></script>
     <script defer src="./app/preview-history.js"></script>
+    <script defer src="./app/preview-edit-modal.js"></script>
     <script defer src="./app/preview-editing.js"></script>
     <script defer src="./app/layout-export-utils.js"></script>
     <script defer src="./app/pdf-export-utils.js"></script>
@@ -267,6 +268,29 @@
           <li>Preview, reorder, and export as PDF or PNG.</li>
         </ul>
         <button id="getStartedBtn" class="solid-btn splash-start-btn" type="button">Get Started</button>
+      </div>
+    </div>
+
+    <div
+      id="previewEditModal"
+      class="preview-edit-modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="previewEditModalTitle"
+      aria-describedby="previewEditModalSubtitle"
+    >
+      <div class="preview-edit-modal-card panel">
+        <div class="preview-edit-modal-head">
+          <h3 id="previewEditModalTitle">Edit content</h3>
+          <p id="previewEditModalSubtitle" class="muted"></p>
+        </div>
+        <form id="previewEditModalForm" class="preview-edit-modal-form">
+          <div id="previewEditModalFields" class="preview-edit-modal-fields"></div>
+          <div class="preview-edit-modal-actions">
+            <button id="previewEditModalCancelBtn" class="ghost-btn" type="button">Cancel</button>
+            <button id="previewEditModalSaveBtn" class="solid-btn" type="submit">Save</button>
+          </div>
+        </form>
       </div>
     </div>
   </body>

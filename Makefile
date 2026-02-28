@@ -11,6 +11,7 @@ check-js:
 	node --check app/preview-render.js
 	node --check app/preview-card-render.js
 	node --check app/preview-history.js
+	node --check app/preview-edit-modal.js
 	node --check app/preview-editing.js
 	node --check app/layout-export-utils.js
 	node --check app/pdf-export-utils.js

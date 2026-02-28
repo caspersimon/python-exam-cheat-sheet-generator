@@ -1,10 +1,15 @@
 .preview-card-head-actions {
+  position: absolute;
+  top: 1px;
+  right: 3px;
+  z-index: 3;
   display: flex;
   align-items: center;
   gap: 3px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 120ms ease;
+  transform: translateY(-5px);
+  transition: opacity 120ms ease, transform 140ms ease;
 }
 
 .preview-head-btn {
@@ -20,6 +25,9 @@
   min-width: 17px;
   height: 17px;
   cursor: pointer;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.84),
+    0 5px 9px rgba(14, 38, 33, 0.2);
 }
 
 .preview-head-btn.danger {
@@ -31,19 +39,21 @@
 .preview-item-block {
   position: relative;
   margin-bottom: 4px;
-  padding-right: 20px;
+  padding-right: 0;
 }
 
 .preview-item-actions {
+  z-index: 2;
   display: flex;
   gap: 3px;
   margin: 0;
   position: absolute;
-  top: 0;
+  top: -3px;
   right: 0;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 120ms ease;
+  transform: translateY(-5px);
+  transition: opacity 120ms ease, transform 140ms ease;
 }
 
 .preview-mini-btn {
@@ -59,6 +69,9 @@
   min-width: 16px;
   height: 16px;
   cursor: pointer;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.84),
+    0 4px 8px rgba(14, 38, 33, 0.19);
 }
 
 .preview-mini-btn.danger {
@@ -75,6 +88,7 @@
 .preview-item-block:hover .preview-item-actions,
 .preview-item-block:focus-within .preview-item-actions {
   opacity: 1;
+  transform: translateY(0);
   pointer-events: auto;
 }
 
@@ -83,6 +97,13 @@
 .preview-card.dragging .preview-card-head-actions,
 .preview-card.resizing .preview-card-head-actions {
   opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.preview-card.is-locked .preview-card-head-actions {
+  opacity: 1;
+  transform: translateY(0);
   pointer-events: auto;
 }
 
@@ -96,6 +117,137 @@
   .preview-card-head-actions,
   .preview-item-actions {
     opacity: 1;
+    transform: translateY(0);
     pointer-events: auto;
+  }
+}
+
+.preview-edit-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(8, 24, 21, 0.46);
+  backdrop-filter: blur(3px);
+}
+
+body.preview-edit-modal-open {
+  overflow: hidden;
+}
+
+.preview-edit-modal-card {
+  width: min(860px, calc(100vw - 30px));
+  max-height: calc(100vh - 36px);
+  padding: 16px 16px 14px;
+  border-radius: 18px;
+  background: linear-gradient(155deg, #ffffff, #f4f8f6);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-edit-modal-head h3 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: #112a24;
+}
+
+.preview-edit-modal-head .muted {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.preview-edit-modal-form {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-edit-modal-fields {
+  min-height: 0;
+  max-height: min(62vh, 640px);
+  overflow: auto;
+  display: grid;
+  gap: 10px;
+  padding-right: 2px;
+}
+
+.preview-edit-field {
+  display: grid;
+  gap: 5px;
+}
+
+.preview-edit-field span {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #23433b;
+}
+
+.preview-edit-field input,
+.preview-edit-field textarea {
+  width: 100%;
+  border: 1px solid #b8c7c2;
+  border-radius: 10px;
+  background: #fff;
+  color: #1f312d;
+  font: inherit;
+}
+
+.preview-edit-field input {
+  height: 40px;
+  padding: 8px 11px;
+}
+
+.preview-edit-field textarea {
+  min-height: 110px;
+  max-height: 42vh;
+  padding: 9px 11px;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.preview-edit-field[data-field-kind="code"] textarea {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.preview-edit-field input:focus-visible,
+.preview-edit-field textarea:focus-visible {
+  outline: 2px solid rgba(0, 109, 91, 0.56);
+  outline-offset: 1px;
+  border-color: #70ac9e;
+}
+
+.preview-edit-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .preview-edit-modal {
+    padding: 12px;
+  }
+
+  .preview-edit-modal-card {
+    width: min(100%, 100vw - 24px);
+    max-height: calc(100vh - 24px);
+    padding: 14px 12px 12px;
+    border-radius: 14px;
+  }
+
+  .preview-edit-modal-actions {
+    justify-content: stretch;
+  }
+
+  .preview-edit-modal-actions .ghost-btn,
+  .preview-edit-modal-actions .solid-btn {
+    flex: 1;
   }
 }
