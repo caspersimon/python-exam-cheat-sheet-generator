@@ -1,13 +1,10 @@
-import json
 import re
 import hashlib
-from collections import defaultdict
 from pathlib import Path
 
 from pipelines.shared import compact_text as shared_compact_text
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE_FILE = ROOT / "study_data.json"
 OUTPUT_FILE = ROOT / "topic_cards.json"
 
 STOP_WORDS = {
@@ -262,4 +259,3 @@ def dedupe_list(items: list[dict], key_fields: list[str]) -> list[dict]:
         seen.add(key)
         out.append(item)
     return out
-

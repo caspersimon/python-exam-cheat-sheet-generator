@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 
+from pipelines.shared import load_topic_pipeline_data
+
 from .assembly import (
     attach_exam_content,
     attach_lecture_content,
@@ -10,11 +12,15 @@ from .assembly import (
     collect_card_topics,
     sort_cards,
 )
-from .core import OUTPUT_FILE, SOURCE_FILE
+from .core import OUTPUT_FILE
 
 
 def main() -> None:
-    data = json.loads(SOURCE_FILE.read_text(encoding="utf-8"))
+    data, source_file = load_topic_pipeline_data()
+    try:
+        generated_from = str(source_file.relative_to(OUTPUT_FILE.parent))
+    except ValueError:
+        generated_from = source_file.name
 
     cards = collect_card_topics(data)
     attach_lecture_content(cards, data)
@@ -24,13 +30,13 @@ def main() -> None:
 
     output = {
         "meta": {
-            "generated_from": SOURCE_FILE.name,
+            "generated_from": generated_from,
             "generator": "build_topic_cards.py",
             "course": data.get("meta", {}).get("course"),
             "weeks_covered": data.get("meta", {}).get("weeks_covered", []),
             "total_cards": 0,
             "notes": [
-                "Sections (1) lecture snippets, (2) exam Q&A, and (4) notebook snippets are sourced from study_data.json.",
+                "Sections (1) lecture snippets, (2) exam Q&A, and (4) notebook snippets are sourced from the canonical study database.",
                 "Low-value one-line notebook/heading snippets are filtered out automatically.",
                 "AI sections are generated separately (summary, common questions, examples).",
             ],

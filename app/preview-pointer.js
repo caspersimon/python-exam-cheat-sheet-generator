@@ -35,7 +35,8 @@ function sanitizePreviewCardLayout(rawLayout, fallback = {}) {
   const y = clamp(Number.isFinite(yRaw) ? yRaw : 0, 0, Math.max(0, pageSize.height - height));
   const zRaw = Number(rawLayout?.z ?? fallback.z ?? 1);
   const z = clamp(Number.isFinite(zRaw) ? zRaw : 1, 1, 9999);
-  return { page, x, y, width, height, z };
+  const locked = Boolean(rawLayout?.locked ?? fallback.locked ?? false);
+  return { page, x, y, width, height, z, locked };
 }
 
 function ensurePreviewCardLayout(cardId, fallback) {
@@ -87,6 +88,9 @@ function handlePreviewPointerDown(event) {
   if (state.view !== "preview" || event.button !== 0) {
     return;
   }
+  if (event.target.closest(".preview-item-actions, .preview-card-head-actions")) {
+    return;
+  }
   const card = event.target.closest(".preview-card");
   if (!card) {
     return;
@@ -106,6 +110,9 @@ function handlePreviewPointerDown(event) {
   const cardId = card.dataset.cardId;
   const layout = state.previewCards[cardId];
   if (!cardId || !layout) {
+    return;
+  }
+  if (layout.locked) {
     return;
   }
 
@@ -203,4 +210,3 @@ function finishPreviewPointerAction(event) {
   previewPointerState.cardEl = null;
   schedulePersistState();
 }
-

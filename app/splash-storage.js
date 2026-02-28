@@ -85,6 +85,7 @@ function resetAppProgress() {
   state.decisions = {};
   state.acceptedOrder = [];
   state.history = [];
+  state.previewHistory = [];
   state.openDrawer = "";
   state.previewCards = {};
   state.previewZCounter = 1;
@@ -107,6 +108,7 @@ function resetAppProgress() {
   applyLayoutVariables();
   setView("swipe");
   renderAll();
+  syncPreviewUndoAvailability();
 }
 
 function hydratePersistedState() {
@@ -238,6 +240,7 @@ function hydratePersistedState() {
         width: Number(layout.width) || 260,
         height: Number(layout.height) || 220,
         z: Number(layout.z) || 1,
+        locked: Boolean(layout.locked),
       };
     });
     state.previewCards = hydratedLayouts;

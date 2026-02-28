@@ -63,6 +63,7 @@ function getDefaultPreviewLayout(index, grid) {
 }
 
 function renderPreview() {
+  syncPreviewUndoAvailability();
   refs.page1Content.innerHTML = "";
   refs.page2Content.innerHTML = "";
   refs.page1Content.classList.remove("is-empty");
@@ -95,6 +96,7 @@ function renderPreview() {
     refs.overflowNotice.classList.add("hidden");
     syncGridControls(grid);
     schedulePersistState();
+    syncPreviewUndoAvailability();
     return;
   }
 
@@ -109,7 +111,7 @@ function renderPreview() {
     }
     const fallback = getDefaultPreviewLayout(index, grid);
     const layout = ensurePreviewCardLayout(card.id, fallback);
-    const cardElement = buildPreviewCard(card, selection);
+    const cardElement = buildPreviewCard(card, selection, layout);
     applyPreviewCardLayout(cardElement, layout);
     const pageContent = getPreviewPageContent(layout.page);
     pageContent.appendChild(cardElement);
@@ -124,6 +126,7 @@ function renderPreview() {
     refs.overflowNotice.classList.add("hidden");
     syncGridControls(grid);
     schedulePersistState();
+    syncPreviewUndoAvailability();
     return;
   }
 
@@ -146,6 +149,7 @@ function renderPreview() {
 
   syncGridControls(grid);
   schedulePersistState();
+  syncPreviewUndoAvailability();
 }
 
 function syncGridControls(effectiveGrid) {
@@ -164,165 +168,3 @@ function syncGridControls(effectiveGrid) {
     ? `${effectiveGrid.rows} (auto)`
     : String(state.layout.gridRows);
 }
-
-function buildPreviewCard(card, selection) {
-  const sectionHtml = [];
-
-  if (selection.sections.keyPoints) {
-    const groups = getSelectedKeyPointGroups(card, selection);
-    if (groups.length) {
-      sectionHtml.push(`<div class="section-title">Key Points for Reference</div>`);
-      sectionHtml.push(renderPreviewKeyPoints(groups));
-    }
-  }
-
-  if (selection.sections.aiExamples) {
-    const aiExamples = usefulAIExamples(card).filter((item) => selection.selected.aiExamples.includes(item.id));
-    if (aiExamples.length) {
-      sectionHtml.push(`<div class="section-title">Code Examples</div>`);
-      aiExamples.forEach((item) => {
-        const kindLabel = item.kind === "incorrect" ? "Incorrect" : "Correct";
-        sectionHtml.push(`<p><strong>${escapeHtml(kindLabel)} • ${renderInlineCode(item.title || "Code example")}</strong></p>`);
-        sectionHtml.push(`<pre>${escapeHtml(item.code || "")}</pre>`);
-        if (item.why) {
-          sectionHtml.push(`<p>${renderInlineCode(normalizeTruncatedDisplayText(item.why))}</p>`);
-        }
-      });
-    }
-  }
-
-  if (selection.sections.recommended) {
-    const recommended = getSelectedSourceItemsForPreview(card, selection, "recommended");
-    if (recommended.length) {
-      sectionHtml.push(`<div class="section-title">Recommended</div>`);
-      recommended.forEach((sourceItem) => {
-        sectionHtml.push(renderPreviewSourceItem(sourceItem));
-      });
-    }
-  }
-
-  if (selection.sections.additional) {
-    const additional = getSelectedSourceItemsForPreview(card, selection, "additional");
-    if (additional.length) {
-      sectionHtml.push(`<div class="section-title">Additional</div>`);
-      additional.forEach((sourceItem) => {
-        sectionHtml.push(renderPreviewSourceItem(sourceItem));
-      });
-    }
-  }
-
-  if (!sectionHtml.length) {
-    sectionHtml.push(`<p class="preview-empty-copy">No selected details for this topic.</p>`);
-  }
-
-  const cardElement = document.createElement("article");
-  cardElement.className = "preview-card";
-  cardElement.dataset.cardId = card.id;
-
-  cardElement.innerHTML = `
-    <div class="preview-card-head" title="Drag to move this card">
-      <h4>${escapeHtml(humanizeTopic(card.topic))}</h4>
-      <span class="preview-drag-hint" aria-hidden="true">&#8942;&#8942;</span>
-    </div>
-    <div class="preview-body">${sectionHtml.join("")}</div>
-    <button type="button" class="preview-resize-bottom" data-role="preview-resize-bottom" aria-label="Resize card height"></button>
-    <button type="button" class="preview-resize-corner" data-role="preview-resize-corner" aria-label="Resize card"></button>
-  `;
-
-  return cardElement;
-}
-
-function getSelectedSourceItemsForPreview(card, selection, sectionKey) {
-  const split = getSourceSplit(card);
-  const selectedIds = new Set(selection.selected[sectionKey] || []);
-  const bucket = sectionKey === "recommended" ? split.recommended : split.additional;
-  return bucket.filter((item) => selectedIds.has(item.id));
-}
-
-function getSelectedKeyPointGroups(card, selection) {
-  const selectedIds = new Set(selection.selected.keyPoints || []);
-  return keyPointGroups(card)
-    .map((group) => {
-      const selectedDetails = group.details.filter((detail) => selectedIds.has(detail.id));
-      const pointSelected = selectedIds.has(group.id);
-      if (!pointSelected && !selectedDetails.length) {
-        return null;
-      }
-      return {
-        ...group,
-        pointSelected,
-        selectedDetails,
-      };
-    })
-    .filter(Boolean);
-}
-
-function renderPreviewKeyPoints(groups) {
-  const blocks = groups
-    .map((group) => {
-      const title = group.pointSelected
-        ? `<p class="preview-kp-main">${renderInlineCode(group.text)}</p>`
-        : `<p class="preview-kp-main"><span class="preview-kp-ref">Reference:</span> ${renderInlineCode(group.text)}</p>`;
-
-      const detailHtml = group.selectedDetails.length
-        ? `<div class="preview-kp-details">${group.selectedDetails.map((detail) => renderPreviewKeyPointDetail(detail)).join("")}</div>`
-        : "";
-
-      return `<div class="preview-kp-group">${title}${detailHtml}</div>`;
-    })
-    .join("");
-  return `<div class="preview-kp-list">${blocks}</div>`;
-}
-
-function renderPreviewKeyPointDetail(detail) {
-  if (detail.table) {
-    return `
-      <div class="preview-kp-detail-block">
-        <p class="preview-kp-detail-title"><strong>${escapeHtml(detail.title || "Table detail")}</strong></p>
-        ${renderPreviewTable(detail.table)}
-      </div>
-    `;
-  }
-  if (detail.code) {
-    return `
-      <div class="preview-kp-detail-block">
-        <p class="preview-kp-detail-title"><strong>${escapeHtml(detail.title || "Code detail")}</strong></p>
-        <pre>${escapeHtml(detail.code)}</pre>
-      </div>
-    `;
-  }
-  const text = normalizeTruncatedDisplayText(detail.text || detail.title || "Optional detail");
-  return `
-    <p class="preview-kp-detail">
-      ${detail.title ? `<strong>${escapeHtml(detail.title)}:</strong> ` : ""}
-      ${renderInlineCode(text)}
-    </p>
-  `;
-}
-
-function renderPreviewTable(table) {
-  const headHtml = table.headers.map((header) => `<th>${renderInlineCode(header)}</th>`).join("");
-  const rowsHtml = table.rows
-    .map((row) => `<tr>${row.map((cell) => `<td>${renderInlineCode(cell)}</td>`).join("")}</tr>`)
-    .join("");
-
-  return `
-    <div class="preview-table-wrap">
-      <table class="preview-table">
-        <thead><tr>${headHtml}</tr></thead>
-        <tbody>${rowsHtml}</tbody>
-      </table>
-    </div>
-  `;
-}
-
-function renderPreviewSourceItem(sourceItem) {
-  const body = renderSourceItemBody(sourceItem);
-  return `
-    <div class="preview-source-item">
-      <p class="preview-source-title"><strong>${escapeHtml(sourceItem.header)}</strong></p>
-      ${body}
-    </div>
-  `;
-}
-

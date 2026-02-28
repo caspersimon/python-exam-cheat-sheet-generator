@@ -144,6 +144,16 @@ button:active,
   transform: translateY(0);
 }
 
+button:disabled {
+  opacity: 0.56;
+  cursor: not-allowed;
+}
+
+button:disabled:hover,
+button:disabled:active {
+  transform: none;
+}
+
 .ghost-btn {
   border-color: var(--line);
   background: #fff;
@@ -188,6 +198,17 @@ button:active,
   background: #fff3de;
   color: #74491a;
   font-weight: 650;
+}
+
+.github-link {
+  border-color: #b7c3be;
+  background: #f2f5f4;
+  color: #1f3530;
+  font-weight: 620;
+}
+
+.github-link:hover {
+  background: #e7edeb;
 }
 
 .coffee-link:hover {
@@ -326,4 +347,3 @@ input[type="range"] {
   width: 100%;
   margin: 0;
 }
-

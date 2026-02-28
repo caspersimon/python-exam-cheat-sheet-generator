@@ -49,6 +49,25 @@
   margin-bottom: 5px;
 }
 
+body.export-snapshot-mode .preview-card-head-actions,
+body.export-snapshot-mode .preview-item-actions,
+body.export-snapshot-mode .preview-resize-bottom,
+body.export-snapshot-mode .preview-resize-corner,
+body.export-snapshot-mode .preview-drag-hint {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.export-snapshot-mode .preview-card code,
+body.export-snapshot-mode .preview-card .inline-code {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 1220px) {
   .app-shell {
     padding: 18px;
@@ -100,6 +119,8 @@
   #overflowNotice,
   .page-label,
   .preview-drag-hint,
+  .preview-card-head-actions,
+  .preview-item-actions,
   .preview-resize-bottom,
   .preview-resize-corner,
   .drawer,

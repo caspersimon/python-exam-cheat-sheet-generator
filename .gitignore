@@ -11,3 +11,8 @@ __pycache__/
 
 # Local smoke artifacts
 docs/smoke-preview.png
+docs/smoke-export-preview.png
+data/test_reports/
+
+# Local AI curation reports
+data/curation_reports/*.json

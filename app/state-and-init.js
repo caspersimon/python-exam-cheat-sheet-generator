@@ -24,6 +24,7 @@ const state = {
   decisions: {},
   acceptedOrder: [],
   history: [],
+  previewHistory: [],
   view: "swipe",
   openDrawer: "",
   previewCards: {},
@@ -55,6 +56,7 @@ const refs = {
   openStatsBtn: document.getElementById("openStatsBtn"),
   openLayoutBtn: document.getElementById("openLayoutBtn"),
   openOrderBtn: document.getElementById("openOrderBtn"),
+  previewUndoBtn: document.getElementById("previewUndoBtn"),
 
   filtersDrawer: document.getElementById("filtersDrawer"),
   statsDrawer: document.getElementById("statsDrawer"),
@@ -250,11 +252,28 @@ function bindEvents() {
     }
 
     if (state.view !== "swipe") {
+      const isUndoShortcut =
+        (event.metaKey || event.ctrlKey) &&
+        !event.altKey &&
+        !event.shiftKey &&
+        event.key.toLowerCase() === "z";
+      if (state.view === "preview" && isUndoShortcut) {
+        event.preventDefault();
+        undoLastPreviewChange();
+      }
       return;
     }
 
     const activeTag = document.activeElement?.tagName;
     if (["INPUT", "TEXTAREA", "SELECT"].includes(activeTag)) {
+      return;
+    }
+
+    const isSwipeUndoShortcut =
+      (event.metaKey || event.ctrlKey) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === "z";
+    if (isSwipeUndoShortcut) {
+      event.preventDefault();
+      undoLastDecision();
       return;
     }
 
@@ -321,10 +340,8 @@ function bindEvents() {
     renderPreview();
   });
 
-  refs.printBtn.addEventListener("click", () => {
-    setView("preview");
-    window.print();
-  });
+  refs.printBtn.addEventListener("click", printGeneratedPdf);
+  refs.previewUndoBtn?.addEventListener("click", () => undoLastPreviewChange());
 
   refs.exportPngBtn.addEventListener("click", exportPng);
   refs.exportPdfBtn.addEventListener("click", exportPdf);

@@ -357,6 +357,10 @@ code,
   padding: 0 2px;
   border-color: rgba(40, 52, 48, 0.12);
   background: #f6f8f9;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 pre {
@@ -397,4 +401,3 @@ pre {
 .plain-bullets li {
   margin-bottom: 0;
 }
-

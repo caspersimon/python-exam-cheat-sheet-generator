@@ -3,11 +3,11 @@ import time
 from pathlib import Path
 from typing import Any
 
-from pipelines.shared import chunked, compact_text, extract_json_blob, run_gemini_cli, trim_lines
+from pipelines.shared import FAST_GEMINI_AGENT, chunked, compact_text, extract_json_blob, run_gemini_cli, trim_lines
 
 ROOT = Path(__file__).resolve().parents[2]
 CARDS_FILE = ROOT / "topic_cards.json"
-MODEL = "gemini-2.5-pro"
+MODEL = FAST_GEMINI_AGENT
 CHUNK_SIZE = 6
 RETRY_LIMIT = 2
 
@@ -288,4 +288,3 @@ def validate_ai_fields(data: dict[str, Any]) -> None:
 
     if missing:
         raise RuntimeError(f"AI validation failed for {len(missing)} cards: {missing[:10]}")
-

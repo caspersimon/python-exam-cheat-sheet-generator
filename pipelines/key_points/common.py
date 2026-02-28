@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from pipelines.shared import (
+    FAST_GEMINI_AGENT,
     chunked,
     compact_text,
     extract_json_blob,
@@ -16,11 +17,11 @@ from pipelines.shared import (
 
 ROOT = Path(__file__).resolve().parents[2]
 CARDS_FILE = ROOT / "topic_cards.json"
-MODEL = "gemini-2.5-flash"
+MODEL = FAST_GEMINI_AGENT
 CHUNK_SIZE = 3
 RETRY_LIMIT = 2
 MAX_KEY_POINT_CHARS = 220
-FILTER_AUDIT_FILE = ROOT / "key_point_filter_audit.json"
+FILTER_AUDIT_FILE = ROOT / "data" / "quality" / "key_point_filter_audit.json"
 
 BANNED_KEY_POINT_START_RE = re.compile(
     r"^(understand|remember|know|be aware|make sure|it is important|always)\b",

@@ -147,6 +147,7 @@ def main() -> None:
     filter_audit["summary"]["cards_with_rejections"] = len(cards_with_rejections)
     filter_audit["summary"]["cards_using_fallback_points"] = len(cards_using_fallback)
 
+    FILTER_AUDIT_FILE.parent.mkdir(parents=True, exist_ok=True)
     CARDS_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     FILTER_AUDIT_FILE.write_text(json.dumps(filter_audit, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Updated {CARDS_FILE} with key points and recommendation splits for {len(cards)} cards.")

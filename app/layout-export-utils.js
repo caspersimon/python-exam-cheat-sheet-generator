@@ -39,13 +39,10 @@ async function exportPng() {
   refs.exportPngBtn.disabled = true;
 
   try {
+    const renderOptions = getExportRenderOptions();
     for (let idx = 0; idx < pages.length; idx += 1) {
       const page = pages[idx];
-      const canvas = await window.html2canvas(page, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-      });
+      const canvas = await window.html2canvas(page, renderOptions);
 
       const url = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -56,51 +53,6 @@ async function exportPng() {
   } finally {
     refs.exportPngBtn.textContent = originalText;
     refs.exportPngBtn.disabled = false;
-  }
-}
-
-async function exportPdf() {
-  setView("preview");
-
-  if (typeof window.html2canvas !== "function" || !window.jspdf || !window.jspdf.jsPDF) {
-    alert("PDF export libraries not loaded. Use Print as fallback.");
-    return;
-  }
-
-  const pages = getNonEmptyPageElements();
-  if (!pages.length) {
-    alert("No content to export.");
-    return;
-  }
-
-  const originalText = refs.exportPdfBtn.textContent;
-  refs.exportPdfBtn.textContent = "Exporting...";
-  refs.exportPdfBtn.disabled = true;
-
-  try {
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-
-    for (let idx = 0; idx < pages.length; idx += 1) {
-      const page = pages[idx];
-      const canvas = await window.html2canvas(page, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-      });
-      const imageData = canvas.toDataURL("image/png");
-
-      if (idx > 0) {
-        pdf.addPage("a4", "portrait");
-      }
-
-      pdf.addImage(imageData, "PNG", 0, 0, 210, 297, undefined, "FAST");
-    }
-
-    pdf.save("python-midterm-cheatsheet.pdf");
-  } finally {
-    refs.exportPdfBtn.textContent = originalText;
-    refs.exportPdfBtn.disabled = false;
   }
 }
 
@@ -116,6 +68,19 @@ function getNonEmptyPageElements() {
     pages.push(refs.page2Content.parentElement);
   }
   return pages;
+}
+
+function getExportRenderOptions() {
+  return {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+    foreignObjectRendering: true,
+    removeContainer: true,
+    onclone: (clonedDoc) => {
+      clonedDoc.body.classList.add("export-snapshot-mode");
+    },
+  };
 }
 
 function formatExamLabel(label) {

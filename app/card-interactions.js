@@ -265,6 +265,7 @@ function triggerDecision(status) {
 }
 
 function commitDecision(status, card) {
+  clearPreviewHistory();
   const previousDecision = state.decisions[card.id] ? deepClone(state.decisions[card.id]) : null;
   const previousOrder = [...state.acceptedOrder];
   state.history.push({
@@ -297,6 +298,7 @@ function commitDecision(status, card) {
 }
 
 function undoLastDecision() {
+  clearPreviewHistory();
   const entry = state.history.pop();
   if (!entry) {
     return;

@@ -1,0 +1,51 @@
+{
+  "week": 4,
+  "topics": [
+    "topic label 1",
+    "topic label 2"
+  ],
+  "lecture": {
+    "concepts": [
+      {
+        "topic": "Example Topic",
+        "explanation": "Explain the rule in exam-focused language.",
+        "code_examples": [
+          {
+            "description": "Short description",
+            "code": "x = [1, 2, 3]\nprint(x[0])"
+          }
+        ]
+      }
+    ],
+    "lecture_questions": [
+      {
+        "topic": "Example Topic",
+        "question": "What is printed by the snippet?",
+        "options": {
+          "a": "1",
+          "b": "2",
+          "c": "Error",
+          "d": "None"
+        },
+        "correct": "a",
+        "explanation": "Index 0 refers to the first element."
+      }
+    ]
+  },
+  "notebook_cells": [
+    {
+      "cell_index": 1,
+      "cell_type": "code",
+      "topic": "indexing",
+      "is_advanced_optional": false,
+      "source": "x = [1, 2, 3]\nprint(x[0])",
+      "outputs": [
+        "1"
+      ]
+    }
+  ],
+  "sources": [
+    "materials/lectures/Lecture Week 4.md",
+    "materials/notebooks/Notebook Week 4.ipynb"
+  ]
+}
