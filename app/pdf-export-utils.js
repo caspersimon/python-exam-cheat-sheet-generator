@@ -2,6 +2,8 @@ const SUPPORT_PAGE_URL =
   "https://buymeacoffee.com/caspersimon/?utm_source=cheatsheet_app&utm_medium=support_prompt&utm_campaign=post_export_support";
 const SUPPORT_PROMPT_SNOOZE_KEY = "python_midterm_support_prompt_snooze_v1";
 const SUPPORT_PROMPT_SNOOZE_DAYS = 14;
+const PDF_EXPORT_SCALE = 3;
+const PDF_IMAGE_COMPRESSION = "MEDIUM";
 
 const supportPromptState = {
   overlay: null,
@@ -60,7 +62,7 @@ async function buildPdfDocumentFromPages(pages) {
 
   for (let idx = 0; idx < pages.length; idx += 1) {
     const page = pages[idx];
-    const canvas = await renderExportPageToCanvas(page);
+    const canvas = await renderExportPageToCanvas(page, { scale: PDF_EXPORT_SCALE });
     if (!canvas || canvas.width < 10 || canvas.height < 10) {
       throw new Error("Generated canvas is invalid.");
     }
@@ -68,7 +70,7 @@ async function buildPdfDocumentFromPages(pages) {
     if (idx > 0) {
       pdf.addPage("a4", "portrait");
     }
-    pdf.addImage(imageData, "PNG", 0, 0, 210, 297, undefined, "FAST");
+    pdf.addImage(imageData, "PNG", 0, 0, 210, 297, undefined, PDF_IMAGE_COMPRESSION);
   }
 
   return pdf;

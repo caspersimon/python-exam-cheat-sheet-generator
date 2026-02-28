@@ -1,4 +1,4 @@
-.PHONY: check-js check-py check-lines test smoke-ui stress-layout-ui gemini-ui-protocol gemini-benchmark gemini-prompt-experiments gemini-health quality-dashboard maintenance-audit leave-better leave-better-ui validate
+.PHONY: check-js check-py check-lines test smoke-ui stress-layout-ui export-canvas-guard-ui gemini-ui-protocol gemini-benchmark gemini-prompt-experiments gemini-health quality-dashboard maintenance-audit leave-better leave-better-ui validate
 
 check-js:
 	node --check app/state-and-init.js
@@ -16,6 +16,7 @@ check-js:
 	node --check app/layout-export-utils.js
 	node --check app/pdf-export-utils.js
 	node --check app/main.js
+	node --check scripts/export_canvas_guard_playwright.js
 	node --check scripts/smoke_ui_playwright.js
 	node --check scripts/stress_layout_playwright.js
 
@@ -42,8 +43,14 @@ stress-layout-ui:
 	/tmp/pwtmp/node_modules/.bin/playwright install chromium
 	NODE_PATH=/tmp/pwtmp/node_modules node scripts/stress_layout_playwright.js
 
+export-canvas-guard-ui:
+	mkdir -p /tmp/pwtmp
+	npm install --prefix /tmp/pwtmp playwright --silent
+	/tmp/pwtmp/node_modules/.bin/playwright install chromium
+	NODE_PATH=/tmp/pwtmp/node_modules node scripts/export_canvas_guard_playwright.js
+
 gemini-ui-protocol:
-	python3 scripts/gemini_test_protocol.py
+	python3 scripts/gemini_test_protocol.py --canvas-cmd "make export-canvas-guard-ui"
 
 gemini-benchmark:
 	python3 scripts/gemini_capability_benchmark.py
