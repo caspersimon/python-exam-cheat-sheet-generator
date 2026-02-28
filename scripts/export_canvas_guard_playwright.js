@@ -151,34 +151,109 @@ async function collectInlineWrapProbe(page) {
       throw new Error("Page 1 element unavailable for inline-wrap probe.");
     }
 
+    const wrapCases = [
+      {
+        id: "short_dictionary",
+        width: 300,
+        prefix: "Direct iteration over a dictionary (e.g.",
+        code: "for key in dict_name",
+        suffix: ") iterates over its keys.",
+      },
+      {
+        id: "long_sorted_items",
+        width: 230,
+        prefix: "Use deterministic iteration when needed:",
+        code: "for key, value in sorted(my_dictionary.items())",
+        suffix: "to keep output stable.",
+      },
+      {
+        id: "membership_chain",
+        width: 210,
+        prefix: "Membership checks can be chained with readability in mind:",
+        code: "if user_id in active_users and role in allowed_roles",
+        suffix: "before returning permissions.",
+      },
+    ];
+
     const host = document.createElement("div");
     host.id = "exportInlineWrapProbeHost";
     host.style.position = "absolute";
     host.style.left = "14px";
     host.style.top = "14px";
-    host.style.width = "300px";
+    host.style.width = "330px";
     host.style.padding = "3px 4px";
     host.style.background = "#fff";
     host.style.zIndex = "9999";
     host.style.pointerEvents = "none";
-    host.innerHTML = `
-      <p id="exportInlineWrapProbeText" style="margin:0; line-height:1.18;">
-        Direct iteration over a dictionary (e.g.
-        <code class="inline-code">for key in dict_name</code>)
-        iterates over its keys.
-      </p>
-    `;
+    host.innerHTML = wrapCases
+      .map(
+        (item, idx) => `
+          <p
+            class="export-inline-wrap-case"
+            data-case-id="${item.id}"
+            style="margin:${idx === 0 ? 0 : 8}px 0 0; line-height:1.18; width:${item.width}px;"
+          >
+            ${item.prefix}
+            <code class="inline-code">${item.code}</code>
+            ${item.suffix}
+          </p>
+        `
+      )
+      .join("");
     refs.page1Content.appendChild(host);
 
     try {
-      const probeEl = host.querySelector("#exportInlineWrapProbeText");
-      const pageRect = pageEl.getBoundingClientRect();
-      const probeRect = probeEl.getBoundingClientRect();
-      const relX = probeRect.left - pageRect.left;
-      const relY = probeRect.top - pageRect.top;
-      const relW = probeRect.width;
-      const relH = probeRect.height;
+      const caseEls = Array.from(host.querySelectorAll(".export-inline-wrap-case"));
+      const codeEl = host.querySelector("code.inline-code");
+      if (!caseEls.length || !codeEl) {
+        throw new Error("Inline-wrap probe host did not render expected elements.");
+      }
+      const readInlineStyle = () => {
+        const style = window.getComputedStyle(codeEl);
+        return {
+          backgroundColor: style.backgroundColor,
+          borderTopColor: style.borderTopColor,
+          borderTopWidth: style.borderTopWidth,
+          borderTopStyle: style.borderTopStyle,
+          borderRadius: style.borderRadius,
+          paddingTop: style.paddingTop,
+          paddingRight: style.paddingRight,
+          paddingBottom: style.paddingBottom,
+          paddingLeft: style.paddingLeft,
+          whiteSpace: style.whiteSpace,
+          overflowWrap: style.overflowWrap,
+          fontFamily: style.fontFamily,
+          fontSize: style.fontSize,
+        };
+      };
+      const norm = (value) => String(value || "").replace(/\s+/g, " ").trim().toLowerCase();
+      const normalStyle = readInlineStyle();
+      document.body.classList.add("export-snapshot-mode");
+      const exportStyle = readInlineStyle();
+      document.body.classList.remove("export-snapshot-mode");
+      const styleParityKeys = [
+        "backgroundColor",
+        "borderTopColor",
+        "borderTopWidth",
+        "borderTopStyle",
+        "borderRadius",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "whiteSpace",
+        "overflowWrap",
+      ];
+      const styleMismatches = styleParityKeys
+        .filter((key) => norm(normalStyle[key]) !== norm(exportStyle[key]))
+        .map((key) => ({
+          key,
+          normal: normalStyle[key],
+          export: exportStyle[key],
+        }));
+      const styleParityOk = styleMismatches.length === 0;
 
+      const pageRect = pageEl.getBoundingClientRect();
       const canvas = await renderExportPageToCanvas(pageEl, { scale: 2 });
       const ctx = canvas.getContext("2d", { willReadFrequently: true });
       if (!ctx) {
@@ -187,10 +262,6 @@ async function collectInlineWrapProbe(page) {
 
       const scaleX = canvas.width / Math.max(1, pageRect.width);
       const scaleY = canvas.height / Math.max(1, pageRect.height);
-      const x = Math.max(0, Math.floor(relX * scaleX));
-      const y = Math.max(0, Math.floor(relY * scaleY));
-      const w = Math.max(10, Math.floor(relW * scaleX));
-      const h = Math.max(10, Math.floor(relH * scaleY));
 
       const sampleInkRatio = (rx, ry, rw, rh) => {
         const step = Math.max(1, Math.floor(Math.min(rw, rh) / 80));
@@ -210,18 +281,47 @@ async function collectInlineWrapProbe(page) {
         return { sampled: Math.max(1, sampled), ink, ratio: ink / Math.max(1, sampled) };
       };
 
-      const full = sampleInkRatio(x, y, w, h);
-      const topLeft = sampleInkRatio(x, y, Math.max(10, Math.floor(w * 0.5)), Math.max(8, Math.floor(h * 0.55)));
-      const bottom = sampleInkRatio(x, y + Math.floor(h * 0.45), w, Math.max(8, Math.floor(h * 0.55)));
-      const ok = full.ratio >= 0.03 && topLeft.ratio >= 0.015 && bottom.ratio >= 0.01;
+      const caseResults = caseEls.map((element) => {
+        const rect = element.getBoundingClientRect();
+        const relX = rect.left - pageRect.left;
+        const relY = rect.top - pageRect.top;
+        const relW = rect.width;
+        const relH = rect.height;
+        const x = Math.max(0, Math.floor(relX * scaleX));
+        const y = Math.max(0, Math.floor(relY * scaleY));
+        const w = Math.max(10, Math.floor(relW * scaleX));
+        const h = Math.max(10, Math.floor(relH * scaleY));
+        const full = sampleInkRatio(x, y, w, h);
+        const topLeft = sampleInkRatio(x, y, Math.max(10, Math.floor(w * 0.5)), Math.max(8, Math.floor(h * 0.55)));
+        const bottom = sampleInkRatio(x, y + Math.floor(h * 0.45), w, Math.max(8, Math.floor(h * 0.55)));
+        const ok = full.ratio >= 0.03 && topLeft.ratio >= 0.015 && bottom.ratio >= 0.01;
+        return {
+          id: element.getAttribute("data-case-id") || "",
+          ok,
+          fullInkRatio: Number(full.ratio.toFixed(5)),
+          topLeftInkRatio: Number(topLeft.ratio.toFixed(5)),
+          bottomInkRatio: Number(bottom.ratio.toFixed(5)),
+          paragraphCanvasBox: { x, y, w, h },
+        };
+      });
+      const minFullInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.fullInkRatio)) : 0;
+      const minTopLeftInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.topLeftInkRatio)) : 0;
+      const minBottomInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.bottomInkRatio)) : 0;
+      const wrapCasesOk = caseResults.every((item) => item.ok);
+      const ok = styleParityOk && wrapCasesOk;
 
       return {
         ok,
-        fullInkRatio: Number(full.ratio.toFixed(5)),
-        topLeftInkRatio: Number(topLeft.ratio.toFixed(5)),
-        bottomInkRatio: Number(bottom.ratio.toFixed(5)),
-        paragraphCanvasBox: { x, y, w, h },
+        styleParityOk,
+        wrapCasesOk,
+        caseResults,
+        styleMismatches,
+        styleSample: { normal: normalStyle, export: exportStyle },
+        minFullInkRatio: Number(minFullInkRatio.toFixed(5)),
+        minTopLeftInkRatio: Number(minTopLeftInkRatio.toFixed(5)),
+        minBottomInkRatio: Number(minBottomInkRatio.toFixed(5)),
         thresholds: {
+          styleParityOk: true,
           fullInkRatio: 0.03,
           topLeftInkRatio: 0.015,
           bottomInkRatio: 0.01,

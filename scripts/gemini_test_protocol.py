@@ -230,6 +230,12 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any], canvas: 
         "Wrapped inline-code export keeps adjacent plain text visible.",
         inline_wrap_probe,
     )
+    add(
+        "export_inline_style_parity_ok",
+        bool(inline_wrap_probe.get("styleParityOk")),
+        "Inline-code chip style remains consistent between preview and export mode.",
+        inline_wrap_probe.get("styleMismatches"),
+    )
     return checks
 
 

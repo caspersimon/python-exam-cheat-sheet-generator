@@ -63,17 +63,11 @@ body.export-snapshot-mode .support-prompt-overlay {
 
 body.export-snapshot-mode .preview-card code,
 body.export-snapshot-mode .preview-card .inline-code {
-  display: inline;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  box-decoration-break: slice;
-  -webkit-box-decoration-break: slice;
-  white-space: pre-wrap;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  white-space: normal;
   word-break: normal;
   overflow-wrap: anywhere;
-  vertical-align: baseline;
 }
 
 @media (max-width: 1220px) {

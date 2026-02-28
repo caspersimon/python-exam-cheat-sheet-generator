@@ -48,6 +48,7 @@ class GeminiTestProtocolTests(unittest.TestCase):
                 },
                 "inlineWrapProbe": {
                     "ok": True,
+                    "styleParityOk": True,
                     "fullInkRatio": 0.08,
                     "topLeftInkRatio": 0.04,
                     "bottomInkRatio": 0.03,
@@ -128,6 +129,7 @@ class GeminiTestProtocolTests(unittest.TestCase):
             },
             "inlineWrapProbe": {
                 "ok": False,
+                "styleParityOk": False,
                 "fullInkRatio": 0.01,
                 "topLeftInkRatio": 0.001,
                 "bottomInkRatio": 0.0,
