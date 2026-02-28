@@ -71,12 +71,20 @@ function getNonEmptyPageElements() {
 
 function getExportRenderOptions(options = {}) {
   const scale = Number(options.scale);
+  const docEl = document.documentElement;
+  const body = document.body;
+  const windowWidth = Math.max(docEl?.clientWidth || 0, docEl?.scrollWidth || 0, body?.scrollWidth || 0);
+  const windowHeight = Math.max(docEl?.clientHeight || 0, docEl?.scrollHeight || 0, body?.scrollHeight || 0);
   return {
     scale: Number.isFinite(scale) && scale > 0 ? scale : 2,
     useCORS: true,
     backgroundColor: "#ffffff",
     logging: false,
     foreignObjectRendering: options.useForeignObject !== false,
+    windowWidth,
+    windowHeight,
+    scrollX: 0,
+    scrollY: 0,
     removeContainer: true,
     onclone: (clonedDoc) => {
       clonedDoc.body.classList.add("export-snapshot-mode");
@@ -123,12 +131,14 @@ async function renderExportPageToCanvas(page, options = {}) {
     throw new Error("html2canvas is not available.");
   }
 
-  const primary = await window.html2canvas(page, getExportRenderOptions({ ...options, useForeignObject: true }));
+  // Prefer raster mode for stable full-page captures. ForeignObject mode can
+  // clip tall content in some browser/PDF combinations.
+  const primary = await window.html2canvas(page, getExportRenderOptions({ ...options, useForeignObject: false }));
   if (!isCanvasLikelyBlank(primary)) {
     return primary;
   }
 
-  const fallback = await window.html2canvas(page, getExportRenderOptions({ ...options, useForeignObject: false }));
+  const fallback = await window.html2canvas(page, getExportRenderOptions({ ...options, useForeignObject: true }));
   if (isCanvasLikelyBlank(fallback)) {
     throw new Error("Export rendering resulted in a blank page.");
   }
