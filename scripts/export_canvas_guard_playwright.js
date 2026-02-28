@@ -128,11 +128,12 @@ async function collectInlineWrapProbe(page) {
     const wrapCases = [
       {
         id: "short_dictionary",
-        width: 284,
+        width: 220,
         prefix: "Direct iteration over a dictionary (e.g.",
         code: "for key in dict_name",
         suffix: ") iterates over its keys.",
         minCodeLines: 1,
+        maxCodeLines: 1,
       },
       {
         id: "long_sorted_items",
@@ -351,7 +352,9 @@ async function collectInlineWrapProbe(page) {
         const minStarts = lineRects.map((lineRect) => sampleRect(lineRect, 1, 1).minInkXRatio);
         const firstLineStart = minStarts[0] ?? 1;
         const lineStartDrift = minStarts.length > 1 ? Math.max(...minStarts) - Math.min(...minStarts) : 0;
-        const hasExpectedWrap = lineRects.length >= (config.minCodeLines || 1);
+        const minLines = config.minCodeLines || 1;
+        const maxLines = config.maxCodeLines || Infinity;
+        const hasExpectedWrap = lineRects.length >= minLines && lineRects.length <= maxLines;
         const ok =
           hasExpectedWrap &&
           codeMetrics.inkRatio >= 0.02 &&
@@ -364,6 +367,7 @@ async function collectInlineWrapProbe(page) {
           id: caseId,
           ok,
           minCodeLines: config.minCodeLines || 1,
+          maxCodeLines: Number.isFinite(config.maxCodeLines) ? config.maxCodeLines : null,
           actualCodeLines: lineRects.length,
           codeInkRatio: Number(codeMetrics.inkRatio.toFixed(5)),
           prefixInkRatio: Number(prefixMetrics.inkRatio.toFixed(5)),

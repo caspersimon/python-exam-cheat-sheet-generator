@@ -63,6 +63,8 @@ body.export-snapshot-mode .support-prompt-overlay {
 
 body.export-snapshot-mode .preview-card code,
 body.export-snapshot-mode .preview-card .inline-code {
+  display: inline-block;
+  max-width: 100%;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   white-space: normal;
