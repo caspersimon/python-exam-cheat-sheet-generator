@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const path = require("path");
 const http = require("http");
+const path = require("path");
 const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -33,11 +33,9 @@ function startStaticServer(rootDir) {
         res.end("Forbidden");
         return;
       }
-
       if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
         filePath = path.join(filePath, "index.html");
       }
-
       if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
         res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
         res.end("Not found");
@@ -45,8 +43,7 @@ function startStaticServer(rootDir) {
       }
 
       const ext = path.extname(filePath).toLowerCase();
-      const type = MIME[ext] || "application/octet-stream";
-      res.writeHead(200, { "Content-Type": type });
+      res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
       fs.createReadStream(filePath).pipe(res);
     } catch (error) {
       res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
@@ -57,8 +54,7 @@ function startStaticServer(rootDir) {
   return new Promise((resolve, reject) => {
     server.on("error", reject);
     server.listen(0, "127.0.0.1", () => {
-      const addr = server.address();
-      resolve({ server, port: addr.port });
+      resolve({ server, port: server.address().port });
     });
   });
 }
@@ -69,8 +65,7 @@ function toFilePathFromDataUrl(dataUrl, targetPath) {
   if (index < 0) {
     throw new Error("Expected base64 PNG data URL.");
   }
-  const b64 = dataUrl.slice(index + marker.length);
-  fs.writeFileSync(targetPath, Buffer.from(b64, "base64"));
+  fs.writeFileSync(targetPath, Buffer.from(dataUrl.slice(index + marker.length), "base64"));
 }
 
 async function collectCanvasProbe(page) {
@@ -94,19 +89,15 @@ async function collectCanvasProbe(page) {
       let minY = h;
       let maxX = -1;
       let maxY = -1;
-
       const bottomStart = Math.floor(h * 0.8);
+
       for (let y = 0; y < h; y += step) {
         for (let x = 0; x < w; x += step) {
           const [r, g, b, a] = ctx.getImageData(x, y, 1, 1).data;
           const isInk = a > 8 && (r < 246 || g < 246 || b < 246);
-          if (!isInk) {
-            continue;
-          }
+          if (!isInk) continue;
           ink += 1;
-          if (y >= bottomStart) {
-            bottomInk += 1;
-          }
+          if (y >= bottomStart) bottomInk += 1;
           if (x < minX) minX = x;
           if (y < minY) minY = y;
           if (x > maxX) maxX = x;
@@ -117,7 +108,6 @@ async function collectCanvasProbe(page) {
       const sampled = Math.max(1, Math.ceil(w / step) * Math.ceil(h / step));
       const bboxHeightRatio = maxY >= 0 ? (maxY - minY + 1) / Math.max(1, h) : 0;
       const bottomInkRatio = ink > 0 ? bottomInk / ink : 0;
-
       results.push({
         page: idx + 1,
         width: w,
@@ -134,7 +124,6 @@ async function collectCanvasProbe(page) {
 
     const minBBoxHeightRatio = results.length ? Math.min(...results.map((item) => item.bboxHeightRatio)) : 0;
     const minBottomInkRatio = results.length ? Math.min(...results.map((item) => item.bottomInkRatio)) : 0;
-
     return {
       pagesDetected: pages.length,
       minBBoxHeightRatio: Number(minBBoxHeightRatio.toFixed(5)),
@@ -147,60 +136,71 @@ async function collectCanvasProbe(page) {
 async function collectInlineWrapProbe(page) {
   return page.evaluate(async () => {
     const pageEl = refs.page1Content?.parentElement;
-    if (!pageEl) {
+    const pageContent = refs.page1Content;
+    if (!pageEl || !pageContent) {
       throw new Error("Page 1 element unavailable for inline-wrap probe.");
     }
 
     const wrapCases = [
       {
         id: "short_dictionary",
-        width: 300,
+        width: 284,
         prefix: "Direct iteration over a dictionary (e.g.",
         code: "for key in dict_name",
         suffix: ") iterates over its keys.",
+        minCodeLines: 1,
       },
       {
         id: "long_sorted_items",
-        width: 230,
+        width: 238,
         prefix: "Use deterministic iteration when needed:",
         code: "for key, value in sorted(my_dictionary.items())",
         suffix: "to keep output stable.",
+        minCodeLines: 2,
       },
       {
         id: "membership_chain",
-        width: 210,
+        width: 226,
         prefix: "Membership checks can be chained with readability in mind:",
         code: "if user_id in active_users and role in allowed_roles",
         suffix: "before returning permissions.",
+        minCodeLines: 2,
       },
     ];
 
-    const host = document.createElement("div");
+    const host = document.createElement("article");
     host.id = "exportInlineWrapProbeHost";
-    host.style.position = "absolute";
-    host.style.left = "14px";
-    host.style.top = "14px";
-    host.style.width = "330px";
-    host.style.padding = "3px 4px";
-    host.style.background = "#fff";
-    host.style.zIndex = "9999";
-    host.style.pointerEvents = "none";
-    host.innerHTML = wrapCases
+    host.className = "preview-card";
+    Object.assign(host.style, {
+      position: "absolute",
+      left: "14px",
+      top: "14px",
+      width: "372px",
+      minHeight: "0",
+      background: "#fff",
+      zIndex: "9999",
+      pointerEvents: "none",
+      borderRadius: "8px",
+    });
+
+    const body = document.createElement("div");
+    body.className = "preview-body";
+    body.style.paddingTop = "4px";
+    body.style.paddingBottom = "5px";
+    body.innerHTML = wrapCases
       .map(
         (item, idx) => `
-          <p
-            class="export-inline-wrap-case"
-            data-case-id="${item.id}"
-            style="margin:${idx === 0 ? 0 : 8}px 0 0; line-height:1.18; width:${item.width}px;"
-          >
-            ${item.prefix}
+          ${idx === 0 ? '<div class="section-title" style="margin-top:0;">Inline Wrap Probe</div>' : ""}
+          <p class="section-paragraph export-inline-wrap-case" data-case-id="${item.id}" style="margin:${idx === 0 ? 2 : 8}px 0 0; width:${item.width}px;">
+            <span class="export-inline-wrap-prefix">${item.prefix}</span>
             <code class="inline-code">${item.code}</code>
-            ${item.suffix}
+            <span class="export-inline-wrap-suffix">${item.suffix}</span>
           </p>
         `
       )
       .join("");
-    refs.page1Content.appendChild(host);
+    host.appendChild(body);
+    pageContent.appendChild(host);
 
     try {
       const caseEls = Array.from(host.querySelectorAll(".export-inline-wrap-case"));
@@ -208,6 +208,7 @@ async function collectInlineWrapProbe(page) {
       if (!caseEls.length || !codeEl) {
         throw new Error("Inline-wrap probe host did not render expected elements.");
       }
+
       const readInlineStyle = () => {
         const style = window.getComputedStyle(codeEl);
         return {
@@ -216,14 +217,16 @@ async function collectInlineWrapProbe(page) {
           borderTopWidth: style.borderTopWidth,
           borderTopStyle: style.borderTopStyle,
           borderRadius: style.borderRadius,
+          display: style.display,
           paddingTop: style.paddingTop,
           paddingRight: style.paddingRight,
           paddingBottom: style.paddingBottom,
           paddingLeft: style.paddingLeft,
           whiteSpace: style.whiteSpace,
+          wordBreak: style.wordBreak,
           overflowWrap: style.overflowWrap,
-          fontFamily: style.fontFamily,
-          fontSize: style.fontSize,
+          boxDecorationBreak: style.boxDecorationBreak,
+          hyphens: style.hyphens,
         };
       };
       const norm = (value) => String(value || "").replace(/\s+/g, " ").trim().toLowerCase();
@@ -231,26 +234,26 @@ async function collectInlineWrapProbe(page) {
       document.body.classList.add("export-snapshot-mode");
       const exportStyle = readInlineStyle();
       document.body.classList.remove("export-snapshot-mode");
-      const styleParityKeys = [
+      const styleKeys = [
         "backgroundColor",
         "borderTopColor",
         "borderTopWidth",
         "borderTopStyle",
         "borderRadius",
+        "display",
         "paddingTop",
         "paddingRight",
         "paddingBottom",
         "paddingLeft",
         "whiteSpace",
+        "wordBreak",
         "overflowWrap",
+        "boxDecorationBreak",
+        "hyphens",
       ];
-      const styleMismatches = styleParityKeys
+      const styleMismatches = styleKeys
         .filter((key) => norm(normalStyle[key]) !== norm(exportStyle[key]))
-        .map((key) => ({
-          key,
-          normal: normalStyle[key],
-          export: exportStyle[key],
-        }));
+        .map((key) => ({ key, normal: normalStyle[key], export: exportStyle[key] }));
       const styleParityOk = styleMismatches.length === 0;
 
       const pageRect = pageEl.getBoundingClientRect();
@@ -262,69 +265,140 @@ async function collectInlineWrapProbe(page) {
 
       const scaleX = canvas.width / Math.max(1, pageRect.width);
       const scaleY = canvas.height / Math.max(1, pageRect.height);
+      const toRelative = (rect) => ({
+        x: rect.left - pageRect.left,
+        y: rect.top - pageRect.top,
+        w: rect.width,
+        h: rect.height,
+      });
 
-      const sampleInkRatio = (rx, ry, rw, rh) => {
+      const sampleRect = (rect, padX = 0, padY = 0) => {
+        const relX = Math.max(0, rect.x - padX);
+        const relY = Math.max(0, rect.y - padY);
+        const relW = Math.max(6, rect.w + padX * 2);
+        const relH = Math.max(6, rect.h + padY * 2);
+        const rx = Math.max(0, Math.floor(relX * scaleX));
+        const ry = Math.max(0, Math.floor(relY * scaleY));
+        const rw = Math.max(6, Math.floor(relW * scaleX));
+        const rh = Math.max(6, Math.floor(relH * scaleY));
         const step = Math.max(1, Math.floor(Math.min(rw, rh) / 80));
+
         let sampled = 0;
         let ink = 0;
+        let tint = 0;
+        let minInkX = rw;
+        let maxInkX = -1;
+
         const maxX = Math.min(canvas.width, rx + rw);
         const maxY = Math.min(canvas.height, ry + rh);
         for (let py = ry; py < maxY; py += step) {
           for (let px = rx; px < maxX; px += step) {
             sampled += 1;
             const [r, g, b, a] = ctx.getImageData(px, py, 1, 1).data;
-            if (a > 8 && (r < 246 || g < 246 || b < 246)) {
+            const isInk = a > 8 && (r < 246 || g < 246 || b < 246);
+            if (isInk) {
               ink += 1;
+              const localX = px - rx;
+              if (localX < minInkX) minInkX = localX;
+              if (localX > maxInkX) maxInkX = localX;
             }
+            const spread = Math.max(r, g, b) - Math.min(r, g, b);
+            const isCodeTint = a > 8 && r >= 220 && g >= 220 && b >= 220 && r <= 252 && g <= 252 && b <= 252 && spread <= 18;
+            if (isCodeTint) tint += 1;
           }
         }
-        return { sampled: Math.max(1, sampled), ink, ratio: ink / Math.max(1, sampled) };
+
+        const denom = Math.max(1, sampled);
+        return {
+          sampled: denom,
+          inkRatio: ink / denom,
+          tintRatio: tint / denom,
+          minInkXRatio: maxInkX >= 0 ? minInkX / Math.max(1, rw) : 1,
+          canvasBox: { x: rx, y: ry, w: rw, h: rh },
+        };
       };
 
       const caseResults = caseEls.map((element) => {
-        const rect = element.getBoundingClientRect();
-        const relX = rect.left - pageRect.left;
-        const relY = rect.top - pageRect.top;
-        const relW = rect.width;
-        const relH = rect.height;
-        const x = Math.max(0, Math.floor(relX * scaleX));
-        const y = Math.max(0, Math.floor(relY * scaleY));
-        const w = Math.max(10, Math.floor(relW * scaleX));
-        const h = Math.max(10, Math.floor(relH * scaleY));
-        const full = sampleInkRatio(x, y, w, h);
-        const topLeft = sampleInkRatio(x, y, Math.max(10, Math.floor(w * 0.5)), Math.max(8, Math.floor(h * 0.55)));
-        const bottom = sampleInkRatio(x, y + Math.floor(h * 0.45), w, Math.max(8, Math.floor(h * 0.55)));
-        const ok = full.ratio >= 0.03 && topLeft.ratio >= 0.015 && bottom.ratio >= 0.01;
+        const caseId = element.getAttribute("data-case-id") || "";
+        const config = wrapCases.find((item) => item.id === caseId) || wrapCases[0];
+        const code = element.querySelector("code.inline-code");
+        const prefix = element.querySelector(".export-inline-wrap-prefix");
+        const suffix = element.querySelector(".export-inline-wrap-suffix");
+        if (!code || !prefix || !suffix) {
+          return { id: caseId, ok: false, error: "Expected probe spans are missing." };
+        }
+
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const lineRectsRaw = Array.from(range.getClientRects()).filter((lineRect) => lineRect.width > 1 && lineRect.height > 1);
+        const lineRects = (lineRectsRaw.length ? lineRectsRaw : [code.getBoundingClientRect()]).map(toRelative);
+
+        const codeMetrics = sampleRect(toRelative(code.getBoundingClientRect()), 2, 2);
+        const prefixMetrics = sampleRect(toRelative(prefix.getBoundingClientRect()), 1, 1);
+        const suffixMetrics = sampleRect(toRelative(suffix.getBoundingClientRect()), 1, 1);
+        const paragraphMetrics = sampleRect(toRelative(element.getBoundingClientRect()), 1, 1);
+
+        const outsideSamples = Math.max(1, paragraphMetrics.sampled - codeMetrics.sampled);
+        const outsideTint = Math.max(0, paragraphMetrics.tintRatio * paragraphMetrics.sampled - codeMetrics.tintRatio * codeMetrics.sampled);
+        const outsideTintRatio = outsideTint / outsideSamples;
+        const minStarts = lineRects.map((lineRect) => sampleRect(lineRect, 1, 1).minInkXRatio);
+        const firstLineStart = minStarts[0] ?? 1;
+        const lineStartDrift = minStarts.length > 1 ? Math.max(...minStarts) - Math.min(...minStarts) : 0;
+
+        const hasExpectedWrap = lineRects.length >= (config.minCodeLines || 1);
+        const ok =
+          hasExpectedWrap &&
+          codeMetrics.inkRatio >= 0.02 &&
+          prefixMetrics.inkRatio >= 0.008 &&
+          suffixMetrics.inkRatio >= 0.008 &&
+          outsideTintRatio <= 0.45 &&
+          (lineRects.length < 2 || firstLineStart <= 0.6) &&
+          (lineRects.length < 2 || lineStartDrift <= 0.55);
+
         return {
-          id: element.getAttribute("data-case-id") || "",
+          id: caseId,
           ok,
-          fullInkRatio: Number(full.ratio.toFixed(5)),
-          topLeftInkRatio: Number(topLeft.ratio.toFixed(5)),
-          bottomInkRatio: Number(bottom.ratio.toFixed(5)),
-          paragraphCanvasBox: { x, y, w, h },
+          minCodeLines: config.minCodeLines || 1,
+          actualCodeLines: lineRects.length,
+          codeInkRatio: Number(codeMetrics.inkRatio.toFixed(5)),
+          prefixInkRatio: Number(prefixMetrics.inkRatio.toFixed(5)),
+          suffixInkRatio: Number(suffixMetrics.inkRatio.toFixed(5)),
+          outsideTintRatio: Number(outsideTintRatio.toFixed(5)),
+          firstLineStartRatio: Number(firstLineStart.toFixed(5)),
+          maxLineStartDrift: Number(lineStartDrift.toFixed(5)),
+          paragraphCanvasBox: codeMetrics.canvasBox,
         };
       });
-      const minFullInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.fullInkRatio)) : 0;
-      const minTopLeftInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.topLeftInkRatio)) : 0;
-      const minBottomInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.bottomInkRatio)) : 0;
+
       const wrapCasesOk = caseResults.every((item) => item.ok);
       const ok = styleParityOk && wrapCasesOk;
+      const minCodeInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.codeInkRatio || 0)) : 0;
+      const minPrefixInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.prefixInkRatio || 0)) : 0;
+      const minSuffixInkRatio = caseResults.length ? Math.min(...caseResults.map((item) => item.suffixInkRatio || 0)) : 0;
+      const maxFirstLineStartRatio = caseResults.length ? Math.max(...caseResults.map((item) => item.firstLineStartRatio || 0)) : 0;
+      const maxLineStartDrift = caseResults.length ? Math.max(...caseResults.map((item) => item.maxLineStartDrift || 0)) : 0;
 
       return {
         ok,
         styleParityOk,
         wrapCasesOk,
+        passingCases: caseResults.filter((item) => item.ok).length,
+        totalCases: caseResults.length,
         caseResults,
         styleMismatches,
-        styleSample: { normal: normalStyle, export: exportStyle },
-        minFullInkRatio: Number(minFullInkRatio.toFixed(5)),
-        minTopLeftInkRatio: Number(minTopLeftInkRatio.toFixed(5)),
-        minBottomInkRatio: Number(minBottomInkRatio.toFixed(5)),
+        minCodeInkRatio: Number(minCodeInkRatio.toFixed(5)),
+        minPrefixInkRatio: Number(minPrefixInkRatio.toFixed(5)),
+        minSuffixInkRatio: Number(minSuffixInkRatio.toFixed(5)),
+        maxFirstLineStartRatio: Number(maxFirstLineStartRatio.toFixed(5)),
+        maxLineStartDrift: Number(maxLineStartDrift.toFixed(5)),
         thresholds: {
           styleParityOk: true,
-          fullInkRatio: 0.03,
-          topLeftInkRatio: 0.015,
-          bottomInkRatio: 0.01,
+          minCodeInkRatio: 0.02,
+          minPrefixInkRatio: 0.008,
+          minSuffixInkRatio: 0.008,
+          outsideTintRatio: 0.45,
+          firstLineStartRatio: 0.6,
+          lineStartDrift: 0.55,
         },
         artifactDataUrl: canvas.toDataURL("image/png"),
       };
@@ -364,14 +438,14 @@ async function run() {
     await page.click("#goToPreviewBtn", { timeout: 5000 });
     await page.waitForSelector("#previewView.active", { timeout: 10000 });
 
-    const previewCards = await page.locator(".preview-card").count();
-    if (previewCards < 1) {
+    if ((await page.locator(".preview-card").count()) < 1) {
       throw new Error("No preview cards available for export canvas guard.");
     }
 
     const probe = await collectCanvasProbe(page);
     const inlineWrapProbe = await collectInlineWrapProbe(page);
     const artifactPaths = [];
+
     for (const item of probe.pages) {
       const artifactPath = path.join(ARTIFACT_DIR, `export-canvas-page-${item.page}.png`);
       toFilePathFromDataUrl(item.dataUrl, artifactPath);
@@ -379,6 +453,7 @@ async function run() {
       delete item.dataUrl;
       item.artifactPath = artifactPath;
     }
+
     const inlineWrapArtifactPath = path.join(ARTIFACT_DIR, "export-inline-wrap-probe.png");
     toFilePathFromDataUrl(inlineWrapProbe.artifactDataUrl, inlineWrapArtifactPath);
     delete inlineWrapProbe.artifactDataUrl;
