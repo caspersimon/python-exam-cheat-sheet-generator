@@ -39,6 +39,8 @@ const state = {
     letterSpacing: 0,
     cardGap: 6,
     cardPadding: 7,
+    codeBlockPadding: 8,
+    codeBlockMargin: 2,
     autoGrid: true,
     gridColumns: 2,
     gridRows: 6,
@@ -104,11 +106,15 @@ const refs = {
   letterSpacingRange: document.getElementById("letterSpacingRange"),
   cardGapRange: document.getElementById("cardGapRange"),
   cardPaddingRange: document.getElementById("cardPaddingRange"),
+  codeBlockPaddingRange: document.getElementById("codeBlockPaddingRange"),
+  codeBlockMarginRange: document.getElementById("codeBlockMarginRange"),
   fontSizeValue: document.getElementById("fontSizeValue"),
   lineHeightValue: document.getElementById("lineHeightValue"),
   letterSpacingValue: document.getElementById("letterSpacingValue"),
   cardGapValue: document.getElementById("cardGapValue"),
   cardPaddingValue: document.getElementById("cardPaddingValue"),
+  codeBlockPaddingValue: document.getElementById("codeBlockPaddingValue"),
+  codeBlockMarginValue: document.getElementById("codeBlockMarginValue"),
   splashOverlay: document.getElementById("splashOverlay"),
   getStartedBtn: document.getElementById("getStartedBtn"),
 };
@@ -163,6 +169,19 @@ async function init() {
       <p>Serve this folder with <code>python3 -m http.server 8000</code> and open <code>http://localhost:8000</code>.</p>
     </div>`;
   }
+}
+
+function readClampedRangeValue(rangeInput) {
+  const rawValue = Number(rangeInput?.value);
+  const min = Number(rangeInput?.min);
+  const max = Number(rangeInput?.max);
+  const safeMin = Number.isFinite(min) ? min : rawValue;
+  const safeMax = Number.isFinite(max) ? max : rawValue;
+  const fallback = Number.isFinite(safeMin) ? safeMin : 0;
+  if (!Number.isFinite(rawValue)) {
+    return fallback;
+  }
+  return clamp(rawValue, Math.min(safeMin, safeMax), Math.max(safeMin, safeMax));
 }
 
 function bindEvents() {
@@ -292,13 +311,13 @@ function bindEvents() {
   });
 
   refs.gridColumnsRange.addEventListener("input", (event) => {
-    state.layout.gridColumns = Number(event.target.value);
+    state.layout.gridColumns = readClampedRangeValue(event.target);
     applyLayoutVariables();
     renderPreview();
   });
 
   refs.gridRowsRange.addEventListener("input", (event) => {
-    state.layout.gridRows = Number(event.target.value);
+    state.layout.gridRows = readClampedRangeValue(event.target);
     applyLayoutVariables();
     renderPreview();
   });
@@ -310,31 +329,43 @@ function bindEvents() {
   });
 
   refs.fontSizeRange.addEventListener("input", (event) => {
-    state.layout.fontSize = Number(event.target.value);
+    state.layout.fontSize = readClampedRangeValue(event.target);
     applyLayoutVariables();
     renderPreview();
   });
 
   refs.lineHeightRange.addEventListener("input", (event) => {
-    state.layout.lineHeight = Number(event.target.value);
+    state.layout.lineHeight = readClampedRangeValue(event.target);
     applyLayoutVariables();
     renderPreview();
   });
 
   refs.letterSpacingRange.addEventListener("input", (event) => {
-    state.layout.letterSpacing = Number(event.target.value);
+    state.layout.letterSpacing = readClampedRangeValue(event.target);
     applyLayoutVariables();
     renderPreview();
   });
 
   refs.cardGapRange.addEventListener("input", (event) => {
-    state.layout.cardGap = Number(event.target.value);
+    state.layout.cardGap = readClampedRangeValue(event.target);
     applyLayoutVariables();
     renderPreview();
   });
 
   refs.cardPaddingRange.addEventListener("input", (event) => {
-    state.layout.cardPadding = Number(event.target.value);
+    state.layout.cardPadding = readClampedRangeValue(event.target);
+    applyLayoutVariables();
+    renderPreview();
+  });
+
+  refs.codeBlockPaddingRange.addEventListener("input", (event) => {
+    state.layout.codeBlockPadding = readClampedRangeValue(event.target);
+    applyLayoutVariables();
+    renderPreview();
+  });
+
+  refs.codeBlockMarginRange.addEventListener("input", (event) => {
+    state.layout.codeBlockMargin = readClampedRangeValue(event.target);
     applyLayoutVariables();
     renderPreview();
   });

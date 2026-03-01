@@ -5,6 +5,8 @@ function applyLayoutVariables() {
   refs.sheetStage.style.setProperty("--sheet-letter-spacing", `${state.layout.letterSpacing}px`);
   refs.sheetStage.style.setProperty("--sheet-card-gap", `${state.layout.cardGap}px`);
   refs.sheetStage.style.setProperty("--sheet-card-padding", `${state.layout.cardPadding}px`);
+  refs.sheetStage.style.setProperty("--sheet-code-block-padding", `${state.layout.codeBlockPadding}px`);
+  refs.sheetStage.style.setProperty("--sheet-code-block-margin", `${state.layout.codeBlockMargin}px`);
 
   refs.fontFamilySelect.value = state.layout.fontFamily;
   refs.fontSizeRange.value = String(state.layout.fontSize);
@@ -12,12 +14,16 @@ function applyLayoutVariables() {
   refs.letterSpacingRange.value = String(state.layout.letterSpacing);
   refs.cardGapRange.value = String(state.layout.cardGap);
   refs.cardPaddingRange.value = String(state.layout.cardPadding);
+  refs.codeBlockPaddingRange.value = String(state.layout.codeBlockPadding);
+  refs.codeBlockMarginRange.value = String(state.layout.codeBlockMargin);
 
   refs.fontSizeValue.textContent = String(state.layout.fontSize);
   refs.lineHeightValue.textContent = String(state.layout.lineHeight);
   refs.letterSpacingValue.textContent = String(state.layout.letterSpacing);
   refs.cardGapValue.textContent = String(state.layout.cardGap);
   refs.cardPaddingValue.textContent = String(state.layout.cardPadding);
+  refs.codeBlockPaddingValue.textContent = String(state.layout.codeBlockPadding);
+  refs.codeBlockMarginValue.textContent = String(state.layout.codeBlockMargin);
 }
 
 async function exportPng() {

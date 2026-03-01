@@ -157,7 +157,8 @@
 }
 
 .preview-card pre {
-  margin: 2px 0 4px;
+  margin: var(--sheet-code-block-margin, 2px) 0;
+  padding: var(--sheet-code-block-padding, 8px);
   background: #f5f6f8;
   border: 1px solid #e4e7ea;
   font-size: 0.78em;

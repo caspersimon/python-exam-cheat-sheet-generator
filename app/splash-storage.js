@@ -99,6 +99,8 @@ function resetAppProgress() {
     letterSpacing: 0,
     cardGap: 6,
     cardPadding: 7,
+    codeBlockPadding: 8,
+    codeBlockMargin: 2,
     autoGrid: true,
     gridColumns: 2,
     gridRows: 6,
@@ -145,6 +147,12 @@ function hydratePersistedState() {
     }
     if (Number.isFinite(raw.layout.cardPadding)) {
       state.layout.cardPadding = clamp(Number(raw.layout.cardPadding), 4, 16);
+    }
+    if (Number.isFinite(raw.layout.codeBlockPadding)) {
+      state.layout.codeBlockPadding = clamp(Number(raw.layout.codeBlockPadding), 2, 10);
+    }
+    if (Number.isFinite(raw.layout.codeBlockMargin)) {
+      state.layout.codeBlockMargin = clamp(Number(raw.layout.codeBlockMargin), 0, 8);
     }
     if (typeof raw.layout.autoGrid === "boolean") {
       state.layout.autoGrid = raw.layout.autoGrid;
