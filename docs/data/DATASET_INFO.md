@@ -43,6 +43,7 @@ Course/source files are organized under `materials/`:
         "lecture_questions": ["..."]
       },
       "notebook_cells": ["..."],
+      "homework_cells": ["..."],
       "sources": ["materials/..."],
       "curation_meta": {
         "generator": "gemini-cli",
@@ -79,6 +80,7 @@ Required fields:
 - `lecture.concepts` (list[object])
 - `lecture.lecture_questions` (list[object])
 - `notebook_cells` (list[object])
+- `homework_cells` (optional list[object], same cell shape as `notebook_cells`)
 - `sources` (list[str])
 
 ## AI-First Ingestion Workflow

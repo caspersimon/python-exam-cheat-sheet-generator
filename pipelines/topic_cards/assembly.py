@@ -31,6 +31,7 @@ def collect_card_topics(data: dict) -> dict[str, dict]:
                     "lecture_snippets": [],
                     "exam_questions": [],
                     "notebook_snippets": [],
+                    "homework_snippets": [],
                     "exam_counts": defaultdict(int),
                     "trap_patterns": [],
                     "sample_topics": set(),
@@ -51,6 +52,7 @@ def collect_card_topics(data: dict) -> dict[str, dict]:
                 "lecture_snippets": [],
                 "exam_questions": [],
                 "notebook_snippets": [],
+                "homework_snippets": [],
                 "exam_counts": defaultdict(int),
                 "trap_patterns": [],
                 "sample_topics": set(),
@@ -176,6 +178,37 @@ def attach_notebook_content(cards: dict[str, dict], data: dict) -> None:
                 card["notebook_snippets"].append(snippet_obj)
 
 
+def attach_homework_content(cards: dict[str, dict], data: dict) -> None:
+    for cell in data.get("homeworks", []):
+        if cell.get("is_advanced_optional"):
+            continue
+        topic = cell.get("topic", "")
+        if not topic:
+            continue
+
+        cleaned_source = clean_notebook_source(cell.get("source", ""), cell.get("cell_type", ""))
+        if not cleaned_source:
+            continue
+
+        source_key = topic_key(topic)
+        snippet_obj = {
+            "id": make_id("hw", f"{cell.get('week')}-{cell.get('cell_index')}-{topic}"),
+            "week": cell.get("week"),
+            "cell_index": cell.get("cell_index"),
+            "cell_type": cell.get("cell_type"),
+            "topic": topic,
+            "source": cleaned_source,
+            "outputs": [compact_text(out, 400) for out in (cell.get("outputs") or [])[:2] if out and out.strip()],
+            "source_origin": cell.get("source_origin", ""),
+        }
+
+        for card_key, card in cards.items():
+            if is_relevant(card_key, source_key, threshold=0.6):
+                card["weeks"].add(cell.get("week"))
+                card["sample_topics"].add(topic)
+                card["homework_snippets"].append(snippet_obj)
+
+
 def attach_patterns(cards: dict[str, dict], data: dict) -> None:
     for pattern in data.get("key_exam_patterns_and_traps", []):
         p_key = topic_key(pattern.get("pattern", ""))
@@ -232,8 +265,15 @@ def sort_cards(cards: dict[str, dict]) -> list[dict]:
         lecture_snippets = dedupe_list(card["lecture_snippets"], ["id"])[:12]
         exam_questions = dedupe_list(card["exam_questions"], ["id"])[:12]
         notebook_snippets = dedupe_list(card["notebook_snippets"], ["id"])[:12]
+        homework_snippets = dedupe_list(card["homework_snippets"], ["id"])[:12]
+        homework_recommended_count = min(4, max(1, (len(homework_snippets) + 1) // 2)) if homework_snippets else 0
+        homework_recommended_ids = [
+            snippet.get("id")
+            for snippet in homework_snippets[:homework_recommended_count]
+            if snippet.get("id")
+        ]
 
-        if not lecture_snippets and not exam_questions and not notebook_snippets and not card["trap_patterns"]:
+        if not lecture_snippets and not exam_questions and not notebook_snippets and not homework_snippets and not card["trap_patterns"]:
             continue
 
         weeks = sorted(w for w in card["weeks"] if isinstance(w, int))
@@ -251,6 +291,8 @@ def sort_cards(cards: dict[str, dict]) -> list[dict]:
             "lecture_snippets": lecture_snippets,
             "exam_questions": exam_questions,
             "notebook_snippets": notebook_snippets,
+            "homework_snippets": homework_snippets,
+            "homework_recommended_ids": homework_recommended_ids,
         }
         sections.update(build_ai_placeholders(display_topic))
 
@@ -279,4 +321,3 @@ def sort_cards(cards: dict[str, dict]) -> list[dict]:
         )
     )
     return card_list
-

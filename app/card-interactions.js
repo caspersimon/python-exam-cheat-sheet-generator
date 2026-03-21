@@ -83,8 +83,12 @@ function handleCardInputChange(event) {
     state.preferences.sourceAutoSelectMode = mode;
     if (mode === "recommended") {
       const split = getSourceSplit(currentCard);
+      const homeworkSplit = getHomeworkSplit(currentCard);
       if (!draft.selected.recommended.length) {
         draft.selected.recommended = split.recommended.map((item) => item.id);
+      }
+      if (!draft.selected.homeworkRecommended.length) {
+        draft.selected.homeworkRecommended = homeworkSplit.recommended.map((item) => item.id);
       }
     }
     rerenderCurrentCard();
@@ -240,6 +244,9 @@ function sectionToSelectionKey(section) {
     keyPoints: "keyPoints",
     recommended: "recommended",
     additional: "additional",
+    homeworkRecommended: "homeworkRecommended",
+    homeworkAdditional: "homeworkAdditional",
+    homework: "homework",
   };
   return map[section] || "";
 }

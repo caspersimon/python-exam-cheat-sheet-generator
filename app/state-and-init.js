@@ -5,10 +5,10 @@ const EXAM_LABELS = {
   extra_practice: "Extra Practice",
 };
 
-const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture snippets, notebook snippets, and trap-pattern context.";
+const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture snippets, notebook snippets, homework snippets, and trap-pattern context.";
 const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v1";
-const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v1";
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v3";
 const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
 

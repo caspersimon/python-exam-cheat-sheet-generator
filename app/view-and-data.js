@@ -100,6 +100,10 @@ function usefulNotebookSnippets(card) {
   return (card.sections.notebook_snippets || []).filter((snippet) => !isLowValueSnippet(snippet.source || ""));
 }
 
+function usefulHomeworkSnippets(card) {
+  return (card.sections.homework_snippets || []).filter((snippet) => !isLowValueSnippet(snippet.source || ""));
+}
+
 function usefulAIExamples(card) {
   return (card.sections.ai_examples || []).filter((item) => (item.code || "").trim().length > 0);
 }
@@ -213,6 +217,38 @@ function buildSourceItems(card) {
   return items;
 }
 
+function buildHomeworkItems(card) {
+  return usefulHomeworkSnippets(card).map((item) => ({
+    id: item.id,
+    sourceType: "homework",
+    header: `Homework • W${item.week || "?"} cell ${item.cell_index || "?"} • ${item.topic || ""}`,
+    item,
+  }));
+}
+
+function getHomeworkSplit(card) {
+  const allItems = buildHomeworkItems(card);
+  const byId = new Map(allItems.map((item) => [item.id, item]));
+  const recommendedIdsRaw = card.sections.homework_recommended_ids || [];
+  const recommendedIds = recommendedIdsRaw.filter((id) => byId.has(id));
+
+  const recommended = [];
+  recommendedIds.forEach((id) => {
+    if (!recommended.some((item) => item.id === id)) {
+      recommended.push(byId.get(id));
+    }
+  });
+
+  if (!recommended.length && allItems.length) {
+    const fallbackCount = Math.min(4, Math.max(1, Math.ceil(allItems.length / 2)));
+    recommended.push(...allItems.slice(0, fallbackCount));
+  }
+
+  const recSet = new Set(recommended.map((item) => item.id));
+  const additional = allItems.filter((item) => !recSet.has(item.id));
+  return { recommended, additional };
+}
+
 function getSourceSplit(card) {
   const allItems = buildSourceItems(card);
   const byId = new Map(allItems.map((item) => [item.id, item]));
@@ -241,13 +277,18 @@ function getSourceSplit(card) {
 }
 
 function ensureDraft(card) {
-  if (state.drafts[card.id]) {
-    return state.drafts[card.id];
+  const existing = state.drafts[card.id];
+  if (existing) {
+    normalizeDraftForCard(existing, card);
+    return existing;
   }
 
   const split = getSourceSplit(card);
+  const homeworkSplit = getHomeworkSplit(card);
   const recommendedIds = split.recommended.map((item) => item.id);
   const additionalIds = split.additional.map((item) => item.id);
+  const homeworkRecommendedIds = homeworkSplit.recommended.map((item) => item.id);
+  const homeworkAdditionalIds = homeworkSplit.additional.map((item) => item.id);
   const aiExampleIds = usefulAIExamples(card).map((item) => item.id);
   const keyPointIds = keyPointSelectableIds(card);
 
@@ -264,16 +305,78 @@ function ensureDraft(card) {
       aiExamples: aiExampleIds.length > 0,
       recommended: recommendedIds.length > 0,
       additional: additionalIds.length > 0,
+      homeworkRecommended: homeworkRecommendedIds.length > 0,
+      homeworkAdditional: homeworkAdditionalIds.length > 0,
     },
     selected: {
       aiExamples: [],
       keyPoints: [],
       recommended: autoSelectRecommended ? [...recommendedIds] : [],
       additional: [],
+      homeworkRecommended: autoSelectRecommended ? [...homeworkRecommendedIds] : [],
+      homeworkAdditional: [],
     },
   };
 
   return state.drafts[card.id];
+}
+
+function normalizeDraftForCard(draft, card) {
+  if (!draft.ui || typeof draft.ui !== "object") {
+    draft.ui = { settingsOpen: false };
+  }
+  if (!draft.sections || typeof draft.sections !== "object") {
+    draft.sections = {};
+  }
+  if (!draft.selected || typeof draft.selected !== "object") {
+    draft.selected = {};
+  }
+
+  const split = getSourceSplit(card);
+  const homeworkSplit = getHomeworkSplit(card);
+  const aiExampleIds = usefulAIExamples(card).map((item) => item.id);
+  const keyPointIds = keyPointSelectableIds(card);
+
+  const legacyHomeworkSection = typeof draft.sections.homework === "boolean" ? draft.sections.homework : null;
+  if (legacyHomeworkSection !== null) {
+    if (typeof draft.sections.homeworkRecommended !== "boolean") {
+      draft.sections.homeworkRecommended = legacyHomeworkSection;
+    }
+    if (typeof draft.sections.homeworkAdditional !== "boolean") {
+      draft.sections.homeworkAdditional = legacyHomeworkSection;
+    }
+  }
+
+  const legacyHomeworkSelected = Array.isArray(draft.selected.homework) ? draft.selected.homework : null;
+  if (legacyHomeworkSelected && (!Array.isArray(draft.selected.homeworkRecommended) || !Array.isArray(draft.selected.homeworkAdditional))) {
+    const recIds = new Set(homeworkSplit.recommended.map((item) => item.id));
+    draft.selected.homeworkRecommended = legacyHomeworkSelected.filter((id) => recIds.has(id));
+    draft.selected.homeworkAdditional = legacyHomeworkSelected.filter((id) => !recIds.has(id));
+  }
+
+  const sectionDefaults = {
+    aiSummary: Boolean(card.sections.ai_summary?.content),
+    aiQuestions: (card.sections.ai_common_questions?.bullets || []).length > 0,
+    keyPoints: keyPointIds.length > 0,
+    aiExamples: aiExampleIds.length > 0,
+    recommended: split.recommended.length > 0,
+    additional: split.additional.length > 0,
+    homeworkRecommended: homeworkSplit.recommended.length > 0,
+    homeworkAdditional: homeworkSplit.additional.length > 0,
+  };
+
+  Object.entries(sectionDefaults).forEach(([key, value]) => {
+    if (typeof draft.sections[key] !== "boolean") {
+      draft.sections[key] = value;
+    }
+  });
+
+  const selectedKeys = ["aiExamples", "keyPoints", "recommended", "additional", "homeworkRecommended", "homeworkAdditional"];
+  selectedKeys.forEach((key) => {
+    if (!Array.isArray(draft.selected[key])) {
+      draft.selected[key] = [];
+    }
+  });
 }
 
 function cloneDraft(draft) {
@@ -287,6 +390,8 @@ function cloneDraft(draft) {
       keyPoints: [...draft.selected.keyPoints],
       recommended: [...draft.selected.recommended],
       additional: [...draft.selected.additional],
+      homeworkRecommended: [...(draft.selected.homeworkRecommended || [])],
+      homeworkAdditional: [...(draft.selected.homeworkAdditional || [])],
     },
   };
 }

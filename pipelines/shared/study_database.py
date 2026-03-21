@@ -39,6 +39,7 @@ def _empty_week_record(week: int) -> dict[str, Any]:
             "lecture_questions": [],
         },
         "notebook_cells": [],
+        "homework_cells": [],
         "sources": [],
     }
 
@@ -75,6 +76,15 @@ def build_study_db_from_monolith(data: dict[str, Any]) -> dict[str, Any]:
             continue
         week_rec = week_map.setdefault(week, _empty_week_record(week))
         week_rec["notebook_cells"].append(cell)
+
+    for cell in _safe_list(data.get("homeworks")):
+        if not isinstance(cell, dict):
+            continue
+        week = _as_int(cell.get("week"))
+        if week is None:
+            continue
+        week_rec = week_map.setdefault(week, _empty_week_record(week))
+        week_rec["homework_cells"].append(cell)
 
     for source in _safe_list(meta.get("sources")):
         if not isinstance(source, str):
@@ -136,6 +146,7 @@ def flatten_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
 
     lectures: list[dict[str, Any]] = []
     notebooks: list[dict[str, Any]] = []
+    homeworks: list[dict[str, Any]] = []
 
     for week_rec in weeks:
         week = _as_int(week_rec.get("week"))
@@ -159,7 +170,15 @@ def flatten_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
             materialized["week"] = week
             notebooks.append(materialized)
 
+        for cell in _safe_list(week_rec.get("homework_cells")):
+            if not isinstance(cell, dict):
+                continue
+            materialized = dict(cell)
+            materialized["week"] = week
+            homeworks.append(materialized)
+
     notebooks.sort(key=lambda item: (_as_int(item.get("week")) or 9999, int(item.get("cell_index") or 0)))
+    homeworks.sort(key=lambda item: (_as_int(item.get("week")) or 9999, int(item.get("cell_index") or 0)))
 
     assessments = db.get("assessments", {}) if isinstance(db.get("assessments"), dict) else {}
     exams = [item for item in _safe_list(assessments.get("exams")) if isinstance(item, dict)]
@@ -174,6 +193,7 @@ def flatten_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
         },
         "lectures": lectures,
         "notebooks": notebooks,
+        "homeworks": homeworks,
         "exams": exams,
         "key_exam_patterns_and_traps": _safe_list(knowledge.get("key_exam_patterns_and_traps")),
         "topic_analysis": knowledge.get("topic_analysis", {}),

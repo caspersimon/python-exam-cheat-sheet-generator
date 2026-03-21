@@ -75,7 +75,7 @@
       "trap_patterns": [
         {
           "pattern": "range() and slicing both exclusive at stop",
-          "trap": "range(1,10,3)\u2192[1,4,7] not including 10; l[2:7] goes up to but not including index 7",
+          "trap": "range(1,10,3)→[1,4,7] not including 10; l[2:7] goes up to but not including index 7",
           "weeks": [
             1,
             2
@@ -93,7 +93,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "Dictionaries",
-            "explanation": "Sets of key:value pairs. Keys must be unique and immutable (hashable). Dictionaries are unordered for equality ({1:1,2:2}=={2:2,1:1} is True). Cannot be sorted. You can check membership with 'in' \u2014 this checks KEYS only. Keys() gives key sequence, values() gives value sequence, items() gives tuples.",
+            "explanation": "Sets of key:value pairs. Keys must be unique and immutable (hashable). Dictionaries are unordered for equality ({1:1,2:2}=={2:2,1:1} is True). Cannot be sorted. You can check membership with 'in' — this checks KEYS only. Keys() gives key sequence, values() gives value sequence, items() gives tuples.",
             "code_examples": [
               {
                 "description": "Creating and using dicts",
@@ -125,7 +125,7 @@
                 "code": "total = 0\nfor number in [1, 2, '3', 3, 5, 7]:\n    if type(number) == str:\n        continue\n    total += number\nprint(total)  # 18"
               },
               {
-                "description": "Loop variable not used \u2014 use _",
+                "description": "Loop variable not used — use _",
                 "code": "for _ in range(5):\n    print('Hello')  # prints Hello 5 times"
               }
             ]
@@ -135,7 +135,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "Looping over dictionaries",
-            "explanation": ".keys() \u2192 key sequence. .values() \u2192 value sequence. .items() \u2192 sequence of (key, value) tuples. 'for key in dict' is the same as 'for key in dict.keys()'.",
+            "explanation": ".keys() → key sequence. .values() → value sequence. .items() → sequence of (key, value) tuples. 'for key in dict' is the same as 'for key in dict.keys()'.",
             "code_examples": [
               {
                 "description": "Looping over dict",
@@ -211,7 +211,7 @@
               "d": "Neither works."
             },
             "correct": "b",
-            "explanation": "Option a produces both (5,6) and (6,5) \u2014 it doesn't ensure uniqueness. Option b iterates up to target//2, so each pair is only considered once. For target=11, range(0,6): checks 0,1,2,3,4,5. Finds: 2+9,3+8,4+7,5+6 \u2014 unique pairs. Option b works as intended. Option a doesn't meet the uniqueness requirement. Correct: b."
+            "explanation": "Option a produces both (5,6) and (6,5) — it doesn't ensure uniqueness. Option b iterates up to target//2, so each pair is only considered once. For target=11, range(0,6): checks 0,1,2,3,4,5. Finds: 2+9,3+8,4+7,5+6 — unique pairs. Option b works as intended. Option a doesn't meet the uniqueness requirement. Correct: b."
           },
           {
             "id": "exm-4cee2500a8",
@@ -344,7 +344,7 @@
               "D": "16"
             },
             "correct": "B",
-            "explanation": "i=0: j in range(0) \u2192 0 iterations. i=1: 1. i=2: 2. i=3: 3. Total: 0+1+2+3 = 6."
+            "explanation": "i=0: j in range(0) → 0 iterations. i=1: 1. i=2: 2. i=3: 3. Total: 0+1+2+3 = 6."
           },
           {
             "id": "exm-3555baf8ba",
@@ -1101,7 +1101,7 @@
                 "id": "kp-15-d1",
                 "kind": "explanation",
                 "title": ".items() Method",
-                "text": "The `.items()` method returns a view object that displays a list of a dictionary\u2019s key-value tuple pairs.",
+                "text": "The `.items()` method returns a view object that displays a list of a dictionary’s key-value tuple pairs.",
                 "code": "",
                 "table": null
               },
@@ -1152,6 +1152,21 @@
           "exm-7f6a7c840f",
           "exm-f44278f521",
           "exm-3555baf8ba"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-d5812572f6",
+            "week": 2,
+            "cell_index": 9,
+            "cell_type": "code",
+            "topic": "for_loops",
+            "source": "# source: materials/homework/week 2/Exercise_2.9.py\ndemand = []\nfor buyer_values in buyers.values():\n     demand = demand + buyer_values\ndemand = sorted(demand, reverse=True)\n\nsupply = []\nfor seller_values in sellers.values():\n     supply = supply + seller_values\nsupply = sorted(supply, reverse=False)\n\nquantity_sold = 0\nfor buyer_value, supplyer_value in zip(demand, supply):\n     quantity_sold += buyer_value >= supplyer_value\n\nprint(quantity_sold)",
+            "outputs": [],
+            "source_origin": "materials/homework/week 2/Exercise_2.9.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-d5812572f6"
         ]
       }
     },
@@ -1177,7 +1192,7 @@
       "related_topics": [
         "*args / passing to function",
         "Function definition and calling",
-        "Functions \u2014 basics",
+        "Functions — basics",
         "Lambda functions",
         "Methods vs functions",
         "Nested functions and function factories",
@@ -1203,7 +1218,7 @@
             "id": "lec-805233cb66",
             "week": 1,
             "source": "Lecture Week 1",
-            "topic": "Functions \u2014 basics",
+            "topic": "Functions — basics",
             "explanation": "Functions are objects. Defined with def. Called with (). Built-in functions: print, id, len, type, del. Functions can return values. Methods are functions attached to objects.",
             "code_examples": [
               {
@@ -1254,7 +1269,7 @@
               },
               {
                 "description": "sorted() with key lambda",
-                "code": "l1 = ['aaa', 'c', 'baab']\nprint(sorted(l1))                              # ['aaa', 'baab', 'c']\nprint(sorted(l1, key=lambda x: x.count('a'))) # ['c', 'baab', 'aaa']\nprint(sorted(l1, key=len))                    # ['c', 'aaa', 'baab']\n\nd = {'a': 2, 'b': 1}\nprint(max(d.items()))                         # ('b', 1)  \u2190 compares tuples\nprint(max(d.items(), key=lambda x: x[1]))     # ('a', 2)  \u2190 by value"
+                "code": "l1 = ['aaa', 'c', 'baab']\nprint(sorted(l1))                              # ['aaa', 'baab', 'c']\nprint(sorted(l1, key=lambda x: x.count('a'))) # ['c', 'baab', 'aaa']\nprint(sorted(l1, key=len))                    # ['c', 'aaa', 'baab']\n\nd = {'a': 2, 'b': 1}\nprint(max(d.items()))                         # ('b', 1)  ← compares tuples\nprint(max(d.items(), key=lambda x: x[1]))     # ('a', 2)  ← by value"
               }
             ]
           },
@@ -1263,14 +1278,14 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "Methods vs functions",
-            "explanation": "Methods are functions attached to objects. Calling obj.method() is equivalent to Class.method(obj). For mutable objects: some methods CHANGE the object (e.g. list.sort()), some RETURN a value (e.g. list.index()). For immutable objects: methods always return a new value (can't change the object itself). COMMON ERROR: s1.upper() on strings \u2014 you must do s1 = s1.upper() to save the result.",
+            "explanation": "Methods are functions attached to objects. Calling obj.method() is equivalent to Class.method(obj). For mutable objects: some methods CHANGE the object (e.g. list.sort()), some RETURN a value (e.g. list.index()). For immutable objects: methods always return a new value (can't change the object itself). COMMON ERROR: s1.upper() on strings — you must do s1 = s1.upper() to save the result.",
             "code_examples": [
               {
-                "description": "Method on immutable \u2014 must capture return value",
-                "code": "s1 = 'UVA Amsterdam'\ns1 = s1.upper()  # CORRECT \u2014 captures new string\ns1.upper()       # WRONG \u2014 result is lost, s1 unchanged"
+                "description": "Method on immutable — must capture return value",
+                "code": "s1 = 'UVA Amsterdam'\ns1 = s1.upper()  # CORRECT — captures new string\ns1.upper()       # WRONG — result is lost, s1 unchanged"
               },
               {
-                "description": "Method on mutable \u2014 changes in place vs returns value",
+                "description": "Method on mutable — changes in place vs returns value",
                 "code": "l1 = [3, 1, 2]\nl1.sort()           # changes l1 in place, returns None\nprint(l1)           # [1, 2, 3]\nprint(l1.index(2))  # 1 (returns index, doesn't change l1)"
               }
             ]
@@ -1280,7 +1295,7 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "Nested functions and function factories",
-            "explanation": "Functions can be defined inside other functions. The inner function is only visible to the outer function. Functions are objects \u2014 a function can return another function (factory pattern).",
+            "explanation": "Functions can be defined inside other functions. The inner function is only visible to the outer function. Functions are objects — a function can return another function (factory pattern).",
             "code_examples": [
               {
                 "description": "Function factory",
@@ -2021,7 +2036,9 @@
           "nb-711110ef0a",
           "nb-eb8335fd0f",
           "nb-09ab40d9b7"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -2044,7 +2061,7 @@
       },
       "related_topics": [
         "Dictionaries",
-        "Lists vs Dictionaries vs Sets \u2014 ordered/unordered",
+        "Lists vs Dictionaries vs Sets — ordered/unordered",
         "Looping over dictionaries",
         "dict / in operator",
         "dictionaries / average",
@@ -2060,7 +2077,7 @@
       "trap_patterns": [
         {
           "pattern": "dict 'in' checks KEYS not values",
-          "trap": "4 in {1:4, 2:3} \u2192 False (4 is a value, not a key)",
+          "trap": "4 in {1:4, 2:3} → False (4 is a value, not a key)",
           "weeks": [
             2
           ],
@@ -2071,7 +2088,7 @@
         },
         {
           "pattern": "Empty set: {} creates dict, not set",
-          "trap": "s = {} \u2192 empty dict. s = set() \u2192 empty set",
+          "trap": "s = {} → empty dict. s = set() → empty set",
           "weeks": [
             2
           ],
@@ -2079,7 +2096,7 @@
         },
         {
           "pattern": "dict to tuple gives keys only",
-          "trap": "tuple({1:'a',2:'b'}) \u2192 (1,2) \u2014 only keys, not values or items",
+          "trap": "tuple({1:'a',2:'b'}) → (1,2) — only keys, not values or items",
           "weeks": [
             2
           ],
@@ -2115,7 +2132,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "Dictionaries",
-            "explanation": "Sets of key:value pairs. Keys must be unique and immutable (hashable). Dictionaries are unordered for equality ({1:1,2:2}=={2:2,1:1} is True). Cannot be sorted. You can check membership with 'in' \u2014 this checks KEYS only. Keys() gives key sequence, values() gives value sequence, items() gives tuples.",
+            "explanation": "Sets of key:value pairs. Keys must be unique and immutable (hashable). Dictionaries are unordered for equality ({1:1,2:2}=={2:2,1:1} is True). Cannot be sorted. You can check membership with 'in' — this checks KEYS only. Keys() gives key sequence, values() gives value sequence, items() gives tuples.",
             "code_examples": [
               {
                 "description": "Creating and using dicts",
@@ -2139,7 +2156,7 @@
             "id": "lec-c54469d107",
             "week": 2,
             "source": "Lecture Week 2",
-            "topic": "Lists vs Dictionaries vs Sets \u2014 ordered/unordered",
+            "topic": "Lists vs Dictionaries vs Sets — ordered/unordered",
             "explanation": "Lists, tuples, strings are SEQUENCES (ordered). Dicts and sets are NOT sequences (unordered for equality). All are called collections.",
             "code_examples": [
               {
@@ -2153,7 +2170,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "Looping over dictionaries",
-            "explanation": ".keys() \u2192 key sequence. .values() \u2192 value sequence. .items() \u2192 sequence of (key, value) tuples. 'for key in dict' is the same as 'for key in dict.keys()'.",
+            "explanation": ".keys() → key sequence. .values() → value sequence. .items() → sequence of (key, value) tuples. 'for key in dict' is the same as 'for key in dict.keys()'.",
             "code_examples": [
               {
                 "description": "Looping over dict",
@@ -2199,7 +2216,7 @@
               "d": "Neither code segment will work as intended."
             },
             "correct": "b",
-            "explanation": "Option a has an indentation error (the for loop is indented under the average_score line as if it's a block, but there's no colon). This causes an IndentationError. Option b works correctly. Actually option a depends on whether the indentation shown is a tab after a plain statement \u2014 in Python that's an IndentationError. So only b works. Correct: b."
+            "explanation": "Option a has an indentation error (the for loop is indented under the average_score line as if it's a block, but there's no colon). This causes an IndentationError. Option b works correctly. Actually option a depends on whether the indentation shown is a tab after a plain statement — in Python that's an IndentationError. So only b works. Correct: b."
           },
           {
             "id": "exm-f6de891c85",
@@ -2218,7 +2235,7 @@
               "d": "Neither of the given options will work as intended."
             },
             "correct": "a",
-            "explanation": "Option a correctly counts grades: initialises to 0 and increments. Produces {9:3, 10:2, 11:1}. Option b creates lists of student names, not counts \u2014 produces {9:['A','C','F'], 10:['B','E'], 11:['D']}, not the required format. Correct: a."
+            "explanation": "Option a correctly counts grades: initialises to 0 and increments. Produces {9:3, 10:2, 11:1}. Option b creates lists of student names, not counts — produces {9:['A','C','F'], 10:['B','E'], 11:['D']}, not the required format. Correct: a."
           },
           {
             "id": "exm-fd0aa669b7",
@@ -2256,7 +2273,7 @@
               "d": "{'12345678': 8, '1': 1, '1234': 4, '12': 2, '6': 1, '123456': 6}"
             },
             "correct": "a",
-            "explanation": "index 0: '12345678', int=12345678, index(0)!=12345678 \u2713, even \u2713 \u2192 add, len=8. index 1: '1', int=1, index==int \u2192 skip. index 2: '123', int=123, odd \u2192 skip. index 3: '1234', int=1234, index(3)!=1234 \u2713, even \u2713 \u2192 add, len=4. index 4: '12345', int=12345, odd \u2192 skip. index 5: '12', int=12, index(5)!=12 \u2713, even \u2713 \u2192 add, len=2. index 6: '6', int=6, index(6)==6 \u2192 skip. index 7: '1', int=1, odd \u2192 skip. index 8: '123456', int=123456, index(8)!=123456 \u2713, even \u2713 \u2192 add, len=6. Result: {'12345678':8,'1234':4,'12':2,'123456':6}. Correct: a."
+            "explanation": "index 0: '12345678', int=12345678, index(0)!=12345678 ✓, even ✓ → add, len=8. index 1: '1', int=1, index==int → skip. index 2: '123', int=123, odd → skip. index 3: '1234', int=1234, index(3)!=1234 ✓, even ✓ → add, len=4. index 4: '12345', int=12345, odd → skip. index 5: '12', int=12, index(5)!=12 ✓, even ✓ → add, len=2. index 6: '6', int=6, index(6)==6 → skip. index 7: '1', int=1, odd → skip. index 8: '123456', int=123456, index(8)!=123456 ✓, even ✓ → add, len=6. Result: {'12345678':8,'1234':4,'12':2,'123456':6}. Correct: a."
           },
           {
             "id": "exm-4cee2500a8",
@@ -2833,6 +2850,42 @@
           "nb-24dbf7c985",
           "exm-d0901c699d",
           "exm-fd0aa669b7"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-acc93a6860",
+            "week": 2,
+            "cell_index": 1,
+            "cell_type": "code",
+            "topic": "dictionaries",
+            "source": "# source: materials/homework/week 2/Exercise_2.1.py\ny = {}\nfor var in '0123456789':\n    if var in x:\n        y[var]=x.count(var)\nprint(y)\n\n# Alternative Solution:\n\ny = {}\nfor element in x:\n    if element in \"0123456789\":\n        y[element] = x.count(element)\nprint(y)",
+            "outputs": [],
+            "source_origin": "materials/homework/week 2/Exercise_2.1.py"
+          },
+          {
+            "id": "hw-82ab83e170",
+            "week": 2,
+            "cell_index": 3,
+            "cell_type": "code",
+            "topic": "dictionaries",
+            "source": "# source: materials/homework/week 2/Exercise_2.3.py\ny = {'c': 3, 'd': 3}\nfor key, value in y.items():\n    if key in x:\n        del x[key]\n    else:\n        x[key] = value",
+            "outputs": [],
+            "source_origin": "materials/homework/week 2/Exercise_2.3.py"
+          },
+          {
+            "id": "hw-9ae0db1eff",
+            "week": 2,
+            "cell_index": 6,
+            "cell_type": "code",
+            "topic": "dictionaries",
+            "source": "# source: materials/homework/week 2/Exercise_2.6.py\nsorted_keys = sorted(x.keys(), reverse=True)\n\nresult = []\nfor key in sorted_keys:\n    result.append(x[key])\n\nprint(result)",
+            "outputs": [],
+            "source_origin": "materials/homework/week 2/Exercise_2.6.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-acc93a6860",
+          "hw-82ab83e170"
         ]
       }
     },
@@ -3031,7 +3084,7 @@
               "d": "True"
             },
             "correct": "d",
-            "explanation": "x[2] = (1,2). x[2][0]=1, x[2][1]=2. 1+2=3. float(3)=3.0. type(3.0)=float. x[-2]=3.0 (index 5). type(3.0)=float. float==float \u2192 True."
+            "explanation": "x[2] = (1,2). x[2][0]=1, x[2][1]=2. 1+2=3. float(3)=3.0. type(3.0)=float. x[-2]=3.0 (index 5). type(3.0)=float. float==float → True."
           }
         ],
         "notebook_snippets": [
@@ -3324,6 +3377,42 @@
           "lec-3c6bbdd9be",
           "nb-a8e98f1319",
           "nb-8ea9af8f8b"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-4d85ae1fd0",
+            "week": 1,
+            "cell_index": 1,
+            "cell_type": "code",
+            "topic": "indexing",
+            "source": "x = ['A','B','A','C','B','A','B']\nn = input('The index of which iteration of B would you like to find?')\ni = -1\ntry:\n    for j in range(int(n)):\n        i = x.index('B',i+1)\n    print(i)\nexcept ValueError:\n    print('There are fewer than ' + n + ' instances of B in the list.') #Either this\n    print('There are only ' + str(j) + ' instances of B in the list.')  #or this option is fine for error handling",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Bonus_Exercise_Solved.py"
+          },
+          {
+            "id": "hw-5cc01b0e90",
+            "week": 1,
+            "cell_index": 8,
+            "cell_type": "code",
+            "topic": "indexing",
+            "source": "# source: materials/homework/week 1/Exercise_1.7.py\nprint([x[3], x[0], x[2]])",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise_1.7.py"
+          },
+          {
+            "id": "hw-d7dbe31ef7",
+            "week": 1,
+            "cell_index": 9,
+            "cell_type": "code",
+            "topic": "indexing",
+            "source": "# source: materials/homework/week 1/Exercise_1.8.py\nprint([[1 - x[0][0], 1 - x[0][1]], [1 - x[1][0], 1 - x[1][1]]])",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise_1.8.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-4d85ae1fd0",
+          "hw-5cc01b0e90"
         ]
       }
     },
@@ -3355,7 +3444,7 @@
       "trap_patterns": [
         {
           "pattern": "UnboundLocalError",
-          "trap": "If a name appears on the left side of assignment ANYWHERE in a function, Python treats it as local THROUGHOUT the function body \u2014 even before the assignment line",
+          "trap": "If a name appears on the left side of assignment ANYWHERE in a function, Python treats it as local THROUGHOUT the function body — even before the assignment line",
           "weeks": [
             3
           ],
@@ -3372,14 +3461,14 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "Global and local scope",
-            "explanation": "Local names: defined inside a function (parameter names + any assignment inside). Only known inside the function. Global names: defined outside any function, known everywhere EXCEPT when a same-named local exists (local dominates). Python makes names local at call time, BEFORE executing the body \u2014 so if you assign to a name ANYWHERE in a function, that name is local throughout the function (even before the assignment line). Use 'global' keyword to override (but avoid it).",
+            "explanation": "Local names: defined inside a function (parameter names + any assignment inside). Only known inside the function. Global names: defined outside any function, known everywhere EXCEPT when a same-named local exists (local dominates). Python makes names local at call time, BEFORE executing the body — so if you assign to a name ANYWHERE in a function, that name is local throughout the function (even before the assignment line). Use 'global' keyword to override (but avoid it).",
             "code_examples": [
               {
                 "description": "Local name not accessible outside",
                 "code": "def adder(n1, n2):\n    return n1 + n2\nadder(1, 2)\nprint(n1)  # NameError: name 'n1' is not defined"
               },
               {
-                "description": "UnboundLocalError trap \u2014 local shadows global even before assignment",
+                "description": "UnboundLocalError trap — local shadows global even before assignment",
                 "code": "def main(a):\n    b = b      # ERROR: Python sees b assigned in function -> local\n    return a   # but local b has no value yet\nb = 1\nprint(main(1))  # UnboundLocalError"
               },
               {
@@ -3514,7 +3603,7 @@
               "d": "val4 = 2\ndef func4():\n    val4 = 3\n    def innerfunc():\n        val4 = 2\n        print(val4)\n    print(val4)\nfunc4()\ninnerfunc()"
             },
             "correct": "c",
-            "explanation": "Original output: 3, 2. Option a: UnboundLocalError (val1 used before local assignment). Option b: global val2 modified to 3, print 3, then print val2=3. Output: 3,3. Option c: func3 creates local val3=3, prints 3. Global val3=2 unchanged, prints 2. Output: 3,2. Matches! Option d: innerfunc() called outside func4 scope \u2014 NameError. Correct: c."
+            "explanation": "Original output: 3, 2. Option a: UnboundLocalError (val1 used before local assignment). Option b: global val2 modified to 3, print 3, then print val2=3. Output: 3,3. Option c: func3 creates local val3=3, prints 3. Global val3=2 unchanged, prints 2. Output: 3,2. Matches! Option d: innerfunc() called outside func4 scope — NameError. Correct: c."
           }
         ],
         "notebook_snippets": [
@@ -3829,7 +3918,9 @@
           "nb-4151cecd5a",
           "nb-2b221f0928",
           "nb-a8920b5b9d"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -3851,7 +3942,7 @@
       },
       "related_topics": [
         "Dictionaries",
-        "Lists vs Dictionaries vs Sets \u2014 ordered/unordered",
+        "Lists vs Dictionaries vs Sets — ordered/unordered",
         "Sets",
         "dictionaries",
         "lists",
@@ -3866,7 +3957,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "Dictionaries",
-            "explanation": "Sets of key:value pairs. Keys must be unique and immutable (hashable). Dictionaries are unordered for equality ({1:1,2:2}=={2:2,1:1} is True). Cannot be sorted. You can check membership with 'in' \u2014 this checks KEYS only. Keys() gives key sequence, values() gives value sequence, items() gives tuples.",
+            "explanation": "Sets of key:value pairs. Keys must be unique and immutable (hashable). Dictionaries are unordered for equality ({1:1,2:2}=={2:2,1:1} is True). Cannot be sorted. You can check membership with 'in' — this checks KEYS only. Keys() gives key sequence, values() gives value sequence, items() gives tuples.",
             "code_examples": [
               {
                 "description": "Creating and using dicts",
@@ -3890,7 +3981,7 @@
             "id": "lec-c54469d107",
             "week": 2,
             "source": "Lecture Week 2",
-            "topic": "Lists vs Dictionaries vs Sets \u2014 ordered/unordered",
+            "topic": "Lists vs Dictionaries vs Sets — ordered/unordered",
             "explanation": "Lists, tuples, strings are SEQUENCES (ordered). Dicts and sets are NOT sequences (unordered for equality). All are called collections.",
             "code_examples": [
               {
@@ -3904,7 +3995,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "Sets",
-            "explanation": "Unordered collection of unique values. Empty set MUST be set() \u2014 {} creates empty dict. Elements must be immutable. No indexing. Methods: .add(), .remove(), .update().",
+            "explanation": "Unordered collection of unique values. Empty set MUST be set() — {} creates empty dict. Elements must be immutable. No indexing. Methods: .add(), .remove(), .update().",
             "code_examples": [
               {
                 "description": "Set operations",
@@ -4026,7 +4117,7 @@
               "d": "Both functions return the same values."
             },
             "correct": "d",
-            "explanation": "Option a: for (1,2,2), tuple has no .count() \u2014 wait, actually tuples DO have .count(). For [1,2,2]: element 2 has count>1 so counter=2, returns False. Original returns False. But for a tuple (1,2,2): tuple has .count(), works. But option b: l1[l1.index(element)+1:] \u2014 tuples support slicing and indexing too. Let's re-examine: for a tuple (1,2,2), both a and b should work the same. Actually option a counts ALL duplicated elements (counts 2 twice for [1,2,2]), making counter=2, so counter==0 is False. Original is False too. Both match. For option b applied to tuple: l1[l1.index(element)+1:] works for tuples too. Actually both a and b return same values as original. Correct: d."
+            "explanation": "Option a: for (1,2,2), tuple has no .count() — wait, actually tuples DO have .count(). For [1,2,2]: element 2 has count>1 so counter=2, returns False. Original returns False. But for a tuple (1,2,2): tuple has .count(), works. But option b: l1[l1.index(element)+1:] — tuples support slicing and indexing too. Let's re-examine: for a tuple (1,2,2), both a and b should work the same. Actually option a counts ALL duplicated elements (counts 2 twice for [1,2,2]), making counter=2, so counter==0 is False. Original is False too. Both match. For option b applied to tuple: l1[l1.index(element)+1:] works for tuples too. Actually both a and b return same values as original. Correct: d."
           }
         ],
         "notebook_snippets": [
@@ -4545,7 +4636,9 @@
           "lec-27dc11e221",
           "nb-24dbf7c985",
           "nb-59478a0652"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -4576,7 +4669,7 @@
         "args_star",
         "fun_example",
         "keyword args / **kwargs",
-        "*args \u2014 undefined number of positional arguments"
+        "*args — undefined number of positional arguments"
       ],
       "trap_patterns": [],
       "sections": {
@@ -4607,14 +4700,14 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "Methods vs functions",
-            "explanation": "Methods are functions attached to objects. Calling obj.method() is equivalent to Class.method(obj). For mutable objects: some methods CHANGE the object (e.g. list.sort()), some RETURN a value (e.g. list.index()). For immutable objects: methods always return a new value (can't change the object itself). COMMON ERROR: s1.upper() on strings \u2014 you must do s1 = s1.upper() to save the result.",
+            "explanation": "Methods are functions attached to objects. Calling obj.method() is equivalent to Class.method(obj). For mutable objects: some methods CHANGE the object (e.g. list.sort()), some RETURN a value (e.g. list.index()). For immutable objects: methods always return a new value (can't change the object itself). COMMON ERROR: s1.upper() on strings — you must do s1 = s1.upper() to save the result.",
             "code_examples": [
               {
-                "description": "Method on immutable \u2014 must capture return value",
-                "code": "s1 = 'UVA Amsterdam'\ns1 = s1.upper()  # CORRECT \u2014 captures new string\ns1.upper()       # WRONG \u2014 result is lost, s1 unchanged"
+                "description": "Method on immutable — must capture return value",
+                "code": "s1 = 'UVA Amsterdam'\ns1 = s1.upper()  # CORRECT — captures new string\ns1.upper()       # WRONG — result is lost, s1 unchanged"
               },
               {
-                "description": "Method on mutable \u2014 changes in place vs returns value",
+                "description": "Method on mutable — changes in place vs returns value",
                 "code": "l1 = [3, 1, 2]\nl1.sort()           # changes l1 in place, returns None\nprint(l1)           # [1, 2, 3]\nprint(l1.index(2))  # 1 (returns index, doesn't change l1)"
               }
             ]
@@ -4623,8 +4716,8 @@
             "id": "lec-db6665e15a",
             "week": 3,
             "source": "Lecture Week 3",
-            "topic": "*args \u2014 undefined number of positional arguments",
-            "explanation": "Prefixing a parameter with * makes Python collect all extra positional arguments into a tuple named args. Can mix with defined parameters: def f(n1, n2, *args) \u2014 Python fills n1,n2 first then collects remainder into args.",
+            "topic": "*args — undefined number of positional arguments",
+            "explanation": "Prefixing a parameter with * makes Python collect all extra positional arguments into a tuple named args. Can mix with defined parameters: def f(n1, n2, *args) — Python fills n1,n2 first then collects remainder into args.",
             "code_examples": [
               {
                 "description": "*args usage",
@@ -4975,7 +5068,9 @@
           "lec-db6665e15a",
           "lec-8bc2ca06f4",
           "nb-711110ef0a"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -5010,7 +5105,7 @@
       "trap_patterns": [
         {
           "pattern": "Negative slicing with step=-2",
-          "trap": "l[::-2] starts from last element going backwards with step 2. l[::2][::-1] first takes every other starting from 0, then reverses \u2014 different result",
+          "trap": "l[::-2] starts from last element going backwards with step 2. l[::2][::-1] first takes every other starting from 0, then reverses — different result",
           "weeks": [
             1
           ],
@@ -5020,7 +5115,7 @@
         },
         {
           "pattern": "range() and slicing both exclusive at stop",
-          "trap": "range(1,10,3)\u2192[1,4,7] not including 10; l[2:7] goes up to but not including index 7",
+          "trap": "range(1,10,3)→[1,4,7] not including 10; l[2:7] goes up to but not including index 7",
           "weeks": [
             1,
             2
@@ -5032,7 +5127,7 @@
         },
         {
           "pattern": "Slicing creates a NEW object",
-          "trap": "l2=l1 vs l2=l1[:] \u2014 l2=l1 shares the SAME object, slicing creates independent copy",
+          "trap": "l2=l1 vs l2=l1[:] — l2=l1 shares the SAME object, slicing creates independent copy",
           "weeks": [
             1
           ],
@@ -5066,7 +5161,7 @@
                 "code": "l1 = [1, 2, 3, 4]\nprint(l1[::-1])    # [4, 3, 2, 1]"
               },
               {
-                "description": "Slicing creates new object \u2014 key exam trap",
+                "description": "Slicing creates new object — key exam trap",
                 "code": "l1 = [1, 2, 3, 4]\nl2 = l1\nl3 = l1[:]\nl1[-1] = 5\nprint(l1 == l2, l2 == l3)  # True False (l3 is independent copy)"
               },
               {
@@ -5613,6 +5708,21 @@
           "nb-15c3c8bffd",
           "nb-1a515da900",
           "leq-eb2d6e90d2"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-57fbc30ac8",
+            "week": 1,
+            "cell_index": 10,
+            "cell_type": "code",
+            "topic": "slicing",
+            "source": "# source: materials/homework/week 1/Exercise_1.9.py\nleft = x.index(15) + 1\nremainder_x = x[left:]\nright = left + remainder_x.index(15)\nprint(x[left:right])",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise_1.9.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-57fbc30ac8"
         ]
       }
     },
@@ -5636,7 +5746,7 @@
       "related_topics": [
         "Boolean operators",
         "Conditional statements and expressions",
-        "Conditions and boolean operators \u2014 precedence",
+        "Conditions and boolean operators — precedence",
         "Truthy and Falsy",
         "conditional_expression",
         "conditions",
@@ -5685,7 +5795,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "Conditional statements and expressions",
-            "explanation": "if/elif/else. One if at start, at most one else at end, unlimited elif in between. Indentation is critical \u2014 all code in a block must have same indentation. Conditional expression (ternary): value_if_true if condition else value_if_false.",
+            "explanation": "if/elif/else. One if at start, at most one else at end, unlimited elif in between. Indentation is critical — all code in a block must have same indentation. Conditional expression (ternary): value_if_true if condition else value_if_false.",
             "code_examples": [
               {
                 "description": "if/elif/else structure",
@@ -5701,15 +5811,15 @@
             "id": "lec-d7fa16c039",
             "week": 2,
             "source": "Lecture Week 2",
-            "topic": "Conditions and boolean operators \u2014 precedence",
-            "explanation": "Precedence (high to low): comparisons \u2192 not \u2192 and \u2192 or. Use parentheses to be explicit. 'in' checks membership in sequence/set/dict-keys.",
+            "topic": "Conditions and boolean operators — precedence",
+            "explanation": "Precedence (high to low): comparisons → not → and → or. Use parentheses to be explicit. 'in' checks membership in sequence/set/dict-keys.",
             "code_examples": [
               {
                 "description": "Precedence trap",
                 "code": "a=1; b=3\n# WRONG: Python evaluates 'and' before 'or'\nprint(a==1 or a==2 and b==1 or b==2)     # True (unexpected)\n# CORRECT: use brackets\nprint((a==1 or a==2) and (b==1 or b==2)) # False"
               },
               {
-                "description": "Inclusion check \u2014 'in' operator",
+                "description": "Inclusion check — 'in' operator",
                 "code": "print(1 in [1,2,3])    # True\nprint(1 in (1,2,3))    # True\nprint('1' in '123')    # True (substring)\nprint(1 in {1:4, 2:3}) # True (checks keys)\nprint(4 in {1:4, 2:3}) # False (4 is value, not key)\nprint(1 in {1,2,3})    # True"
               }
             ]
@@ -6623,6 +6733,31 @@
           "lec-2f353ad9dc",
           "nb-33c2cdb26d",
           "nb-6cf4db433f"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-9b03246fee",
+            "week": 1,
+            "cell_index": 6,
+            "cell_type": "code",
+            "topic": "boolean_operators",
+            "source": "# source: materials/homework/week 1/Exercise_1.5.py\nprint('mnop' * (1 - x))",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise_1.5.py"
+          },
+          {
+            "id": "hw-a68b2adc08",
+            "week": 2,
+            "cell_index": 8,
+            "cell_type": "code",
+            "topic": "conditions",
+            "source": "# source: materials/homework/week 2/Exercise_2.8.py\nresult = []\nfor element in x:\n    if element <= d:\n        text = \"cat4\"\n    elif element >= c:\n        text = \"cat3\"\n    elif element < b:\n        text = \"cat2\"\n    elif element > a:\n        text = \"cat1\"\n    else:\n        text = \"catunknown\"\n    result.append(text)\n\nprint(result)",
+            "outputs": [],
+            "source_origin": "materials/homework/week 2/Exercise_2.8.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-9b03246fee"
         ]
       }
     },
@@ -6655,7 +6790,7 @@
       "trap_patterns": [
         {
           "pattern": "Mutable default argument",
-          "trap": "def f(lst=[]): \u2014 the [] is created ONCE at def time and persists across calls. Fix: use None and create inside function",
+          "trap": "def f(lst=[]): — the [] is created ONCE at def time and persists across calls. Fix: use None and create inside function",
           "weeks": [
             3
           ],
@@ -6672,7 +6807,7 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "Default arguments",
-            "explanation": "Default values are part of the function HEADER (not the call). When argument is omitted, the default is used. Keyword args in a call use =. CRITICAL: mutable defaults are evaluated ONCE at def time \u2014 never use mutable defaults; use None instead.",
+            "explanation": "Default values are part of the function HEADER (not the call). When argument is omitted, the default is used. Keyword args in a call use =. CRITICAL: mutable defaults are evaluated ONCE at def time — never use mutable defaults; use None instead.",
             "code_examples": [
               {
                 "description": "Default value",
@@ -6680,11 +6815,11 @@
               },
               {
                 "description": "Mutable default BUG",
-                "code": "def main(addition, l1=[]):\n    l1.append(addition)\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [2, 3] \u2190 BUG: l1 persists!"
+                "code": "def main(addition, l1=[]):\n    l1.append(addition)\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [2, 3] ← BUG: l1 persists!"
               },
               {
-                "description": "Mutable default FIX \u2014 use None",
-                "code": "def main(addition, l1=None):\n    if l1 is None:\n        l1 = []\n    l1 += [addition]\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [3]  \u2190 correct"
+                "description": "Mutable default FIX — use None",
+                "code": "def main(addition, l1=None):\n    if l1 is None:\n        l1 = []\n    l1 += [addition]\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [3]  ← correct"
               }
             ]
           },
@@ -6992,7 +7127,9 @@
           "leq-a9a97c880c",
           "nb-6725133dff",
           "nb-d69134ce72"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -7028,7 +7165,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "enumerate()",
-            "explanation": "Provides index alongside value when looping. enumerate(seq, start) \u2014 second arg sets the start index (default 0).",
+            "explanation": "Provides index alongside value when looping. enumerate(seq, start) — second arg sets the start index (default 0).",
             "code_examples": [
               {
                 "description": "enumerate with start=1",
@@ -7048,7 +7185,7 @@
                 "code": "total = 0\nfor number in [1, 2, '3', 3, 5, 7]:\n    if type(number) == str:\n        continue\n    total += number\nprint(total)  # 18"
               },
               {
-                "description": "Loop variable not used \u2014 use _",
+                "description": "Loop variable not used — use _",
                 "code": "for _ in range(5):\n    print('Hello')  # prints Hello 5 times"
               }
             ]
@@ -7110,7 +7247,7 @@
               "d": "{'12345678': 8, '1': 1, '1234': 4, '12': 2, '6': 1, '123456': 6}"
             },
             "correct": "a",
-            "explanation": "index 0: '12345678', int=12345678, index(0)!=12345678 \u2713, even \u2713 \u2192 add, len=8. index 1: '1', int=1, index==int \u2192 skip. index 2: '123', int=123, odd \u2192 skip. index 3: '1234', int=1234, index(3)!=1234 \u2713, even \u2713 \u2192 add, len=4. index 4: '12345', int=12345, odd \u2192 skip. index 5: '12', int=12, index(5)!=12 \u2713, even \u2713 \u2192 add, len=2. index 6: '6', int=6, index(6)==6 \u2192 skip. index 7: '1', int=1, odd \u2192 skip. index 8: '123456', int=123456, index(8)!=123456 \u2713, even \u2713 \u2192 add, len=6. Result: {'12345678':8,'1234':4,'12':2,'123456':6}. Correct: a."
+            "explanation": "index 0: '12345678', int=12345678, index(0)!=12345678 ✓, even ✓ → add, len=8. index 1: '1', int=1, index==int → skip. index 2: '123', int=123, odd → skip. index 3: '1234', int=1234, index(3)!=1234 ✓, even ✓ → add, len=4. index 4: '12345', int=12345, odd → skip. index 5: '12', int=12, index(5)!=12 ✓, even ✓ → add, len=2. index 6: '6', int=6, index(6)==6 → skip. index 7: '1', int=1, odd → skip. index 8: '123456', int=123456, index(8)!=123456 ✓, even ✓ → add, len=6. Result: {'12345678':8,'1234':4,'12':2,'123456':6}. Correct: a."
           }
         ],
         "notebook_snippets": [
@@ -7288,6 +7425,21 @@
           "lec-ca6bf752eb",
           "lec-1a2667a070",
           "nb-6d22b8d418"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-bcb4a5a2a8",
+            "week": 2,
+            "cell_index": 4,
+            "cell_type": "code",
+            "topic": "enumerate",
+            "source": "# source: materials/homework/week 2/Exercise_2.4.py\ny = {}\nfor key, value in enumerate(x):\n    y['highest' if value == max(x) else key]= value",
+            "outputs": [],
+            "source_origin": "materials/homework/week 2/Exercise_2.4.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-bcb4a5a2a8"
         ]
       }
     },
@@ -7347,7 +7499,7 @@
               },
               {
                 "description": "sorted() with key lambda",
-                "code": "l1 = ['aaa', 'c', 'baab']\nprint(sorted(l1))                              # ['aaa', 'baab', 'c']\nprint(sorted(l1, key=lambda x: x.count('a'))) # ['c', 'baab', 'aaa']\nprint(sorted(l1, key=len))                    # ['c', 'aaa', 'baab']\n\nd = {'a': 2, 'b': 1}\nprint(max(d.items()))                         # ('b', 1)  \u2190 compares tuples\nprint(max(d.items(), key=lambda x: x[1]))     # ('a', 2)  \u2190 by value"
+                "code": "l1 = ['aaa', 'c', 'baab']\nprint(sorted(l1))                              # ['aaa', 'baab', 'c']\nprint(sorted(l1, key=lambda x: x.count('a'))) # ['c', 'baab', 'aaa']\nprint(sorted(l1, key=len))                    # ['c', 'aaa', 'baab']\n\nd = {'a': 2, 'b': 1}\nprint(max(d.items()))                         # ('b', 1)  ← compares tuples\nprint(max(d.items(), key=lambda x: x[1]))     # ('a', 2)  ← by value"
               }
             ]
           },
@@ -7356,14 +7508,14 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "Methods vs functions",
-            "explanation": "Methods are functions attached to objects. Calling obj.method() is equivalent to Class.method(obj). For mutable objects: some methods CHANGE the object (e.g. list.sort()), some RETURN a value (e.g. list.index()). For immutable objects: methods always return a new value (can't change the object itself). COMMON ERROR: s1.upper() on strings \u2014 you must do s1 = s1.upper() to save the result.",
+            "explanation": "Methods are functions attached to objects. Calling obj.method() is equivalent to Class.method(obj). For mutable objects: some methods CHANGE the object (e.g. list.sort()), some RETURN a value (e.g. list.index()). For immutable objects: methods always return a new value (can't change the object itself). COMMON ERROR: s1.upper() on strings — you must do s1 = s1.upper() to save the result.",
             "code_examples": [
               {
-                "description": "Method on immutable \u2014 must capture return value",
-                "code": "s1 = 'UVA Amsterdam'\ns1 = s1.upper()  # CORRECT \u2014 captures new string\ns1.upper()       # WRONG \u2014 result is lost, s1 unchanged"
+                "description": "Method on immutable — must capture return value",
+                "code": "s1 = 'UVA Amsterdam'\ns1 = s1.upper()  # CORRECT — captures new string\ns1.upper()       # WRONG — result is lost, s1 unchanged"
               },
               {
-                "description": "Method on mutable \u2014 changes in place vs returns value",
+                "description": "Method on mutable — changes in place vs returns value",
                 "code": "l1 = [3, 1, 2]\nl1.sort()           # changes l1 in place, returns None\nprint(l1)           # [1, 2, 3]\nprint(l1.index(2))  # 1 (returns index, doesn't change l1)"
               }
             ]
@@ -7710,6 +7862,21 @@
           "nb-b257dde94b",
           "nb-ead5baf6cb",
           "nb-64fa3cf49c"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-1a9c819007",
+            "week": 3,
+            "cell_index": 9,
+            "cell_type": "code",
+            "topic": "lambda",
+            "source": "# source: materials/homework/week 3/Exercise_3.9.py\nprint(sum(map(lambda x: 5 * x + 6, integer_list)))",
+            "outputs": [],
+            "source_origin": "materials/homework/week 3/Exercise_3.9.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-1a9c819007"
         ]
       }
     },
@@ -7742,19 +7909,19 @@
             "week": 1,
             "source": "Lecture Week 1",
             "topic": "Mutable vs immutable types",
-            "explanation": "Immutable: int, float, str, bool, tuple. Mutable: list, dict, set. The value of a mutable object CAN be changed in-place. The value of an immutable object CANNOT be changed \u2014 a new object must be created.",
+            "explanation": "Immutable: int, float, str, bool, tuple. Mutable: list, dict, set. The value of a mutable object CAN be changed in-place. The value of an immutable object CANNOT be changed — a new object must be created.",
             "code_examples": [
               {
-                "description": "List is mutable \u2014 can change element in place",
+                "description": "List is mutable — can change element in place",
                 "code": "l1 = [1, 2, 3]\nprint(l1)      # [1, 2, 3]\nl1[2] = 4\nprint(l1)      # [1, 2, 4]"
               },
               {
-                "description": "Tuple is immutable \u2014 assigning to index raises TypeError",
+                "description": "Tuple is immutable — assigning to index raises TypeError",
                 "code": "t1 = (1, 2, 3)\nt1[2] = 4\n# TypeError: 'tuple' object does not support item assignment"
               },
               {
                 "description": "String reassignment creates a NEW object, not mutation",
-                "code": "box_1 = 'content'\nold_id = id(box_1)\nbox_1 = 'new content'\nnew_id = id(box_1)\nprint(old_id == new_id)  # False \u2014 different object"
+                "code": "box_1 = 'content'\nold_id = id(box_1)\nbox_1 = 'new content'\nnew_id = id(box_1)\nprint(old_id == new_id)  # False — different object"
               }
             ]
           }
@@ -7796,7 +7963,7 @@
               "D": "set"
             },
             "correct": "C",
-            "explanation": "Tuples are immutable \u2014 their elements cannot be changed after creation. Lists, dicts, and sets are mutable."
+            "explanation": "Tuples are immutable — their elements cannot be changed after creation. Lists, dicts, and sets are mutable."
           },
           {
             "id": "exm-a1a45e4e9f",
@@ -8051,7 +8218,9 @@
           "exm-132fbfd043",
           "exm-a1a45e4e9f",
           "lec-874b4592ee"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -8086,19 +8255,19 @@
             "week": 1,
             "source": "Lecture Week 1",
             "topic": "Mutable vs immutable types",
-            "explanation": "Immutable: int, float, str, bool, tuple. Mutable: list, dict, set. The value of a mutable object CAN be changed in-place. The value of an immutable object CANNOT be changed \u2014 a new object must be created.",
+            "explanation": "Immutable: int, float, str, bool, tuple. Mutable: list, dict, set. The value of a mutable object CAN be changed in-place. The value of an immutable object CANNOT be changed — a new object must be created.",
             "code_examples": [
               {
-                "description": "List is mutable \u2014 can change element in place",
+                "description": "List is mutable — can change element in place",
                 "code": "l1 = [1, 2, 3]\nprint(l1)      # [1, 2, 3]\nl1[2] = 4\nprint(l1)      # [1, 2, 4]"
               },
               {
-                "description": "Tuple is immutable \u2014 assigning to index raises TypeError",
+                "description": "Tuple is immutable — assigning to index raises TypeError",
                 "code": "t1 = (1, 2, 3)\nt1[2] = 4\n# TypeError: 'tuple' object does not support item assignment"
               },
               {
                 "description": "String reassignment creates a NEW object, not mutation",
-                "code": "box_1 = 'content'\nold_id = id(box_1)\nbox_1 = 'new content'\nnew_id = id(box_1)\nprint(old_id == new_id)  # False \u2014 different object"
+                "code": "box_1 = 'content'\nold_id = id(box_1)\nbox_1 = 'new content'\nnew_id = id(box_1)\nprint(old_id == new_id)  # False — different object"
               }
             ]
           },
@@ -8167,7 +8336,7 @@
               "D": "set"
             },
             "correct": "C",
-            "explanation": "Tuples are immutable \u2014 their elements cannot be changed after creation. Lists, dicts, and sets are mutable."
+            "explanation": "Tuples are immutable — their elements cannot be changed after creation. Lists, dicts, and sets are mutable."
           }
         ],
         "notebook_snippets": [
@@ -8519,7 +8688,9 @@
           "lec-054707f60d",
           "nb-7465f041cc",
           "nb-632dd37679"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -8539,7 +8710,7 @@
         "coverage_count": 3
       },
       "related_topics": [
-        "Implicit return \u2014 None",
+        "Implicit return — None",
         "Return statement",
         "global / return None",
         "multiple_returns",
@@ -8562,7 +8733,7 @@
         },
         {
           "pattern": "map/filter return iterables, not lists",
-          "trap": "list(map(lambda x: x*2, l)) \u2014 must wrap in list(). Without it: <map object at 0x...>",
+          "trap": "list(map(lambda x: x*2, l)) — must wrap in list(). Without it: <map object at 0x...>",
           "weeks": [
             3
           ],
@@ -8578,7 +8749,7 @@
             "id": "lec-c2c935e354",
             "week": 3,
             "source": "Lecture Week 3",
-            "topic": "Implicit return \u2014 None",
+            "topic": "Implicit return — None",
             "explanation": "If a function reaches the end without a return statement, Python returns None automatically. This is bad practice but you must know it. Test with: if a != None:  or  if a is not None:",
             "code_examples": [
               {
@@ -8592,7 +8763,7 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "Return statement",
-            "explanation": "Returns a value to the caller. If you don't capture the return value it's lost. A function leaves no traces \u2014 local names are gone after function ends. Common error: using print() instead of return in homework functions.",
+            "explanation": "Returns a value to the caller. If you don't capture the return value it's lost. A function leaves no traces — local names are gone after function ends. Common error: using print() instead of return in homework functions.",
             "code_examples": [
               {
                 "description": "Returning a tuple (multiple values)",
@@ -8955,7 +9126,9 @@
           "nb-fcd5ecd9a3",
           "nb-af7cb6892e",
           "nb-4e869348fc"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -9059,7 +9232,7 @@
               "d": "True"
             },
             "correct": "d",
-            "explanation": "x[2] = (1,2). x[2][0]=1, x[2][1]=2. 1+2=3. float(3)=3.0. type(3.0)=float. x[-2]=3.0 (index 5). type(3.0)=float. float==float \u2192 True."
+            "explanation": "x[2] = (1,2). x[2][0]=1, x[2][1]=2. 1+2=3. float(3)=3.0. type(3.0)=float. x[-2]=3.0 (index 5). type(3.0)=float. float==float → True."
           }
         ],
         "notebook_snippets": [
@@ -9409,6 +9582,21 @@
           "nb-a358f49009",
           "nb-c488bc51d9",
           "nb-614c69b0f2"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-732a093fb6",
+            "week": 1,
+            "cell_index": 7,
+            "cell_type": "code",
+            "topic": "type_conversion",
+            "source": "# source: materials/homework/week 1/Exercise_1.6.py\nprint(float(x + '50'))",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise_1.6.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-732a093fb6"
         ]
       }
     },
@@ -9428,7 +9616,7 @@
         "coverage_count": 2
       },
       "related_topics": [
-        "Object types \u2014 the 8 types to know",
+        "Object types — the 8 types to know",
         "Objects/types",
         "Objects: core properties",
         "objects",
@@ -9439,7 +9627,7 @@
       "trap_patterns": [
         {
           "pattern": "Slicing creates a NEW object",
-          "trap": "l2=l1 vs l2=l1[:] \u2014 l2=l1 shares the SAME object, slicing creates independent copy",
+          "trap": "l2=l1 vs l2=l1[:] — l2=l1 shares the SAME object, slicing creates independent copy",
           "weeks": [
             1
           ],
@@ -9457,7 +9645,7 @@
             "id": "lec-03d78ccf62",
             "week": 1,
             "source": "Lecture Week 1",
-            "topic": "Object types \u2014 the 8 types to know",
+            "topic": "Object types — the 8 types to know",
             "explanation": "int, float, str, bool, tuple, list, dict, set",
             "code_examples": [
               {
@@ -9479,7 +9667,7 @@
               "d": "Neither is correct"
             },
             "correct": "a",
-            "explanation": "I is correct (e.g. a=1, b=2, both int). II is incorrect \u2014 if two objects have the same value they must have the same type."
+            "explanation": "I is correct (e.g. a=1, b=2, both int). II is incorrect — if two objects have the same value they must have the same type."
           },
           {
             "id": "lec-8c4ac0f026",
@@ -9794,7 +9982,9 @@
           "nb-ebb2df2e4e",
           "nb-522899bb07",
           "leq-eb2764fa14"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -9830,7 +10020,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "enumerate()",
-            "explanation": "Provides index alongside value when looping. enumerate(seq, start) \u2014 second arg sets the start index (default 0).",
+            "explanation": "Provides index alongside value when looping. enumerate(seq, start) — second arg sets the start index (default 0).",
             "code_examples": [
               {
                 "description": "enumerate with start=1",
@@ -9889,7 +10079,7 @@
               "d": "Neither of the given options will work as intended."
             },
             "correct": "a",
-            "explanation": "Option a correctly counts grades: initialises to 0 and increments. Produces {9:3, 10:2, 11:1}. Option b creates lists of student names, not counts \u2014 produces {9:['A','C','F'], 10:['B','E'], 11:['D']}, not the required format. Correct: a."
+            "explanation": "Option a correctly counts grades: initialises to 0 and increments. Produces {9:3, 10:2, 11:1}. Option b creates lists of student names, not counts — produces {9:['A','C','F'], 10:['B','E'], 11:['D']}, not the required format. Correct: a."
           }
         ],
         "notebook_snippets": [
@@ -10051,6 +10241,31 @@
           "nb-a88380d21a",
           "nb-6d22b8d418",
           "nb-87216389d2"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-1552d61245",
+            "week": 2,
+            "cell_index": 5,
+            "cell_type": "code",
+            "topic": "zip",
+            "source": "# source: materials/homework/week 2/Exercise_2.5.py\nx = {}\nfor key, value in zip(keys, values):\n    if key != value and value % 5:\n        x[key] = value",
+            "outputs": [],
+            "source_origin": "materials/homework/week 2/Exercise_2.5.py"
+          },
+          {
+            "id": "hw-4ecff3d996",
+            "week": 3,
+            "cell_index": 8,
+            "cell_type": "code",
+            "topic": "zip",
+            "source": "# source: materials/homework/week 3/Exercise_3.8.py\ndef main(list_1, list_2):\n    result = []\n    for first, second in zip(list_1, list_2):\n        result.append(None if first == second else min(first, second))\n    return result",
+            "outputs": [],
+            "source_origin": "materials/homework/week 3/Exercise_3.8.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-1552d61245"
         ]
       }
     },
@@ -10070,7 +10285,7 @@
         "coverage_count": 1
       },
       "related_topics": [
-        "Assignment statements \u2014 reading right to left",
+        "Assignment statements — reading right to left",
         "Augmented assignment operators",
         "assignment",
         "augmented operators",
@@ -10083,7 +10298,7 @@
             "id": "lec-8f40fb5984",
             "week": 1,
             "source": "Lecture Week 1",
-            "topic": "Assignment statements \u2014 reading right to left",
+            "topic": "Assignment statements — reading right to left",
             "explanation": "Python creates a new object with the value on the right, infers type from the value, then binds the name on the left to that object.",
             "code_examples": [
               {
@@ -10517,7 +10732,9 @@
           "nb-c120563f18",
           "nb-1efd2c6579",
           "nb-3642142eff"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -10558,7 +10775,7 @@
                 "code": "total = 0\nfor number in [1, 2, '3', 3, 5, 7]:\n    if type(number) == str:\n        continue\n    total += number\nprint(total)  # 18"
               },
               {
-                "description": "Loop variable not used \u2014 use _",
+                "description": "Loop variable not used — use _",
                 "code": "for _ in range(5):\n    print('Hello')  # prints Hello 5 times"
               }
             ]
@@ -11070,7 +11287,9 @@
           "nb-de37856825",
           "nb-001226386b",
           "nb-80c6871326"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -11119,7 +11338,7 @@
             "week": 2,
             "source": "Lecture Week 2",
             "topic": "enumerate()",
-            "explanation": "Provides index alongside value when looping. enumerate(seq, start) \u2014 second arg sets the start index (default 0).",
+            "explanation": "Provides index alongside value when looping. enumerate(seq, start) — second arg sets the start index (default 0).",
             "code_examples": [
               {
                 "description": "enumerate with start=1",
@@ -11461,6 +11680,21 @@
           "nb-8d7baf62a3",
           "nb-6d22b8d418",
           "nb-87216389d2"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-34b2e5ee0d",
+            "week": 1,
+            "cell_index": 5,
+            "cell_type": "code",
+            "topic": "strings",
+            "source": "# source: materials/homework/week 1/Exercise_1.4.py\nprint(2 * (x + '-3-') + x)",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise_1.4.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-34b2e5ee0d"
         ]
       }
     },
@@ -11663,6 +11897,42 @@
           "lec-5eee5b396a",
           "nb-f3f249a2d7",
           "nb-47b9ce3817"
+        ],
+        "homework_snippets": [
+          {
+            "id": "hw-355b9824ed",
+            "week": 1,
+            "cell_index": 2,
+            "cell_type": "code",
+            "topic": "arithmetic_operators",
+            "source": "# source: materials/homework/week 1/Exercise 1.py\nprint(max(30 - x, 0))",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise 1.py"
+          },
+          {
+            "id": "hw-2f73c03cca",
+            "week": 1,
+            "cell_index": 3,
+            "cell_type": "code",
+            "topic": "arithmetic_operators",
+            "source": "# source: materials/homework/week 1/Exercise_1.2.py\nprint(round(100 * (1 + x / 100)**4, 2))",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise_1.2.py"
+          },
+          {
+            "id": "hw-dd152b8e7c",
+            "week": 1,
+            "cell_index": 4,
+            "cell_type": "code",
+            "topic": "arithmetic_operators",
+            "source": "# source: materials/homework/week 1/Exercise_1.3.py\nprint((64 // package_size) * package_price + (64 % package_size) * individual_price)",
+            "outputs": [],
+            "source_origin": "materials/homework/week 1/Exercise_1.3.py"
+          }
+        ],
+        "homework_recommended_ids": [
+          "hw-355b9824ed",
+          "hw-2f73c03cca"
         ]
       }
     },
@@ -11728,7 +11998,7 @@
             "kind": "correct",
             "title": "Example of: 'Which is different?'",
             "code": "# A: print(1+2)\n# B: print(3)\n# C: print(4-1)",
-            "why": "This question format requires you to evaluate and compare the output of several snippets. A, B, and C all print '3'. If a fourth option printed '4', that would be the different one. It tests if you can spot functional e\u2026",
+            "why": "This question format requires you to evaluate and compare the output of several snippets. A, B, and C all print '3'. If a fourth option printed '4', that would be the different one. It tests if you can spot functional e…",
             "status": "generated"
           },
           {
@@ -11736,7 +12006,7 @@
             "kind": "incorrect",
             "title": "Misreading 'Solves the problem'",
             "code": "def find_max(nums):\n  return nums[0]\n# Problem: Find the largest number in a list",
-            "why": "This code runs without error, but it doesn't correctly solve the stated problem (it only works if the first element is the largest). An exam question might offer this as an option to trap students who don't test the log\u2026",
+            "why": "This code runs without error, but it doesn't correctly solve the stated problem (it only works if the first element is the largest). An exam question might offer this as an option to trap students who don't test the log…",
             "status": "generated"
           },
           {
@@ -11744,7 +12014,7 @@
             "kind": "incorrect",
             "title": "Ignoring a Stated Constraint",
             "code": "def get_unique(items):\n  return list(set(items))\n# Constraint: Preserve original order.",
-            "why": "This function correctly returns unique items, but converting to a set and back does not preserve the original order. If the exam question specified that order must be preserved, this would be an incorrect solution despi\u2026",
+            "why": "This function correctly returns unique items, but converting to a set and back does not preserve the original order. If the exam question specified that order must be preserved, this would be an incorrect solution despi…",
             "status": "generated"
           }
         ],
@@ -11881,7 +12151,9 @@
         ],
         "recommended_ids": [
           "lec-f3fc8a65be"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -12098,7 +12370,9 @@
           "nb-2709817f6f",
           "nb-364b083d05",
           "nb-ffb2c584b7"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -12125,11 +12399,11 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "pass keyword",
-            "explanation": "Does nothing. Used as a placeholder when an indented block is required but you have nothing to put there yet (stub). After a colon you must have an indented block \u2014 pass satisfies this.",
+            "explanation": "Does nothing. Used as a placeholder when an indented block is required but you have nothing to put there yet (stub). After a colon you must have an indented block — pass satisfies this.",
             "code_examples": [
               {
                 "description": "pass as stub",
-                "code": "def adder(n1, n2):\n    if type(n1) == int and type(n2) == int:\n        result = n1 + n2\n    else:\n        pass  # placeholder \u2014 won't cause IndentationError\n    return result"
+                "code": "def adder(n1, n2):\n    if type(n1) == int and type(n2) == int:\n        result = n1 + n2\n    else:\n        pass  # placeholder — won't cause IndentationError\n    return result"
               }
             ]
           }
@@ -12279,7 +12553,9 @@
           "lec-242c6fa7e5",
           "nb-d63665c405",
           "nb-b29776646d"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -12444,7 +12720,9 @@
         ],
         "recommended_ids": [
           "lec-e91df37af4"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -12481,7 +12759,7 @@
             "week": 3,
             "source": "Lecture Week 3",
             "topic": "Single-element tuple",
-            "explanation": "(1) is NOT a tuple \u2014 it's just the integer 1. To create a 1-element tuple: t = (1,) or t = 1,. Neat swap trick: x, y = y, x",
+            "explanation": "(1) is NOT a tuple — it's just the integer 1. To create a 1-element tuple: t = (1,) or t = 1,. Neat swap trick: x, y = y, x",
             "code_examples": [
               {
                 "description": "1-element tuple gotcha",
@@ -12701,7 +12979,9 @@
         ],
         "recommended_ids": [
           "lec-240025dd8c"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     },
     {
@@ -12906,7 +13186,9 @@
           "lec-aa87baadd4",
           "nb-43d9c8aa9a",
           "nb-d4e293f6ac"
-        ]
+        ],
+        "homework_snippets": [],
+        "homework_recommended_ids": []
       }
     }
   ]

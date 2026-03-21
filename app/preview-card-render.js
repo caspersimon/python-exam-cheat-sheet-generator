@@ -56,6 +56,26 @@ function buildPreviewCard(card, selection, layout) {
     }
   }
 
+  if (selection.sections.homeworkRecommended) {
+    const homeworkRecommended = getSelectedSourceItemsForPreview(card, selection, "homeworkRecommended");
+    if (homeworkRecommended.length) {
+      sectionHtml.push(`<div class="section-title">Homework Recommended</div>`);
+      homeworkRecommended.forEach((sourceItem) => {
+        sectionHtml.push(renderPreviewSourceItem(card, selection, sourceItem, "homeworkRecommended"));
+      });
+    }
+  }
+
+  if (selection.sections.homeworkAdditional) {
+    const homeworkAdditional = getSelectedSourceItemsForPreview(card, selection, "homeworkAdditional");
+    if (homeworkAdditional.length) {
+      sectionHtml.push(`<div class="section-title">Homework Additional</div>`);
+      homeworkAdditional.forEach((sourceItem) => {
+        sectionHtml.push(renderPreviewSourceItem(card, selection, sourceItem, "homeworkAdditional"));
+      });
+    }
+  }
+
   if (!sectionHtml.length) {
     sectionHtml.push(`<p class="preview-empty-copy">No selected details for this topic.</p>`);
   }
@@ -135,9 +155,15 @@ function renderPreviewItemActions(cardId, itemType, itemId, sectionKey) {
 }
 
 function getSelectedSourceItemsForPreview(card, selection, sectionKey) {
-  const split = getSourceSplit(card);
   const selectedIds = new Set(selection.selected[sectionKey] || []);
-  const bucket = sectionKey === "recommended" ? split.recommended : split.additional;
+  let bucket = [];
+  if (sectionKey === "recommended" || sectionKey === "additional") {
+    const split = getSourceSplit(card);
+    bucket = sectionKey === "recommended" ? split.recommended : split.additional;
+  } else if (sectionKey === "homeworkRecommended" || sectionKey === "homeworkAdditional") {
+    const split = getHomeworkSplit(card);
+    bucket = sectionKey === "homeworkRecommended" ? split.recommended : split.additional;
+  }
   return bucket.filter((item) => selectedIds.has(item.id));
 }
 

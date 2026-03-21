@@ -212,6 +212,9 @@ def main() -> None:
                 "dropped_cells": 0,
                 "invalid_code_cells": [],
             },
+            "homework": {
+                "total_cells": len(curated_week.get("homework_cells", [])),
+            },
         }
     else:
         curated_week, curation_report = curate_week_payload(raw_week_payload, model=args.model)
@@ -258,7 +261,8 @@ def main() -> None:
         f"Week {curated_week['week']} {integration_action}. "
         f"curated_concepts={len(curated_week['lecture']['concepts'])}, "
         f"curated_questions={len(curated_week['lecture']['lecture_questions'])}, "
-        f"curated_notebook_cells={len(curated_week['notebook_cells'])}"
+        f"curated_notebook_cells={len(curated_week['notebook_cells'])}, "
+        f"homework_cells={len(curated_week.get('homework_cells', []))}"
     )
     if args.dry_run:
         print("Dry run only: canonical database was not modified.")

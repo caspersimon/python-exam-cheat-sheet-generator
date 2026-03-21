@@ -126,6 +126,9 @@ function deletePreviewItem(cardId, itemType, itemId, section) {
   } else if (itemType === "sourceItem") {
     selection.selected.recommended = (selection.selected.recommended || []).filter((id) => id !== itemId);
     selection.selected.additional = (selection.selected.additional || []).filter((id) => id !== itemId);
+    selection.selected.homeworkRecommended = (selection.selected.homeworkRecommended || []).filter((id) => id !== itemId);
+    selection.selected.homeworkAdditional = (selection.selected.homeworkAdditional || []).filter((id) => id !== itemId);
+    selection.selected.homework = (selection.selected.homework || []).filter((id) => id !== itemId);
     delete selection.overrides.sources[itemId];
   }
 
@@ -316,7 +319,8 @@ function findKeyPointDetail(card, detailId) {
 
 function findSourceItem(card, itemId) {
   const split = getSourceSplit(card);
-  return [...split.recommended, ...split.additional].find((item) => item.id === itemId) || null;
+  const homeworkSplit = getHomeworkSplit(card);
+  return [...split.recommended, ...split.additional, ...homeworkSplit.recommended, ...homeworkSplit.additional].find((item) => item.id === itemId) || null;
 }
 
 function sourceItemToEditableText(sourceItem) {
@@ -336,6 +340,9 @@ function sourceItemToEditableText(sourceItem) {
     lines.push(sourceItem.item.question || "");
     lines.push(sourceItem.item.code_examples?.map((example) => example.code || "").join("\n\n") || "");
   } else {
+    if (sourceItem.sourceType === "homework" && sourceItem.item.source_origin) {
+      lines.push(`# source: ${sourceItem.item.source_origin}`);
+    }
     lines.push(sourceItem.item.source || "");
     lines.push((sourceItem.item.outputs || []).join("\n"));
   }

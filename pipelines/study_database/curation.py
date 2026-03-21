@@ -43,6 +43,7 @@ def normalize_week_payload(raw_payload: dict[str, Any]) -> dict[str, Any]:
     concepts = _safe_list(lecture.get("concepts"))
     lecture_questions = _safe_list(lecture.get("lecture_questions"))
     notebook_cells = _safe_list(raw_payload.get("notebook_cells"))
+    homework_cells = _safe_list(raw_payload.get("homework_cells"))
 
     normalized = {
         "week": week,
@@ -52,6 +53,7 @@ def normalize_week_payload(raw_payload: dict[str, Any]) -> dict[str, Any]:
             "lecture_questions": [deepcopy(item) for item in lecture_questions if isinstance(item, dict)],
         },
         "notebook_cells": [deepcopy(item) for item in notebook_cells if isinstance(item, dict)],
+        "homework_cells": [deepcopy(item) for item in homework_cells if isinstance(item, dict)],
         "sources": [str(source).strip() for source in _safe_list(raw_payload.get("sources")) if str(source).strip()],
     }
 
@@ -65,9 +67,15 @@ def normalize_week_payload(raw_payload: dict[str, Any]) -> dict[str, Any]:
         cell.setdefault("cell_type", "code")
         cell.setdefault("outputs", [])
         cell.setdefault("is_advanced_optional", False)
+    for cell in normalized["homework_cells"]:
+        cell["week"] = week
+        cell.setdefault("topic", "")
+        cell.setdefault("cell_type", "code")
+        cell.setdefault("outputs", [])
+        cell.setdefault("is_advanced_optional", False)
 
-    if not normalized["lecture"]["concepts"] and not normalized["notebook_cells"]:
-        raise WeekCurationError("Week payload is empty: provide at least lecture concepts or notebook cells.")
+    if not normalized["lecture"]["concepts"] and not normalized["notebook_cells"] and not normalized["homework_cells"]:
+        raise WeekCurationError("Week payload is empty: provide at least lecture concepts, notebook cells, or homework cells.")
 
     return normalized
 
@@ -156,6 +164,7 @@ def curate_week_payload(payload: dict[str, Any], *, model: str = MODEL_DEFAULT) 
             "lecture_questions": lecture_curated["lecture_questions"],
         },
         "notebook_cells": notebook_curated,
+        "homework_cells": normalized["homework_cells"],
         "sources": normalized["sources"],
         "curation_meta": {
             "generator": "gemini-cli",
@@ -168,6 +177,8 @@ def curate_week_payload(payload: dict[str, Any], *, model: str = MODEL_DEFAULT) 
     for question in curated["lecture"]["lecture_questions"]:
         question["week"] = week
     for cell in curated["notebook_cells"]:
+        cell["week"] = week
+    for cell in curated["homework_cells"]:
         cell["week"] = week
 
     report = {
@@ -182,5 +193,8 @@ def curate_week_payload(payload: dict[str, Any], *, model: str = MODEL_DEFAULT) 
             "quality_notes": lecture_report["quality_notes"],
         },
         "notebooks": notebook_report,
+        "homework": {
+            "total_cells": len(normalized["homework_cells"]),
+        },
     }
     return curated, report

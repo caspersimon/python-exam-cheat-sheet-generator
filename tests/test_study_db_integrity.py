@@ -31,13 +31,15 @@ class StudyDatabaseIntegrityTests(unittest.TestCase):
             self.assertIsInstance(lecture.get("concepts"), list)
             self.assertIsInstance(lecture.get("lecture_questions"), list)
             self.assertIsInstance(week.get("notebook_cells"), list)
+            self.assertIsInstance(week.get("homework_cells", []), list)
             self.assertIsInstance(week.get("sources"), list)
 
     def test_materialized_shape_is_compatible_with_pipelines(self) -> None:
-        for key in ["meta", "lectures", "notebooks", "exams", "key_exam_patterns_and_traps", "topic_analysis"]:
+        for key in ["meta", "lectures", "notebooks", "homeworks", "exams", "key_exam_patterns_and_traps", "topic_analysis"]:
             self.assertIn(key, self.materialized)
         self.assertIsInstance(self.materialized["lectures"], list)
         self.assertIsInstance(self.materialized["notebooks"], list)
+        self.assertIsInstance(self.materialized["homeworks"], list)
         self.assertIsInstance(self.materialized["exams"], list)
 
     def test_material_sources_exist(self) -> None:

@@ -44,7 +44,7 @@ Curation state:
 
 Storage keys:
 
-- `python_midterm_app_state_v1`
+- `python_midterm_app_state_v3`
 - `python_midterm_splash_seen_v1`
 
 ## Core Files
@@ -138,7 +138,7 @@ When editing `topic_cards.json`:
 
 ## GenAI QA Workflow (Current)
 
-- Generate optional key-point details from card-local evidence (`exam_questions`, `lecture_snippets`, `notebook_snippets`, traps).
+- Generate optional key-point details from card-local evidence (`exam_questions`, `lecture_snippets`, `notebook_snippets`, `homework_snippets`, traps).
 - Audit generated details for:
   - alignment to evidence
   - completeness
@@ -224,16 +224,23 @@ print('duplicate-normalized-topics:', len([k for k, v in Counter(norm_topic(c['t
 
 for card in cards:
     s = card['sections']
-    for key in ['lecture_snippets', 'exam_questions', 'notebook_snippets', 'ai_examples', 'key_points_to_remember', 'recommended_ids']:
+    for key in ['lecture_snippets', 'exam_questions', 'notebook_snippets', 'homework_snippets', 'homework_recommended_ids', 'ai_examples', 'key_points_to_remember', 'recommended_ids']:
         assert isinstance(s.get(key), list), f"{card['id']}: {key} must be list"
     valid_ids = {
         item.get('id')
-        for bucket in ['lecture_snippets', 'exam_questions', 'notebook_snippets']
+        for bucket in ['lecture_snippets', 'exam_questions', 'notebook_snippets', 'homework_snippets']
         for item in s.get(bucket, [])
         if isinstance(item, dict)
     }
     for rid in s.get('recommended_ids', []):
         assert rid in valid_ids, f"{card['id']}: recommended id not found: {rid}"
+    homework_ids = {
+        item.get('id')
+        for item in s.get('homework_snippets', [])
+        if isinstance(item, dict)
+    }
+    for rid in s.get('homework_recommended_ids', []):
+        assert rid in homework_ids, f"{card['id']}: homework recommended id not found: {rid}"
 
 print('integrity checks passed')
 PY

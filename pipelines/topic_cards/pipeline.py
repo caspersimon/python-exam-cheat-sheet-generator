@@ -6,6 +6,7 @@ from pipelines.shared import load_topic_pipeline_data
 
 from .assembly import (
     attach_exam_content,
+    attach_homework_content,
     attach_lecture_content,
     attach_notebook_content,
     attach_patterns,
@@ -26,6 +27,7 @@ def main() -> None:
     attach_lecture_content(cards, data)
     attach_exam_content(cards, data)
     attach_notebook_content(cards, data)
+    attach_homework_content(cards, data)
     attach_patterns(cards, data)
 
     output = {
@@ -36,7 +38,7 @@ def main() -> None:
             "weeks_covered": data.get("meta", {}).get("weeks_covered", []),
             "total_cards": 0,
             "notes": [
-                "Sections (1) lecture snippets, (2) exam Q&A, and (4) notebook snippets are sourced from the canonical study database.",
+                "Sections (1) lecture snippets, (2) exam Q&A, (4) notebook snippets, and (5) homework snippets are sourced from the canonical study database.",
                 "Low-value one-line notebook/heading snippets are filtered out automatically.",
                 "AI sections are generated separately (summary, common questions, examples).",
             ],

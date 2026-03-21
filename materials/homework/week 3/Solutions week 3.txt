@@ -1,0 +1,102 @@
+Solutions week 3:
+
+The below are suggested solutions; there are typically many ways to implement ideas in code.
+
+==========================================================================
+
+Exercise 1:
+
+def main(minimum, maximum):
+    result = {}
+    for first in range(minimum, maximum + 1):
+        for second in range(minimum, maximum + 1):
+            result[(first, second)] = first - second
+    return result 
+
+==========================================================================
+
+Exercise 2:
+
+def main(**kwargs):
+    x = {}
+    for key, value in kwargs.items():
+        x[key] = int(value % 5)
+    return x
+
+==========================================================================
+
+Exercise 3:
+
+def main(*args, allowed_value=16):
+    x = {}
+    for arg in args:
+        for key, value in arg.items(): 
+            if value == allowed_value:
+                x[key] = value
+    return x
+
+==========================================================================
+Exercise 4:
+
+def main(value_list, excluded_type=int):
+    x = []
+    for item in value_list:
+        if type(item) != excluded_type:
+            x.append(item)
+    return x
+
+==========================================================================
+Exercise 5:
+
+def main(*args):
+    x = {}
+    for key in args:
+        y = []
+        for number in args:
+            if number < key and key % number == 0:
+                y.append(number)
+        x[key] = sorted(y, reverse=True)
+    return x
+
+==========================================================================
+
+Exercise 6:
+
+def main(sales_before_entry):
+    def calculate_hhi(sales_volumes):
+        total_sales = sum(sales_volumes)
+        hhi = 0
+        for volume in sales_volumes:
+            hhi += round(100 * volume / total_sales)**2
+        return hhi
+    
+    hhi_before_entry = calculate_hhi(sales_before_entry)
+    hhi_after_entry = calculate_hhi(sales_before_entry + [40])
+
+    return hhi_before_entry - hhi_after_entry
+
+==========================================================================
+
+Exercise 7:
+
+def main(symbols, winning_symbol="*"):
+    pattern = 2 * (winning_symbol + " ") + winning_symbol
+    match = winning_symbol + "-BINGO!!!"
+    no_match = "--"
+    return match if symbols == pattern else no_match
+
+==========================================================================
+
+Exercise 8:
+
+def main(list_1, list_2):
+    result = []
+    for first, second in zip(list_1, list_2):
+        result.append(None if first == second else min(first, second))
+    return result
+
+==========================================================================
+
+Exercise 9:
+
+print(sum(map(lambda x: 5 * x + 6, integer_list)))

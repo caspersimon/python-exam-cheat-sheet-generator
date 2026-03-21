@@ -44,6 +44,7 @@ function renderTopicCard(card, draft) {
     .map(([exam, count]) => `${formatExamLabel(exam)} × ${count}`)
     .join(", ");
   const split = getSourceSplit(card);
+  const homeworkSplit = getHomeworkSplit(card);
   const keyPointGroupsForCard = keyPointGroups(card);
   const keyPointItemCount = keyPointGroupsForCard.reduce((count, group) => count + 1 + group.details.length, 0);
   const examSourceInfo = examSources || "No detailed exam-source mapping is available yet.";
@@ -90,6 +91,8 @@ function renderTopicCard(card, draft) {
           ${renderSectionToggle("aiExamples", "Code Examples", usefulAIExamples(card).length, draft.sections.aiExamples, true)}
           ${renderSectionToggle("recommended", "Recommended for Cheat Sheet", split.recommended.length, draft.sections.recommended)}
           ${renderSectionToggle("additional", "Additional Snippets", split.additional.length, draft.sections.additional)}
+          ${renderSectionToggle("homeworkRecommended", "Homework Recommended", homeworkSplit.recommended.length, draft.sections.homeworkRecommended)}
+          ${renderSectionToggle("homeworkAdditional", "Homework Additional", homeworkSplit.additional.length, draft.sections.homeworkAdditional)}
         </div>
         <div class="settings-footer">
           <button type="button" class="text-link-btn" data-role="reset-splash">Reset intro</button>
@@ -103,6 +106,8 @@ function renderTopicCard(card, draft) {
       ${renderAIExamplesSection(card, draft)}
       ${renderSourceSection(card, draft, "recommended", "Recommended for Cheat Sheet", split.recommended)}
       ${renderSourceSection(card, draft, "additional", "Additional Snippets", split.additional)}
+      ${renderSourceSection(card, draft, "homeworkRecommended", "Homework Recommended", homeworkSplit.recommended)}
+      ${renderSourceSection(card, draft, "homeworkAdditional", "Homework Additional", homeworkSplit.additional)}
     </article>
   `;
 }
@@ -379,9 +384,12 @@ function renderSourceItemBody(sourceItem) {
   }
 
   const outText = (item.outputs || []).join("\\n");
+  const originText = sourceItem.sourceType === "homework" && item.source_origin
+    ? `<p class="item-note"><strong>Source:</strong> ${escapeHtml(item.source_origin)}</p>`
+    : "";
   return `
+    ${originText}
     <pre>${escapeHtml(item.source || "")}</pre>
     ${outText ? `<p><strong>Output:</strong></p><pre>${escapeHtml(outText)}</pre>` : ""}
   `;
 }
-

@@ -44,8 +44,19 @@
       ]
     }
   ],
+  "homework_cells": [
+    {
+      "cell_index": 1,
+      "cell_type": "code",
+      "topic": "indexing",
+      "is_advanced_optional": false,
+      "source": "result = [x[0], x[-1]]",
+      "outputs": []
+    }
+  ],
   "sources": [
     "materials/lectures/Lecture Week 4.md",
-    "materials/notebooks/Notebook Week 4.ipynb"
+    "materials/notebooks/Notebook Week 4.ipynb",
+    "materials/homework/week 4/Exercise_4.1.py"
   ]
 }

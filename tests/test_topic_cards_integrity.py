@@ -40,6 +40,8 @@ class TopicCardsIntegrityTests(unittest.TestCase):
                 "lecture_snippets",
                 "exam_questions",
                 "notebook_snippets",
+                "homework_snippets",
+                "homework_recommended_ids",
                 "ai_examples",
                 "key_points_to_remember",
                 "recommended_ids",
@@ -49,12 +51,20 @@ class TopicCardsIntegrityTests(unittest.TestCase):
 
             valid_ids = {
                 item.get("id")
-                for bucket in ["lecture_snippets", "exam_questions", "notebook_snippets"]
+                for bucket in ["lecture_snippets", "exam_questions", "notebook_snippets", "homework_snippets"]
                 for item in sections.get(bucket, [])
                 if isinstance(item, dict)
             }
             for rid in sections.get("recommended_ids", []):
                 self.assertIn(rid, valid_ids, f"{card['id']}: recommended id not found: {rid}")
+
+            homework_ids = {
+                item.get("id")
+                for item in sections.get("homework_snippets", [])
+                if isinstance(item, dict)
+            }
+            for rid in sections.get("homework_recommended_ids", []):
+                self.assertIn(rid, homework_ids, f"{card['id']}: homework recommended id not found: {rid}")
 
 
 if __name__ == "__main__":
