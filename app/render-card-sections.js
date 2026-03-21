@@ -41,7 +41,7 @@ function renderTopicSidebar(bundles, activeTopicId) {
     <div class="topic-sidebar-head">
       <div>
         <h3>Weeks & Topics</h3>
-        <p class="muted">Jump straight to a topic and choose the exact pieces you want.</p>
+        <p class="muted">Browse by week and open a topic.</p>
       </div>
       <button class="ghost-btn icon-btn topic-sidebar-close mobile-only-btn" type="button" data-role="close-topic-sidebar" aria-label="Close topics">
         <span aria-hidden="true">&times;</span>
@@ -69,13 +69,13 @@ function renderWeekSidebarSection(bundle, activeTopicId) {
         data-week="${bundle.week}"
         aria-expanded="${expanded ? "true" : "false"}"
       >
-        <div>
-          <span class="topic-week-eyebrow">Week ${bundle.week}</span>
+        <div class="topic-week-labels">
           <strong>${escapeHtml(bundle.title)}</strong>
+          <span>${topicCountLabel}</span>
         </div>
         <div class="topic-week-meta">
           <span>${summary.topics} selected</span>
-          <span>${topicCountLabel}</span>
+          <span class="topic-week-caret" aria-hidden="true">${expanded ? "−" : "+"}</span>
         </div>
       </button>
       <div class="topic-week-list ${expanded ? "" : "hidden"}">
@@ -116,42 +116,31 @@ function renderTopicDetail(card, bundle) {
   const keyPoints = keyPointGroups(card);
   const aiExamples = usefulAIExamples(card);
   const selectedCounts = getSelectionCounts(card, draft);
-  const weekLabel = Array.isArray(card.weeks) && card.weeks.length ? card.weeks.map((week) => `W${week}`).join(" • ") : `W${bundle.week}`;
+  const weekLabel = Array.isArray(card.weeks) && card.weeks.length ? card.weeks.map((week) => `W${week}`).join(" · ") : `W${bundle.week}`;
   const commonQuestions = card.sections.ai_common_questions?.bullets || [];
+  const examHitsLabel = card.exam_stats.total_hits > 0 ? `${card.exam_stats.total_hits} exam hits` : "Course material only";
+  const selectedLabel = `${selectedCounts.total} selected`;
 
   return `
     <article class="topic-detail-card" data-card-id="${escapeHtml(card.id)}">
       <header class="topic-detail-header">
-        <div class="topic-detail-header-main">
-          <div class="topic-detail-meta">
-            <span class="topic-chip">Week ${bundle.week}</span>
-            <span class="topic-chip">${escapeHtml(weekLabel)}</span>
-            <span class="topic-chip">${card.exam_stats.total_hits > 0 ? `${card.exam_stats.total_hits} exam hits` : "Course material only"}</span>
+        <div class="topic-detail-intro">
+          <p class="topic-detail-kicker">${escapeHtml(`Week ${bundle.week} · ${weekLabel} · ${examHitsLabel}`)}</p>
+          <div class="topic-detail-title-row">
+            <h3>${escapeHtml(humanizeTopic(card.topic))}</h3>
+            <div class="topic-detail-summary-stats">
+              <span>${escapeHtml(selectedLabel)}</span>
+              <span>${escapeHtml(`${card.exam_stats.coverage_count || 0} sources`)}</span>
+            </div>
           </div>
-          <h3>${escapeHtml(humanizeTopic(card.topic))}</h3>
           ${card.sections.ai_summary?.content ? `<p class="topic-detail-summary">${renderInlineCode(normalizeTruncatedDisplayText(card.sections.ai_summary.content))}</p>` : ""}
-        </div>
-        <div class="topic-detail-status">
-          <div>
-            <strong>${selectedCounts.total}</strong>
-            <span>selected items</span>
-          </div>
-          <div>
-            <strong>${card.exam_stats.coverage_count || 0}</strong>
-            <span>exam sources</span>
-          </div>
         </div>
       </header>
 
       ${commonQuestions.length
         ? `
           <section class="topic-context-panel">
-            <div class="topic-section-header">
-              <div>
-                <h4>Common Questions</h4>
-                <p class="muted">Context only. Use this as a guide while selecting concrete items below.</p>
-              </div>
-            </div>
+            <h4>Common questions</h4>
             <div class="common-question-list">
               ${commonQuestions.map((question) => `<p>${renderInlineCode(question)}</p>`).join("")}
             </div>
@@ -228,13 +217,13 @@ function renderSectionHeaderBar(card, draft, sectionKey, title, countText, descr
   const enabled = Boolean(draft.sections[sectionKey]);
   return `
     <div class="topic-section-header">
-      <div>
+      <div class="topic-section-heading">
         <h4>${escapeHtml(title)}</h4>
         ${description ? `<p class="muted">${escapeHtml(description)}</p>` : ""}
       </div>
       <div class="topic-section-actions">
         <span class="topic-section-count">${escapeHtml(countText)}</span>
-        <label class="topic-section-toggle">
+        <label class="topic-section-toggle plain-toggle">
           <input
             type="checkbox"
             data-role="section-toggle"
@@ -281,18 +270,20 @@ function renderKeyPointRail(card, draft, groups) {
                 .map((detail) => {
                   const checked = selectedSet.has(detail.id);
                   return `
-                    <label class="mini-toggle">
-                      <input
-                        type="checkbox"
-                        data-role="item-toggle"
-                        data-card-id="${escapeHtml(card.id)}"
-                        data-section="keyPoints"
-                        data-item-id="${escapeHtml(detail.id)}"
-                        ${checked ? "checked" : ""}
-                      />
-                      <span>${escapeHtml(detailDisplayTitle(detail))}</span>
-                    </label>
-                    ${renderDetailPreview(detail)}
+                    <div class="detail-toggle-row">
+                      <label class="mini-toggle">
+                        <input
+                          type="checkbox"
+                          data-role="item-toggle"
+                          data-card-id="${escapeHtml(card.id)}"
+                          data-section="keyPoints"
+                          data-item-id="${escapeHtml(detail.id)}"
+                          ${checked ? "checked" : ""}
+                        />
+                        <span>${escapeHtml(detailDisplayTitle(detail))}</span>
+                      </label>
+                      ${renderDetailPreview(detail)}
+                    </div>
                   `;
                 })
                 .join("")
@@ -322,7 +313,7 @@ function renderKeyPointRail(card, draft, groups) {
 
   return `
     <section class="topic-section-block ${draft.sections.keyPoints ? "" : "is-dimmed"}" data-section-block="keyPoints">
-      ${renderSectionHeaderBar(card, draft, "keyPoints", "Key Points for Reference", `${selectedCount}/${selectableIds.size} selected`, "Key points and optional detail blocks stay individually selectable.")}
+      ${renderSectionHeaderBar(card, draft, "keyPoints", "Key Points", `${selectedCount}/${selectableIds.size} selected`)}
       <div class="topic-rail">${body}</div>
     </section>
   `;
@@ -360,7 +351,7 @@ function renderExampleRail(card, draft, items) {
 
   return `
     <section class="topic-section-block ${draft.sections.aiExamples ? "" : "is-dimmed"}" data-section-block="aiExamples">
-      ${renderSectionHeaderBar(card, draft, "aiExamples", "Code Examples", `${selectedCount}/${items.length} selected`, "Examples stay compact in horizontal rails so long topics remain manageable.")}
+      ${renderSectionHeaderBar(card, draft, "aiExamples", "Code Examples", `${selectedCount}/${items.length} selected`)}
       <div class="topic-rail">${body}</div>
     </section>
   `;

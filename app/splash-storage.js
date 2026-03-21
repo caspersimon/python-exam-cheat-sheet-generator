@@ -88,7 +88,7 @@ function resetAppProgress() {
   state.previewCards = {};
   state.previewZCounter = 1;
   state.layout = {
-    fontFamily: "'Space Grotesk', sans-serif",
+    fontFamily: "'DM Sans', sans-serif",
     fontSize: 9.5,
     lineHeight: 1.1,
     letterSpacing: 0,

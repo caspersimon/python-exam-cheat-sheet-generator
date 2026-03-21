@@ -15,23 +15,23 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260321b" />
-    <script defer src="./app/state-and-init.js"></script>
-    <script defer src="./app/splash-storage.js"></script>
-    <script defer src="./app/preview-pointer.js"></script>
-    <script defer src="./app/view-and-data.js"></script>
-    <script defer src="./app/topic-selection.js"></script>
-    <script defer src="./app/render-card-sections.js"></script>
-    <script defer src="./app/text-render-utils.js"></script>
-    <script defer src="./app/card-interactions.js"></script>
-    <script defer src="./app/preview-render.js"></script>
-    <script defer src="./app/preview-card-render.js"></script>
-    <script defer src="./app/preview-history.js"></script>
-    <script defer src="./app/preview-edit-modal.js"></script>
-    <script defer src="./app/preview-editing.js"></script>
-    <script defer src="./app/layout-export-utils.js"></script>
-    <script defer src="./app/pdf-export-utils.js"></script>
-    <script defer src="./app/main.js"></script>
+    <link rel="stylesheet" href="./styles.css?v=20260321e" />
+    <script defer src="./app/state-and-init.js?v=20260321e"></script>
+    <script defer src="./app/splash-storage.js?v=20260321e"></script>
+    <script defer src="./app/preview-pointer.js?v=20260321e"></script>
+    <script defer src="./app/view-and-data.js?v=20260321e"></script>
+    <script defer src="./app/topic-selection.js?v=20260321e"></script>
+    <script defer src="./app/render-card-sections.js?v=20260321e"></script>
+    <script defer src="./app/text-render-utils.js?v=20260321e"></script>
+    <script defer src="./app/card-interactions.js?v=20260321e"></script>
+    <script defer src="./app/preview-render.js?v=20260321e"></script>
+    <script defer src="./app/preview-card-render.js?v=20260321e"></script>
+    <script defer src="./app/preview-history.js?v=20260321e"></script>
+    <script defer src="./app/preview-edit-modal.js?v=20260321e"></script>
+    <script defer src="./app/preview-editing.js?v=20260321e"></script>
+    <script defer src="./app/layout-export-utils.js?v=20260321e"></script>
+    <script defer src="./app/pdf-export-utils.js?v=20260321e"></script>
+    <script defer src="./app/main.js?v=20260321e"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   </head>
@@ -42,29 +42,33 @@
 
     <div class="app-shell">
       <header class="app-header">
-        <div>
-          <h1>Build Your Python Cheat Sheet</h1>
-          <p class="subtitle">Browse weeks and topics, select the exact material you want, then export a dense 2-page A4 sheet.</p>
+        <div class="app-header-main">
+          <h1>Cheat Sheet Builder</h1>
+          <p class="subtitle">Select topic items week by week, then export a dense 2-page A4 sheet.</p>
         </div>
         <div class="header-actions">
-          <a
-            class="action-link github-link"
-            href="https://github.com/caspersimon/python-exam-cheat-sheet-generator"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          <a
-            class="action-link coffee-link"
-            href="https://buymeacoffee.com/caspersimon"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Buy Me a Coffee
-          </a>
-          <button id="goToSwipeBtn" class="ghost-btn" type="button">Topic Explorer</button>
-          <button id="goToPreviewBtn" class="solid-btn" type="button">Preview & Export</button>
+          <div class="header-link-group">
+            <a
+              class="action-link github-link"
+              href="https://github.com/caspersimon/python-exam-cheat-sheet-generator"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+            <a
+              class="action-link coffee-link"
+              href="https://buymeacoffee.com/caspersimon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Support
+            </a>
+          </div>
+          <div class="header-nav-group">
+            <button id="goToSwipeBtn" class="ghost-btn" type="button">Topic Explorer</button>
+            <button id="goToPreviewBtn" class="solid-btn" type="button">Preview & Export</button>
+          </div>
         </div>
       </header>
 

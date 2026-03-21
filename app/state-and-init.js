@@ -8,7 +8,7 @@ const EXAM_LABELS = {
 const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture snippets, notebook snippets, and trap-pattern context.";
 const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v3";
-const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v3";
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v4";
 const CANONICAL_WEEK_ORDER = [1, 2, 3, 4, 5, 6];
 const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
@@ -17,7 +17,7 @@ function buildDefaultNavigationState() {
   return {
     activeTopicId: "",
     activeWeek: CANONICAL_WEEK_ORDER[0],
-    expandedWeeks: Object.fromEntries(CANONICAL_WEEK_ORDER.map((week) => [String(week), true])),
+    expandedWeeks: Object.fromEntries(CANONICAL_WEEK_ORDER.map((week, index) => [String(week), index === 0])),
     mobileSidebarOpen: false,
   };
 }
@@ -39,7 +39,7 @@ const state = {
   previewCards: {},
   previewZCounter: 1,
   layout: {
-    fontFamily: "'Inter', sans-serif",
+    fontFamily: "'DM Sans', sans-serif",
     fontSize: 9.5,
     lineHeight: 1.1,
     letterSpacing: 0,
