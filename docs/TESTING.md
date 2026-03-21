@@ -184,7 +184,8 @@ This runs `scripts/smoke_ui_playwright.js` in an isolated temporary Playwright e
 
 - app boot + data load
 - splash dismissal
-- accept action increments counters
+- selecting topic items increments explorer counters
+- the Topic Explorer sidebar opens topics and keeps the main pane in sync
 - preview renders cards
 - preview card lock blocks accidental drag/resize
 - preview item edit (modal path) + in-field keyboard undo (`Ctrl+Z`) before save
@@ -195,6 +196,7 @@ This runs `scripts/smoke_ui_playwright.js` in an isolated temporary Playwright e
 - generated-PDF print flow + support prompt callback (must trigger after print path)
 - export snapshot hides edit/resize controls
 - export snapshot uses compact card headers (space-efficient)
+- preview contains only topics with selected content and does not render empty fallback cards
 
 ## Full UI End-to-End Validation
 
@@ -204,9 +206,10 @@ make full-ui
 
 This runs `scripts/full_ui_playwright.js` in the same isolated Playwright setup and verifies:
 
-- full user flow from chooser to preview/export
+- full user flow from Topic Explorer to preview/export
 - dense multi-week selection behavior
 - merged preview card output
+- explorer topic navigation and section rails under realistic load
 - PDF export/print hook behavior
 - preview density and overlap bounds
 - export legibility and space usage under realistic dense selections

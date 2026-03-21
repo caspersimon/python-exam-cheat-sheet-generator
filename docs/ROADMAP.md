@@ -21,6 +21,7 @@ Current implementation handoff:
 | RM-003 | Medium | planned | QA automation | Add baseline visual diff checks (perceptual threshold) on smoke/stress export snapshots. | [Template](./specs/SPEC_TEMPLATE.md) |
 | RM-004 | Medium | planned | Data quality | Add semantic duplicate detection for week ingestion (beyond exact-string duplicates). | [Template](./specs/SPEC_TEMPLATE.md) |
 | RM-005 | Medium | planned | Codebase hygiene | Reduce >300-line files to improve readability and maintenance velocity. | [Template](./specs/SPEC_TEMPLATE.md) |
+| RM-006 | Medium | planned | Topic Explorer UX | Continue densifying the Topic Explorer sidebar and source rails so long weeks remain fast to scan without layout bloat. | [Template](./specs/SPEC_TEMPLATE.md) |
 
 ## Triage Rules
 
