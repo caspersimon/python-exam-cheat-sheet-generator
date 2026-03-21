@@ -1,0 +1,153 @@
+{
+  "week": 5,
+  "topics": [
+    "Pandas Series and DataFrames",
+    "Data Selection and Filtering",
+    "Sorting DataFrames",
+    "String and Datetime Methods in Pandas",
+    "Merging and Concatenation",
+    "Grouping and Aggregation"
+  ],
+  "lecture": {
+    "concepts": [
+      {
+        "topic": "Pandas Series and DataFrames",
+        "explanation": "Pandas provides two primary data structures: Series (1-dimensional) and DataFrames (2-dimensional). They can be created from dictionaries, lists, or lists of lists. Unlike standard Python lists, their indices act like dictionary keys; they provide labels that are not automatically recalculated when elements are added or removed.",
+        "code_examples": [
+          {
+            "description": "Creating a DataFrame and viewing its index and columns",
+            "code": "import pandas as pd\nd1 = {'Name':['A', 'B', 'C'], 'Length':[153, 160, 150], 'Weight':[55, 70, 60]}\ndf1 = pd.DataFrame(d1, index=['First', 'Second', 'Third'])\nprint(df1.index)\nprint(df1.columns)"
+          }
+        ],
+        "week": 5
+      },
+      {
+        "topic": "Viewing and Summarizing Data",
+        "explanation": "When working with large DataFrames, you can inspect the data using `.head(n)` for the first n rows and `.tail(n)` for the last n rows. The `.describe()` method provides a quick statistical summary of numerical columns (mean, standard deviation, min, max, quartiles).",
+        "code_examples": [
+          {
+            "description": "Using head, tail, and describe",
+            "code": "import pandas as pd\n# Assuming df is a large DataFrame\nprint(df.head(3))\nprint(df.tail(7))\nprint(df.describe())"
+          }
+        ],
+        "week": 5
+      },
+      {
+        "topic": "Sorting DataFrames",
+        "explanation": "DataFrames can be sorted by their index or column labels using `.sort_index()`, or by the values in specific columns using `.sort_values()`. The `axis` parameter determines whether sorting is applied to rows (axis=0) or columns (axis=1), and `ascending` dictates the order.",
+        "code_examples": [
+          {
+            "description": "Sorting by index and by values",
+            "code": "import pandas as pd\ndf1 = pd.DataFrame({'Length':[153, 160, 150]}, index=['First', 'Second', 'Third'])\n# Sort by index (row names)\ndf2 = df1.sort_index(axis=0, ascending=False)\n# Sort by column values\ndf3 = df1.sort_values(by='Length', ascending=True)"
+          }
+        ],
+        "week": 5
+      }
+    ],
+    "lecture_questions": [
+      {
+        "topic": "Series Indices",
+        "question": "If you have a pandas Series `s1 = pd.Series([153, 160, 150])` and you execute `s1 = s1.drop(1)`, what happens to the indices of the remaining elements?",
+        "options": {
+          "a": "They are recalculated to be 0 and 1.",
+          "b": "The remaining indices stay as 0 and 2.",
+          "c": "A KeyError is raised because the index must be a string.",
+          "d": "The Series is converted into a standard Python list."
+        },
+        "correct": "b",
+        "explanation": "DataFrame and Series indices behave like dictionary keys. They provide labels for data rather than relative sequential positions. Therefore, dropping an item removes its label without recalculating the remaining labels.",
+        "week": 5
+      }
+    ]
+  },
+  "notebook_cells": [
+    {
+      "cell_index": 1,
+      "cell_type": "code",
+      "topic": "DataFrame Creation and Indexing",
+      "is_advanced_optional": false,
+      "source": "import pandas as pd\nd1 = {'Name':['A', 'B', 'C'], 'Length':[153, 160, 150], 'Weight':[55, 70, 60]}\ndf1 = pd.DataFrame(d1, index=['First', 'Second', 'Third'])\nprint(df1)\n\n# Modifying index and column names using map and lambda\ndf1.index = df1.index.map(lambda x: x.upper())\ndf1.columns = df1.columns.map(lambda x: x.lower())\nprint(df1)",
+      "outputs": [],
+      "week": 5
+    },
+    {
+      "cell_index": 2,
+      "cell_type": "code",
+      "topic": "Dropping Series Elements",
+      "is_advanced_optional": false,
+      "source": "import pandas as pd\ns1 = pd.Series([153, 160, 150], name='Length')\nprint(\"Original Series:\\n\", s1)\ns1 = s1.drop(1)\nprint(\"\\nSeries after dropping index 1:\\n\", s1)",
+      "outputs": [
+        "Original Series:\n 0    153\n1    160\n2    150\nName: Length, dtype: int64\n\nSeries after dropping index 1:\n 0    153\n2    150\nName: Length, dtype: int64"
+      ],
+      "week": 5
+    },
+    {
+      "cell_index": 3,
+      "cell_type": "code",
+      "topic": "Boolean Indexing (Exercise 5.3)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nWrite a function that returns a DataFrame containing only rows where \nthe value in column 'A' is smaller than or equal to column 'B'.\n\"\"\"\nimport pandas as pd\n\ndef main(df):\n    # Boolean indexing with a Series comparison\n    return df.loc[df[\"A\"] <= df[\"B\"]]",
+      "outputs": [],
+      "week": 5
+    },
+    {
+      "cell_index": 4,
+      "cell_type": "code",
+      "topic": "DatetimeIndex and Sorting (Exercise 5.2)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nFilter DataFrame rows for which the DatetimeIndex is in April (month 4),\nthen sort the output in increasing chronological order.\n\"\"\"\nimport pandas as pd\n\ndef main(df):\n    # Filter using list comprehension on the index, then sort\n    return df.loc[[row for row in df.index if row.month==4]].sort_index()",
+      "outputs": [],
+      "week": 5
+    },
+    {
+      "cell_index": 5,
+      "cell_type": "code",
+      "topic": "Map and Lambda Functions (Exercise 5.5)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nCreate a 'Weight (formatted)' column by converting kilograms to grams (integer)\nand appending ' g' to the string representation.\n\"\"\"\nimport pandas as pd\n\ndef main(df):\n    df[\"Weight (formatted)\"] = df[\"Weight\"].map(lambda x: f\"{x * 1000:.0f} g\")\n    return df",
+      "outputs": [],
+      "week": 5
+    },
+    {
+      "cell_index": 6,
+      "cell_type": "code",
+      "topic": "Vectorized String Methods (Exercise 5.7)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nFilter a Series of names to only include elements that end with a vowel,\nand correct the spelling to be capitalized.\n\"\"\"\nimport pandas as pd\n\ndef main(s):\n    # .str[-1] gets the last character, .isin() checks for vowels\n    return s[s.str[-1].str.lower().isin(list(\"aeiou\"))].str.capitalize()",
+      "outputs": [],
+      "week": 5
+    },
+    {
+      "cell_index": 7,
+      "cell_type": "code",
+      "topic": "Merging DataFrames (Exercise 5.8)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nMerge an 'address' DataFrame with a 'province' DataFrame based on the 'Town' column.\nFill any missing values resulting from the merge with 'No province'.\n\"\"\"\nimport pandas as pd\n\ndef main(address, province):\n    # Left merge ensures we keep all rows from the address DataFrame\n    ext_address = address.merge(province, on=\"Town\", how=\"left\")\n    return ext_address.fillna(\"No province\")",
+      "outputs": [],
+      "week": 5
+    },
+    {
+      "cell_index": 8,
+      "cell_type": "code",
+      "topic": "Grouping and Aggregation (Exercise 5.9)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nCalculate the median height in the dataset grouped by nationality.\n\"\"\"\nimport pandas as pd\n\ndef main(df):\n    # Group by Nationality and compute the median of the Height column\n    return df.groupby('Nationality')['Height'].median()",
+      "outputs": [],
+      "week": 5
+    }
+  ],
+  "sources": [
+    "Exercise_5.1.py",
+    "Exercise_5.2.py",
+    "Exercise_5.3.py",
+    "Exercise_5.4.py",
+    "Exercise_5.5.py",
+    "Exercise_5.6.py",
+    "Exercise_5.7.py",
+    "Exercise_5.8.py",
+    "Exercise_5.9.py",
+    "Lecture Week 5.pptx",
+    "Notebook Week 5.ipynb",
+    "Solutions week 5.txt"
+  ]
+}

@@ -2,8 +2,7 @@ const MAX_PREVIEW_HISTORY_ENTRIES = 60;
 
 function capturePreviewSnapshot() {
   return {
-    decisions: deepClone(state.decisions),
-    acceptedOrder: [...state.acceptedOrder],
+    drafts: deepClone(state.drafts),
     previewCards: deepClone(state.previewCards),
     previewZCounter: Number(state.previewZCounter) || 1,
   };
@@ -34,8 +33,7 @@ function restorePreviewSnapshot(snapshot) {
     return false;
   }
 
-  state.decisions = deepClone(snapshot.decisions || {});
-  state.acceptedOrder = Array.isArray(snapshot.acceptedOrder) ? [...snapshot.acceptedOrder] : [];
+  state.drafts = deepClone(snapshot.drafts || {});
   state.previewCards = deepClone(snapshot.previewCards || {});
   state.previewZCounter = clamp(Number(snapshot.previewZCounter) || 1, 1, 99999);
   return true;

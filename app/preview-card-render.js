@@ -1,5 +1,5 @@
-function buildPreviewCard(card, selection, layout) {
-  ensureSelectionOverrides(selection);
+function buildPreviewCard(entry, layout) {
+  const { previewId, card, cards, selectionsByCard } = entry;
   const sectionHtml = [];
   const locked = Boolean(layout?.locked);
   const lockTitle = locked ? "Unlock card position and size" : "Lock card position and size";
@@ -9,60 +9,81 @@ function buildPreviewCard(card, selection, layout) {
   const dragHint = locked ? "&#128274;" : "&#8942;";
   const dragHintTitle = locked ? "Card locked" : "Drag card";
 
-  if (selection.sections.keyPoints) {
-    const groups = getSelectedKeyPointGroups(card, selection);
-    if (groups.length) {
-      sectionHtml.push(`<div class="section-title">Key Points for Reference</div>`);
-      sectionHtml.push(renderPreviewKeyPoints(card, selection, groups));
-    }
-  }
+  const keyPointBlocks = [];
+  const exampleBlocks = [];
+  const recommendedBlocks = [];
+  const additionalBlocks = [];
 
-  if (selection.sections.aiExamples) {
-    const aiExamples = usefulAIExamples(card).filter((item) => selection.selected.aiExamples.includes(item.id));
-    if (aiExamples.length) {
-      sectionHtml.push(`<div class="section-title">Code Examples</div>`);
-      aiExamples.forEach((item) => {
-        const effective = getPreviewAIExampleOverride(selection, item.id, item);
-        const kindLabel = item.kind === "incorrect" ? "Incorrect" : "Correct";
-        sectionHtml.push(`
-          <div class="preview-item-block">
-            ${renderPreviewItemActions(card.id, "aiExample", item.id, "aiExamples")}
-            <p><strong>${escapeHtml(kindLabel)} • ${renderInlineCode(effective.title || "Code example")}</strong></p>
-            <pre>${escapeHtml(effective.code || "")}</pre>
-            ${effective.why ? `<p>${renderInlineCode(normalizeTruncatedDisplayText(effective.why))}</p>` : ""}
-          </div>
-        `);
+  cards.forEach((sourceCard) => {
+    const selection = selectionsByCard[sourceCard.id];
+    if (!selection) {
+      return;
+    }
+    ensureSelectionOverrides(selection);
+
+    if (selection.sections.keyPoints) {
+      getSelectedKeyPointGroups(sourceCard, selection).forEach((group) => {
+        keyPointBlocks.push(renderPreviewKeyPointGroup(sourceCard, selection, group));
       });
     }
-  }
 
-  if (selection.sections.recommended) {
-    const recommended = getSelectedSourceItemsForPreview(card, selection, "recommended");
-    if (recommended.length) {
-      sectionHtml.push(`<div class="section-title">Recommended</div>`);
-      recommended.forEach((sourceItem) => {
-        sectionHtml.push(renderPreviewSourceItem(card, selection, sourceItem, "recommended"));
+    if (selection.sections.aiExamples) {
+      usefulAIExamples(sourceCard)
+        .filter((item) => selection.selected.aiExamples.includes(item.id))
+        .forEach((item) => {
+          const effective = getPreviewAIExampleOverride(selection, item.id, item);
+          const kindLabel = item.kind === "incorrect" ? "Incorrect" : "Correct";
+          exampleBlocks.push(`
+            <div class="preview-item-block">
+              ${renderPreviewItemActions(previewId, sourceCard.id, "aiExample", item.id, "aiExamples")}
+              <p><strong>${escapeHtml(kindLabel)} • ${renderInlineCode(effective.title || "Code example")}</strong></p>
+              <pre>${escapeHtml(effective.code || "")}</pre>
+              ${effective.why ? `<p>${renderInlineCode(normalizeTruncatedDisplayText(effective.why))}</p>` : ""}
+            </div>
+          `);
+        });
+    }
+
+    if (selection.sections.recommended) {
+      getSelectedSourceItemsForPreview(sourceCard, selection, "recommended").forEach((sourceItem) => {
+        recommendedBlocks.push(renderPreviewSourceItem(previewId, sourceCard, selection, sourceItem, "recommended"));
       });
     }
-  }
 
-  if (selection.sections.additional) {
-    const additional = getSelectedSourceItemsForPreview(card, selection, "additional");
-    if (additional.length) {
-      sectionHtml.push(`<div class="section-title">Additional</div>`);
-      additional.forEach((sourceItem) => {
-        sectionHtml.push(renderPreviewSourceItem(card, selection, sourceItem, "additional"));
+    if (selection.sections.additional) {
+      getSelectedSourceItemsForPreview(sourceCard, selection, "additional").forEach((sourceItem) => {
+        additionalBlocks.push(renderPreviewSourceItem(previewId, sourceCard, selection, sourceItem, "additional"));
       });
     }
+  });
+
+  if (keyPointBlocks.length) {
+    sectionHtml.push(`<div class="section-title">Key Points for Reference</div>`);
+    sectionHtml.push(`<div class="preview-kp-list">${keyPointBlocks.join("")}</div>`);
+  }
+
+  if (exampleBlocks.length) {
+    sectionHtml.push(`<div class="section-title">Code Examples</div>`);
+    sectionHtml.push(exampleBlocks.join(""));
+  }
+
+  if (recommendedBlocks.length) {
+    sectionHtml.push(`<div class="section-title">Recommended</div>`);
+    sectionHtml.push(recommendedBlocks.join(""));
+  }
+
+  if (additionalBlocks.length) {
+    sectionHtml.push(`<div class="section-title">Additional</div>`);
+    sectionHtml.push(additionalBlocks.join(""));
   }
 
   if (!sectionHtml.length) {
-    sectionHtml.push(`<p class="preview-empty-copy">No selected details for this topic.</p>`);
+    return null;
   }
 
   const cardElement = document.createElement("article");
   cardElement.className = `preview-card${locked ? " is-locked" : ""}`;
-  cardElement.dataset.cardId = card.id;
+  cardElement.dataset.cardId = previewId;
   cardElement.dataset.locked = String(locked);
 
   cardElement.innerHTML = `
@@ -73,7 +94,7 @@ function buildPreviewCard(card, selection, layout) {
           type="button"
           class="preview-head-btn icon-only"
           data-role="preview-toggle-lock"
-          data-card-id="${escapeHtml(card.id)}"
+          data-card-id="${escapeHtml(previewId)}"
           data-locked="${String(locked)}"
           title="${lockTitle}"
           aria-label="${lockAria}"
@@ -84,7 +105,7 @@ function buildPreviewCard(card, selection, layout) {
           type="button"
           class="preview-head-btn danger icon-only"
           data-role="preview-delete-card"
-          data-card-id="${escapeHtml(card.id)}"
+          data-card-id="${escapeHtml(previewId)}"
           title="Remove card from cheat sheet"
           aria-label="Remove card from cheat sheet"
         >
@@ -101,14 +122,15 @@ function buildPreviewCard(card, selection, layout) {
   return cardElement;
 }
 
-function renderPreviewItemActions(cardId, itemType, itemId, sectionKey) {
+function renderPreviewItemActions(previewCardId, sourceCardId, itemType, itemId, sectionKey) {
   return `
     <div class="preview-item-actions">
       <button
         type="button"
         class="preview-mini-btn icon-only"
         data-role="preview-edit-item"
-        data-card-id="${escapeHtml(cardId || "")}"
+        data-card-id="${escapeHtml(previewCardId || "")}"
+        data-source-card-id="${escapeHtml(sourceCardId || "")}"
         data-item-type="${escapeHtml(itemType)}"
         data-item-id="${escapeHtml(itemId)}"
         data-section="${escapeHtml(sectionKey)}"
@@ -121,7 +143,8 @@ function renderPreviewItemActions(cardId, itemType, itemId, sectionKey) {
         type="button"
         class="preview-mini-btn danger icon-only"
         data-role="preview-delete-item"
-        data-card-id="${escapeHtml(cardId || "")}"
+        data-card-id="${escapeHtml(previewCardId || "")}"
+        data-source-card-id="${escapeHtml(sourceCardId || "")}"
         data-item-type="${escapeHtml(itemType)}"
         data-item-id="${escapeHtml(itemId)}"
         data-section="${escapeHtml(sectionKey)}"
@@ -159,42 +182,39 @@ function getSelectedKeyPointGroups(card, selection) {
     .filter(Boolean);
 }
 
-function renderPreviewKeyPoints(card, selection, groups) {
-  const blocks = groups
-    .map((group) => {
-      const keyPointText = getPreviewKeyPointOverride(selection, group.id, group.text);
-      const title = group.pointSelected
-        ? `<p class="preview-kp-main">${renderInlineCode(keyPointText)}</p>`
-        : `<p class="preview-kp-main"><span class="preview-kp-ref">Reference:</span> ${renderInlineCode(keyPointText)}</p>`;
+function renderPreviewKeyPointGroup(sourceCard, selection, group) {
+  const keyPointText = getPreviewKeyPointOverride(selection, group.id, group.text);
+  const title = group.pointSelected
+    ? `<p class="preview-kp-main">${renderInlineCode(keyPointText)}</p>`
+    : `<p class="preview-kp-main"><span class="preview-kp-ref">Reference:</span> ${renderInlineCode(keyPointText)}</p>`;
 
-      const detailHtml = group.selectedDetails.length
-        ? `<div class="preview-kp-details">${group.selectedDetails.map((detail) => renderPreviewKeyPointDetail(card.id, selection, detail)).join("")}</div>`
-        : "";
+  const detailHtml = group.selectedDetails.length
+    ? `<div class="preview-kp-details">${group.selectedDetails
+        .map((detail) => renderPreviewKeyPointDetail(sourceCard.id, selection, detail))
+        .join("")}</div>`
+    : "";
 
-      return `
-        <div class="preview-kp-group preview-item-block">
-          ${renderPreviewItemActions(card.id, "keyPoint", group.id, "keyPoints")}
-          ${title}
-          ${detailHtml}
-        </div>
-      `;
-    })
-    .join("");
-  return `<div class="preview-kp-list">${blocks}</div>`;
+  return `
+    <div class="preview-kp-group preview-item-block">
+      ${renderPreviewItemActions(sourceCard.id, sourceCard.id, "keyPoint", group.id, "keyPoints")}
+      ${title}
+      ${detailHtml}
+    </div>
+  `;
 }
 
-function renderPreviewKeyPointDetail(cardId, selection, detail) {
+function renderPreviewKeyPointDetail(sourceCardId, selection, detail) {
   const overridden = getPreviewKeyPointDetailOverride(selection, detail.id);
   if (overridden) {
     return `
       <div class="preview-kp-detail-block preview-item-block">
-        ${renderPreviewItemActions(cardId, "keyPointDetail", detail.id, "keyPoints")}
+        ${renderPreviewItemActions(sourceCardId, sourceCardId, "keyPointDetail", detail.id, "keyPoints")}
         <p class="preview-kp-detail"><strong>${escapeHtml(detail.title || "Detail")}:</strong> ${renderInlineCode(overridden)}</p>
       </div>
     `;
   }
 
-  const actions = renderPreviewItemActions(cardId, "keyPointDetail", detail.id, "keyPoints");
+  const actions = renderPreviewItemActions(sourceCardId, sourceCardId, "keyPointDetail", detail.id, "keyPoints");
   if (detail.table) {
     return `
       <div class="preview-kp-detail-block preview-item-block">
@@ -239,13 +259,13 @@ function renderPreviewTable(table) {
   `;
 }
 
-function renderPreviewSourceItem(card, selection, sourceItem, sectionKey) {
+function renderPreviewSourceItem(previewCardId, sourceCard, selection, sourceItem, sectionKey) {
   const override = getPreviewSourceOverride(selection, sourceItem.id, sourceItem.header);
   const header = override?.header || sourceItem.header;
   const body = override?.body ? `<pre>${escapeHtml(override.body)}</pre>` : renderSourceItemBody(sourceItem);
   return `
     <div class="preview-source-item preview-item-block">
-      ${renderPreviewItemActions(card.id, "sourceItem", sourceItem.id, sectionKey)}
+      ${renderPreviewItemActions(previewCardId, sourceCard.id, "sourceItem", sourceItem.id, sectionKey)}
       <p class="preview-source-title"><strong>${escapeHtml(header)}</strong></p>
       ${body}
     </div>

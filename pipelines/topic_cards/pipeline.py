@@ -9,6 +9,7 @@ from .assembly import (
     attach_lecture_content,
     attach_notebook_content,
     attach_patterns,
+    build_week_groups,
     collect_card_topics,
     sort_cards,
 )
@@ -42,9 +43,11 @@ def main() -> None:
             ],
         },
         "cards": [],
+        "deck_groups": [],
     }
 
     output["cards"] = sort_cards(cards)
+    output["deck_groups"] = build_week_groups(output["cards"])
     output["meta"]["total_cards"] = len(output["cards"])
 
     OUTPUT_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")

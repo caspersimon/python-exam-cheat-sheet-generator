@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python Midterm Cheat Sheet Builder</title>
+    <title>Python Cheat Sheet Builder</title>
     <link
       rel="icon"
       type="image/svg+xml"
@@ -12,14 +12,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260321b" />
     <script defer src="./app/state-and-init.js"></script>
     <script defer src="./app/splash-storage.js"></script>
     <script defer src="./app/preview-pointer.js"></script>
     <script defer src="./app/view-and-data.js"></script>
+    <script defer src="./app/topic-selection.js"></script>
     <script defer src="./app/render-card-sections.js"></script>
     <script defer src="./app/text-render-utils.js"></script>
     <script defer src="./app/card-interactions.js"></script>
@@ -42,11 +43,8 @@
     <div class="app-shell">
       <header class="app-header">
         <div>
-          <p class="eyebrow">Midterm Assistant</p>
-          <h1>Swipe Your Python Cheat Sheet</h1>
-          <p class="subtitle">
-            Tinder-style selection for Python study cards, then export a dense 2-page A4 sheet.
-          </p>
+          <h1>Build Your Python Cheat Sheet</h1>
+          <p class="subtitle">Browse weeks and topics, select the exact material you want, then export a dense 2-page A4 sheet.</p>
         </div>
         <div class="header-actions">
           <a
@@ -65,7 +63,7 @@
           >
             Buy Me a Coffee
           </a>
-          <button id="goToSwipeBtn" class="ghost-btn" type="button">Swipe Mode</button>
+          <button id="goToSwipeBtn" class="ghost-btn" type="button">Topic Explorer</button>
           <button id="goToPreviewBtn" class="solid-btn" type="button">Preview & Export</button>
         </div>
       </header>
@@ -74,10 +72,11 @@
         <section id="swipeView" class="view active" aria-labelledby="swipeHeading">
           <div class="panel compact-toolbar">
             <div>
-              <h2 id="swipeHeading">Topic Deck</h2>
+              <h2 id="swipeHeading">Topic Explorer</h2>
               <p id="progressText" class="muted"></p>
             </div>
             <div class="toolbar-actions">
+              <button id="openTopicSidebarBtn" class="ghost-btn mobile-only-btn" type="button">Topics</button>
               <button id="openFiltersBtn" class="ghost-btn" type="button">Filters</button>
               <button id="openStatsBtn" class="ghost-btn" type="button">Selection</button>
               <button id="skipToPreviewBtn" class="solid-btn" type="button">Preview</button>
@@ -85,12 +84,9 @@
           </div>
 
           <div class="panel card-panel">
-            <div id="cardHost" class="card-host"></div>
-
-            <div class="decision-row">
-              <button id="rejectBtn" class="danger-btn" type="button">No Thanks (←)</button>
-              <button id="undoBtn" class="ghost-btn" type="button">Undo</button>
-              <button id="acceptBtn" class="success-btn" type="button">Add (→)</button>
+            <div id="selectionShell" class="selection-shell">
+              <aside id="topicSidebar" class="topic-sidebar" aria-label="Topic navigation"></aside>
+              <div id="cardHost" class="card-host topic-detail-pane"></div>
             </div>
           </div>
         </section>
@@ -136,7 +132,7 @@
       </div>
 
       <label class="field">
-        <span>Search topic</span>
+        <span>Search content</span>
         <input id="searchInput" type="text" placeholder="e.g. slicing, scope, args" />
       </label>
 
@@ -157,9 +153,7 @@
 
       <div class="field week-filter">
         <span>Weeks</span>
-        <label><input class="weekCheck" type="checkbox" value="1" checked />W1</label>
-        <label><input class="weekCheck" type="checkbox" value="2" checked />W2</label>
-        <label><input class="weekCheck" type="checkbox" value="3" checked />W3</label>
+        <div id="weekFilterList" class="week-filter-list"></div>
       </div>
     </aside>
 
@@ -171,20 +165,20 @@
 
       <div class="stat-grid">
         <div>
-          <p class="stat-label">Accepted</p>
+          <p class="stat-label">Selected Topics</p>
           <p id="acceptedCount" class="stat-value">0</p>
         </div>
         <div>
-          <p class="stat-label">Rejected</p>
+          <p class="stat-label">Selected Items</p>
           <p id="rejectedCount" class="stat-value">0</p>
         </div>
         <div>
-          <p class="stat-label">Remaining</p>
+          <p class="stat-label">Visible Topics</p>
           <p id="remainingCount" class="stat-value">0</p>
         </div>
       </div>
 
-      <h4>Accepted Topics</h4>
+      <h4>Preview Topics</h4>
       <ol id="acceptedTopicsList" class="compact-list"></ol>
     </aside>
 
@@ -264,17 +258,17 @@
     </aside>
 
     <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+    <div id="topicSidebarBackdrop" class="topic-sidebar-backdrop hidden"></div>
 
     <div id="splashOverlay" class="splash-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="splashTitle">
       <div class="splash-card">
-        <p class="splash-kicker">Welcome</p>
         <h2 id="splashTitle">Build Your Python Midterm Cheat Sheet In Minutes</h2>
         <p class="splash-lead">
-          This tool helps you quickly pick the most useful topics, questions, and examples from your course material, then export a compact 2-page A4 cheat sheet.
+          Browse by week and topic, select the exact snippets, questions, key points, and examples you want, then export a compact 2-page A4 cheat sheet.
         </p>
         <ul class="splash-points">
-          <li>Swipe through topics and keep what matters.</li>
-          <li>Use AI summary blocks and key points as quick memory anchors.</li>
+          <li>Use the topic sidebar to jump directly to the material you need.</li>
+          <li>Select only the exact pieces of information you want to keep.</li>
           <li>Preview, reorder, and export as PDF or PNG.</li>
         </ul>
         <button id="getStartedBtn" class="solid-btn splash-start-btn" type="button">Get Started</button>

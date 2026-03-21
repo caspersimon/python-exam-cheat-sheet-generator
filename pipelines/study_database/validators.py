@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -117,6 +118,84 @@ def analyze_week_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
 
     if not concepts and not notebook_cells:
         errors.append("Payload must include at least one lecture concept or one notebook cell.")
+
+    return {
+        "errors": errors,
+        "warnings": warnings,
+    }
+
+
+def normalize_assessment_payload(raw_payload: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(raw_payload, dict):
+        raise ValueError("Assessment payload must be a JSON object.")
+
+    questions = [deepcopy(item) for item in _safe_list(raw_payload.get("questions")) if isinstance(item, dict)]
+    return {
+        "exam_label": _safe_str(raw_payload.get("exam_label")),
+        "source": _safe_str(raw_payload.get("source")),
+        "year": _safe_str(raw_payload.get("year")) or "unknown",
+        "questions": questions,
+        "notes": [str(note).strip() for note in _safe_list(raw_payload.get("notes")) if str(note).strip()],
+    }
+
+
+def analyze_assessment_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    if not isinstance(payload, dict):
+        return {
+            "errors": ["Assessment payload must be a JSON object."],
+            "warnings": [],
+        }
+
+    exam_label = _safe_str(payload.get("exam_label"))
+    source = _safe_str(payload.get("source"))
+    year = _safe_str(payload.get("year"))
+
+    if not exam_label:
+        errors.append("`exam_label` must be a non-empty string.")
+    if not source:
+        errors.append("`source` must be a non-empty string.")
+    if not year:
+        warnings.append("`year` is empty; use `unknown` when no year is known.")
+
+    questions = _safe_list(payload.get("questions"))
+    if not questions:
+        errors.append("Assessment payload must include at least one question.")
+
+    seen_numbers: set[int] = set()
+    for index, question in enumerate(questions, start=1):
+        if not isinstance(question, dict):
+            errors.append(f"`questions[{index}]` must be an object.")
+            continue
+
+        number = _as_positive_int(question.get("number"))
+        if number is not None:
+            if number in seen_numbers:
+                errors.append(f"Duplicate assessment question number found: {number}")
+            seen_numbers.add(number)
+        elif question.get("number") is not None:
+            warnings.append(f"`questions[{index}].number` is not a positive integer.")
+
+        question_text = _safe_str(question.get("question"))
+        if not question_text:
+            warnings.append(f"`questions[{index}]` has empty question text.")
+
+        options = question.get("options")
+        if not isinstance(options, dict) or not options:
+            errors.append(f"`questions[{index}].options` must be a non-empty object.")
+            continue
+
+        valid_keys = {str(key).strip().lower() for key, value in options.items() if _safe_str(value)}
+        if len(valid_keys) < 2:
+            warnings.append(f"`questions[{index}]` has fewer than 2 non-empty options.")
+
+        correct = _safe_str(question.get("correct")).lower()
+        if correct and correct not in valid_keys:
+            errors.append(
+                f"`questions[{index}].correct={correct!r}` is not present in options: {sorted(valid_keys)}"
+            )
 
     return {
         "errors": errors,

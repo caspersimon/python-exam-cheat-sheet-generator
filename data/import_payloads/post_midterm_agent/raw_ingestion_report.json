@@ -1,0 +1,166 @@
+{
+  "source_dir": "materials/post_midterm",
+  "model": "gemini-3-pro-preview",
+  "source_count": 44,
+  "week_sources": {
+    "4": [
+      "Exercise_4.1.py",
+      "Exercise_4.2.py",
+      "Exercise_4.3.py",
+      "Exercise_4.4.py",
+      "Exercise_4.5.py",
+      "Exercise_4.6.py",
+      "Exercise_4.7.py",
+      "Exercise_4.8.py",
+      "Exercise_4.9.py",
+      "Lecture Week 4.pptx",
+      "Notebook Week 4.ipynb",
+      "Solutions week 4.txt"
+    ],
+    "5": [
+      "Exercise_5.1.py",
+      "Exercise_5.2.py",
+      "Exercise_5.3.py",
+      "Exercise_5.4.py",
+      "Exercise_5.5.py",
+      "Exercise_5.6.py",
+      "Exercise_5.7.py",
+      "Exercise_5.8.py",
+      "Exercise_5.9.py",
+      "Lecture Week 5.pptx",
+      "Notebook Week 5.ipynb",
+      "Solutions week 5.txt"
+    ],
+    "6": [
+      "Exercise_6.1.py",
+      "Exercise_6.2.py",
+      "Exercise_6.3.py",
+      "Exercise_6.4.py",
+      "Exercise_6.5.py",
+      "Exercise_6.6.py",
+      "Exercise_6.7.py",
+      "Exercise_6.8.py",
+      "Exercise_6.9.py",
+      "Lecture Week 6.pptx",
+      "Notebook Week 6.ipynb",
+      "OOP.py"
+    ]
+  },
+  "assessment_sources": [
+    "Sample Final plus answers.pdf",
+    "practice_exams_previous_years/final-exam-solutions-for-python-programming-62oop21.pdf",
+    "practice_exams_previous_years/final-exam-solutions-for-python-programming-course-code-308088-308234.pdf",
+    "practice_exams_previous_years/final-exam-study-guide-trial-python-basics-2023.pdf",
+    "practice_exams_previous_years/introduction-to-python-trial-final-exam-solutions-py22.pdf",
+    "practice_exams_previous_years/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023.pdf",
+    "practice_exams_previous_years/resit-solutions-for-introduction-to-python-35761538.pdf",
+    "practice_exams_previous_years/trial-final-exam-solutions-introduction-to-python-3077951.pdf"
+  ],
+  "unassigned_sources": [
+    "OOP.py"
+  ],
+  "artifacts": [
+    {
+      "source": "week 4",
+      "payload_file": "data/import_payloads/post_midterm_agent/week-04/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/week-04/review.json",
+      "payload_type": "week",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "week 5",
+      "payload_file": "data/import_payloads/post_midterm_agent/week-05/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/week-05/review.json",
+      "payload_type": "week",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "week 6",
+      "payload_file": "data/import_payloads/post_midterm_agent/week-06/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/week-06/review.json",
+      "payload_type": "week",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "Sample Final plus answers.pdf",
+      "payload_file": "data/import_payloads/post_midterm_agent/assessment-sample-final-plus-answers/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/assessment-sample-final-plus-answers/review.json",
+      "payload_type": "assessment",
+      "warnings": [],
+      "errors": [
+        "`exam_label` must be a non-empty string.",
+        "`source` must be a non-empty string.",
+        "Assessment payload must include at least one question."
+      ]
+    },
+    {
+      "source": "practice_exams_previous_years/final-exam-solutions-for-python-programming-62oop21.pdf",
+      "payload_file": "data/import_payloads/post_midterm_agent/assessment-final-exam-solutions-for-python-programming-62oop21/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/assessment-final-exam-solutions-for-python-programming-62oop21/review.json",
+      "payload_type": "assessment",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "practice_exams_previous_years/final-exam-solutions-for-python-programming-course-code-308088-308234.pdf",
+      "payload_file": "data/import_payloads/post_midterm_agent/assessment-final-exam-solutions-for-python-programming-course-code-308088-308234/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/assessment-final-exam-solutions-for-python-programming-course-code-308088-308234/review.json",
+      "payload_type": "assessment",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "practice_exams_previous_years/final-exam-study-guide-trial-python-basics-2023.pdf",
+      "payload_file": "data/import_payloads/post_midterm_agent/assessment-final-exam-study-guide-trial-python-basics-2023/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/assessment-final-exam-study-guide-trial-python-basics-2023/review.json",
+      "payload_type": "assessment",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "practice_exams_previous_years/introduction-to-python-trial-final-exam-solutions-py22.pdf",
+      "payload_file": "data/import_payloads/post_midterm_agent/assessment-introduction-to-python-trial-final-exam-solutions-py22/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/assessment-introduction-to-python-trial-final-exam-solutions-py22/review.json",
+      "payload_type": "assessment",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "practice_exams_previous_years/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023.pdf",
+      "payload_file": "data/import_payloads/post_midterm_agent/assessment-resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/assessment-resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023/review.json",
+      "payload_type": "assessment",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "practice_exams_previous_years/resit-solutions-for-introduction-to-python-35761538.pdf",
+      "payload_file": "data/import_payloads/post_midterm_agent/assessment-resit-solutions-for-introduction-to-python-35761538/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/assessment-resit-solutions-for-introduction-to-python-35761538/review.json",
+      "payload_type": "assessment",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "source": "practice_exams_previous_years/trial-final-exam-solutions-introduction-to-python-3077951.pdf",
+      "payload_file": "data/import_payloads/post_midterm_agent/assessment-trial-final-exam-solutions-introduction-to-python-3077951/payload.json",
+      "review_file": "data/import_payloads/post_midterm_agent/assessment-trial-final-exam-solutions-introduction-to-python-3077951/review.json",
+      "payload_type": "assessment",
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "warnings": [
+    "Assigned OOP.py to week 6 based on its advanced topic (Object-Oriented Programming).",
+    "Assigned OOP.py to week 6"
+  ],
+  "summary": {
+    "week_count": 3,
+    "assessment_count": 8,
+    "artifact_count": 11,
+    "warning_count": 2
+  }
+}

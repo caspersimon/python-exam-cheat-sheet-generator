@@ -2,6 +2,9 @@
 
 Backlog of larger improvements that should be tracked even when not solved in the same task.
 
+Current implementation handoff:
+- [Handoff 2026-03-21](./HANDOFF_2026-03-21.md)
+
 ## Status Legend
 
 - `planned`: approved idea, not started

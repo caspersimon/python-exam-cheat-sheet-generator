@@ -1,0 +1,178 @@
+{
+  "week": 4,
+  "topics": [
+    "Strings and Quotes",
+    "String Methods",
+    "String Slicing",
+    "Object-Oriented Programming (OOP)"
+  ],
+  "lecture": {
+    "concepts": [
+      {
+        "topic": "String Methods: Changing Case",
+        "explanation": "Methods to change or check the case of characters in a string. Strings are immutable, so methods like capitalize() or upper() return a new string rather than changing the original one.",
+        "code_examples": [
+          {
+            "description": "Changing case and testing case",
+            "code": "print('ABcd'.upper()) # ABCD\nprint('ABcd'.lower()) # abcd\nprint('abcd'.capitalize()) # Abcd\nprint('ABCD'.isupper()) # True\nprint('abcd'.islower()) # True"
+          }
+        ],
+        "week": 4
+      },
+      {
+        "topic": "String Methods: Split and Join",
+        "explanation": "split() divides a string into a list of substrings based on a delimiter, removing the delimiter. join() concatenates an iterable of strings into a single string using the calling string as a separator.",
+        "code_examples": [
+          {
+            "description": "Splitting and joining strings",
+            "code": "s1 = 'axbcxdefxg'\nprint(s1.split('x')) # ['a', 'bc', 'def', 'g']\nl1 = ['abc', 'de', 'fg']\nprint('xy'.join(l1)) # 'abcxyde'xy'fg'"
+          }
+        ],
+        "week": 4
+      },
+      {
+        "topic": "String Methods: Strip and Replace",
+        "explanation": "strip() removes specified characters (default is whitespace) from the beginning and end of a string. replace() substitutes occurrences of a substring with another substring.",
+        "code_examples": [
+          {
+            "description": "Stripping and replacing",
+            "code": "s1 = '  fgedeef  '\nprint(s1.strip()) # 'fgedeef'\ns2 = 'abcdefgh'\nprint(s2.replace('a', 'aa')) # 'aabcdefgh'"
+          }
+        ],
+        "week": 4
+      }
+    ],
+    "lecture_questions": [
+      {
+        "topic": "String Immutability",
+        "question": "If you want to capitalize a string, which of the following code fragments will print 'Abcd'?\n\n1.\ns1 = 'abcd'\ns1 = s1.capitalize()\nprint(s1)\n\n2.\ns1 = 'abcd'\ns1.capitalize()\nprint(s1)",
+        "options": {
+          "a": "Both are correct",
+          "b": "Both are incorrect",
+          "c": "Only 1 is correct",
+          "d": "Only 2 is correct"
+        },
+        "correct": "c",
+        "explanation": "s1.capitalize() doesn't change string s1, but returns a new string. You must assign that new string to a variable to keep the change, otherwise it is lost.",
+        "week": 4
+      }
+    ]
+  },
+  "notebook_cells": [
+    {
+      "cell_index": 1,
+      "cell_type": "markdown",
+      "topic": "Strings and Quotes",
+      "is_advanced_optional": false,
+      "source": "### Defining strings with quotes and escape characters",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 2,
+      "cell_type": "code",
+      "topic": "Strings and Quotes",
+      "is_advanced_optional": false,
+      "source": "print(\"it's\")\nprint('it\"s')\nprint(\"it\\\"s\\'s\")\nprint('''it's\na new line''')",
+      "outputs": [
+        "it's\nit\"s\nit\"s's\nit's\na new line"
+      ],
+      "week": 4
+    },
+    {
+      "cell_index": 3,
+      "cell_type": "code",
+      "topic": "String Slicing",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nWrite a function called 'main' that accepts a string as an argument.\nYour function should return a string that contains only those characters from \nthe original input string whose index is divisible by 4.\n\"\"\"\n\ndef main(string_1):\n    return string_1[::4]",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 4,
+      "cell_type": "code",
+      "topic": "String Slicing",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nYour function should return a string consisting of odd-indexed \ncharacters in the reverse order, concatenated with even-indexed\ncharacters in the same order (relative to the original argument).\n\"\"\"\n\ndef main(string_1):\n    return string_1[::-2] + string_1[::2]",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 5,
+      "cell_type": "code",
+      "topic": "String Methods (replace)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nReturn a string with the same characters as in the input string. Except, \nwhen a character is present in the string: 'dab', then the second occurence \nof that character should be capitalized.\n\"\"\"\n\ndef main(string1):\n    for el in \"dab\":\n       string1 = string1.replace(el, el.upper(), 2).replace(el.upper(), el, 1)\n    return string1",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 6,
+      "cell_type": "code",
+      "topic": "String Methods (find)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nTake the first 2 characters of the string, and call this a substring.\nReturn a list with the starting indices of all occurences of this substring.\n\"\"\"\n\ndef main(string1):\n    substring = string1[:2]\n    indices = []\n    currentindex = string1.find(substring)\n    while currentindex>= 0:\n        indices.append(currentindex)\n        currentindex = string1.find(substring, currentindex+1)\n    return indices",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 7,
+      "cell_type": "code",
+      "topic": "String Methods (count and formatting)",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nReturn a list that describes how often the letters ['b', 'c', 'd'] occur.\n\"\"\"\n\ndef main(string_1):\n    result = []\n    for letter in ['b', 'c', 'd']:\n        count = string_1.count(letter)\n        times = \"time\" if count == 1 else \"times\"\n        result.append(f\"The string contains the character '{letter}' {count} {times}.\")\n    return result",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 8,
+      "cell_type": "code",
+      "topic": "OOP - Class initialization",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nWrite a class called 'Main', which accepts a list of index numbers.\nThe object should have an attribute called 'occupied_spaces' (length 12), \nwith elements being either None or 'c'.\n\"\"\"\n\nclass Main:\n    def __init__(self, index_list):\n        self.occupied_spaces = []\n        for index in range(12):\n            self.occupied_spaces.append('c' if index in index_list else None)",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 9,
+      "cell_type": "code",
+      "topic": "OOP - Object attributes",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nInitialize a Car object with four attributes: color, speed, brand, worth.\n\"\"\"\n\nclass Car:\n    def __init__(self, color, speed):\n        self.color = color\n        self.speed = speed\n        if color == 'brown' and speed == 'slow':\n            self.brand = 'Chevrolet'\n        else:\n            self.brand = None\n        self.worth = 'cheap' if self.brand else 'expensive'",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 10,
+      "cell_type": "code",
+      "topic": "OOP - Class methods",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nModify the Calculator class to include 'base_number' and four math methods.\n\"\"\"\n\nclass Calculator: \n    def __init__(self, base_number): \n        self.base_number = base_number \n    \n    def add(self): \n        return int(self.base_number + 18)\n\n    def sub(self):\n        return int(self.base_number - 28)\n\n    def mul(self): \n        return int(self.base_number * 38)\n\n    def intdiv(self):\n        return int(self.base_number // 48)",
+      "outputs": [],
+      "week": 4
+    },
+    {
+      "cell_index": 11,
+      "cell_type": "code",
+      "topic": "OOP - Default parameters and string formatting",
+      "is_advanced_optional": false,
+      "source": "\"\"\"\nCreate a Student class with default parameters and an info() method.\n\"\"\"\n\nclass Student:\n    def __init__(self, name, department, university='Utrecht University'):\n        self.name = name\n        self.department = department\n        self.university = university\n\n    def info(self):\n        return (f\"{self.name} studies at the {self.department} Department \"\n                f\"of {self.university}.\")",
+      "outputs": [],
+      "week": 4
+    }
+  ],
+  "sources": [
+    "Exercise_4.1.py",
+    "Exercise_4.2.py",
+    "Exercise_4.3.py",
+    "Exercise_4.4.py",
+    "Exercise_4.5.py",
+    "Exercise_4.6.py",
+    "Exercise_4.7.py",
+    "Exercise_4.8.py",
+    "Exercise_4.9.py",
+    "Lecture Week 4.pptx",
+    "Notebook Week 4.ipynb",
+    "Solutions week 4.txt"
+  ]
+}

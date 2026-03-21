@@ -18,12 +18,14 @@ class GeminiTestProtocolTests(unittest.TestCase):
         self,
         probe_payload: dict[str, object],
         canvas_payload: dict[str, object] | None = None,
+        full_payload: dict[str, object] | None = None,
     ) -> subprocess.CompletedProcess[str]:
         with tempfile.TemporaryDirectory() as tmp:
             temp_dir = Path(tmp)
             probe_path = temp_dir / "probe.json"
             stress_path = temp_dir / "stress.json"
             canvas_path = temp_dir / "canvas.json"
+            full_path = temp_dir / "full.json"
             report_path = temp_dir / "report.json"
             probe_path.write_text(json.dumps(probe_payload, ensure_ascii=False, indent=2), encoding="utf-8")
             stress_payload = {
@@ -58,6 +60,46 @@ class GeminiTestProtocolTests(unittest.TestCase):
                 "artifactPaths": [],
             }
             canvas_path.write_text(json.dumps(canvas_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+            full_payload = full_payload or {
+                "ok": True,
+                "acceptedCards": 14,
+                "previewCards": 14,
+                "previewMetrics": {
+                    "totalCards": 14,
+                    "outOfBoundsCount": 0,
+                    "occupiedAreaRatio": 0.52,
+                    "overlapAreaRatio": 0.0,
+                    "headerRatioAvg": 0.12,
+                },
+                "legibilityProbe": {
+                    "minFontSizePx": 8.5,
+                    "minLineHeight": 1.05,
+                    "overflowCards": 0,
+                    "textElementCount": 28,
+                },
+                "realPdfByteSize": 3200,
+                "exportProbe": {
+                    "supportPrompts": 2,
+                    "saveCalls": 1,
+                    "printCalls": 1,
+                    "events": ["save", "support", "print", "support"],
+                },
+                "exportStyleProbe": {"controlsHidden": True, "layoutStable": True, "compactHeader": True, "headerRatio": 0.08},
+                "previewArtifactPath": "",
+                "exportArtifactPath": "",
+                "summary": {
+                    "occupiedAreaRatio": 0.52,
+                    "overlapAreaRatio": 0.0,
+                    "headerRatioAvg": 0.12,
+                    "minFontSizePx": 8.5,
+                    "minLineHeight": 1.05,
+                    "overflowCards": 0,
+                    "exportControlsHidden": True,
+                    "exportLayoutStable": True,
+                    "exportHeaderRatio": 0.08,
+                },
+            }
+            full_path.write_text(json.dumps(full_payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
             result = subprocess.run(
                 [
@@ -69,6 +111,8 @@ class GeminiTestProtocolTests(unittest.TestCase):
                     str(stress_path),
                     "--canvas-json",
                     str(canvas_path),
+                    "--full-json",
+                    str(full_path),
                     "--skip-gemini",
                     "--report-file",
                     str(report_path),
@@ -140,6 +184,56 @@ class GeminiTestProtocolTests(unittest.TestCase):
         }
         result = self._run_protocol(probe, canvas_payload=clipped_canvas)
         self.assertNotEqual(0, result.returncode, msg="Expected non-zero exit for clipping-like canvas metrics.")
+        self.assertEqual("fail", result.report["summary"]["overall_status"])  # type: ignore[attr-defined]
+
+    def test_protocol_fails_when_full_ui_export_is_sparse_or_unreadable(self) -> None:
+        probe = {
+            "ok": True,
+            "densityProbe": {"iconButtonsOnly": True, "headerRatio": 0.11},
+            "exportProbe": {"supportPrompts": 2, "saveCalls": 1, "printCalls": 1},
+            "exportStyleProbe": {"controlsHidden": True, "compactHeader": True, "headerRatio": 0.08},
+            "screenshotPath": "docs/smoke-preview.png",
+            "exportScreenshotPath": "docs/smoke-export-preview.png",
+        }
+        sparse_full = {
+            "ok": False,
+            "acceptedCards": 14,
+            "previewCards": 14,
+            "previewMetrics": {
+                "totalCards": 14,
+                "outOfBoundsCount": 1,
+                "occupiedAreaRatio": 0.3,
+                "overlapAreaRatio": 0.02,
+                "headerRatioAvg": 0.22,
+            },
+            "legibilityProbe": {
+                "minFontSizePx": 6.5,
+                "minLineHeight": 0.9,
+                "overflowCards": 2,
+                "textElementCount": 4,
+            },
+            "realPdfByteSize": 1400,
+            "exportProbe": {"supportPrompts": 1, "saveCalls": 0, "printCalls": 0, "events": []},
+            "exportStyleProbe": {"controlsHidden": False, "layoutStable": False, "compactHeader": False, "headerRatio": 0.22},
+            "previewArtifactPath": "",
+            "exportArtifactPath": "",
+                "summary": {
+                    "occupiedAreaRatio": 0.3,
+                    "overlapAreaRatio": 0.02,
+                    "headerRatioAvg": 0.22,
+                    "minFontSizePx": 6.5,
+                    "minLineHeight": 0.9,
+                    "overflowCards": 2,
+                    "exportControlsHidden": False,
+                    "exportLayoutStable": False,
+                "exportHeaderRatio": 0.22,
+            },
+        }
+        result = self._run_protocol(probe, full_payload=sparse_full)
+        self.assertNotEqual(0, result.returncode, msg="Expected non-zero exit for sparse or unreadable full export.")
+        hard_ids = {check["check_id"] for check in result.report["hard_checks"]}  # type: ignore[attr-defined]
+        self.assertIn("full_no_overflow_cards", hard_ids)
+        self.assertIn("full_min_font_size", hard_ids)
         self.assertEqual("fail", result.report["summary"]["overall_status"])  # type: ignore[attr-defined]
 
 

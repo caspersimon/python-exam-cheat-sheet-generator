@@ -3,6 +3,7 @@ const fs = require("fs");
 const http = require("http");
 const path = require("path");
 const { chromium } = require("playwright");
+const { acceptCards, dismissSplash } = require("./lib/ui_playwright_common");
 const ROOT = path.resolve(__dirname, "..");
 const ARTIFACT_DIR = path.join(ROOT, "data", "test_reports", "artifacts");
 const MIME = {
@@ -428,18 +429,17 @@ async function run() {
       () => !document.querySelector("#cardHost")?.textContent?.includes("Loading topic cards..."),
       { timeout: 30000 }
     );
-    if ((await page.locator("#splashOverlay:not(.hidden)").count()) > 0) {
-      await page.click("#getStartedBtn", { timeout: 5000 });
+    await dismissSplash(page);
+    await page.waitForSelector(".topic-nav-item", { state: "attached", timeout: 20000 });
+
+    const selectedTopics = await acceptCards(page, 4, { itemsPerTopic: 3 });
+    if (selectedTopics < 3) {
+      throw new Error(`Could not select enough topics for export canvas guard (selected=${selectedTopics}).`);
     }
-    const selectableItems = page.locator("#cardHost [data-role='item-toggle']");
-    if ((await selectableItems.count()) > 0) {
-      await selectableItems.first().click({ timeout: 5000 });
-    }
-    await page.click("#acceptBtn", { timeout: 5000 });
     await page.waitForTimeout(350);
     await page.click("#goToPreviewBtn", { timeout: 5000 });
     await page.waitForSelector("#previewView.active", { timeout: 10000 });
-    if ((await page.locator(".preview-card").count()) < 1) {
+    if ((await page.locator(".preview-card").count()) < 3) {
       throw new Error("No preview cards available for export canvas guard.");
     }
     const probe = await collectCanvasProbe(page);

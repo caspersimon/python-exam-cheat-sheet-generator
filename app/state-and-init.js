@@ -7,33 +7,39 @@ const EXAM_LABELS = {
 
 const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture snippets, notebook snippets, and trap-pattern context.";
 const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
-const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v1";
-const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v1";
+const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v3";
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v3";
+const CANONICAL_WEEK_ORDER = [1, 2, 3, 4, 5, 6];
 const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
 
+function buildDefaultNavigationState() {
+  return {
+    activeTopicId: "",
+    activeWeek: CANONICAL_WEEK_ORDER[0],
+    expandedWeeks: Object.fromEntries(CANONICAL_WEEK_ORDER.map((week) => [String(week), true])),
+    mobileSidebarOpen: false,
+  };
+}
+
 const state = {
   cards: [],
+  deckGroups: [],
   filters: {
     search: "",
     onlyExam: true,
     minHits: 0,
-    weeks: new Set([1, 2, 3]),
+    weeks: new Set(CANONICAL_WEEK_ORDER),
   },
   drafts: {},
-  decisions: {},
-  acceptedOrder: [],
-  history: [],
+  navigation: buildDefaultNavigationState(),
   previewHistory: [],
   view: "swipe",
   openDrawer: "",
   previewCards: {},
   previewZCounter: 1,
-  preferences: {
-    sourceAutoSelectMode: "none",
-  },
   layout: {
-    fontFamily: "'Space Grotesk', sans-serif",
+    fontFamily: "'Inter', sans-serif",
     fontSize: 9.5,
     lineHeight: 1.1,
     letterSpacing: 0,
@@ -52,8 +58,11 @@ const refs = {
   previewView: document.getElementById("previewView"),
 
   progressText: document.getElementById("progressText"),
+  selectionShell: document.getElementById("selectionShell"),
+  topicSidebar: document.getElementById("topicSidebar"),
   cardHost: document.getElementById("cardHost"),
 
+  openTopicSidebarBtn: document.getElementById("openTopicSidebarBtn"),
   openFiltersBtn: document.getElementById("openFiltersBtn"),
   openStatsBtn: document.getElementById("openStatsBtn"),
   openLayoutBtn: document.getElementById("openLayoutBtn"),
@@ -65,12 +74,14 @@ const refs = {
   layoutDrawer: document.getElementById("layoutDrawer"),
   orderDrawer: document.getElementById("orderDrawer"),
   drawerBackdrop: document.getElementById("drawerBackdrop"),
+  topicSidebarBackdrop: document.getElementById("topicSidebarBackdrop"),
   closeDrawerButtons: Array.from(document.querySelectorAll(".close-drawer-btn")),
 
   acceptedCount: document.getElementById("acceptedCount"),
   rejectedCount: document.getElementById("rejectedCount"),
   remainingCount: document.getElementById("remainingCount"),
   acceptedTopicsList: document.getElementById("acceptedTopicsList"),
+  weekFilterList: document.getElementById("weekFilterList"),
 
   previewOrderList: document.getElementById("previewOrderList"),
   page1Content: document.getElementById("page1Content"),
@@ -81,11 +92,7 @@ const refs = {
   searchInput: document.getElementById("searchInput"),
   onlyExamToggle: document.getElementById("onlyExamToggle"),
   minHitsSelect: document.getElementById("minHitsSelect"),
-  weekChecks: Array.from(document.querySelectorAll(".weekCheck")),
 
-  rejectBtn: document.getElementById("rejectBtn"),
-  acceptBtn: document.getElementById("acceptBtn"),
-  undoBtn: document.getElementById("undoBtn"),
   skipToPreviewBtn: document.getElementById("skipToPreviewBtn"),
   goToSwipeBtn: document.getElementById("goToSwipeBtn"),
   goToPreviewBtn: document.getElementById("goToPreviewBtn"),
@@ -147,6 +154,7 @@ const previewPointerState = {
 
 async function init() {
   bindEvents();
+  renderWeekFilterControls();
   applyLayoutVariables();
   setLoadingState();
   maybeShowSplash();
@@ -158,15 +166,20 @@ async function init() {
     }
     const data = await response.json();
     state.cards = Array.isArray(data.cards) ? data.cards : [];
+    state.deckGroups = Array.isArray(data.deck_groups) ? data.deck_groups : [];
     hydratePersistedState();
+    ensureExplorerNavigation(getFilteredWeekBundles());
     syncFilterControls();
     applyLayoutVariables();
     renderAll();
+    if (getSelectedPreviewEntries().length > 0 && state.view === "preview") {
+      setView("preview");
+    }
   } catch (error) {
     refs.cardHost.innerHTML = `<div class="empty-state">
       <p><strong>Could not load <code>topic_cards.json</code>.</strong></p>
       <p>${escapeHtml(error.message)}</p>
-      <p>Serve this folder with <code>python3 -m http.server 8000</code> and open <code>http://localhost:8000</code>.</p>
+      <p>Serve this folder with <code>python3 -m http.server 4173</code> and open <code>http://127.0.0.1:4173</code>.</p>
     </div>`;
   }
 }
@@ -200,23 +213,14 @@ function bindEvents() {
     renderAll();
   });
 
-  refs.weekChecks.forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      const selected = refs.weekChecks
-        .filter((el) => el.checked)
-        .map((el) => Number(el.value));
-      state.filters.weeks = new Set(selected);
-      renderAll();
-    });
-  });
-
-  refs.rejectBtn.addEventListener("click", () => triggerDecision("rejected"));
-  refs.acceptBtn.addEventListener("click", () => triggerDecision("accepted"));
-  refs.undoBtn.addEventListener("click", undoLastDecision);
-
   refs.skipToPreviewBtn.addEventListener("click", () => setView("preview"));
   refs.goToSwipeBtn.addEventListener("click", () => setView("swipe"));
   refs.goToPreviewBtn.addEventListener("click", () => setView("preview"));
+  refs.openTopicSidebarBtn?.addEventListener("click", () => {
+    state.navigation.mobileSidebarOpen = true;
+    renderSwipe();
+    schedulePersistState();
+  });
 
   refs.openFiltersBtn.addEventListener("click", () => toggleDrawer("filters"));
   refs.openStatsBtn.addEventListener("click", () => toggleDrawer("stats"));
@@ -228,6 +232,11 @@ function bindEvents() {
   });
 
   refs.drawerBackdrop.addEventListener("click", () => closeDrawers());
+  refs.topicSidebarBackdrop?.addEventListener("click", () => {
+    state.navigation.mobileSidebarOpen = false;
+    renderSwipe();
+    schedulePersistState();
+  });
 
   if (refs.getStartedBtn) {
     refs.getStartedBtn.addEventListener("click", dismissSplash);
@@ -240,11 +249,11 @@ function bindEvents() {
     });
   }
 
-  refs.cardHost.addEventListener("change", handleCardInputChange);
-  refs.cardHost.addEventListener("click", handleCardClick);
-  refs.cardHost.addEventListener("mouseover", handleCardMouseOver);
+  refs.selectionShell?.addEventListener("change", handleCardInputChange);
+  refs.selectionShell?.addEventListener("click", handleCardClick);
+  refs.selectionShell?.addEventListener("mouseover", handleCardMouseOver);
   document.addEventListener("click", (event) => {
-    if (event.target.closest("#cardHost .info-chip")) {
+    if (event.target.closest("#selectionShell .info-chip")) {
       return;
     }
     closeOpenInfoPopovers();
@@ -285,22 +294,6 @@ function bindEvents() {
 
     if (isEditableKeyTarget(event.target)) {
       return;
-    }
-
-    const isSwipeUndoShortcut =
-      (event.metaKey || event.ctrlKey) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === "z";
-    if (isSwipeUndoShortcut) {
-      event.preventDefault();
-      undoLastDecision();
-      return;
-    }
-
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      triggerDecision("accepted");
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      triggerDecision("rejected");
     }
   });
 
@@ -380,6 +373,27 @@ function bindEvents() {
   document.addEventListener("pointermove", handlePreviewPointerMove);
   document.addEventListener("pointerup", finishPreviewPointerAction);
   document.addEventListener("pointercancel", finishPreviewPointerAction);
+}
+
+function renderWeekFilterControls() {
+  if (!refs.weekFilterList) {
+    return;
+  }
+
+  refs.weekFilterList.innerHTML = CANONICAL_WEEK_ORDER.map((week) => {
+    const checked = state.filters.weeks.has(week);
+    return `<label><input class="weekCheck" type="checkbox" value="${week}" ${checked ? "checked" : ""} />W${week}</label>`;
+  }).join("");
+
+  refs.weekFilterList.querySelectorAll(".weekCheck").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      const selected = Array.from(refs.weekFilterList.querySelectorAll(".weekCheck"))
+        .filter((el) => el.checked)
+        .map((el) => Number(el.value));
+      state.filters.weeks = new Set(selected);
+      renderAll();
+    });
+  });
 }
 
 function isEditableKeyTarget(target) {

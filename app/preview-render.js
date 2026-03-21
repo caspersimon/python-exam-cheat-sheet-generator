@@ -68,30 +68,27 @@ function renderPreview() {
   refs.page2Content.innerHTML = "";
   refs.page1Content.classList.remove("is-empty");
   refs.page2Content.classList.remove("is-empty");
-
   refs.previewOrderList.innerHTML = "";
-  state.acceptedOrder.forEach((cardId) => {
-    const card = state.cards.find((entry) => entry.id === cardId);
-    if (!card) {
-      return;
-    }
+
+  const previewEntries = buildMergedPreviewEntries();
+  state.previewEntries = Object.fromEntries(previewEntries.map((entry) => [entry.previewId, entry]));
+
+  previewEntries.forEach((entry) => {
     const li = document.createElement("li");
-    li.textContent = humanizeTopic(card.topic);
+    li.textContent = `${humanizeTopic(entry.card.topic)}${entry.cards.length > 1 ? ` ×${entry.cards.length}` : ""}`;
     refs.previewOrderList.appendChild(li);
   });
 
-  const acceptedCards = state.acceptedOrder
-    .map((id) => state.cards.find((card) => card.id === id))
-    .filter((card) => card && state.decisions[card.id]?.status === "accepted");
-
-  const grid = getEffectiveGridSettings(acceptedCards.length);
+  const previewTopicCount = previewEntries.length;
+  const grid = getEffectiveGridSettings(previewTopicCount);
   const capacityPerPage = Math.max(1, grid.columns * grid.rows);
 
-  if (!acceptedCards.length) {
+  if (!previewTopicCount) {
+    state.previewEntries = {};
     prunePreviewCardLayouts(new Set());
     refs.page1Content.classList.add("is-empty");
     refs.page2Content.classList.add("is-empty");
-    refs.page1Content.innerHTML = `<div class="empty-state"><p>No accepted topics yet.</p><p>Go to Swipe Mode and add cards first.</p></div>`;
+    refs.page1Content.innerHTML = `<div class="empty-state"><p>No selected content yet.</p><p>Choose specific items in Topic Explorer before opening Preview & Export.</p></div>`;
     refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
     refs.overflowNotice.classList.add("hidden");
     syncGridControls(grid);
@@ -100,35 +97,19 @@ function renderPreview() {
     return;
   }
 
-  const validCardIds = new Set(acceptedCards.map((card) => card.id));
+  const validCardIds = new Set(previewEntries.map((entry) => entry.previewId));
   prunePreviewCardLayouts(validCardIds);
 
-  let renderedCount = 0;
-  acceptedCards.forEach((card, index) => {
-    const selection = state.decisions[card.id]?.selection;
-    if (!selection) {
+  previewEntries.forEach((entry, index) => {
+    const fallback = getDefaultPreviewLayout(index, grid);
+    const layout = ensurePreviewCardLayout(entry.previewId, fallback);
+    const cardElement = buildPreviewCard(entry, layout);
+    if (!cardElement) {
       return;
     }
-    const fallback = getDefaultPreviewLayout(index, grid);
-    const layout = ensurePreviewCardLayout(card.id, fallback);
-    const cardElement = buildPreviewCard(card, selection, layout);
     applyPreviewCardLayout(cardElement, layout);
-    const pageContent = getPreviewPageContent(layout.page);
-    pageContent.appendChild(cardElement);
-    renderedCount += 1;
+    getPreviewPageContent(layout.page).appendChild(cardElement);
   });
-
-  if (!renderedCount) {
-    refs.page1Content.classList.add("is-empty");
-    refs.page2Content.classList.add("is-empty");
-    refs.page1Content.innerHTML = `<div class="empty-state"><p>No accepted topics yet.</p><p>Go to Swipe Mode and add cards first.</p></div>`;
-    refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
-    refs.overflowNotice.classList.add("hidden");
-    syncGridControls(grid);
-    schedulePersistState();
-    syncPreviewUndoAvailability();
-    return;
-  }
 
   if (!refs.page1Content.querySelector(".preview-card")) {
     refs.page1Content.classList.add("is-empty");
@@ -139,10 +120,10 @@ function renderPreview() {
     refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
   }
 
-  const overflowCards = Math.max(0, acceptedCards.length - capacityPerPage * 2);
+  const overflowCards = Math.max(0, previewTopicCount - capacityPerPage * 2);
   if (overflowCards > 0) {
     refs.overflowNotice.classList.remove("hidden");
-    refs.overflowNotice.textContent = `${overflowCards} topic(s) exceed the default grid. They were added on page 2 and may overlap; drag/resize to arrange.`;
+    refs.overflowNotice.textContent = `${overflowCards} selected topic card(s) exceed the default grid. They were added on page 2 and may overlap; drag/resize to arrange.`;
   } else {
     refs.overflowNotice.classList.add("hidden");
   }
@@ -154,17 +135,53 @@ function renderPreview() {
 
 function syncGridControls(effectiveGrid) {
   refs.autoGridToggle.checked = state.layout.autoGrid;
-
   refs.gridColumnsRange.disabled = state.layout.autoGrid;
   refs.gridRowsRange.disabled = state.layout.autoGrid;
-
   refs.gridColumnsRange.value = String(state.layout.gridColumns);
   refs.gridRowsRange.value = String(state.layout.gridRows);
+  refs.gridColumnsValue.textContent = state.layout.autoGrid ? `${effectiveGrid.columns} (auto)` : String(state.layout.gridColumns);
+  refs.gridRowsValue.textContent = state.layout.autoGrid ? `${effectiveGrid.rows} (auto)` : String(state.layout.gridRows);
+}
 
-  refs.gridColumnsValue.textContent = state.layout.autoGrid
-    ? `${effectiveGrid.columns} (auto)`
-    : String(state.layout.gridColumns);
-  refs.gridRowsValue.textContent = state.layout.autoGrid
-    ? `${effectiveGrid.rows} (auto)`
-    : String(state.layout.gridRows);
+function buildMergedPreviewEntries() {
+  const groups = new Map();
+
+  getSelectedPreviewEntries().forEach(({ card, selection }) => {
+    const key = normalizeTopicMergeKey(card);
+    if (!groups.has(key)) {
+      groups.set(key, {
+        key,
+        previewId: card.id,
+        card,
+        cards: [],
+        selectionsByCard: {},
+      });
+    }
+
+    const group = groups.get(key);
+    group.cards.push(card);
+    group.selectionsByCard[card.id] = selection;
+
+    if (group.cards.length > 1) {
+      group.previewId = `merged-${key.replace(/[^a-z0-9]+/g, "-") || card.id}`;
+      if ((card.exam_stats?.total_hits || 0) > (group.card.exam_stats?.total_hits || 0)) {
+        group.card = card;
+      }
+    }
+  });
+
+  return [...groups.values()].sort((a, b) => {
+    const hitDelta = (b.card.exam_stats?.total_hits || 0) - (a.card.exam_stats?.total_hits || 0);
+    if (hitDelta !== 0) {
+      return hitDelta;
+    }
+    return humanizeTopic(a.card.topic).localeCompare(humanizeTopic(b.card.topic));
+  });
+}
+
+function normalizeTopicMergeKey(card) {
+  return String(card?.canonical_topic || card?.topic || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }

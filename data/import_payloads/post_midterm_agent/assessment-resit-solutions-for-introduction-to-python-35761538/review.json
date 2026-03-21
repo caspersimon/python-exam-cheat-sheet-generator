@@ -1,0 +1,11 @@
+{
+  "source_file": "practice_exams_previous_years/resit-solutions-for-introduction-to-python-35761538.pdf",
+  "validation": {
+    "errors": [],
+    "warnings": []
+  },
+  "syntax_errors": [],
+  "review_notes": [
+    "Resit exam questions covering Python basics, variable scoping, logic, functions, keyword arguments, lists, and dictionary comprehensions."
+  ]
+}

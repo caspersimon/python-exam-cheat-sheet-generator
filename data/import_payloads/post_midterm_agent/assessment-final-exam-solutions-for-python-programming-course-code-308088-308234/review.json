@@ -1,0 +1,11 @@
+{
+  "source_file": "practice_exams_previous_years/final-exam-solutions-for-python-programming-course-code-308088-308234.pdf",
+  "validation": {
+    "errors": [],
+    "warnings": []
+  },
+  "syntax_errors": [],
+  "review_notes": [
+    "Exam covers OOP class basics, string manipulation and text processing, and introductory pandas Series operations."
+  ]
+}

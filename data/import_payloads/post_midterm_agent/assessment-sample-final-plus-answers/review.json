@@ -1,0 +1,13 @@
+{
+  "source_file": "Sample Final plus answers.pdf",
+  "validation": {
+    "errors": [
+      "`exam_label` must be a non-empty string.",
+      "`source` must be a non-empty string.",
+      "Assessment payload must include at least one question."
+    ],
+    "warnings": []
+  },
+  "syntax_errors": [],
+  "review_notes": []
+}

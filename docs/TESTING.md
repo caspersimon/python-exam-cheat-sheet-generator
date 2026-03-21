@@ -24,6 +24,7 @@ make maintenance-audit
 make leave-better
 make leave-better-ui
 make smoke-ui
+make full-ui
 make stress-layout-ui
 make gemini-benchmark
 make gemini-prompt-experiments
@@ -194,6 +195,21 @@ This runs `scripts/smoke_ui_playwright.js` in an isolated temporary Playwright e
 - generated-PDF print flow + support prompt callback (must trigger after print path)
 - export snapshot hides edit/resize controls
 - export snapshot uses compact card headers (space-efficient)
+
+## Full UI End-to-End Validation
+
+```bash
+make full-ui
+```
+
+This runs `scripts/full_ui_playwright.js` in the same isolated Playwright setup and verifies:
+
+- full user flow from chooser to preview/export
+- dense multi-week selection behavior
+- merged preview card output
+- PDF export/print hook behavior
+- preview density and overlap bounds
+- export legibility and space usage under realistic dense selections
 
 ## Export Canvas Guard (Headless)
 
