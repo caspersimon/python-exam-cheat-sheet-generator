@@ -22,8 +22,8 @@ class TopicCardsIntegrityTests(unittest.TestCase):
             week = group.get("week")
             self.assertEqual(group.get("id"), f"week-{week}")
             self.assertEqual(group.get("title"), f"Week {week}")
-            self.assertIsInstance(group.get("topic_refs"), list)
-            self.assertGreater(len(group["topic_refs"]), 0, f"Week {week} should reference at least one topic")
+            self.assertIsInstance(group.get("topic_groups"), list)
+            self.assertGreater(len(group["topic_groups"]), 0, f"Week {week} should contain at least one topic group")
 
     def test_cards_have_expected_shape(self) -> None:
         for card in self.cards:
@@ -31,6 +31,9 @@ class TopicCardsIntegrityTests(unittest.TestCase):
             self.assertIsInstance(card.get("topic"), str)
             self.assertIsInstance(card.get("canonical_topic"), str)
             self.assertIsInstance(card.get("weeks"), list)
+            self.assertIsInstance(card.get("week_id"), str)
+            self.assertIsInstance(card.get("topic_meta"), dict)
+            self.assertIsInstance(card.get("subtopics"), list)
             self.assertIsInstance(card.get("exam_stats"), dict)
             self.assertIsInstance(card.get("related_topics"), list)
             self.assertIsInstance(card.get("trap_patterns"), list)
@@ -47,6 +50,10 @@ class TopicCardsIntegrityTests(unittest.TestCase):
                 self.assertIsInstance(sections.get(key), list, f"{card['id']}: {key} must be list")
             self.assertIsInstance(sections.get("ai_summary"), dict, f"{card['id']}: ai_summary must be dict")
             self.assertIsInstance(sections.get("ai_common_questions"), dict, f"{card['id']}: ai_common_questions must be dict")
+            for subtopic in card.get("subtopics", []):
+                self.assertIsInstance(subtopic.get("id"), str)
+                self.assertIsInstance(subtopic.get("title"), str)
+                self.assertIsInstance(subtopic.get("item_ids"), dict)
 
     def test_card_ids_are_unique(self) -> None:
         ids = [card["id"] for card in self.cards]
@@ -67,11 +74,25 @@ class TopicCardsIntegrityTests(unittest.TestCase):
     def test_week_bundle_references_align_with_cards(self) -> None:
         card_ids = {card["id"] for card in self.cards}
         for group in self.deck_groups:
-            for ref in group.get("topic_refs", []):
-                self.assertIn(ref.get("card_id"), card_ids, f"{group.get('id')}: unknown card reference {ref.get('card_id')}")
-                self.assertIsInstance(ref.get("item_counts"), dict, f"{group.get('id')}: item_counts must be a dict")
-                self.assertIsInstance(ref.get("exam_hits"), int, f"{group.get('id')}: exam_hits must be an int")
-                self.assertGreaterEqual(ref.get("exam_hits", 0), 0)
+            for topic_group in group.get("topic_groups", []):
+                for ref in topic_group.get("topic_refs", []):
+                    self.assertIn(ref.get("card_id"), card_ids, f"{group.get('id')}: unknown card reference {ref.get('card_id')}")
+                    self.assertIsInstance(ref.get("exam_hits"), int, f"{group.get('id')}: exam_hits must be an int")
+                    self.assertGreaterEqual(ref.get("exam_hits", 0), 0)
+
+    def test_subtopic_item_ids_reference_real_items(self) -> None:
+        for card in self.cards:
+            valid_ids = {
+                item.get("id")
+                for bucket in ["lecture_snippets", "exam_questions", "notebook_snippets", "ai_examples", "key_points_to_remember"]
+                for item in card.get("sections", {}).get(bucket, [])
+                if isinstance(item, dict) and item.get("id")
+            }
+            for subtopic in card.get("subtopics", []):
+                item_ids = subtopic.get("item_ids", {})
+                for bucket_ids in item_ids.values():
+                    for item_id in bucket_ids:
+                        self.assertIn(item_id, valid_ids, f"{card['id']}: unknown subtopic item id {item_id}")
 
 
 if __name__ == "__main__":

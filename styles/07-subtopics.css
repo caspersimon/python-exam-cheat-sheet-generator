@@ -1,0 +1,57 @@
+.subtopic-overview-list {
+  display: grid;
+  gap: 8px;
+}
+
+.subtopic-overview-item {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.subtopic-overview-item strong {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.subtopic-overview-item p {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.rail-subtopic-group {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  min-width: 0;
+}
+
+.rail-subtopic-head {
+  display: grid;
+  gap: 3px;
+  padding: 0 2px;
+}
+
+.rail-subtopic-head h5 {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  color: var(--ink-0);
+}
+
+.rail-subtopic-head p {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.rail-subtopic-items {
+  display: grid;
+  gap: 10px;
+}

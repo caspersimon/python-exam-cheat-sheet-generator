@@ -38,6 +38,9 @@ def analyze_week_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
         errors.append("`week` must be a positive integer.")
 
     topics = [str(topic).strip() for topic in _safe_list(payload.get("topics")) if str(topic).strip()]
+    if topics and isinstance(_safe_list(payload.get("topics"))[0], dict):
+        return analyze_v3_week_payload(payload)
+
     seen_topics: set[str] = set()
     for topic in topics:
         normalized = topic.lower()
@@ -123,6 +126,102 @@ def analyze_week_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
         "errors": errors,
         "warnings": warnings,
     }
+
+
+def analyze_v3_week_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    week = _as_positive_int(payload.get("week"))
+    if week is None:
+        errors.append("`week` must be a positive integer.")
+
+    topics = _safe_list(payload.get("topics"))
+    if not topics:
+        errors.append("`topics` must contain at least one topic object.")
+
+    seen_topic_ids: set[str] = set()
+    seen_subtopic_ids: set[str] = set()
+    seen_snippet_ids: set[str] = set()
+
+    for topic_index, topic in enumerate(topics, start=1):
+        if not isinstance(topic, dict):
+            errors.append(f"`topics[{topic_index}]` must be an object.")
+            continue
+        topic_id = _safe_str(topic.get("id"))
+        if not topic_id:
+            errors.append(f"`topics[{topic_index}].id` must be a non-empty string.")
+        elif topic_id in seen_topic_ids:
+            errors.append(f"Duplicate topic id found: {topic_id}")
+        else:
+            seen_topic_ids.add(topic_id)
+
+        if not _safe_str(topic.get("title")):
+            warnings.append(f"`topics[{topic_index}].title` is empty.")
+
+        subtopics = _safe_list(topic.get("subtopics"))
+        if not subtopics:
+            warnings.append(f"`topics[{topic_index}]` has no subtopics.")
+
+        for subtopic_index, subtopic in enumerate(subtopics, start=1):
+            if not isinstance(subtopic, dict):
+                errors.append(f"`topics[{topic_index}].subtopics[{subtopic_index}]` must be an object.")
+                continue
+            subtopic_id = _safe_str(subtopic.get("id"))
+            if not subtopic_id:
+                errors.append(f"`topics[{topic_index}].subtopics[{subtopic_index}].id` must be a non-empty string.")
+            elif subtopic_id in seen_subtopic_ids:
+                errors.append(f"Duplicate subtopic id found: {subtopic_id}")
+            else:
+                seen_subtopic_ids.add(subtopic_id)
+
+            if not _safe_str(subtopic.get("title")):
+                warnings.append(f"`topics[{topic_index}].subtopics[{subtopic_index}].title` is empty.")
+
+            for bucket_name in ["knowledge_snippets", "code_snippets", "question_snippets"]:
+                bucket = _safe_list(subtopic.get(bucket_name))
+                for snippet_index, snippet in enumerate(bucket, start=1):
+                    if not isinstance(snippet, dict):
+                        errors.append(
+                            f"`topics[{topic_index}].subtopics[{subtopic_index}].{bucket_name}[{snippet_index}]` must be an object."
+                        )
+                        continue
+                    snippet_id = _safe_str(snippet.get("id"))
+                    if not snippet_id:
+                        errors.append(
+                            f"`topics[{topic_index}].subtopics[{subtopic_index}].{bucket_name}[{snippet_index}].id` must be a non-empty string."
+                        )
+                    elif snippet_id in seen_snippet_ids:
+                        errors.append(f"Duplicate snippet id found: {snippet_id}")
+                    else:
+                        seen_snippet_ids.add(snippet_id)
+                    if not _safe_str(snippet.get("kind")):
+                        warnings.append(
+                            f"`topics[{topic_index}].subtopics[{subtopic_index}].{bucket_name}[{snippet_index}].kind` is empty."
+                        )
+                    if not _safe_str(snippet.get("content")):
+                        warnings.append(
+                            f"`topics[{topic_index}].subtopics[{subtopic_index}].{bucket_name}[{snippet_index}].content` is empty."
+                        )
+                    if not isinstance(snippet.get("source_refs"), list) or not snippet.get("source_refs"):
+                        errors.append(
+                            f"`topics[{topic_index}].subtopics[{subtopic_index}].{bucket_name}[{snippet_index}].source_refs` must be a non-empty list."
+                        )
+                    if not isinstance(snippet.get("curation_meta"), dict):
+                        errors.append(
+                            f"`topics[{topic_index}].subtopics[{subtopic_index}].{bucket_name}[{snippet_index}].curation_meta` must be an object."
+                        )
+
+    sources = [str(source).strip() for source in _safe_list(payload.get("sources")) if str(source).strip()]
+    seen_sources: set[str] = set()
+    for source in sources:
+        normalized = source.lower()
+        if normalized in seen_sources:
+            warnings.append(f"Duplicate source path detected: {source}")
+            continue
+        seen_sources.add(normalized)
+
+    return {"errors": errors, "warnings": warnings}
 
 
 def normalize_assessment_payload(raw_payload: dict[str, Any]) -> dict[str, Any]:

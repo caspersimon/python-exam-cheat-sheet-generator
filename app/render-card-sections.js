@@ -28,9 +28,9 @@ function renderSwipe() {
     return;
   }
 
-  const { bundle, card } = activeContext;
+  const { bundle, group, card } = activeContext;
   refs.topicSidebar.innerHTML = renderTopicSidebar(filteredWeekBundles, card.id);
-  refs.cardHost.innerHTML = renderTopicDetail(card, bundle);
+  refs.cardHost.innerHTML = renderTopicDetail(card, bundle, group);
 
   refs.selectionShell?.classList.toggle("topic-sidebar-open", Boolean(state.navigation.mobileSidebarOpen));
   refs.topicSidebarBackdrop?.classList.toggle("hidden", !state.navigation.mobileSidebarOpen);
@@ -79,9 +79,42 @@ function renderWeekSidebarSection(bundle, activeTopicId) {
         </div>
       </button>
       <div class="topic-week-list ${expanded ? "" : "hidden"}">
-        ${bundle.cards.map((card) => renderSidebarTopicButton(card, bundle.week, activeTopicId)).join("")}
+        ${bundle.groups.map((group) => renderSidebarCourseGroup(group, bundle.week, activeTopicId)).join("")}
       </div>
     </section>
+  `;
+}
+
+function renderSidebarCourseGroup(group, week, activeTopicId) {
+  const groupSelection = getWeekSelectionSummary(group);
+  const countLabel = `${group.cards.length} card${group.cards.length === 1 ? "" : "s"}`;
+  const metaBits = [countLabel];
+  if (groupSelection.topics > 0) {
+    metaBits.push(`${groupSelection.topics} selected`);
+  }
+
+  if (group.isDefault) {
+    return `
+      <div class="topic-course-group topic-course-group-default" data-course-group="${escapeHtml(group.id)}">
+        <div class="topic-course-group-list">
+          ${group.cards.map((card) => renderSidebarTopicButton(card, week, activeTopicId)).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="topic-course-group" data-course-group="${escapeHtml(group.id)}">
+      <div class="topic-course-group-head">
+        <div class="topic-course-group-copy">
+          <strong>${escapeHtml(group.title)}</strong>
+          <span>${escapeHtml(metaBits.join(" • "))}</span>
+        </div>
+      </div>
+      <div class="topic-course-group-list">
+        ${group.cards.map((card) => renderSidebarTopicButton(card, week, activeTopicId)).join("")}
+      </div>
+    </div>
   `;
 }
 
@@ -110,22 +143,28 @@ function renderSidebarTopicButton(card, week, activeTopicId) {
   `;
 }
 
-function renderTopicDetail(card, bundle) {
+function renderTopicDetail(card, bundle, group) {
   const draft = ensureDraft(card);
   const split = getSourceSplit(card);
   const keyPoints = keyPointGroups(card);
   const aiExamples = usefulAIExamples(card);
+  const subtopics = getCardSubtopics(card);
   const selectedCounts = getSelectionCounts(card, draft);
   const weekLabel = Array.isArray(card.weeks) && card.weeks.length ? card.weeks.map((week) => `W${week}`).join(" · ") : `W${bundle.week}`;
   const commonQuestions = card.sections.ai_common_questions?.bullets || [];
   const examHitsLabel = card.exam_stats.total_hits > 0 ? `${card.exam_stats.total_hits} exam hits` : "Course material only";
   const selectedLabel = `${selectedCounts.total} selected`;
+  const groupTitle = group?.isDefault ? "Lecture-aligned topic" : group?.title || "Lecture-aligned topic";
 
   return `
     <article class="topic-detail-card" data-card-id="${escapeHtml(card.id)}">
       <header class="topic-detail-header">
         <div class="topic-detail-intro">
-          <p class="topic-detail-kicker">${escapeHtml(`Week ${bundle.week} · ${weekLabel} · ${examHitsLabel}`)}</p>
+          <div class="topic-detail-course-context">
+            <span class="topic-course-chip">${escapeHtml(`Week ${bundle.week}`)}</span>
+            <span class="topic-course-chip subtle">${escapeHtml(groupTitle)}</span>
+          </div>
+          <p class="topic-detail-kicker">${escapeHtml(`Source weeks ${weekLabel} · ${examHitsLabel}`)}</p>
           <div class="topic-detail-title-row">
             <h3>${escapeHtml(humanizeTopic(card.topic))}</h3>
             <div class="topic-detail-summary-stats">
@@ -136,6 +175,8 @@ function renderTopicDetail(card, bundle) {
           ${card.sections.ai_summary?.content ? `<p class="topic-detail-summary">${renderInlineCode(normalizeTruncatedDisplayText(card.sections.ai_summary.content))}</p>` : ""}
         </div>
       </header>
+
+      ${renderSubtopicOverview(subtopics)}
 
       ${commonQuestions.length
         ? `
@@ -159,58 +200,6 @@ function renderTopicDetail(card, bundle) {
       </footer>
     </article>
   `;
-}
-
-function truncateText(text, maxLength = 240) {
-  const value = normalizeNewlines(String(text || "")).replace(/\s+/g, " ").trim();
-  if (!value || value.length <= maxLength) {
-    return value;
-  }
-  return `${value.slice(0, maxLength).replace(/\s+\S*$/, "").trim()}...`;
-}
-
-function truncateCode(text, maxLines = 8) {
-  const lines = normalizeNewlines(String(text || ""))
-    .split("\n")
-    .map((line) => line.replace(/\s+$/g, ""));
-  if (lines.length <= maxLines) {
-    return lines.join("\n").trim();
-  }
-  return `${lines.slice(0, maxLines).join("\n")}\n...`;
-}
-
-function detailDisplayTitle(detail) {
-  const raw = String(detail?.title || "").trim();
-  if (/^optional\b/i.test(raw)) {
-    if (detail.table) {
-      return "Reference table";
-    }
-    if (detail.code) {
-      return "Code example";
-    }
-    if (detail.kind === "commands") {
-      return "Commands";
-    }
-    return "Note";
-  }
-  return raw || "Detail";
-}
-
-function renderDetailPreview(detail) {
-  const pieces = [];
-  if (detail.text) {
-    pieces.push(`<p>${renderInlineCode(truncateText(detail.text, 120))}</p>`);
-  }
-  if (detail.code) {
-    pieces.push(`<pre>${escapeHtml(truncateCode(detail.code, 4))}</pre>`);
-  }
-  if (detail.table) {
-    pieces.push(`<p class="detail-table-note">${escapeHtml(`${detail.table.headers.length} columns • ${detail.table.rows.length} rows`)}</p>`);
-  }
-  if (!pieces.length) {
-    return "";
-  }
-  return `<div class="detail-preview">${pieces.join("")}</div>`;
 }
 
 function renderSectionHeaderBar(card, draft, sectionKey, title, countText, description = "") {
@@ -260,10 +249,13 @@ function renderKeyPointRail(card, draft, groups) {
   const selectedSet = new Set(draft.selected.keyPoints || []);
   const selectableIds = new Set(keyPointSelectableIds(card));
   const selectedCount = [...selectedSet].filter((id) => selectableIds.has(id)).length;
+  const grouped = groupItemsBySubtopic(card, groups, (item) => item.subtopic_id, (item) => item.subtopic_title);
 
   const body = groups.length
-    ? groups
-        .map((group) => {
+    ? grouped
+        .map((subtopicGroup) => {
+          const itemsHtml = subtopicGroup.items
+            .map((group) => {
           const pointChecked = selectedSet.has(group.id);
           const detailsHtml = group.details.length
             ? group.details
@@ -307,6 +299,10 @@ function renderKeyPointRail(card, draft, groups) {
               </div>
             </article>
           `;
+            })
+            .join("");
+
+          return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
         })
         .join("")
     : renderEmptyRailCopy("No key points are available for this topic.");
@@ -321,9 +317,12 @@ function renderKeyPointRail(card, draft, groups) {
 
 function renderExampleRail(card, draft, items) {
   const selectedCount = items.filter((item) => draft.selected.aiExamples.includes(item.id)).length;
+  const grouped = groupItemsBySubtopic(card, items, (item) => item.subtopic_id, (item) => item.subtopic_title);
   const body = items.length
-    ? items
-        .map((item) => {
+    ? grouped
+        .map((subtopicGroup) => {
+          const itemsHtml = subtopicGroup.items
+            .map((item) => {
           const checked = draft.selected.aiExamples.includes(item.id);
           const kindLabel = item.kind === "incorrect" ? "Incorrect" : "Correct";
           return `
@@ -345,6 +344,10 @@ function renderExampleRail(card, draft, items) {
               </div>
             </article>
           `;
+            })
+            .join("");
+
+          return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
         })
         .join("")
     : renderEmptyRailCopy("No code examples are available for this topic.");
@@ -360,9 +363,12 @@ function renderExampleRail(card, draft, items) {
 function renderSourceRail(card, draft, sectionKey, title, items) {
   const selectedIds = draft.selected[sectionKey] || [];
   const selectedCount = items.filter((item) => selectedIds.includes(item.id)).length;
+  const grouped = groupItemsBySubtopic(card, items, (item) => item.subtopicId, (item) => item.subtopicTitle);
   const body = items.length
-    ? items
-        .map((sourceItem) => {
+    ? grouped
+        .map((subtopicGroup) => {
+          const itemsHtml = subtopicGroup.items
+            .map((sourceItem) => {
           const checked = selectedIds.includes(sourceItem.id);
           return `
             <article class="rail-card rail-card-source">
@@ -382,6 +388,10 @@ function renderSourceRail(card, draft, sectionKey, title, items) {
               </div>
             </article>
           `;
+            })
+            .join("");
+
+          return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
         })
         .join("")
     : renderEmptyRailCopy("No snippets are available in this section.");

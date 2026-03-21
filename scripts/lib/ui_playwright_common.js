@@ -67,8 +67,21 @@ async function dismissSplash(page) {
   }
 }
 
+async function expandAllWeeks(page) {
+  const toggles = page.locator(".topic-week-toggle");
+  const count = await toggles.count();
+  for (let index = 0; index < count; index += 1) {
+    const toggle = toggles.nth(index);
+    const expanded = await toggle.getAttribute("aria-expanded");
+    if (expanded !== "true") {
+      await toggle.click({ timeout: 5000 });
+      await page.waitForTimeout(50);
+    }
+  }
+}
+
 async function openTopicAtIndex(page, index) {
-  const topic = page.locator(".topic-nav-item").nth(index);
+  const topic = page.locator(".topic-nav-item:visible").nth(index);
   if ((await topic.count()) < 1) {
     return false;
   }
@@ -95,7 +108,8 @@ async function selectItemsInCurrentTopic(page, maxItems = 1) {
 
 async function acceptCards(page, target, options = {}) {
   const itemsPerTopic = Math.max(1, Number(options.itemsPerTopic) || 1);
-  const topicButtons = page.locator(".topic-nav-item");
+  await expandAllWeeks(page);
+  const topicButtons = page.locator(".topic-nav-item:visible");
   const totalTopics = await topicButtons.count();
 
   for (let index = 0; index < totalTopics; index += 1) {
@@ -179,6 +193,7 @@ module.exports = {
   acceptCards,
   acceptNextDialog,
   dismissSplash,
+  expandAllWeeks,
   installExportFlowStubs,
   openTopicAtIndex,
   selectItemsInCurrentTopic,

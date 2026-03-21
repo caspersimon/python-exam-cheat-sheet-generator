@@ -52,15 +52,17 @@ Root scripts are now thin entrypoints that delegate to `pipelines/`:
 
 For `key_point_details`, the large rule chain is split into ordered matcher modules (`rules_part1.py` ... `rules_part4.py`) to preserve behavior while avoiding oversized files.
 
-Canonical study data now lives in `data/study_db.json` (week-structured database). The topic-card pipeline materializes this DB into the shape needed for card generation at runtime, including:
+Canonical study data now lives in `data/study_db.json` (lecture-first week/topic/subtopic database, schema `3.0`). The topic-card pipeline materializes this DB into the shape needed for card generation at runtime, including:
 
-- `cards`: preview/export topic cards
+- `cards`: one card per canonical lecture topic, each with explicit subtopics and grouped snippets
 - `deck_groups`: the 6 week bundles used by the Topic Explorer sidebar
 
 Week ingestion flow:
 
 - `scripts/add_week_material.py`: adds one week payload to `data/study_db.json`.
+- `scripts/rewrite_study_db_lecture_first.py`: rewrites legacy/flat study data into the lecture-first canonical schema.
 - `pipelines/study_database/curation.py`: AI-first curation via `gemini-cli` (concept cleaning, notebook cell filtering/scoring).
+- `pipelines/study_database/lecture_first.py`: lecture-outline mapping, snippet normalization, and migration helpers.
 - `pipelines/study_database/validators.py`: payload preflight validation and source-path checks.
 - `data/curation_reports/`: manual-review artifacts for each ingestion run.
 

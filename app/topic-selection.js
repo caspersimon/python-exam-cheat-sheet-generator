@@ -16,7 +16,13 @@ function usefulNotebookSnippets(card) {
 }
 
 function usefulAIExamples(card) {
-  return (card.sections.ai_examples || []).filter((item) => (item.code || "").trim().length > 0);
+  return (card.sections.ai_examples || [])
+    .filter((item) => (item.code || "").trim().length > 0)
+    .map((item) => ({
+      ...item,
+      subtopic_id: item.subtopic_id || "",
+      subtopic_title: item.subtopic_title || "",
+    }));
 }
 
 function normalizeKeyPointDetails(baseId, details) {
@@ -76,6 +82,8 @@ function keyPointGroups(card) {
       return {
         id,
         text,
+        subtopic_id: String(item.subtopic_id || "").trim(),
+        subtopic_title: String(item.subtopic_title || "").trim(),
         details: normalizeKeyPointDetails(id, item.details || []),
       };
     });
@@ -99,6 +107,8 @@ function buildSourceItems(card) {
       sourceType: "exam",
       priority: 0,
       header: `Exam • Q${item.number || "?"} • ${formatExamLabel(item.exam_label)}`,
+      subtopicId: item.subtopic_id || "",
+      subtopicTitle: item.subtopic_title || "",
       item,
     });
   });
@@ -109,6 +119,8 @@ function buildSourceItems(card) {
       sourceType: "lecture",
       priority: 1,
       header: `Lecture • ${item.topic || "snippet"} • W${item.week || "?"}`,
+      subtopicId: item.subtopic_id || "",
+      subtopicTitle: item.subtopic_title || "",
       item,
     });
   });
@@ -119,6 +131,8 @@ function buildSourceItems(card) {
       sourceType: "notebook",
       priority: 2,
       header: `Notebook • W${item.week || "?"} cell ${item.cell_index || "?"} • ${item.topic || ""}`,
+      subtopicId: item.subtopic_id || "",
+      subtopicTitle: item.subtopic_title || "",
       item,
     });
   });
@@ -151,6 +165,53 @@ function getSourceSplit(card) {
   const recSet = new Set(recommended.map((item) => item.id));
   const additional = allItems.filter((item) => !recSet.has(item.id));
   return { recommended, additional };
+}
+
+function getCardSubtopics(card) {
+  const subtopics = Array.isArray(card?.subtopics) ? card.subtopics : [];
+  return [...subtopics].sort((a, b) => Number(a?.order || 0) - Number(b?.order || 0));
+}
+
+function getSubtopicLookup(card) {
+  const lookup = new Map();
+  getCardSubtopics(card).forEach((subtopic) => {
+    lookup.set(String(subtopic.id || ""), subtopic);
+  });
+  return lookup;
+}
+
+function groupItemsBySubtopic(card, items, getSubtopicId, getSubtopicTitle) {
+  const lookup = getSubtopicLookup(card);
+  const grouped = new Map();
+
+  getCardSubtopics(card).forEach((subtopic) => {
+    grouped.set(String(subtopic.id || ""), {
+      id: String(subtopic.id || ""),
+      title: String(subtopic.title || "Subtopic"),
+      summary: String(subtopic.summary || "").trim(),
+      items: [],
+    });
+  });
+
+  items.forEach((item) => {
+    const explicitId = String(getSubtopicId(item) || "").trim();
+    const explicitTitle = String(getSubtopicTitle(item) || "").trim();
+    const fallbackSubtopic = getCardSubtopics(card)[0] || null;
+    const resolvedId = explicitId || String(fallbackSubtopic?.id || "misc");
+
+    if (!grouped.has(resolvedId)) {
+      grouped.set(resolvedId, {
+        id: resolvedId,
+        title: explicitTitle || lookup.get(resolvedId)?.title || "Subtopic",
+        summary: String(lookup.get(resolvedId)?.summary || "").trim(),
+        items: [],
+      });
+    }
+
+    grouped.get(resolvedId).items.push(item);
+  });
+
+  return [...grouped.values()].filter((group) => group.items.length > 0);
 }
 
 function ensureDraft(card) {
