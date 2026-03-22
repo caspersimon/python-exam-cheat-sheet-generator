@@ -117,6 +117,7 @@ When merging cards manually, curate each section intentionally:
 
 - keep all strong exam-style questions that are distinct and useful.
 - remove duplicates and vague wording.
+- remove internal metadata from student-facing copy (`Exam • ...`, taxonomy labels like `Immutability/names`, etc.); that belongs in source metadata, not visible question text.
 
 #### `sections.key_points_to_remember`
 
@@ -132,6 +133,7 @@ When merging cards manually, curate each section intentionally:
 - include both `correct` and `incorrect`.
 - prefer examples that explain common traps clearly.
 - ensure every example has `title`, `code`, `why`, `kind`.
+- when an example uses `print(...)`, show the resulting output either in `output` or as an inline code comment so the example is still informative when scanned quickly.
 
 #### `sections.recommended_ids`
 

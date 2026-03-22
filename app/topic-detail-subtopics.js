@@ -161,7 +161,7 @@ function normalizeCommonQuestionBullet(rawBullet, idx = 0) {
 }
 
 function renderCommonQuestionItem(item) {
-  const detailParts = [item.detail, item.extra].filter(Boolean);
+  const detailParts = [item.detail].filter(Boolean);
   return `
     <details class="common-question-item">
       <summary>${renderInlineCode(item.summary)}</summary>

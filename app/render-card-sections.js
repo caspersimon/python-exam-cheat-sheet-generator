@@ -388,7 +388,6 @@ function renderCommonQuestionRail(card, draft, items) {
               </label>
               <div class="common-question-card-body">
                 ${item.detail ? `<p>${renderInlineCode(item.detail)}</p>` : ""}
-                ${item.extra ? `<p>${renderInlineCode(item.extra)}</p>` : ""}
                 ${item.table ? renderMiniTable(item.table) : ""}
                 ${item.code ? renderCodeBlock(item.code) : ""}
               </div>

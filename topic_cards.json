@@ -182,9 +182,11 @@
             "topic": "Python Basics",
             "subtopic_id": "w1-python-basics-execution-model",
             "subtopic_title": "Execution Model, Logical Lines, and Comments",
-            "title": "print(_, __, ___)",
+            "title": "Undefined names in `print()` cause `NameError`",
             "source": "#\nprint(_, __, ___)",
-            "outputs": []
+            "outputs": [
+              "NameError: name '_' is not defined"
+            ]
           },
           {
             "id": "cs-de6e934319",
@@ -195,9 +197,11 @@
             "topic": "Python Basics",
             "subtopic_id": "w1-python-basics-execution-model",
             "subtopic_title": "Execution Model, Logical Lines, and Comments",
-            "title": "print('Hello World')",
+            "title": "Basic `print()` call",
             "source": "print('Hello World')",
-            "outputs": []
+            "outputs": [
+              "Hello World"
+            ]
           },
           {
             "id": "cs-267155ddae",
@@ -221,9 +225,11 @@
             "topic": "Python Basics",
             "subtopic_id": "w1-python-basics-execution-model",
             "subtopic_title": "Execution Model, Logical Lines, and Comments",
-            "title": "line_joining",
+            "title": "Line joining with a backslash",
             "source": "a = 'Two or more physical lines can be joined' +\\\n    ' with the help of backward slashes'\nprint(a)",
-            "outputs": []
+            "outputs": [
+              "Two or more physical lines can be joined with the help of backward slashes"
+            ]
           },
           {
             "id": "cs-0e39f1876c",
@@ -234,9 +240,11 @@
             "topic": "Python Basics",
             "subtopic_id": "w1-python-basics-execution-model",
             "subtopic_title": "Execution Model, Logical Lines, and Comments",
-            "title": "line_joining",
+            "title": "Implicit line joining inside brackets",
             "source": "a = ['Two or more physical lines can be joined', \n    ' with the help of backward slashes']\nprint(a)",
-            "outputs": []
+            "outputs": [
+              "['Two or more physical lines can be joined', ' with the help of backward slashes']"
+            ]
           },
           {
             "id": "cs-7cdabbafdd",
@@ -326,10 +334,10 @@
           {
             "id": "ai-example-2",
             "kind": "correct",
-            "title": "print(_, __, ___)",
+            "title": "Undefined names in `print()` cause `NameError`",
             "code": "#\nprint(_, __, ___)",
-            "why": "",
-            "output": "",
+            "why": "Python must evaluate the names before printing them. If the names do not exist, execution stops with a `NameError`.",
+            "output": "NameError: name '_' is not defined",
             "status": "curated",
             "subtopic_id": "w1-python-basics-execution-model",
             "subtopic_title": "Execution Model, Logical Lines, and Comments"
@@ -337,10 +345,10 @@
           {
             "id": "ai-example-3",
             "kind": "correct",
-            "title": "print('Hello World')",
+            "title": "Basic `print()` call",
             "code": "print('Hello World')",
-            "why": "",
-            "output": "",
+            "why": "Use `print(...)` to send a value to the console.",
+            "output": "Hello World",
             "status": "curated",
             "subtopic_id": "w1-python-basics-execution-model",
             "subtopic_title": "Execution Model, Logical Lines, and Comments"
@@ -359,10 +367,10 @@
           {
             "id": "ai-example-5",
             "kind": "correct",
-            "title": "line_joining",
+            "title": "Line joining with a backslash",
             "code": "a = 'Two or more physical lines can be joined' +\\\n    ' with the help of backward slashes'\nprint(a)",
-            "why": "",
-            "output": "",
+            "why": "A backslash joins one logical statement across multiple physical lines.",
+            "output": "Two or more physical lines can be joined with the help of backward slashes",
             "status": "curated",
             "subtopic_id": "w1-python-basics-execution-model",
             "subtopic_title": "Execution Model, Logical Lines, and Comments"
@@ -370,10 +378,10 @@
           {
             "id": "ai-example-6",
             "kind": "correct",
-            "title": "line_joining",
+            "title": "Implicit line joining inside brackets",
             "code": "a = ['Two or more physical lines can be joined', \n    ' with the help of backward slashes']\nprint(a)",
-            "why": "",
-            "output": "",
+            "why": "Inside brackets, Python keeps reading the same expression without needing a backslash.",
+            "output": "['Two or more physical lines can be joined', ' with the help of backward slashes']",
             "status": "curated",
             "subtopic_id": "w1-python-basics-execution-model",
             "subtopic_title": "Execution Model, Logical Lines, and Comments"
@@ -426,7 +434,7 @@
             {
               "id": "aiq-1",
               "summary": "Which of the following statements is correct? I: Two objects can have different values, while having the same type. II: Two objects can have the same value, while having different types.",
-              "detail": "I is correct (e.g. a=1, b=2, both int). II is incorrect — if two objects have the same value they must have the same type.",
+              "detail": "I is correct (for example `a = 1` and `b = 2`, both `int`). II is incorrect — if two objects have the same value, they must also have the same type.",
               "extra": "Objects/types",
               "subtopic_id": "w1-objects-and-names-core",
               "subtopic_title": "Objects, Types, Mutability, Assignment, and Names"
@@ -1085,7 +1093,7 @@
           },
           {
             "id": "kp-5",
-            "text": "Names can consist of letters (upper/lower), digits, and underscores. Names CANNOT start with a digit. Names ARE case-sensitive (name_1 != Name_1). Avoid Python reserved words (e.g., don't name a variable 'sorted', 'list', 'print').",
+            "text": "Names can consist of letters (upper/lower), digits, and underscores. Names CANNOT start with a digit. Names ARE case-sensitive (`name_1 != Name_1`). Avoid Python reserved words (for example, don't name a variable `sorted`, `list`, or `print`).",
             "status": "curated",
             "generator": "lecture-first-build",
             "model": null,
@@ -1260,7 +1268,7 @@
             "subtopic_id": "w1-objects-and-names-core",
             "subtopic_title": "Objects, Types, Mutability, Assignment, and Names",
             "title": "Names / variable naming rules",
-            "explanation": "Names can consist of letters (upper/lower), digits, and underscores. Names CANNOT start with a digit. Names ARE case-sensitive (name_1 != Name_1). Avoid Python reserved words (e.g., don't name a variable 'sorted', 'list', 'print').",
+            "explanation": "Names can consist of letters (upper/lower), digits, and underscores. Names CANNOT start with a digit. Names ARE case-sensitive (`name_1 != Name_1`). Avoid Python reserved words (for example, don't name a variable `sorted`, `list`, or `print`).",
             "code_examples": []
           },
           {
@@ -1965,7 +1973,7 @@
           },
           {
             "id": "kp-3",
-            "text": "x and y: True only if both True. x or y: False only if both False. not x: inverts. NOTE: && and || are Python operators but do something different (bitwise). Precedence: 'not' first, then 'and', then 'or'. Use parentheses to avoid confusion.",
+            "text": "`x and y`: True only if both are True. `x or y`: False only if both are False. `not x` inverts the value. NOTE: `&&` and `||` are not Python boolean operators. Precedence: `not` first, then `and`, then `or`. Use parentheses to avoid confusion.",
             "status": "curated",
             "generator": "lecture-first-build",
             "model": null,
@@ -7700,9 +7708,11 @@
             "topic": "Return Behavior",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples",
-            "title": "return_statement",
-            "source": "def adder(n1, n2):\n    return n1 + n2\na = adder(1,2)\nprint(a)",
-            "outputs": []
+            "title": "Store a returned value, then print it",
+            "source": "def adder(n1, n2):\n    return n1 + n2\n\na = adder(1, 2)\nprint(a)",
+            "outputs": [
+              "3"
+            ]
           },
           {
             "id": "cs-f474298134",
@@ -7713,9 +7723,11 @@
             "topic": "Return Behavior",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples",
-            "title": "return_statement",
-            "source": "def adder(n1, n2):\n    total = n1 + n2\na = adder(1, 2)\nprint(a)",
-            "outputs": []
+            "title": "No `return` means the caller receives `None`",
+            "source": "def adder(n1, n2):\n    total = n1 + n2\n\na = adder(1, 2)\nprint(a)",
+            "outputs": [
+              "None"
+            ]
           },
           {
             "id": "cs-153500c287",
@@ -7726,9 +7738,11 @@
             "topic": "Return Behavior",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples",
-            "title": "return_statement",
-            "source": "def powers(n1):\n    return n1 ** 2, n1 ** 3\na = powers(3)\nprint(a)",
-            "outputs": []
+            "title": "Multiple return values stay grouped as one tuple",
+            "source": "def powers(n1):\n    return n1 ** 2, n1 ** 3\n\na = powers(3)\nprint(a)",
+            "outputs": [
+              "(9, 27)"
+            ]
           },
           {
             "id": "cs-6320394388",
@@ -7739,9 +7753,11 @@
             "topic": "Return Behavior",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples",
-            "title": "return_statement",
-            "source": "def powers(n1):\n    return n1 ** 2, n1 ** 3\npower2, power3 = powers(3)\nprint(power2, power3)",
-            "outputs": []
+            "title": "Unpack multiple return values into separate names",
+            "source": "def powers(n1):\n    return n1 ** 2, n1 ** 3\n\npower2, power3 = powers(3)\nprint(power2, power3)",
+            "outputs": [
+              "9 27"
+            ]
           },
           {
             "id": "cs-4e50861176",
@@ -7859,7 +7875,7 @@
         "key_points_to_remember": [
           {
             "id": "kp-1",
-            "text": "Returns a value to the caller. If you don't capture the return value it's lost. A function leaves no traces — local names are gone after function ends. Common error: using print() instead of return in homework functions.",
+            "text": "Returns a value to the caller. If you don't capture the return value, it's lost. A function leaves no traces — local names are gone after the function ends. Common error: using `print()` instead of `return` in homework functions.",
             "status": "curated",
             "generator": "lecture-first-build",
             "model": null,
@@ -7893,7 +7909,7 @@
           },
           {
             "id": "kp-3",
-            "text": "(1) is NOT a tuple — it's just the integer 1. To create a 1-element tuple: t = (1,) or t = 1,. Neat swap trick: x, y = y, x",
+            "text": "`(1)` is NOT a tuple — it's just the integer `1`. To create a one-element tuple, use `t = (1,)` or `t = 1,`. Neat swap trick: `x, y = y, x`.",
             "status": "curated",
             "generator": "lecture-first-build",
             "model": null,
@@ -7932,8 +7948,8 @@
             "kind": "correct",
             "title": "Returning a tuple (multiple values)",
             "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3  # returns a tuple\npower2, power3 = powers(3)\nprint(power2, power3)  # 9 27",
-            "why": "Returns a value to the caller. If you don't capture the return value it's lost. A function leaves no traces — local names are gone after function ends. Common error: using print() instead of return in homework functions.",
-            "output": "",
+            "why": "Trace the tuple that comes back from `return`; unpacking simply assigns its elements to separate names.",
+            "output": "9 27",
             "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
@@ -7944,7 +7960,7 @@
             "title": "Implicit None return",
             "code": "def adder(n1, n2):\n    if type(n1) == type(n2) == int:\n        total = n1 + n2\n        return total\na = adder('1', 2)  # Returns None (no return hit)\nprint(a)           # None",
             "why": "If a function reaches the end without a return statement, Python returns None automatically. This is bad practice but you must know it. Test with: if a != None: or if a is not None:",
-            "output": "",
+            "output": "None",
             "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
@@ -7955,7 +7971,7 @@
             "title": "1-element tuple gotcha",
             "code": "t1 = (1)\nprint(type(t1) == tuple)  # False\nprint(type(t1) == int)    # True\nt1 = (1,)  # correct 1-element tuple\nt1 = 1,    # also correct\nx, y = y, x  # swap using tuple unpacking",
             "why": "(1) is NOT a tuple — it's just the integer 1. To create a 1-element tuple: t = (1,) or t = 1,. Neat swap trick: x, y = y, x",
-            "output": "",
+            "output": "False\nTrue",
             "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
@@ -7974,10 +7990,10 @@
           {
             "id": "ai-example-5",
             "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def adder(n1, n2):\n    return n1 + n2\na = adder(1,2)\nprint(a)",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
+            "title": "Store a returned value, then print it",
+            "code": "def adder(n1, n2):\n    return n1 + n2\n\na = adder(1, 2)\nprint(a)",
+            "why": "Trace the value that `return` hands back to the caller, then follow where that value is stored and printed.",
+            "output": "3",
             "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
@@ -7985,10 +8001,10 @@
           {
             "id": "ai-example-6",
             "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def adder(n1, n2):\n    total = n1 + n2\na = adder(1, 2)\nprint(a)",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
+            "title": "No `return` means the caller receives `None`",
+            "code": "def adder(n1, n2):\n    total = n1 + n2\n\na = adder(1, 2)\nprint(a)",
+            "why": "Computing `total` is not enough; without `return total`, the function finishes and hands back `None`.",
+            "output": "None",
             "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
@@ -7996,10 +8012,10 @@
           {
             "id": "ai-example-7",
             "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3\na = powers(3)\nprint(a)",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
+            "title": "Multiple return values stay grouped as one tuple",
+            "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3\n\na = powers(3)\nprint(a)",
+            "why": "A function can return multiple values, but the caller receives them as a single tuple unless it unpacks them.",
+            "output": "(9, 27)",
             "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
@@ -8007,10 +8023,10 @@
           {
             "id": "ai-example-8",
             "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3\npower2, power3 = powers(3)\nprint(power2, power3)",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
+            "title": "Unpack multiple return values into separate names",
+            "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3\n\npower2, power3 = powers(3)\nprint(power2, power3)",
+            "why": "Unpacking splits the returned tuple into separate variables before the values are printed.",
+            "output": "9 27",
             "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
@@ -9005,7 +9021,7 @@
             {
               "id": "aiq-4",
               "summary": "You need to write a function called print_info which takes two required arguments called name and age, and a flexible number of keyword",
-              "detail": "Check whether the method mutates the list in place and what the list looks like after each call.",
+              "detail": "Keep `name` and `age` as required parameters, and use `**kwargs` to collect the extra named arguments into a dictionary.",
               "extra": "Exam • midterm_2023 • Q10",
               "subtopic_id": "w3-arguments-core",
               "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps",
@@ -9148,10 +9164,10 @@
           {
             "id": "ai-example-4",
             "kind": "correct",
-            "title": "Function return value and trace",
+            "title": "`**kwargs` still returns one computed value",
             "code": "def calc(**kwargs):\n    return kwargs['first'] + 2*kwargs['second'] + 3*kwargs['third']\nprint(calc(third=4, second=2, first=3))",
             "why": "Arguments can be passed by name (keyword). **kwargs collects undefined keyword arguments into a dict. Order in function definition: positional, *args, keyword-with-defaults, **kwargs.",
-            "output": "",
+            "output": "19",
             "status": "curated",
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
@@ -9162,7 +9178,7 @@
             "title": "Default value",
             "code": "def multiplier(first, second=2):\n    return first * second\nprint(multiplier(3))       # 6 (uses default second=2)\nprint(multiplier(3, 3))    # 9\nprint(multiplier(2, second=3))  # 6",
             "why": "Default values are part of the function HEADER (not the call). When argument is omitted, the default is used. Keyword args in a call use =. CRITICAL: mutable defaults are evaluated ONCE at def time — never use mutable defaults; use None instead.",
-            "output": "",
+            "output": "6\n9\n6",
             "status": "curated",
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
@@ -9173,7 +9189,7 @@
             "title": "Mutable default BUG",
             "code": "def main(addition, l1=[]):\n    l1.append(addition)\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [2, 3] ← BUG: l1 persists!",
             "why": "Default values are part of the function HEADER (not the call). When argument is omitted, the default is used. Keyword args in a call use =. CRITICAL: mutable defaults are evaluated ONCE at def time — never use mutable defaults; use None instead.",
-            "output": "",
+            "output": "[2]\n[2, 3]",
             "status": "curated",
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
@@ -9181,10 +9197,10 @@
           {
             "id": "ai-example-7",
             "kind": "correct",
-            "title": "Function return value and trace",
+            "title": "Simple return value from positional arguments",
             "code": "def adder(n1, n2):\n    return n1 + n2\nprint(adder(1, 2))",
             "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
+            "output": "3",
             "status": "curated",
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
@@ -9192,10 +9208,10 @@
           {
             "id": "ai-example-8",
             "kind": "correct",
-            "title": "Function return value and trace",
+            "title": "Default argument changes the returned result",
             "code": "def multiplier(first, second=2):\n    return first * second\nprint(multiplier(3))",
             "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
+            "output": "6",
             "status": "curated",
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
@@ -10275,8 +10291,8 @@
           "items": [
             {
               "id": "aiq-1",
-              "summary": "Given s1 = 'abcd', which code fragment correctly updates s1 to 'Abcd'?",
-              "detail": "Strings are immutable. s1.capitalize() returns a new string, so you must assign that result back to the name s1.",
+              "summary": "Given `s1 = 'abcd'`, which code fragment correctly updates `s1` to `Abcd`?",
+              "detail": "Strings are immutable. `s1.capitalize()` returns a new string, so you must assign that result back to the name `s1`.",
               "extra": "String Methods",
               "subtopic_id": "w4-string-fundamentals-core",
               "subtopic_title": "Quotes, Escape Characters, and Immutability"
@@ -10366,7 +10382,7 @@
                 "id": "kp-2-d1",
                 "kind": "example",
                 "title": "Newlines and tabs",
-                "code": "print('Line 1\\nLine 2\\tTabbed')\nprint(\"It\\'s a string\")"
+                "code": "print(\"Line 1\\nLine 2\\tTabbed\")\nprint(\"It's a string\")"
               }
             ]
           },
@@ -10397,9 +10413,9 @@
             "id": "ai-example-2",
             "kind": "correct",
             "title": "Newlines and tabs",
-            "code": "print('Line 1\\nLine 2\\tTabbed')\nprint(\"It\\'s a string\")",
+            "code": "print(\"Line 1\\nLine 2\\tTabbed\")\nprint(\"It's a string\")",
             "why": "Escape sequences: `\\n` newline, `\\t` tab, and `\\'` or `\\\"` for literal quotes.",
-            "output": "",
+            "output": "Line 1\nLine 2\tTabbed\nIt's a string",
             "status": "curated",
             "subtopic_id": "w4-string-fundamentals-core",
             "subtopic_title": "Quotes, Escape Characters, and Immutability"

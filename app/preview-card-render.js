@@ -249,7 +249,6 @@ function renderPreviewCommonQuestion(previewCardId, sourceCard, selection, item)
       ${renderPreviewItemActions(previewCardId, sourceCard.id, "aiQuestion", item.id, "aiQuestions")}
       <p class="preview-kp-main"><strong>${renderInlineCode(effective.summary)}</strong></p>
       ${effective.detail ? `<p>${renderInlineCode(effective.detail)}</p>` : ""}
-      ${effective.extra ? `<p>${renderInlineCode(effective.extra)}</p>` : ""}
       ${effective.table ? renderPreviewTable(effective.table) : ""}
       ${effective.code ? renderCodeBlock(effective.code) : ""}
     </div>
