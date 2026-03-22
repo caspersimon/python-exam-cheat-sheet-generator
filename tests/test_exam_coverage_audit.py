@@ -1,6 +1,7 @@
+from pathlib import Path
 import unittest
 
-from scripts.exam_coverage_audit import EXAM_SOURCES, iter_selectable_items, unique_exam_sources
+from scripts.exam_coverage_audit import EXAM_SOURCES, ROOT, iter_selectable_items, portable_path, unique_exam_sources
 
 
 class ExamCoverageAuditTests(unittest.TestCase):
@@ -71,6 +72,16 @@ class ExamCoverageAuditTests(unittest.TestCase):
         self.assertEqual(len(duplicate_exam_ids), 1)
         self.assertEqual(len(unique_exam_ids), len(EXAM_SOURCES) - 1)
         self.assertFalse(duplicate_exam_ids & unique_exam_ids)
+
+    def test_portable_path_strips_machine_specific_prefixes(self) -> None:
+        repo_file = ROOT / "topic_cards.json"
+        sibling_file = ROOT.parent / "course_files_after_midterm" / "Sample Final plus answers.pdf"
+
+        self.assertEqual(portable_path(repo_file), "topic_cards.json")
+        self.assertEqual(
+            portable_path(sibling_file),
+            Path("..", "course_files_after_midterm", "Sample Final plus answers.pdf").as_posix(),
+        )
 
 
 if __name__ == "__main__":

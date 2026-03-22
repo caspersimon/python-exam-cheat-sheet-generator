@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -324,6 +325,10 @@ def unique_exam_sources() -> list[dict]:
     return [exam for exam in EXAM_SOURCES if not exam.get("duplicate_of")]
 
 
+def portable_path(path: Path, *, relative_to: Path = ROOT) -> str:
+    return Path(os.path.relpath(path, relative_to)).as_posix()
+
+
 def render_exam_pages(exam: dict, output_dir: Path, dpi: int, overwrite: bool) -> list[Path]:
     exam_dir = output_dir / exam["exam_id"]
     exam_dir.mkdir(parents=True, exist_ok=True)
@@ -345,12 +350,12 @@ def write_prepare_outputs(tmp_dir: Path, dpi: int, overwrite: bool) -> None:
     items = iter_selectable_items(cards)
     page_root = tmp_dir / "pages"
     manifest = {
-        "topic_cards_path": str(TOPIC_CARDS_PATH),
-        "selectable_items_path": str(tmp_dir / "selectable_items.json"),
+        "topic_cards_path": portable_path(TOPIC_CARDS_PATH),
+        "selectable_items_path": portable_path(tmp_dir / "selectable_items.json"),
         "current_repo_cards": len(cards),
         "unique_exam_count": len(unique_exam_sources()),
         "excluded_duplicates": [
-            {"exam_id": exam["exam_id"], "duplicate_of": exam["duplicate_of"], "pdf_path": str(exam["pdf_path"])}
+            {"exam_id": exam["exam_id"], "duplicate_of": exam["duplicate_of"], "pdf_path": portable_path(exam["pdf_path"])}
             for exam in EXAM_SOURCES
             if exam.get("duplicate_of")
         ],
@@ -362,10 +367,10 @@ def write_prepare_outputs(tmp_dir: Path, dpi: int, overwrite: bool) -> None:
             {
                 "exam_id": exam["exam_id"],
                 "title": exam["title"],
-                "pdf_path": str(exam["pdf_path"]),
+                "pdf_path": portable_path(exam["pdf_path"]),
                 "expected_questions": exam["expected_questions"],
                 "page_count": len(pages),
-                "page_image_paths": [str(path) for path in pages],
+                "page_image_paths": [portable_path(path) for path in pages],
             }
         )
     (tmp_dir / "selectable_items.json").write_text(json.dumps(items, indent=2), encoding="utf-8")
