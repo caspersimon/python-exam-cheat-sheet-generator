@@ -118,9 +118,17 @@ function hydratePersistedState() {
   const cardIds = new Set(state.cards.map((card) => card.id));
 
   if (raw.layout && typeof raw.layout === "object") {
-    const allowedFonts = new Set(["'Space Grotesk', sans-serif", "'DM Sans', sans-serif", "'Source Serif 4', serif"]);
-    if (allowedFonts.has(raw.layout.fontFamily)) {
-      state.layout.fontFamily = raw.layout.fontFamily;
+    const fontAliases = new Map([
+      ["'Space Grotesk', sans-serif", "'IBM Plex Sans', sans-serif"],
+      ["'DM Sans', sans-serif", "'IBM Plex Sans', sans-serif"],
+      ["'Inter', sans-serif", "'IBM Plex Sans', sans-serif"],
+      ["'IBM Plex Sans', sans-serif", "'IBM Plex Sans', sans-serif"],
+      ["'Newsreader', serif", "'Newsreader', serif"],
+      ["'Source Serif 4', serif", "'Source Serif 4', serif"],
+    ]);
+    const hydratedFont = fontAliases.get(raw.layout.fontFamily);
+    if (hydratedFont) {
+      state.layout.fontFamily = hydratedFont;
     }
     if (Number.isFinite(raw.layout.fontSize)) {
       state.layout.fontSize = clamp(Number(raw.layout.fontSize), 7, 14);

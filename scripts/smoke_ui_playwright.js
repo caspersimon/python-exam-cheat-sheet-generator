@@ -45,7 +45,7 @@ async function run() {
     );
 
     const title = await page.title();
-    if (!title.includes("Python Cheat Sheet Builder")) {
+    if (!title.includes("Python Exam Cheat Sheet Builder")) {
       throw new Error(`Unexpected page title: ${title}`);
     }
 

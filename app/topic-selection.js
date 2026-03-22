@@ -12,7 +12,12 @@ function usefulLectureSnippets(card) {
 }
 
 function usefulNotebookSnippets(card) {
-  return (card.sections.notebook_snippets || []).filter((snippet) => !isLowValueSnippet(snippet.source || ""));
+  return (card.sections.notebook_snippets || []).filter((snippet) => {
+    const source = snippet.source || "";
+    const hasPrintCall = /\bprint\s*\(/.test(source);
+    const hasOutputs = (snippet.outputs || []).length > 0;
+    return !isLowValueSnippet(source) && (!hasPrintCall || hasOutputs);
+  });
 }
 
 function usefulAIExamples(card) {
@@ -219,6 +224,8 @@ function ensureDraft(card) {
     return state.drafts[card.id];
   }
 
+  const commonQuestionSection = card.sections.ai_common_questions || {};
+  const commonQuestionCount = (commonQuestionSection.items || []).length || (commonQuestionSection.bullets || []).length;
   const split = getSourceSplit(card);
   const recommendedIds = split.recommended.map((item) => item.id);
   const additionalIds = split.additional.map((item) => item.id);
@@ -231,7 +238,7 @@ function ensureDraft(card) {
     },
     sections: {
       aiSummary: Boolean(card.sections.ai_summary?.content),
-      aiQuestions: (card.sections.ai_common_questions?.bullets || []).length > 0,
+      aiQuestions: commonQuestionCount > 0,
       keyPoints: keyPointIds.length > 0,
       aiExamples: aiExampleIds.length > 0,
       recommended: recommendedIds.length > 0,

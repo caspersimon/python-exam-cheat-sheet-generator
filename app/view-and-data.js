@@ -39,6 +39,7 @@ function setView(viewName) {
   state.view = viewName;
   refs.swipeView.classList.toggle("active", viewName === "swipe");
   refs.previewView.classList.toggle("active", viewName === "preview");
+  syncViewButtons();
   closeDrawers();
   if (viewName === "preview") {
     closeTopicSidebar();
@@ -49,6 +50,13 @@ function setView(viewName) {
 function renderAll() {
   renderSwipe();
   renderPreview();
+}
+
+function syncViewButtons() {
+  refs.goToSwipeBtn?.classList.toggle("is-active", state.view === "swipe");
+  refs.goToPreviewBtn?.classList.toggle("is-active", state.view === "preview");
+  refs.swipeHeaderActions?.classList.toggle("hidden", state.view !== "swipe");
+  refs.previewHeaderActions?.classList.toggle("hidden", state.view !== "preview");
 }
 
 function getFilteredDeck() {

@@ -3,20 +3,17 @@ function renderSwipe() {
   const filteredWeekBundles = getFilteredWeekBundles();
   const activeContext = ensureExplorerNavigation(filteredWeekBundles);
   const selectedTotals = getSelectedItemTotals();
-
   refs.acceptedCount.textContent = String(selectedTotals.topics);
   refs.rejectedCount.textContent = String(selectedTotals.items);
   refs.remainingCount.textContent = String(filteredDeck.length);
-
-  refs.progressText.textContent = `${selectedTotals.topics} topics in preview • ${selectedTotals.items} items selected`;
-
+  const visibleExamTopics = filteredDeck.filter((card) => (card.exam_stats?.total_hits || 0) > 0).length;
+  refs.progressText.textContent = `${selectedTotals.topics} topics staged • ${selectedTotals.items} items selected • ${visibleExamTopics} exam-linked topics visible`;
   refs.acceptedTopicsList.innerHTML = "";
   getSelectedPreviewEntries().slice(0, 40).forEach((entry) => {
     const li = document.createElement("li");
     li.textContent = humanizeTopic(entry.card.topic);
     refs.acceptedTopicsList.appendChild(li);
   });
-
   if (!activeContext) {
     refs.topicSidebar.innerHTML = "";
     refs.cardHost.innerHTML = `<div class="empty-state">
@@ -27,11 +24,9 @@ function renderSwipe() {
     refs.topicSidebarBackdrop?.classList.add("hidden");
     return;
   }
-
   const { bundle, group, card } = activeContext;
   refs.topicSidebar.innerHTML = renderTopicSidebar(filteredWeekBundles, card.id);
   refs.cardHost.innerHTML = renderTopicDetail(card, bundle, group);
-
   refs.selectionShell?.classList.toggle("topic-sidebar-open", Boolean(state.navigation.mobileSidebarOpen));
   refs.topicSidebarBackdrop?.classList.toggle("hidden", !state.navigation.mobileSidebarOpen);
 }
@@ -40,8 +35,8 @@ function renderTopicSidebar(bundles, activeTopicId) {
   return `
     <div class="topic-sidebar-head">
       <div>
-        <h3>Weeks & Topics</h3>
-        <p class="muted">Browse by week and open a topic.</p>
+        <h3>Course Map</h3>
+        <p class="muted">Open a week, scan the topic list, and keep only what belongs on the printed sheet.</p>
       </div>
       <button class="ghost-btn icon-btn topic-sidebar-close mobile-only-btn" type="button" data-role="close-topic-sidebar" aria-label="Close topics">
         <span aria-hidden="true">&times;</span>
@@ -54,12 +49,10 @@ function renderTopicSidebar(bundles, activeTopicId) {
     </div>
   `;
 }
-
 function renderWeekSidebarSection(bundle, activeTopicId) {
   const expanded = Boolean(state.navigation.expandedWeeks[String(bundle.week)]);
   const summary = getWeekSelectionSummary(bundle);
   const topicCountLabel = `${bundle.cards.length} topic${bundle.cards.length === 1 ? "" : "s"}`;
-
   return `
     <section class="topic-week-group" data-week="${bundle.week}">
       <button
@@ -84,7 +77,6 @@ function renderWeekSidebarSection(bundle, activeTopicId) {
     </section>
   `;
 }
-
 function renderSidebarCourseGroup(group, week, activeTopicId) {
   const groupSelection = getWeekSelectionSummary(group);
   const countLabel = `${group.cards.length} card${group.cards.length === 1 ? "" : "s"}`;
@@ -92,7 +84,6 @@ function renderSidebarCourseGroup(group, week, activeTopicId) {
   if (groupSelection.topics > 0) {
     metaBits.push(`${groupSelection.topics} selected`);
   }
-
   if (group.isDefault) {
     return `
       <div class="topic-course-group topic-course-group-default" data-course-group="${escapeHtml(group.id)}">
@@ -102,7 +93,6 @@ function renderSidebarCourseGroup(group, week, activeTopicId) {
       </div>
     `;
   }
-
   return `
     <div class="topic-course-group" data-course-group="${escapeHtml(group.id)}">
       <div class="topic-course-group-head">
@@ -117,7 +107,6 @@ function renderSidebarCourseGroup(group, week, activeTopicId) {
     </div>
   `;
 }
-
 function renderSidebarTopicButton(card, week, activeTopicId) {
   const counts = getSelectionCounts(card);
   const isActive = activeTopicId === card.id;
@@ -128,7 +117,6 @@ function renderSidebarTopicButton(card, week, activeTopicId) {
   if (counts.total > 0) {
     badges.push(`${counts.total} selected`);
   }
-
   return `
     <button
       class="topic-nav-item ${isActive ? "is-active" : ""}"
@@ -142,7 +130,6 @@ function renderSidebarTopicButton(card, week, activeTopicId) {
     </button>
   `;
 }
-
 function renderTopicDetail(card, bundle, group) {
   const draft = ensureDraft(card);
   const split = getSourceSplit(card);
@@ -151,11 +138,24 @@ function renderTopicDetail(card, bundle, group) {
   const subtopics = getCardSubtopics(card);
   const selectedCounts = getSelectionCounts(card, draft);
   const weekLabel = Array.isArray(card.weeks) && card.weeks.length ? card.weeks.map((week) => `W${week}`).join(" · ") : `W${bundle.week}`;
-  const commonQuestions = card.sections.ai_common_questions?.bullets || [];
+  const commonQuestions = getCommonQuestionItems(card);
   const examHitsLabel = card.exam_stats.total_hits > 0 ? `${card.exam_stats.total_hits} exam hits` : "Course material only";
-  const selectedLabel = `${selectedCounts.total} selected`;
   const groupTitle = group?.isDefault ? "Lecture-aligned topic" : group?.title || "Lecture-aligned topic";
-
+  const contextPanels = [
+    renderSubtopicOverview(subtopics),
+    commonQuestions.length
+      ? `
+          <section class="topic-context-panel topic-question-panel">
+            <h4>Common exam questions</h4>
+            <div class="common-question-list">
+              ${commonQuestions.map((question) => renderCommonQuestionItem(question)).join("")}
+            </div>
+          </section>
+        `
+      : "",
+  ]
+    .filter(Boolean)
+    .join("");
   return `
     <article class="topic-detail-card" data-card-id="${escapeHtml(card.id)}">
       <header class="topic-detail-header">
@@ -167,33 +167,35 @@ function renderTopicDetail(card, bundle, group) {
           <p class="topic-detail-kicker">${escapeHtml(`Source weeks ${weekLabel} · ${examHitsLabel}`)}</p>
           <div class="topic-detail-title-row">
             <h3>${escapeHtml(humanizeTopic(card.topic))}</h3>
-            <div class="topic-detail-summary-stats">
-              <span>${escapeHtml(selectedLabel)}</span>
-              <span>${escapeHtml(`${card.exam_stats.coverage_count || 0} sources`)}</span>
-            </div>
           </div>
           ${card.sections.ai_summary?.content ? `<p class="topic-detail-summary">${renderInlineCode(normalizeTruncatedDisplayText(card.sections.ai_summary.content))}</p>` : ""}
         </div>
-      </header>
-
-      ${renderSubtopicOverview(subtopics)}
-
-      ${commonQuestions.length
-        ? `
-          <section class="topic-context-panel">
-            <h4>Common questions</h4>
-            <div class="common-question-list">
-              ${commonQuestions.map((question) => `<p>${renderInlineCode(question)}</p>`).join("")}
-            </div>
+        <aside class="topic-detail-aside">
+          <div class="topic-stat-list" aria-label="Topic stats">
+            <article class="topic-stat-card">
+              <span>Exam Hits</span>
+              <strong>${escapeHtml(String(card.exam_stats.total_hits || 0))}</strong>
+            </article>
+            <article class="topic-stat-card">
+              <span>Coverage</span>
+              <strong>${escapeHtml(String(card.exam_stats.coverage_count || 0))}</strong>
+            </article>
+            <article class="topic-stat-card">
+              <span>Selected</span>
+              <strong>${escapeHtml(String(selectedCounts.total))}</strong>
+            </article>
+          </div>
+          <section class="topic-context-panel topic-focus-panel">
+            <h4>Selection guidance</h4>
+            <p>Favor exam-linked facts first, then keep only the examples and snippets you can still read quickly under pressure.</p>
           </section>
-        `
-        : ""}
-
+        </aside>
+      </header>
+      ${contextPanels ? `<div class="topic-detail-context-grid">${contextPanels}</div>` : ""}
       ${renderKeyPointRail(card, draft, keyPoints)}
       ${renderExampleRail(card, draft, aiExamples)}
       ${renderSourceRail(card, draft, "recommended", "Recommended Snippets", split.recommended)}
       ${renderSourceRail(card, draft, "additional", "Additional Snippets", split.additional)}
-
       <footer class="topic-detail-footer">
         <button type="button" class="text-link-btn" data-role="reset-splash">Reset intro</button>
         <button type="button" class="text-link-btn danger-link-btn" data-role="reset-progress">Reset progress</button>
@@ -201,7 +203,6 @@ function renderTopicDetail(card, bundle, group) {
     </article>
   `;
 }
-
 function renderSectionHeaderBar(card, draft, sectionKey, title, countText, description = "") {
   const enabled = Boolean(draft.sections[sectionKey]);
   return `
@@ -244,13 +245,11 @@ function renderSectionHeaderBar(card, draft, sectionKey, title, countText, descr
     </div>
   `;
 }
-
 function renderKeyPointRail(card, draft, groups) {
   const selectedSet = new Set(draft.selected.keyPoints || []);
   const selectableIds = new Set(keyPointSelectableIds(card));
   const selectedCount = [...selectedSet].filter((id) => selectableIds.has(id)).length;
   const grouped = groupItemsBySubtopic(card, groups, (item) => item.subtopic_id, (item) => item.subtopic_title);
-
   const body = groups.length
     ? grouped
         .map((subtopicGroup) => {
@@ -280,7 +279,6 @@ function renderKeyPointRail(card, draft, groups) {
                 })
                 .join("")
             : "";
-
           return `
             <article class="rail-card">
               <label class="item-select">
@@ -301,20 +299,24 @@ function renderKeyPointRail(card, draft, groups) {
           `;
             })
             .join("");
-
           return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
         })
         .join("")
     : renderEmptyRailCopy("No key points are available for this topic.");
-
   return `
     <section class="topic-section-block ${draft.sections.keyPoints ? "" : "is-dimmed"}" data-section-block="keyPoints">
-      ${renderSectionHeaderBar(card, draft, "keyPoints", "Key Points", `${selectedCount}/${selectableIds.size} selected`)}
+      ${renderSectionHeaderBar(
+        card,
+        draft,
+        "keyPoints",
+        "Key Points",
+        `${selectedCount}/${selectableIds.size} selected`,
+        "Keep the facts and optional detail blocks that truly earn space on the sheet."
+      )}
       <div class="topic-rail">${body}</div>
     </section>
   `;
 }
-
 function renderExampleRail(card, draft, items) {
   const selectedCount = items.filter((item) => draft.selected.aiExamples.includes(item.id)).length;
   const grouped = groupItemsBySubtopic(card, items, (item) => item.subtopic_id, (item) => item.subtopic_title);
@@ -346,20 +348,24 @@ function renderExampleRail(card, draft, items) {
           `;
             })
             .join("");
-
           return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
         })
         .join("")
     : renderEmptyRailCopy("No code examples are available for this topic.");
-
   return `
     <section class="topic-section-block ${draft.sections.aiExamples ? "" : "is-dimmed"}" data-section-block="aiExamples">
-      ${renderSectionHeaderBar(card, draft, "aiExamples", "Code Examples", `${selectedCount}/${items.length} selected`)}
+      ${renderSectionHeaderBar(
+        card,
+        draft,
+        "aiExamples",
+        "Code Examples",
+        `${selectedCount}/${items.length} selected`,
+        "Choose the patterns you want to be able to reproduce from memory."
+      )}
       <div class="topic-rail">${body}</div>
     </section>
   `;
 }
-
 function renderSourceRail(card, draft, sectionKey, title, items) {
   const selectedIds = draft.selected[sectionKey] || [];
   const selectedCount = items.filter((item) => selectedIds.includes(item.id)).length;
@@ -390,24 +396,29 @@ function renderSourceRail(card, draft, sectionKey, title, items) {
           `;
             })
             .join("");
-
           return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
         })
         .join("")
     : renderEmptyRailCopy("No snippets are available in this section.");
-
   return `
     <section class="topic-section-block ${draft.sections[sectionKey] ? "" : "is-dimmed"}" data-section-block="${escapeHtml(sectionKey)}">
-      ${renderSectionHeaderBar(card, draft, sectionKey, title, `${selectedCount}/${items.length} selected`)}
+      ${renderSectionHeaderBar(
+        card,
+        draft,
+        sectionKey,
+        title,
+        `${selectedCount}/${items.length} selected`,
+        sectionKey === "recommended"
+          ? "High-value lecture and exam snippets that usually deserve first priority."
+          : "Extra supporting snippets for edge cases, comparisons, and reminders."
+      )}
       <div class="topic-rail">${body}</div>
     </section>
   `;
 }
-
 function renderEmptyRailCopy(text) {
   return `<div class="rail-empty">${escapeHtml(text)}</div>`;
 }
-
 function renderMiniTable(table) {
   const headHtml = table.headers.map((header) => `<th>${renderInlineCode(header)}</th>`).join("");
   const rowsHtml = table.rows
@@ -422,52 +433,45 @@ function renderMiniTable(table) {
     </div>
   `;
 }
-
 function renderSourceItemBody(sourceItem) {
   const item = sourceItem.item;
   if (sourceItem.sourceType === "exam") {
     const parsed = splitPromptAndCode(item.question || "");
     const prompt = parsed.prompt || item.question || "";
-    const explanation = truncateText(item.explanation || "", 240);
     const codeContext = parsed.code || item.code_context || "";
     return `
-      ${prompt ? `<p class="question-text">${renderInlineCode(truncateText(prompt, 220))}</p>` : ""}
-      ${codeContext ? `<pre class="question-code">${escapeHtml(truncateCode(codeContext, 8))}</pre>` : ""}
+      ${prompt ? `<p class="question-text">${renderInlineCode(prompt)}</p>` : ""}
+      ${codeContext ? `<pre class="question-code">${escapeHtml(normalizeNewlines(codeContext || "").trim())}</pre>` : ""}
       ${renderOptions(item.options)}
       ${item.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(item.correct))}</p>` : ""}
-      ${explanation ? `<p class="source-summary">${renderInlineCode(explanation)}</p>` : ""}
+      ${item.explanation ? `<p class="source-summary">${renderInlineCode(item.explanation)}</p>` : ""}
     `;
   }
-
   if (sourceItem.sourceType === "lecture") {
     const codeExamples = (item.code_examples || [])
-      .slice(0, 2)
       .map(
         (example) => `
-          <p><strong>${renderInlineCode(truncateText(example.description || "Code", 72))}</strong></p>
-          <pre>${escapeHtml(truncateCode(example.code || "", 6))}</pre>
+          <p><strong>${renderInlineCode(example.description || "Code")}</strong></p>
+          <pre>${escapeHtml(normalizeNewlines(example.code || "").trim())}</pre>
         `
       )
       .join("");
-
     const lectureQuestion = item.question
       ? `
-        <p class="question-text"><strong>Lecture question:</strong> ${renderInlineCode(truncateText(splitPromptAndCode(item.question).prompt || item.question, 180))}</p>
+        <p class="question-text"><strong>Lecture question:</strong> ${renderInlineCode(splitPromptAndCode(item.question).prompt || item.question)}</p>
         ${renderOptions(item.options)}
         ${item.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(item.correct))}</p>` : ""}
       `
       : "";
-
     return `
-      ${item.explanation ? `<p class="source-summary">${renderInlineCode(truncateText(item.explanation, 260))}</p>` : ""}
+      ${item.explanation ? `<p class="source-summary">${renderInlineCode(item.explanation)}</p>` : ""}
       ${lectureQuestion}
       ${codeExamples}
     `;
   }
-
   const outText = (item.outputs || []).join("\\n");
   return `
-    ${item.source ? `<pre>${escapeHtml(truncateCode(item.source, 10))}</pre>` : ""}
-    ${outText ? `<p><strong>Output:</strong></p><pre>${escapeHtml(truncateCode(outText, 6))}</pre>` : ""}
+    ${item.source ? `<pre>${escapeHtml(normalizeNewlines(item.source || "").trim())}</pre>` : ""}
+    ${outText ? `<p><strong>Output:</strong></p><pre>${escapeHtml(normalizeNewlines(outText).trim())}</pre>` : ""}
   `;
 }

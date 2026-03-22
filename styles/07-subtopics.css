@@ -1,14 +1,19 @@
+.subtopic-overview-panel h4 {
+  margin-bottom: 10px;
+}
+
 .subtopic-overview-list {
   display: grid;
-  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
 }
 
 .subtopic-overview-item {
   display: grid;
-  gap: 4px;
-  padding: 10px 12px;
-  background: #ffffff;
-  border: 1px solid var(--line);
+  gap: 5px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid rgba(82, 74, 57, 0.08);
   border-radius: var(--radius-md);
 }
 
@@ -39,7 +44,7 @@
 
 .rail-subtopic-head h5 {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   line-height: 1.25;
   color: var(--ink-0);
 }

@@ -39,7 +39,7 @@ const state = {
   previewCards: {},
   previewZCounter: 1,
   layout: {
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'IBM Plex Sans', sans-serif",
     fontSize: 9.5,
     lineHeight: 1.1,
     letterSpacing: 0,
@@ -61,6 +61,8 @@ const refs = {
   selectionShell: document.getElementById("selectionShell"),
   topicSidebar: document.getElementById("topicSidebar"),
   cardHost: document.getElementById("cardHost"),
+  swipeHeaderActions: document.getElementById("swipeHeaderActions"),
+  previewHeaderActions: document.getElementById("previewHeaderActions"),
 
   openTopicSidebarBtn: document.getElementById("openTopicSidebarBtn"),
   openFiltersBtn: document.getElementById("openFiltersBtn"),
@@ -154,6 +156,7 @@ const previewPointerState = {
 
 async function init() {
   bindEvents();
+  syncViewButtons();
   renderWeekFilterControls();
   applyLayoutVariables();
   setLoadingState();
