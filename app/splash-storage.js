@@ -77,7 +77,7 @@ function resetAppProgress() {
   lastPersistedPayload = "";
 
   state.filters.search = "";
-  state.filters.onlyExam = true;
+  state.filters.onlyExam = false;
   state.filters.minHits = 0;
   state.filters.weeks = new Set(CANONICAL_WEEK_ORDER);
 
@@ -88,7 +88,7 @@ function resetAppProgress() {
   state.previewCards = {};
   state.previewZCounter = 1;
   state.layout = {
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
     fontSize: 9.5,
     lineHeight: 1.1,
     letterSpacing: 0,
@@ -119,12 +119,13 @@ function hydratePersistedState() {
 
   if (raw.layout && typeof raw.layout === "object") {
     const fontAliases = new Map([
-      ["'Space Grotesk', sans-serif", "'IBM Plex Sans', sans-serif"],
-      ["'DM Sans', sans-serif", "'IBM Plex Sans', sans-serif"],
-      ["'Inter', sans-serif", "'IBM Plex Sans', sans-serif"],
-      ["'IBM Plex Sans', sans-serif", "'IBM Plex Sans', sans-serif"],
-      ["'Newsreader', serif", "'Newsreader', serif"],
-      ["'Source Serif 4', serif", "'Source Serif 4', serif"],
+      ["'Space Grotesk', sans-serif", "'Manrope', sans-serif"],
+      ["'DM Sans', sans-serif", "'Manrope', sans-serif"],
+      ["'Inter', sans-serif", "'Manrope', sans-serif"],
+      ["'IBM Plex Sans', sans-serif", "'Manrope', sans-serif"],
+      ["'Manrope', sans-serif", "'Manrope', sans-serif"],
+      ["'Newsreader', serif", "'Manrope', sans-serif"],
+      ["'Source Serif 4', serif", "'Manrope', sans-serif"],
     ]);
     const hydratedFont = fontAliases.get(raw.layout.fontFamily);
     if (hydratedFont) {
@@ -229,6 +230,7 @@ function hydratePersistedState() {
         height: Number(layout.height) || 220,
         z: Number(layout.z) || 1,
         locked: Boolean(layout.locked),
+        title: typeof layout.title === "string" ? layout.title.trim() : "",
       };
     });
     state.previewCards = hydratedLayouts;

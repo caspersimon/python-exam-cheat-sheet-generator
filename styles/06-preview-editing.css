@@ -6,9 +6,9 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-4px);
+  opacity: 0.94;
+  pointer-events: auto;
+  transform: translateY(0);
   transition: opacity 120ms ease, transform 140ms ease;
 }
 
@@ -92,8 +92,6 @@
 .preview-card.resizing .preview-card-head-actions,
 .preview-card.is-locked .preview-card-head-actions {
   opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
 }
 
 .preview-head-btn:focus-visible,

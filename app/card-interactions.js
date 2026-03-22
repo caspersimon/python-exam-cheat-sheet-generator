@@ -181,6 +181,9 @@ function clearSectionItems(cardId, section) {
 }
 
 function getSectionSelectableIds(card, section) {
+  if (section === "aiQuestions") {
+    return commonQuestionSelectableIds(card);
+  }
   if (section === "keyPoints") {
     return keyPointSelectableIds(card);
   }
@@ -234,6 +237,7 @@ function closeOpenInfoPopovers() {
 
 function sectionToSelectionKey(section) {
   const map = {
+    aiQuestions: "aiQuestions",
     aiExamples: "aiExamples",
     keyPoints: "keyPoints",
     recommended: "recommended",

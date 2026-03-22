@@ -6,10 +6,9 @@
   align-items: start;
   justify-content: space-between;
   gap: 12px;
-  margin: -14px -12px 12px;
-  padding: 14px 12px 10px;
-  background: linear-gradient(180deg, rgba(235, 229, 217, 0.98), rgba(235, 229, 217, 0.9));
-  border-bottom: 1px solid rgba(85, 79, 66, 0.06);
+  margin: -18px -14px 14px;
+  padding: 18px 14px 12px;
+  background: linear-gradient(180deg, rgba(244, 244, 239, 0.98), rgba(244, 244, 239, 0.92));
 }
 .topic-sidebar-head h3 {
   font-size: 1.08rem;
@@ -24,11 +23,10 @@
 .topic-week-group {
   display: grid;
   gap: 4px;
-  padding: 10px 0 8px;
-  border-top: 1px solid rgba(87, 81, 68, 0.09);
+  padding: 12px 0 10px;
+  background: transparent;
 }
 .topic-week-group:first-child {
-  border-top: 0;
   padding-top: 0;
 }
 .topic-week-toggle {
@@ -71,7 +69,7 @@
 }
 .topic-week-list {
   display: grid;
-  gap: 2px;
+  gap: 4px;
 }
 .topic-course-group {
   display: grid;
@@ -101,15 +99,16 @@
 }
 .topic-course-group-list {
   display: grid;
-  gap: 2px;
+  gap: 4px;
 }
 .topic-nav-item {
   width: 100%;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 2px;
-  justify-items: start;
   text-align: left;
-  padding: 8px 8px;
+  padding: 10px 6px 10px 10px;
   background: transparent;
   color: var(--ink-1);
   border: 1px solid transparent;
@@ -117,11 +116,11 @@
   border-radius: 0;
 }
 .topic-nav-item:hover {
-  background: rgba(255, 255, 255, 0.56);
+  background: rgba(232, 240, 233, 0.8);
   border-color: transparent;
 }
 .topic-nav-item.is-active {
-  background: rgba(208, 233, 212, 0.58);
+  background: rgba(223, 233, 221, 0.92);
   color: var(--ink-0);
   border-color: transparent;
   border-left-color: var(--accent-2);
@@ -138,7 +137,7 @@
 }
 .topic-detail-card {
   display: grid;
-  gap: 18px;
+  gap: 24px;
   min-width: 0;
 }
 .topic-detail-header {
@@ -152,9 +151,8 @@
   display: grid;
   gap: 10px;
   min-width: 0;
-  padding: 18px;
-  background: rgba(255, 253, 247, 0.86);
-  border: 1px solid rgba(77, 73, 61, 0.08);
+  padding: 0;
+  background: transparent;
   border-radius: var(--radius-lg);
 }
 .topic-detail-kicker {
@@ -188,9 +186,9 @@
   gap: 6px;
 }
 .topic-detail-title-row h3 {
-  font-size: clamp(2rem, 3vw, 2.75rem);
-  line-height: 0.97;
-  max-width: 28ch;
+  font-size: clamp(1.9rem, 3vw, 2.5rem);
+  line-height: 1.02;
+  max-width: 20ch;
 }
 .topic-detail-summary {
   max-width: 68ch;
@@ -211,8 +209,7 @@
   display: grid;
   gap: 5px;
   padding: 12px;
-  background: rgba(255, 253, 247, 0.86);
-  border: 1px solid rgba(82, 74, 57, 0.08);
+  background: rgba(255, 255, 255, 0.54);
   border-radius: var(--radius-md);
 }
 .topic-stat-card span {
@@ -221,23 +218,27 @@
   letter-spacing: 0.02em;
 }
 .topic-stat-card strong {
-  font-family: "Newsreader", serif;
-  font-size: 1.36rem;
-  font-weight: 600;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.22rem;
+  font-weight: 700;
   color: var(--ink-0);
 }
 .topic-detail-context-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 14px;
+  gap: 18px;
 }
 .topic-context-panel,
 .topic-section-block {
-  background: rgba(255, 253, 247, 0.86);
-  border: 1px solid rgba(77, 73, 61, 0.08);
-  border-radius: var(--radius-lg);
-  padding: 14px;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
   min-width: 0;
+}
+.topic-focus-panel {
+  padding: 14px 16px;
+  background: rgba(244, 244, 239, 0.84);
+  border-radius: var(--radius-lg);
 }
 .topic-focus-panel p {
   margin: 0;
@@ -253,7 +254,8 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px 14px;
   align-items: start;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  padding: 0 2px;
 }
 .topic-section-heading {
   min-width: 0;
@@ -285,8 +287,8 @@
 }
 .plain-toggle {
   padding: 0 10px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.76);
+  border: 0;
   border-radius: 999px;
 }
 .plain-toggle span {
@@ -294,19 +296,19 @@
 }
 .common-question-list {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
 }
-.common-question-item {
-  border: 1px solid rgba(77, 73, 61, 0.08);
+.common-question-item,
+.common-question-card {
   border-radius: var(--radius-md);
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.8);
   overflow: hidden;
 }
 .common-question-item summary {
   list-style: none;
   cursor: pointer;
-  padding: 10px 12px;
+  padding: 12px 14px;
   font-weight: 600;
   color: var(--ink-0);
   line-height: 1.45;
@@ -325,8 +327,7 @@
 .common-question-body {
   display: grid;
   gap: 8px;
-  padding: 0 12px 12px;
-  border-top: 1px solid rgba(77, 73, 61, 0.06);
+  padding: 0 14px 14px;
 }
 .common-question-body p {
   margin: 0;
@@ -334,10 +335,36 @@
   line-height: 1.5;
   font-size: 0.88rem;
 }
+.common-question-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.92);
+}
+.common-question-card-body {
+  display: grid;
+  gap: 12px;
+}
+.common-question-card-body p {
+  margin: 0;
+  line-height: 1.56;
+}
+.common-question-card-body pre {
+  margin: 0;
+  max-width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: #f1ece2;
+  overflow: auto;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 .topic-rail {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 12px;
+  gap: 18px;
   align-items: start;
   min-width: 0;
 }
@@ -346,9 +373,8 @@
   gap: 10px;
   align-content: start;
   min-width: 0;
-  padding: 12px;
-  background: var(--surface-strong);
-  border: 1px solid rgba(81, 74, 60, 0.08);
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.64);
   border-radius: var(--radius-lg);
 }
 .rail-card-body {
@@ -398,19 +424,18 @@
   align-items: start;
   padding: 7px 8px;
   border-radius: var(--radius-md);
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.78);
   color: var(--ink-1);
   font-size: 0.8rem;
 }
 .detail-toggle-row {
   display: grid;
-  gap: 4px;
+  gap: 6px;
 }
 .detail-preview {
   display: grid;
-  gap: 4px;
-  padding-left: 24px;
+  gap: 6px;
+  padding-left: 0;
   min-width: 0;
 }
 .detail-preview p {
@@ -449,7 +474,7 @@
 .kp-mini-table th,
 .kp-mini-table td {
   padding: 7px 8px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.88);
   text-align: left;
 }
 .kp-mini-table th {

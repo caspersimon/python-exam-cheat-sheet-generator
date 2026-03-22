@@ -36,13 +36,13 @@ function detailDisplayTitle(detail) {
 function renderDetailPreview(detail) {
   const pieces = [];
   if (detail.text) {
-    pieces.push(`<p>${renderInlineCode(truncateText(detail.text, 120))}</p>`);
+    pieces.push(`<p>${renderInlineCode(detail.text)}</p>`);
   }
   if (detail.code) {
-    pieces.push(`<pre>${escapeHtml(truncateCode(detail.code, 4))}</pre>`);
+    pieces.push(`<pre>${escapeHtml(detail.code)}</pre>`);
   }
   if (detail.table) {
-    pieces.push(`<p class="detail-table-note">${escapeHtml(`${detail.table.headers.length} columns • ${detail.table.rows.length} rows`)}</p>`);
+    pieces.push(renderMiniTable(detail.table));
   }
   if (!pieces.length) {
     return "";
@@ -78,13 +78,13 @@ function getCommonQuestionItems(card) {
   const section = card.sections.ai_common_questions || {};
   const explicitItems = Array.isArray(section.items) ? section.items : [];
   if (explicitItems.length) {
-    return explicitItems.map((item) => normalizeCommonQuestionItem(item)).filter(Boolean);
+    return explicitItems.map((item, idx) => normalizeCommonQuestionItem(item, idx)).filter(Boolean);
   }
 
-  return (section.bullets || []).map((bullet) => normalizeCommonQuestionBullet(bullet)).filter(Boolean);
+  return (section.bullets || []).map((bullet, idx) => normalizeCommonQuestionBullet(bullet, idx)).filter(Boolean);
 }
 
-function normalizeCommonQuestionItem(item) {
+function normalizeCommonQuestionItem(item, idx = 0) {
   if (!item || typeof item !== "object") {
     return null;
   }
@@ -93,15 +93,23 @@ function normalizeCommonQuestionItem(item) {
   const detail = sanitizeDisplayText(item.detail || item.answer || "").trim();
   const extra = sanitizeDisplayText(item.extra || item.additional_info || item.why || "").trim();
   const code = normalizeNewlines(item.code || "").trim();
+  const table = normalizeMiniTable(item.table);
 
-  if (!summary && !detail && !extra && !code) {
+  if (!summary && !detail && !extra && !code && !table) {
     return null;
   }
 
-  return { summary, detail, extra, code };
+  return {
+    id: String(item.id || `aiq-${idx + 1}`),
+    summary,
+    detail,
+    extra,
+    code,
+    table,
+  };
 }
 
-function normalizeCommonQuestionBullet(rawBullet) {
+function normalizeCommonQuestionBullet(rawBullet, idx = 0) {
   const bullet = sanitizeDisplayText(rawBullet || "").trim();
   if (!bullet) {
     return null;
@@ -113,6 +121,7 @@ function normalizeCommonQuestionBullet(rawBullet) {
 
   if (/^what is the output of the following code\??$/i.test(prompt) && code) {
     return {
+      id: `aiq-${idx + 1}`,
       summary: "What is the output of this code?",
       detail: "Trace the names, values, and operators before you run it.",
       extra: "",
@@ -123,6 +132,7 @@ function normalizeCommonQuestionBullet(rawBullet) {
   const fixMatch = prompt.match(/^(.*?)(?:\s+[—-]\s+|\s+)Fix:\s*(.+)$/i);
   if (fixMatch) {
     return {
+      id: `aiq-${idx + 1}`,
       summary: fixMatch[1].trim(),
       detail: fixMatch[2].trim(),
       extra: code ? "Test the fixed version by stepping through the code and expected output." : "",
@@ -133,6 +143,7 @@ function normalizeCommonQuestionBullet(rawBullet) {
   const dashParts = prompt.split(/\s+[—-]\s+/);
   if (dashParts.length >= 2) {
     return {
+      id: `aiq-${idx + 1}`,
       summary: dashParts[0].trim(),
       detail: dashParts.slice(1).join(" - ").trim(),
       extra: "",
@@ -141,6 +152,7 @@ function normalizeCommonQuestionBullet(rawBullet) {
   }
 
   return {
+    id: `aiq-${idx + 1}`,
     summary: prompt,
     detail: "",
     extra: "",
@@ -155,6 +167,7 @@ function renderCommonQuestionItem(item) {
       <summary>${renderInlineCode(item.summary)}</summary>
       <div class="common-question-body">
         ${detailParts.map((part) => `<p>${renderInlineCode(part)}</p>`).join("")}
+        ${item.table ? renderMiniTable(item.table) : ""}
         ${item.code ? `<pre class="question-code">${escapeHtml(item.code)}</pre>` : ""}
       </div>
     </details>
@@ -172,5 +185,67 @@ function renderSubtopicRailGroup(subtopicGroup, innerHtml) {
         ${innerHtml}
       </div>
     </section>
+  `;
+}
+
+function renderEmptyRailCopy(text) {
+  return `<div class="rail-empty">${escapeHtml(text)}</div>`;
+}
+
+function renderMiniTable(table) {
+  const headHtml = table.headers.map((header) => `<th>${renderInlineCode(header)}</th>`).join("");
+  const rowsHtml = table.rows
+    .map((row) => `<tr>${row.map((cell) => `<td>${renderInlineCode(cell)}</td>`).join("")}</tr>`)
+    .join("");
+  return `
+    <div class="kp-mini-table-wrap">
+      <table class="kp-mini-table">
+        <thead><tr>${headHtml}</tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderSourceItemBody(sourceItem) {
+  const item = sourceItem.item;
+  if (sourceItem.sourceType === "exam") {
+    const parsed = splitPromptAndCode(item.question || "");
+    const prompt = parsed.prompt || item.question || "";
+    const codeContext = parsed.code || item.code_context || "";
+    return `
+      ${prompt ? `<p class="question-text">${renderInlineCode(prompt)}</p>` : ""}
+      ${codeContext ? `<pre class="question-code">${escapeHtml(normalizeNewlines(codeContext || "").trim())}</pre>` : ""}
+      ${renderOptions(item.options)}
+      ${item.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(item.correct))}</p>` : ""}
+      ${item.explanation ? `<p class="source-summary">${renderInlineCode(item.explanation)}</p>` : ""}
+    `;
+  }
+  if (sourceItem.sourceType === "lecture") {
+    const codeExamples = (item.code_examples || [])
+      .map(
+        (example) => `
+          <p><strong>${renderInlineCode(example.description || "Code")}</strong></p>
+          <pre>${escapeHtml(normalizeNewlines(example.code || "").trim())}</pre>
+        `
+      )
+      .join("");
+    const lectureQuestion = item.question
+      ? `
+        <p class="question-text"><strong>Lecture question:</strong> ${renderInlineCode(splitPromptAndCode(item.question).prompt || item.question)}</p>
+        ${renderOptions(item.options)}
+        ${item.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(item.correct))}</p>` : ""}
+      `
+      : "";
+    return `
+      ${item.explanation ? `<p class="source-summary">${renderInlineCode(item.explanation)}</p>` : ""}
+      ${lectureQuestion}
+      ${codeExamples}
+    `;
+  }
+  const outText = (item.outputs || []).join("\n");
+  return `
+    ${item.source ? `<pre>${escapeHtml(normalizeNewlines(item.source || "").trim())}</pre>` : ""}
+    ${outText ? `<p><strong>Output:</strong></p><pre>${escapeHtml(normalizeNewlines(outText).trim())}</pre>` : ""}
   `;
 }

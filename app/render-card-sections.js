@@ -7,7 +7,15 @@ function renderSwipe() {
   refs.rejectedCount.textContent = String(selectedTotals.items);
   refs.remainingCount.textContent = String(filteredDeck.length);
   const visibleExamTopics = filteredDeck.filter((card) => (card.exam_stats?.total_hits || 0) > 0).length;
-  refs.progressText.textContent = `${selectedTotals.topics} topics staged • ${selectedTotals.items} items selected • ${visibleExamTopics} exam-linked topics visible`;
+  const progressBits = [
+    `${selectedTotals.topics} topics staged`,
+    `${selectedTotals.items} items selected`,
+    `${filteredDeck.length} topics visible`,
+  ];
+  if (visibleExamTopics > 0 && visibleExamTopics !== filteredDeck.length) {
+    progressBits.push(`${visibleExamTopics} exam-linked`);
+  }
+  refs.progressText.textContent = progressBits.join(" • ");
   refs.acceptedTopicsList.innerHTML = "";
   getSelectedPreviewEntries().slice(0, 40).forEach((entry) => {
     const li = document.createElement("li");
@@ -143,16 +151,6 @@ function renderTopicDetail(card, bundle, group) {
   const groupTitle = group?.isDefault ? "Lecture-aligned topic" : group?.title || "Lecture-aligned topic";
   const contextPanels = [
     renderSubtopicOverview(subtopics),
-    commonQuestions.length
-      ? `
-          <section class="topic-context-panel topic-question-panel">
-            <h4>Common exam questions</h4>
-            <div class="common-question-list">
-              ${commonQuestions.map((question) => renderCommonQuestionItem(question)).join("")}
-            </div>
-          </section>
-        `
-      : "",
   ]
     .filter(Boolean)
     .join("");
@@ -192,6 +190,7 @@ function renderTopicDetail(card, bundle, group) {
         </aside>
       </header>
       ${contextPanels ? `<div class="topic-detail-context-grid">${contextPanels}</div>` : ""}
+      ${renderCommonQuestionRail(card, draft, commonQuestions)}
       ${renderKeyPointRail(card, draft, keyPoints)}
       ${renderExampleRail(card, draft, aiExamples)}
       ${renderSourceRail(card, draft, "recommended", "Recommended Snippets", split.recommended)}
@@ -366,6 +365,53 @@ function renderExampleRail(card, draft, items) {
     </section>
   `;
 }
+
+function renderCommonQuestionRail(card, draft, items) {
+  const selectedCount = items.filter((item) => (draft.selected.aiQuestions || []).includes(item.id)).length;
+  const body = items.length
+    ? `<div class="common-question-list">${items
+        .map((item) => {
+          const checked = (draft.selected.aiQuestions || []).includes(item.id);
+          return `
+            <article class="common-question-card">
+              <label class="item-select">
+                <input
+                  type="checkbox"
+                  data-role="item-toggle"
+                  data-card-id="${escapeHtml(card.id)}"
+                  data-section="aiQuestions"
+                  data-item-id="${escapeHtml(item.id)}"
+                  ${checked ? "checked" : ""}
+                />
+                <strong>${renderInlineCode(item.summary)}</strong>
+              </label>
+              <div class="common-question-card-body">
+                ${item.detail ? `<p>${renderInlineCode(item.detail)}</p>` : ""}
+                ${item.extra ? `<p>${renderInlineCode(item.extra)}</p>` : ""}
+                ${item.table ? renderMiniTable(item.table) : ""}
+                ${item.code ? `<pre>${escapeHtml(item.code)}</pre>` : ""}
+              </div>
+            </article>
+          `;
+        })
+        .join("")}</div>`
+    : renderEmptyRailCopy("No common exam questions are available for this topic.");
+
+  return `
+    <section class="topic-section-block ${draft.sections.aiQuestions ? "" : "is-dimmed"}" data-section-block="aiQuestions">
+      ${renderSectionHeaderBar(
+        card,
+        draft,
+        "aiQuestions",
+        "Common Exam Questions",
+        `${selectedCount}/${items.length} selected`,
+        "Keep the answer patterns and traps you want printed directly on the cheat sheet."
+      )}
+      ${body}
+    </section>
+  `;
+}
+
 function renderSourceRail(card, draft, sectionKey, title, items) {
   const selectedIds = draft.selected[sectionKey] || [];
   const selectedCount = items.filter((item) => selectedIds.includes(item.id)).length;
@@ -414,64 +460,5 @@ function renderSourceRail(card, draft, sectionKey, title, items) {
       )}
       <div class="topic-rail">${body}</div>
     </section>
-  `;
-}
-function renderEmptyRailCopy(text) {
-  return `<div class="rail-empty">${escapeHtml(text)}</div>`;
-}
-function renderMiniTable(table) {
-  const headHtml = table.headers.map((header) => `<th>${renderInlineCode(header)}</th>`).join("");
-  const rowsHtml = table.rows
-    .map((row) => `<tr>${row.map((cell) => `<td>${renderInlineCode(cell)}</td>`).join("")}</tr>`)
-    .join("");
-  return `
-    <div class="kp-mini-table-wrap">
-      <table class="kp-mini-table">
-        <thead><tr>${headHtml}</tr></thead>
-        <tbody>${rowsHtml}</tbody>
-      </table>
-    </div>
-  `;
-}
-function renderSourceItemBody(sourceItem) {
-  const item = sourceItem.item;
-  if (sourceItem.sourceType === "exam") {
-    const parsed = splitPromptAndCode(item.question || "");
-    const prompt = parsed.prompt || item.question || "";
-    const codeContext = parsed.code || item.code_context || "";
-    return `
-      ${prompt ? `<p class="question-text">${renderInlineCode(prompt)}</p>` : ""}
-      ${codeContext ? `<pre class="question-code">${escapeHtml(normalizeNewlines(codeContext || "").trim())}</pre>` : ""}
-      ${renderOptions(item.options)}
-      ${item.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(item.correct))}</p>` : ""}
-      ${item.explanation ? `<p class="source-summary">${renderInlineCode(item.explanation)}</p>` : ""}
-    `;
-  }
-  if (sourceItem.sourceType === "lecture") {
-    const codeExamples = (item.code_examples || [])
-      .map(
-        (example) => `
-          <p><strong>${renderInlineCode(example.description || "Code")}</strong></p>
-          <pre>${escapeHtml(normalizeNewlines(example.code || "").trim())}</pre>
-        `
-      )
-      .join("");
-    const lectureQuestion = item.question
-      ? `
-        <p class="question-text"><strong>Lecture question:</strong> ${renderInlineCode(splitPromptAndCode(item.question).prompt || item.question)}</p>
-        ${renderOptions(item.options)}
-        ${item.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(item.correct))}</p>` : ""}
-      `
-      : "";
-    return `
-      ${item.explanation ? `<p class="source-summary">${renderInlineCode(item.explanation)}</p>` : ""}
-      ${lectureQuestion}
-      ${codeExamples}
-    `;
-  }
-  const outText = (item.outputs || []).join("\\n");
-  return `
-    ${item.source ? `<pre>${escapeHtml(normalizeNewlines(item.source || "").trim())}</pre>` : ""}
-    ${outText ? `<p><strong>Output:</strong></p><pre>${escapeHtml(normalizeNewlines(outText).trim())}</pre>` : ""}
   `;
 }

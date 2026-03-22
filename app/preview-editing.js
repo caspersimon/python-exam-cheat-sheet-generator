@@ -6,6 +6,13 @@ function bindPreviewEditingEvents() {
 }
 
 function handlePreviewEditingClick(event) {
+  const editCardTitleBtn = event.target.closest("[data-role='preview-edit-card-title']");
+  if (editCardTitleBtn) {
+    event.preventDefault();
+    void editPreviewCardTitle(editCardTitleBtn.dataset.cardId || "");
+    return;
+  }
+
   const toggleLockBtn = event.target.closest("[data-role='preview-toggle-lock']");
   if (toggleLockBtn) {
     event.preventDefault();
@@ -75,11 +82,13 @@ function deletePreviewCard(previewId) {
 
   entry.cards.forEach((sourceCard) => {
     const draft = ensureDraft(sourceCard);
+    draft.selected.aiQuestions = [];
     draft.selected.aiExamples = [];
     draft.selected.keyPoints = [];
     draft.selected.recommended = [];
     draft.selected.additional = [];
     draft.overrides = {
+      aiQuestions: {},
       keyPoints: {},
       keyPointDetails: {},
       aiExamples: {},
@@ -107,6 +116,40 @@ function togglePreviewCardLock(previewId) {
   renderPreview();
 }
 
+async function editPreviewCardTitle(previewId) {
+  if (!previewId) {
+    return;
+  }
+  const entry = getPreviewEntry(previewId);
+  const layout = state.previewCards[previewId];
+  if (!entry || !layout) {
+    return;
+  }
+
+  const currentTitle = getPreviewCardTitle(entry, layout);
+  const values = await requestPreviewEditValues({
+    title: "Edit Card Title",
+    subtitle: humanizeTopic(entry.card.topic),
+    fields: [
+      {
+        id: "title",
+        label: "Card title",
+        prompt: "Edit card title:",
+        value: currentTitle,
+      },
+    ],
+  });
+  if (!values) {
+    return;
+  }
+
+  const nextTitle = String(values.title || "").trim();
+  pushPreviewHistorySnapshot(`Edit card title for "${humanizeTopic(entry.card.topic)}"`);
+  const defaultTitle = derivePreviewCardTitle(entry);
+  layout.title = nextTitle && nextTitle !== defaultTitle ? nextTitle : "";
+  renderPreview();
+}
+
 function deletePreviewItem(cardId, itemType, itemId, section) {
   if (!cardId || !itemId) {
     return;
@@ -128,6 +171,9 @@ function deletePreviewItem(cardId, itemType, itemId, section) {
         delete draft.overrides.keyPointDetails[detailId];
       }
     });
+  } else if (itemType === "aiQuestion") {
+    draft.selected.aiQuestions = (draft.selected.aiQuestions || []).filter((id) => id !== itemId);
+    delete draft.overrides.aiQuestions[itemId];
   } else if (itemType === "keyPointDetail") {
     draft.selected.keyPoints = (draft.selected.keyPoints || []).filter((id) => id !== itemId);
     delete draft.overrides.keyPointDetails[itemId];
@@ -154,6 +200,73 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
 
   const { card, draft } = context;
   const overrides = ensureSelectionOverrides(draft);
+
+  if (itemType === "aiQuestion") {
+    const item = commonQuestionItems(card).find((entry) => entry.id === itemId);
+    if (!item) {
+      return;
+    }
+    const current = getPreviewAIQuestionOverride(draft, itemId, item);
+    const values = await requestPreviewEditValues({
+      title: "Edit Common Exam Question",
+      subtitle: humanizeTopic(card.topic),
+      fields: [
+        {
+          id: "summary",
+          label: "Question",
+          prompt: "Edit question:",
+          value: current.summary || "",
+          multiline: true,
+          rows: 4,
+        },
+        {
+          id: "detail",
+          label: "Answer summary",
+          prompt: "Edit answer summary:",
+          value: current.detail || "",
+          multiline: true,
+          rows: 6,
+        },
+        {
+          id: "extra",
+          label: "Extra exam note",
+          prompt: "Edit extra exam note:",
+          value: current.extra || "",
+          multiline: true,
+          rows: 5,
+        },
+        {
+          id: "code",
+          label: "Code example",
+          prompt: "Edit code example:",
+          value: current.code || "",
+          multiline: true,
+          rows: 9,
+          kind: "code",
+        },
+      ],
+    });
+    if (!values) {
+      return;
+    }
+    const trimmedSummary = String(values.summary || "").trim();
+    const trimmedDetail = String(values.detail || "").trim();
+    const trimmedExtra = String(values.extra || "").trim();
+    const codeValue = String(values.code || "");
+    if (!trimmedSummary && !trimmedDetail && !trimmedExtra && !codeValue.trim()) {
+      deletePreviewItem(cardId, itemType, itemId, section);
+      return;
+    }
+    pushPreviewHistorySnapshot(`Edit common exam question in "${humanizeTopic(card.topic)}"`);
+    overrides.aiQuestions[itemId] = {
+      summary: trimmedSummary,
+      detail: trimmedDetail,
+      extra: trimmedExtra,
+      code: codeValue,
+    };
+    renderPreview();
+    return;
+  }
 
   if (itemType === "keyPoint") {
     const group = keyPointGroups(card).find((entry) => entry.id === itemId);
@@ -353,6 +466,9 @@ function sourceItemToEditableText(sourceItem) {
 }
 
 function humanizeItemType(itemType) {
+  if (itemType === "aiQuestion") {
+    return "common exam question";
+  }
   if (itemType === "keyPoint") {
     return "key point";
   }

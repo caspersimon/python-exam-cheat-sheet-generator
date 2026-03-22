@@ -30,6 +30,14 @@ function usefulAIExamples(card) {
     }));
 }
 
+function commonQuestionItems(card) {
+  return getCommonQuestionItems(card);
+}
+
+function commonQuestionSelectableIds(card) {
+  return commonQuestionItems(card).map((item) => item.id);
+}
+
 function normalizeKeyPointDetails(baseId, details) {
   return (details || [])
     .map((detail, idx) => {
@@ -230,6 +238,7 @@ function ensureDraft(card) {
   const recommendedIds = split.recommended.map((item) => item.id);
   const additionalIds = split.additional.map((item) => item.id);
   const aiExampleIds = usefulAIExamples(card).map((item) => item.id);
+  const aiQuestionIds = commonQuestionSelectableIds(card);
   const keyPointIds = keyPointSelectableIds(card);
 
   state.drafts[card.id] = {
@@ -245,12 +254,14 @@ function ensureDraft(card) {
       additional: additionalIds.length > 0,
     },
     selected: {
+      aiQuestions: [],
       aiExamples: [],
       keyPoints: [],
       recommended: [],
       additional: [],
     },
     overrides: {
+      aiQuestions: {},
       keyPoints: {},
       keyPointDetails: {},
       aiExamples: {},
@@ -268,12 +279,13 @@ function cloneDraft(draft) {
     },
     sections: { ...draft.sections },
     selected: {
+      aiQuestions: [...(draft.selected.aiQuestions || [])],
       aiExamples: [...(draft.selected.aiExamples || [])],
       keyPoints: [...(draft.selected.keyPoints || [])],
       recommended: [...(draft.selected.recommended || [])],
       additional: [...(draft.selected.additional || [])],
     },
-    overrides: deepClone(draft.overrides || { keyPoints: {}, keyPointDetails: {}, aiExamples: {}, sources: {} }),
+    overrides: deepClone(draft.overrides || { aiQuestions: {}, keyPoints: {}, keyPointDetails: {}, aiExamples: {}, sources: {} }),
   };
 }
 
@@ -284,11 +296,15 @@ function getRenderableSelection(card, draft) {
 
   const normalized = cloneDraft(draft);
   const aiExampleIds = new Set(usefulAIExamples(card).map((item) => item.id));
+  const aiQuestionIds = new Set(commonQuestionSelectableIds(card));
   const keyPointIds = new Set(keyPointSelectableIds(card));
   const split = getSourceSplit(card);
   const recommendedIds = new Set(split.recommended.map((item) => item.id));
   const additionalIds = new Set(split.additional.map((item) => item.id));
 
+  normalized.selected.aiQuestions = normalized.sections.aiQuestions
+    ? normalized.selected.aiQuestions.filter((id) => aiQuestionIds.has(id))
+    : [];
   normalized.selected.aiExamples = normalized.sections.aiExamples
     ? normalized.selected.aiExamples.filter((id) => aiExampleIds.has(id))
     : [];
@@ -303,6 +319,7 @@ function getRenderableSelection(card, draft) {
     : [];
 
   const totalSelected =
+    normalized.selected.aiQuestions.length +
     normalized.selected.aiExamples.length +
     normalized.selected.keyPoints.length +
     normalized.selected.recommended.length +
@@ -314,15 +331,17 @@ function getRenderableSelection(card, draft) {
 function getSelectionCounts(card, draft = ensureDraft(card)) {
   const selection = getRenderableSelection(card, draft);
   if (!selection) {
-    return { total: 0, aiExamples: 0, keyPoints: 0, recommended: 0, additional: 0 };
+    return { total: 0, aiQuestions: 0, aiExamples: 0, keyPoints: 0, recommended: 0, additional: 0 };
   }
 
   return {
     total:
+      selection.selected.aiQuestions.length +
       selection.selected.aiExamples.length +
       selection.selected.keyPoints.length +
       selection.selected.recommended.length +
       selection.selected.additional.length,
+    aiQuestions: selection.selected.aiQuestions.length,
     aiExamples: selection.selected.aiExamples.length,
     keyPoints: selection.selected.keyPoints.length,
     recommended: selection.selected.recommended.length,

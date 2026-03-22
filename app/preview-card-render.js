@@ -1,7 +1,8 @@
 function buildPreviewCard(entry, layout) {
   const { previewId, card, cards, selectionsByCard } = entry;
-  const sectionHtml = [];
+  const sections = [];
   const locked = Boolean(layout?.locked);
+  const displayTitle = getPreviewCardTitle(entry, layout);
   const lockTitle = locked ? "Unlock card position and size" : "Lock card position and size";
   const lockAria = locked ? "Unlock card position and size" : "Lock card position and size";
   const lockIcon = locked ? "&#128275;" : "&#128274;";
@@ -10,6 +11,7 @@ function buildPreviewCard(entry, layout) {
   const dragHintTitle = locked ? "Card locked" : "Drag card";
 
   const keyPointBlocks = [];
+  const aiQuestionBlocks = [];
   const exampleBlocks = [];
   const recommendedBlocks = [];
   const additionalBlocks = [];
@@ -20,6 +22,14 @@ function buildPreviewCard(entry, layout) {
       return;
     }
     ensureSelectionOverrides(selection);
+
+    if (selection.sections.aiQuestions) {
+      commonQuestionItems(sourceCard)
+        .filter((item) => (selection.selected.aiQuestions || []).includes(item.id))
+        .forEach((item) => {
+          aiQuestionBlocks.push(renderPreviewCommonQuestion(previewId, sourceCard, selection, item));
+        });
+    }
 
     if (selection.sections.keyPoints) {
       getSelectedKeyPointGroups(sourceCard, selection).forEach((group) => {
@@ -58,28 +68,47 @@ function buildPreviewCard(entry, layout) {
   });
 
   if (keyPointBlocks.length) {
-    sectionHtml.push(`<div class="section-title">Key Points for Reference</div>`);
-    sectionHtml.push(`<div class="preview-kp-list">${keyPointBlocks.join("")}</div>`);
+    sections.push({
+      label: "Key Points for Reference",
+      content: `<div class="preview-kp-list">${keyPointBlocks.join("")}</div>`,
+    });
+  }
+
+  if (aiQuestionBlocks.length) {
+    sections.push({
+      label: "Common Exam Questions",
+      content: aiQuestionBlocks.join(""),
+    });
   }
 
   if (exampleBlocks.length) {
-    sectionHtml.push(`<div class="section-title">Code Examples</div>`);
-    sectionHtml.push(exampleBlocks.join(""));
+    sections.push({
+      label: "Code Examples",
+      content: exampleBlocks.join(""),
+    });
   }
 
   if (recommendedBlocks.length) {
-    sectionHtml.push(`<div class="section-title">Recommended</div>`);
-    sectionHtml.push(recommendedBlocks.join(""));
+    sections.push({
+      label: "Recommended",
+      content: recommendedBlocks.join(""),
+    });
   }
 
   if (additionalBlocks.length) {
-    sectionHtml.push(`<div class="section-title">Additional</div>`);
-    sectionHtml.push(additionalBlocks.join(""));
+    sections.push({
+      label: "Additional",
+      content: additionalBlocks.join(""),
+    });
   }
 
-  if (!sectionHtml.length) {
+  if (!sections.length) {
     return null;
   }
+
+  const sectionHtml = sections
+    .map((section) => (sections.length > 1 ? `<div class="section-title">${section.label}</div>${section.content}` : section.content))
+    .join("");
 
   const cardElement = document.createElement("article");
   cardElement.className = `preview-card${locked ? " is-locked" : ""}`;
@@ -88,8 +117,18 @@ function buildPreviewCard(entry, layout) {
 
   cardElement.innerHTML = `
     <div class="preview-card-head" title="${headTitle}">
-      <h4>${escapeHtml(humanizeTopic(card.topic))}</h4>
+      <h4>${renderInlineCode(displayTitle)}</h4>
       <div class="preview-card-head-actions">
+        <button
+          type="button"
+          class="preview-head-btn icon-only"
+          data-role="preview-edit-card-title"
+          data-card-id="${escapeHtml(previewId)}"
+          title="Edit card title"
+          aria-label="Edit card title"
+        >
+          <span aria-hidden="true">&#9998;</span>
+        </button>
         <button
           type="button"
           class="preview-head-btn icon-only"
@@ -114,7 +153,7 @@ function buildPreviewCard(entry, layout) {
         <span class="preview-drag-hint" aria-hidden="true" title="${dragHintTitle}">${dragHint}</span>
       </div>
     </div>
-    <div class="preview-body">${sectionHtml.join("")}</div>
+    <div class="preview-body">${sectionHtml}</div>
     <button type="button" class="preview-resize-bottom" data-role="preview-resize-bottom" aria-label="Resize card height"></button>
     <button type="button" class="preview-resize-corner" data-role="preview-resize-corner" aria-label="Resize card"></button>
   `;
@@ -203,6 +242,20 @@ function renderPreviewKeyPointGroup(sourceCard, selection, group) {
   `;
 }
 
+function renderPreviewCommonQuestion(previewCardId, sourceCard, selection, item) {
+  const effective = getPreviewAIQuestionOverride(selection, item.id, item);
+  return `
+    <div class="preview-item-block preview-question-block">
+      ${renderPreviewItemActions(previewCardId, sourceCard.id, "aiQuestion", item.id, "aiQuestions")}
+      <p class="preview-kp-main"><strong>${renderInlineCode(effective.summary)}</strong></p>
+      ${effective.detail ? `<p>${renderInlineCode(effective.detail)}</p>` : ""}
+      ${effective.extra ? `<p>${renderInlineCode(effective.extra)}</p>` : ""}
+      ${effective.table ? renderPreviewTable(effective.table) : ""}
+      ${effective.code ? `<pre>${escapeHtml(effective.code)}</pre>` : ""}
+    </div>
+  `;
+}
+
 function renderPreviewKeyPointDetail(sourceCardId, selection, detail) {
   const overridden = getPreviewKeyPointDetailOverride(selection, detail.id);
   if (overridden) {
@@ -274,12 +327,15 @@ function renderPreviewSourceItem(previewCardId, sourceCard, selection, sourceIte
 
 function ensureSelectionOverrides(selection) {
   if (!selection || typeof selection !== "object") {
-    return { keyPoints: {}, keyPointDetails: {}, aiExamples: {}, sources: {} };
+    return { aiQuestions: {}, keyPoints: {}, keyPointDetails: {}, aiExamples: {}, sources: {} };
   }
   if (!selection.overrides || typeof selection.overrides !== "object") {
     selection.overrides = {};
   }
   const overrides = selection.overrides;
+  if (!overrides.aiQuestions || typeof overrides.aiQuestions !== "object") {
+    overrides.aiQuestions = {};
+  }
   if (!overrides.keyPoints || typeof overrides.keyPoints !== "object") {
     overrides.keyPoints = {};
   }
@@ -293,6 +349,22 @@ function ensureSelectionOverrides(selection) {
     overrides.sources = {};
   }
   return overrides;
+}
+
+function getPreviewAIQuestionOverride(selection, itemId, fallback) {
+  const overrides = ensureSelectionOverrides(selection);
+  const value = overrides.aiQuestions[itemId];
+  if (!value || typeof value !== "object") {
+    return fallback;
+  }
+  return {
+    ...fallback,
+    summary: typeof value.summary === "string" && value.summary.trim() ? value.summary.trim() : fallback.summary,
+    detail: typeof value.detail === "string" && value.detail.trim() ? value.detail.trim() : fallback.detail,
+    extra: typeof value.extra === "string" && value.extra.trim() ? value.extra.trim() : fallback.extra,
+    table: fallback.table || null,
+    code: typeof value.code === "string" && value.code.trim() ? value.code : fallback.code,
+  };
 }
 
 function getPreviewKeyPointOverride(selection, keyPointId, fallbackText) {

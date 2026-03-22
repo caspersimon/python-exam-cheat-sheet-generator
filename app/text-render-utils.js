@@ -175,7 +175,7 @@ function autoBacktickInlineCode(text) {
   }
 
   const tokenPattern =
-    /(\b(?:print|len|range|type|id|set|list|dict|tuple|str|int|float|bool|None|True|False)\b|\b[A-Za-z_][A-Za-z0-9_]*\([^()\n]{0,40}\)|\b[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z_][A-Za-z0-9_]*\b|==|!=|<=|>=|\/\/|\*\*|(?<!\*)\*(?!\*)|\/|%|\^)/g;
+    /(\b(?:print|len|range|type|id|set|list|dict|tuple|str|int|float|bool|iter|next|map|filter|sorted|enumerate|zip|None|True|False)\b(?=[\s,.:;)\]])|\b[A-Za-z_][A-Za-z0-9_]*\([^()\n]{0,40}\)|\b[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z_][A-Za-z0-9_]*\b|==|!=|<=|>=|\/\/|\*\*|%|\^)/g;
 
   return value
     .split("`")
@@ -199,7 +199,9 @@ function autoBacktickInlineCode(text) {
 }
 
 function renderInlineCode(text) {
-  const value = closeUnbalancedBackticks(autoBacktickInlineCode(sanitizeDisplayText(text || "")));
+  const value = closeUnbalancedBackticks(
+    normalizeMalformedInlineCode(autoBacktickInlineCode(sanitizeDisplayText(text || "")))
+  );
   if (!value) {
     return "";
   }
@@ -222,4 +224,12 @@ function closeUnbalancedBackticks(text) {
     return `${value}\``;
   }
   return value;
+}
+
+function normalizeMalformedInlineCode(text) {
+  return String(text || "")
+    .replace(/`e\.g`/g, "e.g")
+    .replace(/`\/`/g, "/")
+    .replace(/`None`(?=\s+of the above)/g, "None")
+    .replace(/`from`(?=\s+(?:the value|right to left|the others|the following))/g, "from");
 }

@@ -3,12 +3,14 @@ const EXAM_LABELS = {
   midterm_2023: "Trial 22/23",
   midterm_2024: "Trial 23/24",
   extra_practice: "Extra Practice",
+  intro_python_sample_final_24_25: "Sample Final 24/25",
 };
 
 const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture snippets, notebook snippets, and trap-pattern context.";
 const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v3";
-const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v5";
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v7";
+const TOPIC_CARDS_DATASET_VERSION = "2026-03-22-curation-pass-2";
 const CANONICAL_WEEK_ORDER = [1, 2, 3, 4, 5, 6];
 const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
@@ -27,7 +29,7 @@ const state = {
   deckGroups: [],
   filters: {
     search: "",
-    onlyExam: true,
+    onlyExam: false,
     minHits: 0,
     weeks: new Set(CANONICAL_WEEK_ORDER),
   },
@@ -39,7 +41,7 @@ const state = {
   previewCards: {},
   previewZCounter: 1,
   layout: {
-    fontFamily: "'IBM Plex Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
     fontSize: 9.5,
     lineHeight: 1.1,
     letterSpacing: 0,
@@ -163,7 +165,7 @@ async function init() {
   maybeShowSplash();
 
   try {
-    const response = await fetch("./topic_cards.json");
+    const response = await fetch(`./topic_cards.json?v=${encodeURIComponent(TOPIC_CARDS_DATASET_VERSION)}`);
     if (!response.ok) {
       throw new Error(`Failed to load topic_cards.json (${response.status})`);
     }

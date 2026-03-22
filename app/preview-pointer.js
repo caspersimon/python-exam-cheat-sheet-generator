@@ -36,7 +36,8 @@ function sanitizePreviewCardLayout(rawLayout, fallback = {}) {
   const zRaw = Number(rawLayout?.z ?? fallback.z ?? 1);
   const z = clamp(Number.isFinite(zRaw) ? zRaw : 1, 1, 9999);
   const locked = Boolean(rawLayout?.locked ?? fallback.locked ?? false);
-  return { page, x, y, width, height, z, locked };
+  const title = String(rawLayout?.title ?? fallback.title ?? "").trim();
+  return { page, x, y, width, height, z, locked, title };
 }
 
 function ensurePreviewCardLayout(cardId, fallback) {

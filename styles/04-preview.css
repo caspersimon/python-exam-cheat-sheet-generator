@@ -9,7 +9,7 @@
   min-height: 130px;
   min-width: 170px;
   box-shadow: 0 7px 18px rgba(41, 34, 24, 0.08);
-  font-family: var(--sheet-font, "IBM Plex Sans", sans-serif);
+  font-family: var(--sheet-font, "Manrope", sans-serif);
 }
 
 .preview-card-head {
@@ -32,11 +32,10 @@
 
 .preview-card h4 {
   margin: 0;
-  padding-right: 68px;
+  padding-right: 92px;
   font-size: 0.92em;
   line-height: 1.1;
   letter-spacing: 0;
-  pointer-events: none;
 }
 
 .preview-drag-hint {

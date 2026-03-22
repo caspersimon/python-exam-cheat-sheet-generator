@@ -185,3 +185,118 @@ function normalizeTopicMergeKey(card) {
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 }
+
+function getPreviewCardTitle(entry, layout) {
+  const manualTitle = String(layout?.title || "").trim();
+  if (manualTitle) {
+    return manualTitle;
+  }
+  return derivePreviewCardTitle(entry);
+}
+
+function derivePreviewCardTitle(entry) {
+  const focusQuestion = getFirstSelectedAIQuestion(entry);
+  if (focusQuestion) {
+    return summarizeCommonQuestionTitle(focusQuestion.summary);
+  }
+
+  const focusKeyPoint = getFirstSelectedKeyPoint(entry);
+  if (focusKeyPoint) {
+    return summarizePreviewLabel(focusKeyPoint.text, humanizeTopic(entry.card.topic));
+  }
+
+  const focusExample = getFirstSelectedAIExample(entry);
+  if (focusExample?.title) {
+    return summarizePreviewLabel(focusExample.title, humanizeTopic(entry.card.topic));
+  }
+
+  return humanizeTopic(entry.card.topic);
+}
+
+function getFirstSelectedAIQuestion(entry) {
+  for (const sourceCard of entry.cards) {
+    const selection = entry.selectionsByCard[sourceCard.id];
+    if (!selection?.sections?.aiQuestions) {
+      continue;
+    }
+    const selectedIds = new Set(selection.selected.aiQuestions || []);
+    const match = commonQuestionItems(sourceCard).find((item) => selectedIds.has(item.id));
+    if (match) {
+      return match;
+    }
+  }
+  return null;
+}
+
+function getFirstSelectedKeyPoint(entry) {
+  for (const sourceCard of entry.cards) {
+    const selection = entry.selectionsByCard[sourceCard.id];
+    if (!selection?.sections?.keyPoints) {
+      continue;
+    }
+    const selectedIds = new Set(selection.selected.keyPoints || []);
+    const match = keyPointGroups(sourceCard).find((group) => selectedIds.has(group.id));
+    if (match) {
+      return match;
+    }
+  }
+  return null;
+}
+
+function getFirstSelectedAIExample(entry) {
+  for (const sourceCard of entry.cards) {
+    const selection = entry.selectionsByCard[sourceCard.id];
+    if (!selection?.sections?.aiExamples) {
+      continue;
+    }
+    const selectedIds = new Set(selection.selected.aiExamples || []);
+    const match = usefulAIExamples(sourceCard).find((item) => selectedIds.has(item.id));
+    if (match) {
+      return match;
+    }
+  }
+  return null;
+}
+
+function summarizeCommonQuestionTitle(summary) {
+  const plain = sanitizeDisplayText(summary || "").replace(/`/g, "").trim();
+  const lower = plain.toLowerCase();
+
+  if ((lower.includes("{}") || lower.includes("empty set")) && lower.includes("dict")) {
+    return "Set vs. dict";
+  }
+  if (lower.includes("==") && /\bis\b/.test(lower)) {
+    return "== vs is";
+  }
+  if (lower.includes("mutable") && lower.includes("default")) {
+    return "Mutable defaults";
+  }
+  if (lower.includes("slice")) {
+    return "Slicing rules";
+  }
+  if (lower.includes("membership") || lower.includes(" in {") || lower.includes("dictionary checks keys")) {
+    return "dict membership";
+  }
+  if (lower.includes("print") && lower.includes("return")) {
+    return "print vs return";
+  }
+  if (lower.includes("loc") && lower.includes("iloc")) {
+    return ".loc vs .iloc";
+  }
+  if (lower.includes("strftime") && lower.includes("strptime")) {
+    return "strftime vs strptime";
+  }
+
+  return summarizePreviewLabel(
+    plain.replace(/^(why does|why is|what is|what does|how does|when does|which)\s+/i, "").replace(/\?+$/, ""),
+    "Exam note"
+  );
+}
+
+function summarizePreviewLabel(text, fallback) {
+  const plain = sanitizeDisplayText(text || "").replace(/`/g, "").replace(/\s+/g, " ").trim();
+  if (!plain) {
+    return fallback;
+  }
+  return plain.length > 34 ? `${plain.slice(0, 34).replace(/\s+\S*$/, "").trim()}…` : plain;
+}
