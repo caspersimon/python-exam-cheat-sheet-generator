@@ -17,8 +17,8 @@ Technical handoff for coding agents and contributors working on this repository.
 - Weeks covered in the dataset: **1-6**
 - Exam-topic cards (`exam_stats.total_hits > 0`): **18**
 - Duplicate normalized topic labels: **0**
-- Total key points across all cards: **98**
-- Optional key-point detail blocks: **88**
+- Total key points across all cards: **106**
+- Optional key-point detail blocks: **96**
 
 Curation state:
 

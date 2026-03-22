@@ -485,7 +485,8 @@
               "ai-example-5",
               "ai-example-6",
               "ai-example-7",
-              "ai-example-8"
+              "ai-example-8",
+              "manual-objects-aliasing"
             ],
             "key_point_ids": [
               "kp-1",
@@ -494,6 +495,7 @@
               "kp-4",
               "kp-5",
               "kp-6",
+              "kp-manual-aliasing-copy",
               "kp-7",
               "kp-8",
               "kp-9"
@@ -1494,6 +1496,23 @@
             ]
           },
           {
+            "id": "kp-manual-aliasing-copy",
+            "text": "For mutable objects, `l2 = l1` aliases the same object; use slicing like `l1[:]` when you need an independent copy.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm008",
+            "model": null,
+            "subtopic_id": "w1-objects-and-names-core",
+            "subtopic_title": "Objects, Types, Mutability, Assignment, and Names",
+            "details": [
+              {
+                "id": "kp-manual-aliasing-copy-d1",
+                "kind": "example",
+                "title": "Aliasing vs slicing copy",
+                "code": "l1 = [1, 2, 3]\nl2 = l1\nl3 = l1[:]\nl1[0] = 99\nprint(l2)  # [99, 2, 3]\nprint(l3)  # [1, 2, 3]"
+              }
+            ]
+          },
+          {
             "id": "kp-7",
             "text": "Functions are objects. Defined with def. Called with (). Built-in functions: print, id, len, type, del. Functions can return values. Methods are functions attached to objects.",
             "status": "curated",
@@ -1604,6 +1623,17 @@
             "title": "Negative step",
             "code": "l1 = [1, 2, 3, 4, 5, 6, 7, 8]\nprint(l1[5:1:-2])  # [6, 4]\nprint(l1[5::-1])   # [6, 5, 4, 3, 2, 1]\nprint(l1[:1:-1])   # [8, 7, 6, 5, 4, 3]\nprint(l1[1:5:-2])  # [] (already past end)",
             "why": "Syntax: seq[start:end:step]. Start is inclusive, end is NOT inclusive. Defaults: start=0, end=len, step=1. Negative step goes from right to left. Slicing always creates a NEW object of the same type.",
+            "output": "",
+            "status": "curated",
+            "subtopic_id": "w1-objects-and-names-core",
+            "subtopic_title": "Objects, Types, Mutability, Assignment, and Names"
+          },
+          {
+            "id": "manual-objects-aliasing",
+            "kind": "correct",
+            "title": "Aliasing vs slicing copy",
+            "code": "l1 = [1, 2, 3]\nl2 = l1\nl3 = l1[:]\nl1[0] = 99\nprint(l2)  # [99, 2, 3]\nprint(l3)  # [1, 2, 3]",
+            "why": "For mutable objects, `l2 = l1` aliases the same object; use slicing like `l1[:]` when you need an independent copy.",
             "output": "",
             "status": "curated",
             "subtopic_id": "w1-objects-and-names-core",
@@ -2590,7 +2620,8 @@
             ],
             "key_point_ids": [
               "kp-1",
-              "kp-2"
+              "kp-2",
+              "kp-3"
             ]
           }
         }
@@ -3115,7 +3146,8 @@
             ],
             "key_point_ids": [
               "kp-1",
-              "kp-2"
+              "kp-2",
+              "kp-3"
             ]
           }
         }
@@ -10069,7 +10101,8 @@
               "kp-4",
               "kp-5",
               "kp-6",
-              "kp-7"
+              "kp-7",
+              "kp-manual-string-method-results"
             ]
           }
         }
@@ -10357,7 +10390,7 @@
         ],
         "ai_summary": {
           "status": "curated",
-          "content": "Trace string slicing, search, replacement, splitting, joining, and stripping. Compare `.find` versus `.index`, and remember `join` is called on the separator.",
+          "content": "Trace string slicing, search, replacement, splitting, joining, and stripping. Compare `.find` versus `.index`, and remember string methods return new values unless you reassign the result.",
           "generator": "lecture-first-build",
           "model": null
         },
@@ -10552,6 +10585,23 @@
             "subtopic_id": "w4-string-operations-and-methods-core",
             "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
             "details": []
+          },
+          {
+            "id": "kp-manual-string-method-results",
+            "text": "String methods like `replace`, `capitalize`, `split`, and `join` return new values; the original string stays unchanged unless you assign the result.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm008",
+            "model": null,
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
+            "details": [
+              {
+                "id": "kp-manual-string-method-results-d1",
+                "kind": "example",
+                "title": "replace() returns a new string",
+                "code": "number = '020-525-1400'\ncleaned = number.replace('-', '')\nprint(number)   # '020-525-1400'\nprint(cleaned)  # '0205251400'"
+              }
+            ]
           }
         ],
         "ai_examples": [
@@ -10677,7 +10727,7 @@
           "id": "w4-string-formatting-core",
           "title": "f-strings Basics, Formatting, and Debug Form",
           "order": 1,
-          "summary": "Use f-strings to embed expressions directly in text. Add format specs after `:` for width, alignment, or precision such as `{n:03d}` and `{x:.2f}`.",
+          "summary": "Use f-strings or `.format(...)` to embed values in text. Add format specs after `:` for width, alignment, or precision such as `{n:03d}` and `{x:.2f}`.",
           "item_ids": {
             "lecture_snippet_ids": [
               "ks-72dda5450c",
@@ -10689,12 +10739,14 @@
             "example_ids": [
               "ai-example-1",
               "ai-example-2",
-              "ai-example-3"
+              "ai-example-3",
+              "ai-example-4"
             ],
             "key_point_ids": [
               "kp-1",
               "kp-2",
-              "kp-3"
+              "kp-3",
+              "kp-4"
             ]
           }
         }
@@ -10766,7 +10818,7 @@
         "notebook_snippets": [],
         "ai_summary": {
           "status": "curated",
-          "content": "Use f-strings to embed expressions directly in text. Add format specs after `:` for width, alignment, or precision such as `{n:03d}` and `{x:.2f}`.",
+          "content": "Use f-strings or `.format(...)` to embed values in text. Add format specs after `:` for width, alignment, or precision such as `{n:03d}` and `{x:.2f}`.",
           "generator": "lecture-first-build",
           "model": null
         },
@@ -10837,6 +10889,23 @@
                 "code": "num = 7\nprint(f'{num:03d}') # '007'"
               }
             ]
+          },
+          {
+            "id": "kp-4",
+            "text": "Official assessments also use `.format(...)` placeholders. The same width and zero-padding ideas still apply there, for example `'{:04d}'.format(n)`.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm008",
+            "model": null,
+            "subtopic_id": "w4-string-formatting-core",
+            "subtopic_title": "f-strings Basics, Formatting, and Debug Form",
+            "details": [
+              {
+                "id": "kp-4-d1",
+                "kind": "example",
+                "title": "Padding with `.format(...)`",
+                "code": "score = 91\nprint('Score: {:04d}'.format(score))"
+              }
+            ]
           }
         ],
         "ai_examples": [
@@ -10869,6 +10938,17 @@
             "code": "num = 7\nprint(f'{num:03d}') # '007'",
             "why": "You can specify formatting after a colon, such as padding numbers with zeros.",
             "output": "",
+            "status": "curated",
+            "subtopic_id": "w4-string-formatting-core",
+            "subtopic_title": "f-strings Basics, Formatting, and Debug Form"
+          },
+          {
+            "id": "ai-example-4",
+            "kind": "correct",
+            "title": "Using `.format(...)` with placeholders",
+            "code": "name = 'Jan'\nscore = 7\nprint('Student {} scored {:03d}'.format(name, score))",
+            "why": "The official resit material still uses `.format(...)`, so it is worth recognizing positional placeholders and width specs alongside f-strings.",
+            "output": "Student Jan scored 007",
             "status": "curated",
             "subtopic_id": "w4-string-formatting-core",
             "subtopic_title": "f-strings Basics, Formatting, and Debug Form"
@@ -10928,13 +11008,16 @@
               "ai-example-1",
               "ai-example-2",
               "ai-example-3",
-              "ai-example-6"
+              "ai-example-6",
+              "manual-oop-init-defaults",
+              "manual-oop-attrs"
             ],
             "key_point_ids": [
               "kp-1",
               "kp-2",
               "kp-3",
-              "kp-4"
+              "kp-4",
+              "kp-manual-init-defaults"
             ]
           }
         }
@@ -11211,7 +11294,7 @@
         ],
         "ai_summary": {
           "status": "curated",
-          "content": "A class defines attributes and methods; `__init__` runs when you create an object and stores instance data on `self`.",
+          "content": "A class defines attributes and methods; `__init__` runs when you create an object, defaults can make constructor arguments optional, and class attributes are shared across instances.",
           "generator": "lecture-first-build",
           "model": null
         },
@@ -11315,6 +11398,29 @@
             "subtopic_id": "w4-oop-fundamentals-core",
             "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
             "details": []
+          },
+          {
+            "id": "kp-manual-init-defaults",
+            "text": "Constructor defaults can make arguments optional, but mutable per-instance state should start from `None` and be created inside `__init__`.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm008",
+            "model": null,
+            "subtopic_id": "w4-oop-fundamentals-core",
+            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
+            "details": [
+              {
+                "id": "kp-manual-init-defaults-d1",
+                "kind": "example",
+                "title": "Optional constructor argument",
+                "code": "class Vehicle:\n    def __init__(self, name, mode='land'):\n        self.name = name\n        self.mode = mode"
+              },
+              {
+                "id": "kp-manual-init-defaults-d2",
+                "kind": "example",
+                "title": "Fresh list per object",
+                "code": "class Book:\n    def __init__(self, title, review_scores=None):\n        self.title = title\n        self.review_scores = [] if review_scores is None else review_scores"
+              }
+            ]
           }
         ],
         "ai_examples": [
@@ -11369,6 +11475,17 @@
             "code": "class Rectangle:\n    units = 'cm'\n\n    def __init__(self, width):\n        self.width = width\n\nr1 = Rectangle(3)\nr2 = Rectangle(5)\nr2.units = 'm'\nprint(r1.units, r2.units)",
             "output": "cm m",
             "why": "`self.width` is per object; `Class.units` is shared until an instance shadows it with its own attribute.",
+            "status": "curated",
+            "subtopic_id": "w4-oop-fundamentals-core",
+            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
+          },
+          {
+            "id": "manual-oop-init-defaults",
+            "kind": "correct",
+            "title": "Safe default state in `__init__`",
+            "code": "class Book:\n    def __init__(self, title, review_scores=None):\n        self.title = title\n        self.review_scores = [] if review_scores is None else review_scores",
+            "output": "",
+            "why": "Constructor defaults can make arguments optional, but mutable per-instance state should start from `None` and be created inside `__init__`.",
             "status": "curated",
             "subtopic_id": "w4-oop-fundamentals-core",
             "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
@@ -11573,6 +11690,23 @@
                 "kind": "example",
                 "title": "Raising an error",
                 "code": "def check_positive(n):\n    if n < 0:\n        raise ValueError('Number must be positive')\n    return n"
+              }
+            ]
+          },
+          {
+            "id": "kp-3",
+            "text": "Catch the specific exception you expect when you know the failure mode. `except ValueError` documents the substring-missing case more clearly than a bare `except:`.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm008",
+            "model": null,
+            "subtopic_id": "w4-error-handling-core",
+            "subtopic_title": "try/except and raise",
+            "details": [
+              {
+                "id": "kp-3-d1",
+                "kind": "example",
+                "title": "Specific exception handler",
+                "code": "s1 = 'abcdefghabcdefgh'\nneedle = 'i'\ntry:\n    position = s1.index(needle)\nexcept ValueError:\n    position = -1\nprint(position)"
               }
             ]
           }
@@ -12810,7 +12944,9 @@
               "ai-example-5",
               "ai-example-6",
               "ai-example-7",
-              "ai-example-8"
+              "ai-example-8",
+              "manual-working-values-string-vs-map",
+              "manual-working-values-axis-apply"
             ],
             "key_point_ids": [
               "kp-1",
@@ -12819,7 +12955,8 @@
               "kp-4",
               "kp-5",
               "kp-6",
-              "kp-7"
+              "kp-7",
+              "kp-manual-drop-missing"
             ]
           }
         }
@@ -13174,6 +13311,29 @@
                 "code": "df.fillna('No value') # Replaces all NaNs"
               }
             ]
+          },
+          {
+            "id": "kp-manual-drop-missing",
+            "text": "Use `.drop(...)` to remove labels and `.dropna()` to remove incomplete rows or columns; use `.fillna(...)` when you want to keep the shape and replace the missing values instead.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm008",
+            "model": null,
+            "subtopic_id": "w5-working-with-values-core",
+            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+            "details": [
+              {
+                "id": "kp-manual-drop-missing-d1",
+                "kind": "example",
+                "title": "Dropping a column by label",
+                "code": "df = df.drop(1, axis=1)"
+              },
+              {
+                "id": "kp-manual-drop-missing-d2",
+                "kind": "example",
+                "title": "Removing rows with missing values",
+                "code": "df.dropna()"
+              }
+            ]
           }
         ],
         "ai_examples": [
@@ -13238,6 +13398,28 @@
             "title": "Row-wise average",
             "code": "df['Avg'] = df.apply(lambda x: x.mean(), axis=1)",
             "why": "Applies a function along an axis (0 for columns, 1 for rows) of a DataFrame.",
+            "output": "",
+            "status": "curated",
+            "subtopic_id": "w5-working-with-values-core",
+            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+          },
+          {
+            "id": "manual-working-values-string-vs-map",
+            "kind": "correct",
+            "title": "`.str` methods vs `map(...)`",
+            "code": "s = pd.Series(['Aap', 'Nota', 'MIES'])\nprint(s.map(lambda x: x.lower()))\nprint(s.str.lower())",
+            "why": "Use `.str` for vectorized string operations; `map(...)` is useful when you need a custom per-value transformation.",
+            "output": "",
+            "status": "curated",
+            "subtopic_id": "w5-working-with-values-core",
+            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+          },
+          {
+            "id": "manual-working-values-axis-apply",
+            "kind": "correct",
+            "title": "`apply(axis=0)` vs `apply(axis=1)`",
+            "code": "df.loc['Av'] = df.apply(lambda x: x.mean(), axis=0)\ndf['Avg'] = df.apply(lambda x: x.mean(), axis=1)",
+            "why": "`axis=0` works column by column; `axis=1` works row by row.",
             "output": "",
             "status": "curated",
             "subtopic_id": "w5-working-with-values-core",
@@ -14706,6 +14888,7 @@
           "title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic",
           "order": 1,
           "summary": "Use `datetime.now()` for current time, `strftime` to format, `strptime` to parse, and `timedelta` for date arithmetic.",
+          "summary": "Use `datetime.now()` for current time, `strftime`/`strptime` for formatting and parsing, ISO/week helpers for calendar fields, and `timedelta` for date arithmetic.",
           "item_ids": {
             "lecture_snippet_ids": [
               "ks-e643ee5e77",
@@ -14728,8 +14911,22 @@
               "cs-b31e0142c3",
               "cs-1887901826"
             ],
-            "example_ids": [],
-            "key_point_ids": []
+            "example_ids": [
+              "manual-datetime-format",
+              "manual-datetime-parse",
+              "manual-datetime-delta",
+              "manual-datetime-replace",
+              "manual-datetime-iso",
+              "manual-datetime-day-of-year"
+            ],
+            "key_point_ids": [
+              "kp-manual-datetime-now",
+              "kp-manual-datetime-format",
+              "kp-manual-datetime-delta",
+              "kp-manual-datetime-replace",
+              "kp-manual-datetime-iso",
+              "kp-manual-datetime-day-of-year"
+            ]
           }
         }
       ],
@@ -14986,7 +15183,7 @@
         ],
         "ai_summary": {
           "status": "curated",
-          "content": "Use `datetime.now()` for current time, `strftime` to format, `strptime` to parse, and `timedelta` for date arithmetic.",
+          "content": "Use `datetime.now()` for current time, `strftime`/`strptime` for formatting and parsing, ISO/week helpers for calendar fields, and `timedelta` for date arithmetic.",
           "generator": "lecture-first-build",
           "model": null
         },
@@ -15041,6 +15238,14 @@
           {
             "id": "kp-manual-datetime-replace",
             "text": "Datetime objects are immutable, so `.replace(...)` returns a new datetime instead of modifying the original one."
+          },
+          {
+            "id": "kp-manual-datetime-iso",
+            "text": "Use `isoformat()` for an ISO-style timestamp, `isoweekday()` for Monday=1..Sunday=7, and `isocalendar()` when you need ISO year/week information."
+          },
+          {
+            "id": "kp-manual-datetime-day-of-year",
+            "text": "The day number within the year can be formatted with `%j` or computed with `(dt - datetime(dt.year, 1, 1)).days + 1`."
           }
         ],
         "ai_examples": [
@@ -15084,6 +15289,28 @@
             "code": "from datetime import datetime\n\nd = datetime(2024, 5, 20)\nprint(d.replace(year=2026))\nprint(d)",
             "output": "2026-05-20 00:00:00\n2024-05-20 00:00:00",
             "why": "Datetime objects are immutable, so `.replace(...)` does not modify the original object in place.",
+            "status": "curated",
+            "subtopic_id": "w6-datetime-core",
+            "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
+          },
+          {
+            "id": "manual-datetime-iso",
+            "kind": "correct",
+            "title": "ISO and week-based helpers",
+            "code": "from datetime import datetime\n\nd = datetime(2024, 5, 20)\nprint(d.isoformat())\nprint(d.isoweekday())\nprint(d.isocalendar()[1])",
+            "output": "",
+            "why": "Use ISO helpers when the exam asks for an ISO string, the weekday with Monday as 1, or the ISO week number.",
+            "status": "curated",
+            "subtopic_id": "w6-datetime-core",
+            "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
+          },
+          {
+            "id": "manual-datetime-day-of-year",
+            "kind": "correct",
+            "title": "Compute the day number within the year",
+            "code": "from datetime import datetime\n\ndef day_of_year(dt):\n    return (dt - datetime(dt.year, 1, 1)).days + 1\n\nprint(day_of_year(datetime(2024, 5, 20)))",
+            "output": "",
+            "why": "Subtract January 1st of the same year, then add 1 so January 1st becomes day 1.",
             "status": "curated",
             "subtopic_id": "w6-datetime-core",
             "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
