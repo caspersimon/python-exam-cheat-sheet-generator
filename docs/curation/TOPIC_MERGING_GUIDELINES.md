@@ -16,9 +16,9 @@ Use this guide when you need to:
 
 At the time this guide was written:
 
-- `topic_cards.json` has **174** cards.
+- `topic_cards.json` has **27** merged cards.
 - `deck_groups` covers **6** weeks.
-- exam-topic cards (`exam_stats.total_hits > 0`) total **136**.
+- exam-topic cards (`exam_stats.total_hits > 0`) total **18**.
 - exact duplicate normalized topic labels are **0**.
 - exam-topic key points have optional detail coverage (examples/tables/explanations) and should stay selectable in UI.
 
@@ -63,13 +63,13 @@ Start with highest-impact cards (highest exam hits), then low-hit cards.
 
 Suggested review bundles:
 
-1. `For Loops`, `Range()`
-2. `Conditions`, `truthy_falsy`, `Boolean operators`, `comparison_operators`, `walrus_operator`
-3. `Functions`, `Return / None`, `Default arguments`, `*args`, `*args / **kwargs`
-4. `mutable_immutable`, `mutable args`, `mutable_default`, `Objects`, `Names`
-5. `Dictionaries`, `Sets`, `dict / average`
-6. `Indexing`, `Slicing`, `Strings`
-7. `Lambda`, `Enumerate`, `Zip`
+1. `Python Basics`, `Objects and Names`, `Sequences and Access`
+2. `Operators and Truth`, `Conditions`, `Conversion and Truthiness`
+3. `Functions and Imports`, `Defining and Calling Functions`, `Return Behavior`, `Scope`, `Arguments`, `Higher-Order Patterns`
+4. `Dictionaries and Mappings`, `Lists and Sets`, `Comprehensions`, `Generators and Iterators`
+5. `String Fundamentals`, `String Operations and Methods`, `String Formatting`
+6. `OOP Fundamentals`, `Error Handling`
+7. `Pandas Core Structures`, `Inspecting and Selecting Data`, `Working With Values`, `Combining Data`, `Datetime`
 
 These are semantic-review bundles, not mandatory merges.
 
