@@ -110,36 +110,56 @@ def fallback_ai_bundle(card: dict[str, Any]) -> dict[str, Any]:
         f"What is the most likely wrong answer choice and why? Hint: {compact_text(trap_text, 100)}",
     ]
 
+    question_items = [
+        {
+            "summary": questions[0],
+            "detail": "Trace values and mutations line by line before deciding.",
+            "extra": "",
+            "code": "",
+        },
+        {
+            "summary": questions[1],
+            "detail": "Separate new-object creation from in-place updates.",
+            "extra": "",
+            "code": "",
+        },
+    ]
+
     examples = [
         {
             "kind": "correct",
             "title": f"Correct: basic {topic} usage",
             "code": "def demo(x):\n    return x\n\nprint(demo(3))",
             "why": "Defines a function and returns the expected value clearly.",
+            "output": "3",
         },
         {
             "kind": "correct",
             "title": f"Correct: explicit check for {topic}",
             "code": "value = [1, 2, 3]\nif len(value) > 0:\n    print(value[0])",
             "why": "Uses explicit control flow and avoids hidden assumptions.",
+            "output": "1",
         },
         {
             "kind": "incorrect",
             "title": f"Incorrect: ambiguous {topic} assumption",
             "code": "value = [1, 2, 3]\nprint(value[3])",
             "why": "Raises IndexError because index 3 is out of range.",
+            "output": "IndexError",
         },
         {
             "kind": "incorrect",
             "title": f"Incorrect: forgotten return in {topic}",
             "code": "def demo(x):\n    x + 1\n\nprint(demo(3))",
             "why": "Prints None because the function does not return a value.",
+            "output": "None",
         },
     ]
 
     return {
         "summary": summary,
         "common_questions": questions,
+        "common_question_items": question_items,
         "examples": examples,
     }
 
@@ -155,9 +175,10 @@ def normalize_examples(raw_examples: list[Any], topic: str) -> list[dict[str, st
         title = compact_text(str(item.get("title") or f"{kind.title()} example for {topic}"), 90)
         code = trim_lines(str(item.get("code") or ""), 10).strip()
         why = compact_text(str(item.get("why") or "No explanation provided."), 220)
+        output = compact_text(str(item.get("output") or item.get("result") or ""), 220)
         if not code:
             continue
-        examples.append({"kind": kind, "title": title, "code": code, "why": why})
+        examples.append({"kind": kind, "title": title, "code": code, "why": why, "output": output})
 
     if len(examples) < 4:
         needed = 4 - len(examples)
@@ -188,11 +209,27 @@ def normalize_generated_entry(raw: dict[str, Any], card: dict[str, Any]) -> dict
             common.append(item)
     common = common[:6]
 
+    raw_items = safe_list(raw.get("ai_common_question_items") or raw.get("common_question_items"))
+    common_items = []
+    for idx, item in enumerate(raw_items, start=1):
+        if not isinstance(item, dict):
+            continue
+        summary = compact_text(str(item.get("summary") or item.get("question") or ""), 180)
+        detail = compact_text(str(item.get("detail") or item.get("answer") or ""), 220)
+        extra = compact_text(str(item.get("extra") or item.get("why") or ""), 180)
+        code = trim_lines(str(item.get("code") or ""), 10).strip()
+        if not any([summary, detail, extra, code]):
+            continue
+        common_items.append({"id": f"aiq-{idx}", "summary": summary, "detail": detail, "extra": extra, "code": code})
+    if len(common_items) < 2:
+        common_items = [{"id": f"aiq-{idx+1}", **item} for idx, item in enumerate(fallback["common_question_items"])]
+
     examples = normalize_examples(safe_list(raw.get("ai_examples") or raw.get("examples")), card.get("topic", "topic"))
 
     return {
         "summary": summary,
         "common_questions": common,
+        "common_question_items": common_items[:8],
         "examples": examples,
     }
 
@@ -204,11 +241,14 @@ For EACH topic context below, return one JSON object with this exact schema:
   "id": "<same id>",
   "ai_summary": "2-4 concise sentences about what the code/topic does and what to track in output questions.",
   "ai_common_questions": ["4-6 brief bullets with common exam asks/traps"],
+  "ai_common_question_items": [
+    {"summary":"...","detail":"...","extra":"...","code":"..."}
+  ],
   "ai_examples": [
-    {{"kind":"correct","title":"...","code":"...","why":"..."}},
-    {{"kind":"correct","title":"...","code":"...","why":"..."}},
-    {{"kind":"incorrect","title":"...","code":"...","why":"..."}},
-    {{"kind":"incorrect","title":"...","code":"...","why":"..."}}
+    {{"kind":"correct","title":"...","code":"...","why":"...","output":"..."}},
+    {{"kind":"correct","title":"...","code":"...","why":"...","output":"..."}},
+    {{"kind":"incorrect","title":"...","code":"...","why":"...","output":"..."}},
+    {{"kind":"incorrect","title":"...","code":"...","why":"...","output":"..."}}
   ]
 }}
 
@@ -261,6 +301,7 @@ def apply_generated(data: dict[str, Any], generated_by_id: dict[str, dict[str, A
         sections["ai_common_questions"] = {
             "status": "generated",
             "bullets": generated["common_questions"],
+            "items": generated.get("common_question_items", []),
             "generator": "gemini-cli",
             "model": MODEL,
         }
@@ -274,6 +315,7 @@ def apply_generated(data: dict[str, Any], generated_by_id: dict[str, dict[str, A
                     "title": item["title"],
                     "code": item["code"],
                     "why": item["why"],
+                    "output": item.get("output", ""),
                     "status": "generated",
                 }
             )

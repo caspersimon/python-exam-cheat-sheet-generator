@@ -2,6 +2,9 @@
 
 Backlog of larger improvements that should be tracked even when not solved in the same task.
 
+Current implementation handoff:
+- [Handoff 2026-03-21](./HANDOFF_2026-03-21.md)
+
 ## Status Legend
 
 - `planned`: approved idea, not started
@@ -18,6 +21,8 @@ Backlog of larger improvements that should be tracked even when not solved in th
 | RM-003 | Medium | planned | QA automation | Add baseline visual diff checks (perceptual threshold) on smoke/stress export snapshots. | [Template](./specs/SPEC_TEMPLATE.md) |
 | RM-004 | Medium | planned | Data quality | Add semantic duplicate detection for week ingestion (beyond exact-string duplicates). | [Template](./specs/SPEC_TEMPLATE.md) |
 | RM-005 | Medium | planned | Codebase hygiene | Reduce >300-line files to improve readability and maintenance velocity. | [Template](./specs/SPEC_TEMPLATE.md) |
+| RM-006 | Medium | planned | Topic Explorer UX | Continue densifying the Topic Explorer sidebar and source rails so long weeks remain fast to scan without layout bloat. | [Template](./specs/SPEC_TEMPLATE.md) |
+| RM-007 | Medium | planned | Topic curation | Merge the densest remaining topic clusters inside the new course-outline buckets without losing evidence quality. | [RM-007](./specs/RM-007-course-outline-topic-merging.md) |
 
 ## Triage Rules
 

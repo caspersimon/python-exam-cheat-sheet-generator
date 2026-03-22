@@ -1,0 +1,747 @@
+{
+  "week": 6,
+  "topics": [
+    "Comprehensions",
+    "Generators and Iterators",
+    "Date and Time Handling",
+    "State Management"
+  ],
+  "lecture": {
+    "concepts": [
+      {
+        "topic": "Set Comprehensions",
+        "explanation": "Creates a set using curly braces with a single expression (not key:value pairs). Automatically handles uniqueness and ignores order.",
+        "code_examples": [
+          {
+            "description": "Building a set of doubled odd numbers",
+            "code": "s1 = {x * 2 for x in [1, 3, 2, 5] if x % 2 != 0}"
+          }
+        ]
+      },
+      {
+        "topic": "String Transformations via List Comprehension",
+        "explanation": "Since 'string comprehensions' don't exist natively, use a list comprehension to process characters and then '.join()' them back into a string.",
+        "code_examples": [
+          {
+            "description": "Double vowels in a string",
+            "code": "s2 = ''.join([x*2 if x.lower() in 'aeiou' else x for x in 'Python'])"
+          }
+        ]
+      },
+      {
+        "topic": "Nested Dictionary Comprehensions",
+        "explanation": "Allows creating complex nested structures like dictionaries within dictionaries in a single concise line.",
+        "code_examples": [
+          {
+            "description": "Dictionary with sub-dictionaries",
+            "code": "result = {x: {y: x + y for y in range(x, 4)} for x in range(1, 4)}"
+          }
+        ]
+      },
+      {
+        "topic": "Walrus Operator in Comprehensions",
+        "explanation": "The walrus operator (:=) allows assigning a value to a variable within an expression, avoiding redundant calculations in filters or transformations.",
+        "code_examples": [
+          {
+            "description": "Using walrus to avoid double squaring",
+            "code": "l1 = [(x, r) for x in range(1, 10) if 20 > (r := x**2) > 10]"
+          }
+        ]
+      },
+      {
+        "topic": "Map and Filter vs. Comprehensions",
+        "explanation": "Comprehensions are generally preferred over combining map() and filter() with lambda functions for readability.",
+        "code_examples": [
+          {
+            "description": "Equivalent logic using map/filter",
+            "code": "l2 = list(map(lambda x: x*2, filter(lambda x: x%3 != 0, [1, 2, 3, 4])))"
+          }
+        ]
+      },
+      {
+        "topic": "Generator Functions",
+        "explanation": "Functions using the 'yield' keyword. They produce values one at a time and maintain their local state (variables) between calls.",
+        "code_examples": [
+          {
+            "description": "Simple step generator",
+            "code": "def count(start, stop, step):\n    while start <= stop:\n        yield start\n        start += step"
+          }
+        ]
+      },
+      {
+        "topic": "Generator Comprehensions",
+        "explanation": "Created using parentheses (). Highly memory efficient because they calculate values on the fly rather than storing the whole list in memory.",
+        "code_examples": [
+          {
+            "description": "Generator for large range",
+            "code": "gen = (x for x in range(1000000) if x % 3 == 0)"
+          }
+        ]
+      },
+      {
+        "topic": "Iterators",
+        "explanation": "Objects that can be traversed using next(). Lists can be turned into iterators using iter(). They raise StopIteration when exhausted.",
+        "code_examples": [
+          {
+            "description": "Manual iteration",
+            "code": "it = iter([1, 2]); print(next(it)); print(next(it))"
+          }
+        ]
+      },
+      {
+        "topic": "datetime.now and Timestamps",
+        "explanation": "datetime.now() retrieves the current local time. timestamp() returns the seconds since the Unix Epoch (Jan 1, 1970).",
+        "code_examples": [
+          {
+            "description": "Getting current timestamp",
+            "code": "from datetime import datetime\nprint(datetime.now().timestamp())"
+          }
+        ]
+      },
+      {
+        "topic": "strftime: Date to String",
+        "explanation": "Formats a datetime object into a readable string using format codes (e.g., %Y for 4-digit year, %m for month).",
+        "code_examples": [
+          {
+            "description": "Formatting a date",
+            "code": "from datetime import datetime\nprint(datetime.now().strftime('%Y-%m-%d %H:%M'))"
+          }
+        ]
+      },
+      {
+        "topic": "strptime: String to Date",
+        "explanation": "Parses a string into a datetime object based on a provided format template.",
+        "code_examples": [
+          {
+            "description": "Parsing a date string",
+            "code": "from datetime import datetime\nd = datetime.strptime('2024-05-20', '%Y-%m-%d')"
+          }
+        ]
+      },
+      {
+        "topic": "Timedelta and Date Arithmetic",
+        "explanation": "Timedelta objects represent durations. Subtracting two datetimes creates a timedelta; adding a timedelta to a datetime shifts the date.",
+        "code_examples": [
+          {
+            "description": "Calculating days difference",
+            "code": "from datetime import datetime, timedelta\ndiff = datetime(2024, 1, 1) - datetime(2023, 1, 1)\nprint(diff.days)"
+          }
+        ]
+      },
+      {
+        "topic": "The replace() Method",
+        "explanation": "Datetime objects are immutable. The replace() method creates a new datetime object with specific attributes changed.",
+        "code_examples": [
+          {
+            "description": "Changing the year of a date",
+            "code": "from datetime import datetime\nd = datetime.now().replace(year=2026)"
+          }
+        ]
+      },
+      {
+        "topic": "Dictionary Comprehensions with Logic",
+        "explanation": "Can include 'if' conditions to filter keys or values during dictionary creation.",
+        "code_examples": [
+          {
+            "description": "Filtering dictionary items",
+            "code": "d = {k: v for k, v in {'a': 1, 'b': 2}.items() if v > 1}"
+          }
+        ]
+      },
+      {
+        "topic": "Enumerate in Comprehensions",
+        "explanation": "Use enumerate() to access both the index and the value of items within a comprehension.",
+        "code_examples": [
+          {
+            "description": "Divide by index plus offset",
+            "code": "res = [val // (i + 6) for i, val in enumerate([46, 48])]"
+          }
+        ]
+      }
+    ],
+    "lecture_questions": [
+      {
+        "topic": "Comprehensions",
+        "question": "Why does Python interpret {x * 2 for x in l1} as a set comprehension and not a dictionary comprehension?",
+        "options": {
+          "a": "Because it uses curly braces with single values instead of key:value pairs",
+          "b": "Because the input l1 is a list",
+          "c": "Because sets are the default for curly braces",
+          "d": "Because there is no 'if' statement"
+        },
+        "correct": "a",
+        "explanation": "Dictionary comprehensions require a 'key: value' syntax within the curly braces."
+      },
+      {
+        "topic": "Comprehensions",
+        "question": "What is the result of {int(x) * 2 for x in '01212' if x in '02'}?",
+        "options": {
+          "a": "{0, 2, 4}",
+          "b": "{0, 4}",
+          "c": "[0, 4, 0, 4]",
+          "d": "{'0', '4'}"
+        },
+        "correct": "b",
+        "explanation": "Sets only store unique values. 0*2=0 and 2*2=4. Repeated values are ignored."
+      },
+      {
+        "topic": "Generators",
+        "question": "What is the primary advantage of a generator over a list for large datasets?",
+        "options": {
+          "a": "Generators are faster at indexing elements",
+          "b": "Generators allow for duplicate values while lists do not",
+          "c": "Generators use significantly less memory by yielding values one by one",
+          "d": "Generators can be reversed more easily than lists"
+        },
+        "correct": "c",
+        "explanation": "Generators do not store the entire sequence in memory, which is essential for very large or infinite datasets."
+      },
+      {
+        "topic": "Date and Time Handling",
+        "question": "Which attributes are directly accessible on a timedelta object?",
+        "options": {
+          "a": "years, months, days",
+          "b": "days, seconds, microseconds",
+          "c": "hours, minutes, seconds",
+          "d": "days, hours, minutes"
+        },
+        "correct": "b",
+        "explanation": "Timedelta only stores days, seconds, and microseconds internally. Other units must be calculated."
+      },
+      {
+        "topic": "Date and Time Handling",
+        "question": "Which method should you use to convert a string like '2024/05/20' into a Python datetime object?",
+        "options": {
+          "a": "datetime.strftime()",
+          "b": "datetime.timestamp()",
+          "c": "datetime.strptime()",
+          "d": "datetime.replace()"
+        },
+        "correct": "c",
+        "explanation": "strptime (string parse time) converts strings to objects; strftime (string format time) converts objects to strings."
+      }
+    ]
+  },
+  "notebook_cells": [
+    {
+      "cell_index": 1,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### List comprehensions are a nice way to make your code more concise, but you can always do the same with a loop",
+      "outputs": []
+    },
+    {
+      "cell_index": 2,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "l1 = [1, 3, 2, 4] \n\nl2 = []\nfor x in l1:\n    if x%3 ==0:\n        continue\n    addition = x * 2 if x%2 == 1 else x // 2\n    l2.append(addition)\nprint(l2)\n\nl2 = [x * 2 if x%2 == 1 else x // 2 for x in l1 if x%3 != 0]\nprint(l2)",
+      "outputs": []
+    },
+    {
+      "cell_index": 3,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Dictionary comprehensions",
+      "outputs": []
+    },
+    {
+      "cell_index": 4,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "l1 = [1, 3, 2, 5]\nl2 = [1, 2, 6, 3]\n\nd1 = {}\nfor k,v in zip(l1,l2):\n    if k%2 == 0 or v%2 == 0:\n        continue\n    d1[k] = v * 3\nprint(d1)\n\nd1 = {k: v*3 for k,v in zip(l1,l2) if not (k%2 == 0 or v%2 == 0)}\nprint(d1)",
+      "outputs": []
+    },
+    {
+      "cell_index": 5,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Set comprehensions",
+      "outputs": []
+    },
+    {
+      "cell_index": 6,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "l1 = [1, 3, 2, 5] \n\ns1 = set()\nfor x in l1:\n    if x % 2 == 0:\n        continue\n    s1.add(x * 2)\nprint(s1)\n\ns1 = {x * 2 for x in l1 if not (x%2 == 0)}\nprint(s1)",
+      "outputs": []
+    },
+    {
+      "cell_index": 7,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### 'String comprehensions'",
+      "outputs": []
+    },
+    {
+      "cell_index": 8,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'a1BcDE2FgH3i'\n\nimport string\ns2 = ''\nfor x in s1:\n    if x in string.digits:\n        continue\n    s2 += x * 2 if x.lower() in 'aeiou' else x * 3\nprint(s2)\n\nimport string\nl1 = [x * 2 if x.lower() in 'aeiou' else x * 3 for x in s1 if x in string.ascii_letters]\ns2 = ''.join(l1)\nprint(s2)",
+      "outputs": []
+    },
+    {
+      "cell_index": 9,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Nested comprehensions",
+      "outputs": []
+    },
+    {
+      "cell_index": 10,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "func = lambda x,y: x+y\n\nresult = {}\nfor x in range(1, 4):\n    result1 = {}\n    for y in range(x, 4):\n        result1[y] = func(x,y)\n    result[x] = result1    \nprint(result)\nprint(result[2][3])\n\ndel x, y\nresult = {x:{y: func(x,y) for y in range(x, 4)} for x in range(1, 4)}\nprint(result)\nprint(result[2][3])",
+      "outputs": []
+    },
+    {
+      "cell_index": 11,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "func = lambda x,y: x+y\n\nresult = {}\nfor x in range(1, 4):\n    for y in range(x, 4):\n        result[x,y] = func(x,y)\nprint(result)        \nprint(result[2,3])\n\ndel x,y\nresult = {(x, y): func(x,y) for x in range(1, 4) for y in range(x, 4) }\nprint(result)\nprint(result[2,3])",
+      "outputs": []
+    },
+    {
+      "cell_index": 12,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### List comprehensions (old school)",
+      "outputs": []
+    },
+    {
+      "cell_index": 13,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "l1 = [1, 3, 2, 4] \n\nl2 = []\nfor x in l1:\n    if x%3 ==0:\n        continue\n    addition = x * 2 if x%2 == 1 else x // 2\n    l2.append(addition)\nprint(l2)\n\nl2 = [x * 2 if x%2 == 1 else x // 2 for x in l1 if x%3 != 0]\nprint(l2)\n\nl2 = list(map(lambda x: x * 2 if x%2 == 1 else x//2, filter(lambda x: x % 3 != 0, l1)))\nprint(l2) \n\nfiltered_values = filter(lambda x: x % 3 != 0, l1)\nprocessed_values = map(lambda x: x * 2 if x%2 == 1 else x//2, filtered_values)\nlist_of_processed_values = list(processed_values)\nprint(list_of_processed_values)",
+      "outputs": []
+    },
+    {
+      "cell_index": 14,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "l1 = [1, 3, 2, 4] \n\nl2 = list(map(lambda x: x * 2 if x%2 == 1 else x//2, filter(lambda x: x % 3 != 0, l1)))\nprint(l2) \n\nfiltered_values = filter(lambda x: x % 3 != 0, l1)\nprocessed_values = map(lambda x: x * 2 if x%2 == 1 else x//2, filtered_values)\nlist_of_processed_values = list(processed_values)\nprint(list_of_processed_values)",
+      "outputs": []
+    },
+    {
+      "cell_index": 15,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Keeping state between function calls with a standard function",
+      "outputs": []
+    },
+    {
+      "cell_index": 16,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def myfunc(start, stop,step):\n    num = start\n    start += step\n    if num > stop:\n        raise StopIteration('End of numbers')\n    else:\n        return num, start, stop, step\nsta = 1\nsto  = 5\nste  = 2\nnum, sta, sto, ste = myfunc(sta, sto, ste)\nprint(num)\nnum, sta, sto, ste = myfunc(sta, sto, ste)\nprint(num)\nnum, sta, sto, ste = myfunc(sta, sto, ste)\nprint(num)\nnum, sta, sto, ste = myfunc(sta, sto, ste)\nprint(num)",
+      "outputs": []
+    },
+    {
+      "cell_index": 17,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Keeping state between function calls with a standard function and the global keyword",
+      "outputs": []
+    },
+    {
+      "cell_index": 18,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "start = 1\nstop  = 5\nstep  = 2\ndef myfunc():\n    global start, stop, step \n    num = start\n    start += step\n    if num > stop:\n        raise StopIteration('End of numbers')\n    else:\n        return num\nstart = 1\nstop  = 5\nstep  = 2    \nprint(myfunc())\nprint(myfunc())\nprint(myfunc())\nprint(myfunc())",
+      "outputs": []
+    },
+    {
+      "cell_index": 19,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Keeping state between function calls with a standard class",
+      "outputs": []
+    },
+    {
+      "cell_index": 20,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Myclass:\n    def __init__(self, start, stop, step):\n        self.start = start\n        self.stop = stop\n        self.step = step\n    def following(self):\n        self.num = self.start\n        self.start += self.step\n        if self.num > self.stop:\n            raise StopIteration('End of numbers')\n        else:\n            return self.num\nmyfunc = Myclass(1, 5, 2)\nprint(myfunc.following())\nprint(myfunc.following())\nprint(myfunc.following())\nprint(myfunc.following())",
+      "outputs": []
+    },
+    {
+      "cell_index": 21,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Keeping state between function calls with an iterator",
+      "outputs": []
+    },
+    {
+      "cell_index": 22,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Myiterator:\n    def __init__(self, start, stop, step):\n        self.start = start\n        self.stop = stop\n        self.step = step\n    def __next__(self):\n        self.num = self.start\n        self.start += self.step\n        if self.num > self.stop:\n            raise StopIteration('End of numbers')\n        else:\n            return self.num\nmyiterator = Myiterator(1, 5, 2)\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))",
+      "outputs": []
+    },
+    {
+      "cell_index": 23,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Myiterator:\n    def __init__(self, start, stop, step):\n        self.start = start\n        self.stop = stop\n        self.step = step\n    def __iter__ (self):\n        return self\n    def __next__(self):\n        self.num = self.start\n        self.start += self.step\n        if self.num > self.stop:\n            raise StopIteration('End of numbers')\n        else:\n            return self.num\nfor x in Myiterator(1, 5, 2):\n    print(x)",
+      "outputs": []
+    },
+    {
+      "cell_index": 24,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Myiterator:\n    def __init__(self, start, stop, step):\n        self.start = start\n        self.stop = stop\n        self.step = step\n    def __next__(self):\n        self.num = self.start\n        self.start += self.step\n        if self.num > self.stop:\n            raise StopIteration('End of numbers')\n        else:\n            return self.num\nmyiterator = Myiterator(1, 5, 2)\nfor x in myiterator:\n    print(x)",
+      "outputs": []
+    },
+    {
+      "cell_index": 25,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Keeping state between function calls with an generator function",
+      "outputs": []
+    },
+    {
+      "cell_index": 26,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def generatorfunction(start, stop, step):\n    while (num:=start) <= stop:\n        yield num\n        start += step\n    return 'End of numbers'\nmygenerator = generatorfunction(1, 5, 2)\nprint(next(mygenerator))\nprint(next(mygenerator))\nprint(next(mygenerator))\nprint(next(mygenerator))",
+      "outputs": []
+    },
+    {
+      "cell_index": 27,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def generatorfunction():\n    num = 1\n    yield num\n    num += 2\n    yield num\n    num += 2\n    yield num\n\nmygenerator = generatorfunction()\nprint(next(mygenerator))\nprint(next(mygenerator))\nprint(next(mygenerator))\nprint(next(mygenerator))",
+      "outputs": []
+    },
+    {
+      "cell_index": 28,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def generatorfunction(start, stop, step):\n    while (num:=start) <= stop:\n        yield num\n        start += step\n    return 'End of numbers'\nfor x in generatorfunction(1, 5, 2):\n    print(x)",
+      "outputs": []
+    },
+    {
+      "cell_index": 29,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Turning a generatorfunction into a list",
+      "outputs": []
+    },
+    {
+      "cell_index": 30,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def generatorfunction(start, stop, step):\n    while True:\n        num = start\n        start += step\n        if num <= stop:\n            yield num\n        else:\n            return 'End of numbers'\nprint(list(generatorfunction(1, 5, 2)))",
+      "outputs": []
+    },
+    {
+      "cell_index": 31,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Turning a list into an iterator",
+      "outputs": []
+    },
+    {
+      "cell_index": 32,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "myiterator = iter([1,3,5])\n\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))",
+      "outputs": []
+    },
+    {
+      "cell_index": 33,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Mylist(list):\n    pass\nmyiterator = iter(Mylist([1,3,5]))\n\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))",
+      "outputs": []
+    },
+    {
+      "cell_index": 34,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Mylist(list):\n    def __iter__ (self):\n        pass\nmyiterator = iter(Mylist([1,3,5]))\n\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))",
+      "outputs": []
+    },
+    {
+      "cell_index": 35,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Generator comprehension",
+      "outputs": []
+    },
+    {
+      "cell_index": 36,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "mygenerator = (x for x in range(100000000) if x%3 == 0 or x%4 == 0)\nprint(next(mygenerator))\nprint(next(mygenerator))\nprint(next(mygenerator))\nprint(next(mygenerator))",
+      "outputs": []
+    },
+    {
+      "cell_index": 37,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "l1 = [x for x in range(100000000) if x%3 == 0 or x%4 == 0]\nprint(l1[0])\nprint(l1[1])\nprint(l1[2])\nprint(l1[3])",
+      "outputs": []
+    },
+    {
+      "cell_index": 38,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### seconds since 1970-01-01 00:00:00 UTC",
+      "outputs": []
+    },
+    {
+      "cell_index": 39,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from time import time\nprint(time())\n\nfrom datetime import datetime\nprint(datetime.now().timestamp())",
+      "outputs": []
+    },
+    {
+      "cell_index": 40,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Creating a datatime object",
+      "outputs": []
+    },
+    {
+      "cell_index": 41,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime (year=2023, month=5, day=22, hour=17, minute = 10, second=30 )\nprint(type(d))\nprint(d)\n\nd = datetime ( hour=17, month=5, day=22, second=30, minute = 10, year=2023)\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 42,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime (2023, 5, 22, 17, 10, 30 )\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 43,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime (2023, 5, minute = 10, day = 22, hour = 17, second=30 )\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 44,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime (2023, 5, 22, minute = 10)\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 45,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime.now()\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 46,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Creating a datatime object, defaults",
+      "outputs": []
+    },
+    {
+      "cell_index": 47,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime (2024, 1, 10)\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 48,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime (2024, 1)\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 49,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### attributes of a datatime object",
+      "outputs": []
+    },
+    {
+      "cell_index": 50,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime.now()\nprint(d)\nprint(f\"{d.year = }, {d.month = }, {d.day = }, {d.hour = }, {d.minute = }, {d.second = }, {d.microsecond = }\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 51,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime.now()\nprint(d)\nprint(f\"\"\"\nDatum en tijd in ISO format: {d.isoformat()}\nDay of the week (1=Monday): {d.isoweekday()}\nWeek of the year: {d.isocalendar()[1]}\nYear: {d.isocalendar()[0]}\n\"\"\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 52,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### creating a string representing a datetime object",
+      "outputs": []
+    },
+    {
+      "cell_index": 53,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\n\nd = datetime.now()\nprint(d)\nprint(f\"\"\"\n{d.strftime(\"Year with century: %Y\") = }\n{d.strftime(\"Year without century: %y\") = }\n{d.strftime(\"Full month name: %B\") = }\n{d.strftime(\"Month number: %m\") = }\n{d.strftime(\"Day of the month: %d\") = }\n\n{d.strftime(\"Full weekday name: %A\") = }\n{d.strftime(\"Weekday number: %w\") = }\n\n{d.strftime(\"Week number of the year: %U\") = }\n{d.strftime(\"Day number of the year: %j\") = }\n\n{d.strftime(\"Hour number: %H\") = }\n{d.strftime(\"Minute number: %M\") = }\n{d.strftime(\"Second number: %S\") = }\n\"\"\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 54,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Creating a datetime object by passing a string",
+      "outputs": []
+    },
+    {
+      "cell_index": 55,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\nd = datetime.strptime(\"2024$05%20\",\"%Y$%m%%%d\")\nprint(d)\n\nfrom datetime import datetime\nd = datetime.strptime(\"24$05%20\",\"%y$%m%%%d\")\nprint(d)\n\nfrom datetime import datetime\nd = datetime.strptime(\"24$05%20\",\"%y$%m%%%d\")\nprint(d)\n\nfrom datetime import datetime\nd = datetime.strptime(\"2024*141\",\"%Y*%j\")\nprint(d)\n\nfrom datetime import datetime\nd = datetime.strptime(\"2024*20xyz1\",\"%Y*%Uxyz%w\")\nprint(d)\n\nfrom datetime import datetime\nd = datetime.strptime(\"202420Monday\",\"%Y%U%A\")\nprint(d)\n\nfrom datetime import datetime\nd = datetime.strptime(\"00:00:00 20-05-2024\", \"%H:%M:%S %d-%m-%Y\")\nprint(d)",
+      "outputs": [
+        "2024-05-20 00:00:00\n2024-05-20 00:00:00\n2024-05-20 00:00:00\n2024-05-20 00:00:00\n2024-05-20 00:00:00\n2024-05-20 00:00:00\n2024-05-20 00:00:00"
+      ]
+    },
+    {
+      "cell_index": 56,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Changing a datetime object with the replace method",
+      "outputs": []
+    },
+    {
+      "cell_index": 57,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\nd = datetime.now()\nprint(d)\nd = d.replace(year=2026, month=10, day=13, hour=13, minute=10,second=13, microsecond=123456)\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 58,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\nd = datetime.now()\nprint(d)\nd = d.replace(day=13)\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 59,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\nd = datetime.now()\nprint(d)\nd = d.replace(year=d.year - 2)\nprint(d)",
+      "outputs": []
+    },
+    {
+      "cell_index": 60,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Arithmetic with datetime and timedelta objects",
+      "outputs": []
+    },
+    {
+      "cell_index": 61,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\nbirthday = datetime(1923, 10, 26)\nage = datetime.now() - birthday\n\nprint(f\"\"\"\n{age.days =}\n{age.seconds =}\n\"\"\")\nprint(type(age))",
+      "outputs": []
+    },
+    {
+      "cell_index": 62,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime\nbirthday = datetime(1923, 10, 26)\ntoday = datetime.now()\n\nage = today.year - birthday.year - 1\nage += today.month > birthday.month or today.month == birthday.month and today.day >= birthday.day\n\nprint(f\"\"\"\n{age = } years\n\"\"\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 63,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "from datetime import datetime, timedelta\ntoday = datetime.now()\nfuture_day = datetime.now() + timedelta(days=100)\nprint (future_day.strftime(\"%Y-%m-%d\"))\n\nfrom datetime import datetime, timedelta\ntoday = datetime.now()\nfuture_day = datetime.now() + timedelta(weeks=14, days=2)\nprint (future_day.strftime(\"%Y-%m-%d\"))\n\nfrom datetime import datetime, timedelta\ntoday = datetime.now()\nfuture_day = datetime.now() + timedelta(hours=100*24)\nprint (future_day.strftime(\"%Y-%m-%d\"))\n\nfrom datetime import datetime, timedelta\ntoday = datetime.now()\nfuture_day = datetime.now() + timedelta(minutes=100*24*60)\nprint (future_day.strftime(\"%Y-%m-%d\"))\n\nfrom datetime import datetime, timedelta\ntoday = datetime.now()\nfuture_day = datetime.now() + timedelta(seconds=100*24*60*60)\nprint (future_day.strftime(\"%Y-%m-%d\"))",
+      "outputs": []
+    }
+  ],
+  "sources": [
+    "materials/post_midterm/Lecture Week 6.pptx",
+    "materials/post_midterm/Notebook Week 6.ipynb",
+    "materials/post_midterm/Exercise_6.1.py",
+    "materials/post_midterm/Exercise_6.2.py",
+    "materials/post_midterm/Exercise_6.3.py",
+    "materials/post_midterm/Exercise_6.4.py",
+    "materials/post_midterm/Exercise_6.5.py",
+    "materials/post_midterm/Exercise_6.6.py",
+    "materials/post_midterm/Exercise_6.7.py",
+    "materials/post_midterm/Exercise_6.8.py",
+    "materials/post_midterm/Exercise_6.9.py",
+    "materials/post_midterm/OOP.py"
+  ]
+}

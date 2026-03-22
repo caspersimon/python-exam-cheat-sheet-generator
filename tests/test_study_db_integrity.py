@@ -25,21 +25,42 @@ class StudyDatabaseIntegrityTests(unittest.TestCase):
 
     def test_week_structure(self) -> None:
         for week in self.db["weeks"]:
+            self.assertIsInstance(week.get("title"), str)
             self.assertIsInstance(week.get("topics"), list)
-            lecture = week.get("lecture")
-            self.assertIsInstance(lecture, dict)
-            self.assertIsInstance(lecture.get("concepts"), list)
-            self.assertIsInstance(lecture.get("lecture_questions"), list)
-            self.assertIsInstance(week.get("notebook_cells"), list)
-            self.assertIsInstance(week.get("homework_cells", []), list)
             self.assertIsInstance(week.get("sources"), list)
+            for topic in week.get("topics", []):
+                self.assertIsInstance(topic.get("id"), str)
+                self.assertIsInstance(topic.get("title"), str)
+                self.assertIsInstance(topic.get("order"), int)
+                self.assertIsInstance(topic.get("lecture_refs"), list)
+                self.assertIsInstance(topic.get("subtopics"), list)
+                for subtopic in topic.get("subtopics", []):
+                    self.assertIsInstance(subtopic.get("id"), str)
+                    self.assertIsInstance(subtopic.get("title"), str)
+                    self.assertIsInstance(subtopic.get("order"), int)
+                    for bucket in ["knowledge_snippets", "code_snippets", "question_snippets"]:
+                        self.assertIsInstance(subtopic.get(bucket), list)
+
+    def test_snippet_ids_are_unique_and_provenance_exists(self) -> None:
+        seen_ids: set[str] = set()
+        for week in self.db["weeks"]:
+            for topic in week.get("topics", []):
+                for subtopic in topic.get("subtopics", []):
+                    for bucket in ["knowledge_snippets", "code_snippets", "question_snippets"]:
+                        for snippet in subtopic.get(bucket, []):
+                            snippet_id = snippet.get("id")
+                            self.assertIsInstance(snippet_id, str)
+                            self.assertNotIn(snippet_id, seen_ids, f"Duplicate snippet id found: {snippet_id}")
+                            seen_ids.add(snippet_id)
+                            self.assertIsInstance(snippet.get("source_refs"), list)
+                            self.assertGreater(len(snippet["source_refs"]), 0, f"{snippet_id} should keep provenance refs")
+                            self.assertIsInstance(snippet.get("curation_meta"), dict)
 
     def test_materialized_shape_is_compatible_with_pipelines(self) -> None:
-        for key in ["meta", "lectures", "notebooks", "homeworks", "exams", "key_exam_patterns_and_traps", "topic_analysis"]:
+        for key in ["meta", "lectures", "notebooks", "exams", "key_exam_patterns_and_traps", "topic_analysis"]:
             self.assertIn(key, self.materialized)
         self.assertIsInstance(self.materialized["lectures"], list)
         self.assertIsInstance(self.materialized["notebooks"], list)
-        self.assertIsInstance(self.materialized["homeworks"], list)
         self.assertIsInstance(self.materialized["exams"], list)
 
     def test_material_sources_exist(self) -> None:

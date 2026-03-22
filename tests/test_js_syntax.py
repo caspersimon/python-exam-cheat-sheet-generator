@@ -6,9 +6,10 @@ import unittest
 class JavaScriptSyntaxTests(unittest.TestCase):
     def test_app_scripts_parse(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        app_dir = root / "app"
-        js_files = sorted(app_dir.glob("*.js"))
-        self.assertTrue(js_files, "No JS files found under app/")
+        js_files = sorted((root / "app").glob("*.js")) + sorted((root / "scripts").glob("*.js")) + sorted(
+            (root / "scripts" / "lib").glob("*.js")
+        )
+        self.assertTrue(js_files, "No JS files found under app/ or scripts/")
 
         for js_file in js_files:
             with self.subTest(file=js_file.name):

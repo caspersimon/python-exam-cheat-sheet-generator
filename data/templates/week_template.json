@@ -1,62 +1,123 @@
 {
   "week": 4,
+  "title": "Week 4",
   "topics": [
-    "topic label 1",
-    "topic label 2"
-  ],
-  "lecture": {
-    "concepts": [
-      {
-        "topic": "Example Topic",
-        "explanation": "Explain the rule in exam-focused language.",
-        "code_examples": [
-          {
-            "description": "Short description",
-            "code": "x = [1, 2, 3]\nprint(x[0])"
-          }
-        ]
-      }
-    ],
-    "lecture_questions": [
-      {
-        "topic": "Example Topic",
-        "question": "What is printed by the snippet?",
-        "options": {
-          "a": "1",
-          "b": "2",
-          "c": "Error",
-          "d": "None"
-        },
-        "correct": "a",
-        "explanation": "Index 0 refers to the first element."
-      }
-    ]
-  },
-  "notebook_cells": [
     {
-      "cell_index": 1,
-      "cell_type": "code",
-      "topic": "indexing",
-      "is_advanced_optional": false,
-      "source": "x = [1, 2, 3]\nprint(x[0])",
-      "outputs": [
-        "1"
+      "id": "w4-string-fundamentals",
+      "title": "String Fundamentals",
+      "order": 1,
+      "lecture_refs": [
+        {
+          "source": "materials/lectures/Lecture Week 4.pptx"
+        }
+      ],
+      "subtopics": [
+        {
+          "id": "w4-string-fundamentals-core",
+          "title": "Quotes, Escape Characters, and Immutability",
+          "order": 1,
+          "knowledge_snippets": [
+            {
+              "id": "ks-example-1",
+              "kind": "knowledge",
+              "title": "String immutability",
+              "content": "Strings are immutable, so operations like upper() return a new string instead of changing the original in place.",
+              "source_type": "lecture",
+              "source_refs": [
+                {
+                  "source": "materials/lectures/Lecture Week 4.pptx",
+                  "source_type": "lecture",
+                  "original_id": "lecture-concept-1"
+                }
+              ],
+              "curation_meta": {
+                "confidence": 5,
+                "matched_tags": [
+                  "immutability"
+                ],
+                "migrated_from": "manual_template"
+              },
+              "merged_from_source_ids": [
+                "lecture-concept-1"
+              ],
+              "code_examples": [
+                {
+                  "description": "Create a new string",
+                  "code": "s = 'abc'\nprint(s.upper())"
+                }
+              ]
+            }
+          ],
+          "code_snippets": [
+            {
+              "id": "cs-example-1",
+              "kind": "code",
+              "title": "Notebook code example",
+              "content": "s = 'abc'\nprint(s.replace('a', 'z'))",
+              "source_type": "notebook",
+              "source_refs": [
+                {
+                  "source": "materials/post_midterm/Notebook Week 4.ipynb",
+                  "source_type": "notebook",
+                  "original_id": "notebook-cell-1"
+                }
+              ],
+              "curation_meta": {
+                "confidence": 4,
+                "matched_tags": [
+                  "replace"
+                ],
+                "migrated_from": "manual_template"
+              },
+              "merged_from_source_ids": [
+                "notebook-cell-1"
+              ],
+              "language": "python",
+              "outputs": [
+                "zbc"
+              ]
+            }
+          ],
+          "question_snippets": [
+            {
+              "id": "qs-example-1",
+              "kind": "question",
+              "title": "Practice exam trap",
+              "content": "What is printed by the following code?",
+              "source_type": "exam",
+              "source_refs": [
+                {
+                  "source": "materials/post_midterm/practice_exams_previous_years/sample.pdf",
+                  "source_type": "exam",
+                  "original_id": "exam-question-1"
+                }
+              ],
+              "curation_meta": {
+                "confidence": 4,
+                "matched_tags": [
+                  "string"
+                ],
+                "migrated_from": "manual_template"
+              },
+              "merged_from_source_ids": [
+                "exam-question-1"
+              ],
+              "options": {
+                "a": "ABC",
+                "b": "abc",
+                "c": "Error"
+              },
+              "correct": "a",
+              "explanation": "upper() returns an uppercase string.",
+              "code_context": "s = 'abc'\nprint(s.upper())"
+            }
+          ]
+        }
       ]
     }
   ],
-  "homework_cells": [
-    {
-      "cell_index": 1,
-      "cell_type": "code",
-      "topic": "indexing",
-      "is_advanced_optional": false,
-      "source": "result = [x[0], x[-1]]",
-      "outputs": []
-    }
-  ],
   "sources": [
-    "materials/lectures/Lecture Week 4.md",
-    "materials/notebooks/Notebook Week 4.ipynb",
-    "materials/homework/week 4/Exercise_4.1.py"
+    "materials/lectures/Lecture Week 4.pptx",
+    "materials/post_midterm/Notebook Week 4.ipynb"
   ]
 }

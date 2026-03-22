@@ -1,0 +1,119 @@
+Solutions week 4:
+
+The below are suggested solutions; there are typically many ways to implement ideas in code.
+
+==========================================================================
+
+Exercise 1:
+
+def main(string_1):
+    return string_1[::4]
+
+==========================================================================
+
+Exercise 2:
+
+def main(string_1):
+    return string_1[::-2] + string_1[::2]
+
+==========================================================================
+
+Exercise 3:
+
+def main(string1):
+    for el in "dab":
+       string1 = string1.replace(el, el.upper(), 2).replace(el.upper(), el, 1)
+    return string1
+
+#Alternative solution:
+
+def main2(string1):
+    for letter in 'dab':
+        LetterIndex = string1.index(letter)
+        LetterIndex = string1.index(letter,LetterIndex+1)
+        string1 = string1[:LetterIndex]+letter.upper()+string1[LetterIndex+1:]
+    return string1 
+
+==========================================================================
+
+Exercise 4:
+
+def main(string1):
+    substring = string1[:2]
+    indices = []
+    currentindex = string1.find(substring)
+    while currentindex>= 0:
+        indices.append(currentindex)
+        currentindex = string1.find(substring,currentindex+1)
+    return indices 
+
+==========================================================================
+
+Exercise 5:
+
+def main(string_1):
+    result = []
+    for letter in ['b', 'c', 'd']:
+        count = string_1.count(letter)
+        times = "time" if count == 1 else "times"
+        result.append(
+            f"The string contains the character '{letter}' {count} {times}.")
+    return result
+
+==========================================================================
+
+Exercise 6:
+
+class Main:
+    def __init__(self, index_list):
+        self.occupied_spaces = []
+        for index in range(12):
+            self.occupied_spaces.append('c' if index in index_list else None)
+
+==========================================================================
+
+Exercise 7:
+
+class Car:
+    def __init__(self, color, speed):
+        self.color = color
+        self.speed = speed
+        if color == 'brown' and speed == 'slow':
+            self.brand = 'Chevrolet'
+        else:
+            self.brand = None
+        self.worth = 'cheap' if self.brand else 'expensive'
+
+==========================================================================
+
+Exercise 8:
+
+class Calculator: 
+    def __init__(self, base_number): 
+        self.base_number = base_number 
+    
+    def add(self): 
+        return int(self.base_number + 18)
+
+    def sub(self):
+        return int(self.base_number - 28)
+
+    def mul(self): 
+        return int(self.base_number * 38)
+
+    def intdiv(self):
+        return int(self.base_number // 48)
+
+==========================================================================
+
+Exercise 9:
+
+class Student:
+    def __init__(self, name, department, university='Utrecht University'):
+        self.name = name
+        self.department = department
+        self.university = university
+
+    def info(self):
+        return (f"{self.name} studies at the {self.department} Department "
+                f"of {self.university}.")

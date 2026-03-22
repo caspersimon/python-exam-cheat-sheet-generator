@@ -24,6 +24,7 @@ from pipelines.shared import (
 from pipelines.study_database import (
     WeekCurationError,
     analyze_week_payload,
+    coerce_week_payload_to_v3,
     curate_week_payload,
     missing_source_paths,
     normalize_week_payload,
@@ -118,7 +119,8 @@ def _upsert_week(db: dict[str, Any], week_payload: dict[str, Any], *, replace_ex
 
 def _update_meta(db: dict[str, Any]) -> None:
     meta = db.setdefault("meta", {})
-    meta.setdefault("schema_version", "2.0")
+    meta.setdefault("schema_version", "3.0")
+    meta["schema_version"] = "3.0"
     meta["last_updated"] = datetime.utcnow().isoformat(timespec="seconds") + "Z"
 
     weeks_covered = sorted(
@@ -193,31 +195,30 @@ def main() -> None:
         print(f"Warning: continuing with {len(missing_sources)} missing source path(s).")
 
     if args.skip_ai_curation:
-        curated_week = normalize_week_payload(raw_week_payload)
+        normalized_week = normalize_week_payload(raw_week_payload)
         curation_report = {
-            "week": curated_week["week"],
+            "week": normalized_week["week"],
             "generator": "none",
             "model": None,
             "note": "AI curation skipped by user flag.",
             "lecture": {
-                "input_concepts": len(curated_week["lecture"]["concepts"]),
-                "curated_concepts": len(curated_week["lecture"]["concepts"]),
-                "input_lecture_questions": len(curated_week["lecture"]["lecture_questions"]),
-                "curated_lecture_questions": len(curated_week["lecture"]["lecture_questions"]),
+                "input_concepts": len(normalized_week["lecture"]["concepts"]),
+                "curated_concepts": len(normalized_week["lecture"]["concepts"]),
+                "input_lecture_questions": len(normalized_week["lecture"]["lecture_questions"]),
+                "curated_lecture_questions": len(normalized_week["lecture"]["lecture_questions"]),
                 "quality_notes": [],
             },
             "notebooks": {
-                "total_cells": len(curated_week["notebook_cells"]),
-                "kept_cells": len(curated_week["notebook_cells"]),
+                "total_cells": len(normalized_week["notebook_cells"]),
+                "kept_cells": len(normalized_week["notebook_cells"]),
                 "dropped_cells": 0,
                 "invalid_code_cells": [],
             },
-            "homework": {
-                "total_cells": len(curated_week.get("homework_cells", [])),
-            },
         }
     else:
-        curated_week, curation_report = curate_week_payload(raw_week_payload, model=args.model)
+        normalized_week, curation_report = curate_week_payload(raw_week_payload, model=args.model)
+
+    curated_week, migration_report = coerce_week_payload_to_v3(normalized_week)
 
     post_curation = analyze_week_payload(curated_week)
     if post_curation["errors"]:
@@ -242,6 +243,7 @@ def main() -> None:
         "integration_action": integration_action,
         "week_file": str(args.week_file),
         "curation": curation_report,
+        "lecture_first_migration": migration_report,
         "validation": {
             "preflight_warnings": preflight["warnings"],
             "post_curation_warnings": post_curation["warnings"],
@@ -259,10 +261,9 @@ def main() -> None:
 
     print(
         f"Week {curated_week['week']} {integration_action}. "
-        f"curated_concepts={len(curated_week['lecture']['concepts'])}, "
-        f"curated_questions={len(curated_week['lecture']['lecture_questions'])}, "
-        f"curated_notebook_cells={len(curated_week['notebook_cells'])}, "
-        f"homework_cells={len(curated_week.get('homework_cells', []))}"
+        f"topics={len(curated_week['topics'])}, "
+        f"subtopics={sum(len(topic.get('subtopics', [])) for topic in curated_week['topics'])}, "
+        f"migrated_unassigned={len(migration_report.get('unassigned_snippets', []))}"
     )
     if args.dry_run:
         print("Dry run only: canonical database was not modified.")

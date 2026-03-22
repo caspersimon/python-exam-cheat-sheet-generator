@@ -1,0 +1,23 @@
+{
+  "week": 6,
+  "source_files": [
+    "Exercise_6.1.py",
+    "Exercise_6.2.py",
+    "Exercise_6.3.py",
+    "Exercise_6.4.py",
+    "Exercise_6.5.py",
+    "Exercise_6.6.py",
+    "Exercise_6.7.py",
+    "Exercise_6.8.py",
+    "Exercise_6.9.py",
+    "Lecture Week 6.pptx",
+    "Notebook Week 6.ipynb",
+    "OOP.py"
+  ],
+  "validation": {
+    "errors": [],
+    "warnings": []
+  },
+  "syntax_errors": [],
+  "review_notes": []
+}

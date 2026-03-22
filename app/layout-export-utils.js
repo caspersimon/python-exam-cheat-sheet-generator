@@ -1,6 +1,7 @@
 function applyLayoutVariables() {
   refs.sheetStage.style.setProperty("--sheet-font", state.layout.fontFamily);
   refs.sheetStage.style.setProperty("--sheet-font-size", `${state.layout.fontSize}px`);
+  refs.sheetStage.style.setProperty("--sheet-title-size", `${state.layout.titleSize}px`);
   refs.sheetStage.style.setProperty("--sheet-line-height", String(state.layout.lineHeight));
   refs.sheetStage.style.setProperty("--sheet-letter-spacing", `${state.layout.letterSpacing}px`);
   refs.sheetStage.style.setProperty("--sheet-card-gap", `${state.layout.cardGap}px`);
@@ -10,6 +11,7 @@ function applyLayoutVariables() {
 
   refs.fontFamilySelect.value = state.layout.fontFamily;
   refs.fontSizeRange.value = String(state.layout.fontSize);
+  refs.titleSizeRange.value = String(state.layout.titleSize);
   refs.lineHeightRange.value = String(state.layout.lineHeight);
   refs.letterSpacingRange.value = String(state.layout.letterSpacing);
   refs.cardGapRange.value = String(state.layout.cardGap);
@@ -18,6 +20,7 @@ function applyLayoutVariables() {
   refs.codeBlockMarginRange.value = String(state.layout.codeBlockMargin);
 
   refs.fontSizeValue.textContent = String(state.layout.fontSize);
+  refs.titleSizeValue.textContent = String(state.layout.titleSize);
   refs.lineHeightValue.textContent = String(state.layout.lineHeight);
   refs.letterSpacingValue.textContent = String(state.layout.letterSpacing);
   refs.cardGapValue.textContent = String(state.layout.cardGap);

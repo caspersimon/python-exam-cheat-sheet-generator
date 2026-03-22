@@ -10,14 +10,15 @@ Use this guide when you need to:
 
 - manually merge or split topic cards,
 - improve content quality after regeneration,
-- ensure each swipe topic is exam-relevant and non-redundant.
+- ensure each explorer topic is exam-relevant, well-labeled, and non-redundant.
 
 ## Current Baseline
 
 At the time this guide was written:
 
-- `topic_cards.json` has **28** cards.
-- default swipe deck (`only exam topics`) has **21** cards.
+- `topic_cards.json` has **174** cards.
+- `deck_groups` covers **6** weeks.
+- exam-topic cards (`exam_stats.total_hits > 0`) total **136**.
 - exact duplicate normalized topic labels are **0**.
 - exam-topic key points have optional detail coverage (examples/tables/explanations) and should stay selectable in UI.
 
@@ -211,15 +212,15 @@ PY
 Run local app and verify:
 
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 4173
 ```
 
 Manual checks:
 
-1. Swipe count is reasonable.
+1. Topic count and sidebar labeling are reasonable.
 2. No clearly duplicated concepts with same user-facing label.
-3. Cards read cleanly (no clipped/truncated summary lines).
-4. Key-point detail blocks and examples still render in swipe view and preview/export cards.
+3. Topic Explorer cards read cleanly (no clipped/truncated summary lines).
+4. Key-point detail blocks and examples still render in the Topic Explorer and preview/export cards.
 5. Existing localStorage behavior still works after refresh.
 
 ## Merge Strategy Notes
@@ -238,7 +239,7 @@ Then curate manually by pulling strongest parts from other cards.
 
 Aim for a practical deck size where students can review without fatigue.
 
-- If default deck (`only exam topics`) feels too large, continue semantic merges.
+- If the default filtered explorer feels too noisy, continue semantic merges and improve card labels.
 - If cards become too broad, split back into focused exam concepts.
 
 ## What Not To Do

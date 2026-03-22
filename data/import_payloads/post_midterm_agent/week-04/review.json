@@ -1,0 +1,23 @@
+{
+  "week": 4,
+  "source_files": [
+    "Exercise_4.1.py",
+    "Exercise_4.2.py",
+    "Exercise_4.3.py",
+    "Exercise_4.4.py",
+    "Exercise_4.5.py",
+    "Exercise_4.6.py",
+    "Exercise_4.7.py",
+    "Exercise_4.8.py",
+    "Exercise_4.9.py",
+    "Lecture Week 4.pptx",
+    "Notebook Week 4.ipynb",
+    "Solutions week 4.txt"
+  ],
+  "validation": {
+    "errors": [],
+    "warnings": []
+  },
+  "syntax_errors": [],
+  "review_notes": []
+}

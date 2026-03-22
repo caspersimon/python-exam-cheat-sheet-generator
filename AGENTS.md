@@ -10,29 +10,32 @@ Technical handoff for coding agents and contributors working on this repository.
 - No backend/runtime services required
 - Source dataset and generated card data are JSON files in repo
 
-## Current Snapshot (2026-02-27)
+## Current Snapshot (2026-03-21)
 
-- `topic_cards.json`: **28 total cards**
-- Default exam deck (`only exam topics`): **21 cards**
+- `topic_cards.json`: **174 total cards**
+- `deck_groups`: **6** (`week-1` through `week-6`)
+- Weeks covered in the dataset: **1-6**
+- Exam-topic cards (`exam_stats.total_hits > 0`): **136**
 - Duplicate normalized topic labels: **0**
-- Exam-topic key points: **198**
-- Exam-topic key points with optional details: **198/198**
-- Optional key-point detail blocks: **247**
+- Total key points across all cards: **935**
+- Optional key-point detail blocks: **256**
 
 Curation state:
 
-- All 21 exam-topic cards were curated using an evidence-driven pass over exam + lecture + notebook + trap data.
+- Weeks `4-6` and post-midterm/final assessment material are already imported into `data/study_db.json`.
+- Raw-material ingestion is now AI-first for `.pptx`, `.ipynb`, `.py` + `.txt`, and messy `.pdf` sources.
 - `key_points_to_remember` and `ai_examples` are intentionally **variable-length** by topic based on evidence coverage.
 - There is no fixed per-topic cap for key points/examples.
-- Optional key-point `details` are enabled and intentionally selectable in the UI (example/table/explanation/commands).
-- Exact duplicate key-point text and exact duplicate example code blocks across exam topics were removed.
+- Optional key-point `details` remain intentionally selectable in the UI (`example`, `table`, `explanation`, `commands`).
+- Exact duplicate key-point text and exact duplicate example code blocks were removed.
 - Example code blocks for exam topics and key-point detail code blocks were syntax-checked.
-- A parallel Gemini generation+audit pass plus manual review was used to improve optional detail coverage and quality.
+- Duplicate user-facing topic labels were cleaned up so cards are easier to scan in the explorer sidebar.
 
 ## App Behavior
 
-- Swipe workflow for keep/reject topic cards
-- Detail selection per card (key points, examples, snippets)
+- Topic Explorer workflow with a left week/topic sidebar and a main topic-detail pane
+- Item-first selection model: users select concrete key points, examples, and snippets inside each topic
+- Preview cards are derived only from selected renderable items; empty preview cards should not exist by design
 - 2-page A4 preview with draggable/resizable cards
 - Preview editing controls for card/item edit+delete with undo (`Undo Edit`, `Ctrl/Cmd+Z`)
 - Preview card lock/unlock control to freeze position/size while editing
@@ -44,13 +47,14 @@ Curation state:
 
 Storage keys:
 
-- `python_midterm_app_state_v3`
-- `python_midterm_splash_seen_v1`
+- `python_midterm_app_state_v4`
+- `python_midterm_splash_seen_v3`
 
 ## Core Files
 
 - `index.html`: app shell and major sections
 - `app/`: split frontend logic modules (loaded in order via deferred scripts)
+- `app/topic-selection.js`: selection normalization, useful-item filtering, and preview-eligibility projection
 - `scripts/smoke_ui_playwright.js`: browser smoke test (isolated Playwright install workflow)
 - `scripts/stress_layout_playwright.js`: exhaustive layout stress test workflow
 - `scripts/gemini_test_protocol.py`: complete automated UI QA protocol (hard gates + Gemini micro-audits)
@@ -64,6 +68,7 @@ Storage keys:
 - `topic_cards.json`: curated card dataset consumed by UI
 - `data/study_db.json`: canonical structured source database
 - `materials/`: raw lectures/notebooks/exam files
+- `design_inspo/stitch_exports/`: exported Stitch reference screens used to guide the explorer redesign
 
 Generation/processing scripts:
 
@@ -122,6 +127,14 @@ Useful flags:
 - `--allow-missing-sources`: bypass strict source-path existence checks
 - `--replace-existing`: replace an existing week entry
 
+Raw-material ingestion / import helpers:
+
+```bash
+python3 scripts/ingest_raw_materials.py
+python3 scripts/validate_extracted_material.py
+python3 scripts/import_extracted_materials.py
+```
+
 ## Curation Rules (Important)
 
 When editing `topic_cards.json`:
@@ -138,7 +151,7 @@ When editing `topic_cards.json`:
 
 ## GenAI QA Workflow (Current)
 
-- Generate optional key-point details from card-local evidence (`exam_questions`, `lecture_snippets`, `notebook_snippets`, `homework_snippets`, traps).
+- Generate optional key-point details from card-local evidence (`exam_questions`, `lecture_snippets`, `notebook_snippets`, traps).
 - Audit generated details for:
   - alignment to evidence
   - completeness
@@ -187,6 +200,7 @@ python3 scripts/check_file_lengths.py
 python3 scripts/maintenance_audit.py
 python3 -m unittest discover -s tests -v
 make smoke-ui
+make full-ui
 make stress-layout-ui
 make gemini-ui-protocol
 make gemini-benchmark
@@ -224,23 +238,16 @@ print('duplicate-normalized-topics:', len([k for k, v in Counter(norm_topic(c['t
 
 for card in cards:
     s = card['sections']
-    for key in ['lecture_snippets', 'exam_questions', 'notebook_snippets', 'homework_snippets', 'homework_recommended_ids', 'ai_examples', 'key_points_to_remember', 'recommended_ids']:
+    for key in ['lecture_snippets', 'exam_questions', 'notebook_snippets', 'ai_examples', 'key_points_to_remember', 'recommended_ids']:
         assert isinstance(s.get(key), list), f"{card['id']}: {key} must be list"
     valid_ids = {
         item.get('id')
-        for bucket in ['lecture_snippets', 'exam_questions', 'notebook_snippets', 'homework_snippets']
+        for bucket in ['lecture_snippets', 'exam_questions', 'notebook_snippets']
         for item in s.get(bucket, [])
         if isinstance(item, dict)
     }
     for rid in s.get('recommended_ids', []):
         assert rid in valid_ids, f"{card['id']}: recommended id not found: {rid}"
-    homework_ids = {
-        item.get('id')
-        for item in s.get('homework_snippets', [])
-        if isinstance(item, dict)
-    }
-    for rid in s.get('homework_recommended_ids', []):
-        assert rid in homework_ids, f"{card['id']}: homework recommended id not found: {rid}"
 
 print('integrity checks passed')
 PY
@@ -289,13 +296,17 @@ PY
 2. `Get Started` dismisses splash
 3. `Reset intro` reopens splash
 4. Refresh preserves progress
-5. Swipe counts and filters behave correctly
+5. Topic Explorer sidebar behaves correctly:
+   - only one week is expanded by default
+   - topic navigation changes the main pane correctly
+   - selected-item counts update without any keep/reject flow
 6. Preview drag/resize persists
 7. Preview edit/delete actions can be undone via button and `Ctrl/Cmd+Z`; modal text edits keep native in-field undo behavior
 8. `Print` generates and prints a PDF (not raw page print)
 9. PDF export/print both show custom support prompt only after successful save/print trigger (not before)
 10. Exported cheat sheet view has no wasted chrome: no edit/delete/resize controls and no oversized title bars.
-11. Gemini protocol report (`data/test_reports/gemini_ui_test_report.json`) is green and has no fail checks.
+11. Preview contains only topics with selected content; no empty fallback cards render.
+12. Gemini protocol report (`data/test_reports/gemini_ui_test_report.json`) is green and has no fail checks.
 
 ## Contributor Notes
 

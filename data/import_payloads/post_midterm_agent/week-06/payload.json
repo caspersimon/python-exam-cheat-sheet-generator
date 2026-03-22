@@ -1,0 +1,160 @@
+{
+  "week": 6,
+  "topics": [
+    "List Comprehensions",
+    "Dictionary Comprehensions",
+    "Set Comprehensions",
+    "Nested Comprehensions",
+    "Map, Filter, and Lambda",
+    "Iterators",
+    "Object-Oriented Programming"
+  ],
+  "lecture": {
+    "concepts": [
+      {
+        "topic": "Set Comprehensions",
+        "explanation": "Set comprehensions offer a concise way to create a set from an iterable, using curly braces {}. Like all sets, duplicate values are automatically ignored, and the elements are unordered.",
+        "code_examples": [
+          {
+            "description": "Creating a set with doubled values from a list, ignoring even numbers.",
+            "code": "l1 = [1, 3, 2, 5]\ns1 = {x * 2 for x in l1 if not (x % 2 == 0)}"
+          }
+        ],
+        "week": 6
+      },
+      {
+        "topic": "String Processing with Comprehensions",
+        "explanation": "While 'string comprehensions' do not exist natively in Python, you can achieve the same result by generating a list of characters via a list comprehension and joining them together using the string .join() method.",
+        "code_examples": [
+          {
+            "description": "Doubling vowels and tripling consonants while ignoring digits.",
+            "code": "import string\ns1 = 'a1BcDE2FgH3i'\nl1 = [x * 2 if x.lower() in 'aeiou' else x * 3 for x in s1 if x in string.ascii_letters]\ns2 = ''.join(l1)"
+          }
+        ],
+        "week": 6
+      },
+      {
+        "topic": "Nested Comprehensions",
+        "explanation": "Comprehensions can be nested inside one another to create complex data structures like dictionaries of dictionaries or to iterate over multiple dimensions simultaneously. When reading nested comprehensions, read them from right to left (or outside to inside).",
+        "code_examples": [
+          {
+            "description": "Creating a nested dictionary mapping values sequentially.",
+            "code": "func = lambda x, y: x + y\nresult = {x: {y: func(x,y) for y in range(x, 4)} for x in range(1, 4)}"
+          },
+          {
+            "description": "Using tuple keys in a dictionary comprehension from two nested loops.",
+            "code": "result = {(x, y): func(x,y) for x in range(1, 4) for y in range(x, 4)}"
+          }
+        ],
+        "week": 6
+      },
+      {
+        "topic": "Comprehensions vs. Map/Filter",
+        "explanation": "Before comprehensions were introduced, combinations of map(), filter(), and lambda functions were heavily used to process iterables. Comprehensions are typically preferred now because they are more concise and easier to read.",
+        "code_examples": [
+          {
+            "description": "Comparing map/filter with a list comprehension for the exact same logic.",
+            "code": "l1 = [1, 3, 2, 4]\n# Map/Filter approach\nl2_map = list(map(lambda x: x * 2 if x%2 == 1 else x//2, filter(lambda x: x % 3 != 0, l1)))\n# Comprehension approach\nl2_comp = [x * 2 if x%2 == 1 else x // 2 for x in l1 if x % 3 != 0]"
+          }
+        ],
+        "week": 6
+      }
+    ],
+    "lecture_questions": [
+      {
+        "topic": "Set Comprehensions",
+        "question": "We already have the following code:\ns1 = '01212321'\nset1 = {int(x) * 2 for x in s1 if x in '02468'}\n\nWhich of the following lines of code will print True?",
+        "options": {
+          "a": "print(set1 == {'0', '4', '4', '4'})",
+          "b": "print(set1 == {4, 0})",
+          "c": "Both will print True",
+          "d": "Neither one will print True"
+        },
+        "correct": "b",
+        "explanation": "The comprehension filters the string down to '0', '2', '2', '2'. It then converts them to integers and multiplies them by 2, resulting in 0, 4, 4, 4. Since sets only keep unique values and have no inherent order, the set evaluates to {0, 4} or {4, 0}.",
+        "week": 6
+      }
+    ]
+  },
+  "notebook_cells": [
+    {
+      "cell_index": 1,
+      "cell_type": "code",
+      "topic": "List Comprehensions with Conditions",
+      "is_advanced_optional": false,
+      "source": "l1 = [1, 3, 2, 4]\n\n# Multiply by 2 if odd, floor divide by 2 if even. Skip numbers divisible by 3.\nl2 = [x * 2 if x % 2 == 1 else x // 2 for x in l1 if x % 3 != 0]\nprint(l2)",
+      "outputs": [
+        "[2, 1, 2]"
+      ],
+      "week": 6
+    },
+    {
+      "cell_index": 2,
+      "cell_type": "code",
+      "topic": "Dictionary Comprehensions",
+      "is_advanced_optional": false,
+      "source": "l1 = [1, 3, 2, 5]\nl2 = [1, 2, 6, 3]\n\n# Create a dictionary using zip() filtering out pairs where either value is even.\nd1 = {k: v * 3 for k, v in zip(l1, l2) if not (k % 2 == 0 or v % 2 == 0)}\nprint(d1)",
+      "outputs": [
+        "{1: 3, 5: 9}"
+      ],
+      "week": 6
+    },
+    {
+      "cell_index": 3,
+      "cell_type": "code",
+      "topic": "Using Iterators vs. Comprehensions",
+      "is_advanced_optional": false,
+      "source": "def explicitly_using_iterator(list_in):\n    iterator = iter(list_in)\n    list_out = []\n    while True:\n        try:   \n            list_out.append(next(iterator) * 4)\n        except StopIteration:\n            break\n    return list_out\n\n# The identical logic rewritten as a concise list comprehension:\ndef main(list_in):\n    return [x * 4 for x in list_in]",
+      "outputs": [],
+      "week": 6
+    },
+    {
+      "cell_index": 4,
+      "cell_type": "markdown",
+      "topic": "Nested Dict Comprehension Exercise",
+      "is_advanced_optional": false,
+      "source": "**Problem**: Transform a list of sublists (first element string, remaining 5 are integers) into a dictionary of sub-dictionaries mapped to categories.\n\n```python\ndef main(data):\n    categories = ['cat 1', 'cat 2', 'cat 3', 'cat 4', 'cat 5']\n    return {row[0]: {categories[i]: row[i+1] for i in range(5)} for row in data}\n```",
+      "outputs": [],
+      "week": 6
+    },
+    {
+      "cell_index": 5,
+      "cell_type": "code",
+      "topic": "Custom Iterators",
+      "is_advanced_optional": false,
+      "source": "class Myiterator:\n    def __init__(self, start, stop, step):\n        self.start = start\n        self.stop = stop\n        self.step = step\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        self.num = self.start\n        self.start += self.step\n        if self.num > self.stop:\n            raise StopIteration('End of numbers')\n        else:\n            return self.num\n\nmyiterator = Myiterator(1, 5, 2)\nprint(next(myiterator))\nprint(next(myiterator))\nprint(next(myiterator))",
+      "outputs": [
+        "1",
+        "3",
+        "5"
+      ],
+      "week": 6
+    },
+    {
+      "cell_index": 6,
+      "cell_type": "code",
+      "topic": "Object-Oriented Programming (Classes & Inheritance)",
+      "is_advanced_optional": false,
+      "source": "class Rectangle:\n    def __init__(self, length, width):\n        self.length = length\n        self.width = width\n        self.midpoint = f'The midpoint of this rectangle is {length/2, width/2}'\n\n    def area(self):\n        return self.length * self.width\n\n    def hstretch(self, factor):\n        self.width = factor * self.width\n\nclass Square(Rectangle):\n    def __init__(self, side):\n        self.side = side\n        super().__init__(side, side)\n\na_particular_square = Square(4)\nprint(a_particular_square.width == a_particular_square.length)\na_particular_square.hstretch(2)\nprint(a_particular_square.width == a_particular_square.length)",
+      "outputs": [
+        "True",
+        "False"
+      ],
+      "week": 6
+    }
+  ],
+  "sources": [
+    "Exercise_6.1.py",
+    "Exercise_6.2.py",
+    "Exercise_6.3.py",
+    "Exercise_6.4.py",
+    "Exercise_6.5.py",
+    "Exercise_6.6.py",
+    "Exercise_6.7.py",
+    "Exercise_6.8.py",
+    "Exercise_6.9.py",
+    "Lecture Week 6.pptx",
+    "Notebook Week 6.ipynb",
+    "OOP.py"
+  ]
+}

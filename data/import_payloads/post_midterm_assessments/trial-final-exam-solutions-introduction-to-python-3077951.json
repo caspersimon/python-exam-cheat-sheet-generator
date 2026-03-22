@@ -1,0 +1,94 @@
+{
+  "exam_label": "Trial final exam Introduction to Python",
+  "source": "practice_exams_previous_years/trial-final-exam-solutions-introduction-to-python-3077951.pdf",
+  "year": "unknown",
+  "questions": [
+    {
+      "number": 1,
+      "topic": "OOP",
+      "question": "You'd like to define a class called Vehicle. It should have two attributes: \"name\" and \"mode\", which you want to be initialized at the time of object construction.\n\nThe \"name\" attribute can be any string, and it must be passed to the object constructor. The \"mode\" attribute is also a string, but it doesn't necessarily need to be passed to the object constructor. If it isn't specified at object construction, then the \"mode\" attribute should be equal to \"land\".\n\nFor example, if we create a Vehicle object as:\nmy_car = Vehicle(\"Mazda\")\nthen the following two conditions should both be true:\nmy_car.name == \"Mazda\"\nmy_car.mode == \"land\"\n\nWhich of the following code segments achieves what you want?",
+      "options": {
+        "a": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+        "b": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+        "c": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        return name, mode",
+        "d": "class Vehicle:\n    def __init__(vehicle_name, vehicle_mode):\n        name = vehicle_name\n        mode = vehicle_mode"
+      },
+      "correct": "a",
+      "explanation": "Option A correctly uses `self` as the first parameter of the `__init__` method, provides a default value for `vehicle_mode` (\"land\"), and properly assigns both arguments to instance attributes.",
+      "code_context": ""
+    },
+    {
+      "number": 2,
+      "topic": "OOP",
+      "question": "Take a look at the following class definition.\n\nSuppose that we create a Book object and call its add_review method three times, like this:\nbook_1 = Book(\"The Lightning Thief\", \"Rick Riordan\")\nbook_1.add_review(5)\nbook_1.add_review(3)\nbook_1.add_review(3)\n\nWhat will then the following command print to the screen?\nprint(book_1.show_rating())",
+      "options": {
+        "a": "3.7",
+        "b": "4",
+        "c": "None",
+        "d": "3.67"
+      },
+      "correct": "a",
+      "explanation": "The list of review scores is [5, 3, 3]. The sum is 11, and the length is 3. 11 / 3 is approximately 3.666... Using `round(..., 1)` rounds this float to one decimal place, resulting in 3.7.",
+      "code_context": "class Book:\n    def __init__(self, title, author, review_scores=None):\n        self.title = title\n        self.author = author\n        self.review_scores = review_scores if review_scores else []\n\n    def add_review(self, score):\n        self.review_scores.append(score)\n\n    def show_rating(self):\n        if self.review_scores:\n            return round(sum(self.review_scores) / len(self.review_scores), 1)"
+    },
+    {
+      "number": 3,
+      "topic": "strings",
+      "question": "Imagine that you have a list called students, which is populated by a number of dictionaries.\n\nEach dictionary in the students list has two keys: \"Name\" and \"Grade\". The corresponding values are student names (as strings) and course grades (as floats).\n\nFor each student, you'd like to print the following text to the screen:\n[NAME] has received a grade of [GRADE].\nwhere [NAME] is substituted by the name of the student and [GRADE] is substituted by the actual course grade. The course grade should be displayed to one decimal place after the decimal point.\n\nFor example, if\nstudents = [{\"Name\": \"Adam\", \"Grade\": 7.5}, {\"Name\": \"Bernard\", \"Grade\": 8.0}]\nthen you'd like to see the following two lines printed to the screen:\nAdam has received a grade of 7.5.\nBernard has received a grade of 8.0.\n\nWhich of the following code segments will achieve what you want?",
+      "options": {
+        "a": "for student in students:\n    print(f\"{student['Name']} has received a grade of {student['Grade']:.1f}.\")",
+        "b": "for student, grade in students.items():\n    print(f\"{student} has received a grade of {grade:.1f}.\")",
+        "c": "for student in students:\n    print(f\"{student[\"Name\"]} has received a grade of {student[\"Grade\"]:.1f}.\")",
+        "d": "for student, grade in students:\n    print(f'{student} has received a grade of {grade:.1f}.')"
+      },
+      "correct": "a",
+      "explanation": "Option A correctly iterates over the list of dictionaries and uses f-strings with proper quote escaping (single quotes inside double quotes) and the `:.1f` format specifier to display the float to one decimal place.",
+      "code_context": ""
+    },
+    {
+      "number": 4,
+      "topic": "strings",
+      "question": "You need to write a function called format_phone_number that formats phone numbers. The output of the function should be a string that represents a 10-digit number. The input argument is also a string with 10 digits, but the digits may be separated by dashes (the \"-\" character) at various places.\n\nFor example, the following function calls:\nformat_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\nshould all return the string:\n\"0205251400\"\n\nWhich of the following code segments does not achieve what you want?",
+      "options": {
+        "a": "def format_phone_number(number):\n    number.replace(\"-\", \"\")\n    return number",
+        "b": "def format_phone_number(number):\n    return number.replace(\"-\", \"\")",
+        "c": "def format_phone_number(number):\n    digits = []\n    for char in number:\n        if char in \"0123456789\":\n            digits.append(char)\n    return \"\".join(digits)",
+        "d": "def format_phone_number(number):\n    return \"\".join(number.split(\"-\"))"
+      },
+      "correct": "a",
+      "explanation": "Strings in Python are immutable. The `replace()` method returns a new string, it does not modify the original string in place. Because Option A does not reassign the result of `number.replace(\"-\", \"\")` or return it directly, it returns the original, unmodified string.",
+      "code_context": ""
+    },
+    {
+      "number": 5,
+      "topic": "pandas",
+      "question": "You have a pandas DataFrame called df. It has a column called \"A\" and a column called \"B\". Both contain numbers.\n\nYou'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?",
+      "options": {
+        "a": "df[\"C\"] = df[\"A\"] + df[\"B\"]",
+        "b": "df[\"C\"] = df[\"A\"].map(lambda x: x + df[\"B\"])",
+        "c": "df[\"C\"] = df.columns(\"A\" + \"B\")",
+        "d": "df[\"C\"] = df[\"A\" + \"B\"]"
+      },
+      "correct": "a",
+      "explanation": "Pandas supports vectorized operations. You can add two Series (columns) together element-wise by directly using the `+` operator.",
+      "code_context": ""
+    },
+    {
+      "number": 6,
+      "topic": "pandas",
+      "question": "You have a pandas DataFrame called df that looks like this, when printed:\n\n      A    B    C    D\n1  9.1  9.5  9.0  6.0\n2  6.4  8.2  7.5  1.7\n3  2.5  5.3  8.8  3.0\n4  6.7  3.6  7.2  6.9\n5  8.4  1.9  8.2  3.3\n6  8.1  8.4  9.9  2.2\n\nSuppose that you'd like to create a new DataFrame that only contains those elements of column \"B\" in df that have an even-numbered index. Which of the following code lines will achieve what you want?",
+      "options": {
+        "a": "df.loc[df.index % 2 == 0, [\"B\"]]",
+        "b": "df[2, 4, 6, \"B\"]",
+        "c": "df.iloc[[2, 4, 6], 2]",
+        "d": "df.loc[2::2, \"B\"]"
+      },
+      "correct": "a",
+      "explanation": "Option A uses boolean indexing (`df.index % 2 == 0`) to select rows with even index values, and specifically selects column \"B\" using `.loc`.",
+      "code_context": ""
+    }
+  ],
+  "notes": [
+    "Topics cover Object-Oriented Programming (OOP), string formatting/manipulation, and pandas (DataFrame column arithmetic and row selection)."
+  ]
+}

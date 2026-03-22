@@ -1,0 +1,13 @@
+{
+  "source_file": "practice_exams_previous_years/final-exam-solutions-for-python-programming-62oop21.pdf",
+  "validation": {
+    "errors": [],
+    "warnings": []
+  },
+  "syntax_errors": [],
+  "review_notes": [
+    "Object-Oriented Programming (OOP) questions testing method arguments and implicit 'self' passing.",
+    "String manipulation questions involving split(), replace(), and list operations like sorted().",
+    "Pandas Series operations testing mapping and vectorized arithmetic."
+  ]
+}

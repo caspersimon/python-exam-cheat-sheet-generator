@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-highest": "#e3e3de",
+              "on-background": "#1a1c19",
+              "tertiary-fixed": "#ffddba",
+              "surface-variant": "#e3e3de",
+              "on-tertiary-container": "#f09e34",
+              "on-primary-fixed": "#00201a",
+              "outline": "#707975",
+              "on-surface-variant": "#3f4945",
+              "on-secondary-fixed-variant": "#005145",
+              "on-primary": "#ffffff",
+              "on-tertiary-fixed": "#2b1700",
+              "tertiary-fixed-dim": "#ffb866",
+              "primary": "#00342b",
+              "tertiary-container": "#623a00",
+              "on-primary-fixed-variant": "#065043",
+              "inverse-primary": "#94d3c1",
+              "primary-fixed-dim": "#94d3c1",
+              "on-tertiary-fixed-variant": "#673d00",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#44ddc1",
+              "on-error-container": "#93000a",
+              "on-secondary-fixed": "#00201a",
+              "outline-variant": "#bfc9c4",
+              "secondary": "#006b5c",
+              "primary-container": "#004d40",
+              "tertiary": "#432600",
+              "error": "#ba1a1a",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#29695b",
+              "secondary-fixed": "#68fadd",
+              "inverse-surface": "#2f312e",
+              "on-primary-container": "#7ebdac",
+              "surface-container": "#eeeee9",
+              "on-tertiary": "#ffffff",
+              "on-surface": "#1a1c19",
+              "on-secondary-container": "#007261",
+              "surface-dim": "#dadad5",
+              "background": "#fafaf5",
+              "surface-container-low": "#f4f4ef",
+              "secondary-container": "#68fadd",
+              "primary-fixed": "#afefdd",
+              "surface-bright": "#fafaf5",
+              "surface-container-high": "#e8e8e3",
+              "surface": "#fafaf5",
+              "inverse-on-surface": "#f1f1ec",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 1.25rem;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, .brand-font { font-family: 'Manrope', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Forest Logic Specifics: No gradients, simple 1px borders */
+        .content-card {
+            border: 1px solid #bfc9c4;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- SideNavBar (The Anchor) -->
+<aside class="w-[256px] h-screen fixed left-0 top-0 border-r border-outline-variant/30 bg-surface-container-low flex flex-col p-4 antialiased">
+<div class="mb-8 px-2">
+<h2 class="text-lg font-bold text-primary tracking-tight">Python Craft</h2>
+<p class="text-xs text-on-surface-variant/70 uppercase tracking-widest font-semibold">The Digital Atelier</p>
+</div>
+<nav class="flex-1 space-y-6 overflow-y-auto">
+<!-- Week Groups -->
+<div>
+<h3 class="px-2 mb-2 text-[10px] font-bold text-on-surface-variant/50 uppercase tracking-widest">Week 1: Basics</h3>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm rounded bg-surface-container-lowest text-primary font-semibold border border-outline-variant/20 shadow-sm transition-all" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="auto_stories">auto_stories</span>
+<span>Intro to Types</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm rounded text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span>Variable Scope</span>
+</a>
+</div>
+</div>
+<div>
+<h3 class="px-2 mb-2 text-[10px] font-bold text-on-surface-variant/50 uppercase tracking-widest">Week 2: Control Flow</h3>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm rounded text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+<span>Boolean Logic</span>
+</a>
+</div>
+</div>
+<div>
+<h3 class="px-2 mb-2 text-[10px] font-bold text-on-surface-variant/50 uppercase tracking-widest">Week 3: Functions</h3>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm rounded text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span>*args and **kwargs</span>
+</a>
+</div>
+</div>
+<div>
+<h3 class="px-2 mb-2 text-[10px] font-bold text-on-surface-variant/50 uppercase tracking-widest">Week 4: Data Structures</h3>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm rounded bg-primary text-on-primary font-semibold shadow-md" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span>Dictionary Slicing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm rounded text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span>List Comprehensions</span>
+</a>
+</div>
+</div>
+<div>
+<h3 class="px-2 mb-2 text-[10px] font-bold text-on-surface-variant/50 uppercase tracking-widest">Week 5 &amp; 6</h3>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm rounded text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+<span>Decorators</span>
+</a>
+</div>
+</div>
+</nav>
+<div class="pt-4 border-t border-outline-variant/20 flex items-center gap-3 px-2">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold">JD</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate">User profile</p>
+<p class="text-[10px] text-on-surface-variant truncate">Python Artisan</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[256px] min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="h-16 fixed top-0 right-0 left-[256px] z-40 bg-white border-b border-outline-variant/30 flex justify-between items-center px-8">
+<div class="flex items-center gap-4">
+<h1 class="text-lg font-black text-primary uppercase tracking-tighter">Cheat Sheet Builder</h1>
+<div class="h-4 w-px bg-outline-variant/50"></div>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="w-[60%] h-full bg-secondary"></div>
+</div>
+<span class="text-[11px] font-bold text-on-surface-variant">12/20 Selected</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-1.5 text-xs font-bold border border-outline text-on-surface rounded hover:bg-surface-container transition-all">Preview</button>
+<button class="px-4 py-1.5 text-xs font-bold bg-primary text-on-primary rounded hover:opacity-90 transition-all">Export</button>
+<div class="h-4 w-px bg-outline-variant/50 mx-1"></div>
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="mt-16 p-8 flex-1 bg-background max-w-7xl mx-auto w-full">
+<!-- Compact Header -->
+<div class="mb-10 border-l-4 border-primary pl-6">
+<div class="flex items-baseline gap-3">
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight">Dictionary Membership and Slicing</h2>
+<span class="text-xs font-bold px-2 py-0.5 bg-tertiary-container text-on-tertiary-container rounded">18 exam questions count</span>
+</div>
+<p class="text-on-surface-variant mt-1 text-sm max-w-2xl">Mastering the 'in' operator for key validation and advanced dict-comprehension patterns for subset extraction.</p>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Column: Key Points & Code -->
+<div class="col-span-8 space-y-10">
+<!-- Key Points Grid (2x3) -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60 mb-4">Core Concepts</h3>
+<div class="grid grid-cols-3 gap-4">
+<!-- Point 1 -->
+<div class="p-4 border border-outline-variant/40 bg-white rounded flex flex-col justify-between h-32">
+<p class="text-sm font-semibold leading-snug">The 'in' operator checks keys, not values.</p>
+<div class="flex items-center gap-4 mt-2 pt-2 border-t border-outline-variant/20">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Point</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Code</span>
+</label>
+</div>
+</div>
+<!-- Point 2 -->
+<div class="p-4 border border-outline-variant/40 bg-white rounded flex flex-col justify-between h-32">
+<p class="text-sm font-semibold leading-snug">Dict slicing via comprehensions (Python 3.x).</p>
+<div class="flex items-center gap-4 mt-2 pt-2 border-t border-outline-variant/20">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Point</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Code</span>
+</label>
+</div>
+</div>
+<!-- Point 3 -->
+<div class="p-4 border border-outline-variant/40 bg-white rounded flex flex-col justify-between h-32">
+<p class="text-sm font-semibold leading-snug">Using .get() for safe default retrieval.</p>
+<div class="flex items-center gap-4 mt-2 pt-2 border-t border-outline-variant/20">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Point</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Code</span>
+</label>
+</div>
+</div>
+<!-- Point 4 -->
+<div class="p-4 border border-outline-variant/40 bg-white rounded flex flex-col justify-between h-32">
+<p class="text-sm font-semibold leading-snug">Performance of O(1) membership testing.</p>
+<div class="flex items-center gap-4 mt-2 pt-2 border-t border-outline-variant/20">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Point</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Code</span>
+</label>
+</div>
+</div>
+<!-- Point 5 -->
+<div class="p-4 border border-outline-variant/40 bg-white rounded flex flex-col justify-between h-32">
+<p class="text-sm font-semibold leading-snug">Membership in nested dictionaries.</p>
+<div class="flex items-center gap-4 mt-2 pt-2 border-t border-outline-variant/20">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Point</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Code</span>
+</label>
+</div>
+</div>
+<!-- Point 6 -->
+<div class="p-4 border border-outline-variant/40 bg-white rounded flex flex-col justify-between h-32">
+<p class="text-sm font-semibold leading-snug">Immutable keys and membership stability.</p>
+<div class="flex items-center gap-4 mt-2 pt-2 border-t border-outline-variant/20">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Point</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Code</span>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Code Examples Horizontal Rail -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60 mb-4">Code Examples</h3>
+<div class="flex gap-4 overflow-x-auto pb-4 -mx-2 px-2 scrollbar-hide">
+<div class="min-w-[320px] bg-surface-container-high border-l-4 border-primary p-4 rounded-r">
+<p class="text-[10px] font-bold text-primary mb-2 uppercase">Basic Membership</p>
+<pre class="text-xs leading-relaxed text-on-surface"><code>user = {"id": 1, "name": "JD"}
+if "id" in user:
+    print(user["id"])
+# Output: 1</code></pre>
+</div>
+<div class="min-w-[320px] bg-surface-container-high border-l-4 border-primary p-4 rounded-r">
+<p class="text-[10px] font-bold text-primary mb-2 uppercase">Dictionary Slicing</p>
+<pre class="text-xs leading-relaxed text-on-surface"><code>d = {'a':1, 'b':2, 'c':3}
+ks = ['a', 'c']
+res = {k: d[k] for k in ks}
+# {'a': 1, 'c': 3}</code></pre>
+</div>
+<div class="min-w-[320px] bg-surface-container-high border-l-4 border-primary p-4 rounded-r opacity-60">
+<p class="text-[10px] font-bold text-primary mb-2 uppercase">Safe Get</p>
+<pre class="text-xs leading-relaxed text-on-surface"><code>val = d.get('z', 0)
+# Returns 0 if 'z'
+# is not in d</code></pre>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Common Questions -->
+<div class="col-span-4 border-l border-outline-variant/30 pl-8">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60 mb-6">Common Questions</h3>
+<ul class="space-y-6">
+<li class="group">
+<p class="text-xs font-bold text-primary mb-1">What is the time complexity of 'in'?</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">Dictionary lookups are O(1) on average, making them significantly faster than list membership checks O(n).</p>
+</li>
+<li class="group">
+<p class="text-xs font-bold text-primary mb-1">Does 'in' work on nested keys?</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">No, it only checks top-level keys. For nested structures, you must chain lookups or use recursive functions.</p>
+</li>
+<li class="group">
+<p class="text-xs font-bold text-primary mb-1">Can I slice with a range object?</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">Dictionaries are unordered (pre-3.7) or insertion-ordered. Standard [start:stop] slicing does not work directly.</p>
+</li>
+<li class="group">
+<p class="text-xs font-bold text-primary mb-1">KeyError vs Membership?</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">Using 'in' prevents KeyError exceptions entirely, which is cleaner than try-except blocks in many scenarios.</p>
+</li>
+</ul>
+<div class="mt-12 p-4 bg-surface-container rounded border border-outline-variant/20">
+<p class="text-[10px] font-black uppercase text-secondary mb-2">Exam Tip</p>
+<p class="text-xs text-on-surface-variant italic">Watch for questions that confuse .keys() with checking values. 'in' defaults to keys.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
