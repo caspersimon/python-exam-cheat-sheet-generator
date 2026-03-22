@@ -1,0 +1,80 @@
+{
+  "exam_label": "Test Exam 07-06-22",
+  "source": "practice_exams_previous_years/final-exam-solutions-for-python-programming-course-code-308088-308234.pdf",
+  "year": "2022",
+  "questions": [
+    {
+      "number": 1,
+      "topic": "OOP",
+      "question": "Given the class definition above, trying to execute the following two code lines will result in a Python error.\nmy_flight = Flight(\"KLM\", \"Amsterdam\", \"Paris\")                     # Code line 1\nmy_flight.set_date(my_flight, \"29-02-2022\")                         # Code line 2\n\nWhy?",
+      "options": {
+        "a": "The first argument (my_flight) should not have been passed to the set_date method in Code line 2.",
+        "b": "The capacity of the flight is not specified as an argument in Code line 1.",
+        "c": "The argument self is missing in Code line 1.",
+        "d": "The date string passed as an argument in Code line 2 represents an invalid date."
+      },
+      "correct": "a",
+      "explanation": "In Python, when calling a method on an object, the object itself is automatically passed as the first argument (self). Passing my_flight explicitly results in too many arguments being passed to set_date.",
+      "code_context": "class Flight:\n    def __init__(self, airline, origin, destination, capacity=300):\n        self.airline = airline\n        self.origin = origin\n        self.destination = destination\n        self.capacity = capacity\n\n    def set_date(self, date):\n        self.date = date"
+    },
+    {
+      "number": 2,
+      "topic": "OOP",
+      "question": "Suppose that you also want to write a method called compare that compares the book to another book and gives a recommendation for which one to read. A book is better than another book if its average review score is higher than the second book's and it has at least as many reviews as the second book.\n\nThe compare method should return the title of the better book. If neither book is better than the other, then it should return None.\n\nFor simplicity, you can assume that both books have at least one review already.\n\nWhich method definition achieves what you want?",
+      "options": {
+        "a": "def compare(self, other):\n    avg_better = self.average_score() > other.average_score()\n    no_fewer_reviews = self.num_reviews() >= other.num_reviews()\n    if avg_better and no_fewer_reviews:\n        return self.title\n    elif not avg_better:\n        return other.title\n    else:\n        return None",
+        "b": "def compare(self, other):\n    for first, second in [(self, other), (other, self)]:\n        avg_better = first.average_score() > second.average_score()\n        no_fewer_reviews = first.num_reviews() >= second.num_reviews()\n        if avg_better and no_fewer_reviews:\n            return first.title",
+        "c": "Both methods above compare the book objects as intended.",
+        "d": "Neither of the two methods above compare the book objects as intended."
+      },
+      "correct": "b",
+      "explanation": "Option A fails because its 'elif not avg_better:' condition triggers simply when the other book has an equal or better score, but it returns the other book's title without checking if the other book has at least as many reviews as the first book. Option B checks both pairs (self, other) and (other, self) against the requirements, returning the better one, or implicitly returning None if neither is better.",
+      "code_context": "class Book:\n    def __init__(self, title, author):\n        self.title = title\n        self.author = author\n        self.review_scores = []\n\n    def add_review(self, score):\n        self.review_scores.append(score)\n\n    def num_reviews(self):\n        return len(self.review_scores)\n\n    def average_score(self):\n        if self.num_reviews() > 0:\n            return sum(self.review_scores) / len(self.review_scores)"
+    },
+    {
+      "number": 3,
+      "topic": "Strings",
+      "question": "You would like to write a function called get_tld that extracts the top-level domain from the URL of a website. The function takes the URL as the input string in the following format:\n\"https://www.[SECOND-LEVEL DOMAIN].[TOP-LEVEL DOMAIN]/[FOLDER 1]/[...]/[FOLDER N]/[PAGE NAME].html\"\nand returns the top-level domain as a string.\n\nFor example, the function call:\nget_tld(\"https://www.uva.nl/en/education/bachelor-s/bachelors.html\")\nshould return the string:\n\"nl\"\n\nWhich of the following code segments would not achieve what you want?",
+      "options": {
+        "a": "def get_tld(url):\n    url_1 = url.split(\".\")[-1]\n    return url_1.split(\"/\")[0]",
+        "b": "def get_tld(url):\n    url_1 = url.split(\"//\")[1]\n    url_2 = url_1.split(\"/\")[0]\n    return url_2.split(\".\")[-1]",
+        "c": "def get_tld(url):\n    return url.split(\"//\")[1].split(\"/\")[0].split(\".\")[-1]",
+        "d": "def get_tld(url):\n    url_1 = url[url.find(\"//\") + 2:]\n    url_2 = url_1.split(\"/\")[0]\n    return url_2.split(\".\")[-1]"
+      },
+      "correct": "a",
+      "explanation": "Option A splits the entire URL by '.', so the last element will be 'html' (from 'bachelors.html'). Then splitting 'html' by '/' and taking the first element still results in 'html', not the top-level domain 'nl'. Therefore, it does NOT achieve what is intended.",
+      "code_context": ""
+    },
+    {
+      "number": 4,
+      "topic": "Strings",
+      "question": "You're trying to write a function called is_anagram, which takes two strings as inputs and checks whether they are anagrams of each other. That is: whether one of them can be written by rearranging the letters of the other. Upper case and lower case versions of a letter count as the same letter, and whitespace characters don't count at all.\n\nFor example, the following function calls should all return the boolean value True:\nis_anagram(\"Old West Action\", \"Clint Eastwood\")\nis_anagram(\"eleven plus two\", \"twelve plus one\")\nis_anagram(\"I am a weakish speller\", \"William Shakespeare\")\n\nwhile the following function call should return the boolean value False:\nis_anagram(\"one plus two\", \"three\")\n\nWhich of the following code segments achieves what you want?",
+      "options": {
+        "a": "def is_anagram(word_1, word_2):\n    return sorted(list(word_1.replace(\" \", \"\").lower())) == sorted(list(word_2.replace(\" \", \"\").lower()))",
+        "b": "def is_anagram(word_1, word_2):\n    return word_1.replace(\" \", \"\").lower().sort() == word_2.replace(\" \", \"\").lower().sort()",
+        "c": "def is_anagram(word_1, word_2):\n    return list(word_1.replace(\" \", \"\").lower()).sort() == list(word_2.replace(\" \", \"\").lower()).sort()",
+        "d": "def is_anagram(word_1, word_2):\n    return sorted(list(word_1)).replace(\" \", \"\").lower() == sorted(list(word_2)).replace(\" \", \"\").lower()"
+      },
+      "correct": "a",
+      "explanation": "Option A correctly removes spaces, converts strings to lower case, transforms them to lists, and sorts the lists using sorted() before comparing them. Option B is incorrect because strings do not have a .sort() method. Option C is incorrect because list.sort() operates in-place and returns None, so it would compare None == None. Option D is incorrect because sorted() returns a list, and lists do not have a .replace() or .lower() method.",
+      "code_context": ""
+    },
+    {
+      "number": 5,
+      "topic": "pandas",
+      "question": "You have a pandas Series called s, which contains floats. You'd like to create a new Series, in which each element is equal to the square of the difference between the corresponding element in s and the mean of the elements in s.\n\nFor example, if s is the Series:\n0     2.0\n1     2.0\n2     3.0\n3     5.0\ndtype: float64\n\nthen you want the new Series to be:\n0     1.0\n1     1.0\n2     0.0\n3     4.0\ndtype: float64\n\nWhich of the following code segments does not achieve what you want?",
+      "options": {
+        "a": "s.map((s - s.mean())**2)",
+        "b": "(s - s.mean())**2",
+        "c": "s.map(lambda x: (x - s.mean())**2)",
+        "d": "(s - s.mean()).map(lambda x: x**2)"
+      },
+      "correct": "a",
+      "explanation": "The map() method on a Series expects a function, dictionary, or another Series. If passed a Series, it uses the values of the caller (s) to look up indices in the passed Series. This will lead to unexpected results (looking up float values like 2.0 as indices) instead of applying the mathematical transformation. The other options correctly perform the element-wise operation.",
+      "code_context": ""
+    }
+  ],
+  "notes": [
+    "Exam covers OOP class basics, string manipulation and text processing, and introductory pandas Series operations."
+  ]
+}

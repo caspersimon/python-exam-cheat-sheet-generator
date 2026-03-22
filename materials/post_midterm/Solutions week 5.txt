@@ -1,0 +1,103 @@
+Solutions week 5:
+
+The below are suggested solutions; there are typically many ways to implement ideas in code.
+
+==========================================================================
+
+Exercise 1
+
+import pandas as pd
+
+def main(df):
+    cols_to_use = []
+    for col in df.columns:
+        if col.islower():
+            cols_to_use.append(col)
+    return df[cols_to_use]
+
+==========================================================================
+
+Exercise 2
+
+import pandas as pd
+
+def main(df):
+    return df.loc[[row for row in df.index if row.month==4]].sort_index()
+
+# Alternative solution (without list comprehension):
+
+import pandas as pd
+
+def main(df):
+    rows = []
+    for row in df.index:
+        if row.month==4:
+            rows.append(row)
+    return df.loc[rows].sort_index() 
+
+==========================================================================
+
+Exercise 3
+
+import pandas as pd
+
+def main(df):
+    return df.loc[df["A"] <= df["B"]]
+
+==========================================================================
+
+Exercise 4
+
+import pandas as pd
+
+def main(df):
+    sort_column = df.columns[3]
+    return df.sort_values(sort_column, ascending=False)
+
+==========================================================================
+
+Exercise 5
+
+import pandas as pd
+
+def main(df):
+    df["Weight (formatted)"] = df["Weight"].map(
+        lambda x: f"{x * 1000:.0f} g")
+    return df
+
+==========================================================================
+
+Exercise 6
+
+import pandas as pd
+
+def main(a, b):
+    return pd.concat([a, b, a], axis=0)
+
+==========================================================================
+
+Exercise 7
+
+import pandas as pd
+
+def main(s):
+    return s[s.str[-1].str.lower().isin(list("aeiou"))].str.capitalize()
+
+==========================================================================
+
+Exercise 8
+
+import pandas as pd
+
+def main(address, province):
+    ext_address = address.merge(province, on="Town", how="left")
+    return ext_address.fillna("No province")
+
+==========================================================================
+
+Exercise 9
+
+import pandas as pd
+
+def main(df):
+    return df.groupby('Nationality')['Height'].median()

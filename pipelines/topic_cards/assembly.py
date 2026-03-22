@@ -228,6 +228,7 @@ def build_ai_placeholders(display_topic: str) -> dict:
 
 def sort_cards(cards: dict[str, dict]) -> list[dict]:
     card_list = []
+    used_card_ids: set[str] = set()
     for key, card in cards.items():
         lecture_snippets = dedupe_list(card["lecture_snippets"], ["id"])[:12]
         exam_questions = dedupe_list(card["exam_questions"], ["id"])[:12]
@@ -246,6 +247,14 @@ def sort_cards(cards: dict[str, dict]) -> list[dict]:
         card_id = "topic-" + re.sub(r"[^a-z0-9]+", "-", key).strip("-")
         if not card_id or card_id == "topic-":
             card_id = make_id("topic", key)
+        if card_id in used_card_ids:
+            suffix = 2
+            unique_card_id = f"{card_id}-{suffix}"
+            while unique_card_id in used_card_ids:
+                suffix += 1
+                unique_card_id = f"{card_id}-{suffix}"
+            card_id = unique_card_id
+        used_card_ids.add(card_id)
 
         sections = {
             "lecture_snippets": lecture_snippets,
@@ -280,3 +289,41 @@ def sort_cards(cards: dict[str, dict]) -> list[dict]:
     )
     return card_list
 
+
+def build_week_groups(card_list: list[dict]) -> list[dict]:
+    groups = []
+    for week in sorted({week for card in card_list for week in card.get("weeks", []) if isinstance(week, int)}):
+        topic_refs = []
+        for card in card_list:
+            weeks = card.get("weeks", [])
+            if week not in weeks:
+                continue
+            sections = card.get("sections", {})
+            topic_refs.append(
+                {
+                    "card_id": card["id"],
+                    "topic": card["topic"],
+                    "canonical_topic": card.get("canonical_topic", ""),
+                    "exam_hits": card.get("exam_stats", {}).get("total_hits", 0),
+                    "related_topics": card.get("related_topics", []),
+                    "item_counts": {
+                        "lecture_snippets": len(sections.get("lecture_snippets", [])),
+                        "exam_questions": len(sections.get("exam_questions", [])),
+                        "notebook_snippets": len(sections.get("notebook_snippets", [])),
+                        "ai_examples": len(sections.get("ai_examples", [])),
+                        "key_points_to_remember": len(sections.get("key_points_to_remember", [])),
+                        "recommended_ids": len(sections.get("recommended_ids", [])),
+                    },
+                }
+            )
+
+        topic_refs.sort(key=lambda item: (-item["exam_hits"], item["topic"].lower()))
+        groups.append(
+            {
+                "id": f"week-{week}",
+                "week": week,
+                "title": f"Week {week}",
+                "topic_refs": topic_refs,
+            }
+        )
+    return groups

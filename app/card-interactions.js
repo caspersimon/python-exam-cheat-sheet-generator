@@ -1,121 +1,46 @@
-function attachCardSwipeHandlers() {
-  const card = document.getElementById("activeTopicCard");
-  if (!card) {
-    return;
-  }
-
-  const dragState = {
-    dragging: false,
-    pointerId: null,
-    startX: 0,
-    dx: 0,
-  };
-
-  card.addEventListener("pointerdown", (event) => {
-    if (event.button !== 0) {
-      return;
-    }
-    if (isInteractiveNode(event.target)) {
-      return;
-    }
-
-    dragState.dragging = true;
-    dragState.pointerId = event.pointerId;
-    dragState.startX = event.clientX;
-    dragState.dx = 0;
-    card.setPointerCapture(event.pointerId);
-    card.classList.add("dragging");
-  });
-
-  card.addEventListener("pointermove", (event) => {
-    if (!dragState.dragging || event.pointerId !== dragState.pointerId) {
-      return;
-    }
-
-    dragState.dx = event.clientX - dragState.startX;
-    const rotation = dragState.dx / 24;
-    card.style.transform = `translateX(${dragState.dx}px) rotate(${rotation}deg)`;
-    card.style.opacity = String(Math.max(0.42, 1 - Math.abs(dragState.dx) / 280));
-  });
-
-  const onPointerEnd = (event) => {
-    if (!dragState.dragging || event.pointerId !== dragState.pointerId) {
-      return;
-    }
-
-    dragState.dragging = false;
-    card.classList.remove("dragging");
-    card.releasePointerCapture(event.pointerId);
-
-    const threshold = 130;
-    const dx = dragState.dx;
-    card.style.transform = "";
-    card.style.opacity = "";
-
-    if (dx > threshold) {
-      triggerDecision("accepted");
-    } else if (dx < -threshold) {
-      triggerDecision("rejected");
-    }
-  };
-
-  card.addEventListener("pointerup", onPointerEnd);
-  card.addEventListener("pointercancel", onPointerEnd);
-}
-
 function isInteractiveNode(node) {
   return Boolean(node.closest("input,button,label,select,textarea,a,pre,code"));
 }
 
-function handleCardInputChange(event) {
-  const currentCard = getCurrentCard(getFilteredDeck());
-  if (!currentCard) {
-    return;
-  }
+function getCardById(cardId) {
+  return state.cards.find((entry) => entry.id === cardId) || null;
+}
 
-  const draft = ensureDraft(currentCard);
+function handleCardInputChange(event) {
   const input = event.target;
   const role = input.dataset.role;
-  const section = input.dataset.section;
+  const cardId = input.dataset.cardId || "";
+  const card = cardId ? getCardById(cardId) : null;
 
-  if (role === "default-selection-mode") {
-    const mode = input.value === "recommended" ? "recommended" : "none";
-    state.preferences.sourceAutoSelectMode = mode;
-    if (mode === "recommended") {
-      const split = getSourceSplit(currentCard);
-      if (!draft.selected.recommended.length) {
-        draft.selected.recommended = split.recommended.map((item) => item.id);
-      }
-    }
-    rerenderCurrentCard();
+  if (!card) {
     return;
   }
 
-  if (role === "section-toggle") {
-    const checked = Boolean(input.checked);
-    draft.sections[section] = checked;
+  const draft = ensureDraft(card);
+  const section = input.dataset.section || "";
 
-    rerenderCurrentCard();
+  if (role === "section-toggle") {
+    draft.sections[section] = Boolean(input.checked);
+    renderAll();
     return;
   }
 
   if (role === "item-toggle") {
-    const itemId = input.dataset.itemId;
+    const itemId = input.dataset.itemId || "";
     const key = sectionToSelectionKey(section);
-    if (!key) {
+    if (!key || !itemId) {
       return;
     }
 
-    const existing = draft.selected[key];
-    const next = new Set(existing);
+    const next = new Set(draft.selected[key] || []);
     if (input.checked) {
       next.add(itemId);
+      draft.sections[section] = true;
     } else {
       next.delete(itemId);
     }
     draft.selected[key] = [...next];
-    rerenderCurrentCard();
-    return;
+    renderAll();
   }
 }
 
@@ -136,6 +61,56 @@ function handleCardClick(event) {
     return;
   }
 
+  const openTopicTrigger = event.target.closest("[data-role='open-topic']");
+  if (openTopicTrigger) {
+    event.preventDefault();
+    const cardId = openTopicTrigger.dataset.cardId || "";
+    const week = Number(openTopicTrigger.dataset.week || 0);
+    setActiveTopic(cardId, week);
+    closeTopicSidebar();
+    renderAll();
+    return;
+  }
+
+  const toggleWeekTrigger = event.target.closest("[data-role='toggle-week']");
+  if (toggleWeekTrigger) {
+    event.preventDefault();
+    const week = Number(toggleWeekTrigger.dataset.week || 0);
+    if (Number.isFinite(week) && week > 0) {
+      toggleWeekExpanded(week);
+      renderSwipe();
+      schedulePersistState();
+    }
+    return;
+  }
+
+  const closeSidebarTrigger = event.target.closest("[data-role='close-topic-sidebar']");
+  if (closeSidebarTrigger) {
+    event.preventDefault();
+    closeTopicSidebar();
+    renderSwipe();
+    schedulePersistState();
+    return;
+  }
+
+  const sectionSelectAllTrigger = event.target.closest("[data-role='select-all-section']");
+  if (sectionSelectAllTrigger) {
+    event.preventDefault();
+    const cardId = sectionSelectAllTrigger.dataset.cardId || "";
+    const section = sectionSelectAllTrigger.dataset.section || "";
+    selectAllSectionItems(cardId, section);
+    return;
+  }
+
+  const clearSectionTrigger = event.target.closest("[data-role='clear-section']");
+  if (clearSectionTrigger) {
+    event.preventDefault();
+    const cardId = clearSectionTrigger.dataset.cardId || "";
+    const section = clearSectionTrigger.dataset.section || "";
+    clearSectionItems(cardId, section);
+    return;
+  }
+
   const resetIntroTrigger = event.target.closest("[data-role='reset-splash']");
   if (resetIntroTrigger) {
     event.preventDefault();
@@ -153,20 +128,6 @@ function handleCardClick(event) {
   if (!event.target.closest(".info-chip")) {
     closeOpenInfoPopovers();
   }
-
-  const trigger = event.target.closest("[data-role='toggle-card-settings']");
-  if (!trigger) {
-    return;
-  }
-
-  const currentCard = getCurrentCard(getFilteredDeck());
-  if (!currentCard) {
-    return;
-  }
-
-  const draft = ensureDraft(currentCard);
-  draft.ui.settingsOpen = !Boolean(draft.ui?.settingsOpen);
-  rerenderCurrentCard();
 }
 
 function handleCardMouseOver(event) {
@@ -175,6 +136,64 @@ function handleCardMouseOver(event) {
     return;
   }
   positionInfoPopover(infoChip);
+}
+
+function selectAllSectionItems(cardId, section) {
+  const card = getCardById(cardId);
+  if (!card) {
+    return;
+  }
+  const draft = ensureDraft(card);
+  const key = sectionToSelectionKey(section);
+  if (!key) {
+    return;
+  }
+
+  const allIds = getSectionSelectableIds(card, section);
+  draft.sections[section] = true;
+  draft.selected[key] = [...new Set(allIds)];
+  renderAll();
+}
+
+function clearSectionItems(cardId, section) {
+  const card = getCardById(cardId);
+  if (!card) {
+    return;
+  }
+  const draft = ensureDraft(card);
+  const key = sectionToSelectionKey(section);
+  if (!key) {
+    return;
+  }
+
+  draft.selected[key] = [];
+  if (key === "keyPoints") {
+    const overrides = draft.overrides || {};
+    overrides.keyPoints = {};
+    overrides.keyPointDetails = {};
+    draft.overrides = overrides;
+  } else if (key === "aiExamples") {
+    draft.overrides.aiExamples = {};
+  } else {
+    draft.overrides.sources = {};
+  }
+  renderAll();
+}
+
+function getSectionSelectableIds(card, section) {
+  if (section === "aiQuestions") {
+    return commonQuestionSelectableIds(card);
+  }
+  if (section === "keyPoints") {
+    return keyPointSelectableIds(card);
+  }
+  if (section === "aiExamples") {
+    return usefulAIExamples(card).map((item) => item.id);
+  }
+  if (section === "recommended" || section === "additional") {
+    return getSourceSplit(card)[section].map((item) => item.id);
+  }
+  return [];
 }
 
 function positionInfoPopover(infoChip) {
@@ -213,103 +232,16 @@ function positionInfoPopover(infoChip) {
 }
 
 function closeOpenInfoPopovers() {
-  refs.cardHost.querySelectorAll(".info-chip.open").forEach((chip) => chip.classList.remove("open"));
-}
-
-function rerenderCurrentCard() {
-  const currentCard = getCurrentCard(getFilteredDeck());
-  if (!currentCard) {
-    return;
-  }
-  const draft = ensureDraft(currentCard);
-  refs.cardHost.innerHTML = renderTopicCard(currentCard, draft);
-  attachCardSwipeHandlers();
-  schedulePersistState();
-}
-
-function ensureSectionHasSelection(card, draft, section) {
-  // No-op: selections are manual by default unless user enables auto-select recommended.
-  void card;
-  void draft;
-  void section;
+  refs.selectionShell?.querySelectorAll(".info-chip.open").forEach((chip) => chip.classList.remove("open"));
 }
 
 function sectionToSelectionKey(section) {
   const map = {
+    aiQuestions: "aiQuestions",
     aiExamples: "aiExamples",
     keyPoints: "keyPoints",
     recommended: "recommended",
     additional: "additional",
   };
   return map[section] || "";
-}
-
-function triggerDecision(status) {
-  const currentCard = getCurrentCard(getFilteredDeck());
-  if (!currentCard) {
-    return;
-  }
-
-  const cardElement = document.getElementById("activeTopicCard");
-  if (!cardElement) {
-    commitDecision(status, currentCard);
-    return;
-  }
-
-  const className = status === "accepted" ? "swipe-right" : "swipe-left";
-  cardElement.classList.add(className);
-
-  window.setTimeout(() => {
-    commitDecision(status, currentCard);
-  }, 150);
-}
-
-function commitDecision(status, card) {
-  clearPreviewHistory();
-  const previousDecision = state.decisions[card.id] ? deepClone(state.decisions[card.id]) : null;
-  const previousOrder = [...state.acceptedOrder];
-  state.history.push({
-    cardId: card.id,
-    previousDecision,
-    previousOrder,
-  });
-
-  if (status === "accepted") {
-    const draft = ensureDraft(card);
-    state.decisions[card.id] = {
-      status: "accepted",
-      selection: cloneDraft(draft),
-    };
-
-    if (!state.acceptedOrder.includes(card.id)) {
-      state.acceptedOrder.push(card.id);
-    }
-  } else {
-    state.decisions[card.id] = { status: "rejected" };
-    state.acceptedOrder = state.acceptedOrder.filter((id) => id !== card.id);
-  }
-
-  renderAll();
-
-  const noPending = getPendingCards(getFilteredDeck()).length === 0;
-  if (noPending && state.acceptedOrder.length > 0) {
-    setView("preview");
-  }
-}
-
-function undoLastDecision() {
-  clearPreviewHistory();
-  const entry = state.history.pop();
-  if (!entry) {
-    return;
-  }
-
-  if (entry.previousDecision) {
-    state.decisions[entry.cardId] = entry.previousDecision;
-  } else {
-    delete state.decisions[entry.cardId];
-  }
-
-  state.acceptedOrder = entry.previousOrder;
-  renderAll();
 }

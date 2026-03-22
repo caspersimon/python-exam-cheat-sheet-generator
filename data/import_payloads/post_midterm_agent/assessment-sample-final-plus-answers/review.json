@@ -1,0 +1,11 @@
+{
+  "source_file": "Sample Final plus answers.pdf",
+  "validation": {
+    "errors": [],
+    "warnings": []
+  },
+  "syntax_errors": [],
+  "review_notes": [
+    "Ignored empty extraction artifact preserved for auditability; import tooling should skip it."
+  ]
+}

@@ -11,17 +11,24 @@ The app is still a static frontend with JSON-backed content, but the codebase is
   - `state-and-init.js`: global state, refs, boot, top-level event binding.
   - `splash-storage.js`: splash + localStorage hydration/persistence.
   - `preview-pointer.js`: preview drag/resize pointer mechanics.
-  - `view-and-data.js`: filtering, deck selection, draft initialization.
-  - `render-card-sections.js`: swipe-card rendering and source section rendering.
+  - `view-and-data.js`: filters, week/topic bundle lookup, explorer navigation, and drawer/view coordination.
+  - `topic-selection.js`: useful-item filtering, draft normalization, section splits, and renderable selection projection.
+  - `render-card-sections.js`: topic explorer sidebar, topic-detail pane, and selection rail rendering.
   - `text-render-utils.js`: inline/text/code parsing and render helpers.
-  - `card-interactions.js`: input/click handlers, swipe decisions, undo.
+  - `card-interactions.js`: explorer input/click handlers, topic navigation, section bulk actions, and undo/reset hooks.
   - `preview-card-render.js`: preview card/item rendering with edit/delete controls.
   - `preview-editing.js`: preview item/card edit/delete actions.
-  - `preview-render.js`: 2-page preview rendering and selected-content projection.
+  - `preview-render.js`: 2-page preview rendering and selection-driven topic projection.
   - `preview-history.js`: preview edit/delete undo snapshots.
   - `layout-export-utils.js`: layout variables, PNG export, shared helpers.
   - `pdf-export-utils.js`: generated-PDF export + generated-PDF print flow.
   - `main.js`: final bootstrap (`init()`).
+
+The old keep/reject swipe pipeline is gone. The current selection model is item-first:
+
+- users navigate by week and topic from the left rail,
+- users opt in to concrete content items inside each topic,
+- preview cards are created only for topics with at least one selected renderable item.
 
 ## Styling
 
@@ -45,14 +52,28 @@ Root scripts are now thin entrypoints that delegate to `pipelines/`:
 
 For `key_point_details`, the large rule chain is split into ordered matcher modules (`rules_part1.py` ... `rules_part4.py`) to preserve behavior while avoiding oversized files.
 
-Canonical study data now lives in `data/study_db.json` (week-structured database). The topic-card pipeline materializes this DB into the shape needed for card generation at runtime.
+Canonical study data now lives in `data/study_db.json` (lecture-first week/topic/subtopic database, schema `3.0`). The topic-card pipeline materializes this DB into the shape needed for card generation at runtime, including:
+
+- `cards`: one card per canonical lecture topic, each with explicit subtopics and grouped snippets
+- `deck_groups`: the 6 week bundles used by the Topic Explorer sidebar
 
 Week ingestion flow:
 
 - `scripts/add_week_material.py`: adds one week payload to `data/study_db.json`.
+- `scripts/rewrite_study_db_lecture_first.py`: rewrites legacy/flat study data into the lecture-first canonical schema.
 - `pipelines/study_database/curation.py`: AI-first curation via `gemini-cli` (concept cleaning, notebook cell filtering/scoring).
+- `pipelines/study_database/lecture_first.py`: lecture-outline mapping, snippet normalization, and migration helpers.
 - `pipelines/study_database/validators.py`: payload preflight validation and source-path checks.
 - `data/curation_reports/`: manual-review artifacts for each ingestion run.
+
+Raw material ingestion for post-midterm content is also available through:
+
+- `pipelines/study_database/raw_sources.py`: source extraction, including OCR fallback for messy PDFs
+- `pipelines/study_database/raw_agents.py`: agent/Gemini orchestration for raw-source interpretation
+- `pipelines/study_database/raw_ingestion.py`: end-to-end structured ingestion pipeline
+- `scripts/ingest_raw_materials.py`
+- `scripts/validate_extracted_material.py`
+- `scripts/import_extracted_materials.py`
 
 Testing/QA automation:
 

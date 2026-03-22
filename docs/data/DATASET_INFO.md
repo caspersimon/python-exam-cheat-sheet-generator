@@ -8,6 +8,12 @@ The canonical source dataset is:
 
 This file is the single source of truth used by the generation pipeline.
 
+Related generated audit artifact:
+
+- `data/quality/source_coverage_report.json`
+
+This report records coverage for homework exercises and assessment questions against the current `topic_cards.json` output.
+
 ## Raw Source Materials
 
 Course/source files are organized under `materials/`:
@@ -27,7 +33,7 @@ Course/source files are organized under `materials/`:
 ```json
 {
   "meta": {
-    "schema_version": "2.0",
+    "schema_version": "3.0",
     "course": "...",
     "description": "...",
     "weeks_covered": [1, 2, 3],
@@ -37,12 +43,25 @@ Course/source files are organized under `materials/`:
   "weeks": [
     {
       "week": 1,
-      "topics": ["..."],
-      "lecture": {
-        "concepts": ["..."],
-        "lecture_questions": ["..."]
-      },
-      "notebook_cells": ["..."],
+      "title": "Week 1",
+      "topics": [
+        {
+          "id": "w1-python-basics",
+          "title": "Python Basics",
+          "order": 1,
+          "lecture_refs": [{"source": "materials/lectures/Lecture Week 1.md"}],
+          "subtopics": [
+            {
+              "id": "w1-python-basics-execution-model",
+              "title": "Execution Model, Logical Lines, and Comments",
+              "order": 1,
+              "knowledge_snippets": ["..."],
+              "code_snippets": ["..."],
+              "question_snippets": ["..."]
+            }
+          ]
+        }
+      ],
       "sources": ["materials/..."],
       "curation_meta": {
         "generator": "gemini-cli",
@@ -68,6 +87,23 @@ Course/source files are organized under `materials/`:
 }
 ```
 
+## topic_cards.json Dense Curation Notes
+
+The materialized `topic_cards.json` now supports denser exam-focused structures in addition to raw source buckets:
+
+- `sections.ai_common_questions.items`
+  - structured common-question blocks with `summary`, `detail`, optional `extra`, optional `code`, and optional `table`
+- `sections.ai_examples[*].output`
+  - optional explicit output/result text rendered beneath code examples when the example depends on a concrete result
+- `sections.key_points_to_remember[*].details`
+  - optional `example`, `table`, `commands`, and `explanation` details for high-density reference content
+
+The intended build strategy is:
+
+1. mine lecture/questions/exams/notebooks/homework for exam-relevant patterns,
+2. compress them into denser representations when that preserves exam usefulness,
+3. keep raw source snippets only when they still add standalone value.
+
 ## Week Ingestion Contract
 
 Use `data/templates/week_template.json` as the input schema for new week material.
@@ -75,10 +111,12 @@ Use `data/templates/week_template.json` as the input schema for new week materia
 Required fields:
 
 - `week` (int)
-- `topics` (list[str])
-- `lecture.concepts` (list[object])
-- `lecture.lecture_questions` (list[object])
-- `notebook_cells` (list[object])
+- `title` (str)
+- `topics` (list[object])
+- `topics[*].subtopics` (list[object])
+- `topics[*].subtopics[*].knowledge_snippets` (list[object])
+- `topics[*].subtopics[*].code_snippets` (list[object])
+- `topics[*].subtopics[*].question_snippets` (list[object])
 - `sources` (list[str])
 
 ## AI-First Ingestion Workflow
@@ -98,14 +136,14 @@ python3 scripts/add_week_material.py \
 
 What it does:
 
-1. Validates week payload shape.
+1. Validates week payload shape (`v3` directly, or older flat payloads that are auto-converted).
 2. Verifies payload source paths exist (unless `--allow-missing-sources` is set).
-3. Runs Gemini curation on lecture concepts/questions and notebook cells.
-4. Filters low-value notebook cells via AI keep/drop scoring.
-5. Re-validates the curated payload before integration.
+3. Runs Gemini curation on legacy lecture/notebook payloads when requested.
+4. Converts the week into the lecture-first `week -> topic -> subtopic -> snippet` schema.
+5. Re-validates the converted payload before integration.
 6. Integrates curated week into `data/study_db.json` (unless `--dry-run`).
 7. Recomputes `knowledge.topic_analysis` (unless disabled).
-8. Writes a manual-review report to `data/curation_reports/` (review is required before downstream regeneration).
+8. Writes a manual-review report to `data/curation_reports/`, including lecture-first assignment metadata.
 
 ## One-Time Migration (Old Monolith -> study_db)
 

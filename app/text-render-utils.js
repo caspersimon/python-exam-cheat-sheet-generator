@@ -28,7 +28,7 @@ function renderOptionValue(value) {
   }
 
   if (text.includes("\n") || isCodeBlockLikely(text)) {
-    return `<pre class="option-code">${escapeHtml(text)}</pre>`;
+    return renderCodeBlock(text, "option-code");
   }
 
   return `<span class="option-text">${renderInlineCode(text)}</span>`;
@@ -54,7 +54,7 @@ function renderQuestionContent(question, codeContext = "", label = "") {
   }
 
   codeBlocks.forEach((block) => {
-    parts.push(`<pre class="question-code">${escapeHtml(block)}</pre>`);
+    parts.push(renderCodeBlock(block, "question-code"));
   });
 
   if (!parts.length) {
@@ -146,8 +146,62 @@ function normalizeNewlines(text) {
   return String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
+function sanitizeDisplayText(text) {
+  return decodeHtmlEntities(
+    normalizeNewlines(String(text || ""))
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<\/(ul|ol|p)>/gi, "\n")
+      .replace(/<(ul|ol|p)>/gi, "")
+      .replace(/<li>/gi, "- ")
+      .replace(/<\/li>/gi, "\n")
+      .replace(/<\/?(strong|b|em|i|code)>/gi, "")
+  );
+}
+
+function decodeHtmlEntities(text) {
+  return String(text || "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'");
+}
+
+function autoBacktickInlineCode(text) {
+  const value = String(text || "");
+  if (!value) {
+    return "";
+  }
+
+  const tokenPattern =
+    /(\b(?:print|len|range|type|id|set|list|dict|tuple|str|int|float|bool|iter|next|map|filter|sorted|enumerate|zip|None|True|False)\b(?=[\s,.:;)\]])|\b[A-Za-z_][A-Za-z0-9_]*\([^()\n]{0,40}\)|\b[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z_][A-Za-z0-9_]*\b|==|!=|<=|>=|\/\/|\*\*|%|\^)/g;
+
+  return value
+    .split("`")
+    .map((chunk, idx) => {
+      if (idx % 2 === 1) {
+        return chunk;
+      }
+      return chunk.replace(tokenPattern, (match, _group, offset, source) => {
+        const before = source[offset - 1] || "";
+        const after = source[offset + match.length] || "";
+        if (before === "`" || after === "`") {
+          return match;
+        }
+        if (/[A-Za-z0-9_]/.test(before) || /[A-Za-z0-9_]/.test(after)) {
+          return match;
+        }
+        return `\`${match}\``;
+      });
+    })
+    .join("`");
+}
+
 function renderInlineCode(text) {
-  const value = normalizeNewlines(closeUnbalancedBackticks(text || ""));
+  const value = closeUnbalancedBackticks(
+    normalizeMalformedInlineCode(autoBacktickInlineCode(sanitizeDisplayText(text || "")))
+  );
   if (!value) {
     return "";
   }
@@ -158,7 +212,7 @@ function renderInlineCode(text) {
       if (idx % 2 === 1) {
         return `<code class="inline-code">${escapeHtml(chunk)}</code>`;
       }
-      return escapeHtml(chunk).replace(/\n/g, "<br />");
+      return escapeHtml(chunk).replace(/\n+/g, " ");
     })
     .join("");
 }
@@ -170,4 +224,12 @@ function closeUnbalancedBackticks(text) {
     return `${value}\``;
   }
   return value;
+}
+
+function normalizeMalformedInlineCode(text) {
+  return String(text || "")
+    .replace(/`e\.g`/g, "e.g")
+    .replace(/`\/`/g, "/")
+    .replace(/`None`(?=\s+of the above)/g, "None")
+    .replace(/`from`(?=\s+(?:the value|right to left|the others|the following))/g, "from");
 }

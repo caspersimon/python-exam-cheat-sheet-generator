@@ -1,0 +1,997 @@
+{
+  "week": 4,
+  "topics": [
+    "String Methods",
+    "String Slicing and Manipulation",
+    "F-strings",
+    "Object-Oriented Programming (OOP)",
+    "Error Handling",
+    "The String Module"
+  ],
+  "lecture": {
+    "concepts": [
+      {
+        "topic": "String Immutability",
+        "explanation": "Strings in Python are immutable, meaning they cannot be changed in place. Methods like upper() or replace() return a new string object rather than modifying the original.",
+        "code_examples": [
+          {
+            "description": "Attempting to change a string",
+            "code": "s1 = 'abcd'\ns1.capitalize()  # Returns 'Abcd'\nprint(s1)        # Still prints 'abcd'"
+          }
+        ]
+      },
+      {
+        "topic": "String Searching: find vs index",
+        "explanation": "Both find() and index() search for a substring. The key difference is that find() returns -1 if the substring is not found, while index() raises a ValueError.",
+        "code_examples": [
+          {
+            "description": "Behavior when substring is missing",
+            "code": "s = 'abc'\nprint(s.find('z'))   # -1\n# print(s.index('z')) # Raises ValueError"
+          }
+        ]
+      },
+      {
+        "topic": "String Slicing with Step",
+        "explanation": "Slicing allows a third parameter 'step'. s[::2] takes every second character, while s[::-1] reverses the string.",
+        "code_examples": [
+          {
+            "description": "Slicing examples",
+            "code": "s = '01234567'\nprint(s[::4])    # '04'\nprint(s[::-2])   # '7531'"
+          }
+        ]
+      },
+      {
+        "topic": "The join Method",
+        "explanation": "The join() method takes an iterable (like a list) and concatenates its elements using the string it is called on as a separator.",
+        "code_examples": [
+          {
+            "description": "Joining a list into a string",
+            "code": "words = ['a', 'b', 'c']\nprint('-'.join(words)) # 'a-b-c'\nprint(''.join(words))  # 'abc'"
+          }
+        ]
+      },
+      {
+        "topic": "The replace Method",
+        "explanation": "Replaces occurrences of a substring. It accepts an optional 'count' argument to limit the number of replacements.",
+        "code_examples": [
+          {
+            "description": "Limiting replacements",
+            "code": "s = 'aaaa'\nprint(s.replace('a', 'b', 2)) # 'bbaa'"
+          }
+        ]
+      },
+      {
+        "topic": "F-strings Basics",
+        "explanation": "F-strings (formatted string literals) allow embedding expressions inside curly braces {}. They are more readable than traditional concatenation.",
+        "code_examples": [
+          {
+            "description": "Simple f-string",
+            "code": "name = 'Jan'\nprint(f'{name} studies Python.') # 'Jan studies Python.'"
+          }
+        ]
+      },
+      {
+        "topic": "F-strings Debugging",
+        "explanation": "Using f'{var=}' is a convenient shortcut for debugging that prints both the variable name and its value.",
+        "code_examples": [
+          {
+            "description": "Debug shortcut",
+            "code": "val = 10\nprint(f'{val=}') # 'val=10'"
+          }
+        ]
+      },
+      {
+        "topic": "F-strings Formatting",
+        "explanation": "You can specify formatting after a colon, such as padding numbers with zeros.",
+        "code_examples": [
+          {
+            "description": "Zero-padding an integer",
+            "code": "num = 7\nprint(f'{num:03d}') # '007'"
+          }
+        ]
+      },
+      {
+        "topic": "Class Definition and __init__",
+        "explanation": "A class is a blueprint. The __init__ method is the constructor called automatically when a new object is created to initialize attributes.",
+        "code_examples": [
+          {
+            "description": "Defining a simple class",
+            "code": "class Car:\n    def __init__(self, color):\n        self.color = color"
+          }
+        ]
+      },
+      {
+        "topic": "The self Parameter",
+        "explanation": "In class methods, 'self' refers to the specific instance of the object. It must be the first parameter of any instance method.",
+        "code_examples": [
+          {
+            "description": "Using self to access attributes",
+            "code": "class Dog:\n    def __init__(self, name):\n        self.name = name\n    def bark(self):\n        return f'{self.name} says woof!'"
+          }
+        ]
+      },
+      {
+        "topic": "Class vs Instance Attributes",
+        "explanation": "Instance attributes (self.x) are unique to each object. Class attributes are defined outside methods and shared by all instances of the class.",
+        "code_examples": [
+          {
+            "description": "Shared class attribute",
+            "code": "class Counter:\n    count = 0\n    def __init__(self):\n        Counter.count += 1"
+          }
+        ]
+      },
+      {
+        "topic": "Error Handling: try-except",
+        "explanation": "The try block lets you test a block of code for errors, and the except block lets you handle the error without the program crashing.",
+        "code_examples": [
+          {
+            "description": "Handling a ValueError",
+            "code": "s = 'abc'\ntry:\n    idx = s.index('z')\nexcept ValueError:\n    idx = -1"
+          }
+        ]
+      },
+      {
+        "topic": "The raise Keyword",
+        "explanation": "You can use 'raise' to manually trigger an exception when a specific condition occurs.",
+        "code_examples": [
+          {
+            "description": "Raising an error",
+            "code": "def check_positive(n):\n    if n < 0:\n        raise ValueError('Number must be positive')\n    return n"
+          }
+        ]
+      },
+      {
+        "topic": "Escape Characters",
+        "explanation": "Special characters like newlines (\\n), tabs (\\t), or literal quotes can be included using the backslash (\\).",
+        "code_examples": [
+          {
+            "description": "Newlines and tabs",
+            "code": "print('Line 1\\nLine 2\\tTabbed')\nprint(\"It\\'s a string\")"
+          }
+        ]
+      },
+      {
+        "topic": "The string Module",
+        "explanation": "The 'string' module provides pre-defined constants like all lowercase letters, digits, and punctuation.",
+        "code_examples": [
+          {
+            "description": "Importing string constants",
+            "code": "import string\nprint(string.ascii_lowercase) # 'abcdef...'\nprint(string.digits)          # '0123456789'"
+          }
+        ]
+      },
+      {
+        "topic": "String Stripping",
+        "explanation": "strip() removes leading and trailing characters. lstrip() and rstrip() target the left and right sides respectively.",
+        "code_examples": [
+          {
+            "description": "Stripping whitespace and characters",
+            "code": "s = '  abc  '\nprint(s.strip())      # 'abc'\ns2 = 'eeabcdee'\nprint(s2.strip('e'))  # 'abcd'"
+          }
+        ]
+      }
+    ],
+    "lecture_questions": [
+      {
+        "topic": "String Methods",
+        "question": "Given s1 = 'abcd', which code fragment correctly updates s1 to 'Abcd'?",
+        "options": {
+          "a": "s1.capitalize()",
+          "b": "s1 = s1.capitalize()",
+          "c": "s1.upper(0)",
+          "d": "s1[0] = 'A'"
+        },
+        "correct": "b",
+        "explanation": "Strings are immutable. s1.capitalize() returns a new string, so you must assign that result back to the name s1."
+      },
+      {
+        "topic": "String Searching",
+        "question": "What is the result of 'python'.find('z')?",
+        "options": {
+          "a": "False",
+          "b": "None",
+          "c": "-1",
+          "d": "ValueError"
+        },
+        "correct": "c",
+        "explanation": "The find() method returns -1 if the substring is not found, unlike index() which raises a ValueError."
+      },
+      {
+        "topic": "String Slicing",
+        "question": "What does the slice s[::-2] do for the string s = 'abcdef'?",
+        "options": {
+          "a": "Returns 'ace'",
+          "b": "Returns 'fdb'",
+          "c": "Returns 'fedcba'",
+          "d": "Returns an empty string"
+        },
+        "correct": "b",
+        "explanation": "The step -2 reverses the string and skips every second character, starting from the end ('f', then 'd', then 'b')."
+      },
+      {
+        "topic": "OOP Basics",
+        "question": "Why is 'self' used as the first argument in class methods?",
+        "options": {
+          "a": "To refer to the class definition itself.",
+          "b": "To make the method private.",
+          "c": "To refer to the specific instance of the object calling the method.",
+          "d": "It is just a placeholder and can be omitted."
+        },
+        "correct": "c",
+        "explanation": "By convention, 'self' represents the instance of the object, allowing the method to access that object's unique attributes."
+      },
+      {
+        "topic": "F-strings",
+        "question": "How do you include literal curly braces {} in an f-string?",
+        "options": {
+          "a": "Using a backslash: \\{ \\}",
+          "b": "By doubling them: {{ }}",
+          "c": "You cannot include them in f-strings.",
+          "d": "Using quotes: '{' '}'"
+        },
+        "correct": "b",
+        "explanation": "In f-strings, curly braces are escaped by doubling them ({{ and }})."
+      }
+    ]
+  },
+  "notebook_cells": [
+    {
+      "cell_index": 1,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Defining strings with quotes",
+      "outputs": []
+    },
+    {
+      "cell_index": 2,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(\"its\")\n\nprint('its')",
+      "outputs": []
+    },
+    {
+      "cell_index": 3,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(\"its')",
+      "outputs": []
+    },
+    {
+      "cell_index": 4,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print('its\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 5,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print('''it's\na new line''')\n\nprint(\"\"\"it's\nanother new line\n\"\"\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 6,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print('''its\na new line)",
+      "outputs": []
+    },
+    {
+      "cell_index": 7,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(\"\"\"its\nanother new line\n\"\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 8,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Quotes inside a string",
+      "outputs": []
+    },
+    {
+      "cell_index": 9,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(\"it's\")\nprint('it\"s')",
+      "outputs": []
+    },
+    {
+      "cell_index": 10,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(\"it\"s\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 11,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print('it's')",
+      "outputs": []
+    },
+    {
+      "cell_index": 12,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(\"it\\\"s\\'s\")\nprint('it\\\"s\\'s')",
+      "outputs": []
+    },
+    {
+      "cell_index": 13,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(\"\"\"it\"s's\"\"\")\nprint('''it\"s's''')",
+      "outputs": []
+    },
+    {
+      "cell_index": 14,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Escape characters inside a string",
+      "outputs": []
+    },
+    {
+      "cell_index": 15,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print('The info, it\\'s on the next\\\\following line in three columns:\\n1\\t2\\t3')",
+      "outputs": []
+    },
+    {
+      "cell_index": 16,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(\"\"\"The info, it's on the next\\\\following line in three columns:\n1       2       3\"\"\")",
+      "outputs": []
+    },
+    {
+      "cell_index": 17,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Applying built-in functions to a string",
+      "outputs": []
+    },
+    {
+      "cell_index": 18,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "a = 'adbc'\nprint(len(a))",
+      "outputs": []
+    },
+    {
+      "cell_index": 19,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "a = 'abcd'\nb = 'ef'\na = a + b\nprint(a)",
+      "outputs": []
+    },
+    {
+      "cell_index": 20,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "a = 'abcd'\nb = 'ef'\na += b\nprint(a)",
+      "outputs": []
+    },
+    {
+      "cell_index": 21,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(sorted('aBCdEFgHIjKLmNopQRsTUvWXyZ'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 22,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(sorted('aBCdEFgHIjKLmNopQRsTUvWXyZ', key=lambda x: x.upper()))",
+      "outputs": []
+    },
+    {
+      "cell_index": 23,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(sorted('aBCdEFgHIjKLmNopQRsTUvWXyZ', key=lambda x: str(x.lower() not in 'aeiou') + x.lower()))",
+      "outputs": []
+    },
+    {
+      "cell_index": 24,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(sorted('0123456789', key=lambda x: str(int(x) % 2 == 1) + x))",
+      "outputs": []
+    },
+    {
+      "cell_index": 25,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### The string class has several methods. <ul><li>Methods are functions, but the first argument passed has to be an object of a certain type.<li>The object will be passed almost always to the method with the help of the dot operator<li>Which methods can be applied to wich type of objects is a matter of learning",
+      "outputs": []
+    },
+    {
+      "cell_index": 26,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### calling a method",
+      "outputs": []
+    },
+    {
+      "cell_index": 27,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print('abacad'.index('ac'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 28,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(str.index('abacad', 'ac'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 29,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Built-in methods in general will either:<ul><li>Change the object they are applied to<li>Return a new object (can be of a different type)",
+      "outputs": []
+    },
+    {
+      "cell_index": 30,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'abcd'\ns1.upper()\nprint(s1)",
+      "outputs": []
+    },
+    {
+      "cell_index": 31,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'abcd'\ns1 = s1.upper()\nprint(s1)",
+      "outputs": []
+    },
+    {
+      "cell_index": 32,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods, changing case and testing case",
+      "outputs": []
+    },
+    {
+      "cell_index": 33,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print('ABcd'.upper())\nprint('ABcd'.lower())\nprint('abcd'.capitalize())\nprint(' bcd'.capitalize())\nprint('ABCD'.capitalize())",
+      "outputs": []
+    },
+    {
+      "cell_index": 34,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print('ABCD'.isupper())\nprint('ABcd'.isupper())\nprint('ABcd'.islower())\nprint('abcd'.islower())\nprint('ABcd'[:2].isupper())",
+      "outputs": []
+    },
+    {
+      "cell_index": 35,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: split and rsplit",
+      "outputs": []
+    },
+    {
+      "cell_index": 36,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'axbcxdefxg h\\nij\\tk'\nprint(s1.split('x'))\nprint(s1.split('x', 1))\nprint(s1.split('x', 2))\nprint(s1.split('x', 3))\nprint(s1.split('x', 10))",
+      "outputs": []
+    },
+    {
+      "cell_index": 37,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'axbcxdefxg h\\nij\\tk'\nprint(s1.rsplit('x'))\nprint(s1.rsplit('x', 1))\nprint(s1.rsplit('x', 2))\nprint(s1.rsplit('x', 3))\nprint(s1.rsplit('x', 10))",
+      "outputs": []
+    },
+    {
+      "cell_index": 38,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'axbcxdefxg h\\nij\\tk'\nprint(s1.split('xg'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 39,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'axbcxdefxg h\\nij\\tk'\nprint(s1.split(' '))\nprint(s1.split('\\n'))\nprint(s1.split('\\t'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 40,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'axbcxdefxg h\\nij\\tk'\nprint(s1.split())",
+      "outputs": []
+    },
+    {
+      "cell_index": 41,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'axbcxdefxg h\\nij\\tk'\nprint(s1.split('q'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 42,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 ='axbcx\\rdefxg \\nhij'\nprint(s1.split('\\n'))\nprint(s1.splitlines())",
+      "outputs": []
+    },
+    {
+      "cell_index": 43,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: join",
+      "outputs": []
+    },
+    {
+      "cell_index": 44,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "l1 = ['abc', 'de', 'fg', 'h']\nprint('xy'.join(l1))\nprint(''.join(l1))",
+      "outputs": []
+    },
+    {
+      "cell_index": 45,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "a =sorted('0123456789', key=lambda x: str(int(x) % 2 == 1) + x)\nprint(''.join(a))",
+      "outputs": []
+    },
+    {
+      "cell_index": 46,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: lstrip",
+      "outputs": []
+    },
+    {
+      "cell_index": 47,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = '   fgedeef   '\nprint(s1.lstrip(' '))\nprint(s1.lstrip('f'))\nprint(s1.lstrip(' f'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 48,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = '   \\n\\t\\t\\nfgedee\\n\\t\\t\\na   '\nprint(s1.lstrip(' \\n\\t'))\nprint(s1.lstrip(' \\n\\t') == s1.lstrip())",
+      "outputs": []
+    },
+    {
+      "cell_index": 49,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: rstrip",
+      "outputs": []
+    },
+    {
+      "cell_index": 50,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = '   fgedeef   '\nprint(s1.rstrip(' '))\nprint(s1.rstrip('f'))\nprint(s1.rstrip(' f'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 51,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = '   a\\n\\t\\t\\nfgedee\\n\\t\\t\\n   '\nprint(s1.rstrip(' \\n\\t'))\nprint(s1.rstrip(' \\n\\t') == s1.rstrip())",
+      "outputs": []
+    },
+    {
+      "cell_index": 52,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: strip",
+      "outputs": []
+    },
+    {
+      "cell_index": 53,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = '   fgedeef   '\nprint(s1.strip(' '))\nprint(s1.strip('f'))\nprint(s1.strip(' f'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 54,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = '   a\\n\\t\\t\\nfgedee\\n\\t\\t\\n   '\nprint(s1.strip(' \\n\\t'))\nprint(s1.strip(' \\n\\t') == s1.strip())",
+      "outputs": []
+    },
+    {
+      "cell_index": 55,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Create a function that works the same as the strip method, so you can see how the strip method works",
+      "outputs": []
+    },
+    {
+      "cell_index": 56,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = '   fgedeef   '\n\ndef mystrip(s1, s2 = ' \\n\\t'):\n    lindex = 0\n    while lindex < len(s1) and s1[lindex] in s2:\n        lindex += 1    \n    rindex = -1\n    while rindex >= -len(s1) and s1[rindex] in s2:\n        rindex -= 1    \n    return s1[lindex:rindex+1]        \n\nprint(mystrip(s1, ' fg') == s1.strip(' fg'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 57,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: methods can be chained",
+      "outputs": []
+    },
+    {
+      "cell_index": 58,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = '   fgedeef   '\nprint(s1.lstrip(' f').rstrip(' f'))\nprint(s1.rstrip('f ').lstrip(' f') == s1.strip(' f'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 59,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: replace",
+      "outputs": []
+    },
+    {
+      "cell_index": 60,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'abcdabcdabcd'\nprint(s1.replace('a', 'xx'))\nprint(s1.replace('ab', 'xx', 1))\nprint(s1.replace('abc', 'xx', 2))\nprint(s1.replace('abcd', 'xx', 10))\nprint(s1.replace('a', ''))\nprint(s1.replace('q', 'qq'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 61,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: find, index",
+      "outputs": []
+    },
+    {
+      "cell_index": 62,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'abcdefghabcdefgh'\nprint(s1.find('e'))\nprint(s1.index('e', 5))\nprint(s1.find('e', 5, 10))\nprint(s1.index('e', 5, 13))\nprint(s1.find('ef'))\nprint(s1.index('q'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 63,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'abcdefghabcdefgh'\nprint(s1.find('i'))\nprint(s1[s1.find('i')])\nprint(s1.index('i'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 64,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String methods: count",
+      "outputs": []
+    },
+    {
+      "cell_index": 65,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'abcdefghabcdefgh'\nprint(s1.count('e'))\nprint(s1.count('e', 5))\nprint(s1.count('e', 5, 10))\nprint(s1.count('e', 5, 13))\nprint(s1.count('ef'))\nprint(s1.count('q'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 66,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### String module",
+      "outputs": []
+    },
+    {
+      "cell_index": 67,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "import string\nprint(string.ascii_lowercase)\nprint(string.ascii_uppercase) \nprint(string.ascii_letters == string.ascii_lowercase + string.ascii_uppercase)\nprint(string.digits)\nprint(string.punctuation)\nprint(string.whitespace)\nprint('\\t' in string.whitespace, '\\n' in string.whitespace, ' ' in string.whitespace)",
+      "outputs": []
+    },
+    {
+      "cell_index": 68,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### F-strings",
+      "outputs": []
+    },
+    {
+      "cell_index": 69,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def main(a, b):\n    return f'{a:04.0f} times {b:04.0f} gives {a * b:04.0f}'\nprint(main(7,13))",
+      "outputs": []
+    },
+    {
+      "cell_index": 70,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def main(a, b):\n    def format1(x):\n        return ('0000' + str(x))[-4:]\n    return format1(a) + ' times ' + format1(b) + ' gives ' + format1(a * b)\nprint(main(7,13))",
+      "outputs": []
+    },
+    {
+      "cell_index": 71,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "s1 = 'tekst'\nt1 = (1, 2, 3)\nl1 = [4, 5, 6]\ncapitals = {'Netherlands' : 'Amsterdam'}\nprint(f'{s1} {s1.upper()} {t1[2]} {l1} {capitals[\"Netherlands\"]}')",
+      "outputs": []
+    },
+    {
+      "cell_index": 72,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "print(f'{a} {b}' == str(a) + ' ' + str(b))",
+      "outputs": []
+    },
+    {
+      "cell_index": 73,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def main(a, b):\n    return f'''The first number is: {a:04d}\nThe second number is: {b:04d}\nThe product is: {a * b:04d}'''\nprint(main(7,13))",
+      "outputs": [
+        "The first number is: 0007\nThe second number is: 0013\nThe product is: 0091"
+      ]
+    },
+    {
+      "cell_index": 74,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "a = 10\nb = 'Amsterdam'\nprint (f'{a=} {b=}')",
+      "outputs": []
+    },
+    {
+      "cell_index": 75,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Class definition",
+      "outputs": []
+    },
+    {
+      "cell_index": 76,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Rectangle:\n    def __init__(self, length, width=1):\n        self.length = length\n        self.width = width\n    def size(self, data_type=int):\n        return f\"The size = {data_type(self.length * self.width)}.\"\n    \nrectangle_1 = Rectangle(2,3)\nrectangle_2 = Rectangle(3)\nrectangle_3 = Rectangle(2,2)\n\nprint(rectangle_1.size())\nprint(rectangle_2.size(float))\nprint(rectangle_3.size(int))\nprint(Rectangle(4,4).size(str))",
+      "outputs": []
+    },
+    {
+      "cell_index": 77,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Rectangle:\n    def __init__(self, length, width=1):\n        self.length = length\n        self.width = width\n    def size(self, data_type=int):\n        return f\"The size = {data_type(self.length * self.width)}.\"\n            \nrectangle_1 = Rectangle(2,3)\nrectangle_2 = Rectangle(3)\nrectangle_3 = Rectangle(2,2)\nfor object in [rectangle_1, rectangle_2, rectangle_3, Rectangle(4,4)]:\n    print(Rectangle.size(object))",
+      "outputs": []
+    },
+    {
+      "cell_index": 78,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### You can use class attributes (in the followinexample total_size) to keep track of information you want to share between objects created on the basis of the same class.",
+      "outputs": []
+    },
+    {
+      "cell_index": 79,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Rectangle:\n    total_size = 0\n    def __init__(self, length, width=1):\n        self.length = length\n        self.width = width\n        Rectangle.total_size += self.length * self.width\n        print(f'rectangle {self.length} by {self.width} created\\n{Rectangle.total_size = }')\n    def size(self, data_type=int):\n        return f\"The size = {data_type(self.length * self.width)}.\"\n    def __del__(self):\n        Rectangle.total_size -= self.length * self.width\n        print(f'rectangle {self.length} by {self.width} deleted\\n{Rectangle.total_size = }')\n    \nprint(Rectangle.total_size)\nrectangle_1 = Rectangle(2,3)\nrectangle_2 = Rectangle(3)\nrectangle_3 = Rectangle(2,2)\n\ndel rectangle_1\ndel rectangle_3\ndel rectangle_2",
+      "outputs": [
+        "0\nrectangle 2 by 3 created\nRectangle.total_size = 6\nrectangle 3 by 1 created\nRectangle.total_size = 9\nrectangle 2 by 2 created\nRectangle.total_size = 13\nrectangle 2 by 3 deleted\nRectangle.total_size = 7\nrectangle 2 by 2 deleted\nRectangle.total_size = 3\nrectangle 3 by 1 deleted\nRectangle.total_size = 0"
+      ]
+    },
+    {
+      "cell_index": 80,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### #<br>Referencing and defining attributes from the outside",
+      "outputs": []
+    },
+    {
+      "cell_index": 81,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "#\nclass Rectangle:\n    def __init__(self, length, width=1):\n        self.length = length\n        self.width = width\n    def info_about_attribute_a(self):\n        return f'{Rectangle.a=}, {self.a=}'\n\nrectangle_1 = Rectangle(2,3)\nRectangle.a = 5\nrectangle_1.a = 10\nprint(Rectangle.a, rectangle_1.a)\nprint(rectangle_1.info_about_attribute_a())",
+      "outputs": []
+    },
+    {
+      "cell_index": 82,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### #<br>Calling a dunder method yourself / operator overloading",
+      "outputs": []
+    },
+    {
+      "cell_index": 83,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "#\nprint('abcd'.__add__('ef'))\nprint((1).__add__(2))\nprint([1,2,3].__add__([4,5]))",
+      "outputs": []
+    },
+    {
+      "cell_index": 84,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### #<br>Create a class for which all the methods work the same as in the str class except that the index method now works the same as the find method",
+      "outputs": []
+    },
+    {
+      "cell_index": 85,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "#\nclass New_str(str):\n    def index(self, needle, start = 0):\n        return self.find(needle, start)\n\na = New_str(\"abcd\")\nprint(a.upper()) \nprint(a.find(\"d\")) \nprint(a.find(\"e\")) \nprint(a.index(\"d\")) \nprint(a.index(\"e\"))",
+      "outputs": []
+    },
+    {
+      "cell_index": 86,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Create a function that works like the built-in index method, but if the substring is not found, it doesn't throw an error, but returns -1",
+      "outputs": []
+    },
+    {
+      "cell_index": 87,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def my_index(s,needle):\n    try:\n        result = s.index(needle)\n    except:\n        result = -1\n    return result\ns1 ='abcdefghabcdefgh'\nprint(my_index(s1, 'e'))\nprint(my_index(s1, 'i'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 88,
+      "cell_type": "markdown",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "### Create a function that works like the built-in find method, but if the substring is not found, it doesn't return -1, but throws an an error",
+      "outputs": []
+    },
+    {
+      "cell_index": 89,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def my_find(s,needle):\n    if (result := s.find(needle)) == -1:\n        raise ValueError(\"substring not found\")\n    return result\ns1 ='abcdefghabcdefgh'\nprint(my_find(s1, 'e'))\nprint(my_find(s1, 'i'))",
+      "outputs": []
+    },
+    {
+      "cell_index": 90,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Rectangle:\n    def __init__(self, length, width=1):\n        self.length = length\n        self.width = width\n    def size(self, data_type=int):\n        return f\"The size = {data_type(self.length * self.width)}.\"\nrectangle_1 = Rectangle(2,3)\nrectangle_2 = Rectangle(3)\nrectangle_3 = Rectangle(2,2)\nfor object in [rectangle_1, rectangle_2, rectangle_3, Rectangle(4,4)]:\n    print(object.size(float))",
+      "outputs": []
+    },
+    {
+      "cell_index": 91,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "class Rectangle:\n    total_size = 0\n    def __init__(self, length, width=1):\n        self.length = length\n        self.width = width\n        Rectangle.total_size += self.length * self.width\n        print(f'{self.length} by {self.width} created, {Rectangle.total_size = }')\n    def size(self, data_type=int):\n        return f\"The size = {data_type(self.length * self.width)}.\"\n    def __del__(self):\n        Rectangle.total_size -= self.length * self.width\n        print(f'{self.length} by {self.width} deleted, {Rectangle.total_size = }')\n    \nprint(Rectangle.total_size)\nrectangle_1 = Rectangle(2,3) \nrectangle_2 = Rectangle(2)\ndel rectangle_1 \ndel rectangle_2",
+      "outputs": [
+        "0\n2 by 3 created, Rectangle.total_size = 6\n2 by 1 created, Rectangle.total_size = 8\n2 by 3 deleted, Rectangle.total_size = 2\n2 by 1 deleted, Rectangle.total_size = 0"
+      ]
+    },
+    {
+      "cell_index": 92,
+      "cell_type": "code",
+      "topic": "",
+      "is_advanced_optional": false,
+      "source": "def my_isupper(s1):\n    for el in s1:\n        if el not in \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\":\n            return False\n    return True    \n\nx = \"Harry Potter and the Philosopher's Stone\"\ny = ''\nfor i in x:\n     if my_isupper(i):\n          y += i\nprint(y)",
+      "outputs": [
+        "HPPS"
+      ]
+    }
+  ],
+  "sources": [
+    "materials/post_midterm/Lecture Week 4.pptx",
+    "materials/post_midterm/Notebook Week 4.ipynb",
+    "materials/post_midterm/Solutions week 4.txt",
+    "materials/post_midterm/Exercise_4.1.py",
+    "materials/post_midterm/Exercise_4.2.py",
+    "materials/post_midterm/Exercise_4.3.py",
+    "materials/post_midterm/Exercise_4.4.py",
+    "materials/post_midterm/Exercise_4.5.py",
+    "materials/post_midterm/Exercise_4.6.py",
+    "materials/post_midterm/Exercise_4.7.py",
+    "materials/post_midterm/Exercise_4.8.py",
+    "materials/post_midterm/Exercise_4.9.py"
+  ]
+}

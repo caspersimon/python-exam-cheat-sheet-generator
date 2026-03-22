@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Topic Explorer | Cheat Sheet Builder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#623a00",
+              "on-surface-variant": "#3f4945",
+              "surface-container-low": "#f4f4ef",
+              "on-tertiary-fixed-variant": "#673d00",
+              "on-secondary-container": "#007261",
+              "inverse-primary": "#94d3c1",
+              "surface-container-lowest": "#ffffff",
+              "outline-variant": "#bfc9c4",
+              "secondary-container": "#68fadd",
+              "on-tertiary-container": "#f09e34",
+              "inverse-surface": "#2f312e",
+              "primary-container": "#004d40",
+              "on-primary-fixed-variant": "#065043",
+              "inverse-on-surface": "#f1f1ec",
+              "primary-fixed": "#afefdd",
+              "on-background": "#1a1c19",
+              "surface-container-high": "#e8e8e3",
+              "surface-container": "#eeeee9",
+              "on-error-container": "#93000a",
+              "on-error": "#ffffff",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#ffb866",
+              "surface-tint": "#29695b",
+              "surface-dim": "#dadad5",
+              "on-primary-container": "#7ebdac",
+              "on-primary-fixed": "#00201a",
+              "background": "#fafaf5",
+              "on-tertiary-fixed": "#2b1700",
+              "tertiary": "#432600",
+              "surface-bright": "#fafaf5",
+              "surface-container-highest": "#e3e3de",
+              "secondary-fixed": "#68fadd",
+              "outline": "#707975",
+              "secondary-fixed-dim": "#44ddc1",
+              "on-tertiary": "#ffffff",
+              "error-container": "#ffdad6",
+              "error": "#ba1a1a",
+              "on-secondary-fixed": "#00201a",
+              "primary-fixed-dim": "#94d3c1",
+              "on-primary": "#ffffff",
+              "secondary": "#006b5c",
+              "tertiary-fixed": "#ffddba",
+              "on-surface": "#1a1c19",
+              "surface": "#fafaf5",
+              "surface-variant": "#e3e3de",
+              "on-secondary-fixed-variant": "#005145",
+              "primary": "#00342b"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono", "monospace"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+            font-size: 20px;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bfc9c444;
+        }
+        .code-accent {
+            border-left: 3px solid #004d40;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface flex h-screen overflow-hidden">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="w-64 h-screen border-r border-outline-variant/15 flex flex-col py-6 px-4 bg-[#f4f4ef] shrink-0 overflow-y-auto">
+<div class="mb-8 px-2">
+<h1 class="font-manrope font-extrabold text-primary text-lg tracking-tight">Study Modules</h1>
+<p class="text-on-surface-variant text-xs font-medium">6 Weeks remaining</p>
+</div>
+<nav class="space-y-1">
+<!-- Active Item: Week 4 as per prompt context -->
+<a class="flex items-center gap-3 px-3 py-2 text-primary font-bold bg-white rounded-lg shadow-sm transition-transform duration-200 translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="function">function</span>
+<span class="font-manrope text-sm tracking-tight">Week 4: Functions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-white/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-manrope text-sm tracking-tight">Week 1: Fundamentals</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-white/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+<span class="font-manrope text-sm tracking-tight">Week 2: Data Structures</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-white/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="alt_route">alt_route</span>
+<span class="font-manrope text-sm tracking-tight">Week 3: Control Flow</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-white/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-manrope text-sm tracking-tight">Week 5: File I/O</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary hover:bg-white/50 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-manrope text-sm tracking-tight">Week 6: Advanced Python</span>
+</a>
+</nav>
+<div class="mt-auto px-2">
+<div class="bg-surface-container-highest p-3 rounded-lg border border-outline-variant/15">
+<p class="text-[10px] uppercase tracking-wider font-bold text-on-surface-variant mb-1">Status</p>
+<div class="flex justify-between items-center">
+<span class="text-sm font-semibold">12 / 20 Selected</span>
+<span class="text-[10px] text-secondary font-bold">60%</span>
+</div>
+</div>
+</div>
+</aside>
+<div class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar (Authority: JSON) -->
+<header class="flex justify-between items-center w-full px-8 h-16 bg-[#fafaf5] border-b border-outline-variant/15 shrink-0">
+<div class="flex items-center gap-8">
+<span class="text-xl font-black text-primary font-manrope">Cheat Sheet Builder</span>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 py-1.5 text-sm focus:ring-1 focus:ring-surface-tint/20 font-body" placeholder="Search Topics" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary border-b-2 border-primary pb-1 font-manrope font-semibold text-base transition-all" href="#">Modules</a>
+<a class="text-on-surface-variant hover:text-primary font-manrope font-semibold text-base transition-all" href="#">Resources</a>
+<a class="text-on-surface-variant hover:text-primary font-manrope font-semibold text-base transition-all" href="#">Drafts</a>
+</nav>
+<div class="h-6 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-1.5 text-on-surface font-semibold text-sm rounded-lg bg-surface-container-highest hover:bg-surface-container-high transition-colors">Preview</button>
+<button class="px-4 py-1.5 bg-gradient-to-br from-primary to-primary-container text-on-primary font-semibold text-sm rounded-full shadow-sm hover:opacity-90 transition-all active:scale-95">Export</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto p-8 max-w-7xl mx-auto w-full">
+<!-- Compact Topic Header -->
+<div class="flex items-end justify-between mb-10 border-b border-outline-variant/10 pb-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold rounded uppercase tracking-tighter">Topic 4.2</span>
+<span class="text-on-surface-variant text-xs font-medium">Dictionary Operations</span>
+</div>
+<h2 class="font-manrope font-extrabold text-3xl tracking-tight text-on-surface">W4: Dictionary Membership and Slicing</h2>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Active Study Context</p>
+<p class="text-sm font-medium text-secondary">Data Structures &amp; Logic</p>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Column: Core Content -->
+<div class="col-span-12 lg:col-span-8 space-y-10">
+<!-- Core Syntax & Key Points (Compact Grid) -->
+<section>
+<h3 class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]" data-icon="inventory">inventory</span> Core Syntax &amp; Key Points
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Key Point Card 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/5 hover:border-outline-variant/20 transition-all flex items-start gap-4">
+<input checked="" class="mt-1 w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<h4 class="text-sm font-bold text-on-surface mb-1 leading-tight">Key In-Membership Check</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Use the <code class="font-mono bg-surface-container-high px-1 rounded text-primary">in</code> keyword to check if a key exists in a dictionary (not values).</p>
+</div>
+</div>
+<!-- Key Point Card 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/5 hover:border-outline-variant/20 transition-all flex items-start gap-4">
+<input class="mt-1 w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<h4 class="text-sm font-bold text-on-surface mb-1 leading-tight">The .get() Safety Net</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Retrieving values using <code class="font-mono bg-surface-container-high px-1 rounded text-primary">dict.get(key)</code> prevents KeyErrors.</p>
+</div>
+</div>
+<!-- Key Point Card 3 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/5 hover:border-outline-variant/20 transition-all flex items-start gap-4">
+<input checked="" class="mt-1 w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<h4 class="text-sm font-bold text-on-surface mb-1 leading-tight">Key Extraction</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">The <code class="font-mono bg-surface-container-high px-1 rounded text-primary">keys()</code> method returns a view object of all dictionary keys.</p>
+</div>
+</div>
+<!-- Key Point Card 4 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/5 hover:border-outline-variant/20 transition-all flex items-start gap-4">
+<input class="mt-1 w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<h4 class="text-sm font-bold text-on-surface mb-1 leading-tight">Mutable Slicing</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Dictionaries don't support index slicing; use comprehensions for sub-sets.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Code Snippets (Practical Excerpts) -->
+<section>
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]" data-icon="code">code</span> Essential Snippets
+                            </h3>
+<button class="text-xs font-bold text-primary hover:underline">View Full Reference</button>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-dim p-0 rounded-lg overflow-hidden flex items-stretch">
+<div class="w-12 bg-surface-container-high flex flex-col items-center py-4 border-r border-outline-variant/10 shrink-0">
+<input checked="" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<div class="flex-1 p-4 overflow-x-auto font-mono text-sm leading-relaxed code-accent">
+<pre class="text-on-surface">user = {"id": 101, "role": "admin"}
+<span class="text-secondary font-bold"># Check membership</span>
+if "role" in user:
+    print(user["role"]) <span class="text-on-surface-variant/60"># Outputs: admin</span></pre>
+</div>
+</div>
+<div class="bg-surface-dim p-0 rounded-lg overflow-hidden flex items-stretch">
+<div class="w-12 bg-surface-container-high flex flex-col items-center py-4 border-r border-outline-variant/10 shrink-0">
+<input class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<div class="flex-1 p-4 overflow-x-auto font-mono text-sm leading-relaxed code-accent">
+<pre class="text-on-surface"><span class="text-secondary font-bold"># Dict Comprehension Slicing equivalent</span>
+raw = {"a": 1, "b": 2, "c": 3, "d": 4}
+keys = ["a", "c"]
+sliced = {k: raw[k] for k in keys if k in raw}</pre>
+</div>
+</div>
+</div>
+</section>
+<!-- Additional Snippets (Horizontal Scroll Rail) -->
+<section>
+<h3 class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Common Variations</h3>
+<div class="flex gap-4 overflow-x-auto pb-4 scroll-smooth">
+<div class="min-w-[300px] bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/15 flex flex-col justify-between">
+<div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-tighter block mb-2">Pattern: Nested Keys</span>
+<p class="text-xs font-mono text-on-surface mb-3">data.get('meta', {}).get('id')</p>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Prevents deep path errors</span>
+<input class="w-3.5 h-3.5 rounded border-outline-variant text-primary" type="checkbox"/>
+</div>
+</div>
+<div class="min-w-[300px] bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/15 flex flex-col justify-between">
+<div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-tighter block mb-2">Pattern: Iteration</span>
+<p class="text-xs font-mono text-on-surface mb-3">for k, v in dict.items():</p>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Tuple unpacking approach</span>
+<input class="w-3.5 h-3.5 rounded border-outline-variant text-primary" type="checkbox"/>
+</div>
+</div>
+<div class="min-w-[300px] bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/15 flex flex-col justify-between">
+<div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-tighter block mb-2">Pattern: Merge</span>
+<p class="text-xs font-mono text-on-surface mb-3">new_dict = {**d1, **d2}</p>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Dictionary unpacking (PEP 448)</span>
+<input class="w-3.5 h-3.5 rounded border-outline-variant text-primary" type="checkbox"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Dense Utility List -->
+<div class="col-span-12 lg:col-span-4 space-y-8">
+<section class="bg-surface-container-low p-6 rounded-lg">
+<h3 class="text-[11px] font-black uppercase tracking-widest text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]" data-icon="help_outline">help_outline</span> Common Questions
+                        </h3>
+<ul class="space-y-4">
+<li class="group cursor-pointer">
+<span class="text-xs font-bold text-primary block mb-1">How to check if key NOT in dict?</span>
+<p class="text-xs text-on-surface-variant leading-relaxed">Use <code class="font-mono text-[11px]">if key not in d:</code>. It's more Pythonic than checking against <code class="font-mono text-[11px]">d.keys()</code>.</p>
+</li>
+<li class="h-[1px] bg-outline-variant/10"></li>
+<li class="group cursor-pointer">
+<span class="text-xs font-bold text-primary block mb-1">Difference between .get() and dict[key]?</span>
+<p class="text-xs text-on-surface-variant leading-relaxed"><code class="font-mono text-[11px]">.get()</code> returns <code class="font-mono text-[11px]">None</code> if key doesn't exist; square brackets raise <code class="font-mono text-[11px]">KeyError</code>.</p>
+</li>
+<li class="h-[1px] bg-outline-variant/10"></li>
+<li class="group cursor-pointer">
+<span class="text-xs font-bold text-primary block mb-1">Are dictionaries ordered?</span>
+<p class="text-xs text-on-surface-variant leading-relaxed">As of Python 3.7+, dictionaries maintain insertion order as a language specification.</p>
+</li>
+</ul>
+</section>
+<section class="bg-primary-container p-6 rounded-lg text-white">
+<h3 class="text-[11px] font-black uppercase tracking-widest text-on-primary-container mb-4">Quick Tip</h3>
+<p class="text-xs leading-relaxed opacity-90">When working with large datasets, using <code class="bg-primary px-1 rounded">dict.fromkeys(list)</code> is a highly performant way to initialize default maps.</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="lightbulb">lightbulb</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Cheat Sheet Best Practice</span>
+</div>
+</section>
+<div class="relative overflow-hidden rounded-lg">
+<img alt="Code lines on a dark monitor screen" class="w-full h-32 object-cover opacity-20 grayscale brightness-50" data-alt="Dense lines of Python code on a dark code editor screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7f1bADX-D8TegCKclDYqdT99UkMre9tF88HwvjA3xcBLscqIoONlQPxIKtt9MXr6VO52owAnx4e1tnhpvat2APwj5BiTd2SfT-1Rw-3zMz6fFYImrqaczOB9ryVsmlF_xHFdT_hnC_DoWpDYvNLn7c98JSsag3xIC9iAbhfrNKyNM3FpkTS-JXq40e6fJuJoBkFcpjrMDJQm_wSrxnZRAElAOJ1sIykX5P8jKoCqkeCR7eoh6rdlvbEsYdGI0ZYY8kr4HCQs_tKI"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface/40">Reference Material v4.0</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

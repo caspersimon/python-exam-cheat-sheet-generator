@@ -262,6 +262,7 @@ def run_audit(root: Path, soft_line_limit: int, hard_line_limit: int) -> dict[st
         "timestamp_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "overall_status": overall_status,
         "summary": {
+            "overall_status": overall_status,
             "checks_total": len(checks),
             "failures": len(failures),
             "warnings": len(warnings),

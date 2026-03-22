@@ -1,0 +1,108 @@
+{
+  "exam_label": "Resit 22/23",
+  "source": "practice_exams_previous_years/resit-solutions-for-introduction-to-python-35761538.pdf",
+  "year": "2022-2023",
+  "questions": [
+    {
+      "number": 1,
+      "topic": "1_Basics_Logic_1",
+      "question": "Suppose you have a list called x containing tuples. Which of the following lines of code will print True?",
+      "options": {
+        "a": "print(x[0][1] * x[-3][0] == x[2][1])",
+        "b": "print(x[1][0] + x[-2][0] == x[-1][1])",
+        "c": "print(x[-1][0] - x[-2][0] == x[0][1])",
+        "d": "All lines of code will print True."
+      },
+      "correct": "d",
+      "explanation": "Option A evaluates to 2 * 3 == 6 (True). Option B evaluates to 3 + 5 == 8 (True). Option C evaluates to 7 - 5 == 2 (True). Therefore, all lines print True.",
+      "code_context": "x = [(1, 2), (3, 4), (5, 6), (7, 8)]"
+    },
+    {
+      "number": 2,
+      "topic": "1_Basics_Scope_1",
+      "question": "Executing the following program will produce an error. Why?",
+      "options": {
+        "a": "Result is a local name that cannot be referenced outside of the function power.",
+        "b": "** is not a valid Python operator.",
+        "c": "The syntax used in the return statement to format the string is incorrect.",
+        "d": "The function called power should not return the string 'The result of {} ** {} is: {}.'.format(num, factor, result), but the value of result."
+      },
+      "correct": "a",
+      "explanation": "The variable `result` is defined inside the `power` function, giving it local scope. It cannot be accessed outside the function in the global scope where `print(result)` is called.",
+      "code_context": "def power(num, factor):\n    result = num ** factor\n    return 'The result of {} ** {} is: {}.'.format(num, factor, result)\nprint(result)"
+    },
+    {
+      "number": 3,
+      "topic": "1_Basics_Variables_3",
+      "question": "What will be printed by the following code segment?",
+      "options": {
+        "a": "['a', 'None', '123']",
+        "b": "[[]]",
+        "c": "[None]",
+        "d": "[]"
+      },
+      "correct": "b",
+      "explanation": "The function checks if the type of each element `i` in the list `x` is the same as the type of `x` (which is a list). The only element in `x` that is a list is `[]`. So, it appends `[]` to `y`, resulting in `[[]]`.",
+      "code_context": "def main(x):\n    y = list()\n    for i in x:\n        if type(i) == type(x):\n            y.append(i)\n    return y\n\nresult = main(['a', 'None', [], {}, '123', 0.05, 111])\nprint(result)"
+    },
+    {
+      "number": 4,
+      "topic": "3_Function_Argument_3",
+      "question": "Suppose you have the following function, which takes two integers as arguments:\nWhat will be printed by the following line of code:\nprint(main(1))",
+      "options": {
+        "a": "['1 * 1 = 1', '1 * 2 = 2', '1 * 3 = 3', '1 * 4 = 4', '1 * 5 = 5', '1 * 6 = 6', '1 * 7 = 7', '1 * 8 = 8', '1 * 9 = 9', '1 * 10 = 10']",
+        "b": "['1 * 1 = 1', '1 * 2 = 2', '1 * 3 = 3', '1 * 4 = 4', '1 * 5 = 5', '1 * 6 = 6', '1 * 7 = 7', '1 * 8 = 8', '1 * 9 = 9', '1 * 10 = 10', '1 * 11 = 11']",
+        "c": "This code produces an error as there is a missing argument when calling main.",
+        "d": "The code produces a syntax error because of the line:\n            table.append(f'{x} * {i} = {x*i}')"
+      },
+      "correct": "a",
+      "explanation": "The function `main` is called with `x=1`. `y` defaults to 11. The `while` loop runs while `i < 11`, which means it will run for `i` from 1 to 10 inclusive, resulting in a list of 10 formatted multiplication strings.",
+      "code_context": "def main(x, y=11):\n    table = []\n    i = 1\n    while i < y:\n        table.append(f'{x} * {i} = {x*i}')\n        i += 1\n    return table"
+    },
+    {
+      "number": 5,
+      "topic": "3_Function_Built-in_2",
+      "question": "Suppose you have a list called x. Which of the following code segments will print the following list?\n[5, 4, 3, 2, 1]",
+      "options": {
+        "a": "y = list(set(x))\nprint(sorted(y, reverse = True))",
+        "b": "print(x[::-2])",
+        "c": "Both lines of code will print that output.",
+        "d": "Neither line of code will print that output."
+      },
+      "correct": "c",
+      "explanation": "Option A extracts unique elements with `set(x)`, resulting in `{1, 2, 3, 4, 5}`, then sorts them in reverse order, giving `[5, 4, 3, 2, 1]`. Option B uses list slicing `x[::-2]` which steps backwards through `x` by 2, retrieving indices -1, -3, -5, -7, and -9, which correspond to 5, 4, 3, 2, 1. Thus, both A and B are correct.",
+      "code_context": "x = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]"
+    },
+    {
+      "number": 6,
+      "topic": "3_Function_Flexible-Argument_3",
+      "question": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments.\nFor example, if you call the function as:\nmain(apple=1.99, banana=0.99, orange=1.49)\nit should return:\n4.47\nWhich of the following functions will return the intended value?",
+      "options": {
+        "a": "def main(**kwargs):\n    total = 0\n    for item, price in kwargs.items():\n        total += item\n    return total",
+        "b": "def main(**kwargs):\n    total = 0\n    for price in kwargs.values():\n        total += price\n    return total",
+        "c": "def main(**kwargs):\n    total = 0\n    for item, price in kwargs.keys():\n        total += price\n    return total",
+        "d": "All functions will return the intended value."
+      },
+      "correct": "b",
+      "explanation": "Option B correctly iterates through the values of the `kwargs` dictionary using `kwargs.values()` and sums them. Option A tries to add the keys (`item`), which are strings. Option C tries to unpack keys into two variables, which will fail or iterate through string characters incorrectly.",
+      "code_context": ""
+    },
+    {
+      "number": 7,
+      "topic": "dictionaries - comprehension - 3",
+      "question": "Assume you already have a list of strings called words.\nYou need to create a dictionary called word_lengths, where the keys are the strings in the list words and the values are their lengths.\nWhich of the following code segments will work as intended?",
+      "options": {
+        "a": "word_lengths = {word: len(word) for word in words}",
+        "b": "word_lengths = {length: word for word, length in enumerate(words)}",
+        "c": "word_lengths = {word: len for word, len in words}",
+        "d": "word_lengths = {len: word for word in words}"
+      },
+      "correct": "a",
+      "explanation": "Option A is a valid dictionary comprehension that iterates through `words`, setting each `word` as the key and `len(word)` as the value.",
+      "code_context": ""
+    }
+  ],
+  "notes": [
+    "Resit exam questions covering Python basics, variable scoping, logic, functions, keyword arguments, lists, and dictionary comprehensions."
+  ]
+}

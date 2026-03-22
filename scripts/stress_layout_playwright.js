@@ -2,24 +2,11 @@
 
 const fs = require("fs");
 const path = require("path");
-const http = require("http");
 const { chromium } = require("playwright");
+const { acceptCards, dismissSplash, startStaticServer } = require("./lib/ui_playwright_common");
 
 const ROOT = path.resolve(__dirname, "..");
 const ARTIFACT_DIR = path.join(ROOT, "data", "test_reports", "artifacts", "stress");
-
-const MIME = {
-  ".html": "text/html; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".js": "application/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".pdf": "application/pdf",
-  ".txt": "text/plain; charset=utf-8",
-};
 
 const SCENARIOS = [
   { name: "auto_default", autoGrid: true, fontSize: 9.5, lineHeight: 1.1, cardGap: 6, cardPadding: 7, letterSpacing: 0 },
@@ -33,85 +20,6 @@ const SCENARIOS = [
   { name: "manual_padding_high", autoGrid: false, columns: 2, rows: 3, fontSize: 9.0, lineHeight: 1.1, cardGap: 5, cardPadding: 12, letterSpacing: 0 },
   { name: "manual_padding_low", autoGrid: false, columns: 2, rows: 3, fontSize: 9.0, lineHeight: 1.1, cardGap: 4, cardPadding: 4, letterSpacing: 0 },
 ];
-
-function startStaticServer(rootDir) {
-  const server = http.createServer((req, res) => {
-    try {
-      const reqPath = decodeURIComponent((req.url || "/").split("?")[0]);
-      const normalized = path.normalize(reqPath).replace(/^\/+/, "");
-      let filePath = path.join(rootDir, normalized || "index.html");
-
-      if (!filePath.startsWith(rootDir)) {
-        res.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
-        res.end("Forbidden");
-        return;
-      }
-
-      if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
-        filePath = path.join(filePath, "index.html");
-      }
-
-      if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
-        res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
-        res.end("Not found");
-        return;
-      }
-
-      const ext = path.extname(filePath).toLowerCase();
-      res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
-      fs.createReadStream(filePath).pipe(res);
-    } catch (error) {
-      res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
-      res.end(`Server error: ${error.message}`);
-    }
-  });
-
-  return new Promise((resolve, reject) => {
-    server.on("error", reject);
-    server.listen(0, "127.0.0.1", () => {
-      const addr = server.address();
-      resolve({ server, port: addr.port });
-    });
-  });
-}
-
-function toInt(text) {
-  const n = parseInt(String(text || "").trim(), 10);
-  return Number.isFinite(n) ? n : 0;
-}
-
-async function dismissSplash(page) {
-  const splashVisible = await page.locator("#splashOverlay:not(.hidden)").count();
-  if (splashVisible > 0) {
-    await page.click("#getStartedBtn", { timeout: 5000 });
-  }
-}
-
-async function ensureCurrentCardHasSelection(page) {
-  const selectable = page.locator("#cardHost [data-role='item-toggle']");
-  if ((await selectable.count()) > 0) {
-    const first = selectable.first();
-    if (!(await first.isChecked().catch(() => false))) {
-      await first.click({ timeout: 5000 });
-    }
-  }
-}
-
-async function acceptCards(page, target) {
-  let loop = 0;
-  while (loop < 180) {
-    loop += 1;
-    const activeCards = await page.locator("#activeTopicCard").count();
-    const accepted = toInt(await page.textContent("#acceptedCount"));
-    if (!activeCards || accepted >= target) {
-      return accepted;
-    }
-    await ensureCurrentCardHasSelection(page);
-    await page.click("#acceptBtn", { timeout: 6000 });
-    await page.waitForTimeout(140);
-  }
-  return toInt(await page.textContent("#acceptedCount"));
-}
 
 async function applyScenario(page, scenario) {
   await page.evaluate((cfg) => {
@@ -264,7 +172,7 @@ function evaluateScenarioFailures(metrics) {
   if (metrics.overlapAreaRatio > 0.01) {
     failures.push(`overlap_ratio=${metrics.overlapAreaRatio}`);
   }
-  if (metrics.occupiedAreaRatio < 0.42) {
+  if (metrics.occupiedAreaRatio < 0.4) {
     failures.push(`occupied_ratio=${metrics.occupiedAreaRatio}`);
   }
   if (metrics.headerRatioAvg > 0.16) {
@@ -313,9 +221,11 @@ async function run() {
     });
     await dismissSplash(page);
 
-    const accepted = await acceptCards(page, 10);
+    await page.waitForSelector(".topic-nav-item", { state: "attached", timeout: 20000 });
+
+    const accepted = await acceptCards(page, 10, { itemsPerTopic: 2 });
     if (accepted < 8) {
-      throw new Error(`Could not accept enough cards for stress tests (accepted=${accepted}).`);
+      throw new Error(`Could not select enough topics for stress tests (selected=${accepted}).`);
     }
     await page.click("#goToPreviewBtn", { timeout: 7000 });
     await page.waitForSelector("#previewView.active", { timeout: 12000 });

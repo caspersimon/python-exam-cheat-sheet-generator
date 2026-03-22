@@ -6,6 +6,13 @@ function bindPreviewEditingEvents() {
 }
 
 function handlePreviewEditingClick(event) {
+  const editCardTitleBtn = event.target.closest("[data-role='preview-edit-card-title']");
+  if (editCardTitleBtn) {
+    event.preventDefault();
+    void editPreviewCardTitle(editCardTitleBtn.dataset.cardId || "");
+    return;
+  }
+
   const toggleLockBtn = event.target.closest("[data-role='preview-toggle-lock']");
   if (toggleLockBtn) {
     event.preventDefault();
@@ -24,7 +31,7 @@ function handlePreviewEditingClick(event) {
   if (deleteItemBtn) {
     event.preventDefault();
     deletePreviewItem(
-      deleteItemBtn.dataset.cardId || "",
+      deleteItemBtn.dataset.sourceCardId || "",
       deleteItemBtn.dataset.itemType || "",
       deleteItemBtn.dataset.itemId || "",
       deleteItemBtn.dataset.section || ""
@@ -36,7 +43,7 @@ function handlePreviewEditingClick(event) {
   if (editItemBtn) {
     event.preventDefault();
     void editPreviewItem(
-      editItemBtn.dataset.cardId || "",
+      editItemBtn.dataset.sourceCardId || "",
       editItemBtn.dataset.itemType || "",
       editItemBtn.dataset.itemId || "",
       editItemBtn.dataset.section || ""
@@ -44,113 +51,229 @@ function handlePreviewEditingClick(event) {
   }
 }
 
-function getAcceptedCardContext(cardId) {
-  const card = state.cards.find((entry) => entry.id === cardId);
-  const decision = state.decisions[cardId];
-  if (!card || !decision || decision.status !== "accepted" || !decision.selection) {
-    return null;
-  }
-  return { card, selection: decision.selection };
+function getPreviewEntry(previewId) {
+  return state.previewEntries?.[previewId] || null;
 }
 
-function deletePreviewCard(cardId) {
-  if (!cardId) {
+function getDraftCardContext(cardId) {
+  const card = state.cards.find((entry) => entry.id === cardId);
+  if (!card) {
+    return null;
+  }
+  const draft = ensureDraft(card);
+  return { card, draft };
+}
+
+function deletePreviewCard(previewId) {
+  if (!previewId) {
     return;
   }
-  const context = getAcceptedCardContext(cardId);
-  if (!context) {
+  const entry = getPreviewEntry(previewId);
+  if (!entry) {
     return;
   }
-  const confirmed = window.confirm(`Remove "${humanizeTopic(context.card.topic)}" from the cheat sheet preview?`);
+
+  const confirmed = window.confirm(`Remove "${humanizeTopic(entry.card.topic)}" from the cheat sheet preview?`);
   if (!confirmed) {
     return;
   }
 
-  const previousDecision = deepClone(state.decisions[cardId]);
-  const previousOrder = [...state.acceptedOrder];
-  state.history.push({ cardId, previousDecision, previousOrder });
-  pushPreviewHistorySnapshot(`Remove card "${humanizeTopic(context.card.topic)}"`);
+  pushPreviewHistorySnapshot(`Remove card "${humanizeTopic(entry.card.topic)}"`);
 
-  state.decisions[cardId] = { status: "rejected" };
-  state.acceptedOrder = state.acceptedOrder.filter((id) => id !== cardId);
-  delete state.previewCards[cardId];
+  entry.cards.forEach((sourceCard) => {
+    const draft = ensureDraft(sourceCard);
+    draft.selected.aiQuestions = [];
+    draft.selected.aiExamples = [];
+    draft.selected.keyPoints = [];
+    draft.selected.recommended = [];
+    draft.selected.additional = [];
+    draft.overrides = {
+      aiQuestions: {},
+      keyPoints: {},
+      keyPointDetails: {},
+      aiExamples: {},
+      sources: {},
+    };
+  });
+
+  delete state.previewCards[previewId];
   renderAll();
 }
 
-function togglePreviewCardLock(cardId) {
-  if (!cardId) {
+function togglePreviewCardLock(previewId) {
+  if (!previewId) {
     return;
   }
-  const context = getAcceptedCardContext(cardId);
-  const layout = state.previewCards[cardId];
-  if (!context || !layout) {
+  const entry = getPreviewEntry(previewId);
+  const layout = state.previewCards[previewId];
+  if (!entry || !layout) {
     return;
   }
 
   const nextLocked = !Boolean(layout.locked);
-  pushPreviewHistorySnapshot(`${nextLocked ? "Lock" : "Unlock"} card "${humanizeTopic(context.card.topic)}"`);
+  pushPreviewHistorySnapshot(`${nextLocked ? "Lock" : "Unlock"} card "${humanizeTopic(entry.card.topic)}"`);
   layout.locked = nextLocked;
   renderPreview();
 }
 
-function deletePreviewItem(cardId, itemType, itemId, section) {
-  const resolvedCardId = cardId;
-  if (!resolvedCardId || !itemId) {
+async function editPreviewCardTitle(previewId) {
+  if (!previewId) {
     return;
   }
-  const context = getAcceptedCardContext(resolvedCardId);
+  const entry = getPreviewEntry(previewId);
+  const layout = state.previewCards[previewId];
+  if (!entry || !layout) {
+    return;
+  }
+
+  const currentTitle = getPreviewCardTitle(entry, layout);
+  const values = await requestPreviewEditValues({
+    title: "Edit Card Title",
+    subtitle: humanizeTopic(entry.card.topic),
+    fields: [
+      {
+        id: "title",
+        label: "Card title",
+        prompt: "Edit card title:",
+        value: currentTitle,
+      },
+    ],
+  });
+  if (!values) {
+    return;
+  }
+
+  const nextTitle = String(values.title || "").trim();
+  pushPreviewHistorySnapshot(`Edit card title for "${humanizeTopic(entry.card.topic)}"`);
+  const defaultTitle = derivePreviewCardTitle(entry);
+  layout.title = nextTitle && nextTitle !== defaultTitle ? nextTitle : "";
+  renderPreview();
+}
+
+function deletePreviewItem(cardId, itemType, itemId, section) {
+  if (!cardId || !itemId) {
+    return;
+  }
+  const context = getDraftCardContext(cardId);
   if (!context) {
     return;
   }
 
-  const { selection } = context;
-  ensureSelectionOverrides(selection);
-  pushPreviewHistorySnapshot(`Delete ${humanizeItemType(itemType)} in "${humanizeTopic(context.card.topic)}"`);
+  const { card, draft } = context;
+  ensureSelectionOverrides(draft);
+  pushPreviewHistorySnapshot(`Delete ${humanizeItemType(itemType)} in "${humanizeTopic(card.topic)}"`);
 
   if (itemType === "keyPoint") {
-    selection.selected.keyPoints = (selection.selected.keyPoints || []).filter(
-      (id) => id !== itemId && !id.startsWith(`${itemId}-d`)
-    );
-    delete selection.overrides.keyPoints[itemId];
-    Object.keys(selection.overrides.keyPointDetails).forEach((detailId) => {
+    draft.selected.keyPoints = (draft.selected.keyPoints || []).filter((id) => id !== itemId && !id.startsWith(`${itemId}-d`));
+    delete draft.overrides.keyPoints[itemId];
+    Object.keys(draft.overrides.keyPointDetails).forEach((detailId) => {
       if (detailId.startsWith(`${itemId}-d`)) {
-        delete selection.overrides.keyPointDetails[detailId];
+        delete draft.overrides.keyPointDetails[detailId];
       }
     });
+  } else if (itemType === "aiQuestion") {
+    draft.selected.aiQuestions = (draft.selected.aiQuestions || []).filter((id) => id !== itemId);
+    delete draft.overrides.aiQuestions[itemId];
   } else if (itemType === "keyPointDetail") {
-    selection.selected.keyPoints = (selection.selected.keyPoints || []).filter((id) => id !== itemId);
-    delete selection.overrides.keyPointDetails[itemId];
+    draft.selected.keyPoints = (draft.selected.keyPoints || []).filter((id) => id !== itemId);
+    delete draft.overrides.keyPointDetails[itemId];
   } else if (itemType === "aiExample") {
-    selection.selected.aiExamples = (selection.selected.aiExamples || []).filter((id) => id !== itemId);
-    delete selection.overrides.aiExamples[itemId];
+    draft.selected.aiExamples = (draft.selected.aiExamples || []).filter((id) => id !== itemId);
+    delete draft.overrides.aiExamples[itemId];
   } else if (itemType === "sourceItem") {
-    selection.selected.recommended = (selection.selected.recommended || []).filter((id) => id !== itemId);
-    selection.selected.additional = (selection.selected.additional || []).filter((id) => id !== itemId);
-    delete selection.overrides.sources[itemId];
+    draft.selected.recommended = (draft.selected.recommended || []).filter((id) => id !== itemId);
+    draft.selected.additional = (draft.selected.additional || []).filter((id) => id !== itemId);
+    delete draft.overrides.sources[itemId];
   }
 
   renderPreview();
 }
 
 async function editPreviewItem(cardId, itemType, itemId, section) {
-  const resolvedCardId = cardId;
-  if (!resolvedCardId || !itemId) {
+  if (!cardId || !itemId) {
     return;
   }
-  const context = getAcceptedCardContext(resolvedCardId);
+  const context = getDraftCardContext(cardId);
   if (!context) {
     return;
   }
 
-  const { card, selection } = context;
-  const overrides = ensureSelectionOverrides(selection);
+  const { card, draft } = context;
+  const overrides = ensureSelectionOverrides(draft);
+
+  if (itemType === "aiQuestion") {
+    const item = commonQuestionItems(card).find((entry) => entry.id === itemId);
+    if (!item) {
+      return;
+    }
+    const current = getPreviewAIQuestionOverride(draft, itemId, item);
+    const values = await requestPreviewEditValues({
+      title: "Edit Common Exam Question",
+      subtitle: humanizeTopic(card.topic),
+      fields: [
+        {
+          id: "summary",
+          label: "Question",
+          prompt: "Edit question:",
+          value: current.summary || "",
+          multiline: true,
+          rows: 4,
+        },
+        {
+          id: "detail",
+          label: "Answer summary",
+          prompt: "Edit answer summary:",
+          value: current.detail || "",
+          multiline: true,
+          rows: 6,
+        },
+        {
+          id: "extra",
+          label: "Extra exam note",
+          prompt: "Edit extra exam note:",
+          value: current.extra || "",
+          multiline: true,
+          rows: 5,
+        },
+        {
+          id: "code",
+          label: "Code example",
+          prompt: "Edit code example:",
+          value: current.code || "",
+          multiline: true,
+          rows: 9,
+          kind: "code",
+        },
+      ],
+    });
+    if (!values) {
+      return;
+    }
+    const trimmedSummary = String(values.summary || "").trim();
+    const trimmedDetail = String(values.detail || "").trim();
+    const trimmedExtra = String(values.extra || "").trim();
+    const codeValue = String(values.code || "");
+    if (!trimmedSummary && !trimmedDetail && !trimmedExtra && !codeValue.trim()) {
+      deletePreviewItem(cardId, itemType, itemId, section);
+      return;
+    }
+    pushPreviewHistorySnapshot(`Edit common exam question in "${humanizeTopic(card.topic)}"`);
+    overrides.aiQuestions[itemId] = {
+      summary: trimmedSummary,
+      detail: trimmedDetail,
+      extra: trimmedExtra,
+      code: codeValue,
+    };
+    renderPreview();
+    return;
+  }
 
   if (itemType === "keyPoint") {
     const group = keyPointGroups(card).find((entry) => entry.id === itemId);
     if (!group) {
       return;
     }
-    const current = getPreviewKeyPointOverride(selection, itemId, group.text);
+    const current = getPreviewKeyPointOverride(draft, itemId, group.text);
     const values = await requestPreviewEditValues({
       title: "Edit Key Point",
       subtitle: humanizeTopic(card.topic),
@@ -170,7 +293,7 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
     }
     const trimmed = String(values.text || "").trim();
     if (!trimmed) {
-      deletePreviewItem(resolvedCardId, itemType, itemId, section);
+      deletePreviewItem(cardId, itemType, itemId, section);
       return;
     }
     pushPreviewHistorySnapshot(`Edit key point in "${humanizeTopic(card.topic)}"`);
@@ -185,7 +308,7 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
       return;
     }
     const fallback = detail.code || detail.text || detail.title || "";
-    const current = getPreviewKeyPointDetailOverride(selection, itemId) || fallback;
+    const current = getPreviewKeyPointDetailOverride(draft, itemId) || fallback;
     const values = await requestPreviewEditValues({
       title: "Edit Key Point Detail",
       subtitle: humanizeTopic(card.topic),
@@ -220,7 +343,7 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
     if (!item) {
       return;
     }
-    const current = getPreviewAIExampleOverride(selection, itemId, item);
+    const current = getPreviewAIExampleOverride(draft, itemId, item);
     const values = await requestPreviewEditValues({
       title: "Edit Example",
       subtitle: humanizeTopic(card.topic),
@@ -248,6 +371,14 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
           multiline: true,
           rows: 6,
         },
+        {
+          id: "output",
+          label: "Output / Result",
+          prompt: "Edit output or result:",
+          value: current.output || "",
+          multiline: true,
+          rows: 4,
+        },
       ],
     });
     if (!values) {
@@ -257,6 +388,7 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
     overrides.aiExamples[itemId] = {
       title: String(values.title || "").trim(),
       code: String(values.code || ""),
+      output: String(values.output || "").trim(),
       why: String(values.why || "").trim(),
     };
     renderPreview();
@@ -268,7 +400,7 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
     if (!sourceItem) {
       return;
     }
-    const currentOverride = getPreviewSourceOverride(selection, itemId, sourceItem.header);
+    const currentOverride = getPreviewSourceOverride(draft, itemId, sourceItem.header);
     const headerDefault = currentOverride?.header || sourceItem.header;
     const bodyDefault = currentOverride?.body || sourceItemToEditableText(sourceItem);
     const values = await requestPreviewEditValues({
@@ -343,6 +475,9 @@ function sourceItemToEditableText(sourceItem) {
 }
 
 function humanizeItemType(itemType) {
+  if (itemType === "aiQuestion") {
+    return "common exam question";
+  }
   if (itemType === "keyPoint") {
     return "key point";
   }

@@ -6,10 +6,13 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from pipelines.study_database.lecture_first import coerce_week_payload_to_v3
+
 ROOT = Path(__file__).resolve().parents[2]
 STUDY_DB_FILE = ROOT / "data" / "study_db.json"
 
 _WEEK_SOURCE_RE = re.compile(r"week\s+(\d+)", re.IGNORECASE)
+_NOTEBOOK_CELL_INDEX_RE = re.compile(r"(?:^|[^0-9])(\d+)$")
 
 
 def _as_int(value: Any) -> int | None:
@@ -41,6 +44,11 @@ def _empty_week_record(week: int) -> dict[str, Any]:
         "notebook_cells": [],
         "sources": [],
     }
+
+
+def _db_schema_version(db: dict[str, Any]) -> str:
+    meta = db.get("meta", {}) if isinstance(db.get("meta"), dict) else {}
+    return str(meta.get("schema_version") or "").strip()
 
 
 def _topic_norm(value: str) -> str:
@@ -128,8 +136,22 @@ def _collect_sources(meta: dict[str, Any], weeks: list[dict[str, Any]], exams: l
     return derived
 
 
+def _notebook_cell_index_from_refs(snippet: dict[str, Any], fallback_index: int) -> int:
+    for ref in _safe_list(snippet.get("source_refs")):
+        if not isinstance(ref, dict):
+            continue
+        original_id = str(ref.get("original_id") or "").strip()
+        match = _NOTEBOOK_CELL_INDEX_RE.search(original_id)
+        if match:
+            return int(match.group(1))
+    return fallback_index
+
+
 def flatten_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
     """Build the materialized topic-card input shape from canonical study_db."""
+    if _db_schema_version(db).startswith("3"):
+        return _flatten_v3_study_db_for_pipeline(db)
+
     meta = db.get("meta", {}) if isinstance(db.get("meta"), dict) else {}
     weeks = [item for item in _safe_list(db.get("weeks")) if isinstance(item, dict)]
     weeks = sorted(weeks, key=lambda item: (_as_int(item.get("week")) or 9999))
@@ -158,6 +180,119 @@ def flatten_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
             materialized = dict(cell)
             materialized["week"] = week
             notebooks.append(materialized)
+
+    notebooks.sort(key=lambda item: (_as_int(item.get("week")) or 9999, int(item.get("cell_index") or 0)))
+
+    assessments = db.get("assessments", {}) if isinstance(db.get("assessments"), dict) else {}
+    exams = [item for item in _safe_list(assessments.get("exams")) if isinstance(item, dict)]
+    knowledge = db.get("knowledge", {}) if isinstance(db.get("knowledge"), dict) else {}
+
+    return {
+        "meta": {
+            "course": meta.get("course", ""),
+            "description": meta.get("description", ""),
+            "weeks_covered": [item["week"] for item in lectures],
+            "sources": _collect_sources(meta, weeks, exams),
+        },
+        "lectures": lectures,
+        "notebooks": notebooks,
+        "exams": exams,
+        "key_exam_patterns_and_traps": _safe_list(knowledge.get("key_exam_patterns_and_traps")),
+        "topic_analysis": knowledge.get("topic_analysis", {}),
+    }
+
+
+def _flatten_v3_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
+    meta = db.get("meta", {}) if isinstance(db.get("meta"), dict) else {}
+    weeks = [item for item in _safe_list(db.get("weeks")) if isinstance(item, dict)]
+    weeks = sorted(weeks, key=lambda item: (_as_int(item.get("week")) or 9999))
+
+    lectures: list[dict[str, Any]] = []
+    notebooks: list[dict[str, Any]] = []
+
+    for week_rec in weeks:
+        week = _as_int(week_rec.get("week"))
+        if week is None:
+            continue
+
+        lecture_topics: list[str] = []
+        lecture_concepts: list[dict[str, Any]] = []
+        lecture_questions: list[dict[str, Any]] = []
+
+        notebook_fallback_index = 0
+        for topic in _safe_list(week_rec.get("topics")):
+            if not isinstance(topic, dict):
+                continue
+            topic_title = str(topic.get("title") or "").strip()
+            if topic_title:
+                lecture_topics.append(topic_title)
+            for subtopic in _safe_list(topic.get("subtopics")):
+                if not isinstance(subtopic, dict):
+                    continue
+                subtopic_title = str(subtopic.get("title") or "").strip()
+                for snippet in _safe_list(subtopic.get("knowledge_snippets")):
+                    if not isinstance(snippet, dict):
+                        continue
+                    lecture_concepts.append(
+                        {
+                            "week": week,
+                            "topic": subtopic_title or topic_title,
+                            "explanation": str(snippet.get("content") or "").strip(),
+                            "code_examples": _safe_list(snippet.get("code_examples")),
+                            "source_type": snippet.get("source_type"),
+                            "topic_id": topic.get("id"),
+                            "subtopic_id": subtopic.get("id"),
+                            "subtopic_title": subtopic_title,
+                        }
+                    )
+                for snippet in _safe_list(subtopic.get("question_snippets")):
+                    if not isinstance(snippet, dict):
+                        continue
+                    if str(snippet.get("source_type") or "").strip() != "lecture":
+                        continue
+                    lecture_questions.append(
+                        {
+                            "week": week,
+                            "topic": subtopic_title or topic_title,
+                            "question": str(snippet.get("content") or "").strip(),
+                            "options": snippet.get("options", {}),
+                            "correct": snippet.get("correct"),
+                            "explanation": str(snippet.get("explanation") or "").strip(),
+                            "source_type": snippet.get("source_type"),
+                            "topic_id": topic.get("id"),
+                            "subtopic_id": subtopic.get("id"),
+                            "subtopic_title": subtopic_title,
+                        }
+                    )
+                for snippet in _safe_list(subtopic.get("code_snippets")):
+                    if not isinstance(snippet, dict):
+                        continue
+                    if str(snippet.get("source_type") or "").strip() not in {"notebook", "homework"}:
+                        continue
+                    notebook_fallback_index += 1
+                    notebooks.append(
+                        {
+                            "week": week,
+                            "cell_index": _notebook_cell_index_from_refs(snippet, notebook_fallback_index),
+                            "cell_type": "code",
+                            "topic": subtopic_title or topic_title,
+                            "source": str(snippet.get("content") or "").strip(),
+                            "outputs": _safe_list(snippet.get("outputs")),
+                            "topic_id": topic.get("id"),
+                            "subtopic_id": subtopic.get("id"),
+                            "subtopic_title": subtopic_title,
+                            "is_advanced_optional": False,
+                        }
+                    )
+
+        lectures.append(
+            {
+                "week": week,
+                "topics": lecture_topics,
+                "concepts": lecture_concepts,
+                "lecture_questions": lecture_questions,
+            }
+        )
 
     notebooks.sort(key=lambda item: (_as_int(item.get("week")) or 9999, int(item.get("cell_index") or 0)))
 
@@ -236,7 +371,29 @@ def load_study_db(path: Path | None = None) -> dict[str, Any]:
     db_path = path or STUDY_DB_FILE
     if not db_path.exists():
         raise FileNotFoundError(f"Canonical study database not found: {db_path}")
-    return json.loads(db_path.read_text(encoding="utf-8"))
+    raw = json.loads(db_path.read_text(encoding="utf-8"))
+    if _db_schema_version(raw).startswith("3"):
+        return raw
+
+    weeks = [item for item in _safe_list(raw.get("weeks")) if isinstance(item, dict)]
+    converted_weeks = []
+    did_convert = False
+    for week in weeks:
+        topics = _safe_list(week.get("topics"))
+        if topics and isinstance(topics[0], dict) and "subtopics" in topics[0]:
+            converted_weeks.append(week)
+            continue
+        converted, _ = coerce_week_payload_to_v3(week)
+        converted_weeks.append(converted)
+        did_convert = True
+    if did_convert:
+        upgraded = dict(raw)
+        upgraded["weeks"] = converted_weeks
+        meta = upgraded.setdefault("meta", {})
+        if isinstance(meta, dict):
+            meta["schema_version"] = "3.0"
+        return upgraded
+    return raw
 
 
 def write_study_db(db: dict[str, Any], path: Path | None = None) -> Path:

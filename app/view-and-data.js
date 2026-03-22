@@ -25,11 +25,25 @@ function closeDrawers() {
   state.openDrawer = "";
 }
 
+function openTopicSidebar() {
+  state.navigation.mobileSidebarOpen = true;
+  renderSwipe();
+}
+
+function closeTopicSidebar() {
+  state.navigation.mobileSidebarOpen = false;
+  renderSwipe();
+}
+
 function setView(viewName) {
   state.view = viewName;
   refs.swipeView.classList.toggle("active", viewName === "swipe");
   refs.previewView.classList.toggle("active", viewName === "preview");
+  syncViewButtons();
   closeDrawers();
+  if (viewName === "preview") {
+    closeTopicSidebar();
+  }
   renderPreview();
 }
 
@@ -38,255 +52,202 @@ function renderAll() {
   renderPreview();
 }
 
+function syncViewButtons() {
+  refs.goToSwipeBtn?.classList.toggle("is-active", state.view === "swipe");
+  refs.goToPreviewBtn?.classList.toggle("is-active", state.view === "preview");
+  refs.swipeHeaderActions?.classList.toggle("hidden", state.view !== "swipe");
+  refs.previewHeaderActions?.classList.toggle("hidden", state.view !== "preview");
+}
+
 function getFilteredDeck() {
+  return state.cards.filter(cardMatchesFilters);
+}
+
+function getCardWeek(card) {
+  const explicitWeek = Number(card?.topic_meta?.week);
+  if (Number.isFinite(explicitWeek) && explicitWeek > 0) {
+    return explicitWeek;
+  }
+  const fallbackWeek = Number((card?.weeks || [])[0]);
+  return Number.isFinite(fallbackWeek) && fallbackWeek > 0 ? fallbackWeek : CANONICAL_WEEK_ORDER[0];
+}
+
+function sortTopicCards(cards) {
+  return [...cards].sort((a, b) => {
+    const orderDelta = Number(a?.topic_meta?.topic_order || 0) - Number(b?.topic_meta?.topic_order || 0);
+    if (orderDelta !== 0) {
+      return orderDelta;
+    }
+    const hitDelta = (b.exam_stats?.total_hits || 0) - (a.exam_stats?.total_hits || 0);
+    if (hitDelta !== 0) {
+      return hitDelta;
+    }
+    return humanizeTopic(a.topic).localeCompare(humanizeTopic(b.topic));
+  });
+}
+
+function cardMatchesFilters(card) {
   const search = state.filters.search;
+  const week = getCardWeek(card);
 
-  return state.cards.filter((card) => {
-    if (state.filters.onlyExam && card.exam_stats.total_hits === 0) {
-      return false;
-    }
+  if (state.filters.onlyExam && card.exam_stats.total_hits === 0) {
+    return false;
+  }
 
-    if (card.exam_stats.total_hits < state.filters.minHits) {
-      return false;
-    }
+  if (card.exam_stats.total_hits < state.filters.minHits) {
+    return false;
+  }
 
-    const weeks = Array.isArray(card.weeks) ? card.weeks : [];
-    if (state.filters.weeks.size > 0 && !weeks.some((week) => state.filters.weeks.has(week))) {
-      return false;
-    }
+  if (state.filters.weeks.size > 0 && !state.filters.weeks.has(week)) {
+    return false;
+  }
 
-    if (!search) {
-      return true;
-    }
+  if (!search) {
+    return true;
+  }
 
-    const haystack = [
-      card.topic,
-      card.canonical_topic,
-      ...(card.related_topics || []),
-      ...(card.trap_patterns || []).map((trap) => trap.pattern),
-    ]
-      .join(" ")
-      .toLowerCase();
+  const haystack = [
+    card.topic,
+    card.canonical_topic,
+    ...(card.related_topics || []),
+    ...(card.trap_patterns || []).map((trap) => trap.pattern),
+  ]
+    .join(" ")
+    .toLowerCase();
 
-    return haystack.includes(search);
-  });
+  return haystack.includes(search);
 }
 
-function getPendingCards(filteredDeck) {
-  return filteredDeck.filter((card) => !state.decisions[card.id]);
+function getCanonicalWeekOrder() {
+  if (Array.isArray(state.deckGroups) && state.deckGroups.length > 0) {
+    const weeks = state.deckGroups
+      .map((group) => Number(group?.week))
+      .filter((week, index, all) => Number.isFinite(week) && !all.slice(0, index).includes(week));
+    if (weeks.length) {
+      return weeks;
+    }
+  }
+  return Array.isArray(CANONICAL_WEEK_ORDER) ? [...CANONICAL_WEEK_ORDER] : [1, 2, 3, 4, 5, 6];
 }
 
-function getCurrentCard(filteredDeck) {
-  const pending = getPendingCards(filteredDeck);
-  return pending.length > 0 ? pending[0] : null;
+function getWeekCardsForWeek(week, cards = getFilteredDeck()) {
+  const weekNumber = Number(week);
+  return sortTopicCards(cards.filter((card) => getCardWeek(card) === weekNumber));
 }
 
-function usefulLectureSnippets(card) {
-  const snippets = card.sections.lecture_snippets || [];
-  return snippets
-    .map((snippet) => {
-      const filteredCode = (snippet.code_examples || []).filter((example) => !isLowValueSnippet(example.code || ""));
+function getFilteredWeekBundles() {
+  const filteredCards = getFilteredDeck();
+  const filteredCardById = new Map(filteredCards.map((card) => [card.id, card]));
+  const sourceBundles = Array.isArray(state.deckGroups) && state.deckGroups.length
+    ? state.deckGroups
+    : getCanonicalWeekOrder().map((week) => ({
+        id: `week-${week}`,
+        week,
+        title: `Week ${week}`,
+        topic_groups: [
+          {
+            id: `week-${week}-topics`,
+            title: "Topics",
+            shortTitle: "Topics",
+            is_default: true,
+            topic_refs: getWeekCardsForWeek(week, filteredCards).map((card) => ({
+              card_id: card.id,
+              topic: card.topic,
+              exam_hits: card.exam_stats?.total_hits || 0,
+              topic_order: card.topic_meta?.topic_order || 0,
+            })),
+          },
+        ],
+      }));
+
+  return sourceBundles
+    .map((bundle) => {
+      const groups = (bundle.topic_groups || [])
+        .map((group) => {
+          const cards = sortTopicCards(
+            (group.topic_refs || [])
+              .map((ref) => filteredCardById.get(ref.card_id))
+              .filter(Boolean)
+          );
+
+          return {
+            id: group.id,
+            title: group.title,
+            shortTitle: group.shortTitle || group.title,
+            isDefault: Boolean(group.is_default),
+            cards,
+          };
+        })
+        .filter((group) => group.cards.length > 0);
+
       return {
-        ...snippet,
-        code_examples: filteredCode,
+        id: bundle.id,
+        title: bundle.title,
+        week: Number(bundle.week),
+        groups,
+        cards: groups.flatMap((group) => group.cards),
       };
     })
-    .filter((snippet) => {
-      return Boolean(snippet.explanation || snippet.question || (snippet.code_examples || []).length);
-    });
+    .filter((bundle) => Number.isFinite(bundle.week) && bundle.cards.length > 0);
 }
 
-function usefulNotebookSnippets(card) {
-  return (card.sections.notebook_snippets || []).filter((snippet) => !isLowValueSnippet(snippet.source || ""));
-}
-
-function usefulAIExamples(card) {
-  return (card.sections.ai_examples || []).filter((item) => (item.code || "").trim().length > 0);
-}
-
-function normalizeKeyPointDetails(baseId, details) {
-  return (details || [])
-    .map((detail, idx) => {
-      const id = String(detail?.id || `${baseId}-d${idx + 1}`).trim();
-      const kindRaw = String(detail?.kind || "example").trim().toLowerCase();
-      const kind = ["example", "table", "commands", "explanation"].includes(kindRaw) ? kindRaw : "example";
-      const title = String(detail?.title || "Optional detail").trim();
-      const text = String(detail?.text || "").trim();
-      const code = normalizeNewlines(detail?.code || "").trim();
-      const table = normalizeMiniTable(detail?.table);
-
-      if (!id || (!text && !code && !table)) {
-        return null;
-      }
-
-      return {
-        id,
-        kind,
-        title,
-        text,
-        code,
-        table,
-      };
-    })
-    .filter(Boolean);
-}
-
-function normalizeMiniTable(rawTable) {
-  if (!rawTable || typeof rawTable !== "object") {
+function ensureExplorerNavigation(filteredWeekBundles = getFilteredWeekBundles()) {
+  const visibleBundles = filteredWeekBundles.filter((bundle) => Array.isArray(bundle.cards) && bundle.cards.length > 0);
+  if (!visibleBundles.length) {
+    state.navigation.activeTopicId = "";
+    state.navigation.activeWeek = CANONICAL_WEEK_ORDER[0];
     return null;
   }
 
-  const headers = Array.isArray(rawTable.headers)
-    ? rawTable.headers.map((value) => String(value || "").trim()).filter((value) => value.length > 0)
-    : [];
-
-  const rows = Array.isArray(rawTable.rows)
-    ? rawTable.rows
-        .map((row) => (Array.isArray(row) ? row.map((value) => String(value || "").trim()) : []))
-        .filter((row) => row.length > 0 && row.some((cell) => cell.length > 0))
-    : [];
-
-  if (!headers.length || !rows.length) {
-    return null;
+  if (!state.navigation || typeof state.navigation !== "object") {
+    state.navigation = buildDefaultNavigationState();
   }
 
-  return { headers, rows };
-}
+  const visibleCardIds = new Set(visibleBundles.flatMap((bundle) => bundle.cards.map((card) => card.id)));
+  const currentTopicId = String(state.navigation.activeTopicId || "").trim();
+  const activeTopicId = visibleCardIds.has(currentTopicId) ? currentTopicId : visibleBundles[0].cards[0].id;
+  const activeBundle =
+    visibleBundles.find((bundle) => bundle.cards.some((card) => card.id === activeTopicId)) || visibleBundles[0];
+  const activeGroup =
+    activeBundle.groups?.find((group) => group.cards.some((card) => card.id === activeTopicId)) || activeBundle.groups?.[0] || null;
 
-function keyPointGroups(card) {
-  return (card.sections.key_points_to_remember || [])
-    .filter((item) => item && (item.text || "").trim().length > 0)
-    .map((item, idx) => {
-      const id = String(item.id || `kp-${idx + 1}`).trim();
-      const text = String(item.text || "").trim();
-      return {
-        id,
-        text,
-        details: normalizeKeyPointDetails(id, item.details || []),
-      };
-    });
-}
+  state.navigation.activeTopicId = activeTopicId;
+  state.navigation.activeWeek = activeBundle.week;
 
-function keyPointSelectableIds(card) {
-  const ids = [];
-  keyPointGroups(card).forEach((group) => {
-    ids.push(group.id);
-    group.details.forEach((detail) => ids.push(detail.id));
-  });
-  return ids;
-}
-
-function buildSourceItems(card) {
-  const items = [];
-
-  (card.sections.exam_questions || []).forEach((item) => {
-    items.push({
-      id: item.id,
-      sourceType: "exam",
-      priority: 0,
-      header: `Exam • Q${item.number || "?"} • ${formatExamLabel(item.exam_label)}`,
-      item,
-    });
-  });
-
-  usefulLectureSnippets(card).forEach((item) => {
-    items.push({
-      id: item.id,
-      sourceType: "lecture",
-      priority: 1,
-      header: `Lecture • ${item.topic || "snippet"} • W${item.week || "?"}`,
-      item,
-    });
-  });
-
-  usefulNotebookSnippets(card).forEach((item) => {
-    items.push({
-      id: item.id,
-      sourceType: "notebook",
-      priority: 2,
-      header: `Notebook • W${item.week || "?"} cell ${item.cell_index || "?"} • ${item.topic || ""}`,
-      item,
-    });
-  });
-
-  items.sort((a, b) => a.priority - b.priority);
-  return items;
-}
-
-function getSourceSplit(card) {
-  const allItems = buildSourceItems(card);
-  const byId = new Map(allItems.map((item) => [item.id, item]));
-  const recommendedIdsRaw = card.sections.recommended_ids || [];
-  const recommendedIds = recommendedIdsRaw.filter((id) => byId.has(id));
-
-  const recommended = [];
-  recommendedIds.forEach((id) => {
-    if (!recommended.some((item) => item.id === id)) {
-      recommended.push(byId.get(id));
-    }
-  });
-
-  if (!recommended.length && allItems.length) {
-    const fallback = allItems.filter((item) => item.sourceType === "exam").slice(0, 4);
-    const extra = allItems
-      .filter((item) => item.sourceType !== "exam")
-      .slice(0, Math.max(0, 6 - fallback.length));
-    recommended.push(...fallback, ...extra);
+  if (!state.navigation.expandedWeeks || typeof state.navigation.expandedWeeks !== "object") {
+    state.navigation.expandedWeeks = Object.fromEntries(CANONICAL_WEEK_ORDER.map((week) => [String(week), true]));
+  }
+  if (!Object.values(state.navigation.expandedWeeks).some(Boolean)) {
+    state.navigation.expandedWeeks[String(activeBundle.week)] = true;
+  }
+  if (!state.navigation.expandedWeeks[String(activeBundle.week)]) {
+    state.navigation.expandedWeeks[String(activeBundle.week)] = true;
   }
 
-  const recSet = new Set(recommended.map((item) => item.id));
-  const additional = allItems.filter((item) => !recSet.has(item.id));
-
-  return { recommended, additional };
-}
-
-function ensureDraft(card) {
-  if (state.drafts[card.id]) {
-    return state.drafts[card.id];
-  }
-
-  const split = getSourceSplit(card);
-  const recommendedIds = split.recommended.map((item) => item.id);
-  const additionalIds = split.additional.map((item) => item.id);
-  const aiExampleIds = usefulAIExamples(card).map((item) => item.id);
-  const keyPointIds = keyPointSelectableIds(card);
-
-  const autoSelectRecommended = state.preferences.sourceAutoSelectMode === "recommended";
-
-  state.drafts[card.id] = {
-    ui: {
-      settingsOpen: false,
-    },
-    sections: {
-      aiSummary: Boolean(card.sections.ai_summary?.content),
-      aiQuestions: (card.sections.ai_common_questions?.bullets || []).length > 0,
-      keyPoints: keyPointIds.length > 0,
-      aiExamples: aiExampleIds.length > 0,
-      recommended: recommendedIds.length > 0,
-      additional: additionalIds.length > 0,
-    },
-    selected: {
-      aiExamples: [],
-      keyPoints: [],
-      recommended: autoSelectRecommended ? [...recommendedIds] : [],
-      additional: [],
-    },
-  };
-
-  return state.drafts[card.id];
-}
-
-function cloneDraft(draft) {
   return {
-    ui: {
-      settingsOpen: Boolean(draft.ui?.settingsOpen),
-    },
-    sections: { ...draft.sections },
-    selected: {
-      aiExamples: [...draft.selected.aiExamples],
-      keyPoints: [...draft.selected.keyPoints],
-      recommended: [...draft.selected.recommended],
-      additional: [...draft.selected.additional],
-    },
+    bundle: activeBundle,
+    group: activeGroup,
+    card: activeBundle.cards.find((card) => card.id === activeTopicId) || activeBundle.cards[0],
   };
+}
+
+function setActiveTopic(cardId, week) {
+  if (!cardId) {
+    return;
+  }
+  state.navigation.activeTopicId = cardId;
+  if (Number.isFinite(Number(week))) {
+    state.navigation.activeWeek = Number(week);
+    state.navigation.expandedWeeks[String(week)] = true;
+  }
+  state.navigation.mobileSidebarOpen = false;
+  renderSwipe();
+  schedulePersistState();
+}
+
+function toggleWeekExpanded(week) {
+  const key = String(week);
+  state.navigation.expandedWeeks[key] = !Boolean(state.navigation.expandedWeeks[key]);
+  renderSwipe();
+  schedulePersistState();
 }

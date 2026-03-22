@@ -1,0 +1,368 @@
+{
+  "exam_label": "intro_python_sample_final_24_25",
+  "source": "materials/post_midterm/Sample Final plus answers.pdf",
+  "year": "2024",
+  "note": "Sample final exam for Introduction to Python 24/25 course. Covers core Python, Pandas, and Datetime.",
+  "questions": [
+    {
+      "number": 1,
+      "topic": "OOP (Initializers)",
+      "week": 5,
+      "question": "You'd like to define a class called Vehicle. It should have two attributes: name and mode, which you want to be initialized during object creation. The name attribute can be any string, and it must be passed to the object during creation. The mode attribute is also a string, but it doesn't necessarily need to be passed to the object constructor. If it isn't specified at object construction, then the mode attribute should be equal to the string \"land\". Which of the following code segments achieves what you want?",
+      "options": {
+        "A": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+        "B": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+        "C": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        return name, mode",
+        "D": "class Vehicle:\n    def __init__(vehicle_name, vehicle_mode):\n        name = vehicle_name\n        mode = vehicle_mode"
+      },
+      "correct": "A",
+      "explanation": "In Python, default parameter values in the __init__ method allow for optional arguments during object creation. Option A correctly assigns the parameters to instance attributes.",
+      "code_context": "my_car = Vehicle(\"Mazda\")\n# Expected: my_car.name == \"Mazda\" and my_car.mode == \"land\""
+    },
+    {
+      "number": 2,
+      "topic": "OOP (Methods)",
+      "week": 5,
+      "question": "Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Rick Riordan\"), book_1.add_review(5), book_1.add_review(3), book_1.add_review(3). What will then the following command print to the screen? print(book_1.show_rating())",
+      "options": {
+        "A": "3.7",
+        "B": "4",
+        "C": "None",
+        "D": "3.67"
+      },
+      "correct": "A",
+      "explanation": "The average of scores [5, 3, 3] is 11 / 3 = 3.666... Using round(..., 1) results in 3.7.",
+      "code_context": "class Book:\n    def __init__(self, title, author, review_scores=None):\n        self.title = title\n        self.author = author\n        self.review_scores = review_scores if review_scores else []\n    def add_review(self, score):\n        self.review_scores.append(score)\n    def show_rating(self):\n        if self.review_scores:\n            return round(sum(self.review_scores) / len(self.review_scores), 1)"
+    },
+    {
+      "number": 3,
+      "topic": "Dictionaries",
+      "week": 3,
+      "question": "Imagine that you have a list called students, which is populated by a number of dictionaries. Each dictionary has keys: \"Name\" and \"Grade\". You'd like to print the text: [NAME] has received a grade of [GRADE], with the grade displayed to one decimal place. Which of the following code segments will achieve what you want?",
+      "options": {
+        "A": "for student in students:\n    print(f\"{student['Name']} has received a grade of {student['Grade']}.\")",
+        "B": "for student, grade in students.items():\n    print(f\"{student} has received a grade of {student['Grade']}.\")",
+        "C": "for student in students:\n    print(f\"{student['Name']} has received a grade of \" + str(student[\"Grade\"]))",
+        "D": "for student, grade in students.items():\n    print(f'{student} has received a grade of {grade}.')"
+      },
+      "correct": "A",
+      "explanation": "When iterating over a list of dictionaries, each iteration yields a dictionary. You access values using keys like student['Name']. Options B and D fail because lists do not have an .items() method.",
+      "code_context": "students = [{\"Name\": \"Adam\", \"Grade\": 75}, {\"Name\": \"Bernard\", \"Grade\": 80}]"
+    },
+    {
+      "number": 4,
+      "topic": "String Methods",
+      "week": 2,
+      "question": "Which of the following code segments does NOT achieve the goal of returning a string with 10 digits by removing dashes?",
+      "options": {
+        "A": "def format_phone_number(number):\n    number.replace(\"-\", \"\")\n    return number",
+        "B": "def format_phone_number(number):\n    return number.replace(\"-\", \"\")",
+        "C": "def format_phone_number(number):\n    digits = []\n    for char in number:\n        if char in \"0123456789\":\n            digits.append(char)\n    return \"\".join(digits)",
+        "D": "def format_phone_number(number):\n    return \"\".join(number.split(\"-\"))"
+      },
+      "correct": "A",
+      "explanation": "Strings in Python are immutable. The .replace() method returns a new string but does not modify the original. Option A returns the original string with dashes because the result of .replace() was not assigned back to the variable.",
+      "code_context": ""
+    },
+    {
+      "number": 5,
+      "topic": "Pandas (Basic)",
+      "week": 4,
+      "question": "You have a pandas DataFrame called df with columns \"A\" and \"B\". You'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?",
+      "options": {
+        "A": "df.loc[:,\"C\"] = df.loc[:,\"A\"] + df.loc[:,\"B\"]",
+        "B": "df.loc[\"c\"] = df.loc[\"A\"] + df.loc[\"B\"]",
+        "C": "df.loc[\"C\"] = df.loc[:,(\"A\" + \"B\")]",
+        "D": "df.loc[\"C\"] = df.loc[\"A\" + \"B\"]"
+      },
+      "correct": "A",
+      "explanation": "Vectorized addition in Pandas is performed by adding series together. Using .loc[:, 'C'] correctly assigns the result to a new column for all rows.",
+      "code_context": ""
+    },
+    {
+      "number": 6,
+      "topic": "Pandas (Indexing)",
+      "week": 4,
+      "question": "Suppose that you'd like to create a new DataFrame that contains only column 'B' for rows with indices 2, 4, and 6. Which of the following code lines will achieve what you want?",
+      "options": {
+        "A": "df.loc[df.index % 2 == 0, [\"B\"]]",
+        "B": "df[2, 4, 6, \"B\"]",
+        "C": "df.iloc[[2, 4, 6], 2]",
+        "D": "df.loc[2::2, \"B\"]"
+      },
+      "correct": "A",
+      "explanation": "Option A uses a boolean mask on the index to find even numbers and specifies ['B'] as a list to return a DataFrame. Option D would return a Series.",
+      "code_context": ""
+    },
+    {
+      "number": 7,
+      "topic": "Pandas (Subset/Sort)",
+      "week": 4,
+      "question": "Which of the following code lines could NOT have created df2 from df1?",
+      "options": {
+        "A": "df2 = df1.sort_index(ascending=False).loc[:,[\"A\", \"C\", \"D\"]]",
+        "B": "df2 = df1.iloc[[3, 2, 1], [0, 2, 3]]",
+        "C": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"D\", ascending=False)",
+        "D": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"C\")"
+      },
+      "correct": "A",
+      "explanation": "Option A would sort all 5 rows of df1 and keep columns A, C, D, resulting in a 5-row DataFrame. df2 only has 3 rows (indices 4, 3, 2).",
+      "code_context": ""
+    },
+    {
+      "number": 8,
+      "topic": "Pandas (Series Strings)",
+      "week": 4,
+      "question": "You have a Series s with municipality and province names separated by \"; \". You'd like to create a new Series that only contains the municipality names. Which of the following code lines will achieve what you want?",
+      "options": {
+        "A": "s.map(lambda x: x.split(\"; \")[0])",
+        "B": "s.split(\"; \")[0]",
+        "C": "s.lambda(x.split(\"; \"))",
+        "D": "s.str[:9]"
+      },
+      "correct": "A",
+      "explanation": "The .map() method allows applying a function (like splitting a string and taking the first part) to every element in a pandas Series.",
+      "code_context": ""
+    },
+    {
+      "number": 9,
+      "topic": "Datetime (Parsing)",
+      "week": 6,
+      "question": "Suppose that you call the function like this: get_months([\"03/02/2013\", \"03.02.2013\", \"03-02-2013\"]). What does the function call return?",
+      "options": {
+        "A": "[3, None, 2]",
+        "B": "[2, None, 3]",
+        "C": "[3, 2]",
+        "D": "[2, 3]"
+      },
+      "correct": "A",
+      "explanation": "1st string: contains '/' so it uses %m/%d/%Y -> month 3. 2nd: contains neither '-' nor '/' -> None. 3rd: contains '-' so it uses %d-%m-%Y -> month 2.",
+      "code_context": "from datetime import datetime\ndef get_months(date_strings):\n    dates = []\n    for date_str in date_strings:\n        if \"-\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%d-%m-%Y\"))\n        elif \"/\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%m/%d/%Y\"))\n        else:\n            dates.append(None)\n    return [date.month if date is not None else None for date in dates]"
+    },
+    {
+      "number": 10,
+      "topic": "Datetime (Arithmetic)",
+      "week": 6,
+      "question": "Which of the following code segments will return the number of the day (1-366) that a datetime value represents within the year?",
+      "options": {
+        "A": "def day_of_year(dt):\n    return (dt - datetime(dt.year, 1, 1)).days + 1",
+        "B": "def day_of_year(dt):\n    return timedelta(dt - datetime(dt.year, 1, 1)) + 1",
+        "C": "def day_of_year(dt):\n    return dt - datetime(dt.year, 1, 1) + 1",
+        "D": "def day_of_year(dt):\n    return (dt - datetime(dt.year, 1, 0)).days"
+      },
+      "correct": "A",
+      "explanation": "Subtracting two datetime objects results in a timedelta object. Accessing the .days attribute gives the difference as an integer. Adding 1 makes it 1-based (Jan 1st = day 1).",
+      "code_context": ""
+    },
+    {
+      "number": 11,
+      "topic": "Comprehensions",
+      "week": 3,
+      "question": "Which of the following code lines will create a dictionary, in which the keys are the elements of list_1 and the values are the number of characters in the corresponding key?",
+      "options": {
+        "A": "{item: len(item) for item in list_1}",
+        "B": "[len(item) for item in list_1]",
+        "C": "{item for item in list_1 if len(item) > 0}",
+        "D": "{len(item): item for item in list_1}"
+      },
+      "correct": "A",
+      "explanation": "This is a standard dictionary comprehension. Option B is a list comprehension, Option C is a set comprehension, and Option D swaps keys and values.",
+      "code_context": ""
+    },
+    {
+      "number": 12,
+      "topic": "List Comprehensions",
+      "week": 2,
+      "question": "You'd like to turn every upper case letter in a list into lower case and vice versa. Which code line achieves this?",
+      "options": {
+        "A": "[letter.upper() if letter.islower() else letter.lower() for letter in list_1]",
+        "B": "[x if x in 'abcdefg...'.upper() else x.lower() for x in list_1]",
+        "C": "Both achieve what you want",
+        "D": "None achieves what you want"
+      },
+      "correct": "C",
+      "explanation": "Both options implement the conditional logic required to flip the case of each character in the list.",
+      "code_context": ""
+    },
+    {
+      "number": 13,
+      "topic": "Data Types",
+      "week": 1,
+      "question": "What are the outputs of the following lines of code? print(x == y), print(y == z), print(x == z), print(x == y == z)",
+      "options": {
+        "A": "False, True, False, False",
+        "B": "True, True, True, True",
+        "C": "False, False, False, True",
+        "D": "True, False, False, False"
+      },
+      "correct": "A",
+      "explanation": "'3' == 3 is False. 3 == 3.0 is True. '3' == 3.0 is False. x == y == z evaluates as (x == y) and (y == z), which is False and True, resulting in False.",
+      "code_context": "x = '3'\ny = 3\nz = 3.0"
+    },
+    {
+      "number": 14,
+      "topic": "Loops",
+      "week": 2,
+      "question": "Choose the program that iterates over integers from 1 to 10 and prints the sum of the current and previous number (starting with 0 as previous).",
+      "options": {
+        "A": "while i <= 10: print(i + (i-1))",
+        "B": "previous = 0\nfor i in range(1, 11):\n    print(i + previous)\n    previous = i",
+        "C": "Both of the above work",
+        "D": "Neither of above works"
+      },
+      "correct": "B",
+      "explanation": "Option B correctly updates the 'previous' state at the end of each iteration to match the logic of the target output.",
+      "code_context": ""
+    },
+    {
+      "number": 15,
+      "topic": "Functions (Scope)",
+      "week": 2,
+      "question": "Executing the following program will produce an error. Why?",
+      "options": {
+        "A": "Result is a local name and cannot be referenced outside of the function.",
+        "B": "** is not a valid Python operator.",
+        "C": "The syntax of the f-string is incorrect.",
+        "D": "You can only use either print or return, but not both."
+      },
+      "correct": "A",
+      "explanation": "The variable 'result' is defined inside the 'cube' function, making it local to that function. It cannot be accessed from the global scope.",
+      "code_context": "def cube(num):\n    result = num ** 3\n    return f'The cube of {num} is: {result}.'\nprint(result)"
+    },
+    {
+      "number": 16,
+      "topic": "Lambdas",
+      "week": 3,
+      "question": "What would be printed by the following code snippet: print(list_1[0](1, 2) ** list_1[1](1, 2))",
+      "options": {
+        "A": "6",
+        "B": "7",
+        "C": "8",
+        "D": "9"
+      },
+      "correct": "D",
+      "explanation": "list_1[0](1, 2) is 1 + 2 = 3. list_1[1](1, 2) is 1 * 2 = 2. 3 ** 2 = 9.",
+      "code_context": "list_1 = [lambda a, b: a + b, lambda a, b: a * b]"
+    },
+    {
+      "number": 17,
+      "topic": "Iterables/Logic",
+      "week": 3,
+      "question": "What will be printed by the function calls in the main function provided?",
+      "options": {
+        "A": "True, False, False",
+        "B": "False, False, True",
+        "C": "False, True, True",
+        "D": "True, True, True"
+      },
+      "correct": "D",
+      "explanation": "The function checks if all elements in the input list are either all empty or all non-empty. For the sets and lists provided, they are consistent within each call.",
+      "code_context": "def main(x):\n    y = []\n    for i in x:\n        if len(i) == 0:\n            y.append(True)\n        else:\n            y.append(False)\n    return y[0] == y[1] == y[2]"
+    },
+    {
+      "number": 18,
+      "topic": "Slicing",
+      "week": 2,
+      "question": "How do you break a list into a list of lists, where each sublist contains 3 elements?",
+      "options": {
+        "A": "y = [x[i:(i + 3)] for i in range(0, 7, 3)]",
+        "B": "y = [x[i[0]::3] for i in enumerate(x)]",
+        "C": "Both of the above work",
+        "D": "Neither of above works"
+      },
+      "correct": "A",
+      "explanation": "Option A uses range(0, 7, 3) which generates 0, 3, 6. The slices x[0:3], x[3:6], and x[6:9] correctly partition the list.",
+      "code_context": "x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']"
+    },
+    {
+      "number": 19,
+      "topic": "Dictionaries",
+      "week": 3,
+      "question": "Which of the following programs correctly returns a dictionary where values are sums of input values whose keys are <= the output key?",
+      "options": {
+        "A": "A list comprehension based sum in a loop.",
+        "B": "A running total sum in a sorted key loop.",
+        "C": "Both of the above work as intended",
+        "D": "None of the above works as intended"
+      },
+      "correct": "C",
+      "explanation": "Both methods correctly calculate the cumulative sums based on key values, though Option B is more efficient.",
+      "code_context": "main({5: 1, 2: 5, 4: 2}) # Expected: {5: 8, 2: 5, 4: 7}"
+    },
+    {
+      "number": 20,
+      "topic": "Dictionaries",
+      "week": 3,
+      "question": "What is the result of the program comparing d1 (from zip) and d2 (from enumerate)?",
+      "options": {
+        "A": "True",
+        "B": "False",
+        "C": "An error message.",
+        "D": "None of the above"
+      },
+      "correct": "A",
+      "explanation": "Both d1 and d2 result in the same dictionary: {1: 2, 2: 3, 3: 4, 4: 5}.",
+      "code_context": "l1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]"
+    },
+    {
+      "number": 21,
+      "topic": "Dict Iteration",
+      "week": 3,
+      "question": "The following codes all print the same value, except one. Which one?",
+      "options": {
+        "A": "for key, value in d1: result += value",
+        "B": "for key in d1.keys(): result += d1[key]",
+        "C": "for value in d1.values(): result += value",
+        "D": "result = sum(d1.values())"
+      },
+      "correct": "A",
+      "explanation": "Iterating directly over a dictionary (for key, value in d1) only yields keys. This will cause a ValueError when trying to unpack into two variables.",
+      "code_context": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}"
+    },
+    {
+      "number": 22,
+      "topic": "String Methods",
+      "week": 2,
+      "question": "Which script, using the count string method, would print the value 1 for x = 'Amsterdam'?",
+      "options": {
+        "A": "print(count(x, 'a'))",
+        "B": "print(x.count('a'))",
+        "C": "Both scripts would deliver that result",
+        "D": "Neither script would deliver that result"
+      },
+      "correct": "B",
+      "explanation": "The count() method is a string method, not a standalone function. It is called using the dot notation on a string object.",
+      "code_context": "x = 'Amsterdam'"
+    },
+    {
+      "number": 23,
+      "topic": "Functions (*args)",
+      "week": 3,
+      "question": "Which of the following function calls would return the number 30 as a result?",
+      "options": {
+        "A": "calculation(lambda x: x + 5, 1, 2, 3, 4)",
+        "B": "calculation(lambda x: x**2, 1, 2, 3, 4)",
+        "C": "Both function calls would lead to that result",
+        "D": "Neither function call would lead to that result"
+      },
+      "correct": "C",
+      "explanation": "The first call sums (6+7+8+9)=30. The second call sums (1+4+9+16)=30.",
+      "code_context": "def calculation(func, *args):\n    result = 0\n    for el in args:\n        result += func(el)\n    return result"
+    },
+    {
+      "number": 24,
+      "topic": "Modules",
+      "week": 2,
+      "question": "Which script does NOT print the correct answer for the area of a circle?",
+      "options": {
+        "A": "import math; print(math.pi * r ** 2)",
+        "B": "from math import pi; print(pi * r ** 2)",
+        "C": "import math as constants; print(math.pi * r ** 2)",
+        "D": "from math import pi as constant; print(constant * r ** 2)"
+      },
+      "correct": "C",
+      "explanation": "If math is imported as constants, it must be referred to as 'constants.pi'. 'math.pi' will no longer be available unless 'math' was also imported directly.",
+      "code_context": ""
+    }
+  ]
+}

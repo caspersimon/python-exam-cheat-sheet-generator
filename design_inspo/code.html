@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Topic Explorer - Python Atelier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#f4f4ef",
+                        "on-surface-variant": "#3f4945",
+                        "on-primary-fixed-variant": "#065043",
+                        "background": "#fafaf5",
+                        "secondary-container": "#68fadd",
+                        "secondary-fixed": "#68fadd",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#29695b",
+                        "secondary-fixed-dim": "#44ddc1",
+                        "tertiary-fixed-dim": "#ffb866",
+                        "primary-fixed": "#afefdd",
+                        "primary": "#00342b",
+                        "outline": "#707975",
+                        "tertiary-container": "#623a00",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffddba",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#432600",
+                        "on-secondary-container": "#007261",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#00201a",
+                        "on-tertiary-fixed": "#2b1700",
+                        "primary-fixed-dim": "#94d3c1",
+                        "surface-container-highest": "#e3e3de",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e8e8e3",
+                        "on-surface": "#1a1c19",
+                        "primary-container": "#004d40",
+                        "on-primary-fixed": "#00201a",
+                        "on-background": "#1a1c19",
+                        "surface": "#fafaf5",
+                        "on-tertiary-container": "#f09e34",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#bfc9c4",
+                        "on-primary-container": "#7ebdac",
+                        "inverse-on-surface": "#f1f1ec",
+                        "secondary": "#006b5c",
+                        "surface-bright": "#fafaf5",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeee9",
+                        "inverse-primary": "#94d3c1",
+                        "inverse-surface": "#2f312e",
+                        "surface-dim": "#dadad5",
+                        "on-secondary-fixed-variant": "#005145",
+                        "on-error": "#ffffff"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bfc9c4;
+            border-radius: 10px;
+        }
+        .code-block-accent {
+            border-left: 3px solid #004d40;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased flex h-screen overflow-hidden">
+<!-- Sidebar Navigation (The Anchor) -->
+<aside class="hidden md:flex flex-col p-4 gap-y-2 h-full border-r border-stone-200/10 bg-[#f4f4ef] dark:bg-stone-900/50 w-64 shrink-0">
+<div class="mb-8 px-2">
+<h2 class="font-headline font-extrabold text-primary text-xl tracking-tight">Python Atelier</h2>
+<p class="text-xs text-on-surface-variant mt-1">72% Completed</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 rounded-xl transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label">Introduction</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 rounded-xl transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+<span class="font-label">Data Structures</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 rounded-xl transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-label">Functions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-white dark:bg-stone-800 text-[#004D40] dark:text-white font-bold rounded-xl shadow-sm translate-x-1 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-label">OOP</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 rounded-xl transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+<span class="font-label">Deployment</span>
+</a>
+</nav>
+<div class="pt-4 border-t border-stone-200/20 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label">Documentation</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-8 h-16 w-full bg-[#fafaf5] dark:bg-stone-950/80 backdrop-blur-xl z-50 shrink-0">
+<div class="flex items-center gap-6">
+<h1 class="font-headline font-semibold tracking-tight text-[#004D40] dark:text-[#4DB6AC]">Topic Explorer</h1>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#004D40] transition-colors font-label" href="#">Curriculum</a>
+<a class="text-[#004D40] dark:text-[#4DB6AC] border-b-2 border-[#004D40] dark:border-[#4DB6AC] pb-1 font-label" href="#">Cheat Sheets</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#004D40] transition-colors font-label" href="#">Library</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#004D40] transition-colors font-label" href="#">Community</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-surface-container px-3 py-1.5 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="search">search</span>
+<span class="text-sm text-on-surface-variant font-label">Search library...</span>
+</div>
+<span class="material-symbols-outlined text-stone-600 cursor-pointer" data-icon="account_circle">account_circle</span>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+<div class="max-w-6xl mx-auto space-y-12 pb-24">
+<!-- Topic Header Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+<div class="lg:col-span-7 space-y-4">
+<div class="flex items-center gap-3">
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold tracking-wider">WEEK 4</span>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase">High Frequency</span>
+</div>
+<h2 class="text-4xl lg:text-5xl font-headline font-extrabold text-primary leading-tight">Week 4: OOP</h2>
+<p class="text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                            Object-Oriented Programming (OOP) is a paradigm based on "objects" which can contain data and code. Master inheritance, encapsulation, and polymorphism for technical interviews.
+                        </p>
+<div class="flex items-center gap-6 pt-2">
+<div class="flex flex-col">
+<span class="text-2xl font-bold text-primary">18</span>
+<span class="text-xs font-label text-outline uppercase tracking-widest">Exam Questions</span>
+</div>
+<div class="w-px h-8 bg-surface-container-highest"></div>
+<div class="flex flex-col">
+<span class="text-2xl font-bold text-primary">94%</span>
+<span class="text-xs font-label text-outline uppercase tracking-widest">Topic Mastery</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 bg-surface-container-low rounded-xl p-6 self-center">
+<h3 class="font-headline font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="quiz">quiz</span>
+                            Common Questions
+                        </h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3 text-sm text-on-surface">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary mt-1.5 shrink-0"></span>
+                                Difference between <code class="bg-surface-container-high px-1 rounded">__init__</code> and <code class="bg-surface-container-high px-1 rounded">__new__</code>?
+                            </li>
+<li class="flex items-start gap-3 text-sm text-on-surface">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary mt-1.5 shrink-0"></span>
+                                How does Multiple Inheritance work in Python?
+                            </li>
+<li class="flex items-start gap-3 text-sm text-on-surface">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary mt-1.5 shrink-0"></span>
+                                Explain the <code class="bg-surface-container-high px-1 rounded">super()</code> function.
+                            </li>
+</ul>
+</div>
+</section>
+<!-- Key Points Section -->
+<section class="space-y-6">
+<div class="flex items-end justify-between">
+<h3 class="text-2xl font-headline font-bold text-primary">Key Points for Reference</h3>
+<span class="text-sm font-label text-outline">Select items to add to your sheet</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Key Point Card -->
+<div class="group bg-surface-container-lowest border-none rounded-xl p-5 flex gap-4 hover:bg-surface transition-colors cursor-pointer">
+<div class="pt-1">
+<div class="w-6 h-6 rounded border-2 border-primary flex items-center justify-center text-white bg-primary">
+<span class="material-symbols-outlined text-xs" data-icon="check" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<div class="space-y-2">
+<h4 class="font-bold text-on-surface">Encapsulation Basics</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Hiding internal state and requiring all interaction through methods.</p>
+<div class="bg-surface-dim p-3 rounded-lg code-block-accent">
+<pre class="text-xs font-mono text-primary leading-tight">self.__private_var = 10</pre>
+</div>
+</div>
+</div>
+<div class="group bg-surface-container-lowest border-none rounded-xl p-5 flex gap-4 hover:bg-surface transition-colors cursor-pointer">
+<div class="pt-1">
+<div class="w-6 h-6 rounded border-2 border-outline flex items-center justify-center hover:border-primary transition-colors"></div>
+</div>
+<div class="space-y-2">
+<h4 class="font-bold text-on-surface">Method Resolution Order (MRO)</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">The order in which Python looks for a method in a hierarchy of classes.</p>
+<div class="bg-surface-dim p-3 rounded-lg code-block-accent">
+<pre class="text-xs font-mono text-primary leading-tight">Class.mro()</pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Code Examples Bento Grid -->
+<section class="space-y-6">
+<h3 class="text-2xl font-headline font-bold text-primary">Code Examples</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Correct Snippet -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden border-none flex flex-col">
+<div class="p-4 bg-secondary-container/20 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs font-bold text-on-secondary-container uppercase tracking-widest">Correct Inheritance</span>
+</div>
+<div class="w-5 h-5 rounded border-2 border-primary bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[10px]" data-icon="check" style="font-variation-settings: 'wght' 800;">check</span>
+</div>
+</div>
+<div class="p-0 relative h-48">
+<img class="w-full h-full object-cover" data-alt="Clean Python code snippet showing class inheritance structure" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVcUkobfL7HoRiryjwjanoTSOPVpjljCI0GEIao15srf0PjN-0e7rRY4g1qjRLLUHLGMY_4ueDCI-OE_1p5A7beys_z5x6n2vgwHI4XYgoUoLF5LMuJjywjKRsPbnlcuuD6XFfB6V2nSHOXSwuOqL4iS5BnnvP136OrojkSqJg7qH5QlGuqKsKCVkoz5Rn6ls_vReVOG7euHt-3M-UEiXGO6k5U_svwySRB7wjbANHeVmacXyhMxrTsi9aPokTtYt3ofN1ULVSPwg"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+<div class="p-4 bg-surface-dim">
+<pre class="text-sm font-mono text-on-surface">class Animal:
+    def speak(self): pass
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"</pre>
+</div>
+</div>
+<!-- Incorrect Snippet -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden border-none flex flex-col">
+<div class="p-4 bg-error-container/20 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error" data-icon="cancel" style="font-variation-settings: 'FILL' 1;">cancel</span>
+<span class="text-xs font-bold text-on-error-container uppercase tracking-widest">Common Error: Init</span>
+</div>
+<div class="w-5 h-5 rounded border-2 border-outline"></div>
+</div>
+<div class="p-0 relative h-48">
+<img class="w-full h-full object-cover opacity-80" data-alt="Code editor showing syntax errors in Python initialization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3Nl3JqnCwLp8ijb_CY5lxkj6mgIrHQnh5L1aGikGtYkh6N8v_u1JstKKF3d9P72olhfkVuy8KPQqcSz6WooTG4JIDidrxFyfKLl5hOh9O6yUXMPHJl-XLeQcwZJlV2ZDl12-0bAY1OjkUNB8N8jxZbLpU2EEkvZ2YkZK0O0uQ4gWBC9uGK0lmW9XGgwjCYXTTAopx_oKUtpD22IQA_uCNBo5_Z265u1vHp1gMLYYjKcScxvQetjDIeFuXQZ0Q3EYAcTch6MFxi2Q"/>
+<div class="absolute inset-0 bg-error/5"></div>
+</div>
+<div class="p-4 bg-surface-dim">
+<pre class="text-sm font-mono text-on-surface">class Person:
+    def __init__(name): # Missing self
+        self.name = name</pre>
+</div>
+</div>
+</div>
+</section>
+<!-- Additional Snippets Carousel -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-2xl font-headline font-bold text-primary">Additional Snippets</h3>
+<button class="text-primary font-bold text-sm flex items-center gap-1 hover:underline">
+                            See More
+                            <span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+<div class="overflow-x-auto custom-scrollbar pb-6 -mx-4 px-4">
+<div class="grid grid-rows-2 grid-flow-col gap-4 w-max">
+<!-- Horizontal Card Item -->
+<div class="w-72 bg-surface-container-low p-4 rounded-xl flex items-start gap-3 border-none hover:bg-surface-container-high transition-all">
+<div class="w-5 h-5 rounded border-2 border-outline mt-1 shrink-0"></div>
+<div class="space-y-1">
+<h5 class="text-xs font-bold text-outline uppercase tracking-wider">Polymorphism</h5>
+<p class="text-sm font-semibold">Duck Typing Example</p>
+<img class="w-full h-20 object-cover rounded-lg mt-2 grayscale hover:grayscale-0 transition-all" data-alt="Abstract code representation on dark screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGFjyrI-tgEhdlvdKJ-sh5GjeCbcMzb34JXtASp-9fHQOjL9tJJ7SQ67Ib14GGDU_Hy7SboV-ovuGtbono9eDKL-MW91wAYvh7RrAvMF-tqYYfCtUn87y-Mida1Hf9EL5aOxq8pC-7bYv46HOlnqcR6_ffc5suqgQYAvkPBBVSZTjelHs1vnLhGB6UxTH2f4u5JJ2MmXDPlbb8imf7H5AYomMSbUVReUj-hT6_SN2tKP7dtcNN1sjDraAz-YIdrScXUGM1OUrRZTY"/>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="w-72 bg-surface-container-low p-4 rounded-xl flex items-start gap-3 border-none hover:bg-surface-container-high transition-all">
+<div class="w-5 h-5 rounded border-2 border-primary bg-primary flex items-center justify-center text-white mt-1 shrink-0">
+<span class="material-symbols-outlined text-[10px]" data-icon="check" style="font-variation-settings: 'wght' 800;">check</span>
+</div>
+<div class="space-y-1">
+<h5 class="text-xs font-bold text-outline uppercase tracking-wider">Metaclasses</h5>
+<p class="text-sm font-semibold">Class Factory Pattern</p>
+<img class="w-full h-20 object-cover rounded-lg mt-2 grayscale hover:grayscale-0 transition-all" data-alt="MacBook displaying lines of code in IDE" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_KIj7g4b9ZOAWhdzwa-IUUB34fe94MBBOBeajznV5rZwjbfb00FzmG2xZ6c9enDni7sW-B71ak4VwzJOaRWYGZULru4c6pUU4c09spxRIY2lZzEGuKU344_OmPHGj6OfW6ItX0mizMeGXyRJgD7sD2JG84GE5X1eqDpJn4t3lnCMO4_4xpjViYM41mml3M7SCO8yCdEZYvmaKnOOQRv4hBdFZ4a-HJwMN2Wv9XL5UekOFQQ1GjS01HKIRuPh3Jv6lQ2JKveQbRpU"/>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="w-72 bg-surface-container-low p-4 rounded-xl flex items-start gap-3 border-none hover:bg-surface-container-high transition-all">
+<div class="w-5 h-5 rounded border-2 border-outline mt-1 shrink-0"></div>
+<div class="space-y-1">
+<h5 class="text-xs font-bold text-outline uppercase tracking-wider">Properties</h5>
+<p class="text-sm font-semibold">@property Decorator</p>
+<img class="w-full h-20 object-cover rounded-lg mt-2 grayscale hover:grayscale-0 transition-all" data-alt="Digital forest data visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAt8GySdtVswvqbTxnCVCv4Wqy0SmBqPqMvFgMes0x46zQGvv5c3u-vLhhm9yubY5J9bn-rkKEl1AIUFdN4rgV6hf-eh6P1Ozf_-v2u2rX8He2d_U01MTp6o7b0Kqhxh8Vfv1KjOgIze_juFB_8XBrmCiF1u5gXr-ViBJJ4njcT92I3ePM5Bk8DOlB0QFe_uf-5NYwAKyetC2zZUsrS86TzNHiofIow2Vij6lOHXA1LARlPq89woyQUqSVspUwtEk4aLrCEcLtXnc"/>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="w-72 bg-surface-container-low p-4 rounded-xl flex items-start gap-3 border-none hover:bg-surface-container-high transition-all">
+<div class="w-5 h-5 rounded border-2 border-outline mt-1 shrink-0"></div>
+<div class="space-y-1">
+<h5 class="text-xs font-bold text-outline uppercase tracking-wider">Slots</h5>
+<p class="text-sm font-semibold">Optimizing Memory</p>
+<img class="w-full h-20 object-cover rounded-lg mt-2 grayscale hover:grayscale-0 transition-all" data-alt="High tech terminal interface close-up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxHIAv0zVmtZiGLWUgIYF7jVc25XWp1EHFPeaocyjo3ykn8ictmaqXJKUu1_7bFpCJ56yFCGSWS2uPfdoHZ77p4roF33u6HGzA6FxSPEHAvcp09iOPWZrwaIwMXjPYjo1M3RRqDHQtNfRvr8WkRVtUkEv_2wGFVtmpPe1KCSQEDBHalWX1DUR3eNLYQWrT3kJi0iHWMcLgcFlVAzhN7H7vNHPkv7U8pCrG0VtMPYzkDOdmLV0E4vj7Z4nAYSNnSdXAg4C6nwDYZa0"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Sticky Progress Footer -->
+<footer class="bg-surface p-6 border-t border-surface-container shadow-2xl z-50">
+<div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+<div class="flex-1 w-full sm:w-auto">
+<div class="flex justify-between mb-2">
+<span class="text-sm font-bold text-primary">12 / 20 Selected</span>
+<span class="text-sm font-label text-on-surface-variant">Sheet Capacity: 60%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-container w-[60%] rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-3 font-bold text-primary hover:bg-primary-fixed/20 rounded-full transition-colors font-label">
+                        Clear Selection
+                    </button>
+<button class="px-8 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-full shadow-lg shadow-primary/20 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all">
+                        Add Selected to Sheet
+                        <span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</footer>
+</main>
+<!-- Mobile Navigation Bottom Bar -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-stone-900 border-t border-stone-100 flex justify-around p-3 z-[60]">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="account_tree" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="text-[10px] font-bold">OOP</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-stone-400">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-[10px]">Sheets</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-stone-400">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-[10px]">Community</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-stone-400">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px]">Profile</span>
+</button>
+</div>
+</body></html>

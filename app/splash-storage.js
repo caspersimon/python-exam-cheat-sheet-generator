@@ -1,5 +1,5 @@
 function setLoadingState() {
-  refs.cardHost.innerHTML = `<div class="empty-state"><p>Loading topic cards...</p></div>`;
+  refs.cardHost.innerHTML = `<div class="empty-state"><p>Loading week bundles...</p></div>`;
 }
 
 function maybeShowSplash() {
@@ -54,7 +54,7 @@ function resetSplashIntro() {
 
 function resetAppProgress() {
   const confirmed = window.confirm(
-    "Reset all progress?\n\nThis will permanently remove your saved decisions, selections, filters, layout settings, and preview positions."
+    "Reset all progress?\n\nThis will permanently remove your saved selections, filters, layout settings, and preview positions."
   );
   if (!confirmed) {
     return;
@@ -77,24 +77,20 @@ function resetAppProgress() {
   lastPersistedPayload = "";
 
   state.filters.search = "";
-  state.filters.onlyExam = true;
+  state.filters.onlyExam = false;
   state.filters.minHits = 0;
-  state.filters.weeks = new Set([1, 2, 3]);
+  state.filters.weeks = new Set(CANONICAL_WEEK_ORDER);
 
   state.drafts = {};
-  state.decisions = {};
-  state.acceptedOrder = [];
-  state.history = [];
+  state.navigation = buildDefaultNavigationState();
   state.previewHistory = [];
   state.openDrawer = "";
   state.previewCards = {};
   state.previewZCounter = 1;
-  state.preferences = {
-    sourceAutoSelectMode: "none",
-  };
   state.layout = {
-    fontFamily: "'Space Grotesk', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
     fontSize: 9.5,
+    titleSize: 6.8,
     lineHeight: 1.1,
     letterSpacing: 0,
     cardGap: 6,
@@ -108,6 +104,7 @@ function resetAppProgress() {
 
   syncFilterControls();
   applyLayoutVariables();
+  closeTopicSidebar();
   setView("swipe");
   renderAll();
   syncPreviewUndoAvailability();
@@ -121,20 +118,25 @@ function hydratePersistedState() {
 
   const cardIds = new Set(state.cards.map((card) => card.id));
 
-  if (raw.preferences && typeof raw.preferences === "object") {
-    const mode = raw.preferences.sourceAutoSelectMode;
-    if (mode === "recommended" || mode === "none") {
-      state.preferences.sourceAutoSelectMode = mode;
-    }
-  }
-
   if (raw.layout && typeof raw.layout === "object") {
-    const allowedFonts = new Set(["'Space Grotesk', sans-serif", "'DM Sans', sans-serif", "'Source Serif 4', serif"]);
-    if (allowedFonts.has(raw.layout.fontFamily)) {
-      state.layout.fontFamily = raw.layout.fontFamily;
+    const fontAliases = new Map([
+      ["'Space Grotesk', sans-serif", "'Manrope', sans-serif"],
+      ["'DM Sans', sans-serif", "'Manrope', sans-serif"],
+      ["'Inter', sans-serif", "'Manrope', sans-serif"],
+      ["'IBM Plex Sans', sans-serif", "'Manrope', sans-serif"],
+      ["'Manrope', sans-serif", "'Manrope', sans-serif"],
+      ["'Newsreader', serif", "'Manrope', sans-serif"],
+      ["'Source Serif 4', serif", "'Manrope', sans-serif"],
+    ]);
+    const hydratedFont = fontAliases.get(raw.layout.fontFamily);
+    if (hydratedFont) {
+      state.layout.fontFamily = hydratedFont;
     }
     if (Number.isFinite(raw.layout.fontSize)) {
       state.layout.fontSize = clamp(Number(raw.layout.fontSize), 7, 14);
+    }
+    if (Number.isFinite(raw.layout.titleSize)) {
+      state.layout.titleSize = clamp(Number(raw.layout.titleSize), 4.8, 12);
     }
     if (Number.isFinite(raw.layout.lineHeight)) {
       state.layout.lineHeight = clamp(Number(raw.layout.lineHeight), 0.9, 1.5);
@@ -176,31 +178,11 @@ function hydratePersistedState() {
     if (Array.isArray(raw.filters.weeks)) {
       const validWeeks = raw.filters.weeks
         .map((value) => Number(value))
-        .filter((value) => [1, 2, 3].includes(value));
+        .filter((value) => CANONICAL_WEEK_ORDER.includes(value));
       if (validWeeks.length) {
         state.filters.weeks = new Set(validWeeks);
       }
     }
-  }
-
-  if (raw.decisions && typeof raw.decisions === "object") {
-    const hydratedDecisions = {};
-    Object.entries(raw.decisions).forEach(([cardId, entry]) => {
-      if (!cardIds.has(cardId) || !entry || typeof entry !== "object") {
-        return;
-      }
-      if (entry.status === "accepted" && entry.selection && typeof entry.selection === "object") {
-        hydratedDecisions[cardId] = {
-          status: "accepted",
-          selection: deepClone(entry.selection),
-        };
-        return;
-      }
-      if (entry.status === "rejected") {
-        hydratedDecisions[cardId] = { status: "rejected" };
-      }
-    });
-    state.decisions = hydratedDecisions;
   }
 
   if (raw.drafts && typeof raw.drafts === "object") {
@@ -214,25 +196,28 @@ function hydratePersistedState() {
     state.drafts = hydratedDrafts;
   }
 
-  if (Array.isArray(raw.acceptedOrder)) {
-    const seen = new Set();
-    state.acceptedOrder = raw.acceptedOrder.filter((cardId) => {
-      if (!cardIds.has(cardId) || seen.has(cardId)) {
-        return false;
-      }
-      if (state.decisions[cardId]?.status !== "accepted") {
-        return false;
-      }
-      seen.add(cardId);
-      return true;
-    });
-
-    Object.entries(state.decisions).forEach(([cardId, decision]) => {
-      if (decision?.status === "accepted" && !seen.has(cardId)) {
-        state.acceptedOrder.push(cardId);
-        seen.add(cardId);
-      }
-    });
+  if (raw.navigation && typeof raw.navigation === "object") {
+    const nextNavigation = buildDefaultNavigationState();
+    const activeWeek = Number(raw.navigation.activeWeek);
+    if (CANONICAL_WEEK_ORDER.includes(activeWeek)) {
+      nextNavigation.activeWeek = activeWeek;
+    }
+    const activeTopicId = String(raw.navigation.activeTopicId || "").trim();
+    if (cardIds.has(activeTopicId)) {
+      nextNavigation.activeTopicId = activeTopicId;
+    }
+    if (raw.navigation.expandedWeeks && typeof raw.navigation.expandedWeeks === "object") {
+      CANONICAL_WEEK_ORDER.forEach((week) => {
+        const key = String(week);
+        if (typeof raw.navigation.expandedWeeks[key] === "boolean") {
+          nextNavigation.expandedWeeks[key] = raw.navigation.expandedWeeks[key];
+        }
+      });
+    }
+    if (typeof raw.navigation.mobileSidebarOpen === "boolean") {
+      nextNavigation.mobileSidebarOpen = raw.navigation.mobileSidebarOpen;
+    }
+    state.navigation = nextNavigation;
   }
 
   if (raw.previewCards && typeof raw.previewCards === "object") {
@@ -245,10 +230,11 @@ function hydratePersistedState() {
         page: layout.page === 2 ? 2 : 1,
         x: Number(layout.x) || 0,
         y: Number(layout.y) || 0,
-        width: Number(layout.width) || 260,
+        width: Number(layout.width) || 160,
         height: Number(layout.height) || 220,
         z: Number(layout.z) || 1,
         locked: Boolean(layout.locked),
+        title: typeof layout.title === "string" ? layout.title.trim() : "",
       };
     });
     state.previewCards = hydratedLayouts;
@@ -275,10 +261,12 @@ function syncFilterControls() {
   refs.searchInput.value = state.filters.search;
   refs.onlyExamToggle.checked = state.filters.onlyExam;
   refs.minHitsSelect.value = String(state.filters.minHits);
-  refs.weekChecks.forEach((checkbox) => {
-    const week = Number(checkbox.value);
-    checkbox.checked = state.filters.weeks.has(week);
-  });
+  if (refs.weekFilterList) {
+    refs.weekFilterList.querySelectorAll(".weekCheck").forEach((checkbox) => {
+      const week = Number(checkbox.value);
+      checkbox.checked = state.filters.weeks.has(week);
+    });
+  }
 }
 
 function schedulePersistState() {
@@ -303,9 +291,7 @@ function persistAppState() {
       weeks: [...state.filters.weeks],
     },
     drafts: state.drafts,
-    decisions: state.decisions,
-    acceptedOrder: state.acceptedOrder,
-    preferences: state.preferences,
+    navigation: state.navigation,
     layout: state.layout,
     previewCards: state.previewCards,
     previewZCounter: state.previewZCounter,

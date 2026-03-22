@@ -1,0 +1,11 @@
+{
+  "source_file": "practice_exams_previous_years/trial-final-exam-solutions-introduction-to-python-3077951.pdf",
+  "validation": {
+    "errors": [],
+    "warnings": []
+  },
+  "syntax_errors": [],
+  "review_notes": [
+    "Topics cover Object-Oriented Programming (OOP), string formatting/manipulation, and pandas (DataFrame column arithmetic and row selection)."
+  ]
+}
