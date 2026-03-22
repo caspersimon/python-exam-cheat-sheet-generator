@@ -14,13 +14,15 @@ Use this guide when you need to:
 
 ## Current Baseline
 
-At the time this guide was written:
+As of 2026-03-22, the merged deck baseline was:
 
 - `topic_cards.json` has **27** merged cards.
 - `deck_groups` covers **6** weeks.
 - exam-topic cards (`exam_stats.total_hits > 0`) total **18**.
 - exact duplicate normalized topic labels are **0**.
 - exam-topic key points have optional detail coverage (examples/tables/explanations) and should stay selectable in UI.
+
+Treat `AGENTS.md` as the authoritative current snapshot for repo-wide counts. These numbers can drift as manual curation continues.
 
 Important: even with exact duplicates removed, semantic overlap can still exist.
 Important: curation should be evidence-driven; do not force fixed per-topic item counts.

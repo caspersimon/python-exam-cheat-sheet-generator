@@ -25,6 +25,13 @@ Use `materials/by_week/` when you want a cleaner human-facing overview of the of
 
 These entries are symlinks that point back to the canonical originals.
 
+## How to Use This Folder
+
+- Clone the repo with Git when you want `materials/by_week/` to behave like a link index.
+- Avoid relying on ZIP downloads for this view. ZIP exports may flatten or drop symlinks, which can leave tiny plain-text files instead of working links.
+- On Windows, symlink support may require Developer Mode, an elevated shell, WSL, or a Git/shell setup with symlink support enabled.
+- If an entry under `materials/by_week/` opens as a short path string instead of the expected file, re-clone the repo with Git in an environment with symlink support.
+
 ## Notes
 
 - Week 4-6 lecture decks also exist under `materials/lectures/`, but the organized view points to the `materials/post_midterm/` copies because those are the paths used by the live dataset.
