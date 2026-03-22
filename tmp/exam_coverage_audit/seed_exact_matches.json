@@ -1,0 +1,1107 @@
+{
+  "exams": [
+    {
+      "exam_id": "sample-final-plus-answers",
+      "question_count_found": 24,
+      "question_pages_used": [],
+      "questions": [
+        {
+          "question_number": 1,
+          "question_summary": "You'd like to define a class called Vehicle. It should have two attributes: name and mode, which you want to be initialized during object creation. The name attribute can be any st",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures"
+          ],
+          "evidence_topics": [
+            "Pandas Core Structures"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 2,
+          "question_summary": "Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Rick Riordan\"), book_1.add_review(5), book_1.add_r",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures"
+          ],
+          "evidence_topics": [
+            "Pandas Core Structures"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 3,
+          "question_summary": "Imagine that you have a list called students, which is populated by a number of dictionaries. Each dictionary has keys: \"Name\" and \"Grade\". You'd like to print the text: [NAME] has",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "Which of the following code segments does NOT achieve the goal of returning a string with 10 digits by removing dashes?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-4-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 5,
+          "question_summary": "You have a pandas DataFrame called df with columns \"A\" and \"B\". You'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals"
+          ],
+          "evidence_topics": [
+            "String Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 6,
+          "question_summary": "Suppose that you'd like to create a new DataFrame that contains only column 'B' for rows with indices 2, 4, and 6. Which of the following code lines will achieve what you want?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods"
+          ],
+          "evidence_topics": [
+            "String Operations and Methods"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 7,
+          "question_summary": "Which of the following code lines could NOT have created df2 from df1?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals"
+          ],
+          "evidence_topics": [
+            "String Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 8,
+          "question_summary": "You have a Series s with municipality and province names separated by \"; \". You'd like to create a new Series that only contains the municipality names. Which of the following code",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals"
+          ],
+          "evidence_topics": [
+            "String Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 9,
+          "question_summary": "Suppose that you call the function like this: get_months([\"03/02/2013\", \"03.02.2013\", \"03-02-2013\"]). What does the function call return?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-9-w6-datetime"
+          ],
+          "evidence_topics": [
+            "Datetime"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 10,
+          "question_summary": "Which of the following code segments will return the number of the day (1-366) that a datetime value represents within the year?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-10-w6-datetime"
+          ],
+          "evidence_topics": [
+            "Datetime"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 11,
+          "question_summary": "Which of the following code lines will create a dictionary, in which the keys are the elements of list_1 and the values are the number of characters in the corresponding key?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-11-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 12,
+          "question_summary": "You'd like to turn every upper case letter in a list into lower case and vice versa. Which code line achieves this?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-12-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 13,
+          "question_summary": "What are the outputs of the following lines of code? print(x == y), print(y == z), print(x == z), print(x == y == z)",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-13-w1-objects-and-names"
+          ],
+          "evidence_topics": [
+            "Objects and Names"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 14,
+          "question_summary": "Choose the program that iterates over integers from 1 to 10 and prints the sum of the current and previous number (starting with 0 as previous).",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-14-w2-loops"
+          ],
+          "evidence_topics": [
+            "Loops"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 15,
+          "question_summary": "Executing the following program will produce an error. Why?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-15-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 16,
+          "question_summary": "What would be printed by the following code snippet: print(list_1[0](1, 2) ** list_1[1](1, 2))",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns"
+          ],
+          "evidence_topics": [
+            "Higher-Order Patterns"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 17,
+          "question_summary": "What will be printed by the function calls in the main function provided?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-17-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 18,
+          "question_summary": "How do you break a list into a list of lists, where each sublist contains 3 elements?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-18-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 19,
+          "question_summary": "Which of the following programs correctly returns a dictionary where values are sums of input values whose keys are <= the output key?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 20,
+          "question_summary": "What is the result of the program comparing d1 (from zip) and d2 (from enumerate)?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 21,
+          "question_summary": "The following codes all print the same value, except one. Which one?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 22,
+          "question_summary": "Which script, using the count string method, would print the value 1 for x = 'Amsterdam'?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-22-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 23,
+          "question_summary": "Which of the following function calls would return the number 30 as a result?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-23-w3-arguments"
+          ],
+          "evidence_topics": [
+            "Arguments"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 24,
+          "question_summary": "Which script does NOT print the correct answer for the area of a circle?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-24-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        }
+      ]
+    },
+    {
+      "exam_id": "final-exam-solutions-for-python-programming-62oop21",
+      "question_count_found": 6,
+      "question_pages_used": [],
+      "questions": [
+        {
+          "question_number": 1,
+          "question_summary": "Given the class definition above, trying to execute the following two code lines will result in a Python error. my_flight = Flight(\"KLM\", \"Amsterdam\", \"Paris\") # Code line 1 my_fli",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Exam 07-06-22-1-w4-oop-fundamentals"
+          ],
+          "evidence_topics": [
+            "OOP Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 2,
+          "question_summary": "Suppose that you also want to write a method called compare that compares the book to another book and gives a recommendation for which one to read. A book is better than another b",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Exam 07-06-22-2-w4-oop-fundamentals"
+          ],
+          "evidence_topics": [
+            "OOP Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 3,
+          "question_summary": "You would like to write a function called get_tld that extracts the top-level domain from the URL of a website. The function takes the URL as the input string in the following form",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "You're trying to write a function called is_anagram, which takes two strings as inputs and checks whether they are anagrams of each other. That is: whether one of them can be writt",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Exam 07-06-22-4-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "You're trying to write a function called is_anagram, which takes two strings as inputs and checks whether they are anagrams of each other. That is: whether one of them can be writt",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Exam 07-06-22-4-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 5,
+          "question_summary": "You have a pandas Series called s, which contains floats. You'd like to create a new Series, in which each element is equal to the square of the difference between the correspondin",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Exam 07-06-22-5-w5-pandas-core-structures"
+          ],
+          "evidence_topics": [
+            "Pandas Core Structures"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        }
+      ]
+    },
+    {
+      "exam_id": "final-exam-study-guide-trial-python-basics-2023",
+      "question_count_found": 6,
+      "question_pages_used": [],
+      "questions": [
+        {
+          "question_number": 1,
+          "question_summary": "Suppose you already have: (i) a list of strings called europe which contain the names of all European countries, and (ii) a string variable called destination. You want to write a ",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final - Introduction to Python - 22/23-1-w1-objects-and-names"
+          ],
+          "evidence_topics": [
+            "Objects and Names"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 2,
+          "question_summary": "Calling the function func_1() will produce an error. Which line of the following code segment produces the error?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final - Introduction to Python - 22/23-2-w3-scope"
+          ],
+          "evidence_topics": [
+            "Scope"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 3,
+          "question_summary": "What is the output of the following code segment?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final - Introduction to Python - 22/23-3-w3-return-behavior"
+          ],
+          "evidence_topics": [
+            "Return Behavior"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "You have to create a dictionary called vowels_ASCII where the keys are the lowercase vowels (a, e, i, o, u) and the values are their corresponding ASCII values. The ASCII (American",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final - Introduction to Python - 22/23-4-w2-dictionaries-and-mappings"
+          ],
+          "evidence_topics": [
+            "Dictionaries and Mappings"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 5,
+          "question_summary": "Suppose you have three variables called player1_goals, player2_goals, and player3_goals. Each of the variables contains a list of integers that represents the number of goals score",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final - Introduction to Python - 22/23-5-w2-dictionaries-and-mappings"
+          ],
+          "evidence_topics": [
+            "Dictionaries and Mappings"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 6,
+          "question_summary": "You have the following dictionary that represents the monthly sales of a store: monthly_sales = {'January': 1500, 'February': 2200, 'March': 1800, 'April': 2400, 'May': 2000, 'June",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final - Introduction to Python - 22/23-6-w2-dictionaries-and-mappings"
+          ],
+          "evidence_topics": [
+            "Dictionaries and Mappings"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        }
+      ]
+    },
+    {
+      "exam_id": "introduction-to-python-trial-final-exam-solutions-py22",
+      "question_count_found": 7,
+      "question_pages_used": [],
+      "questions": [
+        {
+          "question_number": 1,
+          "question_summary": "Suppose you have a variable called x which contains an integer between 0 and 10 (both are inclusive). Which of the following programs will tell you whether x contains an odd or eve",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-trial-final-exam-py22-1-w1-objects-and-names"
+          ],
+          "evidence_topics": [
+            "Objects and Names"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 2,
+          "question_summary": "Take a look at the following code segment. Will executing this code segment produce an error? If yes, then why?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-trial-final-exam-py22-2-w3-scope"
+          ],
+          "evidence_topics": [
+            "Scope"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 3,
+          "question_summary": "What will be returned by the following code segment?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-trial-final-exam-py22-3-w3-return-behavior"
+          ],
+          "evidence_topics": [
+            "Return Behavior"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "You have to create a dictionary called roman_nums where the keys are the integers from 1 to 5 (both are inclusive) and the values are their corresponding Roman numeral symbols. Tha",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-trial-final-exam-py22-4-w2-dictionaries-and-mappings"
+          ],
+          "evidence_topics": [
+            "Dictionaries and Mappings"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 5,
+          "question_summary": "You have two lists representing the names and ages of individuals: names = ['Alice', 'Bob', 'Charlie', 'David'] ages = [25, 30, 35, 40] You need to create a dictionary called perso",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings"
+          ],
+          "evidence_topics": [
+            "Dictionaries and Mappings"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 6,
+          "question_summary": "You have the following dictionary that represents the performance ratings of employees in a company: employee_ratings = {'John': 8, 'Sarah': 9, 'Michael': 7, 'Emma': 9, 'David': 6}",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-trial-final-exam-py22-6-w2-dictionaries-and-mappings"
+          ],
+          "evidence_topics": [
+            "Dictionaries and Mappings"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 7,
+          "question_summary": "What is the output of the following code segment?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-trial-final-exam-py22-7-w2-lists-and-sets"
+          ],
+          "evidence_topics": [
+            "Lists and Sets"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        }
+      ]
+    },
+    {
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_count_found": 6,
+      "question_pages_used": [],
+      "questions": [
+        {
+          "question_number": 1,
+          "question_summary": "Suppose you have a list called x containing tuples, where x = [(1, 2), (3, 4), (5, 6), (7, 8)] Which of the following lines of code will print True?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets"
+          ],
+          "evidence_topics": [
+            "Lists and Sets"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 2,
+          "question_summary": "Executing the following program will produce an error. Why?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope"
+          ],
+          "evidence_topics": [
+            "Scope"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 3,
+          "question_summary": "What will be printed by the following code segment?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Resit - Introduction to Python - 22/23-3-w1-objects-and-names"
+          ],
+          "evidence_topics": [
+            "Objects and Names"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "Suppose you have the following function, which takes two integers as arguments: What will be printed by the following line of code: print(main(1))",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops"
+          ],
+          "evidence_topics": [
+            "Loops"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 5,
+          "question_summary": "Suppose you have a list called x, where: Which of the following code segments will print the following list? [5, 4, 3, 2, 1]",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets"
+          ],
+          "evidence_topics": [
+            "Lists and Sets"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 6,
+          "question_summary": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments. For ex",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments"
+          ],
+          "evidence_topics": [
+            "Arguments"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        }
+      ]
+    },
+    {
+      "exam_id": "resit-solutions-for-introduction-to-python-35761538",
+      "question_count_found": 7,
+      "question_pages_used": [],
+      "questions": [
+        {
+          "question_number": 1,
+          "question_summary": "Suppose you have a list called x containing tuples. Which of the following lines of code will print True?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Resit 22/23-1-w2-lists-and-sets"
+          ],
+          "evidence_topics": [
+            "Lists and Sets"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 2,
+          "question_summary": "Executing the following program will produce an error. Why?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Resit 22/23-2-w3-scope"
+          ],
+          "evidence_topics": [
+            "Scope"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 3,
+          "question_summary": "What will be printed by the following code segment?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Resit 22/23-3-w3-return-behavior"
+          ],
+          "evidence_topics": [
+            "Return Behavior"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "Suppose you have the following function, which takes two integers as arguments: What will be printed by the following line of code: print(main(1))",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Resit 22/23-4-w3-arguments"
+          ],
+          "evidence_topics": [
+            "Arguments"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 5,
+          "question_summary": "Suppose you have a list called x. Which of the following code segments will print the following list? [5, 4, 3, 2, 1]",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Resit 22/23-5-w1-functions-and-imports"
+          ],
+          "evidence_topics": [
+            "Functions and Imports"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 6,
+          "question_summary": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments. For ex",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Resit 22/23-6-w3-arguments"
+          ],
+          "evidence_topics": [
+            "Arguments"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 7,
+          "question_summary": "Assume you already have a list of strings called words. You need to create a dictionary called word_lengths, where the keys are the strings in the list words and the values are the",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Resit 22/23-7-w2-dictionaries-and-mappings"
+          ],
+          "evidence_topics": [
+            "Dictionaries and Mappings"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        }
+      ]
+    },
+    {
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_count_found": 6,
+      "question_pages_used": [],
+      "questions": [
+        {
+          "question_number": 1,
+          "question_summary": "You'd like to define a class called Vehicle. It should have two attributes: \"name\" and \"mode\", which you want to be initialized at the time of object construction. The \"name\" attri",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals"
+          ],
+          "evidence_topics": [
+            "OOP Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 2,
+          "question_summary": "Take a look at the following class definition. Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Ric",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals"
+          ],
+          "evidence_topics": [
+            "OOP Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 3,
+          "question_summary": "Imagine that you have a list called students, which is populated by a number of dictionaries. Each dictionary in the students list has two keys: \"Name\" and \"Grade\". The correspondi",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final exam Introduction to Python-3-w1-objects-and-names"
+          ],
+          "evidence_topics": [
+            "Objects and Names"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "You need to write a function called format_phone_number that formats phone numbers. The output of the function should be a string that represents a 10-digit number. The input argum",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 5,
+          "question_summary": "You have a pandas DataFrame called df. It has a column called \"A\" and a column called \"B\". Both contain numbers. You'd like to create a column called \"C\", which contains the sum of",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures"
+          ],
+          "evidence_topics": [
+            "Pandas Core Structures"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 6,
+          "question_summary": "You have a pandas DataFrame called df that looks like this, when printed: A B C D 1 9.1 9.5 9.0 6.0 2 6.4 8.2 7.5 1.7 3 2.5 5.3 8.8 3.0 4 6.7 3.6 7.2 6.9 5 8.4 1.9 8.2 3.3 6 8.1 8.",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data"
+          ],
+          "evidence_topics": [
+            "Inspecting and Selecting Data"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        }
+      ]
+    }
+  ]
+}
