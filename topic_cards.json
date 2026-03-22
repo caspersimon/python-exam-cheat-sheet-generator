@@ -2321,6 +2321,36 @@
             "title": "strings_fstrings",
             "source": "a = 'This is a string'      \nb = \"This is another string\"\nprint(f\"First string: '{a}', Second string: '{b}'.\")\nprint(\"First string: '{a}', Second string: '{b}'.\")",
             "outputs": []
+          },
+          {
+            "id": "cs-curated-hw-seq-nth-occurrence",
+            "week": 1,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Sequences and Access",
+            "subtopic_id": "w1-sequences-and-access-core",
+            "subtopic_title": "Indexing, Slicing, and range()",
+            "title": "Find the nth occurrence by advancing .index()",
+            "source": "x = ['A', 'B', 'A', 'C', 'B', 'A', 'B']\nn = 2\ni = -1\nfor _ in range(n):\n    i = x.index('B', i + 1)\nprint(i)",
+            "outputs": [
+              "4"
+            ]
+          },
+          {
+            "id": "cs-curated-hw-seq-slice-between-sentinels",
+            "week": 1,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Sequences and Access",
+            "subtopic_id": "w1-sequences-and-access-core",
+            "subtopic_title": "Indexing, Slicing, and range()",
+            "title": "Slice between two sentinel values without hard-coding indices",
+            "source": "x = [21, 15, 29, 20, 15, 21, 38, 26]\nleft = x.index(15) + 1\nright = left + x[left:].index(15)\nprint(x[left:right])",
+            "outputs": [
+              "[29, 20]"
+            ]
           }
         ],
         "ai_summary": {
@@ -2623,7 +2653,9 @@
               "cs-7ac6156d67",
               "cs-15d46dcc2c",
               "cs-ab9dc084b6",
-              "cs-59038bcffa"
+              "cs-59038bcffa",
+              "cs-curated-hw-seq-nth-occurrence",
+              "cs-curated-hw-seq-slice-between-sentinels"
             ]
           },
           "order": 1,
@@ -3274,7 +3306,10 @@
               "cs-e2f05091db",
               "cs-93d5411e58",
               "cs-0663a1bed9",
-              "cs-b1d67e0aee"
+              "cs-b1d67e0aee",
+              "cs-curated-hw-dict-digit-frequency",
+              "cs-curated-hw-dict-delete-shared-keys",
+              "cs-curated-hw-dict-project-values-sorted-keys"
             ],
             "example_ids": [
               "ai-example-1",
@@ -4024,6 +4059,51 @@
             "title": "dictionaries",
             "source": "capitals = ['Estonia', 'Tallin', 'Belgium', 'Brussels', 'France', 'Paris']\nprint(capitals[capitals.index('Belgium') + 1])\nprint(capitals[capitals.index('Tallin') - 1])",
             "outputs": []
+          },
+          {
+            "id": "cs-curated-hw-dict-digit-frequency",
+            "week": 2,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Dictionaries and Mappings",
+            "subtopic_id": "w2-dictionaries-and-mappings-core",
+            "subtopic_title": "Creation, Lookup, Updates, and Key Constraints",
+            "title": "Count only digit characters that actually appear",
+            "source": "x = ['1', 'a', 'X', '2', 'b', 'Y', '1', 'a', 'X', '1', 'a', 'X']\ncounts = {}\nfor digit in '0123456789':\n    if digit in x:\n        counts[digit] = x.count(digit)\nprint(counts)",
+            "outputs": [
+              "{'1': 3, '2': 1}"
+            ]
+          },
+          {
+            "id": "cs-curated-hw-dict-delete-shared-keys",
+            "week": 2,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Dictionaries and Mappings",
+            "subtopic_id": "w2-dictionaries-and-mappings-core",
+            "subtopic_title": "Creation, Lookup, Updates, and Key Constraints",
+            "title": "Delete keys only when they also appear in a reference dict",
+            "source": "x = {'a': 1, 'b': 2, 'c': 3}\nto_remove = {'c': 3, 'd': 3}\nfor key in to_remove:\n    if key in x:\n        del x[key]\nprint(x)",
+            "outputs": [
+              "{'a': 1, 'b': 2}"
+            ]
+          },
+          {
+            "id": "cs-curated-hw-dict-project-values-sorted-keys",
+            "week": 2,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Dictionaries and Mappings",
+            "subtopic_id": "w2-dictionaries-and-mappings-core",
+            "subtopic_title": "Creation, Lookup, Updates, and Key Constraints",
+            "title": "Sort keys first, then project values in that order",
+            "source": "x = {1: 3, 3: 4, 2: 5}\nsorted_keys = sorted(x.keys(), reverse=True)\nresult = [x[key] for key in sorted_keys]\nprint(result)",
+            "outputs": [
+              "[4, 5, 3]"
+            ]
           }
         ],
         "ai_summary": {
@@ -4986,7 +5066,8 @@
               "cs-45160a5ff6",
               "cs-ad7786b296",
               "cs-2e15d5f206",
-              "cs-932144cfb6"
+              "cs-932144cfb6",
+              "cs-curated-hw-conditions-first-match-wins"
             ],
             "example_ids": [
               "ai-example-1",
@@ -5343,6 +5424,21 @@
             "title": "conditions",
             "source": "a = 3\nif a > 1 and a < 5:\n    print('a between 2 and 5')",
             "outputs": []
+          },
+          {
+            "id": "cs-curated-hw-conditions-first-match-wins",
+            "week": 2,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Conditions",
+            "subtopic_id": "w2-conditions-core",
+            "subtopic_title": "Comparisons, `in`, Precedence, and Conditional Expressions",
+            "title": "Branch order matters because the first matching condition wins",
+            "source": "x = [5, 10, 15, 20]\na, b, c, d = 4, 9, 13, 15\nresult = []\nfor element in x:\n    if element <= d:\n        label = 'cat4'\n    elif element >= c:\n        label = 'cat3'\n    elif element < b:\n        label = 'cat2'\n    elif element > a:\n        label = 'cat1'\n    else:\n        label = 'catunknown'\n    result.append(label)\nprint(result)",
+            "outputs": [
+              "['cat4', 'cat4', 'cat4', 'cat3']"
+            ]
           }
         ],
         "ai_summary": {
@@ -5548,7 +5644,11 @@
               "cs-24e7b545b8",
               "cs-29b15eafbc",
               "cs-37994cff84",
-              "cs-ab8c33be2c"
+              "cs-ab8c33be2c",
+              "cs-curated-hw-loops-enumerate-mark-max",
+              "cs-curated-hw-loops-zip-filter-pairs",
+              "cs-curated-hw-loops-market-clearing",
+              "cs-curated-hw-loops-nested-pairwise-dict"
             ],
             "example_ids": [
               "ai-example-2",
@@ -5993,6 +6093,66 @@
             "title": "walrus_operator",
             "source": "from random import randint\nprint(a := randint(0,5))\nif a > 1 and a < 5:\n    print('a between 2 and 5')\nelse: \n    print('a not between 2 and 5')",
             "outputs": []
+          },
+          {
+            "id": "cs-curated-hw-loops-enumerate-mark-max",
+            "week": 2,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Loops",
+            "subtopic_id": "w2-loops-core",
+            "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus",
+            "title": "Use enumerate() to keep indices while relabeling one special case",
+            "source": "x = [65, 43, 1, 0, 59, 16, 86, 40, 60]\nmax_value = max(x)\nresult = {}\nfor index, value in enumerate(x):\n    key = 'highest' if value == max_value else index\n    result[key] = value\nprint(result)",
+            "outputs": [
+              "{0: 65, 1: 43, 2: 1, 3: 0, 4: 59, 5: 16, 'highest': 86, 7: 40, 8: 60}"
+            ]
+          },
+          {
+            "id": "cs-curated-hw-loops-zip-filter-pairs",
+            "week": 2,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Loops",
+            "subtopic_id": "w2-loops-core",
+            "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus",
+            "title": "zip() aligns two lists so you can filter pairs into a dict",
+            "source": "keys = [3, 2, 1, 4]\nvalues = [3, 37, 60, 79]\nresult = {}\nfor key, value in zip(keys, values):\n    if key != value and value % 5:\n        result[key] = value\nprint(result)",
+            "outputs": [
+              "{2: 37, 4: 79}"
+            ]
+          },
+          {
+            "id": "cs-curated-hw-loops-market-clearing",
+            "week": 2,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Loops",
+            "subtopic_id": "w2-loops-core",
+            "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus",
+            "title": "Flatten, sort, and zip demand/supply curves to count trades",
+            "source": "buyers = {'buyer1': [24, 16, 13, 6, 5], 'buyer2': [23, 21, 19, 10, 7], 'buyer3': [21, 20, 15, 13, 10], 'buyer4': [20, 17, 9, 6, 5]}\nsellers = {'seller1': [8, 10, 14, 19, 21], 'seller2': [6, 13, 16, 21, 23], 'seller3': [8, 12, 13, 22, 23], 'seller4': [8, 9, 13, 21, 24]}\ndemand = []\nfor buyer_values in buyers.values():\n    demand += buyer_values\nsupply = []\nfor seller_values in sellers.values():\n    supply += seller_values\nquantity_sold = 0\nfor bid, ask in zip(sorted(demand, reverse=True), sorted(supply)):\n    if bid >= ask:\n        quantity_sold += 1\nprint(quantity_sold)",
+            "outputs": [
+              "10"
+            ]
+          },
+          {
+            "id": "cs-curated-hw-loops-nested-pairwise-dict",
+            "week": 3,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Loops",
+            "subtopic_id": "w2-loops-core",
+            "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus",
+            "title": "Nested loops can build pairwise results for every combination",
+            "source": "def main(minimum, maximum):\n    result = {}\n    for first in range(minimum, maximum + 1):\n        for second in range(minimum, maximum + 1):\n            result[(first, second)] = first - second\n    return result\n\nprint(main(2, 4))",
+            "outputs": [
+              "{(2, 2): 0, (2, 3): -1, (2, 4): -2, (3, 2): 1, (3, 3): 0, (3, 4): -1, (4, 2): 2, (4, 3): 1, (4, 4): 0}"
+            ]
           }
         ],
         "ai_summary": {
@@ -9158,7 +9318,8 @@
               "cs-b6925be20a",
               "cs-ab85cbecac",
               "cs-1b7f6fe8ff",
-              "cs-14cb7aace2"
+              "cs-14cb7aace2",
+              "cs-curated-hw-hof-nested-helper-hhi"
             ],
             "example_ids": [
               "ai-example-1",
@@ -9482,6 +9643,21 @@
             "title": "sorted_key",
             "source": "l1 = ['ad', 'dc', 'ce']\nprint(sorted(l1, key=lambda x: x[1]))",
             "outputs": []
+          },
+          {
+            "id": "cs-curated-hw-hof-nested-helper-hhi",
+            "week": 3,
+            "cell_index": null,
+            "cell_type": "code",
+            "source_type": "notebook",
+            "topic": "Higher-Order Patterns",
+            "subtopic_id": "w3-higher-order-patterns-core",
+            "subtopic_title": "Nested Functions, Factories, lambda, map, filter, reduce, and sorted(key=...)",
+            "title": "A nested helper can hide repeated domain math inside one outer function",
+            "source": "def main(sales_before_entry):\n    def calculate_hhi(sales_volumes):\n        total_sales = sum(sales_volumes)\n        return sum(round(100 * volume / total_sales) ** 2 for volume in sales_volumes)\n\n    before = calculate_hhi(sales_before_entry)\n    after = calculate_hhi(sales_before_entry + [40])\n    return before - after\n\nprint(main([47, 21, 27, 29, 11, 6, 18]))",
+            "outputs": [
+              "224"
+            ]
           }
         ],
         "ai_summary": {
