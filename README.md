@@ -72,8 +72,8 @@ Official course files are still kept at their canonical paths under `materials/`
 
 ## Support This Project
 
-This project was made by just one student, and the AI coding tools used to build and improve it cost real money.
+This project was built by one student, and the AI agents/tools used to build it cost real money.
 
-If this helped you and you want to buy me a coffee to say thank you, please do:
+If it saved you time or stress, consider buying me a coffee as a thank-you:
 
 [Buy me a coffee](https://buymeacoffee.com/caspersimon)

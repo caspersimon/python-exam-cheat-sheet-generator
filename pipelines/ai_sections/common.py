@@ -53,6 +53,16 @@ def sanitize_topic_context(card: dict[str, Any]) -> dict[str, Any]:
             }
         )
 
+    homework_context = []
+    for snippet in sections.get("homework_snippets", [])[:2]:
+        homework_context.append(
+            {
+                "topic": snippet.get("topic", ""),
+                "source": trim_lines(snippet.get("source", ""), 8),
+                "outputs": [compact_text(out, 160) for out in (snippet.get("outputs") or [])[:2]],
+            }
+        )
+
     traps = []
     for trap in card.get("trap_patterns", [])[:3]:
         traps.append(
@@ -73,6 +83,7 @@ def sanitize_topic_context(card: dict[str, Any]) -> dict[str, Any]:
         "lecture_context": lecture_context,
         "exam_context": exam_context,
         "notebook_context": notebook_context,
+        "homework_context": homework_context,
         "trap_patterns": traps,
     }
 

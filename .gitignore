@@ -16,3 +16,6 @@ data/test_reports/
 
 # Local AI curation reports
 data/curation_reports/*.json
+
+# Local exam coverage audit packet
+tmp/exam_coverage_audit/

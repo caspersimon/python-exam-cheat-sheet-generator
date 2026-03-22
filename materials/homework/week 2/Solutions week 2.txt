@@ -1,0 +1,120 @@
+Solutions week 2:
+
+The below are suggested solutions; there are typically many ways to implement ideas in code.
+
+==========================================================================
+
+Exercise 1:
+
+y = {}
+for var in '0123456789':
+    if var in x:
+        y[var]=x.count(var)
+print(y)
+
+# Alternative Solution:
+
+y = {}
+for element in x:
+    if element in "0123456789":
+        y[element] = x.count(element)
+print(y)
+
+==========================================================================
+
+Exercise 2:
+
+import math
+
+y = {}
+angle = 0
+while angle <= 45:
+    angle_in_radians = math.radians(angle) 
+    y[angle] = round(math.tan(angle_in_radians), 4)
+    angle = angle + x
+
+==========================================================================
+
+Exercise 3:
+
+y = {'c': 3, 'd': 3}
+for key, value in y.items():
+    if key in x:
+        del x[key]
+    else:
+        x[key] = value  
+
+==========================================================================
+
+Exercise 4:
+
+y = {}
+for key, value in enumerate(x):
+    y['highest' if value == max(x) else key]= value
+
+==========================================================================
+
+Exercise 5:
+
+x = {}
+for key, value in zip(keys, values):
+    if key != value and value % 5:
+        x[key] = value
+
+==========================================================================
+
+Exercise 6:
+
+sorted_keys = sorted(x.keys(), reverse=True)
+
+result = []
+for key in sorted_keys:
+    result.append(x[key])
+
+print(result)
+
+==========================================================================
+
+Exercise 7:
+
+print(sum(x) % 2 == 0)
+
+==========================================================================
+
+Exercise 8:
+
+result = []
+for element in x:
+    if element <= d:
+        text = "cat4"
+    elif element >= c:  
+        text = "cat3"
+    elif element < b:  
+        text = "cat2"
+    elif element > a:  
+        text = "cat1"
+    else:
+        text = "catunknown"
+    result.append(text)
+    
+print(result)
+
+==========================================================================
+
+Exercise 9:
+
+demand = []
+for buyer_values in buyers.values():
+     demand = demand + buyer_values
+demand = sorted(demand, reverse=True)
+
+supply = []
+for seller_values in sellers.values():
+     supply = supply + seller_values
+supply = sorted(supply, reverse=False)
+
+quantity_sold = 0
+for buyer_value, supplyer_value in zip(demand, supply):
+     quantity_sold += buyer_value >= supplyer_value
+ 
+print(quantity_sold)

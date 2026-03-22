@@ -1,0 +1,444 @@
+{
+  "exams": [
+    {
+      "exam_id": "sample-final-plus-answers",
+      "question_count_found": 24,
+      "question_pages_used": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "questions": [
+        {
+          "question_number": 1,
+          "question_summary": "You'd like to define a class called Vehicle. It should have two attributes: name and mode, which you want to be initialized during object creation. The name attribute can be any st",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures"
+          ],
+          "evidence_topics": [
+            "Pandas Core Structures"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 2,
+          "question_summary": "Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Rick Riordan\"), book_1.add_review(5), book_1.add_r",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures"
+          ],
+          "evidence_topics": [
+            "Pandas Core Structures"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 3,
+          "question_summary": "Imagine that you have a list called students, which is populated by a number of dictionaries. Each dictionary has keys: \"Name\" and \"Grade\". You'd like to print the text: [NAME] has",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 4,
+          "question_summary": "Which of the following code segments does NOT achieve the goal of returning a string with 10 digits by removing dashes?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-4-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 5,
+          "question_summary": "You have a pandas DataFrame called df with columns \"A\" and \"B\". You'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals"
+          ],
+          "evidence_topics": [
+            "String Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 6,
+          "question_summary": "Suppose that you'd like to create a new DataFrame that contains only column 'B' for rows with indices 2, 4, and 6. Which of the following code lines will achieve what you want?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods"
+          ],
+          "evidence_topics": [
+            "String Operations and Methods"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 7,
+          "question_summary": "Which of the following code lines could NOT have created df2 from df1?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals"
+          ],
+          "evidence_topics": [
+            "String Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 8,
+          "question_summary": "You have a Series s with municipality and province names separated by \"; \". You'd like to create a new Series that only contains the municipality names. Which of the following code",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals"
+          ],
+          "evidence_topics": [
+            "String Fundamentals"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 9,
+          "question_summary": "Suppose that you call the function like this: get_months([\"03/02/2013\", \"03.02.2013\", \"03-02-2013\"]). What does the function call return?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-9-w6-datetime"
+          ],
+          "evidence_topics": [
+            "Datetime"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 10,
+          "question_summary": "Which of the following code segments will return the number of the day (1-366) that a datetime value represents within the year?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-10-w6-datetime"
+          ],
+          "evidence_topics": [
+            "Datetime"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 11,
+          "question_summary": "Which of the following code lines will create a dictionary, in which the keys are the elements of list_1 and the values are the number of characters in the corresponding key?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-11-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "recommended"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 12,
+          "question_summary": "You'd like to turn every upper case letter in a list into lower case and vice versa. Which code line achieves this?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-12-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 13,
+          "question_summary": "What are the outputs of the following lines of code? print(x == y), print(y == z), print(x == z), print(x == y == z)",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-13-w1-objects-and-names"
+          ],
+          "evidence_topics": [
+            "Objects and Names"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 14,
+          "question_summary": "Choose the program that iterates over integers from 1 to 10 and prints the sum of the current and previous number (starting with 0 as previous).",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-14-w2-loops"
+          ],
+          "evidence_topics": [
+            "Loops"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 15,
+          "question_summary": "Executing the following program will produce an error. Why?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-15-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 16,
+          "question_summary": "What would be printed by the following code snippet: print(list_1[0](1, 2) ** list_1[1](1, 2))",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns"
+          ],
+          "evidence_topics": [
+            "Higher-Order Patterns"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 17,
+          "question_summary": "What will be printed by the function calls in the main function provided?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-17-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 18,
+          "question_summary": "How do you break a list into a list of lists, where each sublist contains 3 elements?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-18-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 19,
+          "question_summary": "Which of the following programs correctly returns a dictionary where values are sums of input values whose keys are <= the output key?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 20,
+          "question_summary": "What is the result of the program comparing d1 (from zip) and d2 (from enumerate)?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 21,
+          "question_summary": "The following codes all print the same value, except one. Which one?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions"
+          ],
+          "evidence_topics": [
+            "Defining and Calling Functions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 22,
+          "question_summary": "Which script, using the count string method, would print the value 1 for x = 'Amsterdam'?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-22-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 23,
+          "question_summary": "Which of the following function calls would return the number 30 as a result?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-23-w3-arguments"
+          ],
+          "evidence_topics": [
+            "Arguments"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        },
+        {
+          "question_number": 24,
+          "question_summary": "Which script does NOT print the correct answer for the area of a circle?",
+          "score": 3,
+          "evidence_item_ids": [
+            "exam-intro_python_sample_final_24_25-24-w2-conditions"
+          ],
+          "evidence_topics": [
+            "Conditions"
+          ],
+          "evidence_buckets": [
+            "additional"
+          ],
+          "rationale": "Exact selectable source_exam item for this question exists in the current builder corpus.",
+          "ai_summary_would_help": false,
+          "ai_summary_note": ""
+        }
+      ]
+    }
+  ]
+}

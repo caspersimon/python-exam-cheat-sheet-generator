@@ -1,7 +1,5 @@
 import json
-from collections import Counter
 from pathlib import Path
-import re
 import unittest
 
 
@@ -39,14 +37,7 @@ class TopicCardsIntegrityTests(unittest.TestCase):
             self.assertIsInstance(card.get("trap_patterns"), list)
 
             sections = card["sections"]
-            for key in [
-                "lecture_snippets",
-                "exam_questions",
-                "notebook_snippets",
-                "ai_examples",
-                "key_points_to_remember",
-                "recommended_ids",
-            ]:
+            for key in ["lecture_snippets", "exam_questions", "notebook_snippets", "ai_examples", "key_points_to_remember", "recommended_ids"]:
                 self.assertIsInstance(sections.get(key), list, f"{card['id']}: {key} must be list")
             self.assertIsInstance(sections.get("ai_summary"), dict, f"{card['id']}: ai_summary must be dict")
             self.assertIsInstance(sections.get("ai_common_questions"), dict, f"{card['id']}: ai_common_questions must be dict")
@@ -94,6 +85,19 @@ class TopicCardsIntegrityTests(unittest.TestCase):
                     for item_id in bucket_ids:
                         self.assertIn(item_id, valid_ids, f"{card['id']}: unknown subtopic item id {item_id}")
 
+    def test_curated_homework_promotions_keep_outputs(self) -> None:
+        promoted_count = 0
+        for card in self.cards:
+            for snippet in card.get("sections", {}).get("notebook_snippets", []):
+                snippet_id = str(snippet.get("id") or "")
+                if not snippet_id.startswith("cs-curated-hw-"):
+                    continue
+                promoted_count += 1
+                self.assertEqual(snippet.get("source_type"), "notebook", f"{card['id']}: {snippet_id} must stay UI-visible")
+                self.assertTrue(snippet.get("outputs"), f"{card['id']}: {snippet_id} should include concrete output")
+                self.assertTrue(str(snippet.get("title") or "").strip(), f"{card['id']}: {snippet_id} should have a descriptive title")
+        self.assertGreater(promoted_count, 0, "Expected at least one curated homework promotion in notebook_snippets")
+
     def test_common_question_bullets_are_unique_per_card(self) -> None:
         for card in self.cards:
             bullets = card.get("sections", {}).get("ai_common_questions", {}).get("bullets", [])
@@ -134,7 +138,5 @@ class TopicCardsIntegrityTests(unittest.TestCase):
             for row in table.get("rows", [])
         )
         return f"{headers}###{rows}"
-
-
 if __name__ == "__main__":
     unittest.main()

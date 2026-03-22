@@ -30,7 +30,27 @@ make gemini-benchmark
 make gemini-prompt-experiments
 make gemini-health
 make quality-dashboard
+python3 scripts/exam_coverage_audit.py prepare
+python3 scripts/exam_coverage_audit.py summary
 ```
+
+## Exam Coverage Audit Prep
+
+```bash
+python3 scripts/exam_coverage_audit.py prepare
+```
+
+This prepares the vision-first audit packet under:
+
+- `tmp/exam_coverage_audit/manifest.json`
+- `tmp/exam_coverage_audit/selectable_items.json`
+- `tmp/exam_coverage_audit/pages/<exam-id>/page-XX.png`
+
+Notes:
+
+- The helper renders the unique exam PDFs only; the duplicate 2022 final is excluded from the packet.
+- It mirrors the current UI's selectable-item rules, so `ai_summary` is excluded while key-point details and both source buckets are included.
+- It is intended for manual or agent-led vision review of the rendered PNG pages, not text-layer parsing or OCR.
 
 ## Maintenance Audit
 

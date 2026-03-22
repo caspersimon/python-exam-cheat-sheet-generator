@@ -90,25 +90,34 @@ def analyze_week_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
                 f"`lecture.lecture_questions[{index}].correct={correct!r}` is not present in options: {sorted(valid_keys)}"
             )
 
-    notebook_cells = _safe_list(payload.get("notebook_cells"))
-    seen_cell_indexes: set[int] = set()
-    for index, cell in enumerate(notebook_cells, start=1):
-        if not isinstance(cell, dict):
-            errors.append(f"`notebook_cells[{index}]` must be an object.")
-            continue
-        cell_index = _as_positive_int(cell.get("cell_index"))
-        if cell_index is None:
-            errors.append(f"`notebook_cells[{index}].cell_index` must be a positive integer.")
-            continue
-        if cell_index in seen_cell_indexes:
-            errors.append(f"Duplicate notebook cell_index found: {cell_index}")
-        seen_cell_indexes.add(cell_index)
+    def bucket_label(bucket: str) -> str:
+        return bucket.replace("_cells", " cell")
 
-        cell_type = _safe_str(cell.get("cell_type")).lower()
-        if cell_type and cell_type not in {"code", "markdown", "raw"}:
-            warnings.append(
-                f"`notebook_cells[{index}].cell_type={cell_type!r}` is unusual (expected code/markdown/raw)."
-            )
+    def validate_cells(bucket: str, cells: list[Any]) -> None:
+        seen_cell_indexes: set[int] = set()
+        for index, cell in enumerate(cells, start=1):
+            if not isinstance(cell, dict):
+                errors.append(f"`{bucket}[{index}]` must be an object.")
+                continue
+            cell_index = _as_positive_int(cell.get("cell_index"))
+            if cell_index is None:
+                errors.append(f"`{bucket}[{index}].cell_index` must be a positive integer.")
+                continue
+            if cell_index in seen_cell_indexes:
+                errors.append(f"Duplicate {bucket_label(bucket)}_index found: {cell_index}")
+            seen_cell_indexes.add(cell_index)
+
+            cell_type = _safe_str(cell.get("cell_type")).lower()
+            if cell_type and cell_type not in {"code", "markdown", "raw"}:
+                warnings.append(
+                    f"`{bucket}[{index}].cell_type={cell_type!r}` is unusual (expected code/markdown/raw)."
+                )
+
+    notebook_cells = _safe_list(payload.get("notebook_cells"))
+    validate_cells("notebook_cells", notebook_cells)
+
+    homework_cells = _safe_list(payload.get("homework_cells"))
+    validate_cells("homework_cells", homework_cells)
 
     sources = [str(source).strip() for source in _safe_list(payload.get("sources")) if str(source).strip()]
     seen_sources: set[str] = set()
@@ -119,8 +128,8 @@ def analyze_week_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
             continue
         seen_sources.add(normalized)
 
-    if not concepts and not notebook_cells:
-        errors.append("Payload must include at least one lecture concept or one notebook cell.")
+    if not concepts and not notebook_cells and not homework_cells:
+        errors.append("Payload must include at least one lecture concept, notebook cell, or homework cell.")
 
     return {
         "errors": errors,

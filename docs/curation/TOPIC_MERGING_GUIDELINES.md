@@ -101,7 +101,7 @@ When merging cards manually, curate each section intentionally:
 - keep `related_topics` meaningful and deduped.
 - dedupe trap patterns by `(pattern, trap)` content.
 
-#### `sections.lecture_snippets`, `sections.exam_questions`, `sections.notebook_snippets`
+#### `sections.lecture_snippets`, `sections.exam_questions`, `sections.notebook_snippets`, `sections.homework_snippets`
 
 - union by content/ID and dedupe.
 - remove low-value snippets (headers, fluff, repetitive tiny notes).
@@ -137,6 +137,12 @@ When merging cards manually, curate each section intentionally:
 
 - must reference IDs that exist in the card’s own source snippet buckets.
 - prioritize exam snippets first, then lecture, then notebook.
+- include homework IDs when homework snippets are strong and exam-relevant.
+
+#### `sections.homework_recommended_ids`
+
+- must reference IDs in the card’s own `sections.homework_snippets`.
+- use it to split Homework into recommended vs additional selection buckets.
 
 ### 6) Recompute/Repair Metadata
 
@@ -177,19 +183,27 @@ print("duplicate-normalized-topics:", len(dups))
 
 for card in cards:
     s = card["sections"]
-    for key in ["lecture_snippets", "exam_questions", "notebook_snippets", "ai_examples", "key_points_to_remember", "recommended_ids"]:
+    for key in ["lecture_snippets", "exam_questions", "notebook_snippets", "homework_snippets", "homework_recommended_ids", "ai_examples", "key_points_to_remember", "recommended_ids"]:
         assert isinstance(s.get(key), list), f'{card["id"]}: {key} must be list'
     assert isinstance(s.get("ai_summary"), dict), f'{card["id"]}: ai_summary must be object'
     assert isinstance(s.get("ai_common_questions"), dict), f'{card["id"]}: ai_common_questions must be object'
 
     valid_ids = {
         item.get("id")
-        for bucket in ["lecture_snippets", "exam_questions", "notebook_snippets"]
+        for bucket in ["lecture_snippets", "exam_questions", "notebook_snippets", "homework_snippets"]
         for item in s.get(bucket, [])
         if isinstance(item, dict)
     }
     for rid in s.get("recommended_ids", []):
         assert rid in valid_ids, f'{card["id"]}: recommended id not found: {rid}'
+
+    homework_ids = {
+        item.get("id")
+        for item in s.get("homework_snippets", [])
+        if isinstance(item, dict)
+    }
+    for rid in s.get("homework_recommended_ids", []):
+        assert rid in homework_ids, f'{card["id"]}: homework recommended id not found: {rid}'
 
 print("integrity checks passed")
 PY
