@@ -484,6 +484,61 @@
     "search_text": "Simple function\ndef size(length, width):\n    return length * width\nprint(size(2,3))  # 6\nFunctions are objects. Defined with def. Called with (). Built-in functions: print, id, len, type, del. Functions can return values. Methods are functions attached to objects."
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+    "card_id": "w1-objects-and-names",
+    "topic": "Objects and Names",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "What are the outputs of the following lines of code? print(x == y), print(y == z), print(x == z), print(x == y == z)\nA\nB\nC\nD\nA\n'3' == 3 is False. 3 == 3.0 is True. '3' == 3.0 is False. x == y == z evaluates as (x == y) and (y == z), which is False and True, resulting in False."
+  },
+  {
+    "item_id": "exam-trial-final-exam-py22-1-w1-objects-and-names",
+    "card_id": "w1-objects-and-names",
+    "topic": "Objects and Names",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you have a variable called x which contains an integer between 0 and 10 (both are inclusive).\n\nWhich of the following programs will tell you whether x contains an odd or even number?\na\nb\nc\nd\nd\nAll three programs correctly identify whether x is odd or even for integers between 0 and 10."
+  },
+  {
+    "item_id": "exam-Test Resit - Introduction to Python - 22/23-3-w1-objects-and-names",
+    "card_id": "w1-objects-and-names",
+    "topic": "Objects and Names",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "What will be printed by the following code segment?\na\nb\nc\nd\nb\nThe type of x is a list. The loop checks if the type of each element is equal to the type of x. The only element in x that is a list is the empty list `[]`. Thus, `[[]]` is returned."
+  },
+  {
+    "item_id": "exam-Trial final - Introduction to Python - 22/23-1-w1-objects-and-names",
+    "card_id": "w1-objects-and-names",
+    "topic": "Objects and Names",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you already have: (i) a list of strings called europe which contain the names of all European countries, and (ii) a string variable called destination.\n\nYou want to write a program to advice Dutch residents on the documents they need to prepare before traveling:\nIf they travel within Europe, your program should print \"No passport needed. Bring your ID card.\"\nIf they travel outside of Europe, the program should print \"Please bring your passport.\"\n\nWhich of the following code segment will achieve what you need?\na\nb\nc\nd\na\nOption A correctly checks if destination is in the list 'europe' using the 'in' operator, and uses 'print' as requested. Option B uses 'return' which is only valid inside a function, and the prompt doesn't mention a function. Option C uses an assignment operator '=' instead of '==' and iterates incorrectly. Option D iterates incorrectly and uses 'return'."
+  },
+  {
+    "item_id": "exam-Trial final exam Introduction to Python-3-w1-objects-and-names",
+    "card_id": "w1-objects-and-names",
+    "topic": "Objects and Names",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Imagine that you have a list called students, which is populated by a number of dictionaries.\n\nEach dictionary in the students list has two keys: \"Name\" and \"Grade\". The corresponding values are student names (as strings) and course grades (as floats).\n\nFor each student, you'd like to print the following text to the screen:\n[NAME] has received a grade of [GRADE].\nwhere [NAME] is substituted by the name of the student and [GRADE] is substituted by the actual course grade. The course grade should be displayed to one decimal place after the decimal point.\n\nFor example, if\nstudents = [{\"Name\": \"Adam\", \"Grade\": 7.5}, {\"Name\": \"Bernard\", \"Grade\": 8.0}]\nthen you'd like to see the following two lines printed to the screen:\nAdam has received a grade of 7.5.\nBernard has received a grade of 8.0.\n\nWhich of the following code segments will achieve what you want?\na\nb\nc\nd\na\nOption A correctly iterates over the list of dictionaries and uses f-strings with proper quote escaping (single quotes inside double quotes) and the `:.1f` format specifier to display the float to one decimal place."
+  },
+  {
     "item_id": "exam-trial_midterm-1-w1-objects-and-names",
     "card_id": "w1-objects-and-names",
     "topic": "Objects and Names",
@@ -735,61 +790,6 @@
     "bucket": "additional",
     "selection_kind": "source",
     "search_text": "x = ['abc', [[]], (1, 2), {}, True, 3.0, 4]\n\nWhat is the output of the following code snippet?\n\nprint(type(float(x[2][0] + x[2][1])) == type(x[-2]))\na\nb\nc\nd\nd\nx[2] = (1,2). x[2][0]=1, x[2][1]=2. 1+2=3. float(3)=3.0. type(3.0)=float. x[-2]=3.0 (index 5). type(3.0)=float. float==float \u2192 True."
-  },
-  {
-    "item_id": "exam-Trial final - Introduction to Python - 22/23-1-w1-objects-and-names",
-    "card_id": "w1-objects-and-names",
-    "topic": "Objects and Names",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Suppose you already have: (i) a list of strings called europe which contain the names of all European countries, and (ii) a string variable called destination.\n\nYou want to write a program to advice Dutch residents on the documents they need to prepare before traveling:\nIf they travel within Europe, your program should print \"No passport needed. Bring your ID card.\"\nIf they travel outside of Europe, the program should print \"Please bring your passport.\"\n\nWhich of the following code segment will achieve what you need?\na\nb\nc\nd\na\nOption A correctly checks if destination is in the list 'europe' using the 'in' operator, and uses 'print' as requested. Option B uses 'return' which is only valid inside a function, and the prompt doesn't mention a function. Option C uses an assignment operator '=' instead of '==' and iterates incorrectly. Option D iterates incorrectly and uses 'return'."
-  },
-  {
-    "item_id": "exam-trial-final-exam-py22-1-w1-objects-and-names",
-    "card_id": "w1-objects-and-names",
-    "topic": "Objects and Names",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Suppose you have a variable called x which contains an integer between 0 and 10 (both are inclusive).\n\nWhich of the following programs will tell you whether x contains an odd or even number?\na\nb\nc\nd\nd\nAll three programs correctly identify whether x is odd or even for integers between 0 and 10."
-  },
-  {
-    "item_id": "exam-Test Resit - Introduction to Python - 22/23-3-w1-objects-and-names",
-    "card_id": "w1-objects-and-names",
-    "topic": "Objects and Names",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "What will be printed by the following code segment?\na\nb\nc\nd\nb\nThe type of x is a list. The loop checks if the type of each element is equal to the type of x. The only element in x that is a list is the empty list `[]`. Thus, `[[]]` is returned."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
-    "card_id": "w1-objects-and-names",
-    "topic": "Objects and Names",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "What are the outputs of the following lines of code? print(x == y), print(y == z), print(x == z), print(x == y == z)\nA\nB\nC\nD\nA\n'3' == 3 is False. 3 == 3.0 is True. '3' == 3.0 is False. x == y == z evaluates as (x == y) and (y == z), which is False and True, resulting in False."
-  },
-  {
-    "item_id": "exam-Trial final exam Introduction to Python-3-w1-objects-and-names",
-    "card_id": "w1-objects-and-names",
-    "topic": "Objects and Names",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Imagine that you have a list called students, which is populated by a number of dictionaries.\n\nEach dictionary in the students list has two keys: \"Name\" and \"Grade\". The corresponding values are student names (as strings) and course grades (as floats).\n\nFor each student, you'd like to print the following text to the screen:\n[NAME] has received a grade of [GRADE].\nwhere [NAME] is substituted by the name of the student and [GRADE] is substituted by the actual course grade. The course grade should be displayed to one decimal place after the decimal point.\n\nFor example, if\nstudents = [{\"Name\": \"Adam\", \"Grade\": 7.5}, {\"Name\": \"Bernard\", \"Grade\": 8.0}]\nthen you'd like to see the following two lines printed to the screen:\nAdam has received a grade of 7.5.\nBernard has received a grade of 8.0.\n\nWhich of the following code segments will achieve what you want?\na\nb\nc\nd\na\nOption A correctly iterates over the list of dictionaries and uses f-strings with proper quote escaping (single quotes inside double quotes) and the `:.1f` format specifier to display the float to one decimal place."
   },
   {
     "item_id": "ks-d79a1899f6",
@@ -1287,6 +1287,17 @@
     "search_text": "slicing\nl1 = ['a', 'b']\nl2 = l1\nl2[-1] = 'c'\nprint(l1 == l3)\nl3 = l1[::]\nl3[-1] = 'c'\nprint(l1 == l3)"
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
+    "card_id": "w1-sequences-and-access",
+    "topic": "Sequences and Access",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "How do you break a list into a list of lists, where each sublist contains 3 elements?\nA\nB\nC\nD\nA\nOption A uses range(0, 7, 3) which generates 0, 3, 6. The slices x[0:3], x[3:6], and x[6:9] correctly partition the list."
+  },
+  {
     "item_id": "exam-extra_practice-6-w1-sequences-and-access",
     "card_id": "w1-sequences-and-access",
     "topic": "Sequences and Access",
@@ -1474,6 +1485,28 @@
     "search_text": "Income tax branches and return shape\nSuppose your country imposes the following tax brackets:\nBracket Tax        Taxable income\nrate       Over          Not over\n1        10%       $0            $11,000\n2        12%       $11,000       $45,000\n3        22%       $45,000       $95,000\n4        32%       $95,000\nIf your gross income is $50,000, you will pay 10% tax on the first $11,000, 12% tax on the next $34,000 and 22% tax on the last $5,000.\nWhich of the following function will return the output containing your net_income and your total_tax given your gross_income?\nFor example:\nIf we call the function as:\nincome_tax_calculator(50000)\nit should return:\n{'total_tax': 6280.0, 'net_income': 43720.0}\nA     def income_tax_calculator(gross_income):\nresults = {}\nrate_1 = 0.10\nrate_2 = 0.12\nrate_3 = 0.22\nrate_4 = 0.32\nbracket_1 = 11000\nbracket_2 = 45000 - 11000\nbracket_3 = 95000 - 45000\nif gross_income > 95000:\ntotal_tax = ((gross_income - 95000) * rate_4) + (bracket_3 * rate_3) + (bracket_2 * rate_2)\n+ (bracket_1 * rate_1)\nelif 95000 >= gross_income > 45000:\ntotal_tax = ((gross_income - 45000) * rate_3) + (bracket_2 * rate_2) + (bracket_1 * rate_1)\nelif 45000 >= gross_income > 11000:\ntotal_tax = ((gross_income - 11000) * rate_2) + (bracket_1 * rate_1)\nelse:\ntotal_tax = gross_income * rate_1\nnet_income = gross_income - total_tax\nresults['total_tax'] = round(total_tax, 2)\nresults['net_income'] = round(net_income, 2)\nreturn results\nB      def income_tax_calculator(gross_income):\n\u200b    results = {}\nrate_1 = 0.10\nrate_2 = 0.12\nrate_3 = 0.22\nrate_4 = 0.32\nbracket_1 = 11000\nbracket_2 = 45000 - 11001\nbracket_3 = 95000 - 45001\ntotal_tax = (gross_income - 95001) * rate_4 + (bracket_3 * rate_3) + (bracket_2 * rate_2) +\n(bracket_1 * rate_1)\nnet_income = lambda gross_income, total_tax: gross_income - total_tax\nresults['total_tax'] = round(total_tax, 2)\nresults['net_income'] = round(net_income, 2)\nreturn results\nC      def income_tax_calculator(gross_income):\n\u200b    results = {}\nrate_1 = 0.10\nrate_2 = 0.12\nrate_3 = 0.22\nrate_4 = 0.32\nif gross_income <= 11000:\ntotal_tax = gross_income * rate_1\nif 45000 > gross_income > 11000:\ntotal_tax += (45000 - gross_income) * rate_2\nif 95000 > gross_income > 45000:\ntotal_tax += (95000 - gross_income) * rate_3\nelse:\ntotal_tax += (gross_income - 95000) * rate_4\nnet_income = gross_income - total_tax\nresults['total_tax'] = total_tax\nresults['net_income'] = net_income\nreturn(total_tax, net_income)\nD      All of three functions will work as intended.\nCheck branch boundaries, rounding, and whether the function returns `{'total_tax': ..., 'net_income': ...}`."
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-24-w2-conditions",
+    "card_id": "w1-functions-and-imports",
+    "topic": "Functions and Imports",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Which script does NOT print the correct answer for the area of a circle?\nA\nB\nC\nD\nC\nIf math is imported as constants, it must be referred to as 'constants.pi'. 'math.pi' will no longer be available unless 'math' was also imported directly."
+  },
+  {
+    "item_id": "exam-Resit 22/23-5-w1-functions-and-imports",
+    "card_id": "w1-functions-and-imports",
+    "topic": "Functions and Imports",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you have a list called x. Which of the following code segments will print the following list?\n[5, 4, 3, 2, 1]\na\nb\nc\nd\nc\nOption A extracts unique elements with `set(x)`, resulting in `{1, 2, 3, 4, 5}`, then sorts them in reverse order, giving `[5, 4, 3, 2, 1]`. Option B uses list slicing `x[::-2]` which steps backwards through `x` by 2, retrieving indices -1, -3, -5, -7, and -9, which correspond to 5, 4, 3, 2, 1. Thus, both A and B are correct."
+  },
+  {
     "item_id": "exam-midterm_2023-12-w1-functions-and-imports",
     "card_id": "w1-functions-and-imports",
     "topic": "Functions and Imports",
@@ -1505,17 +1538,6 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "You need to write a function called weather_alert that accepts a string argument, which is a color code of the weather alert system."
-  },
-  {
-    "item_id": "exam-Resit 22/23-5-w1-functions-and-imports",
-    "card_id": "w1-functions-and-imports",
-    "topic": "Functions and Imports",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "Suppose you have a list called x. Which of the following code segments will print the following list?\n[5, 4, 3, 2, 1]\na\nb\nc\nd\nc\nOption A extracts unique elements with `set(x)`, resulting in `{1, 2, 3, 4, 5}`, then sorts them in reverse order, giving `[5, 4, 3, 2, 1]`. Option B uses list slicing `x[::-2]` which steps backwards through `x` by 2, retrieving indices -1, -3, -5, -7, and -9, which correspond to 5, 4, 3, 2, 1. Thus, both A and B are correct."
   },
   {
     "item_id": "ks-f43422a4cf",
@@ -1793,6 +1815,116 @@
     "search_text": "Dictionary creation and lookup\ncapitals = {'Estonia': 'Tallinn', 'Belgium': 'Brussels', 'France': 'Paris'}\nprint(capitals['Belgium'])\nCheck whether the code is looking up a key, iterating with `.items()`, or mutating the dictionary."
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Which of the following programs correctly returns a dictionary where values are sums of input values whose keys are <= the output key?\nA\nB\nC\nD\nC\nBoth methods correctly calculate the cumulative sums based on key values, though Option B is more efficient."
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "What is the result of the program comparing d1 (from zip) and d2 (from enumerate)?\nA\nB\nC\nD\nA\nBoth d1 and d2 result in the same dictionary: {1: 2, 2: 3, 3: 4, 4: 5}."
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "The following codes all print the same value, except one. Which one?\nA\nB\nC\nD\nA\nIterating directly over a dictionary (for key, value in d1) only yields keys. This will cause a ValueError when trying to unpack into two variables."
+  },
+  {
+    "item_id": "exam-trial-final-exam-py22-4-w2-dictionaries-and-mappings",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You have to create a dictionary called roman_nums where the keys are the integers from 1 to 5 (both are inclusive) and the values are their corresponding Roman numeral symbols.\n\nThat is, if we execute the following command:\nprint(roman_nums)\nthe output should be:\n{1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V'}\n\nWhich of the following code segments works as intended?\na\nb\nc\nd\na\nOption A correctly zips the numbers 1 to 5 with the corresponding Roman numerals to create the dictionary."
+  },
+  {
+    "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You have two lists representing the names and ages of individuals:\nnames = ['Alice', 'Bob', 'Charlie', 'David']\nages = [25, 30, 35, 40]\n\nYou need to create a dictionary called person_dict where the keys are the names and the values are the ages.\nHowever, you want to include only the names that start with the letter 'A' or with the letter 'C'.\n\nSo executing the following command:\nprint(person_dict)\nshould give the following output:\n{'Alice': 25, 'Charlie': 35}\n\nWhich of the following code segments works as intended?\na\nb\nc\nd\na\nOption A correctly iterates through both lists simultaneously using zip and assigns the correct keys and values."
+  },
+  {
+    "item_id": "exam-trial-final-exam-py22-6-w2-dictionaries-and-mappings",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You have the following dictionary that represents the performance ratings of employees in a company:\nemployee_ratings = {'John': 8, 'Sarah': 9, 'Michael': 7, 'Emma': 9, 'David': 6}\n\nYou need to find and print the name of the employee(s) with the highest performance rating.\n\nWhich of the following code segments works as intended?\na\nb\nc\nd\na\nOption A correctly identifies the maximum rating from the values and then prints the corresponding employees."
+  },
+  {
+    "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Assume you already have a list of strings called words.\nYou need to create a dictionary called word_lengths, where the keys are the strings in the list words and the values are their lengths.\nWhich of the following code segments will work as intended?\na\nb\nc\nd\na\nOption A is a valid dictionary comprehension that iterates through `words`, setting each `word` as the key and `len(word)` as the value."
+  },
+  {
+    "item_id": "exam-Trial final - Introduction to Python - 22/23-4-w2-dictionaries-and-mappings",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You have to create a dictionary called vowels_ASCII where the keys are the lowercase vowels (a, e, i, o, u) and the values are their corresponding ASCII values.\nThe ASCII (American Standard Code for Information Interchange) is a character encoding standard that assigns unique numerical values to characters.\n\nThat is, if we execute the following command:\nprint(vowels_ASCII)\n\nthe output should be:\n{'a': 97, 'e': 101, 'i': 105, 'o': 111, 'u': 117}\n\nWhich of the following code segments work(s) as intended?\n\nHint: the ord() function returns a unique numerical value to a character. The function takes a unit-length text as an argument and returns the assigned unique numerical value.\n\nFor example:\nord('a')\n\nreturns:\n97\na\nb\nc\nd\nc\nOption A iterates over 'aeiou' and correctly creates the dictionary. Option B iterates over 'aeiou' and also checks if the vowel is in 'aeiou', which is redundant but still valid and produces the correct dictionary. Thus, both work correctly."
+  },
+  {
+    "item_id": "exam-Trial final - Introduction to Python - 22/23-5-w2-dictionaries-and-mappings",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you have three variables called player1_goals, player2_goals, and player3_goals. Each of the variables contains a list of integers that represents the number of goals scored by the football players in five different matches:\n\nplayer1_goals = [2, 1, 3, 2, 1]\nplayer2_goals = [0, 1, 1, 3, 2]\nplayer3_goals = [1, 0, 2, 1, 3]\n\nYou want to create a new dictionary called match_goals where the keys are the match numbers (starting from 1) and the values are a tuple containing the total goals scored by each player in that match.\n\nSo, if we execute the following command:\nprint(match_goals)\n\nthe output should be:\n{1: (2, 0, 1), 2: (1, 1, 0), 3: (3, 1, 2), 4: (2, 3, 1), 5: (1, 2, 3)}\n\nWhich of the following code segments works as intended?\na\nb\nc\nd\na\nOption A uses zip to combine the lists and enumerate with start=1 to get match numbers starting from 1. It assigns a tuple of goals to each match number. Option B assigns the sum instead of a tuple. Options C and D don't use start=1 for enumerate, so keys will start from 0."
+  },
+  {
+    "item_id": "exam-Trial final - Introduction to Python - 22/23-6-w2-dictionaries-and-mappings",
+    "card_id": "w2-dictionaries-and-mappings",
+    "topic": "Dictionaries and Mappings",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You have the following dictionary that represents the monthly sales of a store:\nmonthly_sales = {'January': 1500, 'February': 2200, 'March': 1800, 'April': 2400, 'May': 2000, 'June': 2800}\n\nYou need to calculate the average sales for the first three months (January, February, and March). Which of the following code segments works as intended?\na\nb\nc\nd\na\nDictionaries are not sliceable, so options B and D will raise TypeErrors. Option C creates a list of tuples, and the sum() function cannot add tuples together in this context (it will raise a TypeError when trying to add an int to a tuple). Option A extracts the first three keys, gets their corresponding values in a list comprehension, and calculates the average correctly."
+  },
+  {
     "item_id": "exam-trial_midterm-2-w2-dictionaries-and-mappings",
     "card_id": "w2-dictionaries-and-mappings",
     "topic": "Dictionaries and Mappings",
@@ -2024,83 +2156,6 @@
     "search_text": "def counter(y):\n\tx = {}\n\tfor index, element in enumerate(y):\n\t\tif index != int(element) and int(element) % 2 == 0:\n\t\t\tx[element] = len(element)\n\treturn x\n\nWhat will this function return when called as:\ncounter(['12345678', '1', '123', '1234', '12345', '12', '6', '1', '123456'])\na\nb\nc\nd\na\nindex 0: '12345678', int=12345678, index(0)!=12345678 \u2713, even \u2713 \u2192 add, len=8. index 1: '1', int=1, index==int \u2192 skip. index 2: '123', int=123, odd \u2192 skip. index 3: '1234', int=1234, index(3)!=1234 \u2713, even \u2713 \u2192 add, len=4. index 4: '12345', int=12345, odd \u2192 skip. index 5: '12', int=12, index(5)!=12 \u2713, even \u2713 \u2192 add, len=2. index 6: '6', int=6, index(6)==6 \u2192 skip. index 7: '1', int=1, odd \u2192 skip. index 8: '123456', int=123456, index(8)!=123456 \u2713, even \u2713 \u2192 add, len=6. Result: {'12345678':8,'1234':4,'12':2,'123456':6}. Correct: a."
   },
   {
-    "item_id": "exam-Trial final - Introduction to Python - 22/23-4-w2-dictionaries-and-mappings",
-    "card_id": "w2-dictionaries-and-mappings",
-    "topic": "Dictionaries and Mappings",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You have to create a dictionary called vowels_ASCII where the keys are the lowercase vowels (a, e, i, o, u) and the values are their corresponding ASCII values.\nThe ASCII (American Standard Code for Information Interchange) is a character encoding standard that assigns unique numerical values to characters.\n\nThat is, if we execute the following command:\nprint(vowels_ASCII)\n\nthe output should be:\n{'a': 97, 'e': 101, 'i': 105, 'o': 111, 'u': 117}\n\nWhich of the following code segments work(s) as intended?\n\nHint: the ord() function returns a unique numerical value to a character. The function takes a unit-length text as an argument and returns the assigned unique numerical value.\n\nFor example:\nord('a')\n\nreturns:\n97\na\nb\nc\nd\nc\nOption A iterates over 'aeiou' and correctly creates the dictionary. Option B iterates over 'aeiou' and also checks if the vowel is in 'aeiou', which is redundant but still valid and produces the correct dictionary. Thus, both work correctly."
-  },
-  {
-    "item_id": "exam-Trial final - Introduction to Python - 22/23-5-w2-dictionaries-and-mappings",
-    "card_id": "w2-dictionaries-and-mappings",
-    "topic": "Dictionaries and Mappings",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Suppose you have three variables called player1_goals, player2_goals, and player3_goals. Each of the variables contains a list of integers that represents the number of goals scored by the football players in five different matches:\n\nplayer1_goals = [2, 1, 3, 2, 1]\nplayer2_goals = [0, 1, 1, 3, 2]\nplayer3_goals = [1, 0, 2, 1, 3]\n\nYou want to create a new dictionary called match_goals where the keys are the match numbers (starting from 1) and the values are a tuple containing the total goals scored by each player in that match.\n\nSo, if we execute the following command:\nprint(match_goals)\n\nthe output should be:\n{1: (2, 0, 1), 2: (1, 1, 0), 3: (3, 1, 2), 4: (2, 3, 1), 5: (1, 2, 3)}\n\nWhich of the following code segments works as intended?\na\nb\nc\nd\na\nOption A uses zip to combine the lists and enumerate with start=1 to get match numbers starting from 1. It assigns a tuple of goals to each match number. Option B assigns the sum instead of a tuple. Options C and D don't use start=1 for enumerate, so keys will start from 0."
-  },
-  {
-    "item_id": "exam-Trial final - Introduction to Python - 22/23-6-w2-dictionaries-and-mappings",
-    "card_id": "w2-dictionaries-and-mappings",
-    "topic": "Dictionaries and Mappings",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You have the following dictionary that represents the monthly sales of a store:\nmonthly_sales = {'January': 1500, 'February': 2200, 'March': 1800, 'April': 2400, 'May': 2000, 'June': 2800}\n\nYou need to calculate the average sales for the first three months (January, February, and March). Which of the following code segments works as intended?\na\nb\nc\nd\na\nDictionaries are not sliceable, so options B and D will raise TypeErrors. Option C creates a list of tuples, and the sum() function cannot add tuples together in this context (it will raise a TypeError when trying to add an int to a tuple). Option A extracts the first three keys, gets their corresponding values in a list comprehension, and calculates the average correctly."
-  },
-  {
-    "item_id": "exam-trial-final-exam-py22-4-w2-dictionaries-and-mappings",
-    "card_id": "w2-dictionaries-and-mappings",
-    "topic": "Dictionaries and Mappings",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You have to create a dictionary called roman_nums where the keys are the integers from 1 to 5 (both are inclusive) and the values are their corresponding Roman numeral symbols.\n\nThat is, if we execute the following command:\nprint(roman_nums)\nthe output should be:\n{1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V'}\n\nWhich of the following code segments works as intended?\na\nb\nc\nd\na\nOption A correctly zips the numbers 1 to 5 with the corresponding Roman numerals to create the dictionary."
-  },
-  {
-    "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
-    "card_id": "w2-dictionaries-and-mappings",
-    "topic": "Dictionaries and Mappings",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You have two lists representing the names and ages of individuals:\nnames = ['Alice', 'Bob', 'Charlie', 'David']\nages = [25, 30, 35, 40]\n\nYou need to create a dictionary called person_dict where the keys are the names and the values are the ages.\nHowever, you want to include only the names that start with the letter 'A' or with the letter 'C'.\n\nSo executing the following command:\nprint(person_dict)\nshould give the following output:\n{'Alice': 25, 'Charlie': 35}\n\nWhich of the following code segments works as intended?\na\nb\nc\nd\na\nOption A correctly iterates through both lists simultaneously using zip and assigns the correct keys and values."
-  },
-  {
-    "item_id": "exam-trial-final-exam-py22-6-w2-dictionaries-and-mappings",
-    "card_id": "w2-dictionaries-and-mappings",
-    "topic": "Dictionaries and Mappings",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You have the following dictionary that represents the performance ratings of employees in a company:\nemployee_ratings = {'John': 8, 'Sarah': 9, 'Michael': 7, 'Emma': 9, 'David': 6}\n\nYou need to find and print the name of the employee(s) with the highest performance rating.\n\nWhich of the following code segments works as intended?\na\nb\nc\nd\na\nOption A correctly identifies the maximum rating from the values and then prints the corresponding employees."
-  },
-  {
-    "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
-    "card_id": "w2-dictionaries-and-mappings",
-    "topic": "Dictionaries and Mappings",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Assume you already have a list of strings called words.\nYou need to create a dictionary called word_lengths, where the keys are the strings in the list words and the values are their lengths.\nWhich of the following code segments will work as intended?\na\nb\nc\nd\na\nOption A is a valid dictionary comprehension that iterates through `words`, setting each `word` as the key and `len(word)` as the value."
-  },
-  {
     "item_id": "aiq-1",
     "card_id": "w2-lists-and-sets",
     "topic": "Lists and Sets",
@@ -2277,6 +2332,50 @@
     "search_text": "List method effects and resulting list\nif 16 not in squares:\n    squares.append(16)\nif 25 not in squares:\n    squares.append(25)    \nprint(squares)\nCheck whether the method mutates the list in place and what the list looks like after each call."
   },
   {
+    "item_id": "exam-Resit 22/23-1-w2-lists-and-sets",
+    "card_id": "w2-lists-and-sets",
+    "topic": "Lists and Sets",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you have a list called x containing tuples. Which of the following lines of code will print True?\na\nb\nc\nd\nd\nOption A evaluates to 2 * 3 == 6 (True). Option B evaluates to 3 + 5 == 8 (True). Option C evaluates to 7 - 5 == 2 (True). Therefore, all lines print True."
+  },
+  {
+    "item_id": "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets",
+    "card_id": "w2-lists-and-sets",
+    "topic": "Lists and Sets",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you have a list called x containing tuples, where\nx = [(1, 2), (3, 4), (5, 6), (7, 8)]\n\nWhich of the following lines of code will print True?\na\nb\nc\nd\nd\nOption A evaluates to 2 * 3 == 6 (True). Option B evaluates to 3 + 5 == 8 (True). Option C evaluates to 7 - 5 == 2 (True). Therefore, all lines print True."
+  },
+  {
+    "item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+    "card_id": "w2-lists-and-sets",
+    "topic": "Lists and Sets",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you have a list called x, where:\n\nWhich of the following code segments will print the following list?\n[5, 4, 3, 2, 1]\na\nb\nc\nd\nc\nOption A creates a set (removing duplicates) and sorts it in reverse order, yielding [5, 4, 3, 2, 1]. Option B uses slicing to step backwards by 2 elements at a time, picking the second instance of each number in reverse order, which also yields [5, 4, 3, 2, 1]. Both work."
+  },
+  {
+    "item_id": "exam-trial-final-exam-py22-7-w2-lists-and-sets",
+    "card_id": "w2-lists-and-sets",
+    "topic": "Lists and Sets",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "What is the output of the following code segment?\na\nb\nc\nd\nc\nThe list comprehension filters numbers that are even (x % 2 == 0) and greater than 2 (x > 2). From the list, only 4 satisfies both conditions."
+  },
+  {
     "item_id": "exam-midterm_2023-15-w2-lists-and-sets",
     "card_id": "w2-lists-and-sets",
     "topic": "Lists and Sets",
@@ -2363,50 +2462,6 @@
     "bucket": "additional",
     "selection_kind": "source",
     "search_text": "Suppose you have the following function:\n\ndef func1(l1):\n    return len(list(l1))==len(set(l1))\n\nWhich of the functions below returns the same values as the function above, if we call it in any of the following ways?\n\nfunc1(l1 = [1,2,3])\nfunc1(l1 = [1,2,2])\nfunc1(l1 = (1,2,2))\na\nb\nc\nd\nd\nOption a: for (1,2,2), tuple has no .count() \u2014 wait, actually tuples DO have .count(). For [1,2,2]: element 2 has count>1 so counter=2, returns False. Original returns False. But for a tuple (1,2,2): tuple has .count(), works. But option b: l1[l1.index(element)+1:] \u2014 tuples support slicing and indexing too. Let's re-examine: for a tuple (1,2,2), both a and b should work the same. Actually option a counts ALL duplicated elements (counts 2 twice for [1,2,2]), making counter=2, so counter==0 is False. Original is False too. Both match. For option b applied to tuple: l1[l1.index(element)+1:] works for tuples too. Actually both a and b return same values as original. Correct: d."
-  },
-  {
-    "item_id": "exam-trial-final-exam-py22-7-w2-lists-and-sets",
-    "card_id": "w2-lists-and-sets",
-    "topic": "Lists and Sets",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "What is the output of the following code segment?\na\nb\nc\nd\nc\nThe list comprehension filters numbers that are even (x % 2 == 0) and greater than 2 (x > 2). From the list, only 4 satisfies both conditions."
-  },
-  {
-    "item_id": "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets",
-    "card_id": "w2-lists-and-sets",
-    "topic": "Lists and Sets",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Suppose you have a list called x containing tuples, where\nx = [(1, 2), (3, 4), (5, 6), (7, 8)]\n\nWhich of the following lines of code will print True?\na\nb\nc\nd\nd\nOption A evaluates to 2 * 3 == 6 (True). Option B evaluates to 3 + 5 == 8 (True). Option C evaluates to 7 - 5 == 2 (True). Therefore, all lines print True."
-  },
-  {
-    "item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
-    "card_id": "w2-lists-and-sets",
-    "topic": "Lists and Sets",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Suppose you have a list called x, where:\n\nWhich of the following code segments will print the following list?\n[5, 4, 3, 2, 1]\na\nb\nc\nd\nc\nOption A creates a set (removing duplicates) and sorts it in reverse order, yielding [5, 4, 3, 2, 1]. Option B uses slicing to step backwards by 2 elements at a time, picking the second instance of each number in reverse order, which also yields [5, 4, 3, 2, 1]. Both work."
-  },
-  {
-    "item_id": "exam-Resit 22/23-1-w2-lists-and-sets",
-    "card_id": "w2-lists-and-sets",
-    "topic": "Lists and Sets",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Suppose you have a list called x containing tuples. Which of the following lines of code will print True?\na\nb\nc\nd\nd\nOption A evaluates to 2 * 3 == 6 (True). Option B evaluates to 3 + 5 == 8 (True). Option C evaluates to 7 - 5 == 2 (True). Therefore, all lines print True."
   },
   {
     "item_id": "manual-bool-precedence",
@@ -2530,7 +2585,7 @@
     "search_text": "`not` flips booleans\nprint(not True) \nprint(not False)\n`not True` becomes `False` and `not False` becomes `True`.\nFalse\nTrue"
   },
   {
-    "item_id": "exam-trial_midterm-6-w2-conditions",
+    "item_id": "exam-Test Exam 07-06-22-4-w2-conditions",
     "card_id": "w2-conditions",
     "topic": "Conditions",
     "subtopic_id": "",
@@ -2538,18 +2593,7 @@
     "item_type": "source_exam",
     "bucket": "recommended",
     "selection_kind": "source",
-    "search_text": "Consider the following code snippet:\ndef main(lst, condition=lambda x: x):\ny = []\nfor x in lst:\nif condition(x):\ny.append(x)\nreturn y\nWhat will this function return, when called in the following way:\nmain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], lambda x: x % 2 != 0)\nA [2, 4, 6, 8, 10]\nB [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nC [1, 3, 5, 7, 9]\nD None"
-  },
-  {
-    "item_id": "exam-trial_midterm-13-w2-conditions",
-    "card_id": "w2-conditions",
-    "topic": "Conditions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "You need to write a function called weather_alert that accepts a string argument, which is a color code of the weather\nalert system."
+    "search_text": "You're trying to write a function called is_anagram, which takes two strings as inputs and checks whether they are anagrams of each other. That is: whether one of them can be written by rearranging the letters of the other. Upper case and lower case versions of a letter count as the same letter, and whitespace characters don't count at all.\n\nFor example, the following function calls should all return the boolean value True:\nis_anagram(\"Old West Action\", \"Clint Eastwood\")\nis_anagram(\"eleven plus two\", \"twelve plus one\")\nis_anagram(\"I am a weakish speller\", \"William Shakespeare\")\n\nwhile the following function call should return the boolean value False:\nis_anagram(\"one plus two\", \"three\")\n\nWhich of the following code segments achieves what you want?\na\nb\nc\nd\na\nOption A correctly removes spaces, converts to lowercase, lists characters, sorts them, and compares the results. Option B and C use .sort() which returns None, and D uses .replace() on a list."
   },
   {
     "item_id": "exam-midterm_2023-1-w2-conditions",
@@ -2574,6 +2618,28 @@
     "search_text": "Assume you have the following variables:\nx = 3\ny = 3.0\nz = '3'\nWhat will be printed by the following code:\nprint((x != z and x == int(z)) or (x != y and y != z))\nA     True\nB      False\nC      The code will result in an error.\nD      3"
   },
   {
+    "item_id": "exam-trial_midterm-6-w2-conditions",
+    "card_id": "w2-conditions",
+    "topic": "Conditions",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Consider the following code snippet:\ndef main(lst, condition=lambda x: x):\ny = []\nfor x in lst:\nif condition(x):\ny.append(x)\nreturn y\nWhat will this function return, when called in the following way:\nmain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], lambda x: x % 2 != 0)\nA [2, 4, 6, 8, 10]\nB [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nC [1, 3, 5, 7, 9]\nD None"
+  },
+  {
+    "item_id": "exam-trial_midterm-13-w2-conditions",
+    "card_id": "w2-conditions",
+    "topic": "Conditions",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You need to write a function called weather_alert that accepts a string argument, which is a color code of the weather\nalert system."
+  },
+  {
     "item_id": "ks-4b427a2425",
     "card_id": "w2-conditions",
     "topic": "Conditions",
@@ -2594,83 +2660,6 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "Conditional statements and expressions\nif/elif/else. One if at start, at most one else at end, unlimited elif in between. Indentation is critical \u2014 all code in a block must have same indentation. Conditional expression (ternary): value_if_true if condition else value_if_false.\nif/elif/else structure\nif condition_1:\n    expression_1\nelif condition_2:\n    expression_2\n    expression_3\nelse:\n    expression_4\nConditional expression (ternary)\n# Statement form:\nif a > 0:\n    b = a\nelse:\n    b = 0\n# Expression form:\nb = a if a > 0 else 0\n# Even simpler:\nb = max(0, a)"
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-4-w2-conditions",
-    "card_id": "w2-conditions",
-    "topic": "Conditions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Which of the following code segments does NOT achieve the goal of returning a string with 10 digits by removing dashes?\nA\nB\nC\nD\nA\nStrings in Python are immutable. The .replace() method returns a new string but does not modify the original. Option A returns the original string with dashes because the result of .replace() was not assigned back to the variable."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-12-w2-conditions",
-    "card_id": "w2-conditions",
-    "topic": "Conditions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You'd like to turn every upper case letter in a list into lower case and vice versa. Which code line achieves this?\nA\nB\nC\nD\nC\nBoth options implement the conditional logic required to flip the case of each character in the list."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-15-w2-conditions",
-    "card_id": "w2-conditions",
-    "topic": "Conditions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Executing the following program will produce an error. Why?\nA\nB\nC\nD\nA\nThe variable 'result' is defined inside the 'cube' function, making it local to that function. It cannot be accessed from the global scope."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
-    "card_id": "w2-conditions",
-    "topic": "Conditions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "How do you break a list into a list of lists, where each sublist contains 3 elements?\nA\nB\nC\nD\nA\nOption A uses range(0, 7, 3) which generates 0, 3, 6. The slices x[0:3], x[3:6], and x[6:9] correctly partition the list."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-22-w2-conditions",
-    "card_id": "w2-conditions",
-    "topic": "Conditions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Which script, using the count string method, would print the value 1 for x = 'Amsterdam'?\nA\nB\nC\nD\nB\nThe count() method is a string method, not a standalone function. It is called using the dot notation on a string object."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-24-w2-conditions",
-    "card_id": "w2-conditions",
-    "topic": "Conditions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Which script does NOT print the correct answer for the area of a circle?\nA\nB\nC\nD\nC\nIf math is imported as constants, it must be referred to as 'constants.pi'. 'math.pi' will no longer be available unless 'math' was also imported directly."
-  },
-  {
-    "item_id": "exam-Test Exam 07-06-22-4-w2-conditions",
-    "card_id": "w2-conditions",
-    "topic": "Conditions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You're trying to write a function called is_anagram, which takes two strings as inputs and checks whether they are anagrams of each other. That is: whether one of them can be written by rearranging the letters of the other. Upper case and lower case versions of a letter count as the same letter, and whitespace characters don't count at all.\n\nFor example, the following function calls should all return the boolean value True:\nis_anagram(\"Old West Action\", \"Clint Eastwood\")\nis_anagram(\"eleven plus two\", \"twelve plus one\")\nis_anagram(\"I am a weakish speller\", \"William Shakespeare\")\n\nwhile the following function call should return the boolean value False:\nis_anagram(\"one plus two\", \"three\")\n\nWhich of the following code segments achieves what you want?\na\nb\nc\nd\na\nOption A correctly removes spaces, converts to lowercase, lists characters, sorts them, and compares the results. Option B and C use .sort() which returns None, and D uses .replace() on a list."
   },
   {
     "item_id": "manual-loop-translate",
@@ -2805,7 +2794,18 @@
     "search_text": "`while items:` repeats until the list is empty\nl1 = [1, 2, 3, 4, 5, 6]\ntotal = 0\nwhile l1:           # truthy while list is non-empty\n    total += l1[0]\n    del l1[0]\nprint(total)        # 21\nNon-empty lists are truthy and empty lists are falsy, so `while items:` is a common consume-until-empty loop.\n21"
   },
   {
-    "item_id": "exam-trial_midterm-5-w2-loops",
+    "item_id": "manual-loop-max-sublist-sum",
+    "card_id": "w2-loops",
+    "topic": "Loops",
+    "subtopic_id": "w2-loops-core",
+    "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Keep the sub-list whose elements have the largest sum\nlists = [[1, 2], [4, 4], [3, 3, 1]]\nbest = lists[0]\nfor current in lists[1:]:\n    if sum(current) > sum(best):\n        best = current\nprint(best)\nStore the current best sub-list, compare `sum(current)` with `sum(best)` on each iteration, and update the winner when you find a larger total.\n[4, 4]"
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-14-w2-loops",
     "card_id": "w2-loops",
     "topic": "Loops",
     "subtopic_id": "",
@@ -2813,7 +2813,18 @@
     "item_type": "source_exam",
     "bucket": "recommended",
     "selection_kind": "source",
-    "search_text": "Consider the following code snippet:\ni = 1\nwhile True:\nif i % 2 == 0:\ni += 1\ncontinue\nelif i == 7:\nbreak\nelse:\nprint(i)\ni += 1\nWhich of the following code snippets will print the same output?\nA for i in range(1, 5, 2):\nprint(i)\nB x = 'numbers'\nfor i, j in enumerate(x):\nif i % 2 != 0:\nprint(i)\nC x = '12345'\nfor i in x:\nif i % 2 != 0:\nprint(i)\nD for i in range(7, 1, -2):\nprint(i)"
+    "search_text": "Choose the program that iterates over integers from 1 to 10 and prints the sum of the current and previous number (starting with 0 as previous).\nA\nB\nC\nD\nB\nOption B correctly updates the 'previous' state at the end of each iteration to match the logic of the target output."
+  },
+  {
+    "item_id": "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops",
+    "card_id": "w2-loops",
+    "topic": "Loops",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you have the following function, which takes two integers as arguments:\n\nWhat will be printed by the following line of code:\nprint(main(1))\na\nb\nc\nd\nb\nThe function uses y=11 as a default argument. The while loop runs while i < 11 (from 1 to 10) and appends formatted strings to the list, resulting in 10 elements."
   },
   {
     "item_id": "exam-midterm_2023-2-w2-loops",
@@ -2827,17 +2838,6 @@
     "search_text": "What is the output of the following code snippet?"
   },
   {
-    "item_id": "exam-midterm_2023-14-w2-loops",
-    "card_id": "w2-loops",
-    "topic": "Loops",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "Assume you already have a variable called alphabet, which contains a string, e.g., alphabet = \"abcdefghijklmnopqrstuvwxyz\"\nWhich of the following code snippets will give the same output as the following command?\nprint(list(alphabet[1::2]))\nHint: The reverse() method reverses the sorting order of the elements in a list.\nA      values = []\nfor index, value in enumerate(alphabet, start=1):\nif index % 2 == 0:\nvalues.append(value)\nprint(values)\nB       values = []\nfor index, value in enumerate(alphabet[::-1]):\nif index % 2 == 0:\nvalues.append(value)\nvalues.reverse()\nprint(values)\nC       Both of the given options.\nD       None of the given options."
-  },
-  {
     "item_id": "exam-midterm_2024-3-w2-loops",
     "card_id": "w2-loops",
     "topic": "Loops",
@@ -2847,6 +2847,28 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "Consider the following code snippet:\ni = 1\nwhile True:\nif i % 2 == 0:\ni += 1\ncontinue\nelif i == 7:\nbreak\nelse:\nprint(i)\ni += 1\nWhich of the following code snippets will print the same output?\nA     for i in range(1, 5, 2):\nprint(i)\nB      for i in range(7, 1, -2):\nprint(i)\nC      x = 'numbers'\nfor i, j in enumerate(x):\nif i % 2 != 0:\nprint(i)\nD      x = '12345'\nfor i in x:\nif i % 2 != 0:\nprint(i)"
+  },
+  {
+    "item_id": "exam-trial_midterm-5-w2-loops",
+    "card_id": "w2-loops",
+    "topic": "Loops",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Consider the following code snippet:\ni = 1\nwhile True:\nif i % 2 == 0:\ni += 1\ncontinue\nelif i == 7:\nbreak\nelse:\nprint(i)\ni += 1\nWhich of the following code snippets will print the same output?\nA for i in range(1, 5, 2):\nprint(i)\nB x = 'numbers'\nfor i, j in enumerate(x):\nif i % 2 != 0:\nprint(i)\nC x = '12345'\nfor i in x:\nif i % 2 != 0:\nprint(i)\nD for i in range(7, 1, -2):\nprint(i)"
+  },
+  {
+    "item_id": "exam-midterm_2023-14-w2-loops",
+    "card_id": "w2-loops",
+    "topic": "Loops",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Assume you already have a variable called alphabet, which contains a string, e.g., alphabet = \"abcdefghijklmnopqrstuvwxyz\"\nWhich of the following code snippets will give the same output as the following command?\nprint(list(alphabet[1::2]))\nHint: The reverse() method reverses the sorting order of the elements in a list.\nA      values = []\nfor index, value in enumerate(alphabet, start=1):\nif index % 2 == 0:\nvalues.append(value)\nprint(values)\nB       values = []\nfor index, value in enumerate(alphabet[::-1]):\nif index % 2 == 0:\nvalues.append(value)\nvalues.reverse()\nprint(values)\nC       Both of the given options.\nD       None of the given options."
   },
   {
     "item_id": "ks-72c9eada91",
@@ -2946,28 +2968,6 @@
     "bucket": "additional",
     "selection_kind": "source",
     "search_text": "Assume you already have a variable called x, which contains a list of integers.\nWhich of the following programs will print you a list of the squared values of the elements in x?"
-  },
-  {
-    "item_id": "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops",
-    "card_id": "w2-loops",
-    "topic": "Loops",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Suppose you have the following function, which takes two integers as arguments:\n\nWhat will be printed by the following line of code:\nprint(main(1))\na\nb\nc\nd\nb\nThe function uses y=11 as a default argument. The while loop runs while i < 11 (from 1 to 10) and appends formatted strings to the list, resulting in 10 elements."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-14-w2-loops",
-    "card_id": "w2-loops",
-    "topic": "Loops",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Choose the program that iterates over integers from 1 to 10 and prints the sum of the current and previous number (starting with 0 as previous).\nA\nB\nC\nD\nB\nOption B correctly updates the 'previous' state at the end of each iteration to match the logic of the target output."
   },
   {
     "item_id": "ks-8ad541fef7",
@@ -3333,28 +3333,6 @@
     "search_text": "Method on mutable \u2014 changes in place vs returns value\nl1 = [3, 1, 2]\nl1.sort()           # changes l1 in place, returns None\nprint(l1)           # [1, 2, 3]\nprint(l1.index(2))  # 1 (returns index, doesn't change l1)\nMethods are functions attached to objects. Some mutate the object in place, while others return a value; string methods always return a new string.\n[1, 2, 3]\n1"
   },
   {
-    "item_id": "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
-    "card_id": "w3-defining-and-calling-functions",
-    "topic": "Defining and Calling Functions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "You would like to write a function called get_tld that extracts the top-level domain from the URL of a website. The function takes the URL as the input string in the following format:\n\"https://www.[SECOND-LEVEL DOMAIN].[TOP-LEVEL DOMAIN]/[FOLDER 1]/[...]/[FOLDER N]/[PAGE NAME].html\"\nand returns the top-level domain as a string.\n\nFor example, the function call:\nget_tld(\"https://www.uva.nl/en/education/bachelor-s/bachelors.html\")\nshould return the string:\n\"nl\"\n\nWhich of the following code segments would not achieve what you want?\na\nb\nc\nd\na\nOption A splits the entire URL by '.', so the last element will be 'html' (from 'bachelors.html'). Then splitting 'html' by '/' and taking the first element still results in 'html', not the top-level domain 'nl'. Therefore, it does NOT achieve what is intended."
-  },
-  {
-    "item_id": "exam-Test Exam 07-06-22-4-w3-defining-and-calling-functions",
-    "card_id": "w3-defining-and-calling-functions",
-    "topic": "Defining and Calling Functions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "You're trying to write a function called is_anagram, which takes two strings as inputs and checks whether they are anagrams of each other. That is: whether one of them can be written by rearranging the letters of the other. Upper case and lower case versions of a letter count as the same letter, and whitespace characters don't count at all.\n\nFor example, the following function calls should all return the boolean value True:\nis_anagram(\"Old West Action\", \"Clint Eastwood\")\nis_anagram(\"eleven plus two\", \"twelve plus one\")\nis_anagram(\"I am a weakish speller\", \"William Shakespeare\")\n\nwhile the following function call should return the boolean value False:\nis_anagram(\"one plus two\", \"three\")\n\nWhich of the following code segments achieves what you want?\na\nb\nc\nd\na\nOption A correctly removes spaces, converts strings to lower case, transforms them to lists, and sorts the lists using sorted() before comparing them. Option B is incorrect because strings do not have a .sort() method. Option C is incorrect because list.sort() operates in-place and returns None, so it would compare None == None. Option D is incorrect because sorted() returns a list, and lists do not have a .replace() or .lower() method."
-  },
-  {
     "item_id": "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
     "card_id": "w3-defining-and-calling-functions",
     "topic": "Defining and Calling Functions",
@@ -3377,6 +3355,50 @@
     "search_text": "Which of the following code lines will create a dictionary, in which the keys are the elements of list_1 and the values are the number of characters in the corresponding key?\nA\nB\nC\nD\nA\nThis is a standard dictionary comprehension. Option B is a list comprehension, Option C is a set comprehension, and Option D swaps keys and values."
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-17-w3-defining-and-calling-functions",
+    "card_id": "w3-defining-and-calling-functions",
+    "topic": "Defining and Calling Functions",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "What will be printed by the function calls in the main function provided?\nA\nB\nC\nD\nD\nThe function checks if all elements in the input list are either all empty or all non-empty. For the sets and lists provided, they are consistent within each call."
+  },
+  {
+    "item_id": "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
+    "card_id": "w3-defining-and-calling-functions",
+    "topic": "Defining and Calling Functions",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You would like to write a function called get_tld that extracts the top-level domain from the URL of a website. The function takes the URL as the input string in the following format:\n\"https://www.[SECOND-LEVEL DOMAIN].[TOP-LEVEL DOMAIN]/[FOLDER 1]/[...]/[FOLDER N]/[PAGE NAME].html\"\nand returns the top-level domain as a string.\n\nFor example, the function call:\nget_tld(\"https://www.uva.nl/en/education/bachelor-s/bachelors.html\")\nshould return the string:\n\"nl\"\n\nWhich of the following code segments would not achieve what you want?\na\nb\nc\nd\na\nOption A splits the entire URL by '.', so the last element will be 'html' (from 'bachelors.html'). Then splitting 'html' by '/' and taking the first element still results in 'html', not the top-level domain 'nl'. Therefore, it does NOT achieve what is intended."
+  },
+  {
+    "item_id": "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
+    "card_id": "w3-defining-and-calling-functions",
+    "topic": "Defining and Calling Functions",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You need to write a function called format_phone_number that formats phone numbers. The output of the function should be a string that represents a 10-digit number. The input argument is also a string with 10 digits, but the digits may be separated by dashes (the \"-\" character) at various places.\n\nFor example, the following function calls:\nformat_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\nshould all return the string:\n\"0205251400\"\n\nWhich of the following code segments does not achieve what you want?\na\nb\nc\nd\na\nStrings in Python are immutable. The `replace()` method returns a new string, it does not modify the original string in place. Because Option A does not reassign the result of `number.replace(\"-\", \"\")` or return it directly, it returns the original, unmodified string."
+  },
+  {
+    "item_id": "exam-Test Exam 07-06-22-4-w3-defining-and-calling-functions",
+    "card_id": "w3-defining-and-calling-functions",
+    "topic": "Defining and Calling Functions",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You're trying to write a function called is_anagram, which takes two strings as inputs and checks whether they are anagrams of each other. That is: whether one of them can be written by rearranging the letters of the other. Upper case and lower case versions of a letter count as the same letter, and whitespace characters don't count at all.\n\nFor example, the following function calls should all return the boolean value True:\nis_anagram(\"Old West Action\", \"Clint Eastwood\")\nis_anagram(\"eleven plus two\", \"twelve plus one\")\nis_anagram(\"I am a weakish speller\", \"William Shakespeare\")\n\nwhile the following function call should return the boolean value False:\nis_anagram(\"one plus two\", \"three\")\n\nWhich of the following code segments achieves what you want?\na\nb\nc\nd\na\nOption A correctly removes spaces, converts strings to lower case, transforms them to lists, and sorts the lists using sorted() before comparing them. Option B is incorrect because strings do not have a .sort() method. Option C is incorrect because list.sort() operates in-place and returns None, so it would compare None == None. Option D is incorrect because sorted() returns a list, and lists do not have a .replace() or .lower() method."
+  },
+  {
     "item_id": "ks-e09d7f145b",
     "card_id": "w3-defining-and-calling-functions",
     "topic": "Defining and Calling Functions",
@@ -3397,61 +3419,6 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "Methods vs functions\nMethods are functions attached to objects. Calling obj.method() is equivalent to Class.method(obj). For mutable objects: some methods CHANGE the object (e.g. list.sort()), some RETURN a value (e.g. list.index()). For immutable objects: methods always return a new value (can't change the object itself). COMMON ERROR: s1.upper() on strings \u2014 you must do s1 = s1.upper() to save the result.\nMethod on immutable \u2014 must capture return value\ns1 = 'UVA Amsterdam'\ns1 = s1.upper()  # CORRECT \u2014 captures new string\ns1.upper()       # WRONG \u2014 result is lost, s1 unchanged\nMethod on mutable \u2014 changes in place vs returns value\nl1 = [3, 1, 2]\nl1.sort()           # changes l1 in place, returns None\nprint(l1)           # [1, 2, 3]\nprint(l1.index(2))  # 1 (returns index, doesn't change l1)"
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-17-w3-defining-and-calling-functions",
-    "card_id": "w3-defining-and-calling-functions",
-    "topic": "Defining and Calling Functions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "What will be printed by the function calls in the main function provided?\nA\nB\nC\nD\nD\nThe function checks if all elements in the input list are either all empty or all non-empty. For the sets and lists provided, they are consistent within each call."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions",
-    "card_id": "w3-defining-and-calling-functions",
-    "topic": "Defining and Calling Functions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Which of the following programs correctly returns a dictionary where values are sums of input values whose keys are <= the output key?\nA\nB\nC\nD\nC\nBoth methods correctly calculate the cumulative sums based on key values, though Option B is more efficient."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
-    "card_id": "w3-defining-and-calling-functions",
-    "topic": "Defining and Calling Functions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "What is the result of the program comparing d1 (from zip) and d2 (from enumerate)?\nA\nB\nC\nD\nA\nBoth d1 and d2 result in the same dictionary: {1: 2, 2: 3, 3: 4, 4: 5}."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
-    "card_id": "w3-defining-and-calling-functions",
-    "topic": "Defining and Calling Functions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "The following codes all print the same value, except one. Which one?\nA\nB\nC\nD\nA\nIterating directly over a dictionary (for key, value in d1) only yields keys. This will cause a ValueError when trying to unpack into two variables."
-  },
-  {
-    "item_id": "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
-    "card_id": "w3-defining-and-calling-functions",
-    "topic": "Defining and Calling Functions",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You need to write a function called format_phone_number that formats phone numbers. The output of the function should be a string that represents a 10-digit number. The input argument is also a string with 10 digits, but the digits may be separated by dashes (the \"-\" character) at various places.\n\nFor example, the following function calls:\nformat_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\nshould all return the string:\n\"0205251400\"\n\nWhich of the following code segments does not achieve what you want?\na\nb\nc\nd\na\nStrings in Python are immutable. The `replace()` method returns a new string, it does not modify the original string in place. Because Option A does not reassign the result of `number.replace(\"-\", \"\")` or return it directly, it returns the original, unmodified string."
   },
   {
     "item_id": "aiq-1",
@@ -3685,6 +3652,39 @@
     "search_text": "Function return value and trace\ndef powers(n1):\n    return n1 ** 2, n1 ** 3\npower2, power3 = powers(3)\nprint(power2, power3)\nTrace the returned value, not just what gets printed while the function runs."
   },
   {
+    "item_id": "exam-trial-final-exam-py22-3-w3-return-behavior",
+    "card_id": "w3-return-behavior",
+    "topic": "Return Behavior",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "What will be returned by the following code segment?\na\nb\nc\nd\na\nThe function checks if the type is exactly int. 1.0, 3.50 are floats, and '9' is a string, so they are replaced by None."
+  },
+  {
+    "item_id": "exam-Resit 22/23-3-w3-return-behavior",
+    "card_id": "w3-return-behavior",
+    "topic": "Return Behavior",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "What will be printed by the following code segment?\na\nb\nc\nd\nb\nThe function checks if the type of each element `i` in the list `x` is the same as the type of `x` (which is a list). The only element in `x` that is a list is `[]`. So, it appends `[]` to `y`, resulting in `[[]]`."
+  },
+  {
+    "item_id": "exam-Trial final - Introduction to Python - 22/23-3-w3-return-behavior",
+    "card_id": "w3-return-behavior",
+    "topic": "Return Behavior",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "What is the output of the following code segment?\na\nb\nc\nd\na\nThe types of the elements are: 'abc' is str, 0 is int, None is NoneType, True is bool, 123.456 is float, 'False' is str (since it's in quotes), and {} is dict."
+  },
+  {
     "item_id": "exam-midterm_2024-1-w3-return-behavior",
     "card_id": "w3-return-behavior",
     "topic": "Return Behavior",
@@ -3716,17 +3716,6 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "Assume sum_even_in_list(l1) filters non-integers and sums even integers.\n\nYou want sum_even_integers that accepts a flexible number of arguments.\n\nFor example: sum_even_integers(1,'2', 3.0, 4) should return 4.\n\nWhich of the following function definitions will work as intended?\na\nb\nc\nd\nd\na: *args creates a tuple, sum_even_in_list accepts any iterable so passing a tuple works. b: list comprehension on tuple works fine. c: direct iteration over tuple works. All three produce the same result. Correct: d."
-  },
-  {
-    "item_id": "exam-Trial final - Introduction to Python - 22/23-3-w3-return-behavior",
-    "card_id": "w3-return-behavior",
-    "topic": "Return Behavior",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "What is the output of the following code segment?\na\nb\nc\nd\na\nThe types of the elements are: 'abc' is str, 0 is int, None is NoneType, True is bool, 123.456 is float, 'False' is str (since it's in quotes), and {} is dict."
   },
   {
     "item_id": "ks-00b2983ca8",
@@ -3771,28 +3760,6 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "pass keyword\nDoes nothing. Used as a placeholder when an indented block is required but you have nothing to put there yet (stub). After a colon you must have an indented block \u2014 pass satisfies this.\npass as stub\ndef adder(n1, n2):\n    if type(n1) == int and type(n2) == int:\n        result = n1 + n2\n    else:\n        pass  # placeholder \u2014 won't cause IndentationError\n    return result"
-  },
-  {
-    "item_id": "exam-trial-final-exam-py22-3-w3-return-behavior",
-    "card_id": "w3-return-behavior",
-    "topic": "Return Behavior",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "What will be returned by the following code segment?\na\nb\nc\nd\na\nThe function checks if the type is exactly int. 1.0, 3.50 are floats, and '9' is a string, so they are replaced by None."
-  },
-  {
-    "item_id": "exam-Resit 22/23-3-w3-return-behavior",
-    "card_id": "w3-return-behavior",
-    "topic": "Return Behavior",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "What will be printed by the following code segment?\na\nb\nc\nd\nb\nThe function checks if the type of each element `i` in the list `x` is the same as the type of `x` (which is a list). The only element in `x` that is a list is `[]`. So, it appends `[]` to `y`, resulting in `[[]]`."
   },
   {
     "item_id": "manual-local-name",
@@ -3905,6 +3872,72 @@
     "search_text": "Rebinding a parameter does not change the caller's name\ndef changer(n1):\n    n1 = n1 + 1\n    return n1\n\na = 1\na = changer(a)\nprint(a)\nThe function works with its local parameter; the caller changes only because the returned value is assigned back to `a`.\n2"
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-15-w2-conditions",
+    "card_id": "w3-scope",
+    "topic": "Scope",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Executing the following program will produce an error. Why?\nA\nB\nC\nD\nA\nThe variable 'result' is defined inside the 'cube' function, making it local to that function. It cannot be accessed from the global scope."
+  },
+  {
+    "item_id": "exam-trial-final-exam-py22-2-w3-scope",
+    "card_id": "w3-scope",
+    "topic": "Scope",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Take a look at the following code segment. Will executing this code segment produce an error? If yes, then why?\na\nb\nc\nd\nb\nThe global variable 'a' is accessible inside the inner function without error. The code evaluates to inner(5) * 3 = (1 + 5 + 4) * 3 = 30."
+  },
+  {
+    "item_id": "exam-Resit 22/23-2-w3-scope",
+    "card_id": "w3-scope",
+    "topic": "Scope",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Executing the following program will produce an error. Why?\na\nb\nc\nd\na\nThe variable `result` is defined inside the `power` function, giving it local scope. It cannot be accessed outside the function in the global scope where `print(result)` is called."
+  },
+  {
+    "item_id": "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
+    "card_id": "w3-scope",
+    "topic": "Scope",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Executing the following program will produce an error. Why?\na\nb\nc\nd\nd\nThe variable 'result' is defined inside the scope of the 'power' function and is therefore a local variable. It cannot be accessed outside the function in the global scope."
+  },
+  {
+    "item_id": "exam-Trial final - Introduction to Python - 22/23-2-w3-scope",
+    "card_id": "w3-scope",
+    "topic": "Scope",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Calling the function func_1() will produce an error. Which line of the following code segment produces the error?\na\nb\nc\nd\na\nvar_1 is a local variable inside func_2, so it is not accessible in the scope of func_1. Furthermore, func_2 is never called, so var_1 is never created. The code will throw an UnboundLocalError or NameError when evaluating var_1 in 'var_2 = var_1 - var'."
+  },
+  {
+    "item_id": "exam-extra_practice-2-w3-scope",
+    "card_id": "w3-scope",
+    "topic": "Scope",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "val = 2\ndef func():\n    val = 3\n    print(val)\nfunc()\nprint(val)\n\nWhich of the following code snippets produces the same output as the above code snippet?\na\nb\nc\nd\nc\nOriginal output: 3, 2. Option a: UnboundLocalError (val1 used before local assignment). Option b: global val2 modified to 3, print 3, then print val2=3. Output: 3,3. Option c: func3 creates local val3=3, prints 3. Global val3=2 unchanged, prints 2. Output: 3,2. Matches! Option d: innerfunc() called outside func4 scope \u2014 NameError. Correct: c."
+  },
+  {
     "item_id": "exam-midterm_2023-3-w3-scope",
     "card_id": "w3-scope",
     "topic": "Scope",
@@ -3927,28 +3960,6 @@
     "search_text": "Which other program will produce the same output as the following code snippet?"
   },
   {
-    "item_id": "exam-extra_practice-2-w3-scope",
-    "card_id": "w3-scope",
-    "topic": "Scope",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "val = 2\ndef func():\n    val = 3\n    print(val)\nfunc()\nprint(val)\n\nWhich of the following code snippets produces the same output as the above code snippet?\na\nb\nc\nd\nc\nOriginal output: 3, 2. Option a: UnboundLocalError (val1 used before local assignment). Option b: global val2 modified to 3, print 3, then print val2=3. Output: 3,3. Option c: func3 creates local val3=3, prints 3. Global val3=2 unchanged, prints 2. Output: 3,2. Matches! Option d: innerfunc() called outside func4 scope \u2014 NameError. Correct: c."
-  },
-  {
-    "item_id": "exam-Trial final - Introduction to Python - 22/23-2-w3-scope",
-    "card_id": "w3-scope",
-    "topic": "Scope",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "Calling the function func_1() will produce an error. Which line of the following code segment produces the error?\na\nb\nc\nd\na\nvar_1 is a local variable inside func_2, so it is not accessible in the scope of func_1. Furthermore, func_2 is never called, so var_1 is never created. The code will throw an UnboundLocalError or NameError when evaluating var_1 in 'var_2 = var_1 - var'."
-  },
-  {
     "item_id": "ks-2a6510492d",
     "card_id": "w3-scope",
     "topic": "Scope",
@@ -3958,39 +3969,6 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "Global and local scope\nLocal names: defined inside a function (parameter names + any assignment inside). Only known inside the function. Global names: defined outside any function, known everywhere EXCEPT when a same-named local exists (local dominates). Python makes names local at call time, BEFORE executing the body \u2014 so if you assign to a name ANYWHERE in a function, that name is local throughout the function (even before the assignment line). Use 'global' keyword to override (but avoid it).\nLocal name not accessible outside\ndef adder(n1, n2):\n    return n1 + n2\nadder(1, 2)\nprint(n1)  # NameError: name 'n1' is not defined\nUnboundLocalError trap \u2014 local shadows global even before assignment\ndef main(a):\n    b = b      # ERROR: Python sees b assigned in function -> local\n    return a   # but local b has no value yet\nb = 1\nprint(main(1))  # UnboundLocalError\nglobal keyword\ndef changer():\n    global n1\n    n1 = n1 + 1\nn1 = 1\nchanger()\nprint(n1)  # 2\nBetter pattern: avoid global\ndef changer(n1):\n    n1 = n1 + 1\n    return n1\na = 1\na = changer(a)\nprint(a)  # 2\nMutable parameter is the SAME object\ndef adder(l2):\n    result = 0\n    while l2:\n        result += l2.pop()\n    return result\nl1 = [1, 2, 3, 4, 5]\ntotal = adder(l1)\nprint(f'The sum of {l1} = {total}')  # The sum of [] = 15 !!!\n# l1 is empty because l2 and l1 refer to the SAME list object\nFix: copy mutable arg at start of function\ndef adder(l2):\n    l2 = l2[:]   # make a copy\n    result = 0\n    while l2:\n        result += l2.pop()\n    return result"
-  },
-  {
-    "item_id": "exam-trial-final-exam-py22-2-w3-scope",
-    "card_id": "w3-scope",
-    "topic": "Scope",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Take a look at the following code segment. Will executing this code segment produce an error? If yes, then why?\na\nb\nc\nd\nb\nThe global variable 'a' is accessible inside the inner function without error. The code evaluates to inner(5) * 3 = (1 + 5 + 4) * 3 = 30."
-  },
-  {
-    "item_id": "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
-    "card_id": "w3-scope",
-    "topic": "Scope",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Executing the following program will produce an error. Why?\na\nb\nc\nd\nd\nThe variable 'result' is defined inside the scope of the 'power' function and is therefore a local variable. It cannot be accessed outside the function in the global scope."
-  },
-  {
-    "item_id": "exam-Resit 22/23-2-w3-scope",
-    "card_id": "w3-scope",
-    "topic": "Scope",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Executing the following program will produce an error. Why?\na\nb\nc\nd\na\nThe variable `result` is defined inside the `power` function, giving it local scope. It cannot be accessed outside the function in the global scope where `print(result)` is called."
   },
   {
     "item_id": "aiq-1",
@@ -4257,6 +4235,50 @@
     "search_text": "Function return value and trace\ndef multiplier(first, second=2):\n    return first * second\nprint(multiplier(3))\nTrace the returned value, not just what gets printed while the function runs."
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-23-w3-arguments",
+    "card_id": "w3-arguments",
+    "topic": "Arguments",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Which of the following function calls would return the number 30 as a result?\nA\nB\nC\nD\nC\nThe first call sums (6+7+8+9)=30. The second call sums (1+4+9+16)=30."
+  },
+  {
+    "item_id": "exam-Resit 22/23-4-w3-arguments",
+    "card_id": "w3-arguments",
+    "topic": "Arguments",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose you have the following function, which takes two integers as arguments:\nWhat will be printed by the following line of code:\nprint(main(1))\na\nb\nc\nd\na\nThe function `main` is called with `x=1`. `y` defaults to 11. The `while` loop runs while `i < 11`, which means it will run for `i` from 1 to 10 inclusive, resulting in a list of 10 formatted multiplication strings."
+  },
+  {
+    "item_id": "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
+    "card_id": "w3-arguments",
+    "topic": "Arguments",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments.\n\nFor example, if you call the function as:\nmain(apple=1.99, banana=0.99, orange=1.49)\nit should return:\n4.47\n\nWhich of the following functions will return the intended value?\na\nb\nc\nd\nb\nOption B correctly iterates over the values of the kwargs dictionary and adds each price to the total. Option A would cause a TypeError because it tries to add a string key ('item') to an integer."
+  },
+  {
+    "item_id": "exam-Resit 22/23-6-w3-arguments",
+    "card_id": "w3-arguments",
+    "topic": "Arguments",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments.\nFor example, if you call the function as:\nmain(apple=1.99, banana=0.99, orange=1.49)\nit should return:\n4.47\nWhich of the following functions will return the intended value?\na\nb\nc\nd\nb\nOption B correctly iterates through the values of the `kwargs` dictionary using `kwargs.values()` and sums them. Option A tries to add the keys (`item`), which are strings. Option C tries to unpack keys into two variables, which will fail or iterate through string characters incorrectly."
+  },
+  {
     "item_id": "exam-midterm_2023-9-w3-arguments",
     "card_id": "w3-arguments",
     "topic": "Arguments",
@@ -4332,50 +4354,6 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "Default arguments\nDefault values are part of the function HEADER (not the call). When argument is omitted, the default is used. Keyword args in a call use =. CRITICAL: mutable defaults are evaluated ONCE at def time \u2014 never use mutable defaults; use None instead.\nDefault value\ndef multiplier(first, second=2):\n    return first * second\nprint(multiplier(3))       # 6 (uses default second=2)\nprint(multiplier(3, 3))    # 9\nprint(multiplier(2, second=3))  # 6\nMutable default BUG\ndef main(addition, l1=[]):\n    l1.append(addition)\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [2, 3] \u2190 BUG: l1 persists!\nMutable default FIX \u2014 use None\ndef main(addition, l1=None):\n    if l1 is None:\n        l1 = []\n    l1 += [addition]\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [3]  \u2190 correct"
-  },
-  {
-    "item_id": "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
-    "card_id": "w3-arguments",
-    "topic": "Arguments",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments.\n\nFor example, if you call the function as:\nmain(apple=1.99, banana=0.99, orange=1.49)\nit should return:\n4.47\n\nWhich of the following functions will return the intended value?\na\nb\nc\nd\nb\nOption B correctly iterates over the values of the kwargs dictionary and adds each price to the total. Option A would cause a TypeError because it tries to add a string key ('item') to an integer."
-  },
-  {
-    "item_id": "exam-Resit 22/23-4-w3-arguments",
-    "card_id": "w3-arguments",
-    "topic": "Arguments",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Suppose you have the following function, which takes two integers as arguments:\nWhat will be printed by the following line of code:\nprint(main(1))\na\nb\nc\nd\na\nThe function `main` is called with `x=1`. `y` defaults to 11. The `while` loop runs while `i < 11`, which means it will run for `i` from 1 to 10 inclusive, resulting in a list of 10 formatted multiplication strings."
-  },
-  {
-    "item_id": "exam-Resit 22/23-6-w3-arguments",
-    "card_id": "w3-arguments",
-    "topic": "Arguments",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments.\nFor example, if you call the function as:\nmain(apple=1.99, banana=0.99, orange=1.49)\nit should return:\n4.47\nWhich of the following functions will return the intended value?\na\nb\nc\nd\nb\nOption B correctly iterates through the values of the `kwargs` dictionary using `kwargs.values()` and sums them. Option A tries to add the keys (`item`), which are strings. Option C tries to unpack keys into two variables, which will fail or iterate through string characters incorrectly."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-23-w3-arguments",
-    "card_id": "w3-arguments",
-    "topic": "Arguments",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "Which of the following function calls would return the number 30 as a result?\nA\nB\nC\nD\nC\nThe first call sums (6+7+8+9)=30. The second call sums (1+4+9+16)=30."
   },
   {
     "item_id": "aiq-1",
@@ -4587,7 +4565,7 @@
     "search_text": "sorted_builtins\nl1 = ['aaa', 'bb', 'c']\nprint(sorted(l1, key=len))"
   },
   {
-    "item_id": "exam-trial_midterm-17-w3-higher-order-patterns",
+    "item_id": "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns",
     "card_id": "w3-higher-order-patterns",
     "topic": "Higher-Order Patterns",
     "subtopic_id": "",
@@ -4595,7 +4573,7 @@
     "item_type": "source_exam",
     "bucket": "recommended",
     "selection_kind": "source",
-    "search_text": "You have four different blocks of code. Three of them return the same list, one of them returns something different.\nWhich block of code prints something different than the other blocks print?"
+    "search_text": "What would be printed by the following code snippet: print(list_1[0](1, 2) ** list_1[1](1, 2))\nA\nB\nC\nD\nD\nlist_1[0](1, 2) is 1 + 2 = 3. list_1[1](1, 2) is 1 * 2 = 2. 3 ** 2 = 9."
   },
   {
     "item_id": "exam-midterm_2023-11-w3-higher-order-patterns",
@@ -4618,6 +4596,17 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "Suppose you have the following functions, one to elevates a number to square and the second elevates to cube:\ndef square(n):\nreturn (n**2)\ndef cube(n):\nreturn (n**3)\nYou want to apply both functions to the elements in a list at the same time.\nFor example:\nIf you have a list such as:\nmy_list = [0, 1, 2, 3, 4]\nyou want to print:\n[0, 0]\n[1, 1]\n[4, 8]\n[9, 27]\n[16, 64]\nWhich of the following blocks of codes works as intended?\nA     funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x(i), funcs)\nprint(list(results))\nB      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x[i], funcs)\nprint(list(results))\nC      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x(i), funcs)\nprint(results)\nD      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x[i], funcs)\nprint(results)"
+  },
+  {
+    "item_id": "exam-trial_midterm-17-w3-higher-order-patterns",
+    "card_id": "w3-higher-order-patterns",
+    "topic": "Higher-Order Patterns",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You have four different blocks of code. Three of them return the same list, one of them returns something different.\nWhich block of code prints something different than the other blocks print?"
   },
   {
     "item_id": "exam-midterm_2024-19-w3-higher-order-patterns",
@@ -4673,17 +4662,6 @@
     "bucket": "additional",
     "selection_kind": "source",
     "search_text": "You need to write a function main(target_num, list_num) that returns all unique pairs of numbers that add up to target_num.\n\nExample: main(11, [4,5,6,9,3,7,2,8]) should return [(5,6),(4,7),(9,2),(3,8)].\n\nNote: (6,5) is not included since (5,6) is already found.\n\nWhich of the following code snippets achieve what you want?\na\nb\nc\nd\nb\nOption a produces both (5,6) and (6,5) \u2014 it doesn't ensure uniqueness. Option b iterates up to target//2, so each pair is only considered once. For target=11, range(0,6): checks 0,1,2,3,4,5. Finds: 2+9,3+8,4+7,5+6 \u2014 unique pairs. Option b works as intended. Option a doesn't meet the uniqueness requirement. Correct: b."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns",
-    "card_id": "w3-higher-order-patterns",
-    "topic": "Higher-Order Patterns",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "additional",
-    "selection_kind": "source",
-    "search_text": "What would be printed by the following code snippet: print(list_1[0](1, 2) ** list_1[1](1, 2))\nA\nB\nC\nD\nD\nlist_1[0](1, 2) is 1 + 2 = 3. list_1[1](1, 2) is 1 * 2 = 2. 3 ** 2 = 9."
   },
   {
     "item_id": "aiq-1",
@@ -4838,39 +4816,6 @@
     "bucket": "aiExamples",
     "selection_kind": "direct",
     "search_text": "Quotes and newline escapes\nprint(\"it's\")\nprint('He said \"hi\"')\nprint(\"Line 1\\nLine 2\")\nUse matching quotes or escape the inner quote; `\\n` inserts a newline.\nit's\nHe said \"hi\"\nLine 1\nLine 2"
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
-    "card_id": "w4-string-fundamentals",
-    "topic": "String Fundamentals",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "You have a pandas DataFrame called df with columns \"A\" and \"B\". You'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?\nA\nB\nC\nD\nA\nVectorized addition in Pandas is performed by adding series together. Using .loc[:, 'C'] correctly assigns the result to a new column for all rows."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
-    "card_id": "w4-string-fundamentals",
-    "topic": "String Fundamentals",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "Which of the following code lines could NOT have created df2 from df1?\nA\nB\nC\nD\nA\nOption A would sort all 5 rows of df1 and keep columns A, C, D, resulting in a 5-row DataFrame. df2 only has 3 rows (indices 4, 3, 2)."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
-    "card_id": "w4-string-fundamentals",
-    "topic": "String Fundamentals",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "You have a Series s with municipality and province names separated by \"; \". You'd like to create a new Series that only contains the municipality names. Which of the following code lines will achieve what you want?\nA\nB\nC\nD\nA\nThe .map() method allows applying a function (like splitting a string and taking the first part) to every element in a pandas Series."
   },
   {
     "item_id": "ks-b734a22f46",
@@ -5203,7 +5148,40 @@
     "search_text": "s1 = 'abcdefghabcdefgh'\ns1 = 'abcdefghabcdefgh'\nprint(s1.find('e'))\nprint(s1.index('e', 5))\nprint(s1.find('e', 5, 10))\nprint(s1.index('e', 5, 13))\nprint(s1.find('ef'))\nprint(s1.index('q'))"
   },
   {
-    "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+    "item_id": "manual-string-format-method",
+    "card_id": "w4-string-operations-and-methods",
+    "topic": "String Operations and Methods",
+    "subtopic_id": "w4-string-operations-and-methods-core",
+    "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Build strings with `.format(...)`\ntemplate = \"{} scored {} points\"\nprint(template.format(\"Ada\", 9))\nUse `.format(...)` on the template string, and remember it returns a new string instead of changing the original text in place.\nAda scored 9 points"
+  },
+  {
+    "item_id": "manual-string-islower-method",
+    "card_id": "w4-string-operations-and-methods",
+    "topic": "String Operations and Methods",
+    "subtopic_id": "w4-string-operations-and-methods-core",
+    "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Check lowercase letters with `.islower()`\nprint(\"amsterdam\".islower())\nprint(\"Amsterdam\".islower())\nprint(\"123\".islower())\n`.islower()` only returns `True` when the string contains at least one cased character and all cased characters are lowercase.\nTrue\nFalse\nFalse"
+  },
+  {
+    "item_id": "manual-string-repetition",
+    "card_id": "w4-string-operations-and-methods",
+    "topic": "String Operations and Methods",
+    "subtopic_id": "w4-string-operations-and-methods-core",
+    "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Repeat text with string multiplication\nprint(3 * \"ha\")\nprint(\"ab\" * 2)\nBoth `n * text` and `text * n` repeat the string `n` times, which is a common concise exam pattern.\nhahaha\nabab"
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-4-w2-conditions",
     "card_id": "w4-string-operations-and-methods",
     "topic": "String Operations and Methods",
     "subtopic_id": "",
@@ -5211,7 +5189,18 @@
     "item_type": "source_exam",
     "bucket": "recommended",
     "selection_kind": "source",
-    "search_text": "Suppose that you'd like to create a new DataFrame that contains only column 'B' for rows with indices 2, 4, and 6. Which of the following code lines will achieve what you want?\nA\nB\nC\nD\nA\nOption A uses a boolean mask on the index to find even numbers and specifies ['B'] as a list to return a DataFrame. Option D would return a Series."
+    "search_text": "Which of the following code segments does NOT achieve the goal of returning a string with 10 digits by removing dashes?\nA\nB\nC\nD\nA\nStrings in Python are immutable. The .replace() method returns a new string but does not modify the original. Option A returns the original string with dashes because the result of .replace() was not assigned back to the variable."
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-22-w2-conditions",
+    "card_id": "w4-string-operations-and-methods",
+    "topic": "String Operations and Methods",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Which script, using the count string method, would print the value 1 for x = 'Amsterdam'?\nA\nB\nC\nD\nB\nThe count() method is a string method, not a standalone function. It is called using the dot notation on a string object."
   },
   {
     "item_id": "ks-5198d93ec1",
@@ -5588,18 +5577,29 @@
     "search_text": "Class attribute vs instance attribute\nclass Rectangle:\n    units = 'cm'\n\n    def __init__(self, width):\n        self.width = width\n\nr1 = Rectangle(3)\nr2 = Rectangle(5)\nr2.units = 'm'\nprint(r1.units, r2.units)\n`self.width` is per object; `Class.units` is shared until an instance shadows it with its own attribute.\ncm m"
   },
   {
-    "item_id": "exam-Test Exam 07-06-22-1-w4-oop-fundamentals",
+    "item_id": "manual-oop-constructor-defaults",
     "card_id": "w4-oop-fundamentals",
     "topic": "OOP Fundamentals",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "Given the class definition above, trying to execute the following two code lines will result in a Python error.\nmy_flight = Flight(\"KLM\", \"Amsterdam\", \"Paris\")                     # Code line 1\nmy_flight.set_date(my_flight, \"29-02-2022\")                         # Code line 2\n\nWhy?\na\nb\nc\nd\na\nIn Python, when calling a method on an object, the object itself is automatically passed as the first argument (self). Passing my_flight explicitly results in too many arguments being passed to set_date."
+    "subtopic_id": "w4-oop-fundamentals-core",
+    "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Constructor defaults belong in `__init__` parameters\nclass Vehicle:\n    def __init__(self, name, mode=\"land\"):\n        self.name = name\n        self.mode = mode\n\ncar = Vehicle(\"Mazda\")\nprint(car.name, car.mode)\nDefault constructor arguments let an instance omit optional information while still giving `self` a predictable initial state.\nMazda land"
   },
   {
-    "item_id": "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
+    "item_id": "manual-oop-state-compare",
+    "card_id": "w4-oop-fundamentals",
+    "topic": "OOP Fundamentals",
+    "subtopic_id": "w4-oop-fundamentals-core",
+    "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Trace `self` state across multiple method calls\nclass Book:\n    def __init__(self, title):\n        self.title = title\n        self.scores = []\n\n    def add_review(self, score):\n        self.scores.append(score)\n\n    def average(self):\n        return sum(self.scores) / len(self.scores)\n\n    def better_than(self, other):\n        return self.average() > other.average()\n\nbook_1 = Book(\"A\")\nbook_2 = Book(\"B\")\nfor score in [5, 3, 3]:\n    book_1.add_review(score)\nfor score in [4, 4, 4]:\n    book_2.add_review(score)\nprint(book_1.better_than(book_2))\nExam OOP reasoning often hinges on updating `self` in one method and then comparing derived state in a later method call.\nFalse"
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
     "card_id": "w4-oop-fundamentals",
     "topic": "OOP Fundamentals",
     "subtopic_id": "",
@@ -5607,7 +5607,18 @@
     "item_type": "source_exam",
     "bucket": "recommended",
     "selection_kind": "source",
-    "search_text": "Suppose that you also want to write a method called compare that compares the book to another book and gives a recommendation for which one to read. A book is better than another book if its average review score is higher than the second book's and it has at least as many reviews as the second book.\n\nThe compare method should return the title of the better book. If neither book is better than the other, then it should return None.\n\nFor simplicity, you can assume that both books have at least one review already.\n\nWhich method definition achieves what you want?\na\nb\nc\nd\nb\nOption A fails because its 'elif not avg_better:' condition triggers simply when the other book has an equal or better score, but it returns the other book's title without checking if the other book has at least as many reviews as the first book. Option B checks both pairs (self, other) and (other, self) against the requirements, returning the better one, or implicitly returning None if neither is better."
+    "search_text": "You'd like to define a class called Vehicle. It should have two attributes: name and mode, which you want to be initialized during object creation. The name attribute can be any string, and it must be passed to the object during creation. The mode attribute is also a string, but it doesn't necessarily need to be passed to the object constructor. If it isn't specified at object construction, then the mode attribute should be equal to the string \"land\". Which of the following code segments achieves what you want?\nA\nB\nC\nD\nA\nIn Python, default parameter values in the __init__ method allow for optional arguments during object creation. Option A correctly assigns the parameters to instance attributes."
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
+    "card_id": "w4-oop-fundamentals",
+    "topic": "OOP Fundamentals",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Rick Riordan\"), book_1.add_review(5), book_1.add_review(3), book_1.add_review(3). What will then the following command print to the screen? print(book_1.show_rating())\nA\nB\nC\nD\nA\nThe average of scores [5, 3, 3] is 11 / 3 = 3.666... Using round(..., 1) results in 3.7."
   },
   {
     "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
@@ -5621,6 +5632,17 @@
     "search_text": "You'd like to define a class called Vehicle. It should have two attributes: \"name\" and \"mode\", which you want to be initialized at the time of object construction.\n\nThe \"name\" attribute can be any string, and it must be passed to the object constructor. The \"mode\" attribute is also a string, but it doesn't necessarily need to be passed to the object constructor. If it isn't specified at object construction, then the \"mode\" attribute should be equal to \"land\".\n\nFor example, if we create a Vehicle object as:\nmy_car = Vehicle(\"Mazda\")\nthen the following two conditions should both be true:\nmy_car.name == \"Mazda\"\nmy_car.mode == \"land\"\n\nWhich of the following code segments achieves what you want?\na\nb\nc\nd\na\nOption A correctly uses `self` as the first parameter of the `__init__` method, provides a default value for `vehicle_mode` (\"land\"), and properly assigns both arguments to instance attributes."
   },
   {
+    "item_id": "exam-Test Exam 07-06-22-1-w4-oop-fundamentals",
+    "card_id": "w4-oop-fundamentals",
+    "topic": "OOP Fundamentals",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Given the class definition above, trying to execute the following two code lines will result in a Python error.\nmy_flight = Flight(\"KLM\", \"Amsterdam\", \"Paris\")                     # Code line 1\nmy_flight.set_date(my_flight, \"29-02-2022\")                         # Code line 2\n\nWhy?\na\nb\nc\nd\na\nIn Python, when calling a method on an object, the object itself is automatically passed as the first argument (self). Passing my_flight explicitly results in too many arguments being passed to set_date."
+  },
+  {
     "item_id": "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals",
     "card_id": "w4-oop-fundamentals",
     "topic": "OOP Fundamentals",
@@ -5630,6 +5652,17 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "Take a look at the following class definition.\n\nSuppose that we create a Book object and call its add_review method three times, like this:\nbook_1 = Book(\"The Lightning Thief\", \"Rick Riordan\")\nbook_1.add_review(5)\nbook_1.add_review(3)\nbook_1.add_review(3)\n\nWhat will then the following command print to the screen?\nprint(book_1.show_rating())\na\nb\nc\nd\na\nThe list of review scores is [5, 3, 3]. The sum is 11, and the length is 3. 11 / 3 is approximately 3.666... Using `round(..., 1)` rounds this float to one decimal place, resulting in 3.7."
+  },
+  {
+    "item_id": "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
+    "card_id": "w4-oop-fundamentals",
+    "topic": "OOP Fundamentals",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose that you also want to write a method called compare that compares the book to another book and gives a recommendation for which one to read. A book is better than another book if its average review score is higher than the second book's and it has at least as many reviews as the second book.\n\nThe compare method should return the title of the better book. If neither book is better than the other, then it should return None.\n\nFor simplicity, you can assume that both books have at least one review already.\n\nWhich method definition achieves what you want?\na\nb\nc\nd\nb\nOption A fails because its 'elif not avg_better:' condition triggers simply when the other book has an equal or better score, but it returns the other book's title without checking if the other book has at least as many reviews as the first book. Option B checks both pairs (self, other) and (other, self) against the requirements, returning the better one, or implicitly returning None if neither is better."
   },
   {
     "item_id": "ks-06b21ad349",
@@ -5918,6 +5951,17 @@
     "search_text": "`df['A']` versus `df[['A']]`\ndf['A']      # Series\ndf[['A']]    # one-column DataFrame\nCheck the brackets carefully: one pair returns a `Series`, two pairs return a `DataFrame`."
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+    "card_id": "w5-pandas-core-structures",
+    "topic": "Pandas Core Structures",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You have a pandas DataFrame called df with columns \"A\" and \"B\". You'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?\nA\nB\nC\nD\nA\nVectorized addition in Pandas is performed by adding series together. Using .loc[:, 'C'] correctly assigns the result to a new column for all rows."
+  },
+  {
     "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
     "card_id": "w5-pandas-core-structures",
     "topic": "Pandas Core Structures",
@@ -5927,28 +5971,6 @@
     "bucket": "recommended",
     "selection_kind": "source",
     "search_text": "You have a pandas Series called s, which contains floats. You'd like to create a new Series, in which each element is equal to the square of the difference between the corresponding element in s and the mean of the elements in s.\n\nFor example, if s is the Series:\n0     2.0\n1     2.0\n2     3.0\n3     5.0\ndtype: float64\n\nthen you want the new Series to be:\n0     1.0\n1     1.0\n2     0.0\n3     4.0\ndtype: float64\n\nWhich of the following code segments does not achieve what you want?\na\nb\nc\nd\na\nThe map() method on a Series expects a function, dictionary, or another Series. If passed a Series, it uses the values of the caller (s) to look up indices in the passed Series. This will lead to unexpected results (looking up float values like 2.0 as indices) instead of applying the mathematical transformation. The other options correctly perform the element-wise operation."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
-    "card_id": "w5-pandas-core-structures",
-    "topic": "Pandas Core Structures",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "You'd like to define a class called Vehicle. It should have two attributes: name and mode, which you want to be initialized during object creation. The name attribute can be any string, and it must be passed to the object during creation. The mode attribute is also a string, but it doesn't necessarily need to be passed to the object constructor. If it isn't specified at object construction, then the mode attribute should be equal to the string \"land\". Which of the following code segments achieves what you want?\nA\nB\nC\nD\nA\nIn Python, default parameter values in the __init__ method allow for optional arguments during object creation. Option A correctly assigns the parameters to instance attributes."
-  },
-  {
-    "item_id": "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
-    "card_id": "w5-pandas-core-structures",
-    "topic": "Pandas Core Structures",
-    "subtopic_id": "",
-    "subtopic_title": "",
-    "item_type": "source_exam",
-    "bucket": "recommended",
-    "selection_kind": "source",
-    "search_text": "Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Rick Riordan\"), book_1.add_review(5), book_1.add_review(3), book_1.add_review(3). What will then the following command print to the screen? print(book_1.show_rating())\nA\nB\nC\nD\nA\nThe average of scores [5, 3, 3] is 11 / 3 = 3.666... Using round(..., 1) results in 3.7."
   },
   {
     "item_id": "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
@@ -6347,6 +6369,17 @@
     "search_text": "import pandas as pd\nimport pandas as pd\nd1 = {10:['A', 'B', 'C', 'D'], 13:[153, 160, 150, 190], 12:[55, 70, 60, 80], 17:[10, 11, 12, 13]}\ndf1 = pd.DataFrame (d1, index=[3, 2, 1, 0])\nprint(df1)\n\n\nprint(df1.loc[[True, True, False, False], [False, True, False, True]])\nprint(df1.loc[[True]*2 + [False]*2, [False, True]*2])\nprint(df1.loc[[3,2], [13, 17]])\nprint(df1.iloc[:2, [1, -1]])\nUse `.loc[:, column] = ...` when the assignment should fill or update an entire column by label."
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+    "card_id": "w5-inspecting-and-selecting-data",
+    "topic": "Inspecting and Selecting Data",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Suppose that you'd like to create a new DataFrame that contains only column 'B' for rows with indices 2, 4, and 6. Which of the following code lines will achieve what you want?\nA\nB\nC\nD\nA\nOption A uses a boolean mask on the index to find even numbers and specifies ['B'] as a list to return a DataFrame. Option D would return a Series."
+  },
+  {
     "item_id": "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
     "card_id": "w5-inspecting-and-selecting-data",
     "topic": "Inspecting and Selecting Data",
@@ -6708,6 +6741,50 @@
     "bucket": "aiExamples",
     "selection_kind": "direct",
     "search_text": "import pandas as pd\nimport pandas as pd\nd1 = {'A':[2, 5, 6], 'B':[3, 4, 7]}\ndf1 = pd.DataFrame (d1)\nprint(df1)\n\ndf2 = df1.loc[:]\ndf2 = df2.applymap(lambda x: 3 * x)\nprint(df2)\nUse `.loc[:, column] = ...` when the assignment should fill or update an entire column by label."
+  },
+  {
+    "item_id": "manual-pandas-split-into-columns",
+    "card_id": "w5-working-with-values",
+    "topic": "Working With Values",
+    "subtopic_id": "w5-working-with-values-core",
+    "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Split string data into multiple DataFrame columns\nimport pandas as pd\n\ndf = pd.DataFrame({\"place\": [\"Amsterdam; Noord-Holland\", \"Utrecht; Utrecht\"]})\ndf[[\"municipality\", \"province\"]] = df[\"place\"].str.split(\"; \", expand=True)\nprint(df)\nUse `.str.split(..., expand=True)` when the exam wants one text column unpacked into multiple DataFrame columns.\n                    place municipality        province\n0  Amsterdam; Noord-Holland    Amsterdam  Noord-Holland\n1         Utrecht; Utrecht      Utrecht         Utrecht"
+  },
+  {
+    "item_id": "manual-pandas-map-column-sum",
+    "card_id": "w5-working-with-values",
+    "topic": "Working With Values",
+    "subtopic_id": "w5-working-with-values-core",
+    "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Trace `map(lambda x: x + df['B'].sum())`\nimport pandas as pd\n\ndf = pd.DataFrame({\"A\": [1, 2], \"B\": [10, 20]})\nresult = df[\"A\"].map(lambda x: x + df[\"B\"].sum())\nprint(result.tolist())\n`df[\"B\"].sum()` is computed from the whole column, so each element from `A` gets the same total from `B` added to it.\n[31, 32]"
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
+    "card_id": "w5-working-with-values",
+    "topic": "Working With Values",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "Which of the following code lines could NOT have created df2 from df1?\nA\nB\nC\nD\nA\nOption A would sort all 5 rows of df1 and keep columns A, C, D, resulting in a 5-row DataFrame. df2 only has 3 rows (indices 4, 3, 2)."
+  },
+  {
+    "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+    "card_id": "w5-working-with-values",
+    "topic": "Working With Values",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You have a Series s with municipality and province names separated by \"; \". You'd like to create a new Series that only contains the municipality names. Which of the following code lines will achieve what you want?\nA\nB\nC\nD\nA\nThe .map() method allows applying a function (like splitting a string and taking the first part) to every element in a pandas Series."
   },
   {
     "item_id": "ks-305a41a33e",
@@ -7282,6 +7359,17 @@
     "search_text": "Divide by index plus offset\nres = [val // (i + 6) for i, val in enumerate([46, 48])]\nUse enumerate() to access both the index and the value of items within a comprehension."
   },
   {
+    "item_id": "exam-intro_python_sample_final_24_25-12-w2-conditions",
+    "card_id": "w6-comprehensions",
+    "topic": "Comprehensions",
+    "subtopic_id": "",
+    "subtopic_title": "",
+    "item_type": "source_exam",
+    "bucket": "recommended",
+    "selection_kind": "source",
+    "search_text": "You'd like to turn every upper case letter in a list into lower case and vice versa. Which code line achieves this?\nA\nB\nC\nD\nC\nBoth options implement the conditional logic required to flip the case of each character in the list."
+  },
+  {
     "item_id": "ks-cacc4fbc21",
     "card_id": "w6-comprehensions",
     "topic": "Comprehensions",
@@ -7665,6 +7753,28 @@
     "bucket": "aiExamples",
     "selection_kind": "direct",
     "search_text": "`.replace(...)` returns a new datetime\nfrom datetime import datetime\n\nd = datetime(2024, 5, 20)\nprint(d.replace(year=2026))\nprint(d)\nDatetime objects are immutable, so `.replace(...)` does not modify the original object in place.\n2026-05-20 00:00:00\n2024-05-20 00:00:00"
+  },
+  {
+    "item_id": "manual-datetime-overlap",
+    "card_id": "w6-datetime",
+    "topic": "Datetime",
+    "subtopic_id": "w6-datetime-core",
+    "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Check whether two datetime intervals overlap\nfrom datetime import datetime\n\nstart_a = datetime(2024, 5, 20, 9, 0)\nend_a = datetime(2024, 5, 20, 11, 0)\nstart_b = datetime(2024, 5, 20, 10, 30)\nend_b = datetime(2024, 5, 20, 12, 0)\n\noverlaps = max(start_a, start_b) < min(end_a, end_b)\nprint(overlaps)\nA reliable overlap check compares the later start with the earlier end; there is overlap only when the later start is still before the earlier end.\nTrue"
+  },
+  {
+    "item_id": "manual-datetime-strftime-loop",
+    "card_id": "w6-datetime",
+    "topic": "Datetime",
+    "subtopic_id": "w6-datetime-core",
+    "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic",
+    "item_type": "ai_example",
+    "bucket": "aiExamples",
+    "selection_kind": "direct",
+    "search_text": "Do datetime math before `strftime` turns values into strings\nfrom datetime import datetime, timedelta\n\nday = datetime(2024, 1, 1)\nlabels = []\nfor _ in range(3):\n    labels.append(day.strftime(\"%Y-%m-%d\"))\n    day += timedelta(days=1)\nprint(labels)\nAfter `strftime`, the value is plain text, so increment the datetime object first and only store formatted strings as the final display step.\n['2024-01-01', '2024-01-02', '2024-01-03']"
   },
   {
     "item_id": "exam-intro_python_sample_final_24_25-9-w6-datetime",

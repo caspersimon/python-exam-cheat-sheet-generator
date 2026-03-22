@@ -3,7 +3,7 @@
 ## Metadata
 
 - ID: `RM-008`
-- Status: `planned`
+- Status: `in_progress`
 - Priority: `High`
 - Owner: `codex/human`
 - Last Updated: `2026-03-22`
@@ -52,6 +52,10 @@ Start with the current-year sample final and other audit-backed high-value exams
 ## Rollout and Validation
 
 - First target: current-year sample final exact matches.
+- 2026-03-22 curation pass:
+  - Re-routed the audited misclassified current sample-final exact matches into the more intuitive destination cards.
+  - Promoted audited exact matches from the current sample final, 2024 trial final, resits, and related high-value exams into `recommended_ids`.
+  - Added small selectable gap-fill examples for repeated weak themes without making `ai_summary` selectable.
 - Success criteria:
   - Fewer exact exam matches hidden in `additional`.
   - No obviously misrouted exam snippets in audited high-value questions.

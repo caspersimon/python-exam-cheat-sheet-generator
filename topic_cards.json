@@ -1622,6 +1622,11 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+          "exam-trial-final-exam-py22-1-w1-objects-and-names",
+          "exam-Test Resit - Introduction to Python - 22/23-3-w1-objects-and-names",
+          "exam-Trial final - Introduction to Python - 22/23-1-w1-objects-and-names",
+          "exam-Trial final exam Introduction to Python-3-w1-objects-and-names",
           "exam-trial_midterm-1-w1-objects-and-names",
           "exam-trial_midterm-3-w1-objects-and-names",
           "exam-trial_midterm-4-w1-objects-and-names",
@@ -2091,7 +2096,8 @@
               "ks-be78ccac04"
             ],
             "exam_question_ids": [
-              "exam-extra_practice-6-w1-sequences-and-access"
+              "exam-extra_practice-6-w1-sequences-and-access",
+              "exam-intro_python_sample_final_24_25-18-w2-conditions"
             ],
             "notebook_snippet_ids": [
               "cs-60dd1a8d2c",
@@ -2217,6 +2223,27 @@
             },
             "correct": "d",
             "explanation": "a: starts at -1 (10), step -2: [10,8,6,4,2]. Correct. b: [::-2] starts at last (10), step -2: [10,8,6,4,2]. Correct. c: [::-1] reverses to [10,9,8,7,6,5,4,3,2,1], then [::2] takes every 2nd: [10,8,6,4,2]. Correct. d: [::2] gives [1,3,5,7,9], then [::-1] reverses: [9,7,5,3,1]. This does NOT give [10,8,6,4,2]. Correct answer (the one that does NOT work): d."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 18,
+            "week": 1,
+            "topic": "Slicing",
+            "subtopic_id": "w1-sequences-and-access-core",
+            "subtopic_title": "Indexing, Slicing, and range()",
+            "question": "How do you break a list into a list of lists, where each sublist contains 3 elements?",
+            "code_context": "x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']",
+            "options": {
+              "A": "y = [x[i:(i + 3)] for i in range(0, 7, 3)]",
+              "B": "y = [x[i[0]::3] for i in enumerate(x)]",
+              "C": "Both of the above work",
+              "D": "Neither of above works"
+            },
+            "correct": "A",
+            "explanation": "Option A uses range(0, 7, 3) which generates 0, 3, 6. The slices x[0:3], x[3:6], and x[6:9] correctly partition the list."
           }
         ],
         "notebook_snippets": [
@@ -2526,6 +2553,7 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-18-w2-conditions",
           "exam-extra_practice-6-w1-sequences-and-access",
           "ks-685cd3d828",
           "ks-be78ccac04",
@@ -2567,7 +2595,8 @@
               "exam-midterm_2023-12-w1-functions-and-imports",
               "exam-midterm_2024-15-w1-functions-and-imports",
               "exam-midterm_2024-16-w1-functions-and-imports",
-              "exam-Resit 22/23-5-w1-functions-and-imports"
+              "exam-Resit 22/23-5-w1-functions-and-imports",
+              "exam-intro_python_sample_final_24_25-24-w2-conditions"
             ],
             "notebook_snippet_ids": [
               "cs-beb6591b24",
@@ -2721,6 +2750,27 @@
             },
             "correct": "c",
             "explanation": "Option A extracts unique elements with `set(x)`, resulting in `{1, 2, 3, 4, 5}`, then sorts them in reverse order, giving `[5, 4, 3, 2, 1]`. Option B uses list slicing `x[::-2]` which steps backwards through `x` by 2, retrieving indices -1, -3, -5, -7, and -9, which correspond to 5, 4, 3, 2, 1. Thus, both A and B are correct."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-24-w2-conditions",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 24,
+            "week": 1,
+            "topic": "Modules",
+            "subtopic_id": "w1-functions-and-imports-core",
+            "subtopic_title": "Built-ins Intro, Functions, and Modules",
+            "question": "Which script does NOT print the correct answer for the area of a circle?",
+            "code_context": "",
+            "options": {
+              "A": "import math; print(math.pi * r ** 2)",
+              "B": "from math import pi; print(pi * r ** 2)",
+              "C": "import math as constants; print(math.pi * r ** 2)",
+              "D": "from math import pi as constant; print(constant * r ** 2)"
+            },
+            "correct": "C",
+            "explanation": "If math is imported as constants, it must be referred to as 'constants.pi'. 'math.pi' will no longer be available unless 'math' was also imported directly."
           }
         ],
         "notebook_snippets": [
@@ -3028,10 +3078,11 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-24-w2-conditions",
+          "exam-Resit 22/23-5-w1-functions-and-imports",
           "exam-midterm_2023-12-w1-functions-and-imports",
           "exam-midterm_2024-15-w1-functions-and-imports",
           "exam-midterm_2024-16-w1-functions-and-imports",
-          "exam-Resit 22/23-5-w1-functions-and-imports",
           "ks-f43422a4cf",
           "ks-b6a39f66a2",
           "cs-beb6591b24",
@@ -3092,7 +3143,10 @@
               "exam-trial-final-exam-py22-4-w2-dictionaries-and-mappings",
               "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
               "exam-trial-final-exam-py22-6-w2-dictionaries-and-mappings",
-              "exam-Resit 22/23-7-w2-dictionaries-and-mappings"
+              "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+              "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions",
+              "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
+              "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions"
             ],
             "notebook_snippet_ids": [
               "cs-f3df72fba8",
@@ -3683,6 +3737,69 @@
             },
             "correct": "a",
             "explanation": "Option A is a valid dictionary comprehension that iterates through `words`, setting each `word` as the key and `len(word)` as the value."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 19,
+            "week": 2,
+            "topic": "Dictionaries",
+            "subtopic_id": "w2-dictionaries-and-mappings-core",
+            "subtopic_title": "Creation, Lookup, Updates, and Key Constraints",
+            "question": "Which of the following programs correctly returns a dictionary where values are sums of input values whose keys are <= the output key?",
+            "code_context": "main({5: 1, 2: 5, 4: 2}) # Expected: {5: 8, 2: 5, 4: 7}",
+            "options": {
+              "A": "A list comprehension based sum in a loop.",
+              "B": "A running total sum in a sorted key loop.",
+              "C": "Both of the above work as intended",
+              "D": "None of the above works as intended"
+            },
+            "correct": "C",
+            "explanation": "Both methods correctly calculate the cumulative sums based on key values, though Option B is more efficient."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 20,
+            "week": 2,
+            "topic": "Dictionaries",
+            "subtopic_id": "w2-dictionaries-and-mappings-core",
+            "subtopic_title": "Creation, Lookup, Updates, and Key Constraints",
+            "question": "What is the result of the program comparing d1 (from zip) and d2 (from enumerate)?",
+            "code_context": "l1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]",
+            "options": {
+              "A": "True",
+              "B": "False",
+              "C": "An error message.",
+              "D": "None of the above"
+            },
+            "correct": "A",
+            "explanation": "Both d1 and d2 result in the same dictionary: {1: 2, 2: 3, 3: 4, 4: 5}."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 21,
+            "week": 2,
+            "topic": "Dict Iteration",
+            "subtopic_id": "w2-dictionaries-and-mappings-core",
+            "subtopic_title": "Creation, Lookup, Updates, and Key Constraints",
+            "question": "The following codes all print the same value, except one. Which one?",
+            "code_context": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}",
+            "options": {
+              "A": "for key, value in d1: result += value",
+              "B": "for key in d1.keys(): result += d1[key]",
+              "C": "for value in d1.values(): result += value",
+              "D": "result = sum(d1.values())"
+            },
+            "correct": "A",
+            "explanation": "Iterating directly over a dictionary (for key, value in d1) only yields keys. This will cause a ValueError when trying to unpack into two variables."
           }
         ],
         "notebook_snippets": [
@@ -4000,6 +4117,16 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions",
+          "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
+          "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
+          "exam-trial-final-exam-py22-4-w2-dictionaries-and-mappings",
+          "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+          "exam-trial-final-exam-py22-6-w2-dictionaries-and-mappings",
+          "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "exam-Trial final - Introduction to Python - 22/23-4-w2-dictionaries-and-mappings",
+          "exam-Trial final - Introduction to Python - 22/23-5-w2-dictionaries-and-mappings",
+          "exam-Trial final - Introduction to Python - 22/23-6-w2-dictionaries-and-mappings",
           "exam-trial_midterm-2-w2-dictionaries-and-mappings",
           "exam-trial_midterm-8-w2-dictionaries-and-mappings",
           "exam-trial_midterm-10-w2-dictionaries-and-mappings",
@@ -4646,6 +4773,10 @@
           }
         ],
         "recommended_ids": [
+          "exam-Resit 22/23-1-w2-lists-and-sets",
+          "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets",
+          "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+          "exam-trial-final-exam-py22-7-w2-lists-and-sets",
           "exam-midterm_2023-15-w2-lists-and-sets",
           "exam-midterm_2023-16-w2-lists-and-sets",
           "exam-midterm_2024-22-w2-lists-and-sets",
@@ -4689,12 +4820,6 @@
               "exam-trial_midterm-13-w2-conditions",
               "exam-midterm_2023-1-w2-conditions",
               "exam-midterm_2024-2-w2-conditions",
-              "exam-intro_python_sample_final_24_25-4-w2-conditions",
-              "exam-intro_python_sample_final_24_25-12-w2-conditions",
-              "exam-intro_python_sample_final_24_25-15-w2-conditions",
-              "exam-intro_python_sample_final_24_25-18-w2-conditions",
-              "exam-intro_python_sample_final_24_25-22-w2-conditions",
-              "exam-intro_python_sample_final_24_25-24-w2-conditions",
               "exam-Test Exam 07-06-22-4-w2-conditions"
             ],
             "notebook_snippet_ids": [
@@ -4935,132 +5060,6 @@
             "options": {},
             "correct": "",
             "explanation": ""
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-4-w2-conditions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 4,
-            "week": 2,
-            "topic": "String Methods",
-            "subtopic_id": "w2-conditions-core",
-            "subtopic_title": "Comparisons, `in`, Precedence, and Conditional Expressions",
-            "question": "Which of the following code segments does NOT achieve the goal of returning a string with 10 digits by removing dashes?",
-            "code_context": "",
-            "options": {
-              "A": "def format_phone_number(number):\n    number.replace(\"-\", \"\")\n    return number",
-              "B": "def format_phone_number(number):\n    return number.replace(\"-\", \"\")",
-              "C": "def format_phone_number(number):\n    digits = []\n    for char in number:\n        if char in \"0123456789\":\n            digits.append(char)\n    return \"\".join(digits)",
-              "D": "def format_phone_number(number):\n    return \"\".join(number.split(\"-\"))"
-            },
-            "correct": "A",
-            "explanation": "Strings in Python are immutable. The .replace() method returns a new string but does not modify the original. Option A returns the original string with dashes because the result of .replace() was not assigned back to the variable."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-12-w2-conditions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 12,
-            "week": 2,
-            "topic": "List Comprehensions",
-            "subtopic_id": "w2-conditions-core",
-            "subtopic_title": "Comparisons, `in`, Precedence, and Conditional Expressions",
-            "question": "You'd like to turn every upper case letter in a list into lower case and vice versa. Which code line achieves this?",
-            "code_context": "",
-            "options": {
-              "A": "[letter.upper() if letter.islower() else letter.lower() for letter in list_1]",
-              "B": "[x if x in 'abcdefg...'.upper() else x.lower() for x in list_1]",
-              "C": "Both achieve what you want",
-              "D": "None achieves what you want"
-            },
-            "correct": "C",
-            "explanation": "Both options implement the conditional logic required to flip the case of each character in the list."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-15-w2-conditions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 15,
-            "week": 2,
-            "topic": "Functions (Scope)",
-            "subtopic_id": "w2-conditions-core",
-            "subtopic_title": "Comparisons, `in`, Precedence, and Conditional Expressions",
-            "question": "Executing the following program will produce an error. Why?",
-            "code_context": "def cube(num):\n    result = num ** 3\n    return f'The cube of {num} is: {result}.'\nprint(result)",
-            "options": {
-              "A": "Result is a local name and cannot be referenced outside of the function.",
-              "B": "** is not a valid Python operator.",
-              "C": "The syntax of the f-string is incorrect.",
-              "D": "You can only use either print or return, but not both."
-            },
-            "correct": "A",
-            "explanation": "The variable 'result' is defined inside the 'cube' function, making it local to that function. It cannot be accessed from the global scope."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 18,
-            "week": 2,
-            "topic": "Slicing",
-            "subtopic_id": "w2-conditions-core",
-            "subtopic_title": "Comparisons, `in`, Precedence, and Conditional Expressions",
-            "question": "How do you break a list into a list of lists, where each sublist contains 3 elements?",
-            "code_context": "x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']",
-            "options": {
-              "A": "y = [x[i:(i + 3)] for i in range(0, 7, 3)]",
-              "B": "y = [x[i[0]::3] for i in enumerate(x)]",
-              "C": "Both of the above work",
-              "D": "Neither of above works"
-            },
-            "correct": "A",
-            "explanation": "Option A uses range(0, 7, 3) which generates 0, 3, 6. The slices x[0:3], x[3:6], and x[6:9] correctly partition the list."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-22-w2-conditions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 22,
-            "week": 2,
-            "topic": "String Methods",
-            "subtopic_id": "w2-conditions-core",
-            "subtopic_title": "Comparisons, `in`, Precedence, and Conditional Expressions",
-            "question": "Which script, using the count string method, would print the value 1 for x = 'Amsterdam'?",
-            "code_context": "x = 'Amsterdam'",
-            "options": {
-              "A": "print(count(x, 'a'))",
-              "B": "print(x.count('a'))",
-              "C": "Both scripts would deliver that result",
-              "D": "Neither script would deliver that result"
-            },
-            "correct": "B",
-            "explanation": "The count() method is a string method, not a standalone function. It is called using the dot notation on a string object."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-24-w2-conditions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 24,
-            "week": 2,
-            "topic": "Modules",
-            "subtopic_id": "w2-conditions-core",
-            "subtopic_title": "Comparisons, `in`, Precedence, and Conditional Expressions",
-            "question": "Which script does NOT print the correct answer for the area of a circle?",
-            "code_context": "",
-            "options": {
-              "A": "import math; print(math.pi * r ** 2)",
-              "B": "from math import pi; print(pi * r ** 2)",
-              "C": "import math as constants; print(math.pi * r ** 2)",
-              "D": "from math import pi as constant; print(constant * r ** 2)"
-            },
-            "correct": "C",
-            "explanation": "If math is imported as constants, it must be referred to as 'constants.pi'. 'math.pi' will no longer be available unless 'math' was also imported directly."
           },
           {
             "id": "exam-Test Exam 07-06-22-4-w2-conditions",
@@ -5314,10 +5313,11 @@
           }
         ],
         "recommended_ids": [
-          "exam-trial_midterm-6-w2-conditions",
-          "exam-trial_midterm-13-w2-conditions",
+          "exam-Test Exam 07-06-22-4-w2-conditions",
           "exam-midterm_2023-1-w2-conditions",
           "exam-midterm_2024-2-w2-conditions",
+          "exam-trial_midterm-6-w2-conditions",
+          "exam-trial_midterm-13-w2-conditions",
           "ks-4b427a2425",
           "ks-c19999c074",
           "cs-cc4bdf194b",
@@ -5384,7 +5384,8 @@
               "ai-example-3",
               "ai-example-4",
               "ai-example-5",
-              "ai-example-7"
+              "ai-example-7",
+              "manual-loop-max-sublist-sum"
             ],
             "key_point_ids": []
           }
@@ -5940,13 +5941,26 @@
             "status": "curated",
             "subtopic_id": "w2-loops-core",
             "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus"
+          },
+          {
+            "id": "manual-loop-max-sublist-sum",
+            "kind": "correct",
+            "title": "Keep the sub-list whose elements have the largest sum",
+            "code": "lists = [[1, 2], [4, 4], [3, 3, 1]]\nbest = lists[0]\nfor current in lists[1:]:\n    if sum(current) > sum(best):\n        best = current\nprint(best)",
+            "output": "[4, 4]",
+            "why": "Store the current best sub-list, compare `sum(current)` with `sum(best)` on each iteration, and update the winner when you find a larger total.",
+            "status": "curated",
+            "subtopic_id": "w2-loops-core",
+            "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus"
           }
         ],
         "recommended_ids": [
-          "exam-trial_midterm-5-w2-loops",
+          "exam-intro_python_sample_final_24_25-14-w2-loops",
+          "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops",
           "exam-midterm_2023-2-w2-loops",
-          "exam-midterm_2023-14-w2-loops",
           "exam-midterm_2024-3-w2-loops",
+          "exam-trial_midterm-5-w2-loops",
+          "exam-midterm_2023-14-w2-loops",
           "ks-72c9eada91",
           "ks-bddafc66a0",
           "ks-59aaf6b0ee",
@@ -6354,9 +6368,6 @@
               "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
               "exam-intro_python_sample_final_24_25-11-w3-defining-and-calling-functions",
               "exam-intro_python_sample_final_24_25-17-w3-defining-and-calling-functions",
-              "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions",
-              "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
-              "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
               "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions"
             ],
             "notebook_snippet_ids": [
@@ -6636,69 +6647,6 @@
             "explanation": "The function checks if all elements in the input list are either all empty or all non-empty. For the sets and lists provided, they are consistent within each call."
           },
           {
-            "id": "exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 19,
-            "week": 3,
-            "topic": "Dictionaries",
-            "subtopic_id": "w3-defining-and-calling-functions-core",
-            "subtopic_title": "def, Calls, and Methods vs Functions",
-            "question": "Which of the following programs correctly returns a dictionary where values are sums of input values whose keys are <= the output key?",
-            "code_context": "main({5: 1, 2: 5, 4: 2}) # Expected: {5: 8, 2: 5, 4: 7}",
-            "options": {
-              "A": "A list comprehension based sum in a loop.",
-              "B": "A running total sum in a sorted key loop.",
-              "C": "Both of the above work as intended",
-              "D": "None of the above works as intended"
-            },
-            "correct": "C",
-            "explanation": "Both methods correctly calculate the cumulative sums based on key values, though Option B is more efficient."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 20,
-            "week": 3,
-            "topic": "Dictionaries",
-            "subtopic_id": "w3-defining-and-calling-functions-core",
-            "subtopic_title": "def, Calls, and Methods vs Functions",
-            "question": "What is the result of the program comparing d1 (from zip) and d2 (from enumerate)?",
-            "code_context": "l1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]",
-            "options": {
-              "A": "True",
-              "B": "False",
-              "C": "An error message.",
-              "D": "None of the above"
-            },
-            "correct": "A",
-            "explanation": "Both d1 and d2 result in the same dictionary: {1: 2, 2: 3, 3: 4, 4: 5}."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 21,
-            "week": 3,
-            "topic": "Dict Iteration",
-            "subtopic_id": "w3-defining-and-calling-functions-core",
-            "subtopic_title": "def, Calls, and Methods vs Functions",
-            "question": "The following codes all print the same value, except one. Which one?",
-            "code_context": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}",
-            "options": {
-              "A": "for key, value in d1: result += value",
-              "B": "for key in d1.keys(): result += d1[key]",
-              "C": "for value in d1.values(): result += value",
-              "D": "result = sum(d1.values())"
-            },
-            "correct": "A",
-            "explanation": "Iterating directly over a dictionary (for key, value in d1) only yields keys. This will cause a ValueError when trying to unpack into two variables."
-          },
-          {
             "id": "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
             "exam_label": "Trial final exam Introduction to Python",
             "exam_source": "materials/post_midterm/practice_exams_previous_years/trial-final-exam-solutions-introduction-to-python-3077951.pdf",
@@ -6976,10 +6924,12 @@
           }
         ],
         "recommended_ids": [
-          "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
-          "exam-Test Exam 07-06-22-4-w3-defining-and-calling-functions",
           "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
           "exam-intro_python_sample_final_24_25-11-w3-defining-and-calling-functions",
+          "exam-intro_python_sample_final_24_25-17-w3-defining-and-calling-functions",
+          "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
+          "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
+          "exam-Test Exam 07-06-22-4-w3-defining-and-calling-functions",
           "ks-e09d7f145b",
           "ks-ab66f3bab6",
           "cs-024f83faaa",
@@ -7642,10 +7592,12 @@
           }
         ],
         "recommended_ids": [
+          "exam-trial-final-exam-py22-3-w3-return-behavior",
+          "exam-Resit 22/23-3-w3-return-behavior",
+          "exam-Trial final - Introduction to Python - 22/23-3-w3-return-behavior",
           "exam-midterm_2024-1-w3-return-behavior",
           "exam-extra_practice-7-w3-return-behavior",
           "exam-extra_practice-9-w3-return-behavior",
-          "exam-Trial final - Introduction to Python - 22/23-3-w3-return-behavior",
           "ks-00b2983ca8",
           "ks-14515a5856",
           "ks-d1a2d7739d",
@@ -7686,7 +7638,8 @@
               "exam-Trial final - Introduction to Python - 22/23-2-w3-scope",
               "exam-trial-final-exam-py22-2-w3-scope",
               "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
-              "exam-Resit 22/23-2-w3-scope"
+              "exam-Resit 22/23-2-w3-scope",
+              "exam-intro_python_sample_final_24_25-15-w2-conditions"
             ],
             "notebook_snippet_ids": [
               "cs-2768956dff",
@@ -7908,6 +7861,27 @@
             },
             "correct": "a",
             "explanation": "The variable `result` is defined inside the `power` function, giving it local scope. It cannot be accessed outside the function in the global scope where `print(result)` is called."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-15-w2-conditions",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 15,
+            "week": 3,
+            "topic": "Functions (Scope)",
+            "subtopic_id": "w3-scope-core",
+            "subtopic_title": "Global vs Local Names and Scope Errors",
+            "question": "Executing the following program will produce an error. Why?",
+            "code_context": "def cube(num):\n    result = num ** 3\n    return f'The cube of {num} is: {result}.'\nprint(result)",
+            "options": {
+              "A": "Result is a local name and cannot be referenced outside of the function.",
+              "B": "** is not a valid Python operator.",
+              "C": "The syntax of the f-string is incorrect.",
+              "D": "You can only use either print or return, but not both."
+            },
+            "correct": "A",
+            "explanation": "The variable 'result' is defined inside the 'cube' function, making it local to that function. It cannot be accessed from the global scope."
           }
         ],
         "notebook_snippets": [
@@ -8108,10 +8082,14 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-15-w2-conditions",
+          "exam-trial-final-exam-py22-2-w3-scope",
+          "exam-Resit 22/23-2-w3-scope",
+          "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
+          "exam-Trial final - Introduction to Python - 22/23-2-w3-scope",
+          "exam-extra_practice-2-w3-scope",
           "exam-midterm_2023-3-w3-scope",
           "exam-midterm_2024-5-w3-scope",
-          "exam-extra_practice-2-w3-scope",
-          "exam-Trial final - Introduction to Python - 22/23-2-w3-scope",
           "ks-2a6510492d",
           "cs-2768956dff",
           "cs-f037678ad8",
@@ -8795,6 +8773,10 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-23-w3-arguments",
+          "exam-Resit 22/23-4-w3-arguments",
+          "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
+          "exam-Resit 22/23-6-w3-arguments",
           "exam-midterm_2023-9-w3-arguments",
           "exam-midterm_2023-10-w3-arguments",
           "exam-midterm_2024-13-w3-arguments",
@@ -9407,9 +9389,10 @@
           }
         ],
         "recommended_ids": [
-          "exam-trial_midterm-17-w3-higher-order-patterns",
+          "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns",
           "exam-midterm_2023-11-w3-higher-order-patterns",
           "exam-midterm_2023-13-w3-higher-order-patterns",
+          "exam-trial_midterm-17-w3-higher-order-patterns",
           "exam-midterm_2024-19-w3-higher-order-patterns",
           "ks-f069ee6a0b",
           "ks-58858d6d96",
@@ -9445,11 +9428,7 @@
               "ks-b734a22f46",
               "ks-309158a68c"
             ],
-            "exam_question_ids": [
-              "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
-              "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
-              "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals"
-            ],
+            "exam_question_ids": [],
             "notebook_snippet_ids": [
               "cs-e7bc165499",
               "cs-14245b8c1f",
@@ -9613,71 +9592,7 @@
             ]
           }
         ],
-        "exam_questions": [
-          {
-            "id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 5,
-            "week": 4,
-            "topic": "Pandas (Basic)",
-            "subtopic_id": "w4-string-fundamentals-core",
-            "subtopic_title": "Quotes, Escape Characters, and Immutability",
-            "question": "You have a pandas DataFrame called df with columns \"A\" and \"B\". You'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?",
-            "code_context": "",
-            "options": {
-              "A": "df.loc[:,\"C\"] = df.loc[:,\"A\"] + df.loc[:,\"B\"]",
-              "B": "df.loc[\"c\"] = df.loc[\"A\"] + df.loc[\"B\"]",
-              "C": "df.loc[\"C\"] = df.loc[:,(\"A\" + \"B\")]",
-              "D": "df.loc[\"C\"] = df.loc[\"A\" + \"B\"]"
-            },
-            "correct": "A",
-            "explanation": "Vectorized addition in Pandas is performed by adding series together. Using .loc[:, 'C'] correctly assigns the result to a new column for all rows."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 7,
-            "week": 4,
-            "topic": "Pandas (Subset/Sort)",
-            "subtopic_id": "w4-string-fundamentals-core",
-            "subtopic_title": "Quotes, Escape Characters, and Immutability",
-            "question": "Which of the following code lines could NOT have created df2 from df1?",
-            "code_context": "",
-            "options": {
-              "A": "df2 = df1.sort_index(ascending=False).loc[:,[\"A\", \"C\", \"D\"]]",
-              "B": "df2 = df1.iloc[[3, 2, 1], [0, 2, 3]]",
-              "C": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"D\", ascending=False)",
-              "D": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"C\")"
-            },
-            "correct": "A",
-            "explanation": "Option A would sort all 5 rows of df1 and keep columns A, C, D, resulting in a 5-row DataFrame. df2 only has 3 rows (indices 4, 3, 2)."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 8,
-            "week": 4,
-            "topic": "Pandas (Series Strings)",
-            "subtopic_id": "w4-string-fundamentals-core",
-            "subtopic_title": "Quotes, Escape Characters, and Immutability",
-            "question": "You have a Series s with municipality and province names separated by \"; \". You'd like to create a new Series that only contains the municipality names. Which of the following code lines will achieve what you want?",
-            "code_context": "",
-            "options": {
-              "A": "s.map(lambda x: x.split(\"; \")[0])",
-              "B": "s.split(\"; \")[0]",
-              "C": "s.lambda(x.split(\"; \"))",
-              "D": "s.str[:9]"
-            },
-            "correct": "A",
-            "explanation": "The .map() method allows applying a function (like splitting a string and taking the first part) to every element in a pandas Series."
-          }
-        ],
+        "exam_questions": [],
         "notebook_snippets": [
           {
             "id": "cs-e7bc165499",
@@ -9997,9 +9912,6 @@
           }
         ],
         "recommended_ids": [
-          "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
-          "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
-          "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
           "ks-b734a22f46",
           "ks-309158a68c",
           "cs-e7bc165499",
@@ -10040,7 +9952,8 @@
               "ks-e4dc502d3e"
             ],
             "exam_question_ids": [
-              "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods"
+              "exam-intro_python_sample_final_24_25-4-w2-conditions",
+              "exam-intro_python_sample_final_24_25-22-w2-conditions"
             ],
             "notebook_snippet_ids": [
               "cs-1c6788a4b3",
@@ -10060,7 +9973,10 @@
               "ai-example-5",
               "ai-example-6",
               "ai-example-7",
-              "ai-example-8"
+              "ai-example-8",
+              "manual-string-format-method",
+              "manual-string-islower-method",
+              "manual-string-repetition"
             ],
             "key_point_ids": [
               "kp-1",
@@ -10228,25 +10144,46 @@
         ],
         "exam_questions": [
           {
-            "id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+            "id": "exam-intro_python_sample_final_24_25-4-w2-conditions",
             "exam_label": "intro_python_sample_final_24_25",
             "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
             "year": "2024",
-            "number": 6,
+            "number": 4,
             "week": 4,
-            "topic": "Pandas (Indexing)",
+            "topic": "String Methods",
             "subtopic_id": "w4-string-operations-and-methods-core",
             "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
-            "question": "Suppose that you'd like to create a new DataFrame that contains only column 'B' for rows with indices 2, 4, and 6. Which of the following code lines will achieve what you want?",
+            "question": "Which of the following code segments does NOT achieve the goal of returning a string with 10 digits by removing dashes?",
             "code_context": "",
             "options": {
-              "A": "df.loc[df.index % 2 == 0, [\"B\"]]",
-              "B": "df[2, 4, 6, \"B\"]",
-              "C": "df.iloc[[2, 4, 6], 2]",
-              "D": "df.loc[2::2, \"B\"]"
+              "A": "def format_phone_number(number):\n    number.replace(\"-\", \"\")\n    return number",
+              "B": "def format_phone_number(number):\n    return number.replace(\"-\", \"\")",
+              "C": "def format_phone_number(number):\n    digits = []\n    for char in number:\n        if char in \"0123456789\":\n            digits.append(char)\n    return \"\".join(digits)",
+              "D": "def format_phone_number(number):\n    return \"\".join(number.split(\"-\"))"
             },
             "correct": "A",
-            "explanation": "Option A uses a boolean mask on the index to find even numbers and specifies ['B'] as a list to return a DataFrame. Option D would return a Series."
+            "explanation": "Strings in Python are immutable. The .replace() method returns a new string but does not modify the original. Option A returns the original string with dashes because the result of .replace() was not assigned back to the variable."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-22-w2-conditions",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 22,
+            "week": 4,
+            "topic": "String Methods",
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
+            "question": "Which script, using the count string method, would print the value 1 for x = 'Amsterdam'?",
+            "code_context": "x = 'Amsterdam'",
+            "options": {
+              "A": "print(count(x, 'a'))",
+              "B": "print(x.count('a'))",
+              "C": "Both scripts would deliver that result",
+              "D": "Neither script would deliver that result"
+            },
+            "correct": "B",
+            "explanation": "The count() method is a string method, not a standalone function. It is called using the dot notation on a string object."
           }
         ],
         "notebook_snippets": [
@@ -10642,10 +10579,44 @@
             "status": "curated",
             "subtopic_id": "w4-string-operations-and-methods-core",
             "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module"
+          },
+          {
+            "id": "manual-string-format-method",
+            "kind": "correct",
+            "title": "Build strings with `.format(...)`",
+            "code": "template = \"{} scored {} points\"\nprint(template.format(\"Ada\", 9))",
+            "output": "Ada scored 9 points",
+            "why": "Use `.format(...)` on the template string, and remember it returns a new string instead of changing the original text in place.",
+            "status": "curated",
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module"
+          },
+          {
+            "id": "manual-string-islower-method",
+            "kind": "correct",
+            "title": "Check lowercase letters with `.islower()`",
+            "code": "print(\"amsterdam\".islower())\nprint(\"Amsterdam\".islower())\nprint(\"123\".islower())",
+            "output": "True\nFalse\nFalse",
+            "why": "`.islower()` only returns `True` when the string contains at least one cased character and all cased characters are lowercase.",
+            "status": "curated",
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module"
+          },
+          {
+            "id": "manual-string-repetition",
+            "kind": "correct",
+            "title": "Repeat text with string multiplication",
+            "code": "print(3 * \"ha\")\nprint(\"ab\" * 2)",
+            "output": "hahaha\nabab",
+            "why": "Both `n * text` and `text * n` repeat the string `n` times, which is a common concise exam pattern.",
+            "status": "curated",
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module"
           }
         ],
         "recommended_ids": [
-          "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+          "exam-intro_python_sample_final_24_25-4-w2-conditions",
+          "exam-intro_python_sample_final_24_25-22-w2-conditions",
           "ks-5198d93ec1",
           "ks-f80f1bf556",
           "ks-cdb152720e",
@@ -10913,7 +10884,9 @@
               "exam-Test Exam 07-06-22-1-w4-oop-fundamentals",
               "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
               "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
-              "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals"
+              "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals",
+              "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
+              "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures"
             ],
             "notebook_snippet_ids": [
               "cs-0d319e4faf",
@@ -10928,7 +10901,9 @@
               "ai-example-1",
               "ai-example-2",
               "ai-example-3",
-              "ai-example-6"
+              "ai-example-6",
+              "manual-oop-constructor-defaults",
+              "manual-oop-state-compare"
             ],
             "key_point_ids": [
               "kp-1",
@@ -11110,6 +11085,48 @@
             },
             "correct": "a",
             "explanation": "The list of review scores is [5, 3, 3]. The sum is 11, and the length is 3. 11 / 3 is approximately 3.666... Using `round(..., 1)` rounds this float to one decimal place, resulting in 3.7."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 1,
+            "week": 4,
+            "topic": "OOP (Initializers)",
+            "subtopic_id": "w4-oop-fundamentals-core",
+            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
+            "question": "You'd like to define a class called Vehicle. It should have two attributes: name and mode, which you want to be initialized during object creation. The name attribute can be any string, and it must be passed to the object during creation. The mode attribute is also a string, but it doesn't necessarily need to be passed to the object constructor. If it isn't specified at object construction, then the mode attribute should be equal to the string \"land\". Which of the following code segments achieves what you want?",
+            "code_context": "my_car = Vehicle(\"Mazda\")\n# Expected: my_car.name == \"Mazda\" and my_car.mode == \"land\"",
+            "options": {
+              "A": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+              "B": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+              "C": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        return name, mode",
+              "D": "class Vehicle:\n    def __init__(vehicle_name, vehicle_mode):\n        name = vehicle_name\n        mode = vehicle_mode"
+            },
+            "correct": "A",
+            "explanation": "In Python, default parameter values in the __init__ method allow for optional arguments during object creation. Option A correctly assigns the parameters to instance attributes."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 2,
+            "week": 4,
+            "topic": "OOP (Methods)",
+            "subtopic_id": "w4-oop-fundamentals-core",
+            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
+            "question": "Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Rick Riordan\"), book_1.add_review(5), book_1.add_review(3), book_1.add_review(3). What will then the following command print to the screen? print(book_1.show_rating())",
+            "code_context": "class Book:\n    def __init__(self, title, author, review_scores=None):\n        self.title = title\n        self.author = author\n        self.review_scores = review_scores if review_scores else []\n    def add_review(self, score):\n        self.review_scores.append(score)\n    def show_rating(self):\n        if self.review_scores:\n            return round(sum(self.review_scores) / len(self.review_scores), 1)",
+            "options": {
+              "A": "3.7",
+              "B": "4",
+              "C": "None",
+              "D": "3.67"
+            },
+            "correct": "A",
+            "explanation": "The average of scores [5, 3, 3] is 11 / 3 = 3.666... Using round(..., 1) results in 3.7."
           }
         ],
         "notebook_snippets": [
@@ -11372,13 +11389,37 @@
             "status": "curated",
             "subtopic_id": "w4-oop-fundamentals-core",
             "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
+          },
+          {
+            "id": "manual-oop-constructor-defaults",
+            "kind": "correct",
+            "title": "Constructor defaults belong in `__init__` parameters",
+            "code": "class Vehicle:\n    def __init__(self, name, mode=\"land\"):\n        self.name = name\n        self.mode = mode\n\ncar = Vehicle(\"Mazda\")\nprint(car.name, car.mode)",
+            "output": "Mazda land",
+            "why": "Default constructor arguments let an instance omit optional information while still giving `self` a predictable initial state.",
+            "status": "curated",
+            "subtopic_id": "w4-oop-fundamentals-core",
+            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
+          },
+          {
+            "id": "manual-oop-state-compare",
+            "kind": "correct",
+            "title": "Trace `self` state across multiple method calls",
+            "code": "class Book:\n    def __init__(self, title):\n        self.title = title\n        self.scores = []\n\n    def add_review(self, score):\n        self.scores.append(score)\n\n    def average(self):\n        return sum(self.scores) / len(self.scores)\n\n    def better_than(self, other):\n        return self.average() > other.average()\n\nbook_1 = Book(\"A\")\nbook_2 = Book(\"B\")\nfor score in [5, 3, 3]:\n    book_1.add_review(score)\nfor score in [4, 4, 4]:\n    book_2.add_review(score)\nprint(book_1.better_than(book_2))",
+            "output": "False",
+            "why": "Exam OOP reasoning often hinges on updating `self` in one method and then comparing derived state in a later method call.",
+            "status": "curated",
+            "subtopic_id": "w4-oop-fundamentals-core",
+            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
           }
         ],
         "recommended_ids": [
-          "exam-Test Exam 07-06-22-1-w4-oop-fundamentals",
-          "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
+          "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
+          "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
           "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+          "exam-Test Exam 07-06-22-1-w4-oop-fundamentals",
           "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals",
+          "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
           "ks-06b21ad349",
           "ks-9e278d1ee6",
           "ks-5cbba26b09",
@@ -11661,9 +11702,8 @@
             ],
             "exam_question_ids": [
               "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
-              "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
-              "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
-              "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures"
+              "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
+              "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals"
             ],
             "notebook_snippet_ids": [
               "cs-82ef14b9d5",
@@ -11863,48 +11903,6 @@
             "explanation": "The map() method on a Series expects a function, dictionary, or another Series. If passed a Series, it uses the values of the caller (s) to look up indices in the passed Series. This will lead to unexpected results (looking up float values like 2.0 as indices) instead of applying the mathematical transformation. The other options correctly perform the element-wise operation."
           },
           {
-            "id": "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 1,
-            "week": 5,
-            "topic": "OOP (Initializers)",
-            "subtopic_id": "w5-pandas-core-structures-core",
-            "subtopic_title": "Series, DataFrame, and Creation Patterns",
-            "question": "You'd like to define a class called Vehicle. It should have two attributes: name and mode, which you want to be initialized during object creation. The name attribute can be any string, and it must be passed to the object during creation. The mode attribute is also a string, but it doesn't necessarily need to be passed to the object constructor. If it isn't specified at object construction, then the mode attribute should be equal to the string \"land\". Which of the following code segments achieves what you want?",
-            "code_context": "my_car = Vehicle(\"Mazda\")\n# Expected: my_car.name == \"Mazda\" and my_car.mode == \"land\"",
-            "options": {
-              "A": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
-              "B": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
-              "C": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        return name, mode",
-              "D": "class Vehicle:\n    def __init__(vehicle_name, vehicle_mode):\n        name = vehicle_name\n        mode = vehicle_mode"
-            },
-            "correct": "A",
-            "explanation": "In Python, default parameter values in the __init__ method allow for optional arguments during object creation. Option A correctly assigns the parameters to instance attributes."
-          },
-          {
-            "id": "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
-            "exam_label": "intro_python_sample_final_24_25",
-            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
-            "year": "2024",
-            "number": 2,
-            "week": 5,
-            "topic": "OOP (Methods)",
-            "subtopic_id": "w5-pandas-core-structures-core",
-            "subtopic_title": "Series, DataFrame, and Creation Patterns",
-            "question": "Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Rick Riordan\"), book_1.add_review(5), book_1.add_review(3), book_1.add_review(3). What will then the following command print to the screen? print(book_1.show_rating())",
-            "code_context": "class Book:\n    def __init__(self, title, author, review_scores=None):\n        self.title = title\n        self.author = author\n        self.review_scores = review_scores if review_scores else []\n    def add_review(self, score):\n        self.review_scores.append(score)\n    def show_rating(self):\n        if self.review_scores:\n            return round(sum(self.review_scores) / len(self.review_scores), 1)",
-            "options": {
-              "A": "3.7",
-              "B": "4",
-              "C": "None",
-              "D": "3.67"
-            },
-            "correct": "A",
-            "explanation": "The average of scores [5, 3, 3] is 11 / 3 = 3.666... Using round(..., 1) results in 3.7."
-          },
-          {
             "id": "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
             "exam_label": "Trial final exam Introduction to Python",
             "exam_source": "materials/post_midterm/practice_exams_previous_years/trial-final-exam-solutions-introduction-to-python-3077951.pdf",
@@ -11924,6 +11922,27 @@
             },
             "correct": "a",
             "explanation": "Pandas supports vectorized operations. You can add two Series (columns) together element-wise by directly using the `+` operator."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 5,
+            "week": 5,
+            "topic": "Pandas (Basic)",
+            "subtopic_id": "w5-pandas-core-structures-core",
+            "subtopic_title": "Series, DataFrame, and Creation Patterns",
+            "question": "You have a pandas DataFrame called df with columns \"A\" and \"B\". You'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?",
+            "code_context": "",
+            "options": {
+              "A": "df.loc[:,\"C\"] = df.loc[:,\"A\"] + df.loc[:,\"B\"]",
+              "B": "df.loc[\"c\"] = df.loc[\"A\"] + df.loc[\"B\"]",
+              "C": "df.loc[\"C\"] = df.loc[:,(\"A\" + \"B\")]",
+              "D": "df.loc[\"C\"] = df.loc[\"A\" + \"B\"]"
+            },
+            "correct": "A",
+            "explanation": "Vectorized addition in Pandas is performed by adding series together. Using .loc[:, 'C'] correctly assigns the result to a new column for all rows."
           }
         ],
         "notebook_snippets": [
@@ -12182,9 +12201,8 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
           "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
-          "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
-          "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
           "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
           "ks-052ed25923",
           "ks-9a5d2c05fb",
@@ -12224,7 +12242,8 @@
               "ks-f550a3ffc7"
             ],
             "exam_question_ids": [
-              "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data"
+              "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
+              "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods"
             ],
             "notebook_snippet_ids": [
               "cs-3d987070d4",
@@ -12389,6 +12408,27 @@
             },
             "correct": "a",
             "explanation": "Option A uses boolean indexing (`df.index % 2 == 0`) to select rows with even index values, and specifically selects column \"B\" using `.loc`."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 6,
+            "week": 5,
+            "topic": "Pandas (Indexing)",
+            "subtopic_id": "w5-inspecting-and-selecting-data-core",
+            "subtopic_title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing",
+            "question": "Suppose that you'd like to create a new DataFrame that contains only column 'B' for rows with indices 2, 4, and 6. Which of the following code lines will achieve what you want?",
+            "code_context": "",
+            "options": {
+              "A": "df.loc[df.index % 2 == 0, [\"B\"]]",
+              "B": "df[2, 4, 6, \"B\"]",
+              "C": "df.iloc[[2, 4, 6], 2]",
+              "D": "df.loc[2::2, \"B\"]"
+            },
+            "correct": "A",
+            "explanation": "Option A uses a boolean mask on the index to find even numbers and specifies ['B'] as a list to return a DataFrame. Option D would return a Series."
           }
         ],
         "notebook_snippets": [
@@ -12754,6 +12794,7 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
           "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
           "ks-0114a2cff0",
           "ks-57ff66f9f1",
@@ -12797,7 +12838,10 @@
               "ks-0d2d15f8d2",
               "ks-18a9645168"
             ],
-            "exam_question_ids": [],
+            "exam_question_ids": [
+              "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
+              "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals"
+            ],
             "notebook_snippet_ids": [
               "cs-942bdc8228",
               "cs-f46d5464f2"
@@ -12810,7 +12854,9 @@
               "ai-example-5",
               "ai-example-6",
               "ai-example-7",
-              "ai-example-8"
+              "ai-example-8",
+              "manual-pandas-split-into-columns",
+              "manual-pandas-map-column-sum"
             ],
             "key_point_ids": [
               "kp-1",
@@ -12977,7 +13023,50 @@
             ]
           }
         ],
-        "exam_questions": [],
+        "exam_questions": [
+          {
+            "id": "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 7,
+            "week": 5,
+            "topic": "Pandas (Subset/Sort)",
+            "subtopic_id": "w5-working-with-values-core",
+            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+            "question": "Which of the following code lines could NOT have created df2 from df1?",
+            "code_context": "",
+            "options": {
+              "A": "df2 = df1.sort_index(ascending=False).loc[:,[\"A\", \"C\", \"D\"]]",
+              "B": "df2 = df1.iloc[[3, 2, 1], [0, 2, 3]]",
+              "C": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"D\", ascending=False)",
+              "D": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"C\")"
+            },
+            "correct": "A",
+            "explanation": "Option A would sort all 5 rows of df1 and keep columns A, C, D, resulting in a 5-row DataFrame. df2 only has 3 rows (indices 4, 3, 2)."
+          },
+          {
+            "id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 8,
+            "week": 5,
+            "topic": "Pandas (Series Strings)",
+            "subtopic_id": "w5-working-with-values-core",
+            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+            "question": "You have a Series s with municipality and province names separated by \"; \". You'd like to create a new Series that only contains the municipality names. Which of the following code lines will achieve what you want?",
+            "code_context": "",
+            "options": {
+              "A": "s.map(lambda x: x.split(\"; \")[0])",
+              "B": "s.split(\"; \")[0]",
+              "C": "s.lambda(x.split(\"; \"))",
+              "D": "s.str[:9]"
+            },
+            "correct": "A",
+            "explanation": "The .map() method allows applying a function (like splitting a string and taking the first part) to every element in a pandas Series."
+          }
+        ],
         "notebook_snippets": [
           {
             "id": "cs-942bdc8228",
@@ -13264,9 +13353,33 @@
             "status": "curated",
             "subtopic_id": "w5-working-with-values-core",
             "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+          },
+          {
+            "id": "manual-pandas-split-into-columns",
+            "kind": "correct",
+            "title": "Split string data into multiple DataFrame columns",
+            "code": "import pandas as pd\n\ndf = pd.DataFrame({\"place\": [\"Amsterdam; Noord-Holland\", \"Utrecht; Utrecht\"]})\ndf[[\"municipality\", \"province\"]] = df[\"place\"].str.split(\"; \", expand=True)\nprint(df)",
+            "output": "                    place municipality        province\n0  Amsterdam; Noord-Holland    Amsterdam  Noord-Holland\n1         Utrecht; Utrecht      Utrecht         Utrecht",
+            "why": "Use `.str.split(..., expand=True)` when the exam wants one text column unpacked into multiple DataFrame columns.",
+            "status": "curated",
+            "subtopic_id": "w5-working-with-values-core",
+            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+          },
+          {
+            "id": "manual-pandas-map-column-sum",
+            "kind": "correct",
+            "title": "Trace `map(lambda x: x + df['B'].sum())`",
+            "code": "import pandas as pd\n\ndf = pd.DataFrame({\"A\": [1, 2], \"B\": [10, 20]})\nresult = df[\"A\"].map(lambda x: x + df[\"B\"].sum())\nprint(result.tolist())",
+            "output": "[31, 32]",
+            "why": "`df[\"B\"].sum()` is computed from the whole column, so each element from `A` gets the same total from `B` added to it.",
+            "status": "curated",
+            "subtopic_id": "w5-working-with-values-core",
+            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
+          "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
           "ks-305a41a33e",
           "ks-f8eec928e1",
           "ks-115ab52188",
@@ -13626,7 +13739,9 @@
               "ks-72c58bb6b2",
               "ks-dd2965ef50"
             ],
-            "exam_question_ids": [],
+            "exam_question_ids": [
+              "exam-intro_python_sample_final_24_25-12-w2-conditions"
+            ],
             "notebook_snippet_ids": [
               "cs-6a322e3274",
               "cs-5fc55f4102",
@@ -13899,7 +14014,29 @@
             ]
           }
         ],
-        "exam_questions": [],
+        "exam_questions": [
+          {
+            "id": "exam-intro_python_sample_final_24_25-12-w2-conditions",
+            "exam_label": "intro_python_sample_final_24_25",
+            "exam_source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "year": "2024",
+            "number": 12,
+            "week": 6,
+            "topic": "List Comprehensions",
+            "subtopic_id": "w6-comprehensions-core",
+            "subtopic_title": "List/Dict/Set Comprehensions, Nested Variants, Logic Filters, Walrus, and enumerate Patterns",
+            "question": "You'd like to turn every upper case letter in a list into lower case and vice versa. Which code line achieves this?",
+            "code_context": "",
+            "options": {
+              "A": "[letter.upper() if letter.islower() else letter.lower() for letter in list_1]",
+              "B": "[x if x in 'abcdefg...'.upper() else x.lower() for x in list_1]",
+              "C": "Both achieve what you want",
+              "D": "None achieves what you want"
+            },
+            "correct": "C",
+            "explanation": "Both options implement the conditional logic required to flip the case of each character in the list."
+          }
+        ],
         "notebook_snippets": [
           {
             "id": "cs-6a322e3274",
@@ -14285,6 +14422,7 @@
           }
         ],
         "recommended_ids": [
+          "exam-intro_python_sample_final_24_25-12-w2-conditions",
           "ks-cacc4fbc21",
           "ks-0e5c8b8b42",
           "ks-3e04c4d5e8",
@@ -14728,7 +14866,10 @@
               "cs-b31e0142c3",
               "cs-1887901826"
             ],
-            "example_ids": [],
+            "example_ids": [
+              "manual-datetime-overlap",
+              "manual-datetime-strftime-loop"
+            ],
             "key_point_ids": []
           }
         }
@@ -15084,6 +15225,28 @@
             "code": "from datetime import datetime\n\nd = datetime(2024, 5, 20)\nprint(d.replace(year=2026))\nprint(d)",
             "output": "2026-05-20 00:00:00\n2024-05-20 00:00:00",
             "why": "Datetime objects are immutable, so `.replace(...)` does not modify the original object in place.",
+            "status": "curated",
+            "subtopic_id": "w6-datetime-core",
+            "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
+          },
+          {
+            "id": "manual-datetime-overlap",
+            "kind": "correct",
+            "title": "Check whether two datetime intervals overlap",
+            "code": "from datetime import datetime\n\nstart_a = datetime(2024, 5, 20, 9, 0)\nend_a = datetime(2024, 5, 20, 11, 0)\nstart_b = datetime(2024, 5, 20, 10, 30)\nend_b = datetime(2024, 5, 20, 12, 0)\n\noverlaps = max(start_a, start_b) < min(end_a, end_b)\nprint(overlaps)",
+            "output": "True",
+            "why": "A reliable overlap check compares the later start with the earlier end; there is overlap only when the later start is still before the earlier end.",
+            "status": "curated",
+            "subtopic_id": "w6-datetime-core",
+            "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
+          },
+          {
+            "id": "manual-datetime-strftime-loop",
+            "kind": "correct",
+            "title": "Do datetime math before `strftime` turns values into strings",
+            "code": "from datetime import datetime, timedelta\n\nday = datetime(2024, 1, 1)\nlabels = []\nfor _ in range(3):\n    labels.append(day.strftime(\"%Y-%m-%d\"))\n    day += timedelta(days=1)\nprint(labels)",
+            "output": "['2024-01-01', '2024-01-02', '2024-01-03']",
+            "why": "After `strftime`, the value is plain text, so increment the datetime object first and only store formatted strings as the final display step.",
             "status": "curated",
             "subtopic_id": "w6-datetime-core",
             "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
