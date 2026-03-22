@@ -10,15 +10,15 @@ Technical handoff for coding agents and contributors working on this repository.
 - No backend/runtime services required
 - Source dataset and generated card data are JSON files in repo
 
-## Current Snapshot (2026-03-21)
+## Current Snapshot (2026-03-22)
 
-- `topic_cards.json`: **174 total cards**
+- `topic_cards.json`: **27 total cards**
 - `deck_groups`: **6** (`week-1` through `week-6`)
 - Weeks covered in the dataset: **1-6**
-- Exam-topic cards (`exam_stats.total_hits > 0`): **136**
+- Exam-topic cards (`exam_stats.total_hits > 0`): **18**
 - Duplicate normalized topic labels: **0**
-- Total key points across all cards: **935**
-- Optional key-point detail blocks: **256**
+- Total key points across all cards: **106**
+- Optional key-point detail blocks: **96**
 
 Curation state:
 

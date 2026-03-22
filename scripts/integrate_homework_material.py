@@ -70,6 +70,28 @@ HOMEWORK_TOPIC_MAP: dict[int, dict[int, str]] = {
 BONUS_TOPIC_MAP: dict[int, str] = {
     1: "indexing",
 }
+
+HOMEWORK_CARD_TARGETS: dict[str, tuple[str, ...]] = {
+    "arithmetic": ("w1-operators-and-truth",),
+    "boolean": ("w1-operators-and-truth",),
+    "conversion": ("w2-conversion-and-truthiness",),
+    "indexing": ("w1-sequences-and-access",),
+    "slicing": ("w1-sequences-and-access",),
+    "string": ("w1-sequences-and-access",),
+    "dictionary": ("w2-dictionaries-and-mappings",),
+    "loop while": ("w2-loops",),
+    "loop": ("w2-loops",),
+    "loop nested": ("w2-loops",),
+    "enumerate": ("w2-loops",),
+    "zip": ("w2-loops",),
+    "falsy truthy": ("w2-conversion-and-truthiness",),
+    "condition": ("w2-conditions",),
+    "args keyword": ("w3-arguments",),
+    "args star": ("w3-arguments",),
+    "args default": ("w3-arguments",),
+    "factory function": ("w3-higher-order-patterns",),
+    "lambda": ("w3-higher-order-patterns",),
+}
 @dataclass(frozen=True)
 class CandidateCell:
     week: int
@@ -388,9 +410,8 @@ def sync_topic_cards_homework(
     for card in cards:
         sections = card.setdefault("sections", {})
         sections["homework_snippets"] = []
-        canonical = str(card.get("canonical_topic") or "").strip()
-        if not canonical:
-            canonical = topic_key(str(card.get("topic") or ""))
+        card_id = str(card.get("id") or "").strip()
+        canonical = topic_key(str(card.get("canonical_topic") or card.get("topic") or ""))
         snippets: list[dict[str, Any]] = []
         for cell in homeworks:
             if cell.get("is_advanced_optional"):
@@ -399,7 +420,11 @@ def sync_topic_cards_homework(
             if not topic:
                 continue
             source_key = topic_key(topic)
-            if not is_relevant(canonical, source_key, threshold=0.6):
+            explicit_targets = HOMEWORK_CARD_TARGETS.get(source_key, ())
+            if explicit_targets:
+                if card_id not in explicit_targets:
+                    continue
+            elif not is_relevant(canonical, source_key, threshold=0.6):
                 continue
             cleaned_source = clean_notebook_source(str(cell.get("source") or ""), str(cell.get("cell_type") or "code"))
             if not cleaned_source:

@@ -66,6 +66,10 @@ python3 -m http.server 8000
 
 Then open [http://localhost:8000](http://localhost:8000).
 
+## Course Materials
+
+Official course files are still kept at their canonical paths under `materials/`, but there is now also a cleaner week-ordered view under [materials/by_week](materials/by_week) for easier browsing.
+
 ## Support This Project
 
 This project was built by one student, and the AI agents/tools used to build it cost real money.

@@ -64,9 +64,42 @@
       "materials/post_midterm/practice_exams_previous_years/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023.pdf",
       "materials/post_midterm/practice_exams_previous_years/resit-solutions-for-introduction-to-python-35761538.pdf",
       "materials/post_midterm/Sample Final plus answers.pdf",
-      "materials/post_midterm/practice_exams_previous_years/trial-final-exam-solutions-introduction-to-python-3077951.pdf"
+      "materials/post_midterm/practice_exams_previous_years/trial-final-exam-solutions-introduction-to-python-3077951.pdf",
+      "materials/homework/week 1/Bonus_Exercise.py",
+      "materials/homework/week 1/Bonus_Exercise_Solved.py",
+      "materials/homework/week 1/Exercise 1.py",
+      "materials/homework/week 1/Exercise_1.2.py",
+      "materials/homework/week 1/Exercise_1.3.py",
+      "materials/homework/week 1/Exercise_1.4.py",
+      "materials/homework/week 1/Exercise_1.5.py",
+      "materials/homework/week 1/Exercise_1.6.py",
+      "materials/homework/week 1/Exercise_1.7.py",
+      "materials/homework/week 1/Exercise_1.8.py",
+      "materials/homework/week 1/Exercise_1.9.py",
+      "materials/homework/week 1/Solutions week 1 (1).txt",
+      "materials/homework/week 2/Exercise_2.1.py",
+      "materials/homework/week 2/Exercise_2.2.py",
+      "materials/homework/week 2/Exercise_2.3.py",
+      "materials/homework/week 2/Exercise_2.4.py",
+      "materials/homework/week 2/Exercise_2.5.py",
+      "materials/homework/week 2/Exercise_2.6.py",
+      "materials/homework/week 2/Exercise_2.7.py",
+      "materials/homework/week 2/Exercise_2.8.py",
+      "materials/homework/week 2/Exercise_2.9.py",
+      "materials/homework/week 2/Solutions week 2.txt",
+      "materials/homework/week 3/Exercise_3.1.py",
+      "materials/homework/week 3/Exercise_3.2.py",
+      "materials/homework/week 3/Exercise_3.3.py",
+      "materials/homework/week 3/Exercise_3.4.py",
+      "materials/homework/week 3/Exercise_3.5.py",
+      "materials/homework/week 3/Exercise_3.6.py",
+      "materials/homework/week 3/Exercise_3.7.py",
+      "materials/homework/week 3/Exercise_3.8.py",
+      "materials/homework/week 3/Exercise_3.9.py",
+      "materials/homework/week 3/Solutions week 3.txt",
+      "materials/post_midterm/practice_exams_previous_years/final-exam-solutions-for-python-programming-62oop21.pdf"
     ],
-    "last_updated": "2026-03-21T21:26:18Z"
+    "last_updated": "2026-03-22T21:40:24Z"
   },
   "weeks": [
     {
@@ -2710,7 +2743,121 @@
       ],
       "sources": [
         "materials/lectures/Lecture Week 1.md",
-        "materials/notebooks/Notebook Week 1.ipynb"
+        "materials/notebooks/Notebook Week 1.ipynb",
+        "materials/homework/week 1/Bonus_Exercise.py",
+        "materials/homework/week 1/Bonus_Exercise_Solved.py",
+        "materials/homework/week 1/Exercise 1.py",
+        "materials/homework/week 1/Exercise_1.2.py",
+        "materials/homework/week 1/Exercise_1.3.py",
+        "materials/homework/week 1/Exercise_1.4.py",
+        "materials/homework/week 1/Exercise_1.5.py",
+        "materials/homework/week 1/Exercise_1.6.py",
+        "materials/homework/week 1/Exercise_1.7.py",
+        "materials/homework/week 1/Exercise_1.8.py",
+        "materials/homework/week 1/Exercise_1.9.py",
+        "materials/homework/week 1/Solutions week 1 (1).txt"
+      ],
+      "homework_cells": [
+        {
+          "cell_index": 1,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "indexing",
+          "is_advanced_optional": false,
+          "source": "x = ['A','B','A','C','B','A','B']\nn = input('The index of which iteration of B would you like to find?')\ni = -1\ntry:\n    for j in range(int(n)):\n        i = x.index('B',i+1)\n    print(i)\nexcept ValueError:\n    print('There are fewer than ' + n + ' instances of B in the list.') #Either this\n    print('There are only ' + str(j) + ' instances of B in the list.')  #or this option is fine for error handling",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Bonus_Exercise_Solved.py"
+        },
+        {
+          "cell_index": 2,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "arithmetic_operators",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise 1.py\nprint(max(30 - x, 0))",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise 1.py"
+        },
+        {
+          "cell_index": 3,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "arithmetic_operators",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise_1.2.py\nprint(round(100 * (1 + x / 100)**4, 2))",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise_1.2.py"
+        },
+        {
+          "cell_index": 4,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "arithmetic_operators",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise_1.3.py\nprint((64 // package_size) * package_price + (64 % package_size) * individual_price)",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise_1.3.py"
+        },
+        {
+          "cell_index": 5,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "strings",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise_1.4.py\nprint(2 * (x + '-3-') + x)",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise_1.4.py"
+        },
+        {
+          "cell_index": 6,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "boolean_operators",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise_1.5.py\nprint('mnop' * (1 - x))",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise_1.5.py"
+        },
+        {
+          "cell_index": 7,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "type_conversion",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise_1.6.py\nprint(float(x + '50'))",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise_1.6.py"
+        },
+        {
+          "cell_index": 8,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "indexing",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise_1.7.py\nprint([x[3], x[0], x[2]])",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise_1.7.py"
+        },
+        {
+          "cell_index": 9,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "indexing",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise_1.8.py\nprint([[1 - x[0][0], 1 - x[0][1]], [1 - x[1][0], 1 - x[1][1]]])",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise_1.8.py"
+        },
+        {
+          "cell_index": 10,
+          "week": 1,
+          "cell_type": "code",
+          "topic": "slicing",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 1/Exercise_1.9.py\nleft = x.index(15) + 1\nremainder_x = x[left:]\nright = left + remainder_x.index(15)\nprint(x[left:right])",
+          "outputs": [],
+          "source_origin": "materials/homework/week 1/Exercise_1.9.py"
+        }
       ]
     },
     {
@@ -5266,7 +5413,109 @@
       ],
       "sources": [
         "materials/lectures/Lecture Week 2.md",
-        "materials/notebooks/Notebook Week 2.ipynb"
+        "materials/notebooks/Notebook Week 2.ipynb",
+        "materials/homework/week 2/Exercise_2.1.py",
+        "materials/homework/week 2/Exercise_2.2.py",
+        "materials/homework/week 2/Exercise_2.3.py",
+        "materials/homework/week 2/Exercise_2.4.py",
+        "materials/homework/week 2/Exercise_2.5.py",
+        "materials/homework/week 2/Exercise_2.6.py",
+        "materials/homework/week 2/Exercise_2.7.py",
+        "materials/homework/week 2/Exercise_2.8.py",
+        "materials/homework/week 2/Exercise_2.9.py",
+        "materials/homework/week 2/Solutions week 2.txt"
+      ],
+      "homework_cells": [
+        {
+          "cell_index": 1,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "dictionaries",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.1.py\ny = {}\nfor var in '0123456789':\n    if var in x:\n        y[var]=x.count(var)\nprint(y)\n\n# Alternative Solution:\n\ny = {}\nfor element in x:\n    if element in \"0123456789\":\n        y[element] = x.count(element)\nprint(y)",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.1.py"
+        },
+        {
+          "cell_index": 2,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "while_loops",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.2.py\nimport math\n\ny = {}\nangle = 0\nwhile angle <= 45:\n    angle_in_radians = math.radians(angle)\n    y[angle] = round(math.tan(angle_in_radians), 4)\n    angle = angle + x",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.2.py"
+        },
+        {
+          "cell_index": 3,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "dictionaries",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.3.py\ny = {'c': 3, 'd': 3}\nfor key, value in y.items():\n    if key in x:\n        del x[key]\n    else:\n        x[key] = value",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.3.py"
+        },
+        {
+          "cell_index": 4,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "enumerate",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.4.py\ny = {}\nfor key, value in enumerate(x):\n    y['highest' if value == max(x) else key]= value",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.4.py"
+        },
+        {
+          "cell_index": 5,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "zip",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.5.py\nx = {}\nfor key, value in zip(keys, values):\n    if key != value and value % 5:\n        x[key] = value",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.5.py"
+        },
+        {
+          "cell_index": 6,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "dictionaries",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.6.py\nsorted_keys = sorted(x.keys(), reverse=True)\n\nresult = []\nfor key in sorted_keys:\n    result.append(x[key])\n\nprint(result)",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.6.py"
+        },
+        {
+          "cell_index": 7,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "truthy_falsy",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.7.py\nprint(sum(x) % 2 == 0)",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.7.py"
+        },
+        {
+          "cell_index": 8,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "conditions",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.8.py\nresult = []\nfor element in x:\n    if element <= d:\n        text = \"cat4\"\n    elif element >= c:\n        text = \"cat3\"\n    elif element < b:\n        text = \"cat2\"\n    elif element > a:\n        text = \"cat1\"\n    else:\n        text = \"catunknown\"\n    result.append(text)\n\nprint(result)",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.8.py"
+        },
+        {
+          "cell_index": 9,
+          "week": 2,
+          "cell_type": "code",
+          "topic": "for_loops",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 2/Exercise_2.9.py\ndemand = []\nfor buyer_values in buyers.values():\n     demand = demand + buyer_values\ndemand = sorted(demand, reverse=True)\n\nsupply = []\nfor seller_values in sellers.values():\n     supply = supply + seller_values\nsupply = sorted(supply, reverse=False)\n\nquantity_sold = 0\nfor buyer_value, supplyer_value in zip(demand, supply):\n     quantity_sold += buyer_value >= supplyer_value\n\nprint(quantity_sold)",
+          "outputs": [],
+          "source_origin": "materials/homework/week 2/Exercise_2.9.py"
+        }
       ]
     },
     {
@@ -7962,7 +8211,109 @@
       ],
       "sources": [
         "materials/lectures/Lecture Week 3.md",
-        "materials/notebooks/Notebook Week 3.ipynb"
+        "materials/notebooks/Notebook Week 3.ipynb",
+        "materials/homework/week 3/Exercise_3.1.py",
+        "materials/homework/week 3/Exercise_3.2.py",
+        "materials/homework/week 3/Exercise_3.3.py",
+        "materials/homework/week 3/Exercise_3.4.py",
+        "materials/homework/week 3/Exercise_3.5.py",
+        "materials/homework/week 3/Exercise_3.6.py",
+        "materials/homework/week 3/Exercise_3.7.py",
+        "materials/homework/week 3/Exercise_3.8.py",
+        "materials/homework/week 3/Exercise_3.9.py",
+        "materials/homework/week 3/Solutions week 3.txt"
+      ],
+      "homework_cells": [
+        {
+          "cell_index": 1,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "nested_loops",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.1.py\ndef main(minimum, maximum):\n    result = {}\n    for first in range(minimum, maximum + 1):\n        for second in range(minimum, maximum + 1):\n            result[(first, second)] = first - second\n    return result",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.1.py"
+        },
+        {
+          "cell_index": 2,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "keyword_args",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.2.py\ndef main(**kwargs):\n    x = {}\n    for key, value in kwargs.items():\n        x[key] = int(value % 5)\n    return x",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.2.py"
+        },
+        {
+          "cell_index": 3,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "args_star",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.3.py\ndef main(*args, allowed_value=16):\n    x = {}\n    for arg in args:\n        for key, value in arg.items():\n            if value == allowed_value:\n                x[key] = value\n    return x",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.3.py"
+        },
+        {
+          "cell_index": 4,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "default_args",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.4.py\ndef main(value_list, excluded_type=int):\n    x = []\n    for item in value_list:\n        if type(item) != excluded_type:\n            x.append(item)\n    return x",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.4.py"
+        },
+        {
+          "cell_index": 5,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "args_star",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.5.py\ndef main(*args):\n    x = {}\n    for key in args:\n        y = []\n        for number in args:\n            if number < key and key % number == 0:\n                y.append(number)\n        x[key] = sorted(y, reverse=True)\n    return x",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.5.py"
+        },
+        {
+          "cell_index": 6,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "function_factories",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.6.py\ndef main(sales_before_entry):\n    def calculate_hhi(sales_volumes):\n        total_sales = sum(sales_volumes)\n        hhi = 0\n        for volume in sales_volumes:\n            hhi += round(100 * volume / total_sales)**2\n        return hhi\n\n    hhi_before_entry = calculate_hhi(sales_before_entry)\n    hhi_after_entry = calculate_hhi(sales_before_entry + [40])\n\n    return hhi_before_entry - hhi_after_entry",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.6.py"
+        },
+        {
+          "cell_index": 7,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "default_args",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.7.py\ndef main(symbols, winning_symbol=\"*\"):\n    pattern = 2 * (winning_symbol + \" \") + winning_symbol\n    match = winning_symbol + \"-BINGO!!!\"\n    no_match = \"--\"\n    return match if symbols == pattern else no_match",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.7.py"
+        },
+        {
+          "cell_index": 8,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "zip",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.8.py\ndef main(list_1, list_2):\n    result = []\n    for first, second in zip(list_1, list_2):\n        result.append(None if first == second else min(first, second))\n    return result",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.8.py"
+        },
+        {
+          "cell_index": 9,
+          "week": 3,
+          "cell_type": "code",
+          "topic": "lambda",
+          "is_advanced_optional": false,
+          "source": "# source: materials/homework/week 3/Exercise_3.9.py\nprint(sum(map(lambda x: 5 * x + 6, integer_list)))",
+          "outputs": [],
+          "source_origin": "materials/homework/week 3/Exercise_3.9.py"
+        }
       ]
     },
     {
@@ -17260,19 +17611,51 @@
     "topic_analysis": {
       "topic_frequency_across_all_exams": [
         [
-          "OOP",
+          "dictionary / dict",
+          11
+        ],
+        [
+          "id",
+          10
+        ],
+        [
+          "list",
+          5
+        ],
+        [
+          "enumerate / loop",
           4
         ],
         [
-          "dictionaries",
-          3
+          "id / type / types",
+          4
+        ],
+        [
+          "loop",
+          4
+        ],
+        [
+          "OOP",
+          4
         ],
         [
           "Dictionaries",
           3
         ],
         [
-          "mutable / immutable",
+          "dictionary / dict / key value",
+          3
+        ],
+        [
+          "function",
+          3
+        ],
+        [
+          "id / name",
+          3
+        ],
+        [
+          "lambda / map",
           3
         ],
         [
@@ -17280,43 +17663,15 @@
           3
         ],
         [
+          "condition /  in",
+          2
+        ],
+        [
+          "in",
+          2
+        ],
+        [
           "scope / global",
-          3
-        ],
-        [
-          "slicing",
-          3
-        ],
-        [
-          "*args",
-          2
-        ],
-        [
-          "filter function",
-          2
-        ],
-        [
-          "for loops / enumerate",
-          2
-        ],
-        [
-          "function factories / closures",
-          2
-        ],
-        [
-          "lambda",
-          2
-        ],
-        [
-          "map function",
-          2
-        ],
-        [
-          "scope / UnboundLocalError",
-          2
-        ],
-        [
-          "sorted / key",
           2
         ],
         [
@@ -17330,18 +17685,6 @@
         [
           "strings",
           2
-        ],
-        [
-          "truthy / falsy",
-          2
-        ],
-        [
-          "type conversion",
-          2
-        ],
-        [
-          "*args / **kwargs",
-          1
         ],
         [
           "*args / passing to function",
@@ -17424,19 +17767,43 @@
           1
         ],
         [
-          "augmented operators",
+          "6-OOP-1",
+          1
+        ],
+        [
+          "6-OOP-2",
+          1
+        ],
+        [
+          "6-strings-1",
+          1
+        ],
+        [
+          "6-strings-2",
+          1
+        ],
+        [
+          "7-pandas-1",
+          1
+        ],
+        [
+          "argument",
+          1
+        ],
+        [
+          "argument / **kwargs / kwargs",
+          1
+        ],
+        [
+          "argument / *args",
+          1
+        ],
+        [
+          "argument / default",
           1
         ],
         [
           "Comprehensions",
-          1
-        ],
-        [
-          "conditions / conditional expression",
-          1
-        ],
-        [
-          "conditions / truthy falsy",
           1
         ],
         [
@@ -17449,18 +17816,6 @@
         ],
         [
           "Datetime (Parsing)",
-          1
-        ],
-        [
-          "default args",
-          1
-        ],
-        [
-          "default args / mutable defaults",
-          1
-        ],
-        [
-          "default arguments / mutable defaults",
           1
         ],
         [
@@ -17488,15 +17843,11 @@
           1
         ],
         [
+          "enumerate",
+          1
+        ],
+        [
           "enumerate / dictionaries / conditions",
-          1
-        ],
-        [
-          "for loops / range",
-          1
-        ],
-        [
-          "for vs while / loop control",
           1
         ],
         [
@@ -17508,23 +17859,7 @@
           1
         ],
         [
-          "identity / is operator",
-          1
-        ],
-        [
-          "indexing / negative",
-          1
-        ],
-        [
-          "indexing / slicing",
-          1
-        ],
-        [
           "Iterables/Logic",
-          1
-        ],
-        [
-          "keyword args / **kwargs",
           1
         ],
         [
@@ -17532,7 +17867,7 @@
           1
         ],
         [
-          "lambda / sorted",
+          "lambda",
           1
         ],
         [
@@ -17541,14 +17876,6 @@
         ],
         [
           "List Comprehensions",
-          1
-        ],
-        [
-          "lists",
-          1
-        ],
-        [
-          "lists / append vs extend",
           1
         ],
         [
@@ -17568,31 +17895,7 @@
           1
         ],
         [
-          "map / filter",
-          1
-        ],
-        [
           "Modules",
-          1
-        ],
-        [
-          "mutable args",
-          1
-        ],
-        [
-          "mutable args / side effects",
-          1
-        ],
-        [
-          "nested functions / scope",
-          1
-        ],
-        [
-          "nested loops",
-          1
-        ],
-        [
-          "nested loops / complexity",
           1
         ],
         [
@@ -17600,11 +17903,7 @@
           1
         ],
         [
-          "objects / identity",
-          1
-        ],
-        [
-          "objects / types",
+          "none",
           1
         ],
         [
@@ -17632,31 +17931,15 @@
           1
         ],
         [
-          "positional / keyword args",
-          1
-        ],
-        [
-          "reduce function",
-          1
-        ],
-        [
-          "return / None",
-          1
-        ],
-        [
           "return / None / global",
           1
         ],
         [
-          "return statement",
+          "scope / global / local",
           1
         ],
         [
           "Scope and Functions",
-          1
-        ],
-        [
-          "sets",
           1
         ],
         [
@@ -17668,7 +17951,7 @@
           1
         ],
         [
-          "string indexing",
+          "type / types",
           1
         ],
         [
@@ -17680,160 +17963,70 @@
           1
         ],
         [
-          "while loops",
-          1
-        ],
-        [
-          "while loops / walrus operator",
-          1
-        ],
-        [
           "While Loops and String Formatting",
-          1
-        ],
-        [
-          "zip / looping",
           1
         ]
       ],
       "most_tested_topics": [
-        "OOP",
-        "dictionaries",
-        "Dictionaries",
-        "mutable / immutable",
-        "pandas"
+        "dictionary / dict",
+        "id",
+        "list",
+        "enumerate / loop",
+        "id / type / types"
       ],
       "topics_in_lectures_not_yet_in_exams": [
-        "What is Python",
-        "Objects",
-        "Types",
-        "Assignment statements",
-        "Names",
-        "Arithmetic operators",
-        "Comparison operators",
-        "Boolean operators",
-        "Mutable vs immutable",
-        "Indexing",
-        "Range",
-        "Functions intro",
-        "Importing packages",
-        "Python execution model",
-        "Objects: core properties",
-        "Mutable vs immutable types",
-        "Assignment statements — reading right to left",
-        "Object types — the 8 types to know",
-        "Names / variable naming rules",
-        "range()",
-        "Functions — basics",
-        "Exam question types",
-        "Augmented assignment operators",
+        "Python Basics",
+        "Objects and Names",
+        "Operators and Truth",
+        "Sequences and Access",
+        "Functions and Imports",
+        "Execution Model, Logical Lines, and Comments",
+        "Objects, Types, Mutability, Assignment, and Names",
+        "Arithmetic, Comparison, and Boolean Operators",
+        "Indexing, Slicing, and range()",
+        "Built-ins Intro, Functions, and Modules",
+        "Dictionaries and Mappings",
+        "Lists and Sets",
         "Conditions",
-        "Boolean operators / precedence",
-        "Conditional statements",
-        "Conditional expressions",
-        "For-loops",
-        "While-loops",
-        "Walrus operator",
-        "Looping over dicts (keys/values/items)",
-        "enumerate()",
-        "zip()",
-        "Truthy and Falsy",
-        "Lists vs Dictionaries vs Sets — ordered/unordered",
-        "Conditions and boolean operators — precedence",
-        "Conditional statements and expressions",
-        "Looping over dictionaries",
-        "Walrus operator :=",
-        "Type conversion (explicit)",
-        "Function definitions",
-        "Calling functions",
-        "Return statements",
-        "Implicit return (None)",
-        "Multiple return values",
-        "Global and local names / scope",
-        "Positional arguments",
-        "**kwargs",
-        "Default arguments",
-        "Mutable argument problem",
-        "Mutable default problem",
-        "Nested functions",
-        "Function factories",
-        "Lambda functions",
-        "map()",
-        "filter()",
-        "reduce()",
-        "sorted() with key",
-        "pass",
-        "Nested for-loops",
-        "Function definition and calling",
-        "Implicit return — None",
-        "Single-element tuple",
-        "pass keyword",
-        "Global and local scope",
-        "*args — undefined number of positional arguments",
-        "Keyword arguments and **kwargs",
-        "Nested functions and function factories",
-        "Methods vs functions",
-        "String Slicing and Manipulation",
-        "F-strings",
-        "Object-Oriented Programming (OOP)",
+        "Conversion and Truthiness",
+        "Creation, Lookup, Updates, and Key Constraints",
+        "Sequences, Uniqueness, and Common Operations",
+        "Comparisons, `in`, Precedence, and Conditional Expressions",
+        "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus",
+        "Explicit Conversion and Truthy/Falsy Rules",
+        "Defining and Calling Functions",
+        "Return Behavior",
+        "Scope",
+        "Arguments",
+        "Higher-Order Patterns",
+        "def, Calls, and Methods vs Functions",
+        "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples",
+        "Global vs Local Names and Scope Errors",
+        "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps",
+        "Nested Functions, Factories, lambda, map, filter, reduce, and sorted(key=...)",
+        "String Fundamentals",
+        "String Operations and Methods",
+        "String Formatting",
+        "OOP Fundamentals",
         "Error Handling",
-        "The String Module",
-        "String Immutability",
-        "String Searching: find vs index",
-        "String Slicing with Step",
-        "The join Method",
-        "The replace Method",
-        "F-strings Basics",
-        "F-strings Debugging",
-        "F-strings Formatting",
-        "Class Definition and __init__",
-        "The self Parameter",
-        "Class vs Instance Attributes",
-        "Error Handling: try-except",
-        "The raise Keyword",
-        "Escape Characters",
-        "String Stripping",
-        "Pandas Series and DataFrames",
-        "Data Selection (loc, iloc, shortcuts)",
-        "Sorting and Statistics",
-        "Vectorized Operations and Broadcasting",
-        "String and Function Mapping",
-        "Combining Data (Concat, Merge, Groupby)",
-        "pd.Series",
-        "pd.DataFrame",
-        "Viewing Data",
-        "Selection: loc",
-        "Selection: iloc",
-        "Selection Result Types",
-        "Boolean Indexing",
-        "Sorting",
-        "Broadcasting",
-        "Vectorized String Methods",
-        "isin()",
-        "apply()",
-        "Missing Data",
-        "Concatenation",
-        "Merging",
-        "Grouping",
-        "DatetimeIndex",
+        "Quotes, Escape Characters, and Immutability",
+        "Slicing with Step, Search, replace, join, strip, and the string Module",
+        "f-strings Basics, Formatting, and Debug Form",
+        "Class Definition, __init__, self, and Attribute Basics",
+        "try/except and raise",
+        "Pandas Core Structures",
+        "Inspecting and Selecting Data",
+        "Working With Values",
+        "Combining Data",
+        "Series, DataFrame, and Creation Patterns",
+        "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing",
+        "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+        "Concatenation, Merging, and Grouping",
         "Generators and Iterators",
-        "Date and Time Handling",
-        "State Management",
-        "Set Comprehensions",
-        "String Transformations via List Comprehension",
-        "Nested Dictionary Comprehensions",
-        "Walrus Operator in Comprehensions",
-        "Map and Filter vs. Comprehensions",
-        "Generator Functions",
-        "Generator Comprehensions",
-        "Iterators",
-        "datetime.now and Timestamps",
-        "strftime: Date to String",
-        "strptime: String to Date",
-        "Timedelta and Date Arithmetic",
-        "The replace() Method",
-        "Dictionary Comprehensions with Logic",
-        "Enumerate in Comprehensions"
+        "Datetime",
+        "List/Dict/Set Comprehensions, Nested Variants, Logic Filters, Walrus, and enumerate Patterns",
+        "Iterator Protocol, Generator Functions, and Generator Comprehensions",
+        "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
       ],
       "exam_question_counts": {
         "trial_midterm": 24,
@@ -17847,7 +18040,7 @@
         "Resit 22/23": 7,
         "intro_python_sample_final_24_25": 24,
         "Trial final exam Introduction to Python": 6,
-        "total": 142
+        "total": 137
       }
     }
   }
