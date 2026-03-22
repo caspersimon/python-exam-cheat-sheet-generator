@@ -15,25 +15,26 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260322d" />
-    <script defer src="./app/state-and-init.js?v=20260322d"></script>
-    <script defer src="./app/splash-storage.js?v=20260322d"></script>
-    <script defer src="./app/preview-pointer.js?v=20260322d"></script>
-    <script defer src="./app/course-outline.js?v=20260322d"></script>
-    <script defer src="./app/view-and-data.js?v=20260322d"></script>
-    <script defer src="./app/topic-selection.js?v=20260322d"></script>
-    <script defer src="./app/topic-detail-subtopics.js?v=20260322d"></script>
-    <script defer src="./app/render-card-sections.js?v=20260322d"></script>
-    <script defer src="./app/text-render-utils.js?v=20260322d"></script>
-    <script defer src="./app/card-interactions.js?v=20260322d"></script>
-    <script defer src="./app/preview-render.js?v=20260322d"></script>
-    <script defer src="./app/preview-card-render.js?v=20260322d"></script>
-    <script defer src="./app/preview-history.js?v=20260322d"></script>
-    <script defer src="./app/preview-edit-modal.js?v=20260322d"></script>
-    <script defer src="./app/preview-editing.js?v=20260322d"></script>
-    <script defer src="./app/layout-export-utils.js?v=20260322d"></script>
-    <script defer src="./app/pdf-export-utils.js?v=20260322d"></script>
-    <script defer src="./app/main.js?v=20260322d"></script>
+    <link rel="stylesheet" href="./styles.css?v=20260322h" />
+    <script defer src="./app/state-and-init.js?v=20260322h"></script>
+    <script defer src="./app/splash-storage.js?v=20260322h"></script>
+    <script defer src="./app/preview-pointer.js?v=20260322h"></script>
+    <script defer src="./app/course-outline.js?v=20260322h"></script>
+    <script defer src="./app/view-and-data.js?v=20260322h"></script>
+    <script defer src="./app/topic-selection.js?v=20260322h"></script>
+    <script defer src="./app/topic-detail-subtopics.js?v=20260322h"></script>
+    <script defer src="./app/render-card-sections.js?v=20260322h"></script>
+    <script defer src="./app/text-render-utils.js?v=20260322h"></script>
+    <script defer src="./app/code-render-utils.js?v=20260322h"></script>
+    <script defer src="./app/card-interactions.js?v=20260322h"></script>
+    <script defer src="./app/preview-render.js?v=20260322h"></script>
+    <script defer src="./app/preview-card-render.js?v=20260322h"></script>
+    <script defer src="./app/preview-history.js?v=20260322h"></script>
+    <script defer src="./app/preview-edit-modal.js?v=20260322h"></script>
+    <script defer src="./app/preview-editing.js?v=20260322h"></script>
+    <script defer src="./app/layout-export-utils.js?v=20260322h"></script>
+    <script defer src="./app/pdf-export-utils.js?v=20260322h"></script>
+    <script defer src="./app/main.js?v=20260322h"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   </head>
@@ -206,6 +207,11 @@
       <label class="field">
         <span>Base font size: <strong id="fontSizeValue">9.5</strong>px</span>
         <input id="fontSizeRange" type="range" min="7" max="14" step="0.5" value="9.5" />
+      </label>
+
+      <label class="field">
+        <span>Title size: <strong id="titleSizeValue">6.8</strong>px</span>
+        <input id="titleSizeRange" type="range" min="4.8" max="12" step="0.2" value="6.8" />
       </label>
 
       <label class="field">

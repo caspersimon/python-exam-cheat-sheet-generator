@@ -90,6 +90,7 @@ function resetAppProgress() {
   state.layout = {
     fontFamily: "'Manrope', sans-serif",
     fontSize: 9.5,
+    titleSize: 6.8,
     lineHeight: 1.1,
     letterSpacing: 0,
     cardGap: 6,
@@ -133,6 +134,9 @@ function hydratePersistedState() {
     }
     if (Number.isFinite(raw.layout.fontSize)) {
       state.layout.fontSize = clamp(Number(raw.layout.fontSize), 7, 14);
+    }
+    if (Number.isFinite(raw.layout.titleSize)) {
+      state.layout.titleSize = clamp(Number(raw.layout.titleSize), 4.8, 12);
     }
     if (Number.isFinite(raw.layout.lineHeight)) {
       state.layout.lineHeight = clamp(Number(raw.layout.lineHeight), 0.9, 1.5);
@@ -226,7 +230,7 @@ function hydratePersistedState() {
         page: layout.page === 2 ? 2 : 1,
         x: Number(layout.x) || 0,
         y: Number(layout.y) || 0,
-        width: Number(layout.width) || 260,
+        width: Number(layout.width) || 160,
         height: Number(layout.height) || 220,
         z: Number(layout.z) || 1,
         locked: Boolean(layout.locked),

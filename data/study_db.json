@@ -15094,343 +15094,271 @@
         "source": "materials/exams/trial midterm.pdf",
         "exam_label": "trial_midterm",
         "year": "2024-2025",
-        "note": "Trial midterm published 15/04/2025. Answers derived by code analysis — no answer key in PDF.",
+        "note": "Rebuilt from actual source PDF via pdftotext.",
         "questions": [
           {
             "number": 1,
-            "topic": "indexing / slicing",
+            "topic": "id",
             "week": 1,
-            "question": "What is the output of the following code?\n\nx = 'Hello, World!'\nprint(x[-6:-1])",
-            "options": {
-              "A": "World",
-              "B": "orld!",
-              "C": "World!",
-              "D": "orld"
-            },
-            "correct": "A",
-            "explanation": "x[-6:-1] starts 6 from the end ('W') and goes to 1 from the end (exclusive of '!'). That gives 'World'."
+            "question": "Assume you already have a variable called x, which contains a list of integers.\nWhich of the following programs will print you a list of the squared values of the elements in x?",
+            "code_context": "For example:\nIf x = [1, 2, 4, 8]\nthe program should prints:\n[1, 4, 16, 64].\nA mylist = []\nfor i in x:\nmylist[i] = x[i]**2\nprint(mylist)\nB mylist = [0] * len(x)\nfor i in range(len(x)):\nmylist[i] = x[i]**2\nprint(mylist)\nC mylist = []\nfor i in range(len(x)):\nmylist[i] = x[i]**2\nprint(mylist)\nD mylist = [0] * len(x)\nfor i in x:\nmylist[i] = x[i]**2\nprint(mylist)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 2,
-            "topic": "mutable / immutable",
-            "week": 1,
-            "question": "What is the output of the following code?\n\nx = [1, 2, 3]\ny = x\ny.append(4)\nprint(x)",
-            "options": {
-              "A": "[1, 2, 3]",
-              "B": "[1, 2, 3, 4]",
-              "C": "[4, 1, 2, 3]",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "y = x makes y point to the same list object. Appending to y also modifies x since they reference the same list."
+            "topic": "dictionary / dict / key value",
+            "week": 2,
+            "question": "Suppose you have a dictionary called characters, of which keys are strings and values are lists of strings.",
+            "code_context": "characters = {'first' : ['a', 'b', '1', 'c', '5'],\n'second': ['d', '2', 'e', '6', 'f'],\n'third' : ['3', 'g', '7', 'h', 'i']}\nYou want to modify the dictionary such that all the elements in the value lists are only character strings and not numeric\nstrings.\nThe intended output should look like this:\ncharacters = {'first': ['a', 'b', 'c'],\n'second': ['d', 'e', 'f'],\n'third': ['g', 'h', 'i']}\nWhich of the following programs will work as intended?\nHints:\nThe remove() list method removes the first occurrence of the element with the specified value.\nThe isnumeric() string method returns True if all the characters are numeric (0-9), otherwise False.\nA for array in characters.values():\nfor element in array:\nif element.isnumeric():\narray.remove(element)\nB for array in characters.values():\nfor index, element in enumerate(array):\nif element.isnumeric():\ndel array[index]\nC for key, value in characters.items():\nfor element in value:\nif element.isnumeric():\ndel value[value.index(element)]\nD All of the programs will work as intended.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 3,
-            "topic": "type conversion",
+            "topic": "id",
             "week": 1,
-            "question": "What is the output of the following code?\n\nx = '5'\ny = 2\nprint(x * y)",
-            "options": {
-              "A": "10",
-              "B": "52",
-              "C": "55",
-              "D": "Error"
-            },
-            "correct": "C",
-            "explanation": "String * integer repeats the string. '5' * 2 = '55'."
+            "question": "Suppose you have the following function:\ndef multiply(*args, factor=2):\ntotal = 1\nfor num in args:\ntotal *= num\nreturn total * factor\nWhich of the following functions will return the same values as the function above, if we call the function thrice as follows:\nmultiply(1, 2, factor=3)\nmultiply(3, 4)\nmultiply()\nA def multiply(*args, factor=2):\ntotal = args[0]\nfor num in args:\ntotal *= num\nreturn total * factor\nB def multiply(*args, factor=2):\nif not args:\nreturn 0\ntotal = args[0]\nfor num in args[1:]:\ntotal *= num\nreturn total * factor\nC Both functions will return the same values.\nD Neither functions will return the same values.",
+            "code_context": "Suppose you have the following function:\ndef multiply(*args, factor=2):\ntotal = 1\nfor num in args:\ntotal *= num\nreturn total * factor\nWhich of the following functions will return the same values as the function above, if we call the function thrice as follows:\nmultiply(1, 2, factor=3)\nmultiply(3, 4)\nmultiply()\nA def multiply(*args, factor=2):\ntotal = args[0]\nfor num in args:\ntotal *= num\nreturn total * factor\nB def multiply(*args, factor=2):\nif not args:\nreturn 0\ntotal = args[0]\nfor num in args[1:]:\ntotal *= num\nreturn total * factor\nC Both functions will return the same values.\nD Neither functions will return the same values.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 4,
-            "topic": "slicing",
+            "topic": "id",
             "week": 1,
-            "question": "What is the output of the following code?\n\nx = [0, 1, 2, 3, 4, 5]\nprint(x[1:5:2])",
-            "options": {
-              "A": "[1, 3]",
-              "B": "[1, 2, 3, 4]",
-              "C": "[0, 2, 4]",
-              "D": "[1, 2]"
-            },
-            "correct": "A",
-            "explanation": "x[1:5:2] starts at index 1, stops before index 5, step 2. Gives elements at indices 1 and 3: [1, 3]."
+            "question": "Assume you have the following variables:\nx = 3\ny = 3.0\nz = '3'\nWhat will be printed by the following code:\nprint((x != z and x == int(z)) or (x != y and y != z))\nA 3\nB The code will result in an error.\nC False\nD True",
+            "code_context": "Assume you have the following variables:\nx = 3\ny = 3.0\nz = '3'\nWhat will be printed by the following code:\nprint((x != z and x == int(z)) or (x != y and y != z))\nA 3\nB The code will result in an error.\nC False\nD True",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 5,
-            "topic": "identity / is operator",
-            "week": 1,
-            "question": "What is the output of the following code?\n\na = [1, 2, 3]\nb = [1, 2, 3]\nprint(a == b, a is b)",
-            "options": {
-              "A": "True True",
-              "B": "False False",
-              "C": "True False",
-              "D": "False True"
-            },
-            "correct": "C",
-            "explanation": "a == b compares values (True). a is b checks identity — they are different objects (False)."
+            "topic": "enumerate",
+            "week": 2,
+            "question": "Consider the following code snippet:\ni = 1\nwhile True:\nif i % 2 == 0:\ni += 1\ncontinue\nelif i == 7:\nbreak\nelse:\nprint(i)\ni += 1\nWhich of the following code snippets will print the same output?\nA for i in range(1, 5, 2):\nprint(i)\nB x = 'numbers'\nfor i, j in enumerate(x):\nif i % 2 != 0:\nprint(i)\nC x = '12345'\nfor i in x:\nif i % 2 != 0:\nprint(i)\nD for i in range(7, 1, -2):\nprint(i)",
+            "code_context": "Consider the following code snippet:\ni = 1\nwhile True:\nif i % 2 == 0:\ni += 1\ncontinue\nelif i == 7:\nbreak\nelse:\nprint(i)\ni += 1\nWhich of the following code snippets will print the same output?\nA for i in range(1, 5, 2):\nprint(i)\nB x = 'numbers'\nfor i, j in enumerate(x):\nif i % 2 != 0:\nprint(i)\nC x = '12345'\nfor i in x:\nif i % 2 != 0:\nprint(i)\nD for i in range(7, 1, -2):\nprint(i)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 6,
-            "topic": "dictionaries",
+            "topic": "condition /  in ",
             "week": 2,
-            "question": "What is the output of the following code?\n\nd = {'a': 1, 'b': 2, 'c': 3}\nprint('d' in d)",
-            "options": {
-              "A": "True",
-              "B": "False",
-              "C": "Error",
-              "D": "None"
-            },
-            "correct": "B",
-            "explanation": "'in' on a dict checks keys. 'd' is not a key in d, so the result is False."
+            "question": "Consider the following code snippet:\ndef main(lst, condition=lambda x: x):\ny = []\nfor x in lst:\nif condition(x):\ny.append(x)\nreturn y\nWhat will this function return, when called in the following way:\nmain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], lambda x: x % 2 != 0)\nA [2, 4, 6, 8, 10]\nB [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nC [1, 3, 5, 7, 9]\nD None",
+            "code_context": "Consider the following code snippet:\ndef main(lst, condition=lambda x: x):\ny = []\nfor x in lst:\nif condition(x):\ny.append(x)\nreturn y\nWhat will this function return, when called in the following way:\nmain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], lambda x: x % 2 != 0)\nA [2, 4, 6, 8, 10]\nB [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nC [1, 3, 5, 7, 9]\nD None",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 7,
-            "topic": "lists / append vs extend",
-            "week": 2,
-            "question": "What is the output of the following code?\n\nlst = [1, 2, 3]\nlst.append([4, 5])\nprint(len(lst))",
-            "options": {
-              "A": "4",
-              "B": "5",
-              "C": "6",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "append adds the list [4, 5] as a single element. The list becomes [1, 2, 3, [4, 5]], length 4."
+            "topic": "id / name",
+            "week": 1,
+            "question": "You need to write a function called dict_keys that checks whether a certain key is in available in a certain dictionary.",
+            "code_context": "For example:\nIf we call the function as dict_keys({\"name\": \"Josh\", \"age\": 56}, 'city')\nit should return False.\nIf we call the function as dict_keys({\"name\": \"Josh\", \"age\": 56}, 'name')\nit should return True.\nWhich of the following code snippets will work as intended?\nA def dict_keys(dictionary, key):\nif not(key in dictionary.keys()):\nreturn True\nelse:\nreturn False\nB def dict_keys(dictionary, key):\nif key not in dictionary:\nreturn True\nelse:\nreturn False\nC def dict_keys(dictionary, key):\nif key in dictionary.keys():\nreturn True\nelse:\nreturn False\nD def dict_keys(dictionary, key):\nif key in dictionary.items():\nreturn True\nelse:\nreturn False",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 8,
-            "topic": "truthy / falsy",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "Which of the following values is truthy in Python?",
-            "options": {
-              "A": "0",
-              "B": "''",
-              "C": "[]",
-              "D": "' '"
-            },
-            "correct": "D",
-            "explanation": "A string with at least one space is truthy. 0, empty string, and empty list are all falsy."
+            "question": "Suppose you have the following dictionary:\nlibrary = {\"books\": 5,\n\"genres\": ['action', 'romance', 'thriller', 'classics']}\nYou want to:\n- add a key \"years\", of which the value is a list of strings that are the years of publication, i.e., [\"1932\" , \"2012\", \"1899\",\n\"2000\", \"1984\"],\n- change the value of the key \"books\" to 6.\nThe new value of the dictionary library should be:\n{\"books\" : 6,\n\"genres\" : ['action', 'romance', 'thriller', 'classics'],\n\"years\" : [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]}\nWhich of the programs below will work as intended?\nA library[\"books\"] = 6\nlibrary.update({\"years\": [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]})\nB library[\"books\"] = 6\nlibrary[\"years\"] = [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]\nC Both of the given options\nD None of the given options",
+            "code_context": "Suppose you have the following dictionary:\nlibrary = {\"books\": 5,\n\"genres\": ['action', 'romance', 'thriller', 'classics']}\nYou want to:\n- add a key \"years\", of which the value is a list of strings that are the years of publication, i.e., [\"1932\" , \"2012\", \"1899\",\n\"2000\", \"1984\"],\n- change the value of the key \"books\" to 6.\nThe new value of the dictionary library should be:\n{\"books\" : 6,\n\"genres\" : ['action', 'romance', 'thriller', 'classics'],\n\"years\" : [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]}\nWhich of the programs below will work as intended?\nA library[\"books\"] = 6\nlibrary.update({\"years\": [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]})\nB library[\"books\"] = 6\nlibrary[\"years\"] = [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]\nC Both of the given options\nD None of the given options",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 9,
-            "topic": "for loops / range",
-            "week": 2,
-            "question": "What is the output of the following code?\n\nresult = 0\nfor i in range(1, 6):\n    result += i\nprint(result)",
-            "options": {
-              "A": "10",
-              "B": "15",
-              "C": "21",
-              "D": "6"
-            },
-            "correct": "B",
-            "explanation": "range(1,6) gives 1,2,3,4,5. Sum = 15."
+            "topic": "id",
+            "week": 1,
+            "question": "Consider the following code snippet:\nmylist = [1, 2, 5, 7, 9, 12]\nnew_list1 = mylist[0:3]\nnew_list2 = mylist[1:4]\nprint(new_list1 + new_list2)\nWhat will be printed?\nA [1, 2, 5, 7, 2, 5, 7, 9]\nB [1, 2, 5, 2, 5, 7]\nC [2, 5, 7, 5, 7, 9]\nD [2, 5, 5, 7]",
+            "code_context": "Consider the following code snippet:\nmylist = [1, 2, 5, 7, 9, 12]\nnew_list1 = mylist[0:3]\nnew_list2 = mylist[1:4]\nprint(new_list1 + new_list2)\nWhat will be printed?\nA [1, 2, 5, 7, 2, 5, 7, 9]\nB [1, 2, 5, 2, 5, 7]\nC [2, 5, 7, 5, 7, 9]\nD [2, 5, 5, 7]",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 10,
-            "topic": "while loops / walrus operator",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "What is the output of the following code?\n\nnumbers = [1, 3, 5, 2, 7]\nresult = []\nfor num in numbers:\n    if num % 2 == 0:\n        result.append(num)\nprint(result)",
-            "options": {
-              "A": "[1, 3, 5, 7]",
-              "B": "[2]",
-              "C": "[]",
-              "D": "[1, 3, 5, 2, 7]"
-            },
-            "correct": "B",
-            "explanation": "Only 2 is even in the list. result = [2]."
+            "question": "Suppose you have the following dictionary:\nx = {1: 10, 2: 20, 3: 30, 4: 40}\nWhat will the following line of code print?\nprint(list(x.values()) + list(x.keys()))\nA This code will result in an error because you cannot concatenate two lists using the + operator.\nB [10, 20, 30, 40, 1, 2, 3, 4]\nC [11, 22, 33, 44]\nD [(1, 10), (2, 20), (3, 30), (4, 40)]",
+            "code_context": "Suppose you have the following dictionary:\nx = {1: 10, 2: 20, 3: 30, 4: 40}\nWhat will the following line of code print?\nprint(list(x.values()) + list(x.keys()))\nA This code will result in an error because you cannot concatenate two lists using the + operator.\nB [10, 20, 30, 40, 1, 2, 3, 4]\nC [11, 22, 33, 44]\nD [(1, 10), (2, 20), (3, 30), (4, 40)]",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 11,
-            "topic": "scope / global",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nx = 10\ndef modify():\n    x = 20\n    print(x)\nmodify()\nprint(x)",
-            "options": {
-              "A": "20\n20",
-              "B": "10\n10",
-              "C": "20\n10",
-              "D": "10\n20"
-            },
-            "correct": "C",
-            "explanation": "Inside modify(), x = 20 creates a local variable. Printing inside gives 20. After the call, global x is still 10."
+            "topic": "id / type / types",
+            "week": 1,
+            "question": "Consider the following code snippet:\nx = 10\ny = '5'\nz = x + y\n​What will be the value of 'z' and why?\nA The code will result in a None because 'x' and 'y' have different types.\nB The code will result in an error because you can't add an integer and a string together.\nC The value of z will be '105' because Python concatenates strings.\nD The value of z will be 15 because the string '5' will be implicitly converted to an integer.",
+            "code_context": "Consider the following code snippet:\nx = 10\ny = '5'\nz = x + y\n​What will be the value of 'z' and why?\nA The code will result in a None because 'x' and 'y' have different types.\nB The code will result in an error because you can't add an integer and a string together.\nC The value of z will be '105' because Python concatenates strings.\nD The value of z will be 15 because the string '5' will be implicitly converted to an integer.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 12,
-            "topic": "scope / UnboundLocalError",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nx = 5\ndef func():\n    print(x)\n    x = 10\nfunc()",
-            "options": {
-              "A": "5",
-              "B": "10",
-              "C": "UnboundLocalError",
-              "D": "None"
-            },
-            "correct": "C",
-            "explanation": "Because x is assigned inside func(), Python treats x as local throughout the function. Printing x before assignment raises UnboundLocalError."
+            "topic": "id",
+            "week": 1,
+            "question": "Which other program will produce the same output as the following code snippet?",
+            "code_context": "num = 300\ndef main():\nnum = 2000\nprint(num)\nmain()\nprint(num)\nA def main():\nglobal num\nnum = 300\nmain()\nprint(num)\nB num = 300\ndef outer():\nnum = 2000\ndef inner():\nnum = 300\nprint(num)\nprint(num)\nouter()\nprint(num)\nC def outer():\nnum = 2000\ndef inner():\nnum = 300\nprint(num)\nprint(num)\nouter()\ninner()\nD num = 300\ndef main():\nglobal num\nnum = 2000\nmain()\nprint(num)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 13,
-            "topic": "default arguments / mutable defaults",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef add_item(item, lst=[]):\n    lst.append(item)\n    return lst\n\nprint(add_item(1))\nprint(add_item(2))\nprint(add_item(3))",
-            "options": {
-              "A": "[1]\n[2]\n[3]",
-              "B": "[1]\n[1, 2]\n[1, 2, 3]",
-              "C": "[1, 2, 3]\n[1, 2, 3]\n[1, 2, 3]",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "The default list [] is created once when the function is defined and shared across all calls. Each call appends to the same list."
+            "topic": "condition /  in ",
+            "week": 2,
+            "question": "You need to write a function called weather_alert that accepts a string argument, which is a color code of the weather\nalert system.",
+            "code_context": "Your function should return one of the following lines to inform the citizens of what to do depending on the color:\nIf the color is red, return: \"Take action to protect against severe condition.\"\nIf the color is orange, return: \"Be prepared for damages.\"\nIf the color is yellow, return: \"Be alert for potential hazard.\"\nFor any other colors, return: \"No warning.\"\nWhich of the following program will do want you need?\nA def weather_alert(color):\nif color == \"red\":\nreturn \"Take action to protect against severe condition.\"\nelif color == \"orange\":\nreturn \"Be prepared for damages.\"\nelif color == \"yellow\":\nreturn \"Be alert for potential hazard.\"\nreturn \"No warning.\"\nB def weather_alert(color):\nif color == \"red\":\nprint(\"Take action to protect against severe condition.\")\nelif color == \"orange\":\nprint(\"Be prepared for damages.\")\nelif color == \"yellow\":\nprint(\"Be alert for potential hazard.\")\nelse:\nprint(\"No warning.\")\nC def weather_alert(color):\nif color == \"red\":\nreturn \"Take action to protect against severe condition.\"\nelif color == \"orange\":\nreturn \"Be prepared for damages.\"\nelif color == \"yellow\":\nreturn \"Be alert for potential hazard.\"\nelif color == \"green\":\nreturn \"No warning.\"\nD All of the programs should work as intended.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 14,
-            "topic": "*args",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef func(*args):\n    return sum(args)\n\nprint(func(1, 2, 3, 4, 5))",
-            "options": {
-              "A": "15",
-              "B": "(1, 2, 3, 4, 5)",
-              "C": "[1, 2, 3, 4, 5]",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "*args collects all positional arguments as a tuple. sum((1,2,3,4,5)) = 15."
+            "topic": "id / type / types",
+            "week": 1,
+            "question": "Consider the following code snippet:\na = 1\nb = 2.0\nc = '3'\nd = 'hello'\ny = {}\nfor i in [0,1]:\nif i==0:\nif type(a)==type(b):\ny[i] = True\nelse:\ny[i] = False\nif i==1:\nif type(c)==type(d):\ny[i] = True\nelse:\ny[i] = False\nprint(y)\nWhat will this code snippet print?\nA {0:      1, 1: 1}\nB {0: True, 1: True}\nC {0:      0, 1: 1}\nD {0: False, 1: True}",
+            "code_context": "Consider the following code snippet:\na = 1\nb = 2.0\nc = '3'\nd = 'hello'\ny = {}\nfor i in [0,1]:\nif i==0:\nif type(a)==type(b):\ny[i] = True\nelse:\ny[i] = False\nif i==1:\nif type(c)==type(d):\ny[i] = True\nelse:\ny[i] = False\nprint(y)\nWhat will this code snippet print?\nA {0:      1, 1: 1}\nB {0: True, 1: True}\nC {0:      0, 1: 1}\nD {0: False, 1: True}",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 15,
-            "topic": "lambda",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndouble = lambda x: x * 2\nprint(double(5))",
-            "options": {
-              "A": "25",
-              "B": "10",
-              "C": "52",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "The lambda multiplies its argument by 2. double(5) = 5 * 2 = 10."
+            "topic": "id / name",
+            "week": 1,
+            "question": "Suppose you have the following function count_characters, which takes two arguments:\na list of strings which are names, and\nan optional keyword argument called character that has a default value of 'a'.\ndef count_character(x, character='a'):\ny = {}\nfor key in x:\ncount = 0\nfor char in key:\nif char == character:\ncount += 1\ny[key] = count\nreturn y\nWhat would be returned by this function, if we call the function twice as follows:\ncount_character(['Emma', 'Julia', 'Ian', 'Noah', 'Liam', 'Anna'], 'i')\ncount_character(['Emma', 'Julia', 'Ian', 'Noah', 'Liam', 'Anna'])\nA {'Emma': 0, 'Julia': 1, 'Ian': 0, 'Noah': 0, 'Liam': 1, 'Anna': 0}\n{'Emma': 1, 'Julia': 1, 'Ian': 1, 'Noah': 1, 'Liam': 1, 'Anna': 1}\nB The first function call will result in an error because there are too many arguments.\nC The second function call will result in an error because there is a missing argument.\nD {'Emma': 0, 'Julia': 1, 'Ian': 0, 'Noah': 0, 'Liam': 1, 'Anna': 0}\n{'Emma': 0, 'Julia': 0, 'Ian': 0, 'Noah': 0, 'Liam': 0, 'Anna': 0}",
+            "code_context": "Suppose you have the following function count_characters, which takes two arguments:\na list of strings which are names, and\nan optional keyword argument called character that has a default value of 'a'.\ndef count_character(x, character='a'):\ny = {}\nfor key in x:\ncount = 0\nfor char in key:\nif char == character:\ncount += 1\ny[key] = count\nreturn y\nWhat would be returned by this function, if we call the function twice as follows:\ncount_character(['Emma', 'Julia', 'Ian', 'Noah', 'Liam', 'Anna'], 'i')\ncount_character(['Emma', 'Julia', 'Ian', 'Noah', 'Liam', 'Anna'])\nA {'Emma': 0, 'Julia': 1, 'Ian': 0, 'Noah': 0, 'Liam': 1, 'Anna': 0}\n{'Emma': 1, 'Julia': 1, 'Ian': 1, 'Noah': 1, 'Liam': 1, 'Anna': 1}\nB The first function call will result in an error because there are too many arguments.\nC The second function call will result in an error because there is a missing argument.\nD {'Emma': 0, 'Julia': 1, 'Ian': 0, 'Noah': 0, 'Liam': 1, 'Anna': 0}\n{'Emma': 0, 'Julia': 0, 'Ian': 0, 'Noah': 0, 'Liam': 0, 'Anna': 0}",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 16,
-            "topic": "map function",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nnumbers = [1, 2, 3, 4, 5]\nsquared = list(map(lambda x: x**2, numbers))\nprint(squared)",
-            "options": {
-              "A": "[1, 4, 9, 16, 25]",
-              "B": "[2, 4, 6, 8, 10]",
-              "C": "[1, 2, 3, 4, 5]",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "map applies the lambda (x**2) to each element: [1, 4, 9, 16, 25]."
+            "topic": "id",
+            "week": 1,
+            "question": "What is the output of the program below?",
+            "code_context": "x = [1, 2, 3, 4, 5, 6, 7, 8]\ncount = [None] * len(x)\nfor i in range(len(x)):\nif x[i] > 4:\ncount[i] = True\nelse:\ncount[i] = False\nsum(count)\nA 0\nB 4\nC This code will result in an error as you cannot multiple None with an integer.\nD None",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 17,
-            "topic": "filter function",
+            "topic": "lambda / map",
             "week": 3,
-            "question": "What is the output of the following code?\n\nnumbers = [1, 2, 3, 4, 5, 6]\neven = list(filter(lambda x: x % 2 == 0, numbers))\nprint(even)",
-            "options": {
-              "A": "[1, 3, 5]",
-              "B": "[2, 4, 6]",
-              "C": "[1, 2, 3, 4, 5, 6]",
-              "D": "[]"
-            },
-            "correct": "B",
-            "explanation": "filter keeps elements for which the lambda returns True. Even numbers: [2, 4, 6]."
+            "question": "You have four different blocks of code. Three of them return the same list, one of them returns something different.\nWhich block of code prints something different than the other blocks print?",
+            "code_context": "A def squared_function(x):\nreturn x**2\nprint(squared_function([1, 2, 3]))\nB print(list(map(lambda x: x**2, [1, 2, 3])))\nC def squared_function(x):\nreturn x**2\nprint(list(map(squared_function, [1, 2, 3])))\nD squared_numbers = lambda x: x**2\nprint([squared_numbers(1), squared_numbers(2), squared_numbers(3)])",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 18,
-            "topic": "sorted / key",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nwords = ['banana', 'apple', 'cherry', 'date']\nsorted_words = sorted(words, key=len)\nprint(sorted_words)",
-            "options": {
-              "A": "['apple', 'banana', 'cherry', 'date']",
-              "B": "['date', 'apple', 'banana', 'cherry']",
-              "C": "['apple', 'date', 'banana', 'cherry']",
-              "D": "['cherry', 'banana', 'apple', 'date']"
-            },
-            "correct": "B",
-            "explanation": "sorted by len: date(4), apple(5), banana(6), cherry(6). Ties in len preserve original order: ['date', 'apple', 'banana', 'cherry']."
+            "topic": "id",
+            "week": 1,
+            "question": "Suppose you have the following function which take a list of numerical strings as an argument.",
+            "code_context": "def counter(y):\nx = {}\nfor index, element in enumerate(y):\nif index != int(element) and int(element) % 2 == 0:\nx[element] = len(element)\nreturn x\nWhat will this function return, when we call the function as follows:\ncounter(['12345678', '1', '123', '1234', '12345', '12', '6', '1', '123456'])\nA {'12345678': 8, '1': 1, '1234': 4, '12': 2, '6': 1, '123456': 6}\nB {'12345678': 8, '1234': 4, '12': 2, '123456': 6}\nC {'12345678': 8, '123': 3, '1234': 4, '12345': 5, '12': 2, '6': 1, '1': 1, '123456':\n6}\nD {'123': 3, '12345': 5, '1': 1}",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 19,
-            "topic": "function factories / closures",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef make_multiplier(n):\n    def multiplier(x):\n        return x * n\n    return multiplier\n\ntimes3 = make_multiplier(3)\nprint(times3(5))",
-            "options": {
-              "A": "15",
-              "B": "8",
-              "C": "3",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "make_multiplier(3) returns a closure that multiplies by 3. times3(5) = 5 * 3 = 15."
+            "topic": "dictionary / dict",
+            "week": 2,
+            "question": "Suppose you have the following function:\ndef my_count_function(string):\ncounts = {}\nfor letter in string:\nif letter in counts:\ncounts[letter] += 1\nelse:\ncounts[letter] = 1\nreturn counts\nAnd you create the following two dictionaries:\napple_count = my_count_function(\"apple\")\npeach_count = my_count_function(\"peach\")\nWhich of the code snippets of code below prints something different than the other code snippets?\nA print(len(apple_count.keys()))\nB print(len(peach_count.keys()))\nC print(sum(apple_count.values()))\nD print(sum(peach_count.values()))",
+            "code_context": "Suppose you have the following function:\ndef my_count_function(string):\ncounts = {}\nfor letter in string:\nif letter in counts:\ncounts[letter] += 1\nelse:\ncounts[letter] = 1\nreturn counts\nAnd you create the following two dictionaries:\napple_count = my_count_function(\"apple\")\npeach_count = my_count_function(\"peach\")\nWhich of the code snippets of code below prints something different than the other code snippets?\nA print(len(apple_count.keys()))\nB print(len(peach_count.keys()))\nC print(sum(apple_count.values()))\nD print(sum(peach_count.values()))",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 20,
-            "topic": "mutable args",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef append_to(element, to):\n    to.append(element)\n    return to\n\nmy_list = []\nresult1 = append_to(1, my_list)\nresult2 = append_to(2, my_list)\nprint(result1)\nprint(result2)",
-            "options": {
-              "A": "[1]\n[2]",
-              "B": "[1]\n[1, 2]",
-              "C": "[1, 2]\n[1, 2]",
-              "D": "Error"
-            },
-            "correct": "C",
-            "explanation": "Both result1 and result2 refer to the same list my_list. After both calls, my_list = [1, 2], so both prints show [1, 2]."
+            "topic": "id",
+            "week": 1,
+            "question": "You have the following list:\nmy_list = [1,2,3,4]\nWhich one of the following lines of code lines does not print 4 as the output?\nA print(my_list[4])\nB print(my_list[-1])\nC print(max(my_list))\nD print(len(my_list))",
+            "code_context": "You have the following list:\nmy_list = [1,2,3,4]\nWhich one of the following lines of code lines does not print 4 as the output?\nA print(my_list[4])\nB print(my_list[-1])\nC print(max(my_list))\nD print(len(my_list))",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 21,
-            "topic": "nested loops",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nresult = []\nfor i in range(3):\n    for j in range(3):\n        if i == j:\n            result.append((i, j))\nprint(result)",
-            "options": {
-              "A": "[(0,0), (1,1), (2,2)]",
-              "B": "[(0,1), (0,2), (1,2)]",
-              "C": "[(0,0), (0,1), (0,2)]",
-              "D": "[]"
-            },
-            "correct": "A",
-            "explanation": "Only pairs where i == j: (0,0), (1,1), (2,2)."
+            "topic": "id",
+            "week": 1,
+            "question": "Consider the following code snippet:\nx = [\"a\", \"b\", \"c\", \"4\"]\nprint(x[-3] + x[3]*3)\nWhich of the following code snippet will print the same output?\nA y = [1, 2, 3, 4]\nprint('b'+ max(y)*3)\nB print('b' + str(len(x)*3))\nC z = [[\"a\", \"b\", \"c\"], [1, 2, 3, 4]]\nprint(z[0][1] + str(z[1][3])*3)\nD print('b'+ str(8 % 4)*3)",
+            "code_context": "Consider the following code snippet:\nx = [\"a\", \"b\", \"c\", \"4\"]\nprint(x[-3] + x[3]*3)\nWhich of the following code snippet will print the same output?\nA y = [1, 2, 3, 4]\nprint('b'+ max(y)*3)\nB print('b' + str(len(x)*3))\nC z = [[\"a\", \"b\", \"c\"], [1, 2, 3, 4]]\nprint(z[0][1] + str(z[1][3])*3)\nD print('b'+ str(8 % 4)*3)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 22,
-            "topic": "keyword args / **kwargs",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef greet(**kwargs):\n    for key, value in kwargs.items():\n        print(f'{key}: {value}')\n\ngreet(name='Alice', age=30)",
-            "options": {
-              "A": "name: Alice\nage: 30",
-              "B": "Alice: name\n30: age",
-              "C": "{'name': 'Alice', 'age': 30}",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "**kwargs collects keyword arguments as a dict. Iterating items() gives key-value pairs: name: Alice, age: 30."
+            "topic": "id / name",
+            "week": 1,
+            "question": "Suppose you have the following a dictionary called students, which contains three sub-dictionaries:\nstudents = {\"james\": {\"name\": \"James\",\n\"homework\": [90.0, 97.0, 75.0, 92.0],\n\"quizzes\": [88.0, 40.0, 94.0],\n\"tests\": [75.0, 90.0]},\n\"eva\":   {\"name\": \"Eva\",\n\"homework\": [100.0, 92.0, 98.0, 100.0],\n\"quizzes\": [82.0, 83.0, 91.0],\n\"tests\": [89.0, 97.0]},\n\"david\": {\"name\": \"David\",\n\"homework\": [0.0, 87.0, 75.0, 22.0],\n\"quizzes\": [0.0, 75.0, 78.0],\n\"tests\": [100.0, 100.0]}\n}\nYou want to create a function that calculates the average final course grade of a student.\nThe final course grade is calculated as 20% average homework grade, 10% average quizzes grade and 70% average tests\ngrade.\nWhich of the following programs will work as intended and will give the final course grade of Eva?\nA def average(numbers):\nreturn sum(numbers)/(len(numbers))\ndef final_average(student):\nhomework = average(student['homework'])\nquizzes = average(student['quizzes'])\ntests = average(student['tests'])\nreturn round(0.2*homework + 0.1*quizzes + 0.7*tests, 2)\nfinal_average(students[\"eva\"])\nB def final_average(student):\ndef average(numbers):\nreturn sum(numbers)/(len(numbers)\nhomework = average(student['homework'])\nquizzes = average(student['quizzes'])\ntests = average(student['tests'])\nreturn round(0.2*homework + 0.1*quizzes + 0.7*tests, 2)\nfinal_average(students[\"eva\"])\nC Both functions will give the correct output.\nD Neither functions will give the correct output.",
+            "code_context": "Suppose you have the following a dictionary called students, which contains three sub-dictionaries:\nstudents = {\"james\": {\"name\": \"James\",\n\"homework\": [90.0, 97.0, 75.0, 92.0],\n\"quizzes\": [88.0, 40.0, 94.0],\n\"tests\": [75.0, 90.0]},\n\"eva\":   {\"name\": \"Eva\",\n\"homework\": [100.0, 92.0, 98.0, 100.0],\n\"quizzes\": [82.0, 83.0, 91.0],\n\"tests\": [89.0, 97.0]},\n\"david\": {\"name\": \"David\",\n\"homework\": [0.0, 87.0, 75.0, 22.0],\n\"quizzes\": [0.0, 75.0, 78.0],\n\"tests\": [100.0, 100.0]}\n}\nYou want to create a function that calculates the average final course grade of a student.\nThe final course grade is calculated as 20% average homework grade, 10% average quizzes grade and 70% average tests\ngrade.\nWhich of the following programs will work as intended and will give the final course grade of Eva?\nA def average(numbers):\nreturn sum(numbers)/(len(numbers))\ndef final_average(student):\nhomework = average(student['homework'])\nquizzes = average(student['quizzes'])\ntests = average(student['tests'])\nreturn round(0.2*homework + 0.1*quizzes + 0.7*tests, 2)\nfinal_average(students[\"eva\"])\nB def final_average(student):\ndef average(numbers):\nreturn sum(numbers)/(len(numbers)\nhomework = average(student['homework'])\nquizzes = average(student['quizzes'])\ntests = average(student['tests'])\nreturn round(0.2*homework + 0.1*quizzes + 0.7*tests, 2)\nfinal_average(students[\"eva\"])\nC Both functions will give the correct output.\nD Neither functions will give the correct output.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 23,
-            "topic": "reduce function",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nfrom functools import reduce\nnumbers = [1, 2, 3, 4, 5]\nresult = reduce(lambda x, y: x * y, numbers)\nprint(result)",
-            "options": {
-              "A": "15",
-              "B": "120",
-              "C": "24",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "reduce multiplies left to right: 1*2=2, 2*3=6, 6*4=24, 24*5=120."
+            "topic": "dictionary / dict / key value",
+            "week": 2,
+            "question": "You have to write a function called summarize which take a list of integers as an argument.",
+            "code_context": "The function should return a dictionary with the following key-value pairs:\namount: the number of the integers from the input list\nsmallest: the smallest integer from the input list\nlargest: the largest integer from the input list\ntotal: the sum of all integers from the input list\nWhich of the following functions will achieve what you need?\nA def summarize(x):\ny = {}\nx['amount'] = len(y)\nx['smallest'] = min(y)\nx['largest'] = max(y)\nx['total'] = sum(y)\nreturn x\nB def summarize(x):\ny = {}\ntotal = 0\nfor integer in x:\ny['amount'] = len(x)\nif integer == min(x):\ny['smallest'] = min(x)\nelif integer == max(x):\ny['largest'] = max(x)\nelse:\ny['total'] += integer\nreturn y\nC def summarize(x):\ny = {}\nfor integer in x:\nif integer == min(x):\ny['smallest'] == min(x)\nelif integer == max(x):\ny['largest'] == max(x)\nelse:\ny['amount'] == x.count()\ny['total'] == sum(x)\nreturn y\nD None of the functions will work as needed.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 24,
-            "topic": "for vs while / loop control",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nresult = []\ni = 0\nwhile i < 5:\n    if i % 2 == 0:\n        result.append(i)\n    i += 1\nprint(result)",
-            "options": {
-              "A": "[1, 3]",
-              "B": "[0, 2, 4]",
-              "C": "[0, 1, 2, 3, 4]",
-              "D": "[2, 4]"
-            },
-            "correct": "B",
-            "explanation": "Loop i=0..4, appending even values: 0, 2, 4. Result = [0, 2, 4]."
+            "topic": "id",
+            "week": 1,
+            "question": "Consider the following code snippet:\na = True\nb = False\nc = True\nd = False\nif not (a or b) and (c or d):\nprint(\"True\")\nelse:\nprint(\"False\")\nWhat will be printed by the code?\nA The code will result in an error.\nB True\nC None\nD False\nEnd of test Trial Midterm - Introduction to Python - 23/24",
+            "code_context": "Consider the following code snippet:\na = True\nb = False\nc = True\nd = False\nif not (a or b) and (c or d):\nprint(\"True\")\nelse:\nprint(\"False\")\nWhat will be printed by the code?\nA The code will result in an error.\nB True\nC None\nD False\nEnd of test Trial Midterm - Introduction to Python - 23/24",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from trial midterm.pdf; answer key not embedded in source PDF."
           }
         ]
       },
@@ -15438,233 +15366,183 @@
         "source": "materials/exams/2023.pdf",
         "exam_label": "midterm_2023",
         "year": "2022-2023",
-        "note": "Trial midterm 22/23. Scanned PDF — answers read from filled radio buttons. Some question text reconstructed from visual inspection.",
+        "note": "Rebuilt from actual source PDF via pdftotext.",
         "questions": [
           {
             "number": 1,
-            "topic": "objects / identity",
-            "week": 1,
-            "question": "What is the output of the following code?\n\nx = 257\ny = 257\nprint(x is y)",
-            "options": {
-              "A": "True",
-              "B": "False",
-              "C": "Error",
-              "D": "None"
-            },
-            "correct": "B",
-            "explanation": "For integers outside the range [-5, 256], Python does not guarantee interning. Two separate 257 literals are different objects, so 'is' returns False."
+            "topic": " in ",
+            "week": 2,
+            "question": "What is the output of the following code snippet?",
+            "code_context": "x = 1\ny = 15\nprint(not(not(x < 3) and not(y > 14 or y > 10)))\nA     The code will result in a SyntaxError.\nB      True\nC      False\nD      0",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 2,
-            "topic": "slicing",
-            "week": 1,
-            "question": "What is the output of the following code?\n\nlst = [10, 20, 30, 40, 50]\nprint(lst[::2])",
-            "options": {
-              "A": "[10, 30, 50]",
-              "B": "[20, 40]",
-              "C": "[10, 20, 30, 40, 50]",
-              "D": "[50, 30, 10]"
-            },
-            "correct": "A",
-            "explanation": "lst[::2] takes every other element starting from index 0: [10, 30, 50]."
+            "topic": "loop",
+            "week": 2,
+            "question": "What is the output of the following code snippet?",
+            "code_context": "list1 = [1, 2, 3, 4, 5]\nlist2 = [2, 4, 6, 8, 10]\nlist3 = []\nfor i in list1:\nfor j in list2:\nif i + j >= 10:\nbreak\nlist3.append(i + j)\nprint(list3)\nA     [3, 5, 7, 9, 4, 6, 8, 5, 7, 9, 6, 8, 7, 9]\nB      [3, 5, 7, 8, 9, 6, 8, 10]\nC      [3, 5, 7, 8, 9, 6, 8, 9]\nD      This code will result in an IndexError.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 3,
-            "topic": "mutable / immutable",
-            "week": 1,
-            "question": "Which of the following is immutable in Python?\n\na) list\nb) dict\nc) tuple\nd) set",
-            "options": {
-              "A": "list",
-              "B": "dict",
-              "C": "tuple",
-              "D": "set"
-            },
-            "correct": "C",
-            "explanation": "Tuples are immutable — their elements cannot be changed after creation. Lists, dicts, and sets are mutable."
+            "topic": "scope / global / local",
+            "week": 3,
+            "question": "Which other program will give the same output as the following code snippet?",
+            "code_context": "def outer():\na = 5\ndef inner():\na = 10\nprint(\"Value of a inside inner():\", a)\ninner()\nprint(\"Value of a inside outer():\", a)\nouter()\nA     x = 10\ndef outer():\nx = 5\ndef inner():\nglobal x\ninner()\nprint(\"Value of x inside outer():\", x)\nouter()\nprint(\"Value of x outside outer():\", x)\nB      x = 10\ndef outer():\nx = 5\ndef inner():\nnonlocal x\ninner()\nprint(\"Value of x inside outer():\", x)\nouter()\nprint(\"Value of x outside outer():\", x)\nC      def outer():\nx = 10\ndef inner():\nglobal x\nx = 5\ninner()\nprint(\"Value of x inside outer():\", x)\nouter()\nprint(\"Value of x outside outer():\", x)\nD      def outer():\nx = 5\ndef inner():\nnonlocal x\nx = 10\ninner()\nprint(\"Value of x inside outer():\", x)\nouter()\nprint(\"Value of x outside outer():\", x)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 4,
-            "topic": "string indexing",
+            "topic": "type / types",
             "week": 1,
-            "question": "What is the output of the following code?\n\ns = 'Python'\nprint(s[1:4])",
-            "options": {
-              "A": "Pyt",
-              "B": "yth",
-              "C": "ytho",
-              "D": "ython"
-            },
-            "correct": "B",
-            "explanation": "s[1:4] gives characters at indices 1, 2, 3: 'y', 't', 'h' = 'yth'."
+            "question": "Assume you have the following variables:\nx = 'abc'\ny = 3\nz = 2.0\nWhat will be printed after these lines of code?\nprint(x*y)\nprint(x*z)\nprint(y*z)\nA      'abcabcabc'\nThe code will result in a TypeError because you can't multiply a float and a string together.\n6.0\nB       The code will result in a ValueError because you can't concatenate a string and an integer.\nThe code will result in a TypeError because you can't multiply a float and a string together.\n6\nC       'abcabcabc'\n'abcabc'\n6.0\nD       'abcabcabc'\nThe code will result in a TypeError because you can't multiply a float and a string together.\n6",
+            "code_context": "Assume you have the following variables:\nx = 'abc'\ny = 3\nz = 2.0\nWhat will be printed after these lines of code?\nprint(x*y)\nprint(x*z)\nprint(y*z)\nA      'abcabcabc'\nThe code will result in a TypeError because you can't multiply a float and a string together.\n6.0\nB       The code will result in a ValueError because you can't concatenate a string and an integer.\nThe code will result in a TypeError because you can't multiply a float and a string together.\n6\nC       'abcabcabc'\n'abcabc'\n6.0\nD       'abcabcabc'\nThe code will result in a TypeError because you can't multiply a float and a string together.\n6",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 5,
-            "topic": "dictionaries",
+            "topic": "dictionary / dict / key value",
             "week": 2,
-            "question": "What is the output of the following code?\n\nd = {'a': 1, 'b': 2}\nd['c'] = 3\nprint(len(d))",
-            "options": {
-              "A": "2",
-              "B": "3",
-              "C": "4",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "After adding key 'c', the dictionary has 3 keys: 'a', 'b', 'c'. len(d) = 3."
+            "question": "What is the output of the program below?",
+            "code_context": "x = {1: 10, 2: 20, 3: 30, 4: 40, 5: 50}\ny = {1: 50, 2: 40, 3: 30, 4: 20, 5: 10}\nz = x.copy()\nfor key, value in x.items():\nif key in y:\nif value <= y[key]:\nz[key] = y[key]\nz[key] = y[key]\nprint(z)\nA      {1: 50, 2: 40, 3: 30, 4: 20, 5: 10}\nB       {1: 10, 2: 20, 3: 30, 4: 40, 5: 50}\nC       None of the given options\nD       {}",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 6,
-            "topic": "lists",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "What is the output of the following code?\n\nlst = [1, 2, 3]\nlst2 = lst[:]\nlst2.append(4)\nprint(lst)\nprint(lst2)",
-            "options": {
-              "A": "[1, 2, 3]\n[1, 2, 3, 4]",
-              "B": "[1, 2, 3, 4]\n[1, 2, 3, 4]",
-              "C": "[1, 2, 3]\n[1, 2, 3]",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "lst[:] creates a shallow copy. Modifying lst2 does not affect lst. lst stays [1,2,3], lst2 becomes [1,2,3,4]."
+            "question": "Suppose you have the following dictionary:\nsample_dict = {\n\"name\": \"Kim\",\n\"age\": 25,\n\"birthdate\": \"3-2-1998\",\n\"city\": \"Amsterdam\"}\nSuppose you want to create a dictionary that only contains the keys 'name' and 'city'.\nWhich of the following code snippets return(s) the desired dictionary?\nA     keys = [\"name\", \"city\"]\nnew_dict = {}\nfor k in keys:\nnew_dict[k] = sample_dict[k]\nnew_dict\nB      keys = [\"age\", \"birthdate\"]\nnew_dict = {}\nnew_keys = sample_dict.keys() - keys\nfor k in new_keys:\nnew_dict[k] = sample_dict[k]\nnew_dict\nC      None of the given options\nD      Both of the given options",
+            "code_context": "Suppose you have the following dictionary:\nsample_dict = {\n\"name\": \"Kim\",\n\"age\": 25,\n\"birthdate\": \"3-2-1998\",\n\"city\": \"Amsterdam\"}\nSuppose you want to create a dictionary that only contains the keys 'name' and 'city'.\nWhich of the following code snippets return(s) the desired dictionary?\nA     keys = [\"name\", \"city\"]\nnew_dict = {}\nfor k in keys:\nnew_dict[k] = sample_dict[k]\nnew_dict\nB      keys = [\"age\", \"birthdate\"]\nnew_dict = {}\nnew_keys = sample_dict.keys() - keys\nfor k in new_keys:\nnew_dict[k] = sample_dict[k]\nnew_dict\nC      None of the given options\nD      Both of the given options",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 7,
-            "topic": "conditions / truthy falsy",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "What is the output of the following code?\n\nx = 0\nif x:\n    print('truthy')\nelse:\n    print('falsy')",
-            "options": {
-              "A": "truthy",
-              "B": "falsy",
-              "C": "0",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "0 is falsy in Python. The else branch executes, printing 'falsy'."
+            "question": "Suppose you have the following dictionary:\ncloset = {\n\"shirts\" : 5,\n\"colors\" : ['red', 'yellow', 'blue', 'pink']\n}\nYou want to:\n- add a key \"shoes\" which has a value that is a list containing the strings \"sneakers\" and \"heels\"\n- add 2 shirts, so that the value of the key \"shirts\" becomes 7\nSo the final dictionary should look like:\n{'shirts': 7, 'colors': ['red', 'yellow', 'blue', 'pink'], 'shoes': ['sneakers', 'heels']}\nWhich of the programs below will work as intended?\nA     shoes = {'shoes': ['sneakers', 'heels']}\ncloset[\"shirts\"] = 7\ncloset = dict(zip(closet, shoes))\nB      closet.keys() = closet.keys() + \"shoes\"\ncloset.values() = [7, ['red', 'yellow', 'blue', 'pink'], ['sneakers', 'heels']]\nC      Both of the given options\nD      None of the given options",
+            "code_context": "Suppose you have the following dictionary:\ncloset = {\n\"shirts\" : 5,\n\"colors\" : ['red', 'yellow', 'blue', 'pink']\n}\nYou want to:\n- add a key \"shoes\" which has a value that is a list containing the strings \"sneakers\" and \"heels\"\n- add 2 shirts, so that the value of the key \"shirts\" becomes 7\nSo the final dictionary should look like:\n{'shirts': 7, 'colors': ['red', 'yellow', 'blue', 'pink'], 'shoes': ['sneakers', 'heels']}\nWhich of the programs below will work as intended?\nA     shoes = {'shoes': ['sneakers', 'heels']}\ncloset[\"shirts\"] = 7\ncloset = dict(zip(closet, shoes))\nB      closet.keys() = closet.keys() + \"shoes\"\ncloset.values() = [7, ['red', 'yellow', 'blue', 'pink'], ['sneakers', 'heels']]\nC      Both of the given options\nD      None of the given options",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 8,
-            "topic": "for loops / enumerate",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "What is the output of the following code?\n\nfruits = ['apple', 'banana', 'cherry']\nfor i, fruit in enumerate(fruits):\n    print(i, fruit)",
-            "options": {
-              "A": "0 apple\n1 banana\n2 cherry",
-              "B": "1 apple\n2 banana\n3 cherry",
-              "C": "apple 0\nbanana 1\ncherry 2",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "enumerate starts at 0 by default and yields (index, value) pairs."
+            "question": "Suppose you have the following function:\ndef my_count_function(string):\ncounts = {}\nfor letter in string:\ncounts[letter] = string.count(letter)\nreturn counts\nAnd you create the following two dictionaries:\ndesk_count = my_count_function(\"desk\")\nlaptop_count = my_count_function(\"laptop\")\nWhich of the lines of code below returns something different than the rest?\nA     len(desk_count)\nB      max(laptop_count.values())*2\nC      sum(desk_count.values())\nD      sum(laptop_count.keys())",
+            "code_context": "Suppose you have the following function:\ndef my_count_function(string):\ncounts = {}\nfor letter in string:\ncounts[letter] = string.count(letter)\nreturn counts\nAnd you create the following two dictionaries:\ndesk_count = my_count_function(\"desk\")\nlaptop_count = my_count_function(\"laptop\")\nWhich of the lines of code below returns something different than the rest?\nA     len(desk_count)\nB      max(laptop_count.values())*2\nC      sum(desk_count.values())\nD      sum(laptop_count.keys())",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 9,
-            "topic": "scope / global",
+            "topic": "argument / default",
             "week": 3,
-            "question": "What is the output of the following code?\n\ncount = 0\ndef increment():\n    global count\n    count += 1\n\nincrement()\nincrement()\nprint(count)",
-            "options": {
-              "A": "0",
-              "B": "1",
-              "C": "2",
-              "D": "Error"
-            },
-            "correct": "C",
-            "explanation": "The global keyword lets increment() modify the global count. After two calls, count = 2."
+            "question": "Suppose you have the following function:\ndef add_numbers(num1, num2 = 10, num3 = 20):\nreturn num1 + num2 + num3\nWhat are the outputs if we call the function three times as follows:\nadd_numbers(5, 15)\nadd_numbers(5, num3 = 30)\nadd_numbers(num2 = 15, num3 = 10)\nA     40\n45\n25\nB      40\n45\nThe code will result in TypeError because there is a missing argument.\nC      25\n35\n35\nD      All three lines of code will result in TypeError because there is a missing argument.",
+            "code_context": "Suppose you have the following function:\ndef add_numbers(num1, num2 = 10, num3 = 20):\nreturn num1 + num2 + num3\nWhat are the outputs if we call the function three times as follows:\nadd_numbers(5, 15)\nadd_numbers(5, num3 = 30)\nadd_numbers(num2 = 15, num3 = 10)\nA     40\n45\n25\nB      40\n45\nThe code will result in TypeError because there is a missing argument.\nC      25\n35\n35\nD      All three lines of code will result in TypeError because there is a missing argument.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 10,
-            "topic": "return statement",
+            "topic": "argument / **kwargs / kwargs",
             "week": 3,
-            "question": "What is the output of the following code?\n\ndef func():\n    return 1, 2, 3\n\nresult = func()\nprint(type(result))",
-            "options": {
-              "A": "<class 'list'>",
-              "B": "<class 'tuple'>",
-              "C": "<class 'int'>",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "Returning multiple values with commas creates a tuple. type(result) is tuple."
+            "question": "You need to write a function called print_info which takes two required arguments called name and age, and a flexible number of keyword\narguments.\nThe function should return a dictionary with name, age, and all other key-value pairs that may be passed as keyword arguments.",
+            "code_context": "For example:\nIf we call the function as:\nprint_info('John', 30, city = 'New York', job = 'software engineer')\nthen it should return the dictionary:\n{'name' = 'John', 'age' = 30, 'city' = 'New York', 'job' = 'software engineer'}\nWhich of the following code snippets will do what you want?\nA     def print_info(name, age, **kwargs):\ninfo = {}\ninfo['name'] = name\ninfo['age'] = age\nfor key, value in kwargs.items():\ninfo[key] = value\nreturn info\nB      def print_info(**kwargs, name, age):\nfor key, value in kwargs:\ninfo = {}\ninfo[key] = value\ninfo['name'] = name\ninfo['age'] = age\nreturn info\nC      def print_info(name, age, **kwargs):\ninfo = {}\ninfo.append(name)\ninfo.append(age)\nfor element in kwargs:\ninfo.append(element)\nprint(info)\nD      def print_info(name, age, **kwargs):\ninfo = {}\ninfo['name'] = name\ninfo['age'] = age\nfor key in kwargs.keys() and value in kwargs.values():\ninfo[key] = value\nreturn info",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 11,
-            "topic": "default args",
+            "topic": "lambda",
             "week": 3,
-            "question": "What is the output of the following code?\n\ndef greet(name, greeting='Hello'):\n    print(f'{greeting}, {name}!')\n\ngreet('Alice')\ngreet('Bob', 'Hi')",
-            "options": {
-              "A": "Hello, Alice!\nHi, Bob!",
-              "B": "Hi, Alice!\nHello, Bob!",
-              "C": "Hello, Alice!\nHello, Bob!",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "First call uses default greeting 'Hello'. Second call overrides with 'Hi'."
+            "question": "You need to write a function called sort_list that accepts a list of integers.\nThe function should return a new list, in which the elements are sorted from highest to lowest based on their absolute values.",
+            "code_context": "For example:\nIf we call the function as:\nsort_list([-9, 2, 5, -3, -10, 4, 7])\nthen it should return the list:\n[-10, -9, 7, 5, 4, -3, 2]\nWhich of the following functions will give you the correct output?\nA    def sort_list(x):\nreturn sorted(x, key = lambda num: abs(num), reverse = True)\nB    def sort_list(x):\nreturn sorted(nums, key = lambda x: abs(x), reverse = True)\nC    def sort_list(x):\nreturn x.sort(key = lambda num: abs(num), reverse = True)\nD    All of three functions will give the correct output.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 12,
-            "topic": "lambda / sorted",
-            "week": 3,
-            "question": "What is the output of the following code?\n\npairs = [(1, 3), (2, 1), (3, 2)]\nsorted_pairs = sorted(pairs, key=lambda x: x[1])\nprint(sorted_pairs)",
-            "options": {
-              "A": "[(1, 3), (2, 1), (3, 2)]",
-              "B": "[(2, 1), (3, 2), (1, 3)]",
-              "C": "[(3, 2), (2, 1), (1, 3)]",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "Sorted by second element (x[1]): 1 < 2 < 3. Result: [(2,1), (3,2), (1,3)]."
+            "topic": "function",
+            "week": 1,
+            "question": "You want to write a program to calculate your income tax for 2023.",
+            "code_context": "Suppose your country imposes the following tax brackets:\nBracket Tax        Taxable income\nrate       Over          Not over\n1        10%       $0            $11,000\n2        12%       $11,000       $45,000\n3        22%       $45,000       $95,000\n4        32%       $95,000\nIf your gross income is $50,000, you will pay 10% tax on the first $11,000, 12% tax on the next $34,000 and 22% tax on the last $5,000.\nWhich of the following function will return the output containing your net_income and your total_tax given your gross_income?\nFor example:\nIf we call the function as:\nincome_tax_calculator(50000)\nit should return:\n{'total_tax': 6280.0, 'net_income': 43720.0}\nA     def income_tax_calculator(gross_income):\nresults = {}\nrate_1 = 0.10\nrate_2 = 0.12\nrate_3 = 0.22\nrate_4 = 0.32\nbracket_1 = 11000\nbracket_2 = 45000 - 11000\nbracket_3 = 95000 - 45000\nif gross_income > 95000:\ntotal_tax = ((gross_income - 95000) * rate_4) + (bracket_3 * rate_3) + (bracket_2 * rate_2)\n+ (bracket_1 * rate_1)\nelif 95000 >= gross_income > 45000:\ntotal_tax = ((gross_income - 45000) * rate_3) + (bracket_2 * rate_2) + (bracket_1 * rate_1)\nelif 45000 >= gross_income > 11000:\ntotal_tax = ((gross_income - 11000) * rate_2) + (bracket_1 * rate_1)\nelse:\ntotal_tax = gross_income * rate_1\nnet_income = gross_income - total_tax\nresults['total_tax'] = round(total_tax, 2)\nresults['net_income'] = round(net_income, 2)\nreturn results\nB      def income_tax_calculator(gross_income):\n​    results = {}\nrate_1 = 0.10\nrate_2 = 0.12\nrate_3 = 0.22\nrate_4 = 0.32\nbracket_1 = 11000\nbracket_2 = 45000 - 11001\nbracket_3 = 95000 - 45001\ntotal_tax = (gross_income - 95001) * rate_4 + (bracket_3 * rate_3) + (bracket_2 * rate_2) +\n(bracket_1 * rate_1)\nnet_income = lambda gross_income, total_tax: gross_income - total_tax\nresults['total_tax'] = round(total_tax, 2)\nresults['net_income'] = round(net_income, 2)\nreturn results\nC      def income_tax_calculator(gross_income):\n​    results = {}\nrate_1 = 0.10\nrate_2 = 0.12\nrate_3 = 0.22\nrate_4 = 0.32\nif gross_income <= 11000:\ntotal_tax = gross_income * rate_1\nif 45000 > gross_income > 11000:\ntotal_tax += (45000 - gross_income) * rate_2\nif 95000 > gross_income > 45000:\ntotal_tax += (95000 - gross_income) * rate_3\nelse:\ntotal_tax += (gross_income - 95000) * rate_4\nnet_income = gross_income - total_tax\nresults['total_tax'] = total_tax\nresults['net_income'] = net_income\nreturn(total_tax, net_income)\nD      All of three functions will work as intended.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 13,
-            "topic": "map / filter",
+            "topic": "lambda / map",
             "week": 3,
-            "question": "What is the output of the following code?\n\nnums = [1, 2, 3, 4, 5]\nresult = list(filter(lambda x: x > 2, map(lambda x: x * 2, nums)))\nprint(result)",
-            "options": {
-              "A": "[6, 8, 10]",
-              "B": "[2, 4, 6, 8, 10]",
-              "C": "[3, 4, 5]",
-              "D": "[4, 6, 8, 10]"
-            },
-            "correct": "A",
-            "explanation": "map doubles: [2,4,6,8,10]. filter keeps >2: [4,6,8,10]... wait, 4>2, 6>2, 8>2, 10>2 so [4,6,8,10]. But 2 is not >2 so filtered out. Result: [4, 6, 8, 10].",
-            "correct_override": "D",
-            "note": "map doubles [1,2,3,4,5] -> [2,4,6,8,10]. filter(x>2) keeps [4,6,8,10]. Correct answer is D."
+            "question": "Suppose you have the following functions, one to elevates a number to square and the second elevates to cube:\ndef square(n):\nreturn (n**2)\ndef cube(n):\nreturn (n**3)\nYou want to apply both functions to the elements in a list at the same time.\nFor example:\nIf you have a list such as:\nmy_list = [0, 1, 2, 3, 4]\nyou want to print:\n[0, 0]\n[1, 1]\n[4, 8]\n[9, 27]\n[16, 64]\nWhich of the following blocks of codes works as intended?\nA     funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x(i), funcs)\nprint(list(results))\nB      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x[i], funcs)\nprint(list(results))\nC      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x(i), funcs)\nprint(results)\nD      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x[i], funcs)\nprint(results)",
+            "code_context": "Suppose you have the following functions, one to elevates a number to square and the second elevates to cube:\ndef square(n):\nreturn (n**2)\ndef cube(n):\nreturn (n**3)\nYou want to apply both functions to the elements in a list at the same time.\nFor example:\nIf you have a list such as:\nmy_list = [0, 1, 2, 3, 4]\nyou want to print:\n[0, 0]\n[1, 1]\n[4, 8]\n[9, 27]\n[16, 64]\nWhich of the following blocks of codes works as intended?\nA     funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x(i), funcs)\nprint(list(results))\nB      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x[i], funcs)\nprint(list(results))\nC      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x(i), funcs)\nprint(results)\nD      funcs = [square, cube]\nfor i in my_list:\nresults = map(lambda x: x[i], funcs)\nprint(results)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 14,
-            "topic": "*args / **kwargs",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef func(a, b, *args, **kwargs):\n    print(a, b, args, kwargs)\n\nfunc(1, 2, 3, 4, x=5, y=6)",
-            "options": {
-              "A": "1 2 (3, 4) {'x': 5, 'y': 6}",
-              "B": "1 2 [3, 4] {'x': 5, 'y': 6}",
-              "C": "1 2 3 4 5 6",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "a=1, b=2, args=(3,4) as tuple, kwargs={'x':5,'y':6} as dict."
+            "topic": "enumerate / loop",
+            "week": 2,
+            "question": "Assume you already have a variable called alphabet, which contains a string, e.g., alphabet = \"abcdefghijklmnopqrstuvwxyz\"\nWhich of the following code snippets will give the same output as the following command?\nprint(list(alphabet[1::2]))\nHint: The reverse() method reverses the sorting order of the elements in a list.\nA      values = []\nfor index, value in enumerate(alphabet, start=1):\nif index % 2 == 0:\nvalues.append(value)\nprint(values)\nB       values = []\nfor index, value in enumerate(alphabet[::-1]):\nif index % 2 == 0:\nvalues.append(value)\nvalues.reverse()\nprint(values)\nC       Both of the given options.\nD       None of the given options.",
+            "code_context": "Assume you already have a variable called alphabet, which contains a string, e.g., alphabet = \"abcdefghijklmnopqrstuvwxyz\"\nWhich of the following code snippets will give the same output as the following command?\nprint(list(alphabet[1::2]))\nHint: The reverse() method reverses the sorting order of the elements in a list.\nA      values = []\nfor index, value in enumerate(alphabet, start=1):\nif index % 2 == 0:\nvalues.append(value)\nprint(values)\nB       values = []\nfor index, value in enumerate(alphabet[::-1]):\nif index % 2 == 0:\nvalues.append(value)\nvalues.reverse()\nprint(values)\nC       Both of the given options.\nD       None of the given options.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 15,
-            "topic": "nested functions / scope",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef outer():\n    x = 10\n    def inner():\n        print(x)\n    inner()\n\nouter()",
-            "options": {
-              "A": "10",
-              "B": "None",
-              "C": "Error",
-              "D": "0"
-            },
-            "correct": "A",
-            "explanation": "inner() can access x from the enclosing scope (closure). Prints 10."
+            "topic": "list",
+            "week": 2,
+            "question": "Assume you already have a variable a, which is an integer between 1 and 4.\nWhat is the ​output of the following ​code snippet?",
+            "code_context": "mylist = [1, 3, 5, 7, 9]\nprint(mylist[a] + mylist[-a])\nA      12\nB       11\nC       10\nD       8",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 16,
-            "topic": "zip / looping",
+            "topic": "list",
             "week": 2,
-            "question": "What is the output of the following code?\n\nnames = ['Alice', 'Bob', 'Charlie']\nscores = [85, 92, 78]\nfor name, score in zip(names, scores):\n    print(f'{name}: {score}')",
-            "options": {
-              "A": "Alice: 85\nBob: 92\nCharlie: 78",
-              "B": "Alice: 92\nBob: 85\nCharlie: 78",
-              "C": "Alice Bob Charlie: 85 92 78",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "zip pairs elements positionally. Output: Alice: 85, Bob: 92, Charlie: 78."
+            "question": "Consider the following code snippet:\nmylist = [1, 3, 2, 3, 4, 5, 3, 3]\nmylist.append('3')\nmylist.remove(3)\nprint(mylist.count(3))\nWhat will be the output?\nHint: The remove() list method removes the first occurrence of the element with the specified value.\nA     3\nB      4\nC      0\nD      None of the given options.",
+            "code_context": "Consider the following code snippet:\nmylist = [1, 3, 2, 3, 4, 5, 3, 3]\nmylist.append('3')\nmylist.remove(3)\nprint(mylist.count(3))\nWhat will be the output?\nHint: The remove() list method removes the first occurrence of the element with the specified value.\nA     3\nB      4\nC      0\nD      None of the given options.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2023.pdf; answer key not embedded in source PDF."
           }
         ]
       },
@@ -15672,345 +15550,271 @@
         "source": "materials/exams/2024.pdf",
         "exam_label": "midterm_2024",
         "year": "2023-2024",
-        "note": "Trial midterm 23/24. Answers read from boxed letters in PDF.",
+        "note": "Rebuilt from actual source PDF via pdftotext.",
         "questions": [
           {
             "number": 1,
-            "topic": "objects / types",
-            "week": 1,
-            "question": "What is the output of the following code?\n\nprint(type(True))",
-            "options": {
-              "A": "<class 'int'>",
-              "B": "<class 'bool'>",
-              "C": "<class 'str'>",
-              "D": "<class 'NoneType'>"
-            },
-            "correct": "B",
-            "explanation": "True is of type bool in Python."
+            "topic": "none",
+            "week": 3,
+            "question": "Consider the following code snippet:\na = True\nb = False\nc = True\nd = False\nif not (a or b) and (c or d):\nprint(\"True\")\nelse:\nprint(\"False\")\nWhat will be printed by the code?\nA     True\nB      False\nC      The code will result in an error.\nD      None",
+            "code_context": "Consider the following code snippet:\na = True\nb = False\nc = True\nd = False\nif not (a or b) and (c or d):\nprint(\"True\")\nelse:\nprint(\"False\")\nWhat will be printed by the code?\nA     True\nB      False\nC      The code will result in an error.\nD      None",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 2,
-            "topic": "mutable / immutable",
-            "week": 1,
-            "question": "What is the output of the following code?\n\nt = (1, 2, 3)\nt[0] = 10",
-            "options": {
-              "A": "(10, 2, 3)",
-              "B": "(1, 2, 3)",
-              "C": "TypeError",
-              "D": "None"
-            },
-            "correct": "C",
-            "explanation": "Tuples are immutable. Attempting to assign to an index raises TypeError."
+            "topic": " in ",
+            "week": 2,
+            "question": "Assume you have the following variables:\nx = 3\ny = 3.0\nz = '3'\nWhat will be printed by the following code:\nprint((x != z and x == int(z)) or (x != y and y != z))\nA     True\nB      False\nC      The code will result in an error.\nD      3",
+            "code_context": "Assume you have the following variables:\nx = 3\ny = 3.0\nz = '3'\nWhat will be printed by the following code:\nprint((x != z and x == int(z)) or (x != y and y != z))\nA     True\nB      False\nC      The code will result in an error.\nD      3",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 3,
-            "topic": "slicing",
-            "week": 1,
-            "question": "What is the output of the following code?\n\ns = 'abcdef'\nprint(s[2:5])",
-            "options": {
-              "A": "bcd",
-              "B": "cde",
-              "C": "cdef",
-              "D": "bcde"
-            },
-            "correct": "B",
-            "explanation": "s[2:5] gives characters at indices 2,3,4: 'c','d','e' = 'cde'."
+            "topic": "enumerate / loop",
+            "week": 2,
+            "question": "Consider the following code snippet:\ni = 1\nwhile True:\nif i % 2 == 0:\ni += 1\ncontinue\nelif i == 7:\nbreak\nelse:\nprint(i)\ni += 1\nWhich of the following code snippets will print the same output?\nA     for i in range(1, 5, 2):\nprint(i)\nB      for i in range(7, 1, -2):\nprint(i)\nC      x = 'numbers'\nfor i, j in enumerate(x):\nif i % 2 != 0:\nprint(i)\nD      x = '12345'\nfor i in x:\nif i % 2 != 0:\nprint(i)",
+            "code_context": "Consider the following code snippet:\ni = 1\nwhile True:\nif i % 2 == 0:\ni += 1\ncontinue\nelif i == 7:\nbreak\nelse:\nprint(i)\ni += 1\nWhich of the following code snippets will print the same output?\nA     for i in range(1, 5, 2):\nprint(i)\nB      for i in range(7, 1, -2):\nprint(i)\nC      x = 'numbers'\nfor i, j in enumerate(x):\nif i % 2 != 0:\nprint(i)\nD      x = '12345'\nfor i in x:\nif i % 2 != 0:\nprint(i)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 4,
-            "topic": "indexing / negative",
+            "topic": "id / type / types",
             "week": 1,
-            "question": "What is the output of the following code?\n\nlst = [10, 20, 30, 40, 50]\nprint(lst[-2])",
-            "options": {
-              "A": "20",
-              "B": "30",
-              "C": "40",
-              "D": "50"
-            },
-            "correct": "C",
-            "explanation": "lst[-2] is the second-to-last element: 40."
+            "question": "Consider the following code snippet:\na = 1\nb = 2.0\nc = '3'\nd = 'hello'\ny = {}\nfor i in [0,1]:\nif i==0:\nif type(a)==type(b):\ny[i] = True\nelse:\ny[i] = False\nif i==1:\nif type(c)==type(d):\ny[i] = True\nelse:\ny[i] = False\nprint(y)\nWhat will this code snippet print?\nA      {0: False, 1: True}\nB       {0: True, 1: True}\nC       {0:   0, 1: 1}\nD       {0:   1, 1: 1}",
+            "code_context": "Consider the following code snippet:\na = 1\nb = 2.0\nc = '3'\nd = 'hello'\ny = {}\nfor i in [0,1]:\nif i==0:\nif type(a)==type(b):\ny[i] = True\nelse:\ny[i] = False\nif i==1:\nif type(c)==type(d):\ny[i] = True\nelse:\ny[i] = False\nprint(y)\nWhat will this code snippet print?\nA      {0: False, 1: True}\nB       {0: True, 1: True}\nC       {0:   0, 1: 1}\nD       {0:   1, 1: 1}",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 5,
-            "topic": "type conversion",
-            "week": 1,
-            "question": "What is the output of the following code?\n\nprint(int('42') + float('3.5'))",
-            "options": {
-              "A": "45",
-              "B": "45.5",
-              "C": "'423.5'",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "int('42')=42, float('3.5')=3.5. 42 + 3.5 = 45.5."
+            "topic": "scope / global",
+            "week": 3,
+            "question": "Which other program will produce the same output as the following code snippet?",
+            "code_context": "num = 300\ndef main():\nnum = 2000\nprint(num)\nmain()\nprint(num)\nA     def main():\nglobal num\nnum = 300\nmain()\nprint(num)\nB      num = 300\ndef main():\nglobal num\nnum = 2000\nmain()\nprint(num)\nC      def outer():\nnum = 2000\ndef inner():\nnum = 300\nprint(num)\nprint(num)\nouter()\ninner()\nD      num = 300\ndef outer():\nnum = 2000\ndef inner():\nnum = 300\nprint(num)\nprint(num)\nouter()\nprint(num)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 6,
-            "topic": "augmented operators",
-            "week": 2,
-            "question": "What is the output of the following code?\n\nx = 10\nx //= 3\nprint(x)",
-            "options": {
-              "A": "3",
-              "B": "3.33",
-              "C": "4",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "//= is floor division assignment. 10 // 3 = 3."
+            "topic": "id / type / types",
+            "week": 1,
+            "question": "Consider the following code snippet:\nx = 10\ny = '5'\nz = x + y\n​What will be the value of 'z' and why?\nA      The value of z will be 15 because the string '5' will be implicitly converted to an integer.\nB       The value of z will be '105' because Python concatenates strings.\nC       The code will result in an error because you can't add an integer and a string together.\nD       The code will result in a None because 'x' and 'y' have different types.",
+            "code_context": "Consider the following code snippet:\nx = 10\ny = '5'\nz = x + y\n​What will be the value of 'z' and why?\nA      The value of z will be 15 because the string '5' will be implicitly converted to an integer.\nB       The value of z will be '105' because Python concatenates strings.\nC       The code will result in an error because you can't add an integer and a string together.\nD       The code will result in a None because 'x' and 'y' have different types.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 7,
-            "topic": "dictionaries",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "What is the output of the following code?\n\nd = {'x': 1, 'y': 2, 'z': 3}\ndel d['y']\nprint(d)",
-            "options": {
-              "A": "{'x': 1, 'z': 3}",
-              "B": "{'x': 1, 'y': 2, 'z': 3}",
-              "C": "{'y': 2}",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "del removes key 'y'. Remaining dict: {'x': 1, 'z': 3}."
+            "question": "Suppose you have the following a dictionary called students, which contains three sub-dictionaries:\nstudents = {\"james\": {\"name\": \"James\",\n\"homework\": [90.0, 97.0, 75.0, 92.0],\n\"quizzes\": [88.0, 40.0, 94.0],\n\"tests\": [75.0, 90.0]},\n\"eva\":   {\"name\": \"Eva\",\n\"homework\": [100.0, 92.0, 98.0, 100.0],\n\"quizzes\": [82.0, 83.0, 91.0],\n\"tests\": [89.0, 97.0]},\n\"david\": {\"name\": \"David\",\n\"homework\": [0.0, 87.0, 75.0, 22.0],\n\"quizzes\": [0.0, 75.0, 78.0],\n\"tests\": [100.0, 100.0]}\n}\nYou want to create a function that calculates the average final course grade of a student.\nThe final course grade is calculated as 20% average homework grade, 10% average quizzes grade and 70% average tests grade.\nWhich of the following programs will work as intended and will give the final course grade of Eva?\nA     def average(numbers):\nreturn sum(numbers)/(len(numbers))\ndef final_average(student):\nhomework = average(student['homework'])\nquizzes = average(student['quizzes'])\ntests = average(student['tests'])\nreturn round(0.2*homework + 0.1*quizzes + 0.7*tests, 2)\nfinal_average(students[\"eva\"])\nB      def final_average(student):\ndef average(numbers):\nreturn sum(numbers)/(len(numbers)\nhomework = average(student['homework'])\nquizzes = average(student['quizzes'])\ntests = average(student['tests'])\nreturn round(0.2*homework + 0.1*quizzes + 0.7*tests, 2)\nfinal_average(students[\"eva\"])\nC      Both functions will give the correct output.\nD      Neither functions will give the correct output.",
+            "code_context": "Suppose you have the following a dictionary called students, which contains three sub-dictionaries:\nstudents = {\"james\": {\"name\": \"James\",\n\"homework\": [90.0, 97.0, 75.0, 92.0],\n\"quizzes\": [88.0, 40.0, 94.0],\n\"tests\": [75.0, 90.0]},\n\"eva\":   {\"name\": \"Eva\",\n\"homework\": [100.0, 92.0, 98.0, 100.0],\n\"quizzes\": [82.0, 83.0, 91.0],\n\"tests\": [89.0, 97.0]},\n\"david\": {\"name\": \"David\",\n\"homework\": [0.0, 87.0, 75.0, 22.0],\n\"quizzes\": [0.0, 75.0, 78.0],\n\"tests\": [100.0, 100.0]}\n}\nYou want to create a function that calculates the average final course grade of a student.\nThe final course grade is calculated as 20% average homework grade, 10% average quizzes grade and 70% average tests grade.\nWhich of the following programs will work as intended and will give the final course grade of Eva?\nA     def average(numbers):\nreturn sum(numbers)/(len(numbers))\ndef final_average(student):\nhomework = average(student['homework'])\nquizzes = average(student['quizzes'])\ntests = average(student['tests'])\nreturn round(0.2*homework + 0.1*quizzes + 0.7*tests, 2)\nfinal_average(students[\"eva\"])\nB      def final_average(student):\ndef average(numbers):\nreturn sum(numbers)/(len(numbers)\nhomework = average(student['homework'])\nquizzes = average(student['quizzes'])\ntests = average(student['tests'])\nreturn round(0.2*homework + 0.1*quizzes + 0.7*tests, 2)\nfinal_average(students[\"eva\"])\nC      Both functions will give the correct output.\nD      Neither functions will give the correct output.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 8,
-            "topic": "sets",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "What is the output of the following code?\n\ns = {1, 2, 3, 2, 1}\nprint(len(s))",
-            "options": {
-              "A": "5",
-              "B": "3",
-              "C": "2",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "Sets do not allow duplicates. {1,2,3,2,1} has 3 unique elements."
+            "question": "You need to write a function called dict_keys that checks whether a certain key is in available in a certain dictionary.",
+            "code_context": "For example:\nIf we call the function as dict_keys({\"name\": \"Josh\", \"age\": 56}, 'city')\nit should return False.\nIf we call the function as dict_keys({\"name\": \"Josh\", \"age\": 56}, 'name')\nit should return True.\nWhich of the following code snippets will work as intended?\nA     def dict_keys(dictionary, key):\nif key in dictionary.keys():\nreturn True\nelse:\nreturn False\nB      def dict_keys(dictionary, key):\nif key not in dictionary:\nreturn True\nelse:\nreturn False\nC      def dict_keys(dictionary, key):\nif not(key in dictionary.keys()):\nreturn True\nelse:\nreturn False\nD      def dict_keys(dictionary, key):\nif key in dictionary.items():\nreturn True\nelse:\nreturn False",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 9,
-            "topic": "conditions / conditional expression",
+            "topic": "enumerate / loop",
             "week": 2,
-            "question": "What is the output of the following code?\n\nx = 7\nresult = 'odd' if x % 2 != 0 else 'even'\nprint(result)",
-            "options": {
-              "A": "even",
-              "B": "odd",
-              "C": "7",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "7 % 2 = 1 != 0, so result = 'odd'."
+            "question": "Suppose you have a dictionary called characters, of which keys are strings and values are lists of strings.",
+            "code_context": "characters = {'first' : ['a', 'b', '1', 'c', '5'],\n'second': ['d', '2', 'e', '6', 'f'],\n'third' : ['3', 'g', '7', 'h', 'i']}\nYou want to modify the dictionary such that all the elements in the value lists are only character strings and not numeric strings.\nThe intended output should look like this:\ncharacters = {'first': ['a', 'b', 'c'],\n'second': ['d', 'e', 'f'],\n'third': ['g', 'h', 'i']}\nWhich of the following programs will work as intended?\nHints:\nThe remove() list method removes the first occurrence of the element with the specified value.\nThe isnumeric() string method returns True if all the characters are numeric (0-9), otherwise False.\nA      for array in characters.values():\nfor element in array:\nif element.isnumeric():\narray.remove(element)\nB       for array in characters.values():\nfor index, element in enumerate(array):\nif element.isnumeric():\ndel array[index]\nC       for key, value in characters.items():\nfor element in value:\nif element.isnumeric():\ndel value[value.index(element)]\nD       All of the programs will work as intended.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 10,
-            "topic": "for loops / enumerate",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "What is the output of the following code?\n\nlst = ['a', 'b', 'c']\nfor i, v in enumerate(lst, start=1):\n    print(i, v)",
-            "options": {
-              "A": "0 a\n1 b\n2 c",
-              "B": "1 a\n2 b\n3 c",
-              "C": "a 1\nb 2\nc 3",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "enumerate(lst, start=1) begins counting at 1. Output: 1 a, 2 b, 3 c."
+            "question": "Suppose you have the following dictionary:\nlibrary = {\"books\": 5,\n\"genres\": ['action', 'romance', 'thriller', 'classics']}\nYou want to:\n- add a key \"years\", of which the value is a list of strings that are the years of publication, i.e., [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"],\n- change the value of the key \"books\" to 6.\nThe new value of the dictionary library should be:\n{\"books\" : 6,\n\"genres\" : ['action', 'romance', 'thriller', 'classics'],\n\"years\" : [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]}\nWhich of the programs below will work as intended?\nA      library[\"books\"] = 6\nlibrary.update({\"years\": [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]})\nB       library[\"books\"] = 6\nlibrary[\"years\"] = [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]\nC       Both of the given options\nD       None of the given options",
+            "code_context": "Suppose you have the following dictionary:\nlibrary = {\"books\": 5,\n\"genres\": ['action', 'romance', 'thriller', 'classics']}\nYou want to:\n- add a key \"years\", of which the value is a list of strings that are the years of publication, i.e., [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"],\n- change the value of the key \"books\" to 6.\nThe new value of the dictionary library should be:\n{\"books\" : 6,\n\"genres\" : ['action', 'romance', 'thriller', 'classics'],\n\"years\" : [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]}\nWhich of the programs below will work as intended?\nA      library[\"books\"] = 6\nlibrary.update({\"years\": [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]})\nB       library[\"books\"] = 6\nlibrary[\"years\"] = [\"1932\" , \"2012\", \"1899\", \"2000\", \"1984\"]\nC       Both of the given options\nD       None of the given options",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 11,
-            "topic": "while loops",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "What is the output of the following code?\n\nn = 1\nwhile n < 32:\n    n *= 2\nprint(n)",
-            "options": {
-              "A": "16",
-              "B": "32",
-              "C": "64",
-              "D": "31"
-            },
-            "correct": "B",
-            "explanation": "n: 1->2->4->8->16->32. 32 < 32 is False, loop stops. print(n) = 32."
+            "question": "Suppose you have the following function:\ndef my_count_function(string):\ncounts = {}\nfor letter in string:\nif letter in counts:\ncounts[letter] += 1\nelse:\ncounts[letter] = 1\nreturn counts\nAnd you create the following two dictionaries:\napple_count = my_count_function(\"apple\")\npeach_count = my_count_function(\"peach\")\nWhich of the code snippets of code below prints something different than the other code snippets?\nA     print(sum(apple_count.values()))\nB      print(len(apple_count.keys()))\nC      print(sum(peach_count.values()))\nD      print(len(peach_count.keys()))",
+            "code_context": "Suppose you have the following function:\ndef my_count_function(string):\ncounts = {}\nfor letter in string:\nif letter in counts:\ncounts[letter] += 1\nelse:\ncounts[letter] = 1\nreturn counts\nAnd you create the following two dictionaries:\napple_count = my_count_function(\"apple\")\npeach_count = my_count_function(\"peach\")\nWhich of the code snippets of code below prints something different than the other code snippets?\nA     print(sum(apple_count.values()))\nB      print(len(apple_count.keys()))\nC      print(sum(peach_count.values()))\nD      print(len(peach_count.keys()))",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 12,
-            "topic": "truthy / falsy",
+            "topic": "dictionary / dict",
             "week": 2,
-            "question": "Which of the following expressions evaluates to True?",
-            "options": {
-              "A": "bool([])",
-              "B": "bool(0)",
-              "C": "bool('')",
-              "D": "bool([0])"
-            },
-            "correct": "D",
-            "explanation": "A list with one element [0] is truthy even though the element itself is falsy. [], 0, and '' are all falsy."
+            "question": "Suppose you have the following dictionary:\nx = {1: 10, 2: 20, 3: 30, 4: 40}\nWhat will the following line of code print?\nprint(list(x.values()) + list(x.keys()))\nA     [10, 20, 30, 40, 1, 2, 3, 4]\nB      [11, 22, 33, 44]\nC      This code will result in an error because you cannot concatenate two lists using the + operator.\nD      [(1, 10), (2, 20), (3, 30), (4, 40)]",
+            "code_context": "Suppose you have the following dictionary:\nx = {1: 10, 2: 20, 3: 30, 4: 40}\nWhat will the following line of code print?\nprint(list(x.values()) + list(x.keys()))\nA     [10, 20, 30, 40, 1, 2, 3, 4]\nB      [11, 22, 33, 44]\nC      This code will result in an error because you cannot concatenate two lists using the + operator.\nD      [(1, 10), (2, 20), (3, 30), (4, 40)]",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 13,
-            "topic": "scope / UnboundLocalError",
+            "topic": "argument",
             "week": 3,
-            "question": "What is the output of the following code?\n\ny = 100\ndef func():\n    y += 1\n    return y\nprint(func())",
-            "options": {
-              "A": "101",
-              "B": "100",
-              "C": "UnboundLocalError",
-              "D": "None"
-            },
-            "correct": "C",
-            "explanation": "y += 1 makes y local to func(). But y hasn't been assigned locally before this line, causing UnboundLocalError."
+            "question": "You have to write a function called summarize which take a list of integers as an argument.",
+            "code_context": "The function should return a dictionary with the following key-value pairs:\namount: the number of the integers from the input list\nsmallest: the smallest integer from the input list\nlargest: the largest integer from the input list\ntotal: the sum of all integers from the input list\nWhich of the following functions will achieve what you need?\nA     def summarize(x):\ny = {}\nx['amount'] = len(y)\nx['smallest'] = min(y)\nx['largest'] = max(y)\nx['total'] = sum(y)\nreturn x\nB      def summarize(x):\ny = {}\ntotal = 0\nfor integer in x:\ny['amount'] = len(x)\nif integer == min(x):\ny['smallest'] = min(x)\nelif integer == max(x):\ny['largest'] = max(x)\nelse:\ny['total'] += integer\nreturn y\nC      def summarize(x):\ny = {}\nfor integer in x:\nif integer == min(x):\ny['smallest'] == min(x)\nelif integer == max(x):\ny['largest'] == max(x)\nelse:\ny['amount'] == x.count()\ny['total'] == sum(x)\nreturn y\nD      None of the functions will work as needed.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 14,
-            "topic": "return / None",
+            "topic": "argument / *args",
             "week": 3,
-            "question": "What is the output of the following code?\n\ndef func(x):\n    if x > 0:\n        return x\n\nprint(func(-1))",
-            "options": {
-              "A": "-1",
-              "B": "0",
-              "C": "None",
-              "D": "Error"
-            },
-            "correct": "C",
-            "explanation": "func(-1): condition x>0 is False, function falls through without a return statement and implicitly returns None."
+            "question": "Suppose you have the following function:\ndef multiply(*args, factor=2):\ntotal = 1\nfor num in args:\ntotal *= num\nreturn total * factor\nWhich of the following functions will return the same values as the function above, if we call the function thrice as follows:\nmultiply(1, 2, factor=3)\nmultiply(3, 4)\nmultiply()\nA      def multiply(*args, factor=2):\ntotal = args[0]\nfor num in args:\ntotal *= num\nreturn total * factor\nB       def multiply(*args, factor=2):\nif not args:\nreturn 0\ntotal = args[0]\nfor num in args[1:]:\ntotal *= num\nreturn total * factor\nC       Both functions will return the same values.\nD       Neither functions will return the same values.",
+            "code_context": "Suppose you have the following function:\ndef multiply(*args, factor=2):\ntotal = 1\nfor num in args:\ntotal *= num\nreturn total * factor\nWhich of the following functions will return the same values as the function above, if we call the function thrice as follows:\nmultiply(1, 2, factor=3)\nmultiply(3, 4)\nmultiply()\nA      def multiply(*args, factor=2):\ntotal = args[0]\nfor num in args:\ntotal *= num\nreturn total * factor\nB       def multiply(*args, factor=2):\nif not args:\nreturn 0\ntotal = args[0]\nfor num in args[1:]:\ntotal *= num\nreturn total * factor\nC       Both functions will return the same values.\nD       Neither functions will return the same values.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 15,
-            "topic": "positional / keyword args",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef func(a, b, c):\n    return a - b + c\n\nprint(func(c=3, a=1, b=2))",
-            "options": {
-              "A": "0",
-              "B": "2",
-              "C": "-4",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "a=1, b=2, c=3. 1 - 2 + 3 = 2."
+            "topic": "function",
+            "week": 1,
+            "question": "Consider the following code snippet:\ndef main(lst, condition=lambda x: x):\ny = []\nfor x in lst:\nif condition(x):\ny.append(x)\nreturn y\nWhat will this function return, when called in the following way:\nmain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], lambda x: x % 2 != 0)\nA      [1, 3, 5, 7, 9]\nB       [2, 4, 6, 8, 10]\nC       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nD       None",
+            "code_context": "Consider the following code snippet:\ndef main(lst, condition=lambda x: x):\ny = []\nfor x in lst:\nif condition(x):\ny.append(x)\nreturn y\nWhat will this function return, when called in the following way:\nmain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], lambda x: x % 2 != 0)\nA      [1, 3, 5, 7, 9]\nB       [2, 4, 6, 8, 10]\nC       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nD       None",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 16,
-            "topic": "default args / mutable defaults",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef func(x, lst=[]):\n    lst.append(x)\n    return lst\n\nprint(func(1))\nprint(func(2))\nprint(func(3, []))",
-            "options": {
-              "A": "[1]\n[2]\n[3]",
-              "B": "[1]\n[1, 2]\n[3]",
-              "C": "[1]\n[1, 2]\n[1, 2, 3]",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "func(1) and func(2) share the default list: [1] then [1,2]. func(3,[]) uses a fresh list: [3]."
+            "topic": "function",
+            "week": 1,
+            "question": "You need to write a function called weather_alert that accepts a string argument, which is a color code of the weather alert system.",
+            "code_context": "Your function should return one of the following lines to inform the citizens of what to do depending on the color:\nIf the color is red, return: \"Take action to protect against severe condition.\"\nIf the color is orange, return: \"Be prepared for damages.\"\nIf the color is yellow, return: \"Be alert for potential hazard.\"\nFor any other colors, return: \"No warning.\"\nWhich of the following program will do want you need?\nA     def weather_alert(color):\nif color == \"red\":\nreturn \"Take action to protect against severe condition.\"\nelif color == \"orange\":\nreturn \"Be prepared for damages.\"\nelif color == \"yellow\":\nreturn \"Be alert for potential hazard.\"\nreturn \"No warning.\"\nB      def weather_alert(color):\nif color == \"red\":\nprint(\"Take action to protect against severe condition.\")\nelif color == \"orange\":\nprint(\"Be prepared for damages.\")\nelif color == \"yellow\":\nprint(\"Be alert for potential hazard.\")\nelse:\nprint(\"No warning.\")\nC      def weather_alert(color):\nif color == \"red\":\nreturn \"Take action to protect against severe condition.\"\nelif color == \"orange\":\nreturn \"Be prepared for damages.\"\nelif color == \"yellow\":\nreturn \"Be alert for potential hazard.\"\nelif color == \"green\":\nreturn \"No warning.\"\nD      All of the programs should work as intended.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 17,
-            "topic": "*args",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef func(*args):\n    print(type(args))\n\nfunc(1, 2, 3)",
-            "options": {
-              "A": "<class 'list'>",
-              "B": "<class 'tuple'>",
-              "C": "<class 'dict'>",
-              "D": "<class 'set'>"
-            },
-            "correct": "B",
-            "explanation": "*args collects positional arguments as a tuple."
+            "topic": "enumerate / loop",
+            "week": 2,
+            "question": "Suppose you have the following function which take a list of numerical strings as an argument.",
+            "code_context": "def counter(y):\nx = {}\nfor index, element in enumerate(y):\nif index != int(element) and int(element) % 2 == 0:\nx[element] = len(element)\nreturn x\nWhat will this function return, when we call the function as follows:\ncounter(['12345678', '1', '123', '1234', '12345', '12', '6', '1', '123456'])\nA     {'12345678': 8, '1234': 4, '12': 2, '123456': 6}\nB      {'12345678': 8, '123': 3, '1234': 4, '12345': 5, '12': 2, '6': 1, '1': 1, '123456': 6}\nC      {'123': 3, '12345': 5, '1': 1}\nD      {'12345678': 8, '1': 1, '1234': 4, '12': 2, '6': 1, '123456': 6}",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 18,
-            "topic": "lambda",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nf = lambda x, y: x if x > y else y\nprint(f(3, 7))",
-            "options": {
-              "A": "3",
-              "B": "7",
-              "C": "10",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "3 > 7 is False, so the lambda returns y = 7."
+            "topic": "loop",
+            "week": 2,
+            "question": "Suppose you have the following function count_characters, which takes two arguments:\na list of strings which are names, and\nan optional keyword argument called character that has a default value of 'a'.\ndef count_character(x, character='a'):\ny = {}\nfor key in x:\ncount = 0\nfor char in key:\nif char == character:\ncount += 1\ny[key] = count\nreturn y\nWhat would be returned by this function, if we call the function twice as follows:\ncount_character(['Emma', 'Julia', 'Ian', 'Noah', 'Liam', 'Anna'], 'i')\ncount_character(['Emma', 'Julia', 'Ian', 'Noah', 'Liam', 'Anna'])\nA     {'Emma': 0, 'Julia': 1, 'Ian': 0, 'Noah': 0, 'Liam': 1, 'Anna': 0}\n{'Emma': 1, 'Julia': 1, 'Ian': 1, 'Noah': 1, 'Liam': 1, 'Anna': 1}\nB      {'Emma': 0, 'Julia': 1, 'Ian': 0, 'Noah': 0, 'Liam': 1, 'Anna': 0}\n{'Emma': 0, 'Julia': 0, 'Ian': 0, 'Noah': 0, 'Liam': 0, 'Anna': 0}\nC      The first function call will result in an error because there are too many arguments.\nD      The second function call will result in an error because there is a missing argument.",
+            "code_context": "Suppose you have the following function count_characters, which takes two arguments:\na list of strings which are names, and\nan optional keyword argument called character that has a default value of 'a'.\ndef count_character(x, character='a'):\ny = {}\nfor key in x:\ncount = 0\nfor char in key:\nif char == character:\ncount += 1\ny[key] = count\nreturn y\nWhat would be returned by this function, if we call the function twice as follows:\ncount_character(['Emma', 'Julia', 'Ian', 'Noah', 'Liam', 'Anna'], 'i')\ncount_character(['Emma', 'Julia', 'Ian', 'Noah', 'Liam', 'Anna'])\nA     {'Emma': 0, 'Julia': 1, 'Ian': 0, 'Noah': 0, 'Liam': 1, 'Anna': 0}\n{'Emma': 1, 'Julia': 1, 'Ian': 1, 'Noah': 1, 'Liam': 1, 'Anna': 1}\nB      {'Emma': 0, 'Julia': 1, 'Ian': 0, 'Noah': 0, 'Liam': 1, 'Anna': 0}\n{'Emma': 0, 'Julia': 0, 'Ian': 0, 'Noah': 0, 'Liam': 0, 'Anna': 0}\nC      The first function call will result in an error because there are too many arguments.\nD      The second function call will result in an error because there is a missing argument.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 19,
-            "topic": "map function",
+            "topic": "lambda / map",
             "week": 3,
-            "question": "What is the output of the following code?\n\nlst = [1, 2, 3]\nresult = list(map(str, lst))\nprint(result)",
-            "options": {
-              "A": "[1, 2, 3]",
-              "B": "['1', '2', '3']",
-              "C": "['str', 'str', 'str']",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "map(str, lst) converts each integer to string. Result: ['1', '2', '3']."
+            "question": "You have four different blocks of code. Three of them return the same list, one of them returns something different.\nWhich block of code prints something different than the other blocks print?",
+            "code_context": "A     print(list(map(lambda x: x**2, [1, 2, 3])))\nB      def squared_function(x):\nreturn x**2\nprint(list(map(squared_function, [1, 2, 3])))\nC      def squared_function(x):\nreturn x**2\nprint(squared_function([1, 2, 3]))\nD      squared_numbers = lambda x: x**2\nprint([squared_numbers(1), squared_numbers(2), squared_numbers(3)])",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 20,
-            "topic": "filter function",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nlst = [0, 1, 2, 0, 3, 0]\nresult = list(filter(None, lst))\nprint(result)",
-            "options": {
-              "A": "[0, 0, 0]",
-              "B": "[1, 2, 3]",
-              "C": "[0, 1, 2, 0, 3, 0]",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "filter(None, lst) keeps truthy values. 0 is falsy, so it filters out all 0s: [1, 2, 3]."
+            "topic": "loop",
+            "week": 2,
+            "question": "What is the output of the program below?",
+            "code_context": "x = [1, 2, 3, 4, 5, 6, 7, 8]\ncount = [None] * len(x)\nfor i in range(len(x)):\nif x[i] > 4:\ncount[i] = True\nelse:\ncount[i] = False\nsum(count)\nA      4\nB       0\nC       None\nD       This code will result in an error as you cannot multiple None with an integer.",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 21,
-            "topic": "sorted / key",
-            "week": 3,
-            "question": "What is the output of the following code?\n\nlst = [-3, 1, -2, 4, -1]\nsorted_lst = sorted(lst, key=abs)\nprint(sorted_lst)",
-            "options": {
-              "A": "[-1, 1, -2, -3, 4]",
-              "B": "[-3, -2, -1, 1, 4]",
-              "C": "[-1, 1, -2, -3, 4]",
-              "D": "[1, -1, -2, -3, 4]"
-            },
-            "correct": "C",
-            "explanation": "Sorted by absolute value: abs values are 3,1,2,4,1. Order: 1,-1(tie→original order),-2,-3,4 → [-1, 1, -2, -3, 4]. Wait: sorted by abs: 1(idx1), 1(idx4=-1), 2(idx2=-2), 3(idx0=-3), 4(idx3=4). Result: [1, -1, -2, -3, 4].",
-            "correct_override": "D",
-            "note": "Sorted by abs value ascending: abs=1 (value 1), abs=1 (value -1), abs=2 (value -2), abs=3 (value -3), abs=4 (value 4). Stable sort preserves original order for ties. Result: [1, -1, -2, -3, 4]. Correct answer is D."
+            "topic": "loop",
+            "week": 2,
+            "question": "Assume you already have a variable called x, which contains a list of integers.\nWhich of the following programs will print you a list of the squared values of the elements in x?",
+            "code_context": "For example:\nIf x = [1, 2, 4, 8]\nthe program should prints:\n[1, 4, 16, 64].\nA      mylist = [0] * len(x)\nfor i in range(len(x)):\nmylist[i] = x[i]**2\nprint(mylist)\nB       mylist = [0] * len(x)\nfor i in x:\nmylist[i] = x[i]**2\nprint(mylist)\nC       mylist = []\nfor i in range(len(x)):\nmylist[i] = x[i]**2\nprint(mylist)\nD       mylist = []\nfor i in x:\nmylist[i] = x[i]**2\nprint(mylist)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 22,
-            "topic": "function factories / closures",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef counter():\n    count = 0\n    def increment():\n        nonlocal count\n        count += 1\n        return count\n    return increment\n\nc = counter()\nprint(c())\nprint(c())\nprint(c())",
-            "options": {
-              "A": "1\n1\n1",
-              "B": "1\n2\n3",
-              "C": "0\n1\n2",
-              "D": "Error"
-            },
-            "correct": "B",
-            "explanation": "nonlocal allows increment() to modify count in the enclosing scope. Each call increments count: 1, 2, 3."
+            "topic": "list",
+            "week": 2,
+            "question": "Consider the following code snippet:\nx = [\"a\", \"b\", \"c\", \"4\"]\nprint(x[-3] + x[3]*3)\nWhich of the following code snippet will print the same output?\nA      z = [[\"a\", \"b\", \"c\"], [1, 2, 3, 4]]\nprint(z[0][1] + str(z[1][3])*3)\nB       print('b'+ str(8 % 4)*3)\nC       print('b' + str(len(x)*3))\nD       y = [1, 2, 3, 4]\nprint('b'+ max(y)*3)",
+            "code_context": "Consider the following code snippet:\nx = [\"a\", \"b\", \"c\", \"4\"]\nprint(x[-3] + x[3]*3)\nWhich of the following code snippet will print the same output?\nA      z = [[\"a\", \"b\", \"c\"], [1, 2, 3, 4]]\nprint(z[0][1] + str(z[1][3])*3)\nB       print('b'+ str(8 % 4)*3)\nC       print('b' + str(len(x)*3))\nD       y = [1, 2, 3, 4]\nprint('b'+ max(y)*3)",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 23,
-            "topic": "mutable args / side effects",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ndef double_list(lst):\n    lst = [x * 2 for x in lst]\n    return lst\n\nmy_list = [1, 2, 3]\nresult = double_list(my_list)\nprint(my_list)\nprint(result)",
-            "options": {
-              "A": "[1, 2, 3]\n[2, 4, 6]",
-              "B": "[2, 4, 6]\n[2, 4, 6]",
-              "C": "[1, 2, 3]\n[1, 2, 3]",
-              "D": "Error"
-            },
-            "correct": "A",
-            "explanation": "Inside the function, lst = [...] rebinds the local name to a new list. my_list is not modified. result is [2,4,6]."
+            "topic": "list",
+            "week": 2,
+            "question": "Consider the following code snippet:\nmylist = [1, 2, 5, 7, 9, 12]\nnew_list1 = mylist[0:3]\nnew_list2 = mylist[1:4]\nprint(new_list1 + new_list2)\nWhat will be printed?\nA      [1, 2, 5, 2, 5, 7]\nB       [1, 2, 5, 7, 2, 5, 7, 9]\nC       [2, 5, 7, 5, 7, 9]\nD       [2, 5, 5, 7]",
+            "code_context": "Consider the following code snippet:\nmylist = [1, 2, 5, 7, 9, 12]\nnew_list1 = mylist[0:3]\nnew_list2 = mylist[1:4]\nprint(new_list1 + new_list2)\nWhat will be printed?\nA      [1, 2, 5, 2, 5, 7]\nB       [1, 2, 5, 7, 2, 5, 7, 9]\nC       [2, 5, 7, 5, 7, 9]\nD       [2, 5, 5, 7]",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           },
           {
             "number": 24,
-            "topic": "nested loops / complexity",
-            "week": 3,
-            "question": "What is the output of the following code?\n\ncount = 0\nfor i in range(4):\n    for j in range(i):\n        count += 1\nprint(count)",
-            "options": {
-              "A": "4",
-              "B": "6",
-              "C": "10",
-              "D": "16"
-            },
-            "correct": "B",
-            "explanation": "i=0: j in range(0) → 0 iterations. i=1: 1. i=2: 2. i=3: 3. Total: 0+1+2+3 = 6."
+            "topic": "list",
+            "week": 2,
+            "question": "You have the following list:\nmy_list = [1,2,3,4]\nWhich one of the following lines of code lines does not print 4 as the output?\nA      print(max(my_list))\nB       print(len(my_list))\nC       print(my_list[4])\nD       print(my_list[-1])",
+            "code_context": "You have the following list:\nmy_list = [1,2,3,4]\nWhich one of the following lines of code lines does not print 4 as the output?\nA      print(max(my_list))\nB       print(len(my_list))\nC       print(my_list[4])\nD       print(my_list[-1])",
+            "options": {},
+            "correct": "",
+            "explanation": "",
+            "note": "Rebuilt from 2024.pdf; answer key not embedded in source PDF."
           }
         ]
       },
@@ -17047,9 +16851,6 @@
             "explanation": "If math is imported as constants, it must be referred to as 'constants.pi'. 'math.pi' will no longer be available unless 'math' was also imported directly.",
             "code_context": ""
           }
-        ],
-        "notes": [
-          "Sample final exam for Introduction to Python 24/25 course. Covers core Python, Pandas, and Datetime."
         ]
       },
       {
@@ -17144,6 +16945,88 @@
         ],
         "notes": [
           "Topics cover Object-Oriented Programming (OOP), string formatting/manipulation, and pandas (DataFrame column arithmetic and row selection)."
+        ]
+      },
+      {
+        "exam_label": "Test Exam 07-06-22",
+        "source": "materials/post_midterm/practice_exams_previous_years/final-exam-solutions-for-python-programming-62oop21.pdf",
+        "year": "2022",
+        "questions": [
+          {
+            "number": 1,
+            "topic": "6-OOP-1",
+            "question": "Take a look at the following class definition.\n\nGiven the class definition above, trying to execute the following two code lines will result in a Python error.\n\nWhy?",
+            "options": {
+              "a": "The first argument (my_flight) should not have been passed to the set_date method in Code line 2.",
+              "b": "The capacity of the flight is not specified as an argument in Code line 1.",
+              "c": "The argument self is missing in Code line 1.",
+              "d": "The date string passed as an argument in Code line 2 represents an invalid date."
+            },
+            "correct": "a",
+            "explanation": "In Python, the 'self' argument is passed implicitly when calling an instance method. Passing 'my_flight' explicitly results in providing three arguments to a method that only expects two ('self' and 'date').",
+            "code_context": "class Flight:\n    def __init__(self, airline, origin, destination, capacity=300):\n        self.airline = airline\n        self.origin = origin\n        self.destination = destination\n        self.capacity = capacity\n\n    def set_date(self, date):\n        self.date = date\n\nmy_flight = Flight(\"KLM\", \"Amsterdam\", \"Paris\")                     # Code line 1\nmy_flight.set_date(my_flight, \"29-02-2022\")                         # Code line 2"
+          },
+          {
+            "number": 2,
+            "topic": "6-OOP-2",
+            "question": "You have the following definition for a Book class.\n\nSuppose that you also want to write a method called compare that compares the book to another book and gives a recommendation for which one to read. A book is better than another book if its average review score is higher than the second book's and it has at least as many reviews as the second book.\n\nThe compare method should return the title of the better book. If neither book is better than the other, then it should return None.\n\nFor simplicity, you can assume that both books have at least one review already.\n\nWhich method definition achieves what you want?",
+            "options": {
+              "a": "def compare(self, other):\n    avg_better = self.average_score() > other.average_score()\n    no_fewer_reviews = self.num_reviews() >= other.num_reviews()\n    if avg_better and no_fewer_reviews:\n        return self.title\n    elif not avg_better:\n        return other.title\n    else:\n        return None",
+              "b": "def compare(self, other):\n    for first, second in [(self, other), (other, self)]:\n        avg_better = first.average_score() > second.average_score()\n        no_fewer_reviews = first.num_reviews() >= second.num_reviews()\n        if avg_better and no_fewer_reviews:\n            return first.title",
+              "c": "Both methods above compare the book objects as intended.",
+              "d": "Neither of the two methods above compare the book objects as intended."
+            },
+            "correct": "b",
+            "explanation": "Option A assumes that if the first book isn't strictly better in average score, the second book must be better, which ignores the possibility that neither satisfies the 'better' conditions, incorrectly returning the other book's title. Option B correctly checks both books symmetrically and implicitly returns None if neither is better.",
+            "code_context": "class Book:\n    def __init__(self, title, author):\n        self.title = title\n        self.author = author\n        self.review_scores = []\n\n    def add_review(self, score):\n        self.review_scores.append(score)\n\n    def num_reviews(self):\n        return len(self.review_scores)\n\n    def average_score(self):\n        if self.num_reviews() > 0:\n            return sum(self.review_scores) / len(self.review_scores)"
+          },
+          {
+            "number": 3,
+            "topic": "6-strings-1",
+            "question": "You would like to write a function called get_tld that extracts the top-level domain from the URL of a website. The function takes the URL as the input string in the following format:\n\"https://www.[SECOND-LEVEL DOMAIN].[TOP-LEVEL DOMAIN]/[FOLDER 1]/[...]/[FOLDER N]/[PAGE NAME].html\"\nand returns the top-level domain as a string.\n\nFor example, the function call:\nget_tld(\"https://www.uva.nl/en/education/bachelor-s/bachelors.html\")\nshould return the string:\n\"nl\"\n\nWhich of the following code segments would not achieve what you want?",
+            "options": {
+              "a": "def get_tld(url):\n    url_1 = url.split(\".\")[-1]\n    return url_1.split(\"/\")[0]",
+              "b": "def get_tld(url):\n    url_1 = url.split(\"//\")[1]\n    url_2 = url_1.split(\"/\")[0]\n    return url_2.split(\".\")[-1]",
+              "c": "def get_tld(url):\n    return url.split(\"//\")[1].split(\"/\")[0].split(\".\")[-1]",
+              "d": "def get_tld(url):\n    url_1 = url[url.find(\"//\") + 2:]\n    url_2 = url_1.split(\"/\")[0]\n    return url_2.split(\".\")[-1]"
+            },
+            "correct": "a",
+            "explanation": "Option A splits the entire URL by '.' and takes the last element, which would be 'html' instead of 'nl'.",
+            "code_context": ""
+          },
+          {
+            "number": 4,
+            "topic": "6-strings-2",
+            "question": "You're trying to write a function called is_anagram, which takes two strings as inputs and checks whether they are anagrams of each other. That is: whether one of them can be written by rearranging the letters of the other. Upper case and lower case versions of a letter count as the same letter, and whitespace characters don't count at all.\n\nFor example, the following function calls should all return the boolean value True:\nis_anagram(\"Old West Action\", \"Clint Eastwood\")\nis_anagram(\"eleven plus two\", \"twelve plus one\")\nis_anagram(\"I am a weakish speller\", \"William Shakespeare\")\n\nwhile the following function call should return the boolean value False:\nis_anagram(\"one plus two\", \"three\")\n\nWhich of the following code segments achieves what you want?",
+            "options": {
+              "a": "def is_anagram(word_1, word_2):\n    return sorted(list(word_1.replace(\" \", \"\").lower())) == sorted(list(word_2.replace(\" \", \"\").lower()))",
+              "b": "def is_anagram(word_1, word_2):\n    return word_1.replace(\" \", \"\").lower().sort() == word_2.replace(\" \", \"\").lower().sort()",
+              "c": "def is_anagram(word_1, word_2):\n    return list(word_1.replace(\" \", \"\").lower()).sort() == list(word_2.replace(\" \", \"\").lower()).sort()",
+              "d": "def is_anagram(word_1, word_2):\n    return sorted(list(word_1)).replace(\" \", \"\").lower() == sorted(list(word_2)).replace(\" \", \"\").lower()"
+            },
+            "correct": "a",
+            "explanation": "Option A correctly removes spaces, converts to lowercase, lists characters, sorts them, and compares the results. Option B and C use .sort() which returns None, and D uses .replace() on a list.",
+            "code_context": ""
+          },
+          {
+            "number": 5,
+            "topic": "7-pandas-1",
+            "question": "You have a pandas Series called s, which contains floats. You'd like to create a new Series, in which each element is equal to the square of the difference between the corresponding element in s and the mean of the elements in s.\n\nFor example, if s is the Series:\n0     2.0\n1     2.0\n2     3.0\n3     5.0\ndtype: float64\n\nthen you want the new Series to be:\n0     1.0\n1     1.0\n2     0.0\n3     4.0\ndtype: float64\n\nWhich of the following code segments does not achieve what you want?",
+            "options": {
+              "a": "s.map((s - s.mean())**2)",
+              "b": "(s - s.mean())**2",
+              "c": "s.map(lambda x: (x - s.mean())**2)",
+              "d": "(s - s.mean()).map(lambda x: x**2)"
+            },
+            "correct": "a",
+            "explanation": "The map() function on a Series expects a function, dict, or Series. If passed a Series, it maps the values of 's' to the index of the passed Series, rather than performing an element-wise mapping of a function.",
+            "code_context": ""
+          }
+        ],
+        "notes": [
+          "Object-Oriented Programming (OOP) questions testing method arguments and implicit 'self' passing.",
+          "String manipulation questions involving split(), replace(), and list operations like sorted().",
+          "Pandas Series operations testing mapping and vectorized arithmetic."
         ]
       }
     ]
@@ -17964,7 +17847,7 @@
         "Resit 22/23": 7,
         "intro_python_sample_final_24_25": 24,
         "Trial final exam Introduction to Python": 6,
-        "total": 137
+        "total": 142
       }
     }
   }

@@ -210,9 +210,12 @@ async function run() {
       throw new Error(`Preview undo did not restore item count for type=${editableType}.`);
     }
 
-    await page.locator(".preview-card").first().hover({ timeout: 5000 });
+    const firstDeleteTargetCard = page.locator(".preview-card").first();
+    const firstDeleteTargetHead = firstDeleteTargetCard.locator(".preview-card-head");
+    await firstDeleteTargetHead.hover({ timeout: 5000 });
     await acceptNextDialog(page, async () => {
-      await page.click("[data-role='preview-delete-card']", { timeout: 5000 });
+      await firstDeleteTargetHead.hover({ timeout: 5000 });
+      await firstDeleteTargetCard.locator("[data-role='preview-delete-card']").click({ timeout: 5000 });
     });
     await page.waitForTimeout(350);
     const previewAfterDelete = await page.locator(".preview-card").count();

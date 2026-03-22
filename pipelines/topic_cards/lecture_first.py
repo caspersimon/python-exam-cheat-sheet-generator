@@ -8,6 +8,17 @@ from typing import Any
 
 from pipelines.lecture_first_outline import match_outline_target, outline_for_week
 from pipelines.shared import compact_text
+from pipelines.topic_cards.curation_utils import dedupe_section_overlap
+from pipelines.topic_cards.dense_curation import (
+    build_common_question_items,
+    build_examples,
+    build_key_points,
+    common_questions,
+    curate_notebook_snippets,
+    recommended_ids,
+)
+from pipelines.topic_cards.manual_curation import apply_manual_curation
+from pipelines.topic_cards.study_text import normalize_rule_text
 
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_FILE = ROOT / "topic_cards.json"
@@ -49,139 +60,14 @@ def _subtopic_lookup(topic: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
 
 def _topic_summary(topic: dict[str, Any], lecture_snippets: list[dict[str, Any]]) -> str:
-    snippets = [snippet.get("explanation", "") for snippet in lecture_snippets if _safe_str(snippet.get("explanation"))]
+    snippets = [normalize_rule_text(snippet.get("explanation", "")) for snippet in lecture_snippets if _safe_str(snippet.get("explanation"))]
+    snippets = [snippet for snippet in snippets if snippet]
     if snippets:
-        return compact_text(" ".join(snippets[:3]), 420)
-    return f"This topic follows the Week {topic.get('week')} lecture outline and groups curated reference snippets under explicit subtopics."
-
-
-def _common_questions(exam_questions: list[dict[str, Any]], traps: list[dict[str, Any]]) -> list[str]:
-    bullets = []
-    for question in exam_questions[:4]:
-        prompt = compact_text(question.get("question", ""), 160)
-        if prompt:
-            bullets.append(prompt)
-    for trap in traps[:3]:
-        text = compact_text(trap.get("trap", ""), 160)
-        if text and text not in bullets:
-            bullets.append(text)
-    return bullets[:6]
-
-
-def _build_key_points(topic: dict[str, Any], lecture_snippets: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    key_points = []
-    index = 1
-    for snippet in lecture_snippets:
-        text = compact_text(snippet.get("explanation", ""), 220)
-        if not text:
-            continue
-        details = []
-        for detail_index, example in enumerate(_safe_list(snippet.get("code_examples"))[:2], start=1):
-            code = _safe_str(example.get("code"))
-            if not code:
-                continue
-            details.append(
-                {
-                    "id": f"kp-{index}-d{detail_index}",
-                    "kind": "example",
-                    "title": _safe_str(example.get("description")) or "Code example",
-                    "code": code,
-                }
-            )
-        key_points.append(
-            {
-                "id": f"kp-{index}",
-                "text": text,
-                "status": "curated",
-                "generator": "lecture-first-build",
-                "model": None,
-                "subtopic_id": snippet.get("subtopic_id"),
-                "subtopic_title": snippet.get("subtopic_title"),
-                "details": details,
-            }
-        )
-        index += 1
-    return key_points[:10]
-
-
-def _build_examples(
-    lecture_snippets: list[dict[str, Any]],
-    notebook_snippets: list[dict[str, Any]],
-    exam_questions: list[dict[str, Any]],
-) -> list[dict[str, Any]]:
-    examples = []
-    index = 1
-    for snippet in lecture_snippets:
-        for example in _safe_list(snippet.get("code_examples"))[:2]:
-            code = _safe_str(example.get("code"))
-            if not code:
-                continue
-            examples.append(
-                {
-                    "id": f"ai-example-{index}",
-                    "kind": "correct",
-                    "title": _safe_str(example.get("description")) or "Lecture example",
-                    "code": code,
-                    "why": compact_text(snippet.get("explanation", ""), 180),
-                    "status": "curated",
-                    "subtopic_id": snippet.get("subtopic_id"),
-                    "subtopic_title": snippet.get("subtopic_title"),
-                }
-            )
-            index += 1
-    for snippet in notebook_snippets[:4]:
-        code = _safe_str(snippet.get("source"))
-        if not code:
-            continue
-        examples.append(
-            {
-                "id": f"ai-example-{index}",
-                "kind": "correct",
-                "title": _safe_str(snippet.get("title")) or "Notebook example",
-                "code": code,
-                "why": "Selected from notebook material because it directly reinforces the lecture subtopic.",
-                "status": "curated",
-                "subtopic_id": snippet.get("subtopic_id"),
-                "subtopic_title": snippet.get("subtopic_title"),
-            }
-        )
-        index += 1
-    for question in exam_questions[:2]:
-        code = _safe_str(question.get("code_context"))
-        if not code:
-            continue
-        examples.append(
-            {
-                "id": f"ai-example-{index}",
-                "kind": "incorrect",
-                "title": f"Exam trap • Q{question.get('number') or '?'}",
-                "code": code,
-                "why": compact_text(question.get("explanation", ""), 180) or "Practice tracing this carefully before checking the answer.",
-                "status": "curated",
-                "subtopic_id": question.get("subtopic_id"),
-                "subtopic_title": question.get("subtopic_title"),
-            }
-        )
-        index += 1
-    return examples[:8]
-
-
-def _recommended_ids(
-    lecture_snippets: list[dict[str, Any]],
-    exam_questions: list[dict[str, Any]],
-    notebook_snippets: list[dict[str, Any]],
-) -> list[str]:
-    ordered = [item["id"] for item in exam_questions[:4]]
-    ordered.extend(item["id"] for item in lecture_snippets[:4])
-    ordered.extend(item["id"] for item in notebook_snippets[:4])
-    seen = set()
-    out = []
-    for item_id in ordered:
-        if item_id in seen:
-            continue
-        seen.add(item_id)
-        out.append(item_id)
-    return out[:8]
+        return compact_text(" ".join(snippets[:2]), 320)
+    return (
+        f"This topic follows the Week {topic.get('week')} lecture outline and groups dense exam-ready references "
+        "under explicit subtopics."
+    )
 
 
 def _build_subtopic_meta(topic: dict[str, Any], sections: dict[str, Any]) -> list[dict[str, Any]]:
@@ -214,11 +100,12 @@ def _build_subtopic_meta(topic: dict[str, Any], sections: dict[str, Any]) -> lis
             continue
         meta = grouped_counts.get(subtopic["id"], {})
         source_texts = [
-            snippet["explanation"]
+            normalize_rule_text(snippet["explanation"])
             for snippet in sections["lecture_snippets"]
             if snippet.get("subtopic_id") == subtopic["id"] and _safe_str(snippet.get("explanation"))
         ]
-        summary = compact_text(" ".join(source_texts[:2]), 220) if source_texts else ""
+        source_texts = [text for text in source_texts if text]
+        summary = compact_text(" ".join(source_texts[:1]), 380) if source_texts else ""
         subtopics.append(
             {
                 "id": subtopic["id"],
@@ -250,6 +137,24 @@ def _build_traps_for_topic(db: dict[str, Any], week: int, topic_id: str) -> list
     return traps[:8]
 
 
+def _best_outline_assignment(*texts: Any, week_hint: int | None = None) -> tuple[int, str, str, list[str]]:
+    candidate_weeks = [week_hint] if isinstance(week_hint, int) and week_hint > 0 else list(range(1, 7))
+    best_week = candidate_weeks[0]
+    best_topic_id = outline_for_week(best_week)["topics"][0]["id"]
+    best_subtopic_id = outline_for_week(best_week)["topics"][0]["subtopics"][0]["id"]
+    best_hits: list[str] = []
+    best_score = -1
+    for candidate_week in candidate_weeks:
+        topic, subtopic, score, hits = match_outline_target(candidate_week, *texts)
+        if score > best_score:
+            best_week = candidate_week
+            best_topic_id = topic["id"]
+            best_subtopic_id = subtopic["id"]
+            best_hits = hits
+            best_score = score
+    return best_week, best_topic_id, best_subtopic_id, best_hits
+
+
 def _build_exam_questions_for_topic(db: dict[str, Any], week: int, topic_id: str) -> list[dict[str, Any]]:
     questions = []
     for exam in _safe_list(db.get("assessments", {}).get("exams")):
@@ -259,15 +164,15 @@ def _build_exam_questions_for_topic(db: dict[str, Any], week: int, topic_id: str
         for question in _safe_list(exam.get("questions")):
             if not isinstance(question, dict):
                 continue
-            if int(question.get("week") or 0) != week:
-                continue
-            match_topic_id, subtopic_id = _match_subtopic(
-                week,
+            match_week, match_topic_id, subtopic_id, hits = _best_outline_assignment(
                 question.get("topic"),
                 question.get("question"),
                 question.get("explanation"),
                 question.get("code_context"),
+                week_hint=int(question.get("week") or 0) or None,
             )
+            if match_week != week:
+                continue
             if match_topic_id != topic_id:
                 continue
             subtopic = next(
@@ -287,8 +192,8 @@ def _build_exam_questions_for_topic(db: dict[str, Any], week: int, topic_id: str
                     "exam_source": _safe_str(exam.get("source")),
                     "year": _safe_str(exam.get("year")) or "unknown",
                     "number": question.get("number"),
-                    "week": week,
-                    "topic": _safe_str(question.get("topic")),
+                    "week": match_week,
+                    "topic": _safe_str(question.get("topic")) or " / ".join(hits) or subtopic_title,
                     "subtopic_id": subtopic_id,
                     "subtopic_title": subtopic_title,
                     "question": compact_text(question.get("question", ""), 1200),
@@ -303,6 +208,7 @@ def _build_exam_questions_for_topic(db: dict[str, Any], week: int, topic_id: str
 
 def _build_topic_sections(topic: dict[str, Any], db: dict[str, Any], week: int) -> dict[str, Any]:
     lecture_snippets = []
+    lecture_questions = []
     notebook_snippets = []
     for subtopic in _safe_list(topic.get("subtopics")):
         if not isinstance(subtopic, dict):
@@ -322,6 +228,26 @@ def _build_topic_sections(topic: dict[str, Any], db: dict[str, Any], week: int) 
                     "title": _safe_str(snippet.get("title")),
                     "explanation": compact_text(snippet.get("content", ""), 700),
                     "code_examples": _safe_list(snippet.get("code_examples")),
+                }
+            )
+        for snippet in _safe_list(subtopic.get("question_snippets")):
+            if not isinstance(snippet, dict):
+                continue
+            lecture_questions.append(
+                {
+                    "id": snippet["id"],
+                    "week": week,
+                    "source": _safe_str(_safe_list(snippet.get("source_refs"))[0].get("source") if _safe_list(snippet.get("source_refs")) else ""),
+                    "source_type": _safe_str(snippet.get("source_type")),
+                    "topic": topic["title"],
+                    "subtopic_id": subtopic["id"],
+                    "subtopic_title": subtopic["title"],
+                    "title": _safe_str(snippet.get("title")),
+                    "content": compact_text(snippet.get("content", ""), 500),
+                    "code_context": _safe_str(snippet.get("code_context")),
+                    "options": snippet.get("options", {}),
+                    "correct": _safe_str(snippet.get("correct")),
+                    "explanation": compact_text(snippet.get("explanation", ""), 300),
                 }
             )
         for snippet in _safe_list(subtopic.get("code_snippets")):
@@ -344,7 +270,8 @@ def _build_topic_sections(topic: dict[str, Any], db: dict[str, Any], week: int) 
             )
 
     lecture_snippets = _dedupe(lecture_snippets, ["id"])
-    notebook_snippets = _dedupe(notebook_snippets, ["id"])
+    lecture_questions = _dedupe(lecture_questions, ["id"])
+    notebook_snippets = curate_notebook_snippets(topic, _dedupe(notebook_snippets, ["id"]), _norm)
     exam_questions = _build_exam_questions_for_topic(db, week, topic["id"])
     traps = _build_traps_for_topic(db, week, topic["id"])
 
@@ -361,14 +288,15 @@ def _build_topic_sections(topic: dict[str, Any], db: dict[str, Any], week: int) 
     }
     sections["ai_common_questions"] = {
         "status": "curated",
-        "bullets": _common_questions(exam_questions, traps),
+        "bullets": common_questions(exam_questions, traps),
+        "items": build_common_question_items(topic, lecture_questions, exam_questions, traps),
         "generator": "lecture-first-build",
         "model": None,
     }
-    sections["key_points_to_remember"] = _build_key_points(topic, lecture_snippets)
-    sections["ai_examples"] = _build_examples(lecture_snippets, notebook_snippets, exam_questions)
-    sections["recommended_ids"] = _recommended_ids(lecture_snippets, exam_questions, notebook_snippets)
-    return sections
+    sections["key_points_to_remember"] = build_key_points(topic, lecture_snippets, exam_questions)
+    sections["ai_examples"] = build_examples(lecture_snippets, notebook_snippets, exam_questions)
+    sections["recommended_ids"] = recommended_ids(lecture_snippets, exam_questions, notebook_snippets)
+    return dedupe_section_overlap(sections)
 
 
 def build_cards_from_study_db(db: dict[str, Any]) -> list[dict[str, Any]]:
@@ -384,7 +312,8 @@ def build_cards_from_study_db(db: dict[str, Any]) -> list[dict[str, Any]]:
             exam_counts = Counter(item["exam_label"] for item in sections["exam_questions"] if _safe_str(item.get("exam_label")))
             subtopics = _build_subtopic_meta(topic, sections)
             cards.append(
-                {
+                apply_manual_curation(
+                    {
                     "id": topic["id"],
                     "topic": topic["title"],
                     "canonical_topic": topic["id"],
@@ -407,7 +336,8 @@ def build_cards_from_study_db(db: dict[str, Any]) -> list[dict[str, Any]]:
                     "related_topics": [subtopic["title"] for subtopic in subtopics],
                     "trap_patterns": _build_traps_for_topic(db, week, topic["id"]),
                     "sections": sections,
-                }
+                    }
+                )
             )
     return cards
 

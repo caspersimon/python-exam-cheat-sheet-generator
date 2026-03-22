@@ -73,9 +73,10 @@ async function run() {
     if ((await lockBtn.count()) < 1) {
       throw new Error("Preview card lock button was not found.");
     }
-    await firstPreviewCard.hover({ timeout: 5000 });
+    const firstCardHead = firstPreviewCard.locator(".preview-card-head");
+    await firstCardHead.hover({ timeout: 5000 });
     const posBeforeLock = await firstPreviewCard.evaluate((el) => ({ left: el.style.left, top: el.style.top }));
-    await lockBtn.click({ timeout: 5000 });
+    await lockBtn.click({ timeout: 5000, force: true });
     await page.waitForFunction(() => document.querySelector(".preview-card")?.classList.contains("is-locked"), { timeout: 7000 });
     const lockedHeadBox = await firstPreviewCard.locator(".preview-card-head").boundingBox();
     if (!lockedHeadBox) {
@@ -90,7 +91,8 @@ async function run() {
     if (posBeforeLock.left !== posAfterLockDrag.left || posBeforeLock.top !== posAfterLockDrag.top) {
       throw new Error("Locked preview card still moved during drag attempt.");
     }
-    await lockBtn.click({ timeout: 5000 });
+    await firstCardHead.hover({ timeout: 5000 });
+    await lockBtn.click({ timeout: 5000, force: true });
     await page.waitForFunction(() => !document.querySelector(".preview-card")?.classList.contains("is-locked"), { timeout: 7000 });
 
     const firstEditButton = page.locator("[data-role='preview-edit-item']").first();
@@ -157,9 +159,12 @@ async function run() {
       throw new Error(`Preview undo did not restore item count for type=${editableType} (${deleteButtonsBefore} -> ${deleteButtonsAfterUndo}).`);
     }
 
-    await page.locator(".preview-card").first().hover({ timeout: 5000 });
+    const deleteTargetCard = page.locator(".preview-card").first();
+    const deleteTargetHead = deleteTargetCard.locator(".preview-card-head");
+    await deleteTargetHead.hover({ timeout: 5000 });
     await acceptNextDialog(page, async () => {
-      await page.click("[data-role='preview-delete-card']", { timeout: 5000 });
+      await deleteTargetHead.hover({ timeout: 5000 });
+      await deleteTargetCard.locator("[data-role='preview-delete-card']").click({ timeout: 5000 });
     });
     await page.waitForTimeout(350);
     const previewAfterDelete = await page.locator(".preview-card").count();

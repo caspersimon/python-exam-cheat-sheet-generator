@@ -10,7 +10,7 @@ const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture s
 const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v3";
 const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v7";
-const TOPIC_CARDS_DATASET_VERSION = "2026-03-22-curation-pass-2";
+const TOPIC_CARDS_DATASET_VERSION = "2026-03-22-curation-pass-5";
 const CANONICAL_WEEK_ORDER = [1, 2, 3, 4, 5, 6];
 const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
@@ -43,6 +43,7 @@ const state = {
   layout: {
     fontFamily: "'Manrope', sans-serif",
     fontSize: 9.5,
+    titleSize: 6.8,
     lineHeight: 1.1,
     letterSpacing: 0,
     cardGap: 6,
@@ -113,6 +114,7 @@ const refs = {
 
   fontFamilySelect: document.getElementById("fontFamilySelect"),
   fontSizeRange: document.getElementById("fontSizeRange"),
+  titleSizeRange: document.getElementById("titleSizeRange"),
   lineHeightRange: document.getElementById("lineHeightRange"),
   letterSpacingRange: document.getElementById("letterSpacingRange"),
   cardGapRange: document.getElementById("cardGapRange"),
@@ -120,6 +122,7 @@ const refs = {
   codeBlockPaddingRange: document.getElementById("codeBlockPaddingRange"),
   codeBlockMarginRange: document.getElementById("codeBlockMarginRange"),
   fontSizeValue: document.getElementById("fontSizeValue"),
+  titleSizeValue: document.getElementById("titleSizeValue"),
   lineHeightValue: document.getElementById("lineHeightValue"),
   letterSpacingValue: document.getElementById("letterSpacingValue"),
   cardGapValue: document.getElementById("cardGapValue"),
@@ -328,6 +331,12 @@ function bindEvents() {
 
   refs.fontSizeRange.addEventListener("input", (event) => {
     state.layout.fontSize = readClampedRangeValue(event.target);
+    applyLayoutVariables();
+    renderPreview();
+  });
+
+  refs.titleSizeRange.addEventListener("input", (event) => {
+    state.layout.titleSize = readClampedRangeValue(event.target);
     applyLayoutVariables();
     renderPreview();
   });

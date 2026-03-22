@@ -8,6 +8,12 @@ The canonical source dataset is:
 
 This file is the single source of truth used by the generation pipeline.
 
+Related generated audit artifact:
+
+- `data/quality/source_coverage_report.json`
+
+This report records coverage for homework exercises and assessment questions against the current `topic_cards.json` output.
+
 ## Raw Source Materials
 
 Course/source files are organized under `materials/`:
@@ -80,6 +86,23 @@ Course/source files are organized under `materials/`:
   }
 }
 ```
+
+## topic_cards.json Dense Curation Notes
+
+The materialized `topic_cards.json` now supports denser exam-focused structures in addition to raw source buckets:
+
+- `sections.ai_common_questions.items`
+  - structured common-question blocks with `summary`, `detail`, optional `extra`, optional `code`, and optional `table`
+- `sections.ai_examples[*].output`
+  - optional explicit output/result text rendered beneath code examples when the example depends on a concrete result
+- `sections.key_points_to_remember[*].details`
+  - optional `example`, `table`, `commands`, and `explanation` details for high-density reference content
+
+The intended build strategy is:
+
+1. mine lecture/questions/exams/notebooks/homework for exam-relevant patterns,
+2. compress them into denser representations when that preserves exam usefulness,
+3. keep raw source snippets only when they still add standalone value.
 
 ## Week Ingestion Contract
 

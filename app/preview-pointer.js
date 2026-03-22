@@ -25,9 +25,9 @@ function getPreviewPageSize(page) {
 function sanitizePreviewCardLayout(rawLayout, fallback = {}) {
   const page = rawLayout?.page === 2 ? 2 : 1;
   const pageSize = getPreviewPageSize(page);
-  const widthRaw = Number(rawLayout?.width ?? fallback.width ?? 260);
+  const widthRaw = Number(rawLayout?.width ?? fallback.width ?? 160);
   const heightRaw = Number(rawLayout?.height ?? fallback.height ?? 220);
-  const width = clamp(Number.isFinite(widthRaw) ? widthRaw : 260, 170, pageSize.width);
+  const width = clamp(Number.isFinite(widthRaw) ? widthRaw : 160, 56, pageSize.width);
   const height = clamp(Number.isFinite(heightRaw) ? heightRaw : 220, 130, pageSize.height);
   const xRaw = Number(rawLayout?.x ?? fallback.x ?? 0);
   const yRaw = Number(rawLayout?.y ?? fallback.y ?? 0);
@@ -176,9 +176,9 @@ function handlePreviewPointerMove(event) {
   const dy = event.clientY - previewPointerState.startY;
 
   if (previewPointerState.mode === "resize-corner") {
-    const maxWidth = Math.max(170, pageSize.width - layout.x);
+    const maxWidth = Math.max(72, pageSize.width - layout.x);
     const maxHeight = Math.max(130, pageSize.height - layout.y);
-    layout.width = clamp(previewPointerState.startWidth + dx, 170, maxWidth);
+    layout.width = clamp(previewPointerState.startWidth + dx, 56, maxWidth);
     layout.height = clamp(previewPointerState.startHeight + dy, 130, maxHeight);
   } else if (previewPointerState.mode === "resize-bottom") {
     const maxHeight = Math.max(130, pageSize.height - layout.y);

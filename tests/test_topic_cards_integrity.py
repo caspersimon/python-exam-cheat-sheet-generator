@@ -94,6 +94,47 @@ class TopicCardsIntegrityTests(unittest.TestCase):
                     for item_id in bucket_ids:
                         self.assertIn(item_id, valid_ids, f"{card['id']}: unknown subtopic item id {item_id}")
 
+    def test_common_question_bullets_are_unique_per_card(self) -> None:
+        for card in self.cards:
+            bullets = card.get("sections", {}).get("ai_common_questions", {}).get("bullets", [])
+            normalized = [" ".join(str(bullet or "").lower().split()) for bullet in bullets if str(bullet or "").strip()]
+            self.assertEqual(
+                len(normalized),
+                len(set(normalized)),
+                f"{card['id']}: duplicate ai_common_questions bullets found",
+            )
+
+    def test_dense_tables_do_not_repeat_across_common_questions_and_key_points(self) -> None:
+        for card in self.cards:
+            common_tables = {
+                self._table_signature(item.get("table"))
+                for item in card.get("sections", {}).get("ai_common_questions", {}).get("items", [])
+                if isinstance(item, dict) and item.get("table")
+            }
+            detail_tables = {
+                self._table_signature(detail.get("table"))
+                for key_point in card.get("sections", {}).get("key_points_to_remember", [])
+                for detail in key_point.get("details", []) or []
+                if isinstance(detail, dict) and detail.get("table")
+            }
+            common_tables.discard("")
+            detail_tables.discard("")
+            self.assertFalse(
+                common_tables & detail_tables,
+                f"{card['id']}: duplicate dense reference table appears in common questions and key point details",
+            )
+
+    @staticmethod
+    def _table_signature(table: dict | None) -> str:
+        if not isinstance(table, dict):
+            return ""
+        headers = "|".join(" ".join(str(cell or "").lower().split()) for cell in table.get("headers", []))
+        rows = "||".join(
+            "|".join(" ".join(str(cell or "").lower().split()) for cell in row)
+            for row in table.get("rows", [])
+        )
+        return f"{headers}###{rows}"
+
 
 if __name__ == "__main__":
     unittest.main()

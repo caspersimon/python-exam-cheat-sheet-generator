@@ -39,7 +39,7 @@ function renderDetailPreview(detail) {
     pieces.push(`<p>${renderInlineCode(detail.text)}</p>`);
   }
   if (detail.code) {
-    pieces.push(`<pre>${escapeHtml(detail.code)}</pre>`);
+    pieces.push(renderCodeBlock(detail.code));
   }
   if (detail.table) {
     pieces.push(renderMiniTable(detail.table));
@@ -168,7 +168,7 @@ function renderCommonQuestionItem(item) {
       <div class="common-question-body">
         ${detailParts.map((part) => `<p>${renderInlineCode(part)}</p>`).join("")}
         ${item.table ? renderMiniTable(item.table) : ""}
-        ${item.code ? `<pre class="question-code">${escapeHtml(item.code)}</pre>` : ""}
+        ${item.code ? renderCodeBlock(item.code, "question-code") : ""}
       </div>
     </details>
   `;
@@ -215,7 +215,7 @@ function renderSourceItemBody(sourceItem) {
     const codeContext = parsed.code || item.code_context || "";
     return `
       ${prompt ? `<p class="question-text">${renderInlineCode(prompt)}</p>` : ""}
-      ${codeContext ? `<pre class="question-code">${escapeHtml(normalizeNewlines(codeContext || "").trim())}</pre>` : ""}
+      ${codeContext ? renderCodeBlock(normalizeNewlines(codeContext || "").trim(), "question-code") : ""}
       ${renderOptions(item.options)}
       ${item.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(item.correct))}</p>` : ""}
       ${item.explanation ? `<p class="source-summary">${renderInlineCode(item.explanation)}</p>` : ""}
@@ -226,7 +226,7 @@ function renderSourceItemBody(sourceItem) {
       .map(
         (example) => `
           <p><strong>${renderInlineCode(example.description || "Code")}</strong></p>
-          <pre>${escapeHtml(normalizeNewlines(example.code || "").trim())}</pre>
+          ${renderCodeBlock(normalizeNewlines(example.code || "").trim())}
         `
       )
       .join("");
@@ -245,7 +245,7 @@ function renderSourceItemBody(sourceItem) {
   }
   const outText = (item.outputs || []).join("\n");
   return `
-    ${item.source ? `<pre>${escapeHtml(normalizeNewlines(item.source || "").trim())}</pre>` : ""}
-    ${outText ? `<p><strong>Output:</strong></p><pre>${escapeHtml(normalizeNewlines(outText).trim())}</pre>` : ""}
+    ${item.source ? renderCodeBlock(normalizeNewlines(item.source || "").trim()) : ""}
+    ${outText ? `<p><strong>Output:</strong></p>${renderOutputBlock(normalizeNewlines(outText).trim())}` : ""}
   `;
 }

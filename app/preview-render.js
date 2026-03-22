@@ -298,5 +298,5 @@ function summarizePreviewLabel(text, fallback) {
   if (!plain) {
     return fallback;
   }
-  return plain.length > 34 ? `${plain.slice(0, 34).replace(/\s+\S*$/, "").trim()}…` : plain;
+  return plain.length > 52 ? `${plain.slice(0, 52).replace(/\s+\S*$/, "").trim()}…` : plain;
 }

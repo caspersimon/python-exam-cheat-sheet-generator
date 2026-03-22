@@ -371,6 +371,14 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
           multiline: true,
           rows: 6,
         },
+        {
+          id: "output",
+          label: "Output / Result",
+          prompt: "Edit output or result:",
+          value: current.output || "",
+          multiline: true,
+          rows: 4,
+        },
       ],
     });
     if (!values) {
@@ -380,6 +388,7 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
     overrides.aiExamples[itemId] = {
       title: String(values.title || "").trim(),
       code: String(values.code || ""),
+      output: String(values.output || "").trim(),
       why: String(values.why || "").trim(),
     };
     renderPreview();

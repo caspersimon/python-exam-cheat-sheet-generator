@@ -28,7 +28,7 @@ function renderOptionValue(value) {
   }
 
   if (text.includes("\n") || isCodeBlockLikely(text)) {
-    return `<pre class="option-code">${escapeHtml(text)}</pre>`;
+    return renderCodeBlock(text, "option-code");
   }
 
   return `<span class="option-text">${renderInlineCode(text)}</span>`;
@@ -54,7 +54,7 @@ function renderQuestionContent(question, codeContext = "", label = "") {
   }
 
   codeBlocks.forEach((block) => {
-    parts.push(`<pre class="question-code">${escapeHtml(block)}</pre>`);
+    parts.push(renderCodeBlock(block, "question-code"));
   });
 
   if (!parts.length) {

@@ -340,7 +340,8 @@ function renderExampleRail(card, draft, items) {
                 <strong>${escapeHtml(kindLabel)} • ${renderInlineCode(item.title || "Code example")}</strong>
               </label>
               <div class="rail-card-body">
-                <pre>${escapeHtml(item.code || "")}</pre>
+                ${renderCodeBlock(item.code || "")}
+                ${item.output ? `<p><strong>Output / Result:</strong></p>${renderOutputBlock(item.output || "")}` : ""}
                 ${item.why ? `<p class="item-note">${renderInlineCode(item.why)}</p>` : ""}
               </div>
             </article>
@@ -389,7 +390,7 @@ function renderCommonQuestionRail(card, draft, items) {
                 ${item.detail ? `<p>${renderInlineCode(item.detail)}</p>` : ""}
                 ${item.extra ? `<p>${renderInlineCode(item.extra)}</p>` : ""}
                 ${item.table ? renderMiniTable(item.table) : ""}
-                ${item.code ? `<pre>${escapeHtml(item.code)}</pre>` : ""}
+                ${item.code ? renderCodeBlock(item.code) : ""}
               </div>
             </article>
           `;

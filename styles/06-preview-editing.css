@@ -1,18 +1,20 @@
 .preview-card-head-actions {
   position: absolute;
-  top: 7px;
-  right: 7px;
-  z-index: 3;
+  top: 4px;
+  right: 6px;
+  z-index: 20;
   display: flex;
   align-items: center;
   gap: 4px;
-  opacity: 0.94;
-  pointer-events: auto;
-  transform: translateY(0);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
   transition: opacity 120ms ease, transform 140ms ease;
 }
 
 .preview-head-btn {
+  position: relative;
+  z-index: 1;
   border: 1px solid rgba(87, 82, 68, 0.15);
   border-radius: 4px;
   background: rgba(255, 253, 247, 0.94);
@@ -86,27 +88,19 @@
   pointer-events: auto;
 }
 
-.preview-card:hover .preview-card-head-actions,
-.preview-card:focus-within .preview-card-head-actions,
+.preview-card-head:hover .preview-card-head-actions,
+.preview-card-head:focus-within .preview-card-head-actions,
 .preview-card.dragging .preview-card-head-actions,
-.preview-card.resizing .preview-card-head-actions,
-.preview-card.is-locked .preview-card-head-actions {
+.preview-card.resizing .preview-card-head-actions {
   opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .preview-head-btn:focus-visible,
 .preview-mini-btn:focus-visible {
   outline: 2px solid rgba(45, 76, 57, 0.45);
   outline-offset: 1px;
-}
-
-@media (hover: none) {
-  .preview-card-head-actions,
-  .preview-item-actions {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
 }
 
 .preview-edit-modal {

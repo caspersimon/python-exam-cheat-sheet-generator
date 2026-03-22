@@ -47,8 +47,8 @@ function buildPreviewCard(entry, layout) {
             <div class="preview-item-block">
               ${renderPreviewItemActions(previewId, sourceCard.id, "aiExample", item.id, "aiExamples")}
               <p><strong>${escapeHtml(kindLabel)} • ${renderInlineCode(effective.title || "Code example")}</strong></p>
-              <pre>${escapeHtml(effective.code || "")}</pre>
-              ${effective.why ? `<p>${renderInlineCode(normalizeTruncatedDisplayText(effective.why))}</p>` : ""}
+              ${renderCodeBlock(effective.code || "")}
+              ${effective.output ? `<p><strong>Output / Result:</strong></p>${renderOutputBlock(effective.output || "")}` : ""}
             </div>
           `);
         });
@@ -251,7 +251,7 @@ function renderPreviewCommonQuestion(previewCardId, sourceCard, selection, item)
       ${effective.detail ? `<p>${renderInlineCode(effective.detail)}</p>` : ""}
       ${effective.extra ? `<p>${renderInlineCode(effective.extra)}</p>` : ""}
       ${effective.table ? renderPreviewTable(effective.table) : ""}
-      ${effective.code ? `<pre>${escapeHtml(effective.code)}</pre>` : ""}
+      ${effective.code ? renderCodeBlock(effective.code) : ""}
     </div>
   `;
 }
@@ -282,7 +282,7 @@ function renderPreviewKeyPointDetail(sourceCardId, selection, detail) {
       <div class="preview-kp-detail-block preview-item-block">
         ${actions}
         <p class="preview-kp-detail-title"><strong>${escapeHtml(detail.title || "Code detail")}</strong></p>
-        <pre>${escapeHtml(detail.code)}</pre>
+        ${renderCodeBlock(detail.code)}
       </div>
     `;
   }
@@ -315,7 +315,7 @@ function renderPreviewTable(table) {
 function renderPreviewSourceItem(previewCardId, sourceCard, selection, sourceItem, sectionKey) {
   const override = getPreviewSourceOverride(selection, sourceItem.id, sourceItem.header);
   const header = override?.header || sourceItem.header;
-  const body = override?.body ? `<pre>${escapeHtml(override.body)}</pre>` : renderSourceItemBody(sourceItem);
+  const body = override?.body ? renderAutoBlock(override.body) : renderSourceItemBody(sourceItem);
   return `
     <div class="preview-source-item preview-item-block">
       ${renderPreviewItemActions(previewCardId, sourceCard.id, "sourceItem", sourceItem.id, sectionKey)}
@@ -395,6 +395,7 @@ function getPreviewAIExampleOverride(selection, exampleId, fallback) {
     ...fallback,
     title: typeof value.title === "string" && value.title.trim() ? value.title.trim() : fallback.title,
     code: typeof value.code === "string" && value.code.trim() ? value.code : fallback.code,
+    output: typeof value.output === "string" && value.output.trim() ? value.output : fallback.output,
     why: typeof value.why === "string" && value.why.trim() ? value.why.trim() : fallback.why,
   };
 }
