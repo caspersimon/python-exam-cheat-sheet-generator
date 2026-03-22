@@ -8,7 +8,7 @@ from pipelines.shared import SMART_GEMINI_AGENT, extract_json_blob, run_gemini_c
 from .raw_sources import RawSourceRecord
 
 RAW_TIMEOUT_SECONDS = 900
-RAW_STERR_CLIP = 1200
+RAW_STDERR_CLIP = 1200
 DEFAULT_MODEL = SMART_GEMINI_AGENT
 RETRY_LIMIT = 2
 
@@ -30,7 +30,7 @@ def run_json_agent(prompt: str, *, model: str = DEFAULT_MODEL, timeout_seconds: 
     last_error: Exception | None = None
     for _ in range(RETRY_LIMIT + 1):
         try:
-            raw = run_gemini_cli(prompt, model=model, timeout_seconds=timeout_seconds, stderr_clip=RAW_STERR_CLIP)
+            raw = run_gemini_cli(prompt, model=model, timeout_seconds=timeout_seconds, stderr_clip=RAW_STDERR_CLIP)
             blob = extract_json_blob(raw)
             return json.loads(blob)
         except Exception as exc:  # noqa: BLE001

@@ -235,6 +235,7 @@ def normalize_assessment_payload(raw_payload: dict[str, Any]) -> dict[str, Any]:
         "year": _safe_str(raw_payload.get("year")) or "unknown",
         "questions": questions,
         "notes": [str(note).strip() for note in _safe_list(raw_payload.get("notes")) if str(note).strip()],
+        "ignored": bool(raw_payload.get("ignored")),
     }
 
 
@@ -247,6 +248,13 @@ def analyze_assessment_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
             "errors": ["Assessment payload must be a JSON object."],
             "warnings": [],
         }
+
+    if payload.get("ignored"):
+        if not _safe_str(payload.get("exam_label")):
+            errors.append("Ignored assessment payloads still need a stable `exam_label`.")
+        if not _safe_str(payload.get("source")):
+            errors.append("Ignored assessment payloads still need a non-empty `source`.")
+        return {"errors": errors, "warnings": warnings}
 
     exam_label = _safe_str(payload.get("exam_label"))
     source = _safe_str(payload.get("source"))

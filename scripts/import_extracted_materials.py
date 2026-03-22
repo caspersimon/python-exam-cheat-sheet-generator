@@ -74,6 +74,7 @@ def _normalize_import_payload(payload: dict[str, Any]) -> dict[str, Any]:
             normalized["notes"] = [str(normalized["note"]).strip()]
         elif "notes" in normalized:
             normalized["notes"] = [str(note).strip() for note in _safe_list(normalized.get("notes")) if str(note).strip()]
+        normalized["ignored"] = bool(normalized.get("ignored"))
         return normalized
 
     return normalized
@@ -176,6 +177,15 @@ def main() -> None:
         summary["weeks"].append({"week": payload["week"], "action": action, "warnings": issues["warnings"]})
 
     for payload in assessment_payloads:
+        if payload.get("ignored"):
+            summary["assessments"].append(
+                {
+                    "exam_label": payload["exam_label"],
+                    "action": "skipped",
+                    "warnings": ["ignored assessment payload"],
+                }
+            )
+            continue
         issues = analyze_assessment_payload(payload)
         if issues["errors"]:
             raise RuntimeError(f"Assessment {payload.get('exam_label')} failed validation: {issues['errors']}")

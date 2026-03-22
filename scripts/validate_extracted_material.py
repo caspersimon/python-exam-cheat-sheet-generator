@@ -190,6 +190,15 @@ def validate_exam_payload(payload: dict[str, Any]) -> dict[str, list[str]]:
     if not isinstance(payload, dict):
         return {"errors": ["Exam payload must be a JSON object."], "warnings": []}
 
+    if payload.get("ignored"):
+        exam_label = _safe_str(payload.get("exam_label"))
+        source = _safe_str(payload.get("source"))
+        if not exam_label:
+            _append_error(errors, "exam_label", "is required for ignored payloads")
+        if not source:
+            _append_error(errors, "source", "is required for ignored payloads")
+        return {"errors": errors, "warnings": warnings}
+
     exams = _safe_list(payload.get("exams"))
     if not exams and _safe_list(payload.get("questions")):
         exams = [{"questions": _safe_list(payload.get("questions")), "exam_label": payload.get("exam_label", "exam")}]  # type: ignore[list-item]

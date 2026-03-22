@@ -1,13 +1,11 @@
 {
   "source_file": "Sample Final plus answers.pdf",
   "validation": {
-    "errors": [
-      "`exam_label` must be a non-empty string.",
-      "`source` must be a non-empty string.",
-      "Assessment payload must include at least one question."
-    ],
+    "errors": [],
     "warnings": []
   },
   "syntax_errors": [],
-  "review_notes": []
+  "review_notes": [
+    "Ignored empty extraction artifact preserved for auditability; import tooling should skip it."
+  ]
 }

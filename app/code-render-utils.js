@@ -63,23 +63,49 @@ const PYTHON_BUILTINS = new Set([
   "zip",
 ]);
 
+function normalizeCodeRenderNewlines(text) {
+  if (typeof normalizeNewlines === "function") {
+    return normalizeNewlines(text);
+  }
+  return String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+}
+
+function escapeCodeRenderHtml(value) {
+  if (typeof escapeHtml === "function") {
+    return escapeHtml(value);
+  }
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function isCodeBlockLikelyLocal(text) {
+  if (typeof isCodeBlockLikely === "function") {
+    return isCodeBlockLikely(text);
+  }
+  return /(def |class |for |while |if |elif |else:|return\b|print\(|import\b|from\b|lambda\b|\.loc\[|\.iloc\[)/.test(text);
+}
+
 function wrapCodeToken(className, value) {
-  return `<span class="${className}">${escapeHtml(value)}</span>`;
+  return `<span class="${className}">${escapeCodeRenderHtml(value)}</span>`;
 }
 
 function looksLikePythonBlock(text) {
-  const value = normalizeNewlines(String(text || "")).trim();
+  const value = normalizeCodeRenderNewlines(String(text || "")).trim();
   if (!value) {
     return false;
   }
-  if (typeof isCodeBlockLikely === "function" && isCodeBlockLikely(value)) {
+  if (isCodeBlockLikelyLocal(value)) {
     return true;
   }
   return /(def |class |for |while |if |elif |else:|return\b|print\(|import\b|from\b|lambda\b|\.loc\[|\.iloc\[)/.test(value);
 }
 
 function highlightPythonCode(text) {
-  const source = normalizeNewlines(String(text || ""));
+  const source = normalizeCodeRenderNewlines(String(text || ""));
   let output = "";
   let index = 0;
   let expectNamedToken = "";
@@ -121,7 +147,7 @@ function highlightPythonCode(text) {
       } else if (identifier === "self" || identifier === "cls") {
         output += wrapCodeToken("tok-self", identifier);
       } else {
-        output += escapeHtml(identifier);
+        output += escapeCodeRenderHtml(identifier);
       }
       index += identifier.length;
       continue;
@@ -141,7 +167,7 @@ function highlightPythonCode(text) {
       continue;
     }
 
-    output += escapeHtml(source[index]);
+    output += escapeCodeRenderHtml(source[index]);
     index += 1;
   }
 
@@ -149,23 +175,23 @@ function highlightPythonCode(text) {
 }
 
 function renderCodeBlock(text, className = "") {
-  const value = normalizeNewlines(String(text || "")).replace(/\s+$/g, "").trimEnd();
+  const value = normalizeCodeRenderNewlines(String(text || "")).replace(/\s+$/g, "").trimEnd();
   if (!value.trim()) {
     return "";
   }
 
   const classes = ["code-block", "python-code", className].filter(Boolean).join(" ");
-  const content = looksLikePythonBlock(value) ? highlightPythonCode(value) : escapeHtml(value);
+  const content = looksLikePythonBlock(value) ? highlightPythonCode(value) : escapeCodeRenderHtml(value);
   return `<pre class="${classes}"><code>${content}</code></pre>`;
 }
 
 function renderOutputBlock(text, className = "") {
-  const value = normalizeNewlines(String(text || "")).replace(/\s+$/g, "").trimEnd();
+  const value = normalizeCodeRenderNewlines(String(text || "")).replace(/\s+$/g, "").trimEnd();
   if (!value.trim()) {
     return "";
   }
   const classes = ["output-block", className].filter(Boolean).join(" ");
-  return `<pre class="${classes}"><code>${escapeHtml(value)}</code></pre>`;
+  return `<pre class="${classes}"><code>${escapeCodeRenderHtml(value)}</code></pre>`;
 }
 
 function renderAutoBlock(text, className = "") {

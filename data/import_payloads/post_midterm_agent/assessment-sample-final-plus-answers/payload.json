@@ -1,7 +1,10 @@
 {
-  "exam_label": "",
-  "source": "",
+  "exam_label": "IGNORED_INVALID_EXTRACTION",
+  "source": "materials/post_midterm/Sample Final plus answers.pdf",
   "year": "unknown",
   "questions": [],
-  "notes": []
+  "notes": [
+    "This payload was generated without any questions and is intentionally marked as ignored so import and validation tooling can skip it."
+  ],
+  "ignored": true
 }

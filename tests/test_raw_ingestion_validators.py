@@ -53,6 +53,18 @@ class RawIngestionValidatorTests(unittest.TestCase):
         self.assertEqual("unknown", normalized["year"])
         self.assertEqual("sample_final", normalized["exam_label"])
 
+    def test_ignored_assessment_payload_only_requires_identity_fields(self) -> None:
+        issues = analyze_assessment_payload(
+            {
+                "exam_label": "ignored_sample_final",
+                "source": "materials/exams/ignored.pdf",
+                "year": "unknown",
+                "questions": [],
+                "ignored": True,
+            }
+        )
+        self.assertEqual([], issues["errors"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,3 +1,6 @@
+const MIN_PREVIEW_CARD_WIDTH = 56;
+const MIN_PREVIEW_CARD_HEIGHT = 130;
+
 function getPreviewPageContent(page) {
   return page === 2 ? refs.page2Content : refs.page1Content;
 }
@@ -27,8 +30,8 @@ function sanitizePreviewCardLayout(rawLayout, fallback = {}) {
   const pageSize = getPreviewPageSize(page);
   const widthRaw = Number(rawLayout?.width ?? fallback.width ?? 160);
   const heightRaw = Number(rawLayout?.height ?? fallback.height ?? 220);
-  const width = clamp(Number.isFinite(widthRaw) ? widthRaw : 160, 56, pageSize.width);
-  const height = clamp(Number.isFinite(heightRaw) ? heightRaw : 220, 130, pageSize.height);
+  const width = clamp(Number.isFinite(widthRaw) ? widthRaw : 160, MIN_PREVIEW_CARD_WIDTH, pageSize.width);
+  const height = clamp(Number.isFinite(heightRaw) ? heightRaw : 220, MIN_PREVIEW_CARD_HEIGHT, pageSize.height);
   const xRaw = Number(rawLayout?.x ?? fallback.x ?? 0);
   const yRaw = Number(rawLayout?.y ?? fallback.y ?? 0);
   const x = clamp(Number.isFinite(xRaw) ? xRaw : 0, 0, Math.max(0, pageSize.width - width));
@@ -176,13 +179,13 @@ function handlePreviewPointerMove(event) {
   const dy = event.clientY - previewPointerState.startY;
 
   if (previewPointerState.mode === "resize-corner") {
-    const maxWidth = Math.max(72, pageSize.width - layout.x);
-    const maxHeight = Math.max(130, pageSize.height - layout.y);
-    layout.width = clamp(previewPointerState.startWidth + dx, 56, maxWidth);
-    layout.height = clamp(previewPointerState.startHeight + dy, 130, maxHeight);
+    const maxWidth = Math.max(MIN_PREVIEW_CARD_WIDTH, pageSize.width - layout.x);
+    const maxHeight = Math.max(MIN_PREVIEW_CARD_HEIGHT, pageSize.height - layout.y);
+    layout.width = clamp(previewPointerState.startWidth + dx, MIN_PREVIEW_CARD_WIDTH, maxWidth);
+    layout.height = clamp(previewPointerState.startHeight + dy, MIN_PREVIEW_CARD_HEIGHT, maxHeight);
   } else if (previewPointerState.mode === "resize-bottom") {
-    const maxHeight = Math.max(130, pageSize.height - layout.y);
-    layout.height = clamp(previewPointerState.startHeight + dy, 130, maxHeight);
+    const maxHeight = Math.max(MIN_PREVIEW_CARD_HEIGHT, pageSize.height - layout.y);
+    layout.height = clamp(previewPointerState.startHeight + dy, MIN_PREVIEW_CARD_HEIGHT, maxHeight);
   }
 
   applyPreviewCardLayout(cardElement, layout);

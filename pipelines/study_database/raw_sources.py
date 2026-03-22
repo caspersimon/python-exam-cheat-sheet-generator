@@ -17,6 +17,10 @@ from pipelines.shared import normalize_newlines
 WEEK_RE = re.compile(r"(?:week|exercise[_\s-])\s*(\d+)", re.IGNORECASE)
 ASSESSMENT_RE = re.compile(r"(final|exam|resit|trial)", re.IGNORECASE)
 REPO_ROOT = Path(__file__).resolve().parents[2]
+PDFTOTEXT_TIMEOUT_SECONDS = 20
+PDFTOPPM_TIMEOUT_SECONDS = 45
+TESSERACT_TIMEOUT_SECONDS = 20
+OCR_MAX_PAGES = 20
 
 
 @dataclass(slots=True)
@@ -140,14 +144,28 @@ def extract_pptx_text(path: Path) -> str:
     return "\n".join(slide_texts).strip()
 
 
+def _run_subprocess(args: list[str], *, timeout_seconds: int, failure_label: str) -> subprocess.CompletedProcess[str]:
+    try:
+        result = subprocess.run(
+            args,
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=timeout_seconds,
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise RuntimeError(f"{failure_label} timed out after {timeout_seconds} seconds") from exc
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or f"{failure_label} failed")
+    return result
+
+
 def _run_pdftotext(path: Path, *, layout: bool) -> str:
     args = ["pdftotext"]
     if layout:
         args.append("-layout")
     args.extend([str(path), "-"])
-    result = subprocess.run(args, capture_output=True, text=True, check=False)
-    if result.returncode != 0:
-        raise RuntimeError(result.stderr.strip() or "pdftotext failed")
+    result = _run_subprocess(args, timeout_seconds=PDFTOTEXT_TIMEOUT_SECONDS, failure_label="pdftotext")
     return normalize_newlines(result.stdout).strip()
 
 
@@ -169,25 +187,22 @@ def _run_pdf_ocr(path: Path) -> str:
     with tempfile.TemporaryDirectory(prefix="pdf-ocr-") as tmp:
         temp_dir = Path(tmp)
         prefix = temp_dir / "page"
-        render = subprocess.run(
-            ["pdftoppm", "-png", "-r", "180", str(path), str(prefix)],
-            capture_output=True,
-            text=True,
-            check=False,
+        _run_subprocess(
+            ["pdftoppm", "-png", "-r", "180", "-f", "1", "-l", str(OCR_MAX_PAGES), str(path), str(prefix)],
+            timeout_seconds=PDFTOPPM_TIMEOUT_SECONDS,
+            failure_label="pdftoppm",
         )
-        if render.returncode != 0:
-            raise RuntimeError(render.stderr.strip() or "pdftoppm failed")
 
         pages = sorted(temp_dir.glob("page-*.png"))
         page_texts: list[str] = []
         for image_path in pages:
-            ocr = subprocess.run(
-                ["tesseract", str(image_path), "stdout", "--psm", "6"],
-                capture_output=True,
-                text=True,
-                check=False,
-            )
-            if ocr.returncode != 0:
+            try:
+                ocr = _run_subprocess(
+                    ["tesseract", str(image_path), "stdout", "--psm", "6"],
+                    timeout_seconds=TESSERACT_TIMEOUT_SECONDS,
+                    failure_label=f"tesseract ({image_path.name})",
+                )
+            except RuntimeError:
                 continue
             text = normalize_newlines(ocr.stdout).strip()
             if text:

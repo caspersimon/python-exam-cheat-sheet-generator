@@ -130,6 +130,19 @@ class ExtractedMaterialValidationTests(unittest.TestCase):
         self.assertTrue(result.report_path.exists())
         self.assertIn("correct", result.stdout.lower() + result.stderr.lower())
 
+    def test_exam_payload_allows_ignored_extraction(self) -> None:
+        payload = {
+            "exam_label": "IGNORED_INVALID_EXTRACTION",
+            "source": "materials/post_midterm/Sample Final plus answers.pdf",
+            "questions": [],
+            "ignored": True,
+        }
+
+        report = extracted.validate_exam_payload(payload)
+        self.assertEqual([], report["errors"], msg=str(report))
+        result = self._run_cli(payload, kind="exam")
+        self.assertEqual(0, result.returncode)
+
     def test_bundle_payload_validates_week_and_exam_sections_together(self) -> None:
         payload = {
             "week": 6,

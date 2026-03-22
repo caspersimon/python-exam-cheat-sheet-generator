@@ -34,6 +34,19 @@ class ImportExtractedMaterialsTests(unittest.TestCase):
         self.assertEqual("materials/post_midterm/practice/foo.pdf", payload["source"])
         self.assertEqual(["OCR cleanup used"], payload["notes"])
 
+    def test_normalize_import_payload_preserves_ignored_assessments(self) -> None:
+        payload = _normalize_import_payload(
+            {
+                "exam_label": "ignored_sample_final",
+                "source": "materials/post_midterm/practice/foo.pdf",
+                "year": "unknown",
+                "questions": [],
+                "ignored": True,
+            }
+        )
+
+        self.assertTrue(payload["ignored"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 STUDY_DB_FILE = ROOT / "data" / "study_db.json"
 
 _WEEK_SOURCE_RE = re.compile(r"week\s+(\d+)", re.IGNORECASE)
+_NOTEBOOK_CELL_INDEX_RE = re.compile(r"(?:^|[^0-9])(\d+)$")
 
 
 def _as_int(value: Any) -> int | None:
@@ -135,6 +136,17 @@ def _collect_sources(meta: dict[str, Any], weeks: list[dict[str, Any]], exams: l
     return derived
 
 
+def _notebook_cell_index_from_refs(snippet: dict[str, Any], fallback_index: int) -> int:
+    for ref in _safe_list(snippet.get("source_refs")):
+        if not isinstance(ref, dict):
+            continue
+        original_id = str(ref.get("original_id") or "").strip()
+        match = _NOTEBOOK_CELL_INDEX_RE.search(original_id)
+        if match:
+            return int(match.group(1))
+    return fallback_index
+
+
 def flatten_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
     """Build the materialized topic-card input shape from canonical study_db."""
     if _db_schema_version(db).startswith("3"):
@@ -207,6 +219,7 @@ def _flatten_v3_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
         lecture_concepts: list[dict[str, Any]] = []
         lecture_questions: list[dict[str, Any]] = []
 
+        notebook_fallback_index = 0
         for topic in _safe_list(week_rec.get("topics")):
             if not isinstance(topic, dict):
                 continue
@@ -256,10 +269,11 @@ def _flatten_v3_study_db_for_pipeline(db: dict[str, Any]) -> dict[str, Any]:
                         continue
                     if str(snippet.get("source_type") or "").strip() not in {"notebook", "homework"}:
                         continue
+                    notebook_fallback_index += 1
                     notebooks.append(
                         {
                             "week": week,
-                            "cell_index": len(notebooks) + 1,
+                            "cell_index": _notebook_cell_index_from_refs(snippet, notebook_fallback_index),
                             "cell_type": "code",
                             "topic": subtopic_title or topic_title,
                             "source": str(snippet.get("content") or "").strip(),
