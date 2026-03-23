@@ -315,3 +315,5 @@ PY
 - If localStorage schema changes are intentional, bump storage key versions in `app/state-and-init.js`.
 - If you adjust topic curation policy, update both this file and `docs/curation/TOPIC_MERGING_GUIDELINES.md`.
 - If you defer a larger issue, track it in `docs/ROADMAP.md` and add/update a spec in `docs/specs/`.
+
+@RTK.md
