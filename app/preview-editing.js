@@ -30,24 +30,14 @@ function handlePreviewEditingClick(event) {
   const deleteItemBtn = event.target.closest("[data-role='preview-delete-item']");
   if (deleteItemBtn) {
     event.preventDefault();
-    deletePreviewItem(
-      deleteItemBtn.dataset.sourceCardId || "",
-      deleteItemBtn.dataset.itemType || "",
-      deleteItemBtn.dataset.itemId || "",
-      deleteItemBtn.dataset.section || ""
-    );
+    deletePreviewItem(deleteItemBtn.dataset.sourceCardId || "", deleteItemBtn.dataset.pieceId || "");
     return;
   }
 
   const editItemBtn = event.target.closest("[data-role='preview-edit-item']");
   if (editItemBtn) {
     event.preventDefault();
-    void editPreviewItem(
-      editItemBtn.dataset.sourceCardId || "",
-      editItemBtn.dataset.itemType || "",
-      editItemBtn.dataset.itemId || "",
-      editItemBtn.dataset.section || ""
-    );
+    void editPreviewItem(editItemBtn.dataset.sourceCardId || "", editItemBtn.dataset.pieceId || "");
   }
 }
 
@@ -82,18 +72,8 @@ function deletePreviewCard(previewId) {
 
   entry.cards.forEach((sourceCard) => {
     const draft = ensureDraft(sourceCard);
-    draft.selected.aiQuestions = [];
-    draft.selected.aiExamples = [];
-    draft.selected.keyPoints = [];
-    draft.selected.recommended = [];
-    draft.selected.additional = [];
-    draft.overrides = {
-      aiQuestions: {},
-      keyPoints: {},
-      keyPointDetails: {},
-      aiExamples: {},
-      sources: {},
-    };
+    draft.selected.pieces = [];
+    draft.overrides = { pieces: {} };
   });
 
   delete state.previewCards[previewId];
@@ -150,49 +130,11 @@ async function editPreviewCardTitle(previewId) {
   renderPreview();
 }
 
-function deletePreviewItem(cardId, itemType, itemId, section) {
-  if (!cardId || !itemId) {
-    return;
-  }
-  const context = getDraftCardContext(cardId);
-  if (!context) {
+function deletePreviewItem(cardId, pieceId) {
+  if (!cardId || !pieceId) {
     return;
   }
 
-  const { card, draft } = context;
-  ensureSelectionOverrides(draft);
-  pushPreviewHistorySnapshot(`Delete ${humanizeItemType(itemType)} in "${humanizeTopic(card.topic)}"`);
-
-  if (itemType === "keyPoint") {
-    draft.selected.keyPoints = (draft.selected.keyPoints || []).filter((id) => id !== itemId && !id.startsWith(`${itemId}-d`));
-    delete draft.overrides.keyPoints[itemId];
-    Object.keys(draft.overrides.keyPointDetails).forEach((detailId) => {
-      if (detailId.startsWith(`${itemId}-d`)) {
-        delete draft.overrides.keyPointDetails[detailId];
-      }
-    });
-  } else if (itemType === "aiQuestion") {
-    draft.selected.aiQuestions = (draft.selected.aiQuestions || []).filter((id) => id !== itemId);
-    delete draft.overrides.aiQuestions[itemId];
-  } else if (itemType === "keyPointDetail") {
-    draft.selected.keyPoints = (draft.selected.keyPoints || []).filter((id) => id !== itemId);
-    delete draft.overrides.keyPointDetails[itemId];
-  } else if (itemType === "aiExample") {
-    draft.selected.aiExamples = (draft.selected.aiExamples || []).filter((id) => id !== itemId);
-    delete draft.overrides.aiExamples[itemId];
-  } else if (itemType === "sourceItem") {
-    draft.selected.recommended = (draft.selected.recommended || []).filter((id) => id !== itemId);
-    draft.selected.additional = (draft.selected.additional || []).filter((id) => id !== itemId);
-    delete draft.overrides.sources[itemId];
-  }
-
-  renderPreview();
-}
-
-async function editPreviewItem(cardId, itemType, itemId, section) {
-  if (!cardId || !itemId) {
-    return;
-  }
   const context = getDraftCardContext(cardId);
   if (!context) {
     return;
@@ -200,294 +142,266 @@ async function editPreviewItem(cardId, itemType, itemId, section) {
 
   const { card, draft } = context;
   const overrides = ensureSelectionOverrides(draft);
+  pushPreviewHistorySnapshot(`Delete piece in "${humanizeTopic(card.topic)}"`);
+  draft.selected.pieces = (draft.selected.pieces || []).filter((id) => id !== pieceId);
+  delete overrides.pieces[pieceId];
+  renderPreview();
+}
 
-  if (itemType === "aiQuestion") {
-    const item = commonQuestionItems(card).find((entry) => entry.id === itemId);
-    if (!item) {
-      return;
-    }
-    const current = getPreviewAIQuestionOverride(draft, itemId, item);
-    const values = await requestPreviewEditValues({
-      title: "Edit Common Exam Question",
-      subtitle: humanizeTopic(card.topic),
-      fields: [
-        {
-          id: "summary",
-          label: "Question",
-          prompt: "Edit question:",
-          value: current.summary || "",
-          multiline: true,
-          rows: 4,
-        },
-        {
-          id: "detail",
-          label: "Answer summary",
-          prompt: "Edit answer summary:",
-          value: current.detail || "",
-          multiline: true,
-          rows: 6,
-        },
-        {
-          id: "extra",
-          label: "Extra exam note",
-          prompt: "Edit extra exam note:",
-          value: current.extra || "",
-          multiline: true,
-          rows: 5,
-        },
-        {
-          id: "code",
-          label: "Code example",
-          prompt: "Edit code example:",
-          value: current.code || "",
-          multiline: true,
-          rows: 9,
-          kind: "code",
-        },
-      ],
-    });
-    if (!values) {
-      return;
-    }
-    const trimmedSummary = String(values.summary || "").trim();
-    const trimmedDetail = String(values.detail || "").trim();
-    const trimmedExtra = String(values.extra || "").trim();
-    const codeValue = String(values.code || "");
-    if (!trimmedSummary && !trimmedDetail && !trimmedExtra && !codeValue.trim()) {
-      deletePreviewItem(cardId, itemType, itemId, section);
-      return;
-    }
-    pushPreviewHistorySnapshot(`Edit common exam question in "${humanizeTopic(card.topic)}"`);
-    overrides.aiQuestions[itemId] = {
-      summary: trimmedSummary,
-      detail: trimmedDetail,
-      extra: trimmedExtra,
-      code: codeValue,
-    };
-    renderPreview();
+async function editPreviewItem(cardId, pieceId) {
+  if (!cardId || !pieceId) {
+    return;
+  }
+  const context = getDraftCardContext(cardId);
+  if (!context) {
     return;
   }
 
-  if (itemType === "keyPoint") {
-    const group = keyPointGroups(card).find((entry) => entry.id === itemId);
-    if (!group) {
-      return;
-    }
-    const current = getPreviewKeyPointOverride(draft, itemId, group.text);
-    const values = await requestPreviewEditValues({
-      title: "Edit Key Point",
-      subtitle: humanizeTopic(card.topic),
-      fields: [
-        {
-          id: "text",
-          label: "Key point text",
-          prompt: "Edit key point text:",
-          value: current,
-          multiline: true,
-          rows: 6,
-        },
-      ],
-    });
-    if (!values) {
-      return;
-    }
-    const trimmed = String(values.text || "").trim();
-    if (!trimmed) {
-      deletePreviewItem(cardId, itemType, itemId, section);
-      return;
-    }
-    pushPreviewHistorySnapshot(`Edit key point in "${humanizeTopic(card.topic)}"`);
-    overrides.keyPoints[itemId] = trimmed;
-    renderPreview();
+  const { card, draft } = context;
+  const match = findExamPieceContext(card, pieceId);
+  if (!match) {
     return;
   }
 
-  if (itemType === "keyPointDetail") {
-    const detail = findKeyPointDetail(card, itemId);
-    if (!detail) {
-      return;
-    }
-    const fallback = detail.code || detail.text || detail.title || "";
-    const current = getPreviewKeyPointDetailOverride(draft, itemId) || fallback;
-    const values = await requestPreviewEditValues({
-      title: "Edit Key Point Detail",
-      subtitle: humanizeTopic(card.topic),
-      fields: [
-        {
-          id: "text",
-          label: "Detail text",
-          prompt: "Edit detail text:",
-          value: current,
-          multiline: true,
-          rows: detail.code ? 9 : 7,
-          kind: detail.code ? "code" : "text",
-        },
-      ],
-    });
-    if (!values) {
-      return;
-    }
-    const trimmed = String(values.text || "").trim();
-    pushPreviewHistorySnapshot(`Edit key point detail in "${humanizeTopic(card.topic)}"`);
-    if (!trimmed) {
-      delete overrides.keyPointDetails[itemId];
-    } else {
-      overrides.keyPointDetails[itemId] = trimmed;
-    }
-    renderPreview();
+  const current = getPieceOverride(draft, match.piece);
+  const values = await requestPreviewEditValues(buildPieceEditRequest(card, current));
+  if (!values) {
     return;
   }
 
-  if (itemType === "aiExample") {
-    const item = usefulAIExamples(card).find((entry) => entry.id === itemId);
-    if (!item) {
-      return;
-    }
-    const current = getPreviewAIExampleOverride(draft, itemId, item);
-    const values = await requestPreviewEditValues({
-      title: "Edit Example",
-      subtitle: humanizeTopic(card.topic),
-      fields: [
-        {
-          id: "title",
-          label: "Example title",
-          prompt: "Edit example title:",
-          value: current.title || "",
-        },
-        {
-          id: "code",
-          label: "Example code",
-          prompt: "Edit example code:",
-          value: current.code || "",
-          multiline: true,
-          rows: 11,
-          kind: "code",
-        },
-        {
-          id: "why",
-          label: "Explanation",
-          prompt: "Edit explanation:",
-          value: current.why || "",
-          multiline: true,
-          rows: 6,
-        },
-        {
-          id: "output",
-          label: "Output / Result",
-          prompt: "Edit output or result:",
-          value: current.output || "",
-          multiline: true,
-          rows: 4,
-        },
-      ],
-    });
-    if (!values) {
-      return;
-    }
-    pushPreviewHistorySnapshot(`Edit example in "${humanizeTopic(card.topic)}"`);
-    overrides.aiExamples[itemId] = {
-      title: String(values.title || "").trim(),
-      code: String(values.code || ""),
-      output: String(values.output || "").trim(),
-      why: String(values.why || "").trim(),
-    };
-    renderPreview();
+  const nextOverride = buildPieceOverrideFromValues(current, values);
+  if (!nextOverride) {
+    deletePreviewItem(cardId, pieceId);
     return;
   }
 
-  if (itemType === "sourceItem") {
-    const sourceItem = findSourceItem(card, itemId);
-    if (!sourceItem) {
-      return;
-    }
-    const currentOverride = getPreviewSourceOverride(draft, itemId, sourceItem.header);
-    const headerDefault = currentOverride?.header || sourceItem.header;
-    const bodyDefault = currentOverride?.body || sourceItemToEditableText(sourceItem);
-    const values = await requestPreviewEditValues({
-      title: "Edit Snippet",
-      subtitle: humanizeTopic(card.topic),
-      fields: [
-        {
-          id: "header",
-          label: "Snippet title",
-          prompt: "Edit snippet title:",
-          value: headerDefault,
-        },
-        {
-          id: "body",
-          label: "Snippet content",
-          prompt: "Edit snippet content:",
-          value: bodyDefault,
-          multiline: true,
-          rows: 12,
-          kind: "code",
-        },
-      ],
-    });
-    if (!values) {
-      return;
-    }
-    pushPreviewHistorySnapshot(`Edit snippet in "${humanizeTopic(card.topic)}"`);
-    overrides.sources[itemId] = {
-      header: String(values.header || "").trim(),
-      body: String(values.body || ""),
-    };
-    renderPreview();
-  }
+  pushPreviewHistorySnapshot(`Edit piece in "${humanizeTopic(card.topic)}"`);
+  ensureSelectionOverrides(draft).pieces[pieceId] = nextOverride;
+  renderPreview();
 }
 
-function findKeyPointDetail(card, detailId) {
-  for (const group of keyPointGroups(card)) {
-    const detail = group.details.find((entry) => entry.id === detailId);
-    if (detail) {
-      return detail;
+function buildPieceEditRequest(card, piece) {
+  const base = {
+    title: `Edit ${humanizePieceType(piece.pieceType)}`,
+    subtitle: humanizeTopic(card.topic),
+    fields: [
+      {
+        id: "title",
+        label: "Piece title",
+        prompt: "Edit piece title:",
+        value: piece.title || "",
+      },
+    ],
+  };
+
+  if (piece.pieceType === "code_example") {
+    base.fields.push(
+      {
+        id: "code",
+        label: "Code",
+        prompt: "Edit code:",
+        value: String(piece.content?.code || ""),
+        multiline: true,
+        rows: 10,
+        kind: "code",
+      },
+      {
+        id: "output",
+        label: "Output",
+        prompt: "Edit output:",
+        value: String(piece.content?.output || ""),
+        multiline: true,
+        rows: 4,
+      },
+      {
+        id: "text",
+        label: "Optional note",
+        prompt: "Edit note:",
+        value: String(piece.content?.text || ""),
+        multiline: true,
+        rows: 4,
+      }
+    );
+    return base;
+  }
+
+  if (piece.pieceType === "past_exam_piece") {
+    base.fields.push(
+      {
+        id: "question",
+        label: "Question",
+        prompt: "Edit question:",
+        value: String(piece.content?.question || ""),
+        multiline: true,
+        rows: 7,
+      },
+      {
+        id: "code_context",
+        label: "Code context",
+        prompt: "Edit code context:",
+        value: String(piece.content?.code_context || ""),
+        multiline: true,
+        rows: 8,
+        kind: "code",
+      },
+      {
+        id: "options",
+        label: "Options",
+        prompt: "Edit options as one per line, for example `a: ...`:",
+        value: optionsToEditableText(piece.content?.options || {}),
+        multiline: true,
+        rows: 6,
+      },
+      {
+        id: "correct",
+        label: "Correct option",
+        prompt: "Edit correct option:",
+        value: String(piece.content?.correct || ""),
+      },
+      {
+        id: "explanation",
+        label: "Explanation",
+        prompt: "Edit explanation:",
+        value: String(piece.content?.explanation || ""),
+        multiline: true,
+        rows: 6,
+      }
+    );
+    return base;
+  }
+
+  if (piece.pieceType === "reference_table") {
+    base.fields.push(
+      {
+        id: "table",
+        label: "Table",
+        prompt: "Edit the table as tab-separated lines. First line is headers.",
+        value: tableToEditableText(piece.content || {}),
+        multiline: true,
+        rows: 8,
+      },
+      {
+        id: "text",
+        label: "Optional note",
+        prompt: "Edit note:",
+        value: String(piece.content?.text || ""),
+        multiline: true,
+        rows: 3,
+      }
+    );
+    return base;
+  }
+
+  base.fields.push({
+    id: "text",
+    label: "Text",
+    prompt: "Edit text:",
+    value: String(piece.content?.text || ""),
+    multiline: true,
+    rows: 6,
+  });
+  return base;
+}
+
+function buildPieceOverrideFromValues(piece, values) {
+  const title = String(values.title || "").trim();
+  const content = {};
+
+  if (piece.pieceType === "code_example") {
+    content.code = String(values.code || "");
+    content.output = String(values.output || "").trim();
+    content.text = String(values.text || "").trim();
+    if (!title && !content.code.trim() && !content.output && !content.text) {
+      return null;
     }
+    return { title, content };
   }
-  return null;
-}
 
-function findSourceItem(card, itemId) {
-  const split = getSourceSplit(card);
-  return [...split.recommended, ...split.additional].find((item) => item.id === itemId) || null;
-}
-
-function sourceItemToEditableText(sourceItem) {
-  const lines = [];
-  if (sourceItem.sourceType === "exam") {
-    lines.push(sourceItem.item.question || "");
-    lines.push(sourceItem.item.code_context || "");
-    Object.entries(sourceItem.item.options || {}).forEach(([key, value]) => {
-      lines.push(`${String(key).toUpperCase()}: ${value}`);
-    });
-    if (sourceItem.item.correct) {
-      lines.push(`Correct: ${sourceItem.item.correct}`);
+  if (piece.pieceType === "past_exam_piece") {
+    content.question = String(values.question || "").trim();
+    content.code_context = String(values.code_context || "");
+    content.options = editableTextToOptions(values.options || "");
+    content.correct = String(values.correct || "").trim();
+    content.explanation = String(values.explanation || "").trim();
+    if (!title && !content.question && !content.code_context.trim() && !Object.keys(content.options).length && !content.correct && !content.explanation) {
+      return null;
     }
-    lines.push(sourceItem.item.explanation || "");
-  } else if (sourceItem.sourceType === "lecture") {
-    lines.push(sourceItem.item.explanation || "");
-    lines.push(sourceItem.item.question || "");
-    lines.push(sourceItem.item.code_examples?.map((example) => example.code || "").join("\n\n") || "");
-  } else {
-    lines.push(sourceItem.item.source || "");
-    lines.push((sourceItem.item.outputs || []).join("\n"));
+    return { title, content };
   }
-  return lines.filter((line) => String(line || "").trim()).join("\n");
+
+  if (piece.pieceType === "reference_table") {
+    const parsed = editableTextToTable(values.table || "");
+    content.headers = parsed.headers;
+    content.rows = parsed.rows;
+    content.text = String(values.text || "").trim();
+    if (!title && !content.text && !content.headers.length && !content.rows.length) {
+      return null;
+    }
+    return { title, content };
+  }
+
+  content.text = String(values.text || "").trim();
+  if (!title && !content.text) {
+    return null;
+  }
+  return { title, content };
 }
 
-function humanizeItemType(itemType) {
-  if (itemType === "aiQuestion") {
-    return "common exam question";
+function optionsToEditableText(options) {
+  return Object.entries(options || {})
+    .map(([key, value]) => `${key}: ${value}`)
+    .join("\n");
+}
+
+function editableTextToOptions(text) {
+  const lines = String(text || "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const options = {};
+  lines.forEach((line) => {
+    const match = line.match(/^([A-Za-z0-9]+)\s*:\s*(.+)$/);
+    if (match) {
+      options[match[1].toLowerCase()] = match[2].trim();
+    }
+  });
+  return options;
+}
+
+function tableToEditableText(content) {
+  const headers = Array.isArray(content.headers) ? content.headers : [];
+  const rows = Array.isArray(content.rows) ? content.rows : [];
+  return [headers.join("\t"), ...rows.map((row) => row.join("\t"))].filter(Boolean).join("\n");
+}
+
+function editableTextToTable(text) {
+  const lines = String(text || "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  if (!lines.length) {
+    return { headers: [], rows: [] };
   }
-  if (itemType === "keyPoint") {
-    return "key point";
+  const splitRow = (line) =>
+    line.includes("\t")
+      ? line.split("\t").map((value) => value.trim())
+      : line.split("|").map((value) => value.trim()).filter(Boolean);
+  const headers = splitRow(lines[0]).filter(Boolean);
+  const rows = lines.slice(1).map(splitRow).filter((row) => row.length > 0);
+  return { headers, rows };
+}
+
+function humanizePieceType(pieceType) {
+  if (pieceType === "past_exam_piece") {
+    return "past exam snippet";
   }
-  if (itemType === "keyPointDetail") {
-    return "key point detail";
+  if (pieceType === "reference_table") {
+    return "reference table";
   }
-  if (itemType === "aiExample") {
-    return "example";
+  if (pieceType === "code_example") {
+    return "code example";
   }
-  return "snippet";
+  return "explanation";
 }
 
 bindPreviewEditingEvents();

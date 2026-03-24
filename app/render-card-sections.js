@@ -1,27 +1,33 @@
 function renderSwipe() {
   const filteredDeck = getFilteredDeck();
-  const filteredWeekBundles = getFilteredWeekBundles();
-  const activeContext = ensureExplorerNavigation(filteredWeekBundles);
+  const filteredParents = getFilteredParentBundles();
+  const activeContext = ensureExplorerNavigation(filteredParents);
   const selectedTotals = getSelectedItemTotals();
+
   refs.acceptedCount.textContent = String(selectedTotals.topics);
   refs.rejectedCount.textContent = String(selectedTotals.items);
   refs.remainingCount.textContent = String(filteredDeck.length);
+
   const visibleExamTopics = filteredDeck.filter((card) => (card.exam_stats?.total_hits || 0) > 0).length;
   const progressBits = [
     `${selectedTotals.topics} topics staged`,
-    `${selectedTotals.items} items selected`,
+    `${selectedTotals.items} pieces selected`,
     `${filteredDeck.length} topics visible`,
   ];
   if (visibleExamTopics > 0 && visibleExamTopics !== filteredDeck.length) {
-    progressBits.push(`${visibleExamTopics} exam-linked`);
+    progressBits.push(`${visibleExamTopics} exam-heavy`);
   }
   refs.progressText.textContent = progressBits.join(" • ");
+
   refs.acceptedTopicsList.innerHTML = "";
-  getSelectedPreviewEntries().slice(0, 40).forEach((entry) => {
-    const li = document.createElement("li");
-    li.textContent = humanizeTopic(entry.card.topic);
-    refs.acceptedTopicsList.appendChild(li);
-  });
+  getSelectedPreviewEntries()
+    .slice(0, 40)
+    .forEach((entry) => {
+      const li = document.createElement("li");
+      li.textContent = humanizeTopic(entry.card.topic);
+      refs.acceptedTopicsList.appendChild(li);
+    });
+
   if (!activeContext) {
     refs.topicSidebar.innerHTML = "";
     refs.cardHost.innerHTML = `<div class="empty-state">
@@ -32,47 +38,46 @@ function renderSwipe() {
     refs.topicSidebarBackdrop?.classList.add("hidden");
     return;
   }
-  const { bundle, group, card } = activeContext;
-  refs.topicSidebar.innerHTML = renderTopicSidebar(filteredWeekBundles, card.id);
-  refs.cardHost.innerHTML = renderTopicDetail(card, bundle, group);
+
+  refs.topicSidebar.innerHTML = renderTopicSidebar(filteredParents, activeContext.card.id);
+  refs.cardHost.innerHTML = renderTopicDetail(activeContext.card, activeContext.parentTopic);
   refs.selectionShell?.classList.toggle("topic-sidebar-open", Boolean(state.navigation.mobileSidebarOpen));
   refs.topicSidebarBackdrop?.classList.toggle("hidden", !state.navigation.mobileSidebarOpen);
 }
 
-function renderTopicSidebar(bundles, activeTopicId) {
+function renderTopicSidebar(parentTopics, activeTopicId) {
   return `
     <div class="topic-sidebar-head">
       <div>
-        <h3>Course Map</h3>
-        <p class="muted">Open a week, scan the topic list, and keep only what belongs on the printed sheet.</p>
+        <h3>Exam Map</h3>
+        <p class="muted">Browse by topic, keep only what is worth final-sheet space, and let the ordering show what matters most.</p>
       </div>
       <button class="ghost-btn icon-btn topic-sidebar-close mobile-only-btn" type="button" data-role="close-topic-sidebar" aria-label="Close topics">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="topic-sidebar-scroll">
-      ${bundles
-        .map((bundle) => renderWeekSidebarSection(bundle, activeTopicId))
-        .join("")}
+      ${parentTopics.map((parentTopic) => renderParentSidebarSection(parentTopic, activeTopicId)).join("")}
     </div>
   `;
 }
-function renderWeekSidebarSection(bundle, activeTopicId) {
-  const expanded = Boolean(state.navigation.expandedWeeks[String(bundle.week)]);
-  const summary = getWeekSelectionSummary(bundle);
-  const topicCountLabel = `${bundle.cards.length} topic${bundle.cards.length === 1 ? "" : "s"}`;
+
+function renderParentSidebarSection(parentTopic, activeTopicId) {
+  const expanded = Boolean(state.navigation.expandedParents[parentTopic.id]);
+  const summary = getParentSelectionSummary(parentTopic);
+  const topicCountLabel = `${parentTopic.cards.length} topic${parentTopic.cards.length === 1 ? "" : "s"}`;
   return `
-    <section class="topic-week-group" data-week="${bundle.week}">
+    <section class="topic-week-group" data-parent-id="${escapeHtml(parentTopic.id)}">
       <button
         class="topic-week-toggle"
         type="button"
-        data-role="toggle-week"
-        data-week="${bundle.week}"
+        data-role="toggle-parent"
+        data-parent-id="${escapeHtml(parentTopic.id)}"
         aria-expanded="${expanded ? "true" : "false"}"
       >
         <div class="topic-week-labels">
-          <strong>${escapeHtml(bundle.title)}</strong>
-          <span>${topicCountLabel}</span>
+          <strong>${escapeHtml(parentTopic.title)}</strong>
+          <span>${escapeHtml(topicCountLabel)}</span>
         </div>
         <div class="topic-week-meta">
           <span>${summary.topics} selected</span>
@@ -80,48 +85,21 @@ function renderWeekSidebarSection(bundle, activeTopicId) {
         </div>
       </button>
       <div class="topic-week-list ${expanded ? "" : "hidden"}">
-        ${bundle.groups.map((group) => renderSidebarCourseGroup(group, bundle.week, activeTopicId)).join("")}
+        ${parentTopic.summary ? `<p class="topic-parent-summary muted">${escapeHtml(parentTopic.summary)}</p>` : ""}
+        <div class="topic-course-group topic-course-group-default">
+          <div class="topic-course-group-list">
+            ${parentTopic.cards.map((card) => renderSidebarTopicButton(card, parentTopic.id, activeTopicId)).join("")}
+          </div>
+        </div>
       </div>
     </section>
   `;
 }
-function renderSidebarCourseGroup(group, week, activeTopicId) {
-  const groupSelection = getWeekSelectionSummary(group);
-  const countLabel = `${group.cards.length} card${group.cards.length === 1 ? "" : "s"}`;
-  const metaBits = [countLabel];
-  if (groupSelection.topics > 0) {
-    metaBits.push(`${groupSelection.topics} selected`);
-  }
-  if (group.isDefault) {
-    return `
-      <div class="topic-course-group topic-course-group-default" data-course-group="${escapeHtml(group.id)}">
-        <div class="topic-course-group-list">
-          ${group.cards.map((card) => renderSidebarTopicButton(card, week, activeTopicId)).join("")}
-        </div>
-      </div>
-    `;
-  }
-  return `
-    <div class="topic-course-group" data-course-group="${escapeHtml(group.id)}">
-      <div class="topic-course-group-head">
-        <div class="topic-course-group-copy">
-          <strong>${escapeHtml(group.title)}</strong>
-          <span>${escapeHtml(metaBits.join(" • "))}</span>
-        </div>
-      </div>
-      <div class="topic-course-group-list">
-        ${group.cards.map((card) => renderSidebarTopicButton(card, week, activeTopicId)).join("")}
-      </div>
-    </div>
-  `;
-}
-function renderSidebarTopicButton(card, week, activeTopicId) {
+
+function renderSidebarTopicButton(card, parentId, activeTopicId) {
   const counts = getSelectionCounts(card);
   const isActive = activeTopicId === card.id;
   const badges = [];
-  if (card.exam_stats.total_hits > 0) {
-    badges.push(`${card.exam_stats.total_hits} exam`);
-  }
   if (counts.total > 0) {
     badges.push(`${counts.total} selected`);
   }
@@ -131,52 +109,43 @@ function renderSidebarTopicButton(card, week, activeTopicId) {
       type="button"
       data-role="open-topic"
       data-card-id="${escapeHtml(card.id)}"
-      data-week="${week}"
+      data-parent-id="${escapeHtml(parentId)}"
     >
       <span class="topic-nav-title">${escapeHtml(humanizeTopic(card.topic))}</span>
-      <span class="topic-nav-meta">${escapeHtml(badges.join(" • ") || "Open topic")}</span>
+      ${badges.length ? `<span class="topic-nav-meta">${escapeHtml(badges.join(" • "))}</span>` : ""}
     </button>
   `;
 }
-function renderTopicDetail(card, bundle, group) {
+
+function renderTopicDetail(card, parentTopic) {
   const draft = ensureDraft(card);
-  const split = getSourceSplit(card);
-  const keyPoints = keyPointGroups(card);
-  const aiExamples = usefulAIExamples(card);
-  const subtopics = getCardSubtopics(card);
   const selectedCounts = getSelectionCounts(card, draft);
-  const weekLabel = Array.isArray(card.weeks) && card.weeks.length ? card.weeks.map((week) => `W${week}`).join(" · ") : `W${bundle.week}`;
-  const commonQuestions = getCommonQuestionItems(card);
-  const examHitsLabel = card.exam_stats.total_hits > 0 ? `${card.exam_stats.total_hits} exam hits` : "Course material only";
-  const groupTitle = group?.isDefault ? "Lecture-aligned topic" : group?.title || "Lecture-aligned topic";
-  const contextPanels = [
-    renderSubtopicOverview(subtopics),
-  ]
-    .filter(Boolean)
-    .join("");
+  const weekLabel = Array.isArray(card.weeks) && card.weeks.length ? card.weeks.map((week) => `W${week}`).join(" · ") : "No week tag";
+  const visibleSections = getExamCardSections(card).filter((section) => section.snippets.length > 0);
+
   return `
-    <article class="topic-detail-card" data-card-id="${escapeHtml(card.id)}">
+    <article class="topic-detail-card exam-topic-detail" data-card-id="${escapeHtml(card.id)}">
       <header class="topic-detail-header">
         <div class="topic-detail-intro">
           <div class="topic-detail-course-context">
-            <span class="topic-course-chip">${escapeHtml(`Week ${bundle.week}`)}</span>
-            <span class="topic-course-chip subtle">${escapeHtml(groupTitle)}</span>
+            <span class="topic-course-chip">${escapeHtml(parentTopic.title)}</span>
+            <span class="topic-course-chip subtle">${escapeHtml(weekLabel)}</span>
           </div>
-          <p class="topic-detail-kicker">${escapeHtml(`Source weeks ${weekLabel} · ${examHitsLabel}`)}</p>
+          <p class="topic-detail-kicker">${escapeHtml(`${card.snippetCount} curated snippets · ${card.pieceCount} selectable pieces`)}</p>
           <div class="topic-detail-title-row">
             <h3>${escapeHtml(humanizeTopic(card.topic))}</h3>
           </div>
-          ${card.sections.ai_summary?.content ? `<p class="topic-detail-summary">${renderInlineCode(normalizeTruncatedDisplayText(card.sections.ai_summary.content))}</p>` : ""}
+          ${card.summary ? `<p class="topic-detail-summary">${renderInlineCode(card.summary)}</p>` : ""}
         </div>
         <aside class="topic-detail-aside">
           <div class="topic-stat-list" aria-label="Topic stats">
             <article class="topic-stat-card">
-              <span>Exam Hits</span>
-              <strong>${escapeHtml(String(card.exam_stats.total_hits || 0))}</strong>
+              <span>Sections</span>
+              <strong>${escapeHtml(String(visibleSections.length))}</strong>
             </article>
             <article class="topic-stat-card">
-              <span>Coverage</span>
-              <strong>${escapeHtml(String(card.exam_stats.coverage_count || 0))}</strong>
+              <span>Total Pieces</span>
+              <strong>${escapeHtml(String(card.pieceCount || 0))}</strong>
             </article>
             <article class="topic-stat-card">
               <span>Selected</span>
@@ -185,16 +154,11 @@ function renderTopicDetail(card, bundle, group) {
           </div>
           <section class="topic-context-panel topic-focus-panel">
             <h4>Selection guidance</h4>
-            <p>Favor exam-linked facts first, then keep only the examples and snippets you can still read quickly under pressure.</p>
+            <p>Start near the top, keep the densest references first, and use lower sections only when you still need coverage.</p>
           </section>
         </aside>
       </header>
-      ${contextPanels ? `<div class="topic-detail-context-grid">${contextPanels}</div>` : ""}
-      ${renderCommonQuestionRail(card, draft, commonQuestions)}
-      ${renderKeyPointRail(card, draft, keyPoints)}
-      ${renderExampleRail(card, draft, aiExamples)}
-      ${renderSourceRail(card, draft, "recommended", "Recommended Snippets", split.recommended)}
-      ${renderSourceRail(card, draft, "additional", "Additional Snippets", split.additional)}
+      ${visibleSections.map((section) => renderSectionBlock(card, draft, section)).join("")}
       <footer class="topic-detail-footer">
         <button type="button" class="text-link-btn" data-role="reset-splash">Reset intro</button>
         <button type="button" class="text-link-btn danger-link-btn" data-role="reset-progress">Reset progress</button>
@@ -202,264 +166,157 @@ function renderTopicDetail(card, bundle, group) {
     </article>
   `;
 }
-function renderSectionHeaderBar(card, draft, sectionKey, title, countText, description = "") {
-  const enabled = Boolean(draft.sections[sectionKey]);
+
+function renderSectionBlock(card, draft, section) {
+  const selectedCount = getSectionSelectedCount(card, draft, section.key);
+  const isExpanded = Boolean(draft.ui.expandedSections?.[section.key]);
+  const visibleSnippets = isExpanded ? section.snippets : section.snippets.slice(0, section.initialVisibleCount);
+  const hiddenCount = Math.max(0, section.snippets.length - visibleSnippets.length);
+
   return `
-    <div class="topic-section-header">
-      <div class="topic-section-heading">
-        <h4>${escapeHtml(title)}</h4>
-        ${description ? `<p class="muted">${escapeHtml(description)}</p>` : ""}
-      </div>
-      <div class="topic-section-actions">
-        <span class="topic-section-count">${escapeHtml(countText)}</span>
-        <label class="topic-section-toggle plain-toggle">
-          <input
-            type="checkbox"
-            data-role="section-toggle"
+    <section class="topic-section-block" data-section-block="${escapeHtml(section.key)}">
+      <div class="topic-section-header">
+        <div class="topic-section-heading">
+          <h4>${escapeHtml(section.title)}</h4>
+          ${section.description ? `<p class="muted">${escapeHtml(section.description)}</p>` : ""}
+        </div>
+        <div class="topic-section-actions">
+          <span class="topic-section-count">${escapeHtml(`${selectedCount}/${getSectionSelectablePieceIds(card, section.key).length} selected`)}</span>
+          <button
+            type="button"
+            class="ghost-btn compact-btn"
+            data-role="select-all-section"
             data-card-id="${escapeHtml(card.id)}"
-            data-section="${escapeHtml(sectionKey)}"
-            ${enabled ? "checked" : ""}
-          />
-          <span>Show in preview</span>
-        </label>
-        <button
-          type="button"
-          class="ghost-btn compact-btn"
-          data-role="select-all-section"
+            data-section-key="${escapeHtml(section.key)}"
+          >
+            Select all
+          </button>
+          <button
+            type="button"
+            class="ghost-btn compact-btn"
+            data-role="clear-section"
+            data-card-id="${escapeHtml(card.id)}"
+            data-section-key="${escapeHtml(section.key)}"
+          >
+            Clear
+          </button>
+          ${section.snippets.length > section.initialVisibleCount
+            ? `
+              <button
+                type="button"
+                class="ghost-btn compact-btn"
+                data-role="toggle-section-expanded"
+                data-card-id="${escapeHtml(card.id)}"
+                data-section-key="${escapeHtml(section.key)}"
+              >
+                ${isExpanded ? "Show less" : `Show ${hiddenCount} more`}
+              </button>
+            `
+            : ""}
+        </div>
+      </div>
+      <div class="topic-rail">
+        ${visibleSnippets.map((snippet) => renderSnippetCard(card, draft, section, snippet)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderSnippetCard(card, draft, section, snippet) {
+  const selectedCount = getSnippetSelectedCount(card, draft, snippet.id);
+  return `
+    <article class="rail-card exam-snippet-card" data-snippet-id="${escapeHtml(snippet.id)}">
+      <div class="exam-snippet-head">
+        <div class="exam-snippet-copy">
+          <div class="exam-snippet-meta">
+            ${isPastExamSnippet(snippet) ? `<span class="topic-course-chip subtle">Past exam</span>` : ""}
+          </div>
+          <h5>${escapeHtml(snippet.title)}</h5>
+          ${snippet.summary ? `<p class="muted">${renderInlineCode(snippet.summary)}</p>` : ""}
+          <p class="muted">${escapeHtml(`${selectedCount}/${getSnippetSelectablePieceIds(card, snippet.id).length} pieces selected`)}</p>
+        </div>
+        <div class="topic-section-actions">
+          <button
+            type="button"
+            class="ghost-btn compact-btn"
+            data-role="select-all-snippet"
+            data-card-id="${escapeHtml(card.id)}"
+            data-snippet-id="${escapeHtml(snippet.id)}"
+          >
+            Select all
+          </button>
+          <button
+            type="button"
+            class="ghost-btn compact-btn"
+            data-role="clear-snippet"
+            data-card-id="${escapeHtml(card.id)}"
+            data-snippet-id="${escapeHtml(snippet.id)}"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+      <div class="rail-card-body">
+        ${snippet.pieces.map((piece) => renderPieceSelector(card, draft, section, snippet, piece)).join("")}
+      </div>
+    </article>
+  `;
+}
+
+function renderPieceSelector(card, draft, section, snippet, piece) {
+  const selectedSet = new Set(draft.selected.pieces || []);
+  const checked = selectedSet.has(piece.id);
+  const effectivePiece = getPieceOverride(draft, piece);
+  return `
+    <div class="detail-toggle-row exam-piece-row">
+      <label class="item-select">
+        <input
+          type="checkbox"
+          data-role="item-toggle"
           data-card-id="${escapeHtml(card.id)}"
-          data-section="${escapeHtml(sectionKey)}"
-        >
-          Select all
-        </button>
-        <button
-          type="button"
-          class="ghost-btn compact-btn"
-          data-role="clear-section"
-          data-card-id="${escapeHtml(card.id)}"
-          data-section="${escapeHtml(sectionKey)}"
-        >
-          Clear
-        </button>
+          data-piece-id="${escapeHtml(piece.id)}"
+          ${checked ? "checked" : ""}
+        />
+        <strong>${escapeHtml(effectivePiece.title || piece.title)}</strong>
+      </label>
+      <div class="rail-card-body exam-piece-preview">
+        ${renderPieceBody(effectivePiece)}
       </div>
     </div>
   `;
 }
-function renderKeyPointRail(card, draft, groups) {
-  const selectedSet = new Set(draft.selected.keyPoints || []);
-  const selectableIds = new Set(keyPointSelectableIds(card));
-  const selectedCount = [...selectedSet].filter((id) => selectableIds.has(id)).length;
-  const grouped = groupItemsBySubtopic(card, groups, (item) => item.subtopic_id, (item) => item.subtopic_title);
-  const body = groups.length
-    ? grouped
-        .map((subtopicGroup) => {
-          const itemsHtml = subtopicGroup.items
-            .map((group) => {
-          const pointChecked = selectedSet.has(group.id);
-          const detailsHtml = group.details.length
-            ? group.details
-                .map((detail) => {
-                  const checked = selectedSet.has(detail.id);
-                  return `
-                    <div class="detail-toggle-row">
-                      <label class="mini-toggle">
-                        <input
-                          type="checkbox"
-                          data-role="item-toggle"
-                          data-card-id="${escapeHtml(card.id)}"
-                          data-section="keyPoints"
-                          data-item-id="${escapeHtml(detail.id)}"
-                          ${checked ? "checked" : ""}
-                        />
-                        <span>${escapeHtml(detailDisplayTitle(detail))}</span>
-                      </label>
-                      ${renderDetailPreview(detail)}
-                    </div>
-                  `;
-                })
-                .join("")
-            : "";
-          return `
-            <article class="rail-card">
-              <label class="item-select">
-                <input
-                  type="checkbox"
-                  data-role="item-toggle"
-                  data-card-id="${escapeHtml(card.id)}"
-                  data-section="keyPoints"
-                  data-item-id="${escapeHtml(group.id)}"
-                  ${pointChecked ? "checked" : ""}
-                />
-                <strong>${renderInlineCode(group.text)}</strong>
-              </label>
-              <div class="rail-card-body">
-                ${detailsHtml ? `<div class="rail-subsection">${detailsHtml}</div>` : ""}
-              </div>
-            </article>
-          `;
-            })
-            .join("");
-          return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
-        })
-        .join("")
-    : renderEmptyRailCopy("No key points are available for this topic.");
-  return `
-    <section class="topic-section-block ${draft.sections.keyPoints ? "" : "is-dimmed"}" data-section-block="keyPoints">
-      ${renderSectionHeaderBar(
-        card,
-        draft,
-        "keyPoints",
-        "Key Points",
-        `${selectedCount}/${selectableIds.size} selected`,
-        "Keep the facts and optional detail blocks that truly earn space on the sheet."
-      )}
-      <div class="topic-rail">${body}</div>
-    </section>
-  `;
-}
-function renderExampleRail(card, draft, items) {
-  const selectedCount = items.filter((item) => draft.selected.aiExamples.includes(item.id)).length;
-  const grouped = groupItemsBySubtopic(card, items, (item) => item.subtopic_id, (item) => item.subtopic_title);
-  const body = items.length
-    ? grouped
-        .map((subtopicGroup) => {
-          const itemsHtml = subtopicGroup.items
-            .map((item) => {
-          const checked = draft.selected.aiExamples.includes(item.id);
-          const kindLabel = item.kind === "incorrect" ? "Incorrect" : "Correct";
-          return `
-            <article class="rail-card rail-card-code">
-              <label class="item-select">
-                <input
-                  type="checkbox"
-                  data-role="item-toggle"
-                  data-card-id="${escapeHtml(card.id)}"
-                  data-section="aiExamples"
-                  data-item-id="${escapeHtml(item.id)}"
-                  ${checked ? "checked" : ""}
-                />
-                <strong>${escapeHtml(kindLabel)} • ${renderInlineCode(item.title || "Code example")}</strong>
-              </label>
-              <div class="rail-card-body">
-                ${renderCodeBlock(item.code || "")}
-                ${item.output ? `<p><strong>Output / Result:</strong></p>${renderOutputBlock(item.output || "")}` : ""}
-                ${item.why ? `<p class="item-note">${renderInlineCode(item.why)}</p>` : ""}
-              </div>
-            </article>
-          `;
-            })
-            .join("");
-          return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
-        })
-        .join("")
-    : renderEmptyRailCopy("No code examples are available for this topic.");
-  return `
-    <section class="topic-section-block ${draft.sections.aiExamples ? "" : "is-dimmed"}" data-section-block="aiExamples">
-      ${renderSectionHeaderBar(
-        card,
-        draft,
-        "aiExamples",
-        "Code Examples",
-        `${selectedCount}/${items.length} selected`,
-        "Choose the patterns you want to be able to reproduce from memory."
-      )}
-      <div class="topic-rail">${body}</div>
-    </section>
-  `;
-}
 
-function renderCommonQuestionRail(card, draft, items) {
-  const selectedCount = items.filter((item) => (draft.selected.aiQuestions || []).includes(item.id)).length;
-  const body = items.length
-    ? `<div class="common-question-list">${items
-        .map((item) => {
-          const checked = (draft.selected.aiQuestions || []).includes(item.id);
-          return `
-            <article class="common-question-card">
-              <label class="item-select">
-                <input
-                  type="checkbox"
-                  data-role="item-toggle"
-                  data-card-id="${escapeHtml(card.id)}"
-                  data-section="aiQuestions"
-                  data-item-id="${escapeHtml(item.id)}"
-                  ${checked ? "checked" : ""}
-                />
-                <strong>${renderInlineCode(item.summary)}</strong>
-              </label>
-              <div class="common-question-card-body">
-                ${item.detail ? `<p>${renderInlineCode(item.detail)}</p>` : ""}
-                ${item.extra ? `<p>${renderInlineCode(item.extra)}</p>` : ""}
-                ${item.table ? renderMiniTable(item.table) : ""}
-                ${item.code ? renderCodeBlock(item.code) : ""}
-              </div>
-            </article>
-          `;
-        })
-        .join("")}</div>`
-    : renderEmptyRailCopy("No common exam questions are available for this topic.");
+function renderPieceBody(piece) {
+  const content = piece.content || {};
+  if (piece.pieceType === "reference_table") {
+    const text = String(content.text || "").trim();
+    const table = {
+      headers: Array.isArray(content.headers) ? content.headers : [],
+      rows: Array.isArray(content.rows) ? content.rows : [],
+    };
+    return `
+      ${text ? `<p>${renderInlineCode(text)}</p>` : ""}
+      ${table.headers.length && table.rows.length ? renderMiniTable(table) : ""}
+    `;
+  }
 
-  return `
-    <section class="topic-section-block ${draft.sections.aiQuestions ? "" : "is-dimmed"}" data-section-block="aiQuestions">
-      ${renderSectionHeaderBar(
-        card,
-        draft,
-        "aiQuestions",
-        "Common Exam Questions",
-        `${selectedCount}/${items.length} selected`,
-        "Keep the answer patterns and traps you want printed directly on the cheat sheet."
-      )}
-      ${body}
-    </section>
-  `;
-}
+  if (piece.pieceType === "code_example") {
+    return `
+      ${content.text ? `<p>${renderInlineCode(content.text)}</p>` : ""}
+      ${content.code ? renderCodeBlock(content.code) : ""}
+      ${content.output ? `<p><strong>Output:</strong></p>${renderOutputBlock(content.output)}` : ""}
+    `;
+  }
 
-function renderSourceRail(card, draft, sectionKey, title, items) {
-  const selectedIds = draft.selected[sectionKey] || [];
-  const selectedCount = items.filter((item) => selectedIds.includes(item.id)).length;
-  const grouped = groupItemsBySubtopic(card, items, (item) => item.subtopicId, (item) => item.subtopicTitle);
-  const body = items.length
-    ? grouped
-        .map((subtopicGroup) => {
-          const itemsHtml = subtopicGroup.items
-            .map((sourceItem) => {
-          const checked = selectedIds.includes(sourceItem.id);
-          return `
-            <article class="rail-card rail-card-source">
-              <label class="item-select">
-                <input
-                  type="checkbox"
-                  data-role="item-toggle"
-                  data-card-id="${escapeHtml(card.id)}"
-                  data-section="${escapeHtml(sectionKey)}"
-                  data-item-id="${escapeHtml(sourceItem.id)}"
-                  ${checked ? "checked" : ""}
-                />
-                <strong>${escapeHtml(sourceItem.header)}</strong>
-              </label>
-              <div class="rail-card-body">
-                ${renderSourceItemBody(sourceItem)}
-              </div>
-            </article>
-          `;
-            })
-            .join("");
-          return renderSubtopicRailGroup(subtopicGroup, itemsHtml);
-        })
-        .join("")
-    : renderEmptyRailCopy("No snippets are available in this section.");
-  return `
-    <section class="topic-section-block ${draft.sections[sectionKey] ? "" : "is-dimmed"}" data-section-block="${escapeHtml(sectionKey)}">
-      ${renderSectionHeaderBar(
-        card,
-        draft,
-        sectionKey,
-        title,
-        `${selectedCount}/${items.length} selected`,
-        sectionKey === "recommended"
-          ? "High-value lecture and exam snippets that usually deserve first priority."
-          : "Extra supporting snippets for edge cases, comparisons, and reminders."
-      )}
-      <div class="topic-rail">${body}</div>
-    </section>
-  `;
+  if (piece.pieceType === "past_exam_piece") {
+    return `
+      ${renderQuestionContent(content.question || "", content.code_context || "")}
+      ${renderOptions(content.options || {})}
+      ${content.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(content.correct).toUpperCase())}</p>` : ""}
+      ${content.explanation ? `<p class="source-summary">${renderInlineCode(content.explanation)}</p>` : ""}
+    `;
+  }
+
+  const text = String(content.text || "").trim();
+  return text ? `<p>${renderInlineCode(text)}</p>` : "";
 }

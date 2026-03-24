@@ -1,0 +1,103 @@
+2026-03-24T00:50:09.350555Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:50:09.376361Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:50:09.378879Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:50:09.405013Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:50:09.405988Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:50:09.428417Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:50:09.429548Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:50:09.453010Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:50:09.454276Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:50:09.479723Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:50:09.481488Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:50:09.507176Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:50:09.511740Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:50:09.534426Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:50:09.535784Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:50:09.559926Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:50:14.239646Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at "/Users/juliuseikmans/.codex/shell_snapshots/019d1d52-0903-7a83-86aa-15f9019adee6.tmp-1774313409226369000": Os { code: 2, kind: NotFound, message: "No such file or directory" }
+2026-03-24T00:51:44.340402Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.340812Z  WARN codex_core::state_db: failed to initialize state runtime at /Users/juliuseikmans/.codex: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.758974Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.791147Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:44.792144Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.817184Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:44.819341Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.841903Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.843568Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.843649Z  WARN codex_core::state_db: failed to initialize state runtime at /Users/juliuseikmans/.codex: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.866881Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:44.868038Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.893495Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:44.894616Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.919452Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:44.921009Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.945842Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:44.947821Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.973147Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:44.974615Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:44.998913Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:45.300289Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:45.325638Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:45.335301Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:45.358778Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:45.364824Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:45.381942Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:45.383358Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:45.405862Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:45.407419Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:45.432188Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:45.434953Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:45.460737Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:45.462208Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:45.485581Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:45.486946Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:51:45.511035Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:51:52.348050Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at "/Users/juliuseikmans/.codex/shell_snapshots/019d1d53-7e46-7fe1-8ba7-e8e3c5ecc93f.tmp-1774313504746139000": Os { code: 2, kind: NotFound, message: "No such file or directory" }
+2026-03-24T00:51:52.776123Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at "/Users/juliuseikmans/.codex/shell_snapshots/019d1d53-804a-71d3-a748-0fdb547dfbe5.tmp-1774313505258850000": Os { code: 2, kind: NotFound, message: "No such file or directory" }
+2026-03-24T00:52:30.218312Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.218361Z  WARN codex_core::state_db: failed to initialize state runtime at /Users/juliuseikmans/.codex: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.690755Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.717003Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.718870Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.737872Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.739825Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.746568Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.746603Z  WARN codex_core::state_db: failed to initialize state runtime at /Users/juliuseikmans/.codex: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.765195Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.766107Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.791879Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.792799Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.817114Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.818485Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.842280Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.843318Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.868417Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.869354Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.892268Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.893467Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.915812Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:30.916787Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:30.940063Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.349620Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.363563Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.368152Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.382086Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.392328Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.403881Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.406391Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.429607Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.430910Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.456790Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.458267Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.483780Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.485506Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.509036Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.510077Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.533524Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.535947Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.563145Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:31.564358Z  WARN codex_state::runtime: failed to open state db at /Users/juliuseikmans/.codex/state_5.sqlite: migration 19 was previously applied but is missing in the resolved migrations
+2026-03-24T00:52:31.580972Z  WARN codex_core::state_db: state db record_discrepancy: find_thread_path_by_id_str_in_subdir, falling_back
+2026-03-24T00:52:35.868788Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at "/Users/juliuseikmans/.codex/shell_snapshots/019d1d54-3185-7552-8bf9-cf7762242495.tmp-1774313550644627000": Os { code: 2, kind: NotFound, message: "No such file or directory" }
+2026-03-24T00:52:36.485462Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at "/Users/juliuseikmans/.codex/shell_snapshots/019d1d54-3398-7bc2-9bab-b59ebbebb0c6.tmp-1774313551301718000": Os { code: 2, kind: NotFound, message: "No such file or directory" }
+2026-03-24T00:53:30.962411Z  WARN codex_core::codex: stream disconnected - retrying sampling request (1/5 in 201ms)...

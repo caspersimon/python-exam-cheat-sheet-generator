@@ -1,5 +1,5 @@
 function setLoadingState() {
-  refs.cardHost.innerHTML = `<div class="empty-state"><p>Loading week bundles...</p></div>`;
+  refs.cardHost.innerHTML = `<div class="empty-state"><p>Loading exam topic explorer...</p></div>`;
 }
 
 function maybeShowSplash() {
@@ -77,15 +77,13 @@ function resetAppProgress() {
   lastPersistedPayload = "";
 
   state.filters.search = "";
-  state.filters.onlyExam = false;
-  state.filters.minHits = 0;
   state.filters.weeks = new Set(CANONICAL_WEEK_ORDER);
-
   state.drafts = {};
   state.navigation = buildDefaultNavigationState();
   state.previewHistory = [];
   state.openDrawer = "";
   state.previewCards = {};
+  state.previewEntries = {};
   state.previewZCounter = 1;
   state.layout = {
     fontFamily: "'Manrope', sans-serif",
@@ -102,8 +100,10 @@ function resetAppProgress() {
     gridRows: 6,
   };
 
+  renderWeekFilterControls();
   syncFilterControls();
   applyLayoutVariables();
+  ensureExplorerNavigation(getFilteredParentBundles());
   closeTopicSidebar();
   setView("swipe");
   renderAll();
@@ -117,6 +117,8 @@ function hydratePersistedState() {
   }
 
   const cardIds = new Set(state.cards.map((card) => card.id));
+  const parentIds = new Set(state.parentTopics.map((parentTopic) => parentTopic.id));
+  const validWeeks = new Set(CANONICAL_WEEK_ORDER);
 
   if (raw.layout && typeof raw.layout === "object") {
     const fontAliases = new Map([
@@ -169,18 +171,12 @@ function hydratePersistedState() {
 
   if (raw.filters && typeof raw.filters === "object") {
     state.filters.search = typeof raw.filters.search === "string" ? raw.filters.search : state.filters.search;
-    if (typeof raw.filters.onlyExam === "boolean") {
-      state.filters.onlyExam = raw.filters.onlyExam;
-    }
-    if (Number.isFinite(raw.filters.minHits)) {
-      state.filters.minHits = clamp(Number(raw.filters.minHits), 0, 3);
-    }
     if (Array.isArray(raw.filters.weeks)) {
-      const validWeeks = raw.filters.weeks
+      const weeks = raw.filters.weeks
         .map((value) => Number(value))
-        .filter((value) => CANONICAL_WEEK_ORDER.includes(value));
-      if (validWeeks.length) {
-        state.filters.weeks = new Set(validWeeks);
+        .filter((value) => validWeeks.has(value));
+      if (weeks.length) {
+        state.filters.weeks = new Set(weeks);
       }
     }
   }
@@ -191,27 +187,43 @@ function hydratePersistedState() {
       if (!cardIds.has(cardId) || !draft || typeof draft !== "object") {
         return;
       }
-      hydratedDrafts[cardId] = deepClone(draft);
+
+      const card = state.cards.find((entry) => entry.id === cardId);
+      const validPieceIds = new Set(getAllSelectablePieceIds(card));
+      const selectedPieces = Array.isArray(draft.selected?.pieces)
+        ? draft.selected.pieces.filter((pieceId) => validPieceIds.has(pieceId))
+        : [];
+      hydratedDrafts[cardId] = {
+        ui: {
+          expandedSections: deepClone(draft.ui?.expandedSections || {}),
+        },
+        selected: {
+          pieces: [...new Set(selectedPieces)],
+        },
+        overrides: {
+          pieces: deepClone(draft.overrides?.pieces || {}),
+        },
+      };
     });
     state.drafts = hydratedDrafts;
   }
 
   if (raw.navigation && typeof raw.navigation === "object") {
     const nextNavigation = buildDefaultNavigationState();
-    const activeWeek = Number(raw.navigation.activeWeek);
-    if (CANONICAL_WEEK_ORDER.includes(activeWeek)) {
-      nextNavigation.activeWeek = activeWeek;
+    const activeParentId = String(raw.navigation.activeParentId || "").trim();
+    if (parentIds.has(activeParentId)) {
+      nextNavigation.activeParentId = activeParentId;
     }
     const activeTopicId = String(raw.navigation.activeTopicId || "").trim();
     if (cardIds.has(activeTopicId)) {
       nextNavigation.activeTopicId = activeTopicId;
     }
-    if (raw.navigation.expandedWeeks && typeof raw.navigation.expandedWeeks === "object") {
-      CANONICAL_WEEK_ORDER.forEach((week) => {
-        const key = String(week);
-        if (typeof raw.navigation.expandedWeeks[key] === "boolean") {
-          nextNavigation.expandedWeeks[key] = raw.navigation.expandedWeeks[key];
-        }
+    if (raw.navigation.expandedParents && typeof raw.navigation.expandedParents === "object") {
+      state.parentTopics.forEach((parentTopic, index) => {
+        const fallbackValue = index === 0;
+        const persistedValue = raw.navigation.expandedParents[parentTopic.id];
+        nextNavigation.expandedParents[parentTopic.id] =
+          typeof persistedValue === "boolean" ? persistedValue : fallbackValue;
       });
     }
     if (typeof raw.navigation.mobileSidebarOpen === "boolean") {
@@ -259,14 +271,10 @@ function getPersistedRawState() {
 
 function syncFilterControls() {
   refs.searchInput.value = state.filters.search;
-  refs.onlyExamToggle.checked = state.filters.onlyExam;
-  refs.minHitsSelect.value = String(state.filters.minHits);
-  if (refs.weekFilterList) {
-    refs.weekFilterList.querySelectorAll(".weekCheck").forEach((checkbox) => {
-      const week = Number(checkbox.value);
-      checkbox.checked = state.filters.weeks.has(week);
-    });
-  }
+  refs.weekFilterList?.querySelectorAll(".weekCheck").forEach((checkbox) => {
+    const week = Number(checkbox.value);
+    checkbox.checked = state.filters.weeks.has(week);
+  });
 }
 
 function schedulePersistState() {
@@ -286,8 +294,6 @@ function persistAppState() {
   const payload = {
     filters: {
       search: state.filters.search,
-      onlyExam: state.filters.onlyExam,
-      minHits: state.filters.minHits,
       weeks: [...state.filters.weeks],
     },
     drafts: state.drafts,

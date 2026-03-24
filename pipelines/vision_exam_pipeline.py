@@ -8,6 +8,10 @@ from pipelines.vision_exam_pipeline_bank import (
     write_completeness_report,
     write_extraction_packets,
 )
+from pipelines.vision_exam_pipeline_analytics import (
+    build_ranking_analytics,
+    write_ranking_analytics,
+)
 from pipelines.vision_exam_pipeline_gemini import (
     auto_capture_missing_questions,
     auto_evaluate_questions,
@@ -18,13 +22,13 @@ from pipelines.vision_exam_pipeline_packet import (
 )
 from pipelines.vision_exam_pipeline_review import (
     build_evaluation_scaffold,
-    build_ranking_analytics,
-    build_selectable_items_snapshot,
     synthesize_suggestions,
     validate_all,
     validate_evaluation_payload,
     write_evaluation_scaffold,
-    write_ranking_analytics,
+)
+from pipelines.vision_exam_pipeline_selectable import (
+    build_selectable_items_snapshot,
 )
 from pipelines.vision_exam_pipeline_status import (
     build_pipeline_status,

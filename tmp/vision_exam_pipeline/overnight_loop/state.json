@@ -1,0 +1,110 @@
+{
+  "started_at": "2026-03-24T01:50:07.709323+01:00",
+  "timezone": "Europe/Amsterdam",
+  "cutoff_at": "2026-03-24T08:00:00+01:00",
+  "model": "gpt-5.4",
+  "prompt_file": "/Users/juliuseikmans/Desktop/Studies/2025-2026/intro to python/python-exam-cheat-sheet-generator/docs/curation/OVERNIGHT_SUPERVISOR_PROMPT.txt",
+  "iterations_attempted": 2,
+  "last_exit_code": 0,
+  "status_before_iteration": {
+    "generated_at": "2026-03-24T01:05:19Z",
+    "round": "round1",
+    "paths": {
+      "question_bank": "data/vision_exam_pipeline/exam_question_bank.json",
+      "completeness": "data/vision_exam_pipeline/exam_question_bank_completeness.json",
+      "evaluations": "data/vision_exam_pipeline/evaluations/round1.json",
+      "synthesis": "data/vision_exam_pipeline/synthesis/round1.json",
+      "analytics": "data/vision_exam_pipeline/analytics/round1.json",
+      "review_packet": "data/vision_exam_pipeline/review_packets/round1.json",
+      "manual_review_packet": "data/vision_exam_pipeline/review_packets/round1_manual_synthesis.md"
+    },
+    "question_bank": {
+      "canonical_exam_count": 7,
+      "present_questions": 168,
+      "blocked_questions": 0,
+      "review_status_counts": {
+        "agent_reviewed_pending_human_confirmation": 168
+      },
+      "completeness_status": "complete"
+    },
+    "evaluation_round": {
+      "exists": true,
+      "question_count": 168,
+      "status_counts": {
+        "completed": 168
+      },
+      "completed_evaluations": 168,
+      "answerability_counts": {
+        "certain": 88,
+        "partial": 40,
+        "insufficient": 40
+      }
+    },
+    "review_outputs": {
+      "synthesis_exists": true,
+      "suggestion_count": 151,
+      "analytics_exists": true,
+      "review_packet_exists": true,
+      "manual_review_packet_exists": true
+    },
+    "overall_status": {
+      "question_bank_complete": true,
+      "evaluation_round_complete": true,
+      "synthesis_exists": true,
+      "analytics_exists": true,
+      "review_packet_exists": true
+    },
+    "next_gate": "human_review_of_synthesized_changes"
+  },
+  "last_iteration_finished_at": "2026-03-24T02:24:46.801162+01:00",
+  "status_after_iteration": {
+    "generated_at": "2026-03-24T01:24:46Z",
+    "round": "round1",
+    "paths": {
+      "question_bank": "data/vision_exam_pipeline/exam_question_bank.json",
+      "completeness": "data/vision_exam_pipeline/exam_question_bank_completeness.json",
+      "evaluations": "data/vision_exam_pipeline/evaluations/round1.json",
+      "synthesis": "data/vision_exam_pipeline/synthesis/round1.json",
+      "analytics": "data/vision_exam_pipeline/analytics/round1.json",
+      "review_packet": "data/vision_exam_pipeline/review_packets/round1.json",
+      "manual_review_packet": "data/vision_exam_pipeline/review_packets/round1_manual_synthesis.md"
+    },
+    "question_bank": {
+      "canonical_exam_count": 7,
+      "present_questions": 168,
+      "blocked_questions": 0,
+      "review_status_counts": {
+        "agent_reviewed_pending_human_confirmation": 168
+      },
+      "completeness_status": "complete"
+    },
+    "evaluation_round": {
+      "exists": true,
+      "question_count": 168,
+      "status_counts": {
+        "completed": 168
+      },
+      "completed_evaluations": 168,
+      "answerability_counts": {
+        "certain": 88,
+        "partial": 40,
+        "insufficient": 40
+      }
+    },
+    "review_outputs": {
+      "synthesis_exists": true,
+      "suggestion_count": 151,
+      "analytics_exists": true,
+      "review_packet_exists": true,
+      "manual_review_packet_exists": true
+    },
+    "overall_status": {
+      "question_bank_complete": true,
+      "evaluation_round_complete": true,
+      "synthesis_exists": true,
+      "analytics_exists": true,
+      "review_packet_exists": true
+    },
+    "next_gate": "human_review_of_synthesized_changes"
+  }
+}

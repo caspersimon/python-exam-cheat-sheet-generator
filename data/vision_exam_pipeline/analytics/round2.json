@@ -1,0 +1,528 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-03-24T10:43:09Z",
+  "round": "round2",
+  "input_evaluations_path": "data/vision_exam_pipeline/evaluations/round2.json",
+  "summary": {
+    "total_evaluations": 168,
+    "completed_evaluations": 168,
+    "status_counts": {
+      "completed": 168
+    },
+    "answerability_counts": {
+      "certain": 61,
+      "insufficient": 71,
+      "partial": 36
+    },
+    "near_identical_repeat_piece_count": 42
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "top1_unique_snippets": 10,
+      "top3_unique_snippets": 16,
+      "minimal_set_unique_snippets": 17,
+      "minimal_set_unused_snippets": 73,
+      "unused_snippet_ids": [
+        "item:aiq-6",
+        "item:aiq-7",
+        "item:cs-09e2b215ee",
+        "item:cs-23b2cfd4d6",
+        "item:cs-266616a010",
+        "item:cs-3cb4b8e8f9",
+        "item:cs-4155022ebf",
+        "item:cs-4f8a5f420b",
+        "item:cs-5b89a10dcd",
+        "item:cs-6d0d650063",
+        "item:cs-7eb8617d28",
+        "item:cs-814a07a136",
+        "item:cs-beb6591b24",
+        "item:cs-c25503e5db",
+        "item:cs-curated-hw-seq-nth-occurrence",
+        "item:cs-curated-hw-seq-slice-between-sentinels",
+        "item:exam-extra_practice-11-w1-objects-and-names",
+        "item:exam-intro_python_sample_final_24_25-24-w2-conditions",
+        "item:exam-midterm_2023-12-w1-functions-and-imports",
+        "item:exam-midterm_2023-4-w1-objects-and-names",
+        "item:exam-midterm_2024-16-w1-functions-and-imports",
+        "item:exam-midterm_2024-4-w1-objects-and-names",
+        "item:exam-midterm_2024-6-w1-objects-and-names",
+        "item:exam-trial_midterm-1-w1-objects-and-names",
+        "item:exam-trial_midterm-11-w1-objects-and-names",
+        "item:exam-trial_midterm-12-w1-objects-and-names",
+        "item:exam-trial_midterm-14-w1-objects-and-names",
+        "item:exam-trial_midterm-15-w1-objects-and-names",
+        "item:exam-trial_midterm-16-w1-objects-and-names",
+        "item:exam-trial_midterm-18-w1-objects-and-names",
+        "item:exam-trial_midterm-20-w1-objects-and-names",
+        "item:exam-trial_midterm-21-w1-objects-and-names",
+        "item:exam-trial_midterm-22-w1-objects-and-names",
+        "item:exam-trial_midterm-24-w1-objects-and-names",
+        "item:exam-trial_midterm-3-w1-objects-and-names",
+        "item:exam-trial_midterm-4-w1-objects-and-names",
+        "item:exam-trial_midterm-7-w1-objects-and-names",
+        "item:exam-trial_midterm-9-w1-objects-and-names",
+        "item:kp-1-d1",
+        "item:kp-1-d2",
+        "item:kp-2-d1",
+        "item:kp-2-d2",
+        "item:kp-3-d1",
+        "item:kp-3-d2",
+        "item:kp-4-d1",
+        "item:kp-6-d1",
+        "item:kp-6-d2",
+        "item:kp-7-d1",
+        "item:kp-manual-aliasing-copy-d1",
+        "item:ks-0153de2f70"
+      ]
+    },
+    {
+      "week": 2,
+      "top1_unique_snippets": 22,
+      "top3_unique_snippets": 31,
+      "minimal_set_unique_snippets": 28,
+      "minimal_set_unused_snippets": 74,
+      "unused_snippet_ids": [
+        "item:cs-3e39a2f12f",
+        "item:cs-curated-hw-conditions-first-match-wins",
+        "item:cs-curated-hw-dict-delete-shared-keys",
+        "item:cs-curated-hw-dict-digit-frequency",
+        "item:cs-curated-hw-dict-project-values-sorted-keys",
+        "item:cs-curated-hw-loops-enumerate-mark-max",
+        "item:cs-curated-hw-loops-market-clearing",
+        "item:cs-curated-hw-loops-nested-pairwise-dict",
+        "item:cs-curated-hw-loops-zip-filter-pairs",
+        "item:cs-fc8bdeb969",
+        "item:exam-Test Exam 07-06-22-4-w2-conditions",
+        "item:exam-extra_practice-12-w2-dictionaries-and-mappings",
+        "item:exam-extra_practice-3-w2-dictionaries-and-mappings",
+        "item:exam-extra_practice-8-w2-dictionaries-and-mappings",
+        "item:exam-intro_python_sample_final_24_25-19-w3-defining-and-calling-functions",
+        "item:exam-midterm_2023-1-w2-conditions",
+        "item:exam-midterm_2023-15-w2-lists-and-sets",
+        "item:exam-midterm_2023-2-w2-loops",
+        "item:exam-midterm_2023-5-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2023-6-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2023-7-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2023-8-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2024-10-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2024-11-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2024-12-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2024-17-w2-loops",
+        "item:exam-midterm_2024-20-w2-loops",
+        "item:exam-midterm_2024-21-w2-loops",
+        "item:exam-midterm_2024-22-w2-lists-and-sets",
+        "item:exam-midterm_2024-23-w2-lists-and-sets",
+        "item:exam-midterm_2024-24-w2-lists-and-sets",
+        "item:exam-midterm_2024-7-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2024-8-w2-dictionaries-and-mappings",
+        "item:exam-midterm_2024-9-w2-loops",
+        "item:exam-trial_midterm-13-w2-conditions",
+        "item:exam-trial_midterm-2-w2-dictionaries-and-mappings",
+        "item:exam-trial_midterm-23-w2-dictionaries-and-mappings",
+        "item:exam-trial_midterm-5-w2-loops",
+        "item:exam-trial_midterm-8-w2-dictionaries-and-mappings",
+        "item:kp-1-d3",
+        "item:kp-1-d4",
+        "item:kp-2-d3",
+        "item:kp-iteration-traps-d1",
+        "item:kp-manual-break-continue",
+        "item:kp-manual-enumerate",
+        "item:kp-manual-enumerate-d1",
+        "item:kp-manual-loop-core",
+        "item:kp-manual-loop-core-d1",
+        "item:kp-manual-precedence",
+        "item:kp-manual-ternary"
+      ]
+    },
+    {
+      "week": 3,
+      "top1_unique_snippets": 16,
+      "top3_unique_snippets": 25,
+      "minimal_set_unique_snippets": 22,
+      "minimal_set_unused_snippets": 43,
+      "unused_snippet_ids": [
+        "item:cs-curated-hw-hof-nested-helper-hhi",
+        "item:exam-Resit 22/23-2-w3-scope",
+        "item:exam-Resit 22/23-3-w3-return-behavior",
+        "item:exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
+        "item:exam-Trial final - Introduction to Python - 22/23-2-w3-scope",
+        "item:exam-extra_practice-10-w3-higher-order-patterns",
+        "item:exam-extra_practice-7-w3-return-behavior",
+        "item:exam-intro_python_sample_final_24_25-15-w2-conditions",
+        "item:exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns",
+        "item:exam-intro_python_sample_final_24_25-17-w3-defining-and-calling-functions",
+        "item:exam-midterm_2023-11-w3-higher-order-patterns",
+        "item:exam-midterm_2023-3-w3-scope",
+        "item:exam-midterm_2024-13-w3-arguments",
+        "item:exam-midterm_2024-14-w3-arguments",
+        "item:exam-midterm_2024-19-w3-higher-order-patterns",
+        "item:exam-midterm_2024-5-w3-scope",
+        "item:exam-trial-final-exam-py22-2-w3-scope",
+        "item:exam-trial_midterm-17-w3-higher-order-patterns",
+        "item:kp-manual-args-kwargs-return-d1",
+        "item:kp-manual-mutating-methods-none-d1",
+        "item:kp-manual-scope-global",
+        "item:kp-manual-scope-local",
+        "item:kp-manual-scope-return-outside",
+        "item:kp-manual-scope-unbound",
+        "item:ks-14515a5856",
+        "item:ks-40fee04740",
+        "item:ks-994a4083e3",
+        "item:ks-d1a2d7739d",
+        "item:ks-d26b85265c",
+        "item:ks-db93da9e3e",
+        "item:ks-e09d7f145b",
+        "item:ks-f069ee6a0b",
+        "item:ks-f5d65c7e89",
+        "item:manual-call-vs-index",
+        "item:manual-global",
+        "item:manual-list-of-dicts-loop",
+        "item:manual-string-return-shape",
+        "item:manual-unboundlocal",
+        "subtopic:w3-arguments:w3-arguments-core",
+        "subtopic:w3-defining-and-calling-functions:w3-defining-and-calling-functions-core",
+        "subtopic:w3-higher-order-patterns:w3-higher-order-patterns-core",
+        "subtopic:w3-return-behavior:w3-return-behavior-core",
+        "subtopic:w3-scope:w3-scope-core"
+      ]
+    },
+    {
+      "week": 4,
+      "top1_unique_snippets": 5,
+      "top3_unique_snippets": 10,
+      "minimal_set_unique_snippets": 6,
+      "minimal_set_unused_snippets": 41,
+      "unused_snippet_ids": [
+        "item:cs-0d319e4faf",
+        "item:cs-14245b8c1f",
+        "item:cs-30e53467b8",
+        "item:cs-e7bc165499",
+        "item:exam-Test Exam 07-06-22-1-w4-oop-fundamentals",
+        "item:exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals",
+        "item:exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
+        "item:exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
+        "item:kp-5-d1",
+        "item:kp-8-d1",
+        "item:kp-9-d1",
+        "item:kp-manual-init-defaults-d1",
+        "item:kp-manual-init-defaults-d2",
+        "item:kp-manual-oop-compare-d1",
+        "item:kp-manual-self-attr-d1",
+        "item:kp-manual-string-method-results-d1",
+        "item:ks-2c73fabc68",
+        "item:ks-309158a68c",
+        "item:ks-40d373c410",
+        "item:ks-45aead894c",
+        "item:ks-5198d93ec1",
+        "item:ks-5cbba26b09",
+        "item:ks-72dda5450c",
+        "item:ks-9e278d1ee6",
+        "item:ks-acb7f400b2",
+        "item:ks-b734a22f46",
+        "item:ks-bdea67862f",
+        "item:ks-cdb152720e",
+        "item:ks-e4dc502d3e",
+        "item:ks-ea5a4acb43",
+        "item:ks-f80f1bf556",
+        "item:manual-find-vs-index",
+        "item:manual-init-default",
+        "item:manual-method-call",
+        "item:manual-self",
+        "item:manual-string-escapes",
+        "item:manual-string-immutability",
+        "subtopic:w4-error-handling:w4-error-handling-core",
+        "subtopic:w4-string-formatting:w4-string-formatting-core",
+        "subtopic:w4-string-fundamentals:w4-string-fundamentals-core",
+        "subtopic:w4-string-operations-and-methods:w4-string-operations-and-methods-core"
+      ]
+    },
+    {
+      "week": 5,
+      "top1_unique_snippets": 6,
+      "top3_unique_snippets": 8,
+      "minimal_set_unique_snippets": 8,
+      "minimal_set_unused_snippets": 47,
+      "unused_snippet_ids": [
+        "item:cs-2e178eda82",
+        "item:cs-3d987070d4",
+        "item:cs-49cf15967e",
+        "item:cs-82ef14b9d5",
+        "item:cs-8bae99d6de",
+        "item:cs-8ec741987c",
+        "item:cs-b069af91f4",
+        "item:cs-b3e0b57d7a",
+        "item:cs-c4c296595e",
+        "item:cs-cdfd529b3d",
+        "item:cs-e6b6bd65f0",
+        "item:kp-5-d2",
+        "item:kp-manual-df-constructor",
+        "item:kp-manual-drop-missing-d1",
+        "item:kp-manual-drop-missing-d2",
+        "item:kp-manual-filter-aggregate-d1",
+        "item:kp-manual-filter-aggregate-d2",
+        "item:kp-manual-pandas-two-axis",
+        "item:kp-manual-pandas-two-axis-d1",
+        "item:kp-manual-series-default-index",
+        "item:kp-manual-series-vs-df",
+        "item:kp-manual-series-vs-df-d1",
+        "item:ks-0114a2cff0",
+        "item:ks-052ed25923",
+        "item:ks-0d2d15f8d2",
+        "item:ks-115ab52188",
+        "item:ks-17e621a20d",
+        "item:ks-18a9645168",
+        "item:ks-21496ff1cd",
+        "item:ks-2bed6c308f",
+        "item:ks-305a41a33e",
+        "item:ks-57ff66f9f1",
+        "item:ks-591dd1aa33",
+        "item:ks-75cf35c8b4",
+        "item:ks-99fe849762",
+        "item:ks-9a5d2c05fb",
+        "item:ks-dfc064979d",
+        "item:ks-f1be187b50",
+        "item:ks-f550a3ffc7",
+        "item:ks-f8eec928e1",
+        "item:manual-df-constructor",
+        "item:manual-series-index",
+        "item:manual-series-vs-dataframe",
+        "subtopic:w5-combining-data:w5-combining-data-core",
+        "subtopic:w5-inspecting-and-selecting-data:w5-inspecting-and-selecting-data-core",
+        "subtopic:w5-pandas-core-structures:w5-pandas-core-structures-core",
+        "subtopic:w5-working-with-values:w5-working-with-values-core"
+      ]
+    },
+    {
+      "week": 6,
+      "top1_unique_snippets": 3,
+      "top3_unique_snippets": 5,
+      "minimal_set_unique_snippets": 4,
+      "minimal_set_unused_snippets": 32,
+      "unused_snippet_ids": [
+        "item:cs-905c77e1f3",
+        "item:exam-intro_python_sample_final_24_25-12-w2-conditions",
+        "item:kp-manual-comprehension-syntax-d1",
+        "item:kp-manual-datetime-day-of-year",
+        "item:kp-manual-datetime-delta",
+        "item:kp-manual-datetime-format",
+        "item:kp-manual-datetime-format-codes",
+        "item:kp-manual-datetime-format-codes-d1",
+        "item:kp-manual-datetime-iso",
+        "item:kp-manual-datetime-now",
+        "item:kp-manual-datetime-objects-vs-strings",
+        "item:kp-manual-datetime-objects-vs-strings-d1",
+        "item:kp-manual-datetime-replace",
+        "item:ks-0a4fcae36d",
+        "item:ks-0e5c8b8b42",
+        "item:ks-169cc25be1",
+        "item:ks-1bc815f6d1",
+        "item:ks-3e04c4d5e8",
+        "item:ks-662456da41",
+        "item:ks-72c58bb6b2",
+        "item:ks-86cd7ede1c",
+        "item:ks-900b394f8e",
+        "item:ks-b9d93f2bc1",
+        "item:ks-cacc4fbc21",
+        "item:ks-cd030b9520",
+        "item:ks-dd2965ef50",
+        "item:ks-e643ee5e77",
+        "item:manual-day-of-year",
+        "item:manual-strftime-vs-strptime",
+        "item:manual-timedelta-attrs",
+        "subtopic:w6-comprehensions:w6-comprehensions-core",
+        "subtopic:w6-generators-and-iterators:w6-generators-and-iterators-core"
+      ]
+    }
+  ],
+  "insights": [
+    "Week 2 currently has the broadest minimal-set footprint with 28 unique snippets."
+  ],
+  "repeated_near_identical_exam_pieces": [
+    {
+      "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+      "count": 5
+    },
+    {
+      "item_id": "exam-Resit 22/23-2-w3-scope",
+      "count": 4
+    },
+    {
+      "item_id": "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
+      "count": 4
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-15-w2-conditions",
+      "count": 4
+    },
+    {
+      "item_id": "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
+      "count": 3
+    },
+    {
+      "item_id": "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
+      "count": 3
+    },
+    {
+      "item_id": "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets",
+      "count": 3
+    },
+    {
+      "item_id": "exam-Resit 22/23-1-w2-lists-and-sets",
+      "count": 3
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-10-w6-datetime",
+      "count": 3
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-9-w6-datetime",
+      "count": 3
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-11-w3-defining-and-calling-functions",
+      "count": 3
+    },
+    {
+      "item_id": "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Resit 22/23-3-w3-return-behavior",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Test Resit - Introduction to Python - 22/23-3-w1-objects-and-names",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Resit 22/23-4-w3-arguments",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Resit 22/23-5-w1-functions-and-imports",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Resit 22/23-6-w3-arguments",
+      "count": 2
+    },
+    {
+      "item_id": "exam-extra_practice-5-w2-dictionaries-and-mappings",
+      "count": 2
+    },
+    {
+      "item_id": "exam-extra_practice-4-w2-dictionaries-and-mappings",
+      "count": 2
+    },
+    {
+      "item_id": "exam-extra_practice-6-w1-sequences-and-access",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Trial final exam Introduction to Python-3-w1-objects-and-names",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
+      "count": 2
+    },
+    {
+      "item_id": "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-14-w2-loops",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-22-w2-conditions",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-23-w3-arguments",
+      "count": 2
+    },
+    {
+      "item_id": "exam-intro_python_sample_final_24_25-24-w2-conditions",
+      "count": 2
+    }
+  ],
+  "comparison": {
+    "certain": {
+      "current": 61,
+      "baseline": 88,
+      "delta": -27
+    },
+    "insufficient": {
+      "current": 71,
+      "baseline": 40,
+      "delta": 31
+    },
+    "partial": {
+      "current": 36,
+      "baseline": 40,
+      "delta": -4
+    }
+  }
+}

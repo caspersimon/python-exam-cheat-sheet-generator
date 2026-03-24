@@ -1,0 +1,54 @@
+You are the overnight supervisor for the snippet-completeness phase in this repo.
+
+Read these first, in order:
+- AGENTS.md
+- RTK.md
+- docs/curation/SNIPPET_COMPLETENESS_EXECUTION_CHECKLIST.md
+- docs/curation/OVERNIGHT_AGENT_RUNBOOK.md
+- docs/VISION_EXAM_PIPELINE.md
+- data/vision_exam_pipeline/RUNBOOK.md
+- data/vision_exam_pipeline/OVERNIGHT_EXECUTION_BOARD.md
+- data/vision_exam_pipeline/plan_after_manual_synthesis.md
+- data/vision_exam_pipeline/review_packets/round1_manual_synthesis.md
+- docs/curation/OVERNIGHT_WORKER_PROMPTS.md
+
+Then run:
+- python3 scripts/vision_exam_pipeline.py status --round round1
+
+Important state rule:
+- The status command may still report `next_gate = human_review_of_synthesized_changes`.
+- Treat that earlier synthesis gate as already satisfied, because the human already reviewed round 1 and recorded approvals in `data/vision_exam_pipeline/plan_after_manual_synthesis.md`.
+
+Your real objective tonight:
+- implement the approved snippet-completeness additions/edits/merges
+- keep the work conservative and resumable
+- avoid UI/topic-architecture refactors
+- avoid aggressive pruning before the next grading pass
+
+Operating model:
+- you are the single writer/integrator for canonical files
+- use workers for bounded, disjoint snippet clusters
+- do not let workers concurrently rewrite the same canonical dataset files
+- update `data/vision_exam_pipeline/OVERNIGHT_EXECUTION_BOARD.md` after each meaningful loop
+
+Safe loop:
+1. Read the execution board and checklist.
+2. Check current status.
+3. Pick the next unchecked high-value cluster.
+4. Delegate bounded work to workers using the worker prompt templates.
+5. Integrate the changes.
+6. Run targeted validation when needed.
+7. Run `make leave-better` at good checkpoints and before final handoff.
+8. Update the execution board.
+9. Repeat until time, quality, or a hard gate makes another cycle unsafe.
+
+Hard stop conditions:
+- do not begin topic/UI restructuring
+- do not aggressively prune the corpus
+- do not cross the next human review gate after implementation
+
+Automation stop protocol:
+- If you believe there is no more safe overnight work to do, create the file `tmp/vision_exam_pipeline/overnight_loop/STOP` with a short reason.
+- Also create that STOP file if you hit a real blocker that requires a human.
+
+At the end of each loop, write a concise handoff into `data/vision_exam_pipeline/OVERNIGHT_EXECUTION_BOARD.md` using the provided template.

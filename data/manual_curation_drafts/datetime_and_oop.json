@@ -1,0 +1,1083 @@
+[
+  {
+    "id": "datetime-and-time-logic",
+    "title": "Datetime and Time Logic",
+    "main_topics": [
+      {
+        "id": "datetime-parsing-and-formatting",
+        "title": "Datetime Parsing and Formatting",
+        "summary": "Parsing date text into datetime objects, formatting datetime objects back into strings, and remembering the small set of format codes that actually shows up in exams.",
+        "curation_notes": [
+          "Merged the duplicate strptime-vs-strftime snippets, format-code tables, and object-vs-string reminders into a tighter core.",
+          "Kept the code patterns that let a zero-knowledge student decode exam options quickly.",
+          "Dropped noisy now()/timestamp examples from the core because they are weak for the shipped UI unless the question is explicitly about them."
+        ],
+        "sections": {
+          "must_know": [
+            {
+              "title": "Parse first, format last",
+              "summary": "`datetime.strptime(text, format)` turns text into a datetime object; `dt.strftime(format)` turns a datetime object into text. Do math and attribute access while it is still a datetime object.",
+              "example": "from datetime import datetime\nstart = datetime.strptime('20-05-2024', '%d-%m-%Y')\nprint(start.strftime('%Y/%m/%d'))",
+              "source_refs": [
+                "manual-datetime-parse-format",
+                "snippet-item-manual-strftime-vs-strptime",
+                "kp-manual-datetime-objects-vs-strings"
+              ],
+              "pieces": [
+                {
+                  "id": "dt-parse-vs-format-table",
+                  "piece_type": "reference_table",
+                  "title": "Parse vs format",
+                  "content": {
+                    "headers": [
+                      "Call",
+                      "Input",
+                      "Output"
+                    ],
+                    "rows": [
+                      [
+                        "datetime.strptime(text, fmt)",
+                        "string + format",
+                        "datetime object"
+                      ],
+                      [
+                        "dt.strftime(fmt)",
+                        "datetime object + format",
+                        "string"
+                      ]
+                    ],
+                    "text": "Do arithmetic and attribute access while the value is still a datetime object."
+                  },
+                  "source_refs": [
+                    "manual-datetime-parse-format",
+                    "snippet-item-manual-strftime-vs-strptime",
+                    "kp-manual-datetime-objects-vs-strings"
+                  ]
+                },
+                {
+                  "id": "dt-parse-vs-format-code",
+                  "piece_type": "code_example",
+                  "title": "Parse first, format last",
+                  "content": {
+                    "text": "`datetime.strptime(text, format)` turns text into a datetime object; `dt.strftime(format)` turns a datetime object into text. Do math and attribute access while it is still a datetime object.",
+                    "code": "from datetime import datetime\nstart = datetime.strptime('20-05-2024', '%d-%m-%Y')\nprint(start.strftime('%Y/%m/%d'))"
+                  },
+                  "source_refs": [
+                    "manual-datetime-parse-format",
+                    "snippet-item-manual-strftime-vs-strptime",
+                    "kp-manual-datetime-objects-vs-strings"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Know the exam format codes by sight",
+              "summary": "The recurring codes are `%Y` year, `%y` 2-digit year, `%m` month, `%d` day, `%H` hour, `%M` minute, `%S` second, and `%j` day-of-year. Constructor order is year, month, day.",
+              "example": "datetime.strptime('2023/1/10', '%Y/%m/%d')\ndt.strftime('%d-%m-%Y')\n# 10-01-2023",
+              "source_refs": [
+                "snippet-item-kp-manual-datetime-format-codes-d1",
+                "snippet-item-kp-manual-datetime-format-codes",
+                "ks-169cc25be1",
+                "ks-755c23c4be"
+              ],
+              "pieces": [
+                {
+                  "id": "dt-format-codes-table",
+                  "piece_type": "reference_table",
+                  "title": "Format codes you should recognize instantly",
+                  "content": {
+                    "headers": [
+                      "Code",
+                      "Meaning",
+                      "Example"
+                    ],
+                    "rows": [
+                      [
+                        "%Y",
+                        "4-digit year",
+                        "2024"
+                      ],
+                      [
+                        "%y",
+                        "2-digit year",
+                        "24"
+                      ],
+                      [
+                        "%m",
+                        "month number",
+                        "03"
+                      ],
+                      [
+                        "%d",
+                        "day of month",
+                        "09"
+                      ],
+                      [
+                        "%H",
+                        "hour (24h)",
+                        "17"
+                      ],
+                      [
+                        "%M",
+                        "minute",
+                        "05"
+                      ],
+                      [
+                        "%S",
+                        "second",
+                        "42"
+                      ],
+                      [
+                        "%j",
+                        "day of year",
+                        "060"
+                      ]
+                    ],
+                    "text": "Constructor order is year, month, day. Formatting codes are read literally in exam answer options."
+                  },
+                  "source_refs": [
+                    "snippet-item-kp-manual-datetime-format-codes-d1",
+                    "snippet-item-kp-manual-datetime-format-codes",
+                    "ks-169cc25be1",
+                    "ks-755c23c4be"
+                  ]
+                },
+                {
+                  "id": "dt-format-codes-code",
+                  "piece_type": "code_example",
+                  "title": "Parse then format with the same mental map",
+                  "content": {
+                    "text": "The recurring codes are `%Y` year, `%y` 2-digit year, `%m` month, `%d` day, `%H` hour, `%M` minute, `%S` second, and `%j` day-of-year. Constructor order is year, month, day.",
+                    "code": "dt = datetime.strptime('2023/1/10', '%Y/%m/%d')\nprint(dt.strftime('%d-%m-%Y'))  # 10-01-2023"
+                  },
+                  "source_refs": [
+                    "snippet-item-kp-manual-datetime-format-codes-d1",
+                    "snippet-item-kp-manual-datetime-format-codes",
+                    "ks-169cc25be1",
+                    "ks-755c23c4be"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Object vs string mental model",
+              "summary": "A parsed datetime supports `.year`, `.month`, comparisons, and arithmetic. A formatted string does not. If an option formats too early, it usually breaks the later arithmetic step.",
+              "example": "dt = datetime.strptime('01-06-2023 09:30', '%d-%m-%Y %H:%M')\ntext = dt.strftime('%d-%m-%Y %H:%M')\n# dt + timedelta(minutes=20) works\n# text + timedelta(minutes=20) does not",
+              "source_refs": [
+                "snippet-item-kp-manual-datetime-objects-vs-strings-d1",
+                "snippet-item-kp-manual-datetime-objects-vs-strings"
+              ]
+            }
+          ],
+          "exam_patterns": [
+            {
+              "title": "Decode the date format from the sample string",
+              "summary": "If the question shows both the input string and the format template, match separators and positions directly. This is usually enough to identify the month/day/year meaning without extra theory.",
+              "pieces": [
+                {
+                  "id": "dt-decode-format-table",
+                  "piece_type": "reference_table",
+                  "title": "Read the sample string literally",
+                  "content": {
+                    "headers": [
+                      "Sample",
+                      "Format",
+                      "Meaning"
+                    ],
+                    "rows": [
+                      [
+                        "03/02/2013",
+                        "%m/%d/%Y",
+                        "month 3, day 2, year 2013"
+                      ],
+                      [
+                        "03-02-2013",
+                        "%d-%m-%Y",
+                        "day 3, month 2, year 2013"
+                      ]
+                    ],
+                    "text": "Match separators and positions directly; that is usually enough to eliminate the wrong options."
+                  },
+                  "source_refs": [
+                    "exam-intro_python_sample_final_24_25-9-w6-datetime",
+                    "snippet-subtopic-w6-datetime-w6-datetime-core"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "exam-intro_python_sample_final_24_25-9-w6-datetime",
+                "snippet-subtopic-w6-datetime-w6-datetime-core"
+              ]
+            },
+            {
+              "title": "Day-of-year questions use one of two routes",
+              "summary": "Either use `%j` when formatting, or compute `(dt - datetime(dt.year, 1, 1)).days + 1`. Exam distractors often forget the `+ 1` or return a timedelta instead of an integer.",
+              "example": "def day_of_year(dt):\n    return (dt - datetime(dt.year, 1, 1)).days + 1",
+              "source_refs": [
+                "snippet-item-manual-day-of-year",
+                "snippet-item-kp-manual-datetime-day-of-year",
+                "snippet-subtopic-w6-datetime-w6-datetime-core"
+              ]
+            },
+            {
+              "title": "DataFrame date-column questions still reduce to parse/format rules",
+              "summary": "When a question builds a `Date` column from day, month, and year pieces, the winning option usually constructs a datetime in year-month-day order and then formats it with `strftime`.",
+              "example": "datetime(y, m, d).strftime('%d-%m-%Y')",
+              "source_refs": [
+                "snippet-subtopic-w6-datetime-w6-datetime-core"
+              ]
+            }
+          ],
+          "useful_backup": [
+            {
+              "title": "`replace()` returns a new datetime",
+              "summary": "Datetime objects are immutable. `replace(...)` gives you a modified copy; it does not change the original object in place.",
+              "example": "d = datetime.now()\nd2 = d.replace(year=2026)",
+              "source_refs": [
+                "ks-662456da41",
+                "snippet-item-kp-manual-datetime-replace"
+              ]
+            },
+            {
+              "title": "`now()`, `timestamp()`, and ISO helpers",
+              "summary": "These are fine references to have nearby, but they are backup material here because they are lower-frequency than parse/format and arithmetic traps.",
+              "example": "datetime.now().timestamp()\nd.isoformat()\nd.isocalendar()",
+              "source_refs": [
+                "ks-e643ee5e77",
+                "snippet-item-kp-manual-datetime-now",
+                "snippet-item-kp-manual-datetime-iso"
+              ]
+            },
+            {
+              "title": "Weekday, month, and year attributes are direct lookups",
+              "summary": "Once you have a datetime object, use attributes like `.year`, `.month`, `.day`, and `.weekday()` directly instead of re-formatting the date string.",
+              "pieces": [
+                {
+                  "id": "dt-attributes-table",
+                  "piece_type": "reference_table",
+                  "title": "Direct datetime attributes",
+                  "content": {
+                    "headers": [
+                      "Attribute / call",
+                      "Returns"
+                    ],
+                    "rows": [
+                      [
+                        "dt.year",
+                        "integer year"
+                      ],
+                      [
+                        "dt.month",
+                        "integer month"
+                      ],
+                      [
+                        "dt.day",
+                        "integer day"
+                      ],
+                      [
+                        "dt.weekday()",
+                        "0=Monday ... 6=Sunday"
+                      ]
+                    ],
+                    "text": "Use attributes on the datetime object itself; do not format to text first unless the question wants text output."
+                  },
+                  "source_refs": [
+                    "manual-datetime-parse-format"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-datetime-parse-format"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "datetime-arithmetic-and-comparisons",
+        "title": "Datetime Arithmetic and Comparisons",
+        "summary": "Timedelta arithmetic, overlap/comparison logic, and the specific traps that show up when an option turns a datetime into text too early.",
+        "curation_notes": [
+          "Collapsed the arithmetic snippets into one clear 'do math before formatting' rule plus a small support layer for comparisons and overlap checks.",
+          "Kept timedelta attributes as backup rather than core because `.days` matters far more often than the full attribute list."
+        ],
+        "sections": {
+          "must_know": [
+            {
+              "title": "Do arithmetic before formatting",
+              "summary": "Add or subtract `timedelta(...)` while the value is a datetime object. Only call `strftime(...)` after the arithmetic is finished.",
+              "example": "from datetime import datetime, timedelta\nstart = datetime.strptime('2024-05-20', '%Y-%m-%d')\nnext_week = start + timedelta(days=7)\nprint(next_week.strftime('%Y-%m-%d'))",
+              "source_refs": [
+                "manual-datetime-arithmetic",
+                "kp-manual-datetime-objects-vs-strings"
+              ]
+            },
+            {
+              "title": "Subtracting datetimes gives a timedelta",
+              "summary": "The result of `end - start` is a `timedelta`, not another datetime. The most exam-useful attribute is usually `.days`.",
+              "example": "diff = datetime(2024, 1, 1) - datetime(2023, 1, 1)\nprint(diff.days)",
+              "source_refs": [
+                "ks-86cd7ede1c",
+                "snippet-item-kp-manual-datetime-delta",
+                "snippet-item-manual-timedelta-attrs"
+              ],
+              "pieces": [
+                {
+                  "id": "dt-delta-table",
+                  "piece_type": "reference_table",
+                  "title": "Datetime subtraction and timedelta facts",
+                  "content": {
+                    "headers": [
+                      "Expression",
+                      "Result"
+                    ],
+                    "rows": [
+                      [
+                        "end - start",
+                        "timedelta"
+                      ],
+                      [
+                        "start + timedelta(days=7)",
+                        "datetime"
+                      ],
+                      [
+                        "diff.days",
+                        "whole-day count"
+                      ],
+                      [
+                        "timedelta(hours=2, minutes=30)",
+                        "2.5 hours"
+                      ]
+                    ],
+                    "text": "The most exam-useful timedelta attribute is usually `.days`."
+                  },
+                  "source_refs": [
+                    "ks-86cd7ede1c",
+                    "snippet-item-kp-manual-datetime-delta",
+                    "snippet-item-manual-timedelta-attrs"
+                  ]
+                },
+                {
+                  "id": "dt-delta-code",
+                  "piece_type": "code_example",
+                  "title": "Subtracting datetimes gives a timedelta",
+                  "content": {
+                    "text": "The result of `end - start` is a `timedelta`, not another datetime. The most exam-useful attribute is usually `.days`.",
+                    "code": "diff = datetime(2024, 1, 1) - datetime(2023, 1, 1)\nprint(diff.days)"
+                  },
+                  "source_refs": [
+                    "ks-86cd7ede1c",
+                    "snippet-item-kp-manual-datetime-delta",
+                    "snippet-item-manual-timedelta-attrs"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Datetime comparisons behave like normal ordering",
+              "summary": "You can compare datetimes with `<`, `>`, and `==`. Overlap questions usually combine two comparisons: one start must be before the other end, and one end must be after the other start.",
+              "example": "self.start < other.end and self.end > other.start",
+              "source_refs": [
+                "manual-datetime-arithmetic",
+                "snippet-subtopic-w6-datetime-w6-datetime-core"
+              ]
+            }
+          ],
+          "exam_patterns": [
+            {
+              "title": "The classic trap: `strftime` too early",
+              "summary": "A wrong option often stores the formatted string in a list and then tries to add another week to that string in the next loop iteration.",
+              "pieces": [
+                {
+                  "id": "dt-strftime-too-early-table",
+                  "piece_type": "reference_table",
+                  "title": "Good pattern vs wrong pattern",
+                  "content": {
+                    "headers": [
+                      "Pattern",
+                      "Why"
+                    ],
+                    "rows": [
+                      [
+                        "keep a datetime in the loop, then format",
+                        "later arithmetic still works"
+                      ],
+                      [
+                        "format early, then add a timedelta to the string",
+                        "breaks because the value is no longer a datetime"
+                      ]
+                    ],
+                    "text": "This is one of the most common datetime distractor patterns."
+                  },
+                  "source_refs": [
+                    "manual-datetime-arithmetic",
+                    "snippet-subtopic-w6-datetime-w6-datetime-core"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-datetime-arithmetic",
+                "snippet-subtopic-w6-datetime-w6-datetime-core"
+              ]
+            },
+            {
+              "title": "Overlap logic is interval logic, not equality logic",
+              "summary": "For event-overlap questions, the winning answer is usually the one that checks interval intersection, not exact matching times.",
+              "example": "Two events overlap when `a.start < b.end and a.end > b.start`.",
+              "source_refs": [
+                "snippet-subtopic-w6-datetime-w6-datetime-core"
+              ]
+            },
+            {
+              "title": "Constructor-vs-format confusion is a common distractor",
+              "summary": "Wrong options often swap constructor order, misuse `strftime` where `strptime` is needed, or try to do datetime math on a string result.",
+              "pieces": [
+                {
+                  "id": "dt-constructor-vs-format-table",
+                  "piece_type": "reference_table",
+                  "title": "Constructor vs parse vs format",
+                  "content": {
+                    "headers": [
+                      "Task",
+                      "Use"
+                    ],
+                    "rows": [
+                      [
+                        "build a datetime from numeric parts",
+                        "datetime(year, month, day, ...)"
+                      ],
+                      [
+                        "parse text into a datetime",
+                        "datetime.strptime(text, format)"
+                      ],
+                      [
+                        "turn a datetime into text",
+                        "dt.strftime(format)"
+                      ]
+                    ],
+                    "text": "Wrong options often swap these directions."
+                  },
+                  "source_refs": [
+                    "manual-datetime-parse-format",
+                    "snippet-subtopic-w6-datetime-w6-datetime-core"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-datetime-parse-format",
+                "snippet-subtopic-w6-datetime-w6-datetime-core"
+              ]
+            },
+            {
+              "title": "Build recurring schedules by advancing the datetime, not the string",
+              "summary": "For repeated appointments or weekly schedules, keep a datetime in the loop, append the formatted text only at the edge, and advance the datetime with a timedelta each iteration.",
+              "pieces": [
+                {
+                  "id": "dt-recurring-schedule-code",
+                  "piece_type": "code_example",
+                  "title": "Recurring schedule pattern",
+                  "content": {
+                    "text": "This is the safe loop pattern for weekly date generation questions.",
+                    "code": "current = datetime.strptime('20-05-2024', '%d-%m-%Y')\nrows = []\nfor _ in range(3):\n    rows.append(current.strftime('%d-%m-%Y'))\n    current += timedelta(days=7)"
+                  },
+                  "source_refs": [
+                    "manual-datetime-arithmetic"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-datetime-arithmetic"
+              ]
+            }
+          ],
+          "useful_backup": [
+            {
+              "title": "Timedelta stores `days`, `seconds`, and `microseconds` directly",
+              "summary": "This is sometimes useful for eliminating distractors that refer to nonexistent direct attributes like `hours`.",
+              "example": "delta.days, delta.seconds, delta.microseconds",
+              "source_refs": [
+                "snippet-item-manual-timedelta-attrs"
+              ]
+            },
+            {
+              "title": "You can derive day-of-year without `%j`",
+              "summary": "Keep this around as a fallback mental model when the format-code route is not obvious.",
+              "example": "(dt - datetime(dt.year, 1, 1)).days + 1",
+              "source_refs": [
+                "snippet-item-manual-day-of-year",
+                "snippet-item-kp-manual-datetime-day-of-year"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "object-oriented-python",
+    "title": "Object-Oriented Python",
+    "main_topics": [
+      {
+        "id": "oop-fundamentals",
+        "title": "OOP Fundamentals",
+        "summary": "What classes store, what `self` means, how constructor defaults behave, and why method-call syntax creates so many exam traps.",
+        "curation_notes": [
+          "Merged the overlapping `self`, method-call, attribute, and default-argument snippets into one practical exam-facing core.",
+          "Kept the mutable-default constructor fix because it is stronger than the extra duplicate default-arg examples.",
+          "Omitted weaker near-duplicates that only rephrased the same `self` rule without adding exam value."
+        ],
+        "sections": {
+          "core_class_basics": {
+            "title": "Core Class Basics",
+            "description": "The smallest class patterns you should recognize instantly.",
+            "snippets": [
+              {
+                "title": "`self` means the current object",
+                "summary": "Inside instance methods, read and update object state through `self.attribute`. If you assign only to a local variable, that value disappears when the method ends.",
+                "example": "class Flight:\n    def set_date(self, date):\n        self.date = date",
+                "source_refs": [
+                  "snippet-subtopic-w4-oop-fundamentals-w4-oop-fundamentals-core",
+                  "snippet-item-manual-self",
+                  "snippet-item-kp-manual-self-attr-d1"
+                ]
+              },
+              {
+                "title": "Method calls pass `self` automatically",
+                "summary": "Use `obj.method(x)`, not `obj.method(obj, x)`. Passing the object again gives one argument too many.",
+                "example": "obj.set_date(x)      # correct\nobj.set_date(obj, x) # too many args",
+                "source_refs": [
+                  "manual-oop-fundamentals",
+                  "snippet-item-manual-method-call"
+                ]
+              },
+              {
+                "title": "Minimal class template you should recognize instantly",
+                "summary": "Many OOP answer choices differ only in whether the class skeleton is written correctly. Know the smallest valid class with an initializer and one method.",
+                "pieces": [
+                  {
+                    "id": "oop-class-template-code",
+                    "piece_type": "code_example",
+                    "title": "Minimal class template",
+                    "content": {
+                      "text": "Recognize the skeleton before you reason about the custom logic inside it.",
+                      "code": "class Flight:\n    def __init__(self, code, capacity=300):\n        self.code = code\n        self.capacity = capacity\n\n    def seats_left(self):\n        return self.capacity"
+                    },
+                    "source_refs": [
+                      "manual-oop-fundamentals"
+                    ]
+                  }
+                ],
+                "source_refs": [
+                  "manual-oop-fundamentals"
+                ]
+              }
+            ]
+          },
+          "constructor_defaults": {
+            "title": "Constructor Defaults",
+            "description": "Constructor signatures, defaults, and per-object state rules.",
+            "snippets": [
+              {
+                "title": "Defaults in `__init__` make constructor arguments optional",
+                "summary": "A parameter like `mode='land'` may be omitted by the caller, but the instance still gets that value. This matters a lot in exam distractors.",
+                "example": "class Vehicle:\n    def __init__(self, name, mode='land'):\n        self.name = name\n        self.mode = mode",
+                "source_refs": [
+                  "manual-oop-fundamentals",
+                  "snippet-item-manual-init-default",
+                  "snippet-item-kp-manual-init-defaults-d1"
+                ]
+              },
+              {
+                "title": "Use `None` for fresh per-object collections",
+                "summary": "For list-like constructor arguments, use `None` as the default and create the list inside `__init__` so objects do not accidentally share state.",
+                "example": "class Book:\n    def __init__(self, title, review_scores=None):\n        self.title = title\n        self.review_scores = [] if review_scores is None else review_scores",
+                "source_refs": [
+                  "snippet-item-kp-manual-init-defaults-d2"
+                ]
+              }
+            ]
+          },
+          "exam_patterns": [
+            {
+              "title": "Spot the extra-`self` error immediately",
+              "summary": "If a question shows `my_obj.method(my_obj, value)`, the error is almost always that the instance was passed manually even though Python already supplies it.",
+              "example": "my_flight.set_date(my_flight, '29-02-2022')",
+              "source_refs": [
+                "snippet-item-manual-method-call",
+                "manual-oop-fundamentals"
+              ]
+            },
+            {
+              "title": "Distinguish object state from temporary locals",
+              "summary": "An option that writes `name = ...` inside `__init__` or another method without `self.name = ...` usually fails to store the value on the object.",
+              "pieces": [
+                {
+                  "id": "oop-object-state-table",
+                  "piece_type": "reference_table",
+                  "title": "Object state vs local name",
+                  "content": {
+                    "headers": [
+                      "Code",
+                      "What happens"
+                    ],
+                    "rows": [
+                      [
+                        "self.name = vehicle_name",
+                        "stores the value on the object"
+                      ],
+                      [
+                        "name = vehicle_name",
+                        "creates only a local variable"
+                      ]
+                    ],
+                    "text": "If the value is meant to survive on the object, store it on `self`."
+                  },
+                  "source_refs": [
+                    "snippet-subtopic-w4-oop-fundamentals-w4-oop-fundamentals-core",
+                    "snippet-item-kp-manual-self-attr-d1"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "snippet-subtopic-w4-oop-fundamentals-w4-oop-fundamentals-core",
+                "snippet-item-kp-manual-self-attr-d1"
+              ]
+            },
+            {
+              "title": "Default-argument distractors hide in constructor signatures",
+              "summary": "If the class header already gives a default value, the caller is allowed to omit that argument. Wrong options often pretend the constructor call is missing something required.",
+              "pieces": [
+                {
+                  "id": "oop-default-argument-table",
+                  "piece_type": "reference_table",
+                  "title": "Constructor default reminder",
+                  "content": {
+                    "headers": [
+                      "Signature shape",
+                      "Caller may do"
+                    ],
+                    "rows": [
+                      [
+                        "__init__(self, code, capacity=300)",
+                        "Flight('KLM') or Flight('KLM', 400)"
+                      ],
+                      [
+                        "__init__(self, code, capacity)",
+                        "must pass both required values"
+                      ]
+                    ],
+                    "text": "If the constructor already provides a default, omitting that argument is valid."
+                  },
+                  "source_refs": [
+                    "manual-oop-fundamentals",
+                    "snippet-item-manual-init-default"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-oop-fundamentals",
+                "snippet-item-manual-init-default"
+              ]
+            },
+            {
+              "title": "Trace attribute changes across method calls",
+              "summary": "When the exam creates one object and calls two or three methods on it, keep rewriting the object state after each call instead of trying to reason globally.",
+              "pieces": [
+                {
+                  "id": "oop-state-trace-code",
+                  "piece_type": "code_example",
+                  "title": "Tiny state-tracing pattern",
+                  "content": {
+                    "text": "Write down the attribute after each call. Most mistakes happen when one call mutates the object and the next call reads that updated state.",
+                    "code": "class Book:\n    def __init__(self):\n        self.reviews = []\n\n    def add_review(self, score):\n        self.reviews.append(score)\n\nbook = Book()\nbook.add_review(8)\nbook.add_review(6)\nprint(book.reviews)  # [8, 6]"
+                  },
+                  "source_refs": [
+                    "manual-oop-fundamentals",
+                    "snippet-subtopic-w4-oop-fundamentals-w4-oop-fundamentals-core"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-oop-fundamentals",
+                "snippet-subtopic-w4-oop-fundamentals-w4-oop-fundamentals-core"
+              ]
+            }
+          ],
+          "useful_backup": [
+            {
+              "title": "Class attribute vs instance attribute",
+              "summary": "`self.x` belongs to one object; a class attribute is shared until an instance shadows it. This is useful, but it is not as central as the `self` and method-call traps.",
+              "example": "class Counter:\n    count = 0",
+              "source_refs": [
+                "snippet-subtopic-w4-oop-fundamentals-w4-oop-fundamentals-core"
+              ]
+            },
+            {
+              "title": "OOP reminder table",
+              "summary": "A compact last-minute table for the high-frequency class traps: attributes live on `self`, methods get `self` automatically, and constructor defaults count as provided values.",
+              "pieces": [
+                {
+                  "id": "oop-reminder-table",
+                  "piece_type": "reference_table",
+                  "title": "Pattern / Meaning / Trap",
+                  "content": {
+                    "headers": [
+                      "Pattern",
+                      "Meaning",
+                      "Trap"
+                    ],
+                    "rows": [
+                      [
+                        "self.name = value",
+                        "store state on the object",
+                        "plain `name = value` stays local"
+                      ],
+                      [
+                        "obj.method(x)",
+                        "Python passes `self` automatically",
+                        "do not write `obj.method(obj, x)`"
+                      ],
+                      [
+                        "mode='land' in __init__",
+                        "caller may omit that argument",
+                        "do not reject valid shorter constructor calls"
+                      ],
+                      [
+                        "items=None; create list inside __init__",
+                        "fresh list per object",
+                        "mutable defaults can leak state across objects"
+                      ]
+                    ],
+                    "text": "Compact last-minute table for the class patterns and traps that come up most often."
+                  },
+                  "source_refs": [
+                    "manual-oop-fundamentals"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-oop-fundamentals"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "oop-comparison-logic",
+        "title": "OOP Comparison Logic",
+        "summary": "Compare-style methods where one object is only 'better' if multiple conditions are satisfied, and where the correct fallback is often `None`.",
+        "curation_notes": [
+          "This topic is already thin and useful, so the draft keeps it compact instead of over-expanding it with generic comparison material.",
+          "Merged the reusable compare template and the fallback logic into one crisp rule set."
+        ],
+        "sections": {
+          "must_know": [
+            {
+              "title": "Check both directions explicitly",
+              "summary": "In asymmetric comparison rules, `not self_better` does not mean `other_better`. Compute both conditions and only return a winner when that side truly meets the rule.",
+              "example": "self_better = self.avg > other.avg and self.reviews >= other.reviews\nother_better = other.avg > self.avg and other.reviews >= self.reviews",
+              "source_refs": [
+                "manual-oop-comparison",
+                "snippet-item-kp-manual-oop-compare-d1"
+              ]
+            },
+            {
+              "title": "Use an explicit fallback",
+              "summary": "If neither object wins under the full rule, return `None` (or the stated fallback) instead of guessing that the other object must be better.",
+              "example": "if self_better:\n    return self.title\nif other_better:\n    return other.title\nreturn None",
+              "source_refs": [
+                "manual-oop-comparison",
+                "snippet-item-kp-manual-oop-compare-d1"
+              ]
+            }
+          ],
+          "exam_patterns": [
+            {
+              "title": "Reject the fake `elif not avg_better` shortcut",
+              "summary": "A common wrong option says 'if self is not better, return the other object'. That fails whenever neither object satisfies all conditions.",
+              "pieces": [
+                {
+                  "id": "oop-fake-elif-table",
+                  "piece_type": "reference_table",
+                  "title": "Why the shortcut fails",
+                  "content": {
+                    "headers": [
+                      "Shortcut",
+                      "Why it is wrong"
+                    ],
+                    "rows": [
+                      [
+                        "`elif not avg_better: return other`",
+                        "neither object may satisfy the full rule"
+                      ],
+                      [
+                        "compute both booleans explicitly",
+                        "you preserve the real tie / no-winner case"
+                      ]
+                    ],
+                    "text": "Do not let a missing self-win case trick you into assuming the other object must win."
+                  },
+                  "source_refs": [
+                    "manual-oop-comparison"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-oop-comparison"
+              ]
+            },
+            {
+              "title": "Translate the English rule into booleans first",
+              "summary": "Exam wording usually mixes score, review count, and a fallback. Write the rule as named boolean checks before returning anything.",
+              "example": "avg_better = first.average_score() > second.average_score()\nno_fewer_reviews = first.num_reviews() >= second.num_reviews()",
+              "source_refs": [
+                "manual-oop-comparison"
+              ]
+            }
+          ],
+          "useful_backup": [
+            {
+              "title": "Minimal comparison template",
+              "summary": "Keep a tiny three-case table in reserve: self wins, other wins, tie/no clear winner.",
+              "source_refs": [
+                "snippet-item-kp-manual-oop-compare-d1"
+              ],
+              "pieces": [
+                {
+                  "id": "oop-compare-template-table",
+                  "piece_type": "reference_table",
+                  "title": "Three-case comparison template",
+                  "content": {
+                    "headers": [
+                      "Case",
+                      "Return"
+                    ],
+                    "rows": [
+                      [
+                        "self satisfies the full winning rule",
+                        "return the value from self"
+                      ],
+                      [
+                        "other satisfies the full winning rule",
+                        "return the value from other"
+                      ],
+                      [
+                        "neither side fully wins",
+                        "return None or the stated fallback"
+                      ]
+                    ],
+                    "text": "Keep this tiny template in reserve when the method compares two objects under several conditions."
+                  },
+                  "source_refs": [
+                    "snippet-item-kp-manual-oop-compare-d1"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Comparison checklist table",
+              "summary": "Use a tiny checklist when a class method compares two objects under multiple conditions.",
+              "pieces": [
+                {
+                  "id": "oop-compare-table",
+                  "piece_type": "reference_table",
+                  "title": "Comparison checklist",
+                  "content": {
+                    "headers": [
+                      "Step",
+                      "Question"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "What boolean makes `self` win?"
+                      ],
+                      [
+                        "2",
+                        "What boolean makes `other` win?"
+                      ],
+                      [
+                        "3",
+                        "If neither wins, what is the explicit fallback?"
+                      ]
+                    ],
+                    "text": "Do not jump straight to `else: return other` unless the rules truly make it exhaustive."
+                  },
+                  "source_refs": [
+                    "manual-oop-comparison"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-oop-comparison"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "inheritance-and-class-relationships",
+        "title": "Inheritance and Class Relationships",
+        "summary": "Parent-child class relationships, `super()`, and what the child keeps from the parent constructor.",
+        "curation_notes": [
+          "Kept this topic lean because the current repo data is already fairly clean here.",
+          "Focused on the patterns most likely to help in shipped UI: inheritance syntax, parent initialization, and the 'child is still a parent' mental model."
+        ],
+        "sections": {
+          "must_know": [
+            {
+              "title": "Subclass syntax and parent initialization",
+              "summary": "Write `class Child(Parent):` to inherit, and call `super().__init__(...)` when the child should keep the parent's setup logic.",
+              "example": "class Dog(Animal):\n    def __init__(self, name, breed):\n        super().__init__(name)\n        self.breed = breed",
+              "source_refs": [
+                "manual-inheritance"
+              ]
+            },
+            {
+              "title": "A child object still counts as the parent type",
+              "summary": "Inheritance does not replace the parent identity; it extends it. A child instance can still be treated as a parent where appropriate.",
+              "example": "isinstance(dog, Animal)  # True",
+              "source_refs": [
+                "manual-inheritance"
+              ]
+            },
+            {
+              "title": "Inheritance quick table",
+              "summary": "A compact checklist for the three cues that matter most in child-class questions.",
+              "pieces": [
+                {
+                  "id": "oop-inheritance-table",
+                  "piece_type": "reference_table",
+                  "title": "Inheritance cues",
+                  "content": {
+                    "headers": [
+                      "Cue",
+                      "What it tells you"
+                    ],
+                    "rows": [
+                      [
+                        "class Child(Parent):",
+                        "Child inherits parent behavior"
+                      ],
+                      [
+                        "super().__init__(...)",
+                        "parent initialization still runs"
+                      ],
+                      [
+                        "child.method()",
+                        "child can use inherited methods unless overridden"
+                      ]
+                    ],
+                    "text": "These three cues solve a large share of inheritance answer-choice questions."
+                  },
+                  "source_refs": [
+                    "manual-inheritance"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-inheritance"
+              ]
+            }
+          ],
+          "exam_patterns": [
+            {
+              "title": "The child should add, not erase, the parent fields",
+              "summary": "Wrong options often forget to call `super().__init__(...)`, which means the inherited attributes are never initialized.",
+              "source_refs": [
+                "manual-inheritance"
+              ],
+              "pieces": [
+                {
+                  "id": "inheritance-parent-fields-table",
+                  "piece_type": "reference_table",
+                  "title": "Keep the parent setup intact",
+                  "content": {
+                    "headers": [
+                      "Pattern",
+                      "What it means"
+                    ],
+                    "rows": [
+                      [
+                        "call `super().__init__(name)`",
+                        "the parent still initializes shared attributes"
+                      ],
+                      [
+                        "skip the parent initializer entirely",
+                        "shared parent fields may never be created"
+                      ],
+                      [
+                        "set only the new child field afterward",
+                        "the child adds behavior instead of replacing the parent setup"
+                      ]
+                    ],
+                    "text": "Wrong options often forget the parent initializer, which leaves inherited state incomplete."
+                  },
+                  "source_refs": [
+                    "manual-inheritance"
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Use `super()` when the parent constructor still matters",
+              "summary": "If the parent constructor already handles shared setup, do not copy-paste it into the child unless the question explicitly asks for something else.",
+              "example": "super().__init__(name)",
+              "source_refs": [
+                "manual-inheritance"
+              ]
+            }
+          ],
+          "useful_backup": [
+            {
+              "title": "Three inheritance cues to remember",
+              "summary": "Look for `class Child(Parent):`, `super().__init__(...)`, and `isinstance(child, Parent)` as the quick scan pattern.",
+              "example": "These three cues usually identify the correct inheritance answer faster than reading every distractor in full.",
+              "source_refs": [
+                "manual-inheritance"
+              ]
+            },
+            {
+              "title": "Child objects inherit parent methods too",
+              "summary": "If `Dog(Animal)` does not override a method, the child object still uses the parent version. Inheritance is not only about shared attributes.",
+              "pieces": [
+                {
+                  "id": "inheritance-method-inheritance-table",
+                  "piece_type": "reference_table",
+                  "title": "What the child automatically gets",
+                  "content": {
+                    "headers": [
+                      "If the parent defines...",
+                      "Then the child has..."
+                    ],
+                    "rows": [
+                      [
+                        "attributes created by `super().__init__(...)`",
+                        "the initialized parent state"
+                      ],
+                      [
+                        "a regular instance method",
+                        "that method too, unless it is overridden"
+                      ],
+                      [
+                        "a type relationship to the parent",
+                        "`isinstance(child, Parent)` can be True"
+                      ]
+                    ],
+                    "text": "This helps when answer options confuse inheritance with copy-pasting."
+                  },
+                  "source_refs": [
+                    "manual-oop-inheritance"
+                  ]
+                }
+              ],
+              "source_refs": [
+                "manual-oop-inheritance"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

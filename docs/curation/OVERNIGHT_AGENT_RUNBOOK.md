@@ -166,6 +166,39 @@ python3 scripts/vision_exam_pipeline.py status --round round1
 3. Compare the status output against the board.
 4. If they disagree, trust the files and fix the board.
 
+## Hourly Supervisor Watch
+
+For additional oversight, an hourly supervisor can resume the main Codex thread, inspect the overnight orchestrator, and steer or stop it if needed.
+
+Install or refresh it with:
+
+```bash
+python3 scripts/hourly_supervisor_watch_manager.py install
+```
+
+Check its status with:
+
+```bash
+python3 scripts/hourly_supervisor_watch_manager.py status
+```
+
+Trigger an immediate supervisory pass with:
+
+```bash
+python3 scripts/hourly_supervisor_watch_manager.py trigger
+```
+
+Remove it with:
+
+```bash
+python3 scripts/hourly_supervisor_watch_manager.py uninstall
+```
+
+It uses:
+
+- `docs/curation/HOURLY_ORCHESTRATOR_SUPERVISOR_PROMPT.txt`
+- `scripts/hourly_supervisor_watch.py`
+
 ## Failure Handling
 
 If a worker stalls:

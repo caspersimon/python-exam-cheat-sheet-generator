@@ -35,7 +35,7 @@ WORK_PACKET_DIR = DATA_ROOT / "work_packets"
 
 QUESTION_BANK_SCHEMA = "1.0"
 PAGE_MANIFEST_SCHEMA = "1.0"
-EVALUATION_SCHEMA = "1.0"
+EVALUATION_SCHEMA = "1.1"
 SYNTHESIS_SCHEMA = "1.0"
 ANALYTICS_SCHEMA = "1.0"
 REVIEW_PACKET_SCHEMA = "1.0"
@@ -106,6 +106,20 @@ def _card_week(card: dict[str, Any]) -> int:
         if week > 0:
             return week
     return 0
+
+
+def snippet_identity_for_item(item: dict[str, Any]) -> tuple[str, str]:
+    item_id = _safe_str(item.get("item_id"))
+    card_id = _safe_str(item.get("card_id"))
+    subtopic_id = _safe_str(item.get("subtopic_id"))
+    subtopic_title = _safe_str(item.get("subtopic_title"))
+    topic = _safe_str(item.get("topic")) or "Unknown topic"
+    item_type = _safe_str(item.get("item_type")) or "unknown"
+    if subtopic_id and card_id:
+        return (f"subtopic:{card_id}:{subtopic_id}", subtopic_title or topic)
+    if card_id and item_type == "source_exam":
+        return (f"item:{item_id}", subtopic_title or topic)
+    return (f"item:{item_id}", subtopic_title or topic)
 
 
 def duplicate_exam_aliases() -> list[dict[str, Any]]:

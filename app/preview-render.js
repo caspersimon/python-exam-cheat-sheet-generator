@@ -75,7 +75,7 @@ function renderPreview() {
 
   previewEntries.forEach((entry) => {
     const li = document.createElement("li");
-    li.textContent = `${humanizeTopic(entry.card.topic)}${entry.cards.length > 1 ? ` ×${entry.cards.length}` : ""}`;
+    li.textContent = humanizeTopic(entry.card.topic);
     refs.previewOrderList.appendChild(li);
   });
 
@@ -88,7 +88,7 @@ function renderPreview() {
     prunePreviewCardLayouts(new Set());
     refs.page1Content.classList.add("is-empty");
     refs.page2Content.classList.add("is-empty");
-    refs.page1Content.innerHTML = `<div class="empty-state"><p>No selected content yet.</p><p>Choose specific items in Topic Explorer before opening Preview & Export.</p></div>`;
+    refs.page1Content.innerHTML = `<div class="empty-state"><p>No selected content yet.</p><p>Choose exact snippet pieces in the topic explorer before opening Preview & Export.</p></div>`;
     refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
     refs.overflowNotice.classList.add("hidden");
     syncGridControls(grid);
@@ -123,7 +123,7 @@ function renderPreview() {
   const overflowCards = Math.max(0, previewTopicCount - capacityPerPage * 2);
   if (overflowCards > 0) {
     refs.overflowNotice.classList.remove("hidden");
-    refs.overflowNotice.textContent = `${overflowCards} selected topic card(s) exceed the default grid. They were added on page 2 and may overlap; drag/resize to arrange.`;
+    refs.overflowNotice.textContent = `${overflowCards} selected topic card(s) exceed the default grid. They were added on page 2 and may overlap; drag or resize to arrange.`;
   } else {
     refs.overflowNotice.classList.add("hidden");
   }
@@ -144,46 +144,18 @@ function syncGridControls(effectiveGrid) {
 }
 
 function buildMergedPreviewEntries() {
-  const groups = new Map();
-
-  getSelectedPreviewEntries().forEach(({ card, selection }) => {
-    const key = normalizeTopicMergeKey(card);
-    if (!groups.has(key)) {
-      groups.set(key, {
-        key,
-        previewId: card.id,
-        card,
-        cards: [],
-        selectionsByCard: {},
-      });
-    }
-
-    const group = groups.get(key);
-    group.cards.push(card);
-    group.selectionsByCard[card.id] = selection;
-
-    if (group.cards.length > 1) {
-      group.previewId = `merged-${key.replace(/[^a-z0-9]+/g, "-") || card.id}`;
-      if ((card.exam_stats?.total_hits || 0) > (group.card.exam_stats?.total_hits || 0)) {
-        group.card = card;
-      }
-    }
-  });
-
-  return [...groups.values()].sort((a, b) => {
-    const hitDelta = (b.card.exam_stats?.total_hits || 0) - (a.card.exam_stats?.total_hits || 0);
-    if (hitDelta !== 0) {
-      return hitDelta;
-    }
-    return humanizeTopic(a.card.topic).localeCompare(humanizeTopic(b.card.topic));
-  });
-}
-
-function normalizeTopicMergeKey(card) {
-  return String(card?.canonical_topic || card?.topic || "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
+  return getSelectedPreviewEntries()
+    .map(({ card, selection }) => ({
+      previewId: card.id,
+      card,
+      cards: [card],
+      selectionsByCard: {
+        [card.id]: selection,
+      },
+    }))
+    .sort((a, b) => {
+      return humanizeTopic(a.card.topic).localeCompare(humanizeTopic(b.card.topic));
+    });
 }
 
 function getPreviewCardTitle(entry, layout) {
@@ -195,102 +167,29 @@ function getPreviewCardTitle(entry, layout) {
 }
 
 function derivePreviewCardTitle(entry) {
-  const focusQuestion = getFirstSelectedAIQuestion(entry);
-  if (focusQuestion) {
-    return summarizeCommonQuestionTitle(focusQuestion.summary);
+  const firstContext = getFirstSelectedPieceContext(entry);
+  if (!firstContext) {
+    return humanizeTopic(entry.card.topic);
   }
 
-  const focusKeyPoint = getFirstSelectedKeyPoint(entry);
-  if (focusKeyPoint) {
-    return summarizePreviewLabel(focusKeyPoint.text, humanizeTopic(entry.card.topic));
+  if (firstContext.snippet?.title) {
+    return summarizePreviewLabel(firstContext.snippet.title, humanizeTopic(entry.card.topic));
   }
-
-  const focusExample = getFirstSelectedAIExample(entry);
-  if (focusExample?.title) {
-    return summarizePreviewLabel(focusExample.title, humanizeTopic(entry.card.topic));
+  if (firstContext.piece?.title) {
+    return summarizePreviewLabel(firstContext.piece.title, humanizeTopic(entry.card.topic));
   }
-
   return humanizeTopic(entry.card.topic);
 }
 
-function getFirstSelectedAIQuestion(entry) {
+function getFirstSelectedPieceContext(entry) {
   for (const sourceCard of entry.cards) {
     const selection = entry.selectionsByCard[sourceCard.id];
-    if (!selection?.sections?.aiQuestions) {
-      continue;
-    }
-    const selectedIds = new Set(selection.selected.aiQuestions || []);
-    const match = commonQuestionItems(sourceCard).find((item) => selectedIds.has(item.id));
-    if (match) {
-      return match;
+    const contexts = getSelectedPieceContexts(sourceCard, selection);
+    if (contexts.length) {
+      return contexts[0];
     }
   }
   return null;
-}
-
-function getFirstSelectedKeyPoint(entry) {
-  for (const sourceCard of entry.cards) {
-    const selection = entry.selectionsByCard[sourceCard.id];
-    if (!selection?.sections?.keyPoints) {
-      continue;
-    }
-    const selectedIds = new Set(selection.selected.keyPoints || []);
-    const match = keyPointGroups(sourceCard).find((group) => selectedIds.has(group.id));
-    if (match) {
-      return match;
-    }
-  }
-  return null;
-}
-
-function getFirstSelectedAIExample(entry) {
-  for (const sourceCard of entry.cards) {
-    const selection = entry.selectionsByCard[sourceCard.id];
-    if (!selection?.sections?.aiExamples) {
-      continue;
-    }
-    const selectedIds = new Set(selection.selected.aiExamples || []);
-    const match = usefulAIExamples(sourceCard).find((item) => selectedIds.has(item.id));
-    if (match) {
-      return match;
-    }
-  }
-  return null;
-}
-
-function summarizeCommonQuestionTitle(summary) {
-  const plain = sanitizeDisplayText(summary || "").replace(/`/g, "").trim();
-  const lower = plain.toLowerCase();
-
-  if ((lower.includes("{}") || lower.includes("empty set")) && lower.includes("dict")) {
-    return "Set vs. dict";
-  }
-  if (lower.includes("==") && /\bis\b/.test(lower)) {
-    return "== vs is";
-  }
-  if (lower.includes("mutable") && lower.includes("default")) {
-    return "Mutable defaults";
-  }
-  if (lower.includes("slice")) {
-    return "Slicing rules";
-  }
-  if (lower.includes("membership") || lower.includes(" in {") || lower.includes("dictionary checks keys")) {
-    return "dict membership";
-  }
-  if (lower.includes("print") && lower.includes("return")) {
-    return "print vs return";
-  }
-  if (lower.includes("loc") && lower.includes("iloc")) {
-    return ".loc vs .iloc";
-  }
-  if (lower.includes("strftime") && lower.includes("strptime")) {
-    return "strftime vs strptime";
-  }
-
-  return summarizePreviewLabel(
-    plain.replace(/^(why does|why is|what is|what does|how does|when does|which)\s+/i, "").replace(/\?+$/, ""),
-    "Exam note"
-  );
 }
 
 function summarizePreviewLabel(text, fallback) {

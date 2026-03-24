@@ -1,16 +1,6 @@
-const EXAM_LABELS = {
-  trial_midterm: "Trial 24/25",
-  midterm_2023: "Trial 22/23",
-  midterm_2024: "Trial 23/24",
-  extra_practice: "Extra Practice",
-  intro_python_sample_final_24_25: "Sample Final 24/25",
-};
-
-const AI_GENERATION_NOTE = "AI-generated from practice exam questions, lecture snippets, notebook snippets, and trap-pattern context.";
-const KEY_POINTS_GENERATION_NOTE = "AI-generated key points and optional details, then filtered against available course materials.";
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v3";
-const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v7";
-const TOPIC_CARDS_DATASET_VERSION = "2026-03-22-curation-pass-5";
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v9";
+const EXAM_BUILDER_DATASET_VERSION = "2026-03-24-manual-curation-hard-cut";
 const CANONICAL_WEEK_ORDER = [1, 2, 3, 4, 5, 6];
 const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
@@ -18,19 +8,17 @@ const DEFAULT_PAGE_INNER_HEIGHT = 1079;
 function buildDefaultNavigationState() {
   return {
     activeTopicId: "",
-    activeWeek: CANONICAL_WEEK_ORDER[0],
-    expandedWeeks: Object.fromEntries(CANONICAL_WEEK_ORDER.map((week, index) => [String(week), index === 0])),
+    activeParentId: "",
+    expandedParents: {},
     mobileSidebarOpen: false,
   };
 }
 
 const state = {
+  parentTopics: [],
   cards: [],
-  deckGroups: [],
   filters: {
     search: "",
-    onlyExam: false,
-    minHits: 0,
     weeks: new Set(CANONICAL_WEEK_ORDER),
   },
   drafts: {},
@@ -39,6 +27,7 @@ const state = {
   view: "swipe",
   openDrawer: "",
   previewCards: {},
+  previewEntries: {},
   previewZCounter: 1,
   layout: {
     fontFamily: "'Manrope', sans-serif",
@@ -95,9 +84,6 @@ const refs = {
   sheetStage: document.getElementById("sheetStage"),
 
   searchInput: document.getElementById("searchInput"),
-  onlyExamToggle: document.getElementById("onlyExamToggle"),
-  minHitsSelect: document.getElementById("minHitsSelect"),
-
   skipToPreviewBtn: document.getElementById("skipToPreviewBtn"),
   goToSwipeBtn: document.getElementById("goToSwipeBtn"),
   goToPreviewBtn: document.getElementById("goToPreviewBtn"),
@@ -158,25 +144,27 @@ const previewPointerState = {
   grabOffsetY: 0,
 };
 
-
 async function init() {
   bindEvents();
   syncViewButtons();
-  renderWeekFilterControls();
   applyLayoutVariables();
   setLoadingState();
   maybeShowSplash();
 
   try {
-    const response = await fetch(`./topic_cards.json?v=${encodeURIComponent(TOPIC_CARDS_DATASET_VERSION)}`);
+    const response = await fetch(`./data/exam_builder_topics.json?v=${encodeURIComponent(EXAM_BUILDER_DATASET_VERSION)}`);
     if (!response.ok) {
-      throw new Error(`Failed to load topic_cards.json (${response.status})`);
+      throw new Error(`Failed to load exam_builder_topics.json (${response.status})`);
     }
-    const data = await response.json();
-    state.cards = Array.isArray(data.cards) ? data.cards : [];
-    state.deckGroups = Array.isArray(data.deck_groups) ? data.deck_groups : [];
+
+    const payload = await response.json();
+    const normalized = normalizeExamBuilderPayload(payload);
+    state.parentTopics = normalized.parentTopics;
+    state.cards = normalized.cards;
+
+    renderWeekFilterControls();
     hydratePersistedState();
-    ensureExplorerNavigation(getFilteredWeekBundles());
+    ensureExplorerNavigation(getFilteredParentBundles());
     syncFilterControls();
     applyLayoutVariables();
     renderAll();
@@ -185,9 +173,9 @@ async function init() {
     }
   } catch (error) {
     refs.cardHost.innerHTML = `<div class="empty-state">
-      <p><strong>Could not load <code>topic_cards.json</code>.</strong></p>
+      <p><strong>Could not load <code>data/exam_builder_topics.json</code>.</strong></p>
       <p>${escapeHtml(error.message)}</p>
-      <p>Serve this folder with <code>python3 -m http.server 4173</code> and open <code>http://127.0.0.1:4173</code>.</p>
+      <p>Refresh the manually curated dataset at <code>data/exam_builder_topics.json</code>, then serve the repo with <code>python3 -m http.server 4173</code>.</p>
     </div>`;
   }
 }
@@ -208,16 +196,6 @@ function readClampedRangeValue(rangeInput) {
 function bindEvents() {
   refs.searchInput.addEventListener("input", (event) => {
     state.filters.search = event.target.value.trim().toLowerCase();
-    renderAll();
-  });
-
-  refs.onlyExamToggle.addEventListener("change", (event) => {
-    state.filters.onlyExam = Boolean(event.target.checked);
-    renderAll();
-  });
-
-  refs.minHitsSelect.addEventListener("change", (event) => {
-    state.filters.minHits = Number(event.target.value);
     renderAll();
   });
 
@@ -266,11 +244,6 @@ function bindEvents() {
     }
     closeOpenInfoPopovers();
   });
-  const repositionOpenPopovers = () => {
-    document.querySelectorAll(".info-chip.open").forEach((chip) => positionInfoPopover(chip));
-  };
-  window.addEventListener("resize", repositionOpenPopovers);
-  window.addEventListener("scroll", repositionOpenPopovers, true);
 
   document.addEventListener("keydown", (event) => {
     if (isSplashVisible()) {
@@ -379,7 +352,6 @@ function bindEvents() {
 
   refs.printBtn.addEventListener("click", printGeneratedPdf);
   refs.previewUndoBtn?.addEventListener("click", () => undoLastPreviewChange());
-
   refs.exportPngBtn.addEventListener("click", exportPng);
   refs.exportPdfBtn.addEventListener("click", exportPdf);
 

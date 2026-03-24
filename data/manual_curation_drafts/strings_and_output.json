@@ -1,0 +1,409 @@
+{
+  "parent_topic_id": "strings-and-output",
+  "parent_topic_title": "Strings and Output",
+  "topics": [
+    {
+      "id": "string-fundamentals",
+      "title": "String Fundamentals",
+      "must_know": [
+        {
+          "title": "Strings are immutable",
+          "source_ids": [
+            "kp-1",
+            "ks-b734a22f46",
+            "manual-string-immutability"
+          ],
+          "text": "String methods return new strings. If you want the change to persist, assign the result back to a variable.",
+          "code": "s = 'abcd'\ns = s.upper()"
+        },
+        {
+          "title": "Escape characters and literal quotes",
+          "source_ids": [
+            "kp-2",
+            "ks-309158a68c",
+            "manual-string-literals-example"
+          ],
+          "text": "Use the other quote style or escape the inner quote. Keep three patterns in mind: backslash-n makes a newline, backslash-t makes a tab, and escaped quotes let the string stay open.",
+          "code": "print(\"it\\'s\")\nprint('He said \"hi\"')"
+        },
+        {
+          "title": "Length and indexing basics",
+          "source_ids": [
+            "ai-example-8",
+            "cs-bb7b598ca1"
+          ],
+          "text": "len(s) counts every character in the string, and indexing starts at 0.",
+          "code": "a = 'adbc'\nprint(len(a))"
+        }
+      ],
+      "exam_patterns": [
+        {
+          "title": "Rebuild strings instead of assigning into them",
+          "source_ids": [
+            "kp-3",
+            "manual-string-immutability"
+          ],
+          "text": "If an exam asks to change one character, rebuild the string with slicing instead of assigning by index.",
+          "code": "s = 'A' + s[1:]"
+        },
+        {
+          "title": "Filter characters in a loop",
+          "source_ids": [
+            "ai-example-4",
+            "cs-14245b8c1f"
+          ],
+          "text": "Use a running result string when the question asks you to keep only the characters that pass a test.",
+          "code": "text = 'AbCde'\nresult = ''\nfor ch in text:\n    if ch.islower():\n        result += ch\nprint(result)  # 'bde'"
+        }
+      ],
+      "useful_backup": [
+        {
+          "title": "Repeat text with *",
+          "source_ids": [
+            "manual-string-repetition"
+          ],
+          "text": "The * operator repeats a string, which sometimes appears in short output questions.",
+          "code": "print(3 * 'ha')"
+        },
+        {
+          "title": "Uppercase helper loop",
+          "source_ids": [
+            "ai-example-4",
+            "cs-14245b8c1f"
+          ],
+          "text": "A tiny helper can make a filtering loop readable when the test itself is part of what the exam is asking about.",
+          "code": "def my_isupper(s1):\n    return s1 == s1.upper() and s1 != s1.lower()\n\nresult = ''\nfor ch in 'AbCdeF':\n    if my_isupper(ch):\n        result += ch\nprint(result)  # 'ACF'"
+        },
+        {
+          "title": "Escape-sequence quick table",
+          "summary": "A compact backup table for the escape and quote patterns that still show up in tiny output questions.",
+          "pieces": [
+            {
+              "id": "string-fundamentals-escape-table",
+              "piece_type": "reference_table",
+              "title": "Escapes and quote-safe patterns",
+              "content": {
+                "headers": [
+                  "Pattern",
+                  "Meaning",
+                  "Example"
+                ],
+                "rows": [
+                  [
+                    "backslash-n",
+                    "newline",
+                    "\"Line 1\\nLine 2\""
+                  ],
+                  [
+                    "backslash-t",
+                    "tab",
+                    "\"A\\tB\""
+                  ],
+                  [
+                    "escaped quote",
+                    "literal quote",
+                    "\"it\\'s\" or 'He said \"hi\"'"
+                  ],
+                  [
+                    "raw string r\"...\"",
+                    "keep backslashes literal",
+                    "r\"c:\\\\temp\\\\file.txt\""
+                  ]
+                ],
+                "text": "Keep this low on the page, but it is worth having when a syntax fragment has to be read exactly."
+              },
+              "source_refs": [
+                "manual-string-literals-example",
+                "manual-string-immutability"
+              ]
+            }
+          ],
+          "source_refs": [
+            "manual-string-literals-example"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "string-operations-and-methods",
+      "title": "String Operations and Methods",
+      "must_know": [
+        {
+          "title": "find() versus index()",
+          "source_ids": [
+            "kp-1",
+            "kp-7",
+            "ai-example-1",
+            "manual-find-vs-index"
+          ],
+          "text": ".find() returns -1 when the substring is missing; .index() raises ValueError.",
+          "code": "s = 'abc'\nprint(s.find('z'))\n# print(s.index('z'))  # ValueError"
+        },
+        {
+          "title": "split() and join() round-trip",
+          "source_ids": [
+            "kp-3",
+            "ai-example-3",
+            "manual-string-output-construction"
+          ],
+          "text": ".split() turns text into a list, and .join() turns a list back into text with a separator.",
+          "code": "words = 'a b c'.split()\nprint('-'.join(words))"
+        },
+        {
+          "title": "replace() returns a new string",
+          "source_ids": [
+            "kp-4",
+            "ai-example-4",
+            "kp-manual-string-method-results-d1"
+          ],
+          "text": ".replace(old, new, count) creates a new string and can limit how many replacements happen.",
+          "code": "s = 'aaaa'\nprint(s.replace('a', 'b', 2))"
+        }
+      ],
+      "exam_patterns": [
+        {
+          "title": "Step slicing and reverse order",
+          "source_ids": [
+            "kp-2",
+            "ai-example-2",
+            "manual-string-indexing-reference"
+          ],
+          "text": "Use s[::2] for every second character, s[::-1] to reverse, and negative indices to count from the end.",
+          "code": "s = '01234567'\nprint(s[::2])\nprint(s[::-1])"
+        },
+        {
+          "title": "Boolean string predicates",
+          "source_ids": [
+            "kp-9",
+            "manual-string-islower-method"
+          ],
+          "text": ".islower(), .isupper(), and .isdigit() only return True when the string contains matching cased or digit characters.",
+          "code": "print('amsterdam'.islower())\nprint('123'.islower())"
+        },
+        {
+          "title": "Trim whitespace and edges",
+          "source_ids": [
+            "kp-6",
+            "ai-example-6",
+            "manual-string-method-results-d1"
+          ],
+          "text": ".strip() removes leading and trailing whitespace; lstrip() and rstrip() remove just one side.",
+          "code": "s = '  abc  '\nprint(s.strip())"
+        }
+      ],
+      "useful_backup": [
+        {
+          "title": "String module constants",
+          "source_ids": [
+            "kp-5",
+            "ai-example-5"
+          ],
+          "text": "The string module provides ready-made constants such as ascii_lowercase and digits.",
+          "code": "import string\nprint(string.digits)"
+        },
+        {
+          "title": "Search with start/stop",
+          "source_ids": [
+            "ai-example-7",
+            "ai-example-8"
+          ],
+          "text": "find() and index() accept optional start and stop positions when a question needs a bounded search.",
+          "code": "s = 'abcdefgh'\nprint(s.find('e', 5))"
+        }
+      ],
+      "quick_tables": [
+        {
+          "title": "String-method quick table",
+          "summary": "A compact scan table for the string methods that show up most often in exam options.",
+          "pieces": [
+            {
+              "id": "string-methods-quick-table",
+              "piece_type": "reference_table",
+              "title": "Common string methods at a glance",
+              "content": {
+                "headers": [
+                  "Method",
+                  "What it returns",
+                  "Reminder"
+                ],
+                "rows": [
+                  [
+                    "s.find(sub)",
+                    "index or -1",
+                    "safe when missing"
+                  ],
+                  [
+                    "s.index(sub)",
+                    "index or error",
+                    "raises if missing"
+                  ],
+                  [
+                    "s.replace(a, b)",
+                    "new string",
+                    "string stays immutable"
+                  ],
+                  [
+                    "s.split(sep)",
+                    "list of parts",
+                    "text -> list"
+                  ],
+                  [
+                    "sep.join(parts)",
+                    "new string",
+                    "list -> text"
+                  ],
+                  [
+                    "s.strip()",
+                    "trimmed string",
+                    "edges only"
+                  ]
+                ],
+                "text": "These are the highest-payoff methods to recognize instantly."
+              },
+              "source_refs": [
+                "manual-find-vs-index",
+                "manual-string-method-results-d1"
+              ]
+            }
+          ],
+          "source_refs": [
+            "manual-find-vs-index",
+            "manual-string-method-results-d1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "output-formatting",
+      "title": "Output Formatting",
+      "must_know": [
+        {
+          "title": "f-strings for direct interpolation",
+          "source_ids": [
+            "kp-1",
+            "ks-72dda5450c"
+          ],
+          "text": "F-strings embed expressions inside {} and are the cleanest way to build output strings.",
+          "code": "name = 'Jan'\nprint(f'{name} studies Python.')"
+        },
+        {
+          "title": ".format() still appears in exams",
+          "source_ids": [
+            "kp-4",
+            "ai-example-4",
+            "manual-string-format-method"
+          ],
+          "text": "The older .format() style still appears in exam questions and supports the same width and precision ideas.",
+          "code": "name = 'Jan'\nscore = 7\nprint('Student {} scored {:03d}'.format(name, score))"
+        },
+        {
+          "title": "join() plus a custom tail",
+          "source_ids": [
+            "ai-example-5",
+            "manual-output-formatting-code"
+          ],
+          "text": "Use join() for the repeated separator, then add the final custom wording separately.",
+          "code": "names = ['Ada', 'Linus', 'Grace']\nprint(', '.join(names[:-1]) + ', and ' + names[-1])"
+        }
+      ],
+      "exam_patterns": [
+        {
+          "title": "Zero padding and decimal precision",
+          "source_ids": [
+            "kp-3",
+            "ai-example-3",
+            "kp-5"
+          ],
+          "text": "Recognize formatting specs like {:03d} for zero padding and {:.1f} for one decimal place.",
+          "code": "print(f'{7:03d}')\nprint('{:.1f}'.format(7.25))"
+        },
+        {
+          "title": "Debug output with f'{var=}'",
+          "source_ids": [
+            "kp-2",
+            "ai-example-2"
+          ],
+          "text": "f'{var=}' prints both the variable name and the current value, which is easy to miss in answer choices.",
+          "code": "val = 10\nprint(f'{val=}')"
+        },
+        {
+          "title": "Repeated output with *",
+          "source_ids": [
+            "manual-string-repetition"
+          ],
+          "text": "The * operator repeats strings and can show up in quick output questions.",
+          "code": "print('ha' * 3)"
+        }
+      ],
+      "useful_backup": [
+        {
+          "title": "Legacy format width",
+          "source_ids": [
+            "kp-4",
+            "ai-example-4"
+          ],
+          "text": "'{:04d}'.format(n) is the non-f-string version of zero padding and is still worth recognizing.",
+          "code": "print('{:04d}'.format(7))"
+        },
+        {
+          "title": "Build the middle, then patch the tail",
+          "source_ids": [
+            "manual-output-formatting-code"
+          ],
+          "text": "When the last item needs special wording, format the repeated middle first and then patch on the ending.",
+          "code": "body = ', '.join(names[:-1])"
+        }
+      ],
+      "quick_tables": [
+        {
+          "title": "Formatting mini table",
+          "summary": "A small reference for the format specs and output-building patterns that are easiest to forget under pressure.",
+          "pieces": [
+            {
+              "id": "output-format-mini-table",
+              "piece_type": "reference_table",
+              "title": "Output formatting mini table",
+              "content": {
+                "headers": [
+                  "Pattern",
+                  "Meaning"
+                ],
+                "rows": [
+                  [
+                    "f'{name}'",
+                    "embed a value directly"
+                  ],
+                  [
+                    "{:03d}",
+                    "integer with zero padding"
+                  ],
+                  [
+                    "{:.1f}",
+                    "one decimal place"
+                  ],
+                  [
+                    "', '.join(names)",
+                    "separator between repeated items"
+                  ],
+                  [
+                    "f'{var=}'",
+                    "show name and value together"
+                  ]
+                ],
+                "text": "This keeps the highest-value formatting specs in one place."
+              },
+              "source_refs": [
+                "manual-string-format-method",
+                "manual-output-formatting-code"
+              ]
+            }
+          ],
+          "source_refs": [
+            "manual-string-format-method",
+            "manual-output-formatting-code"
+          ]
+        }
+      ]
+    }
+  ]
+}

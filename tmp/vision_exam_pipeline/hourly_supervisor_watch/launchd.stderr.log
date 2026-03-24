@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/Users/juliuseikmans/Desktop/Studies/2025-2026/intro to python/python-exam-cheat-sheet-generator/scripts/hourly_supervisor_watch.py", line 170, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/juliuseikmans/Desktop/Studies/2025-2026/intro to python/python-exam-cheat-sheet-generator/scripts/hourly_supervisor_watch.py", line 159, in main
+    exit_code = _run_watch(args, run_dir, run_log)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/juliuseikmans/Desktop/Studies/2025-2026/intro to python/python-exam-cheat-sheet-generator/scripts/hourly_supervisor_watch.py", line 104, in _run_watch
+    completed = subprocess.run(
+                ^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 1953, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'codex'

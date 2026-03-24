@@ -1,0 +1,870 @@
+{
+  "schema_version": "1.0",
+  "parent_topic_id": "collections-and-iteration",
+  "parent_topic_title": "Collections and Iteration",
+  "curation_status": "manual_draft",
+  "curation_notes": [
+    "Built from current data/exam_builder_topics.json and topic_cards.json.",
+    "This draft keeps only the strongest shipped-ui material for the parent topic and rewrites noisy or unclear source pieces.",
+    "Weak duplicates, broken examples, and low-yield advanced material were omitted."
+  ],
+  "main_topics": [
+    {
+      "id": "lists-and-sets",
+      "title": "Lists and Sets",
+      "summary": "Indexing, slicing, list mutation, and the key difference between ordered sequences and unordered unique-value sets.",
+      "sections": {
+        "must_know": [
+          {
+            "id": "ls-mk-1",
+            "title": "Indexing, slicing, and range at a glance",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Pattern",
+                "Meaning",
+                "Example result"
+              ],
+              "rows": [
+                [
+                  "seq[i]",
+                  "single element at index i",
+                  "['a', 'b', 'c'][1] -> 'b'"
+                ],
+                [
+                  "seq[-1]",
+                  "last element",
+                  "[1, 2, 3][-1] -> 3"
+                ],
+                [
+                  "seq[a:b]",
+                  "start included, stop excluded",
+                  "[1, 2, 3, 4][1:3] -> [2, 3]"
+                ],
+                [
+                  "seq[::2]",
+                  "every second element",
+                  "[1, 2, 3, 4, 5][::2] -> [1, 3, 5]"
+                ],
+                [
+                  "seq[::-1]",
+                  "reversed copy",
+                  "[1, 2, 3][::-1] -> [3, 2, 1]"
+                ],
+                [
+                  "range(start, stop, step)",
+                  "stop is excluded",
+                  "list(range(3, 8, 2)) -> [3, 5, 7]"
+                ]
+              ]
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w1-sequences-and-access-w1-sequences-and-access-core"
+            ]
+          },
+          {
+            "id": "ls-mk-2",
+            "title": "List operations mutate the list",
+            "kind": "code_example",
+            "content": {
+              "text": "Lists are mutable. Read exam code in order and track the updated list after each line.",
+              "code": "values = [1, 3, 2, 3]\nvalues.append(5)     # [1, 3, 2, 3, 5]\nvalues.remove(3)     # removes the first 3 only\nprint(values)        # [1, 2, 3, 5]"
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-lists-and-sets-w2-lists-and-sets-core"
+            ]
+          },
+          {
+            "id": "ls-mk-3",
+            "title": "Ordered sequences vs sets",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Collection",
+                "Ordered for equality?",
+                "Duplicates kept?",
+                "Indexing?"
+              ],
+              "rows": [
+                [
+                  "list / tuple / str",
+                  "yes",
+                  "yes",
+                  "yes"
+                ],
+                [
+                  "set",
+                  "no",
+                  "no",
+                  "no"
+                ],
+                [
+                  "dict",
+                  "no for equality",
+                  "keys unique",
+                  "lookup by key, not by position"
+                ]
+              ]
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-lists-and-sets-w2-lists-and-sets-core"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "id": "ls-ep-1",
+            "title": "Reverse-and-step slicing trap",
+            "kind": "code_example",
+            "content": {
+              "text": "When a question compares slicing expressions, work left to right. `seq[::2][::-1]` means take every second element first, then reverse that shorter list.",
+              "code": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nprint(numbers[::2])       # [1, 3, 5, 7, 9]\nprint(numbers[::2][::-1]) # [9, 7, 5, 3, 1]"
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w1-sequences-and-access-w1-sequences-and-access-core"
+            ]
+          },
+          {
+            "id": "ls-ep-2",
+            "title": "Chunk a list with slicing inside a comprehension",
+            "kind": "code_example",
+            "content": {
+              "text": "A common exam pattern is splitting a list into fixed-size sublists.",
+              "code": "x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']\nchunks = [x[i:i + 3] for i in range(0, len(x), 3)]\nprint(chunks)\n# [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]"
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w1-sequences-and-access-w1-sequences-and-access-core"
+            ]
+          },
+          {
+            "id": "ls-ep-3",
+            "title": "Check whether all items are unique",
+            "kind": "code_example",
+            "content": {
+              "text": "Turning a sequence into a set removes duplicates, so compare lengths.",
+              "code": "def all_unique(values):\n    return len(values) == len(set(values))"
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-lists-and-sets-w2-lists-and-sets-core"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "id": "ls-ub-1",
+            "title": "Find the nth occurrence of a value",
+            "kind": "code_example",
+            "content": {
+              "code": "x = ['A', 'B', 'A', 'C', 'B', 'A', 'B']\nn = 2\ni = -1\nfor _ in range(n):\n    i = x.index('B', i + 1)\nprint(i)  # 4",
+              "text": "Use `.index(value, start)` repeatedly when the question asks for the second or third occurrence."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w1-sequences-and-access-w1-sequences-and-access-core"
+            ]
+          },
+          {
+            "id": "ls-ub-2",
+            "title": "Set basics worth remembering",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Pattern",
+                "Reminder"
+              ],
+              "rows": [
+                [
+                  "set()",
+                  "creates an empty set"
+                ],
+                [
+                  "{}",
+                  "creates an empty dict, not a set"
+                ],
+                [
+                  "value in my_set",
+                  "membership works, indexing does not"
+                ],
+                [
+                  "my_set.add(x) / update(xs)",
+                  "mutates the set"
+                ]
+              ]
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-lists-and-sets-w2-lists-and-sets-core"
+            ]
+          },
+          {
+            "id": "ls-ub-3",
+            "title": "Mutating list methods usually return `None`",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Pattern",
+                "What happens"
+              ],
+              "rows": [
+                [
+                  "values.append(5)",
+                  "list changes in place; expression itself returns `None`"
+                ],
+                [
+                  "values.sort()",
+                  "list is reordered in place; expression itself returns `None`"
+                ],
+                [
+                  "sorted(values)",
+                  "returns a new sorted list"
+                ]
+              ],
+              "text": "This trap crosses over with function-return questions, so it is worth keeping explicitly."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-lists-and-sets-w2-lists-and-sets-core"
+            ]
+          }
+        ],
+        "quick_tables": [
+          {
+            "id": "ls-qt-1",
+            "title": "List mutation and set reminders",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Pattern",
+                "Remember"
+              ],
+              "rows": [
+                [
+                  "lst.append(x)",
+                  "adds one item at the end"
+                ],
+                [
+                  "lst.sort()",
+                  "sorts in place and returns None"
+                ],
+                [
+                  "lst.append(x)",
+                  "mutates the list; do not assign its return value"
+                ],
+                [
+                  "lst.remove(x)",
+                  "removes the first matching value"
+                ],
+                [
+                  "lst.pop(i)",
+                  "removes and returns an item"
+                ],
+                [
+                  "set()",
+                  "empty set"
+                ],
+                [
+                  "{}",
+                  "empty dict, not a set"
+                ],
+                [
+                  "x in my_set",
+                  "membership works, indexing does not"
+                ]
+              ],
+              "text": "These are the list/set reminders that are easiest to miss in short output questions."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-lists-and-sets-w2-lists-and-sets-core"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dictionaries-and-mappings",
+      "title": "Dictionaries and Mappings",
+      "summary": "Key-based lookup, membership, iteration, and the most common construction patterns.",
+      "sections": {
+        "must_know": [
+          {
+            "id": "dm-mk-1",
+            "title": "Core dictionary patterns",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Goal",
+                "Pattern"
+              ],
+              "rows": [
+                [
+                  "create",
+                  "{'a': 1, 'b': 2}"
+                ],
+                [
+                  "lookup by key",
+                  "d['a']"
+                ],
+                [
+                  "safe membership check",
+                  "'a' in d"
+                ],
+                [
+                  "safe lookup with fallback",
+                  "d.get('a', 0)"
+                ],
+                [
+                  "iterate keys and values",
+                  "for key, value in d.items():"
+                ],
+                [
+                  "build from pairs",
+                  "dict(zip(keys, values))"
+                ],
+                [
+                  "build with logic",
+                  "{x: len(x) for x in words}"
+                ]
+              ]
+            },
+            "source_snippet_ids": [
+              "manual-dictionary-patterns"
+            ]
+          },
+          {
+            "id": "dm-mk-2",
+            "title": "What membership and equality actually test",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Expression",
+                "What it means"
+              ],
+              "rows": [
+                [
+                  "'x' in d",
+                  "checks keys only"
+                ],
+                [
+                  "3 in d.values()",
+                  "checks values explicitly"
+                ],
+                [
+                  "{1: 10, 2: 20} == {2: 20, 1: 10}",
+                  "True, insertion order does not matter"
+                ],
+                [
+                  "for key in d",
+                  "same as looping over d.keys()"
+                ]
+              ]
+            },
+            "source_snippet_ids": [
+              "manual-dictionary-patterns",
+              "snippet-subtopic-w2-dictionaries-and-mappings-w2-dictionaries-and-mappings-core"
+            ]
+          },
+          {
+            "id": "dm-mk-3",
+            "title": "Minimal code pattern for iteration",
+            "kind": "code_example",
+            "content": {
+              "text": "Most dictionary-loop questions reduce to deciding whether you need keys, values, or both.",
+              "code": "d = {'a': 3, 'b': 5}\nfor key in d:\n    print(key, d[key])\n\nfor key, value in d.items():\n    print(key, value)"
+            },
+            "source_snippet_ids": [
+              "manual-dictionary-patterns",
+              "snippet-subtopic-w2-dictionaries-and-mappings-w2-dictionaries-and-mappings-core"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "id": "dm-ep-1",
+            "title": "Dictionary comprehension and filtering",
+            "kind": "code_example",
+            "content": {
+              "code": "scores = {'Ann': 8, 'Bob': 5, 'Cara': 9}\npassed = {name: score for name, score in scores.items() if score >= 6}",
+              "text": "If the question asks for a dictionary result, remember that the `key: value` pair comes before `for`."
+            },
+            "source_snippet_ids": [
+              "manual-dictionary-patterns",
+              "snippet-subtopic-w6-comprehensions-w6-comprehensions-core"
+            ]
+          },
+          {
+            "id": "dm-ep-2",
+            "title": "Transform parallel sequences into a dictionary",
+            "kind": "code_example",
+            "content": {
+              "code": "keys = ['x', 'y', 'z']\nvalues = [1, 2, 3]\nd = dict(zip(keys, values))",
+              "text": "Use `dict(zip(...))` when the question starts from two separate lists or tuples."
+            },
+            "source_snippet_ids": [
+              "manual-dictionary-patterns"
+            ]
+          },
+          {
+            "id": "dm-ep-3",
+            "title": "Count or sum dictionary values",
+            "kind": "code_example",
+            "content": {
+              "code": "sales = {'a': 3, 'b': 5, 'c': 2}\nprint(sum(sales.values()))  # 10",
+              "text": "Many exam questions hide the fact that only the values matter."
+            },
+            "source_snippet_ids": [
+              "manual-dictionary-patterns"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "id": "dm-ub-1",
+            "title": "Delete only keys that also exist elsewhere",
+            "kind": "code_example",
+            "content": {
+              "code": "x = {'a': 1, 'b': 2, 'c': 3}\nto_remove = {'c': 3, 'd': 3}\nfor key in to_remove:\n    if key in x:\n        del x[key]",
+              "text": "Useful when the exam mixes membership checks with mutation."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-dictionaries-and-mappings-w2-dictionaries-and-mappings-core"
+            ]
+          },
+          {
+            "id": "dm-ub-2",
+            "title": "Ordered output from a dictionary",
+            "kind": "code_example",
+            "content": {
+              "code": "for key in sorted(d.keys()):\n    print(key, d[key])",
+              "text": "Only sort keys when the question cares about printed order."
+            },
+            "source_snippet_ids": [
+              "manual-dictionary-patterns"
+            ]
+          }
+        ],
+        "quick_tables": [
+          {
+            "id": "dm-qt-1",
+            "title": "Dictionary methods and iteration quick table",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Pattern",
+                "Use it for"
+              ],
+              "rows": [
+                [
+                  "d[key]",
+                  "direct lookup by key"
+                ],
+                [
+                  "d.get(key, default)",
+                  "safe lookup with fallback"
+                ],
+                [
+                  "key in d",
+                  "membership over keys"
+                ],
+                [
+                  "d.keys() / d.values() / d.items()",
+                  "iterate keys, values, or both"
+                ],
+                [
+                  "dict(zip(keys, values))",
+                  "build from paired iterables"
+                ]
+              ],
+              "text": "This restores the compact dictionary method scan table that helps eliminate distractors quickly."
+            },
+            "source_snippet_ids": [
+              "manual-dictionary-patterns"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "loops",
+      "title": "Loops",
+      "summary": "Choosing the right loop, using enumerate/zip/items cleanly, and avoiding the standard exam traps.",
+      "sections": {
+        "must_know": [
+          {
+            "id": "lp-mk-1",
+            "title": "Pick the loop shape first",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Need",
+                "Best pattern"
+              ],
+              "rows": [
+                [
+                  "visit every item in an iterable",
+                  "for x in xs:"
+                ],
+                [
+                  "repeat a fixed number of times",
+                  "for _ in range(n):"
+                ],
+                [
+                  "need index and value",
+                  "for i, x in enumerate(xs):"
+                ],
+                [
+                  "walk two iterables together",
+                  "for left, right in zip(a, b):"
+                ],
+                [
+                  "continue while a condition stays true",
+                  "while condition:"
+                ]
+              ]
+            },
+            "source_snippet_ids": [
+              "manual-iteration-helpers",
+              "snippet-item-kp-manual-loop-core-d1"
+            ]
+          },
+          {
+            "id": "lp-mk-2",
+            "title": "break, continue, and loop control",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Statement",
+                "Effect"
+              ],
+              "rows": [
+                [
+                  "break",
+                  "exit the loop immediately"
+                ],
+                [
+                  "continue",
+                  "skip the rest of this iteration"
+                ],
+                [
+                  "while items:",
+                  "keep looping while the list is non-empty"
+                ]
+              ]
+            },
+            "source_snippet_ids": [
+              "snippet-item-manual-break-continue",
+              "snippet-item-kp-manual-while-truthy"
+            ]
+          },
+          {
+            "id": "lp-mk-3",
+            "title": "Common helper patterns",
+            "kind": "code_example",
+            "content": {
+              "code": "letters = ['a', 'b', 'c']\nfor index, letter in enumerate(letters, start=1):\n    print(index, letter)\n\nfor left, right in zip(['x', 'y'], [10, 20]):\n    print(left, right)\n\nfor key, value in {'a': 1, 'b': 2}.items():\n    print(key, value)",
+              "text": "These three patterns cover most loop-structure questions."
+            },
+            "source_snippet_ids": [
+              "manual-iteration-helpers",
+              "snippet-subtopic-w2-loops-w2-loops-core"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "id": "lp-ep-1",
+            "title": "Count matches with sum of booleans",
+            "kind": "code_example",
+            "content": {
+              "code": "nums = [2, 5, 8, 9]\ncount = sum(x % 2 != 0 for x in nums)\nprint(count)  # 2",
+              "text": "In Python, `True` counts as 1 and `False` counts as 0 in numeric contexts."
+            },
+            "source_snippet_ids": [
+              "manual-iteration-helpers"
+            ]
+          },
+          {
+            "id": "lp-ep-2",
+            "title": "Translate a slice into an explicit loop",
+            "kind": "code_example",
+            "content": {
+              "code": "alphabet = ['a', 'b', 'c', 'd', 'e', 'f']\nresult = []\nfor i in range(1, len(alphabet), 2):\n    result.append(alphabet[i])",
+              "text": "Useful when the exam asks you to rewrite slicing logic as a loop."
+            },
+            "source_snippet_ids": [
+              "snippet-item-manual-loop-translate"
+            ]
+          },
+          {
+            "id": "lp-ep-3",
+            "title": "Nested loops for pairwise results",
+            "kind": "code_example",
+            "content": {
+              "code": "result = {}\nfor first in range(1, 4):\n    for second in range(1, 4):\n        result[(first, second)] = first + second",
+              "text": "If every item must be combined with every other item, expect a nested loop."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-loops-w2-loops-core"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "id": "lp-ub-1",
+            "title": "Loop variable intentionally unused",
+            "kind": "code_example",
+            "content": {
+              "code": "for _ in range(3):\n    print('repeat')",
+              "text": "Use `_` when only the number of repetitions matters."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w2-loops-w2-loops-core"
+            ]
+          },
+          {
+            "id": "lp-ub-2",
+            "title": "Iterator basics",
+            "kind": "code_example",
+            "content": {
+              "code": "it = iter([1, 2])\nprint(next(it))\nprint(next(it))",
+              "text": "Low priority for the shipped UI, but helpful if a question mentions `iter()` or `next()` directly."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w6-generators-and-iterators-w6-generators-and-iterators-core"
+            ]
+          },
+          {
+            "id": "lp-ub-3",
+            "title": "range(start, stop, step) still excludes stop",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Code",
+                "Result",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "list(range(6))",
+                  "[0, 1, 2, 3, 4, 5]",
+                  "starts at 0 by default"
+                ],
+                [
+                  "list(range(3, 6))",
+                  "[3, 4, 5]",
+                  "stop value 6 is excluded"
+                ],
+                [
+                  "list(range(3, 9, 2))",
+                  "[3, 5, 7]",
+                  "step controls the jump size"
+                ]
+              ],
+              "text": "Off-by-one mistakes in `range(...)` still decide a surprising number of loop questions."
+            },
+            "source_snippet_ids": [
+              "manual-iteration-helpers"
+            ]
+          }
+        ],
+        "quick_tables": [
+          {
+            "id": "lp-qt-1",
+            "title": "Loop helper cheat table",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Need",
+                "Pattern"
+              ],
+              "rows": [
+                [
+                  "index + value",
+                  "for i, x in enumerate(xs):"
+                ],
+                [
+                  "pair two iterables",
+                  "for left, right in zip(a, b):"
+                ],
+                [
+                  "repeat n times",
+                  "for _ in range(n):"
+                ],
+                [
+                  "skip current iteration",
+                  "continue"
+                ],
+                [
+                  "exit loop entirely",
+                  "break"
+                ]
+              ],
+              "text": "These are the loop helpers most worth keeping nearby during the exam."
+            },
+            "source_snippet_ids": [
+              "manual-iteration-helpers",
+              "snippet-item-manual-break-continue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "comprehensions",
+      "title": "Comprehensions",
+      "summary": "Recognize list/set/dict comprehension syntax quickly and separate filtering from value transformation.",
+      "sections": {
+        "must_know": [
+          {
+            "id": "cp-mk-1",
+            "title": "Comprehension templates",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Type",
+                "Template",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "list",
+                  "[expr for x in xs]",
+                  "[x * 2 for x in xs]"
+                ],
+                [
+                  "list with filter",
+                  "[expr for x in xs if cond]",
+                  "[x for x in xs if x > 0]"
+                ],
+                [
+                  "list with if/else",
+                  "[a if cond else b for x in xs]",
+                  "[x if x > 0 else 0 for x in xs]"
+                ],
+                [
+                  "set",
+                  "{expr for x in xs}",
+                  "{len(name) for name in names}"
+                ],
+                [
+                  "dict",
+                  "{key: value for x in xs}",
+                  "{name: len(name) for name in names}"
+                ]
+              ]
+            },
+            "source_snippet_ids": [
+              "manual-comprehension-syntax"
+            ]
+          },
+          {
+            "id": "cp-mk-2",
+            "title": "Filter vs transform placement rule",
+            "kind": "code_example",
+            "content": {
+              "code": "positives = [value for value in nums if value > 0]\nflipped = [letter.lower() if letter.isupper() else letter.upper() for letter in letters]",
+              "text": "Trailing `if` removes items. Inline `a if cond else b` changes the output value while keeping one output per input."
+            },
+            "source_snippet_ids": [
+              "manual-comprehension-syntax",
+              "snippet-subtopic-w6-comprehensions-w6-comprehensions-core"
+            ]
+          },
+          {
+            "id": "cp-mk-3",
+            "title": "String output still needs join",
+            "kind": "code_example",
+            "content": {
+              "code": "result = ''.join([char * 2 if char.lower() in 'aeiou' else char for char in 'Python'])",
+              "text": "Python has list comprehensions, not native string comprehensions. Build characters first, then `''.join(...)` them."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w6-comprehensions-w6-comprehensions-core"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "id": "cp-ep-1",
+            "title": "Dictionary comprehension with items()",
+            "kind": "code_example",
+            "content": {
+              "code": "d = {'a': 1, 'b': 2}\nfiltered = {k: v for k, v in d.items() if v > 1}",
+              "text": "This is the standard exam pattern for filtering or transforming dictionaries."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w6-comprehensions-w6-comprehensions-core"
+            ]
+          },
+          {
+            "id": "cp-ep-2",
+            "title": "Set comprehension means uniqueness",
+            "kind": "code_example",
+            "content": {
+              "code": "values = {x * 2 for x in [1, 3, 2, 5] if x % 2 != 0}\nprint(values)",
+              "text": "Use a set comprehension when duplicates should collapse automatically."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w6-comprehensions-w6-comprehensions-core"
+            ]
+          },
+          {
+            "id": "cp-ep-3",
+            "title": "enumerate inside a comprehension",
+            "kind": "code_example",
+            "content": {
+              "code": "res = [val // (i + 6) for i, val in enumerate([46, 48])]",
+              "text": "Keep this pattern in reserve when the expression depends on both index and value."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w6-comprehensions-w6-comprehensions-core"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "id": "cp-ub-1",
+            "title": "Nested comprehension example",
+            "kind": "code_example",
+            "content": {
+              "code": "result = {x: {y: x + y for y in range(x, 4)} for x in range(1, 4)}",
+              "text": "Useful if the exam includes nested structures, but too advanced to surface as core shipped material."
+            },
+            "source_snippet_ids": [
+              "snippet-subtopic-w6-comprehensions-w6-comprehensions-core"
+            ]
+          },
+          {
+            "id": "cp-ub-2",
+            "title": "The expression must produce a value, not a side effect",
+            "kind": "reference_table",
+            "content": {
+              "headers": [
+                "Wrong instinct",
+                "Why it fails",
+                "Better pattern"
+              ],
+              "rows": [
+                [
+                  "[result.append(x) for x in xs]",
+                  "append returns `None`, so the comprehension collects `None` values",
+                  "[x for x in xs] or build the list in a normal loop"
+                ],
+                [
+                  "[print(x) for x in xs]",
+                  "prints as a side effect instead of building useful values",
+                  "use a normal loop for printing"
+                ],
+                [
+                  "{d.update({k: v}) for k, v in pairs}",
+                  "update mutates and returns `None`",
+                  "{k: v for k, v in pairs}"
+                ]
+              ],
+              "text": "Use comprehensions to build values. If the real goal is mutation or printing, a normal loop is clearer and usually correct."
+            },
+            "source_snippet_ids": [
+              "manual-comprehension-syntax"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -15,23 +15,24 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260322h" />
-    <script defer src="./app/state-and-init.js?v=20260322h"></script>
-    <script defer src="./app/splash-storage.js?v=20260322h"></script>
+    <link rel="stylesheet" href="./styles.css?v=20260324a" />
+    <script defer src="./app/state-and-init.js?v=20260324a"></script>
+    <script defer src="./app/exam-builder-data.js?v=20260324a"></script>
+    <script defer src="./app/splash-storage.js?v=20260324a"></script>
     <script defer src="./app/preview-pointer.js?v=20260322h"></script>
     <script defer src="./app/course-outline.js?v=20260322h"></script>
-    <script defer src="./app/view-and-data.js?v=20260322h"></script>
-    <script defer src="./app/topic-selection.js?v=20260322h"></script>
+    <script defer src="./app/view-and-data.js?v=20260324a"></script>
+    <script defer src="./app/topic-selection.js?v=20260324a"></script>
     <script defer src="./app/topic-detail-subtopics.js?v=20260322h"></script>
-    <script defer src="./app/render-card-sections.js?v=20260322h"></script>
+    <script defer src="./app/render-card-sections.js?v=20260324a"></script>
     <script defer src="./app/text-render-utils.js?v=20260322h"></script>
     <script defer src="./app/code-render-utils.js?v=20260322h"></script>
-    <script defer src="./app/card-interactions.js?v=20260322h"></script>
-    <script defer src="./app/preview-render.js?v=20260322h"></script>
-    <script defer src="./app/preview-card-render.js?v=20260322h"></script>
+    <script defer src="./app/card-interactions.js?v=20260324a"></script>
+    <script defer src="./app/preview-render.js?v=20260324a"></script>
+    <script defer src="./app/preview-card-render.js?v=20260324a"></script>
     <script defer src="./app/preview-history.js?v=20260322h"></script>
     <script defer src="./app/preview-edit-modal.js?v=20260322h"></script>
-    <script defer src="./app/preview-editing.js?v=20260322h"></script>
+    <script defer src="./app/preview-editing.js?v=20260324a"></script>
     <script defer src="./app/layout-export-utils.js?v=20260322h"></script>
     <script defer src="./app/pdf-export-utils.js?v=20260322h"></script>
     <script defer src="./app/main.js?v=20260322h"></script>
@@ -47,7 +48,7 @@
       <header class="app-header">
         <div class="app-header-main">
           <h1>Python Exam Cheat Sheet Builder</h1>
-          <p class="subtitle">Select exact key points, snippets, and examples, then compress them into a clean two-page A4 study sheet.</p>
+          <p class="subtitle">Browse the most exam-useful Python topics, select exact snippet pieces, and compress them into a clean two-page A4 cheat sheet.</p>
           <p id="progressText" class="header-status-text muted"></p>
         </div>
         <div class="header-actions">
@@ -94,7 +95,7 @@
 
       <main>
         <section id="swipeView" class="view active" aria-labelledby="swipeHeading">
-          <h2 id="swipeHeading" class="sr-only">Topic Explorer</h2>
+          <h2 id="swipeHeading" class="sr-only">Exam Topic Explorer</h2>
           <div id="selectionShell" class="selection-shell">
             <aside id="topicSidebar" class="topic-sidebar" aria-label="Topic navigation"></aside>
             <div id="cardHost" class="card-host topic-detail-pane"></div>
@@ -102,7 +103,7 @@
         </section>
 
         <section id="previewView" class="view" aria-labelledby="previewHeading">
-          <h2 id="previewHeading" class="sr-only">Preview & Export Workspace</h2>
+          <h2 id="previewHeading" class="sr-only">Preview and Export Workspace</h2>
           <p id="overflowNotice" class="warning hidden"></p>
 
           <div id="sheetStage" class="sheet-stage">
@@ -126,27 +127,12 @@
       </div>
 
       <label class="field">
-        <span>Search content</span>
+        <span>Search snippets</span>
         <input id="searchInput" type="text" placeholder="e.g. slicing, scope, args" />
       </label>
 
-      <label class="field inline-field">
-        <input id="onlyExamToggle" type="checkbox" />
-        <span>Only show topics seen in practice exams</span>
-      </label>
-
-      <label class="field">
-        <span>Minimum practice-exam hits</span>
-        <select id="minHitsSelect">
-          <option value="0">0+</option>
-          <option value="1">1+</option>
-          <option value="2">2+</option>
-          <option value="3">3+</option>
-        </select>
-      </label>
-
       <div class="field week-filter">
-        <span>Weeks</span>
+        <span>Week tags</span>
         <div id="weekFilterList" class="week-filter-list"></div>
       </div>
     </aside>
@@ -259,13 +245,13 @@
 
     <div id="splashOverlay" class="splash-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="splashTitle">
       <div class="splash-card">
-        <h2 id="splashTitle">Build Your Python Midterm Cheat Sheet In Minutes</h2>
+        <h2 id="splashTitle">Build Your Exam Cheat Sheet In Minutes</h2>
         <p class="splash-lead">
-          Browse by week and topic, select the exact snippets, questions, key points, and examples you want, then export a compact 2-page A4 cheat sheet.
+          Browse by exam topic, start with the highest-value snippets, pick the exact pieces you want, and export a compact 2-page A4 cheat sheet.
         </p>
         <ul class="splash-points">
-          <li>Use the topic sidebar to jump directly to the material you need.</li>
-          <li>Select only the exact pieces of information you want to keep.</li>
+          <li>Use the topic sidebar to jump straight to the concept you need.</li>
+          <li>Select only the exact reference pieces worth precious cheat-sheet space.</li>
           <li>Preview, reorder, and export as PDF or PNG.</li>
         </ul>
         <button id="getStartedBtn" class="solid-btn splash-start-btn" type="button">Get Started</button>

@@ -37,11 +37,11 @@
               "cs-7cdabbafdd",
               "cs-814a07a136"
             ],
-            "example_ids": [
-              "ai-example-1",
-              "ai-example-2",
-              "ai-example-3",
-              "ai-example-4",
+        "example_ids": [
+          "ai-example-1",
+          "ai-example-2",
+          "ai-example-3",
+          "ai-example-4",
               "ai-example-5",
               "ai-example-6"
             ],
@@ -3318,7 +3318,8 @@
               "ai-example-5",
               "ai-example-6",
               "ai-example-7",
-              "ai-example-8"
+              "ai-example-8",
+              "manual-dict-construction-and-iteration"
             ],
             "key_point_ids": [
               "kp-1",
@@ -4214,6 +4215,40 @@
                     ]
                   ]
                 }
+              },
+              {
+                "id": "kp-1-d4",
+                "kind": "table",
+                "title": "Construction and lookup patterns",
+                "table": {
+                  "headers": [
+                    "Pattern",
+                    "What it does",
+                    "Exam use"
+                  ],
+                  "rows": [
+                    [
+                      "{'a': 1}",
+                      "literal dict",
+                      "fastest way to show known pairs"
+                    ],
+                    [
+                      "dict()",
+                      "empty dict",
+                      "start building inside a loop"
+                    ],
+                    [
+                      "dict(zip(keys, values))",
+                      "pairs two iterables",
+                      "good when keys and values already exist separately"
+                    ],
+                    [
+                      "d.get(key, default)",
+                      "safe lookup",
+                      "avoids KeyError when a key may be missing"
+                    ]
+                  ]
+                }
               }
             ]
           },
@@ -4231,6 +4266,46 @@
                 "kind": "example",
                 "title": "Looping over dict",
                 "code": "capitals = {'Andorra': 'Andorra la Vella', 'Belgium': 'Brussels'}\nfor key in capitals.keys():\n    print(key)\nfor val in capitals.values():\n    print(val)\nfor key, value in capitals.items():\n    print(key, value)\n# These two are equivalent:\nfor key in capitals:\nfor key in capitals.keys():"
+              },
+              {
+                "id": "kp-2-d2",
+                "kind": "table",
+                "title": "Iteration and ordering reminders",
+                "table": {
+                  "headers": [
+                    "Pattern",
+                    "Iterates over",
+                    "Trap"
+                  ],
+                  "rows": [
+                    [
+                      "for key in d",
+                      "keys",
+                      "same as for key in d.keys()"
+                    ],
+                    [
+                      "for value in d.values()",
+                      "values",
+                      "no keys available unless you ask for them"
+                    ],
+                    [
+                      "for key, value in d.items()",
+                      "(key, value) tuples",
+                      "best when both are needed"
+                    ],
+                    [
+                      "for key in sorted(d)",
+                      "keys in sorted order",
+                      "use this when output order matters"
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "kp-2-d3",
+                "kind": "example",
+                "title": "Dictionary equality ignores insertion order",
+                "code": "print({1: 1, 2: 2} == {2: 2, 1: 1})\nprint([1, 2] == [2, 1])"
               }
             ]
           }
@@ -4309,6 +4384,17 @@
             "code": "capitals = {'Estonia': 'Tallinn', 'Belgium': 'Brussels', 'France': 'Paris'}\nprint(capitals['Belgium'])",
             "why": "Check whether the code is looking up a key, iterating with `.items()`, or mutating the dictionary.",
             "output": "",
+            "status": "curated",
+            "subtopic_id": "w2-dictionaries-and-mappings-core",
+            "subtopic_title": "Creation, Lookup, Updates, and Key Constraints"
+          },
+          {
+            "id": "manual-dict-construction-and-iteration",
+            "kind": "correct",
+            "title": "Construct, iterate, count, and sort dictionaries",
+            "code": "words = ['pear', 'apple', 'pear']\ncounts = {}\nfor word in words:\n    counts[word] = counts.get(word, 0) + 1\nprint(dict(zip(['a', 'b'], [1, 2])))\nfor key in sorted(counts):\n    print(key, counts[key])\nprint(sum(counts.values()))",
+            "why": "This bundles the recurring exam mechanics: `dict(zip(...))`, safe counting with `.get(...)`, deterministic iteration with `sorted(...)`, and totals via `sum(d.values())`.",
+            "output": "{'a': 1, 'b': 2}\napple 1\npear 2\n3",
             "status": "curated",
             "subtopic_id": "w2-dictionaries-and-mappings-core",
             "subtopic_title": "Creation, Lookup, Updates, and Key Constraints"
@@ -5656,9 +5742,16 @@
               "ai-example-4",
               "ai-example-5",
               "ai-example-7",
-              "manual-loop-max-sublist-sum"
+              "manual-loop-max-sublist-sum",
+              "manual-loop-zip-enumerate-membership"
             ],
-            "key_point_ids": []
+            "key_point_ids": [
+              "kp-manual-loop-core",
+              "kp-manual-break-continue",
+              "kp-manual-enumerate",
+              "kp-manual-while-truthy",
+              "kp-iteration-traps"
+            ]
           }
         }
       ],
@@ -6202,7 +6295,43 @@
         "key_points_to_remember": [
           {
             "id": "kp-manual-loop-core",
-            "text": "Use `for` when you already have an iterable; use `while` when repetition should continue only while a condition stays `True`."
+            "text": "Use `for` when you already have an iterable; use `while` when repetition should continue only while a condition stays `True`.",
+            "details": [
+              {
+                "id": "kp-manual-loop-core-d1",
+                "kind": "table",
+                "title": "Pick the loop shape first",
+                "table": {
+                  "headers": [
+                    "Pattern",
+                    "Use when",
+                    "Common exam note"
+                  ],
+                  "rows": [
+                    [
+                      "for item in seq",
+                      "you need the values",
+                      "prefer this over indexing when position is irrelevant"
+                    ],
+                    [
+                      "for i, item in enumerate(seq, start)",
+                      "you need both index and value",
+                      "start defaults to 0"
+                    ],
+                    [
+                      "while items:",
+                      "truthiness controls repetition",
+                      "stops when the list becomes empty"
+                    ],
+                    [
+                      "for _ in range(n)",
+                      "repeat n times only",
+                      "_ means the loop variable itself is unused"
+                    ]
+                  ]
+                }
+              }
+            ]
           },
           {
             "id": "kp-manual-break-continue",
@@ -6210,11 +6339,69 @@
           },
           {
             "id": "kp-manual-enumerate",
-            "text": "`enumerate(seq, start)` gives `(index, value)` pairs; `zip(a, b)` gives tuples of items from multiple iterables in parallel."
+            "text": "`enumerate(seq, start)` gives `(index, value)` pairs; `zip(a, b)` gives tuples of items from multiple iterables in parallel.",
+            "details": [
+              {
+                "id": "kp-manual-enumerate-d1",
+                "kind": "example",
+                "title": "Start offset and tuple unpacking",
+                "code": "letters = ['a', 'b', 'c']\nfor index, letter in enumerate(letters, start=1):\n    print(index, letter)\nfor left, right in zip(['x', 'y'], [10, 20]):\n    print(left, right)"
+              }
+            ]
           },
           {
             "id": "kp-manual-while-truthy",
             "text": "A `while` condition is checked before every iteration, so a list loop like `while items:` keeps going only while the list is non-empty."
+          },
+          {
+            "id": "kp-iteration-traps",
+            "text": "`zip` stops at the shortest iterable, `in` checks membership, `//` floors division, `%` gives the remainder, and `sum(condition for ...)` counts how many times the condition is true.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm009",
+            "model": null,
+            "subtopic_id": "w2-loops-core",
+            "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus",
+            "details": [
+              {
+                "id": "kp-iteration-traps-d1",
+                "kind": "table",
+                "title": "Iteration helpers and operator traps",
+                "table": {
+                  "headers": [
+                    "Pattern",
+                    "Returns / does",
+                    "Trap"
+                  ],
+                  "rows": [
+                    [
+                      "zip(a, b)",
+                      "pairs items in parallel",
+                      "extra items in the longer iterable are ignored"
+                    ],
+                    [
+                      "x in d",
+                      "checks dict keys",
+                      "not dict values"
+                    ],
+                    [
+                      "a // b",
+                      "floor division",
+                      "7 // 2 is 3, not 3.5"
+                    ],
+                    [
+                      "a % b",
+                      "remainder",
+                      "use with // to reconstruct quotient + remainder"
+                    ],
+                    [
+                      "sum(value > 0 for value in nums)",
+                      "counts truths",
+                      "True acts like 1 and False like 0"
+                    ]
+                  ]
+                }
+              }
+            ]
           }
         ],
         "ai_examples": [
@@ -6280,6 +6467,17 @@
             "code": "lists = [[1, 2], [4, 4], [3, 3, 1]]\nbest = lists[0]\nfor current in lists[1:]:\n    if sum(current) > sum(best):\n        best = current\nprint(best)",
             "output": "[4, 4]",
             "why": "Store the current best sub-list, compare `sum(current)` with `sum(best)` on each iteration, and update the winner when you find a larger total.",
+            "status": "curated",
+            "subtopic_id": "w2-loops-core",
+            "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus"
+          },
+          {
+            "id": "manual-loop-zip-enumerate-membership",
+            "kind": "correct",
+            "title": "Combine `zip`, `enumerate`, unpacking, and membership",
+            "code": "names = ['Ada', 'Bob', 'Cleo']\nscores = [8, 5]\nfor index, (name, score) in enumerate(zip(names, scores), start=1):\n    passed = score in {5, 6, 7, 8, 9, 10}\n    print(index, name, passed)",
+            "output": "1 Ada True\n2 Bob True",
+            "why": "`zip` stops at the shortest iterable, tuple unpacking works directly in the loop header, and `in` is often the clearest membership test.",
             "status": "curated",
             "subtopic_id": "w2-loops-core",
             "subtopic_title": "for, while, Dictionary Iteration, enumerate(), zip(), and Walrus"
@@ -7334,17 +7532,17 @@
             "subtopic_id": "w3-defining-and-calling-functions-core",
             "subtopic_title": "def, Calls, and Methods vs Functions"
           },
-          {
-            "id": "ai-example-4",
-            "kind": "correct",
-            "title": "Method on mutable — changes in place vs returns value",
-            "code": "l1 = [3, 1, 2]\nl1.sort()           # changes l1 in place, returns None\nprint(l1)           # [1, 2, 3]\nprint(l1.index(2))  # 1 (returns index, doesn't change l1)",
-            "why": "Methods are functions attached to objects. Some mutate the object in place, while others return a value; string methods always return a new string.",
-            "output": "[1, 2, 3]\n1",
-            "status": "curated",
-            "subtopic_id": "w3-defining-and-calling-functions-core",
-            "subtopic_title": "def, Calls, and Methods vs Functions"
-          }
+      {
+        "id": "ai-example-4",
+        "kind": "correct",
+        "title": "`list.sort()` mutates in place and returns `None`",
+        "code": "l1 = [3, 1, 2]\nl1.sort()           # changes l1 in place, returns None\nprint(l1)           # [1, 2, 3]\nprint(l1.index(2))  # 1 (returns index, doesn't change l1)",
+        "why": "Mutating methods and value-returning methods look similar at a glance, so keep the exam distinction clear: `sort()` changes the list, while `index()` returns information about it.",
+        "output": "[1, 2, 3]\n1",
+        "status": "curated",
+        "subtopic_id": "w3-defining-and-calling-functions-core",
+        "subtopic_title": "def, Calls, and Methods vs Functions"
+      }
         ],
         "recommended_ids": [
           "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
@@ -7383,7 +7581,7 @@
           "id": "w3-return-behavior-core",
           "title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples",
           "order": 1,
-          "summary": "`return` ends the function and gives a value back to the caller. If no `return` runs, the function returns `None`, and commas create tuples.",
+    "summary": "`return` ends the function and gives a value back to the caller. If no `return` runs, the function returns `None`, commas create tuples, and many mutating methods also return `None`.",
           "item_ids": {
             "lecture_snippet_ids": [
               "ks-00b2983ca8",
@@ -7423,7 +7621,8 @@
               "kp-1",
               "kp-2",
               "kp-3",
-              "kp-4"
+              "kp-4",
+              "kp-manual-mutating-methods-none"
             ]
           }
         }
@@ -7908,11 +8107,11 @@
               }
             ]
           },
-          {
-            "id": "kp-4",
-            "text": "Does nothing. Used as a placeholder when an indented block is required but you have nothing to put there yet (stub). After a colon you must have an indented block — pass satisfies this.",
-            "status": "curated",
-            "generator": "lecture-first-build",
+      {
+        "id": "kp-4",
+        "text": "Does nothing. Used as a placeholder when an indented block is required but you have nothing to put there yet (stub). After a colon you must have an indented block — pass satisfies this.",
+        "status": "curated",
+        "generator": "lecture-first-build",
             "model": null,
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples",
@@ -7920,12 +8119,52 @@
               {
                 "id": "kp-4-d1",
                 "kind": "example",
-                "title": "pass as stub",
-                "code": "def adder(n1, n2):\n    if type(n1) == int and type(n2) == int:\n        result = n1 + n2\n    else:\n        pass  # placeholder — won't cause IndentationError\n    return result"
-              }
-            ]
+            "title": "pass as stub",
+            "code": "def adder(n1, n2):\n    if type(n1) == int and type(n2) == int:\n        result = n1 + n2\n    else:\n        pass  # placeholder — won't cause IndentationError\n    return result"
           }
-        ],
+        ]
+      },
+      {
+        "id": "kp-manual-mutating-methods-none",
+        "text": "A missing `return` is not the only source of `None`: many mutating methods also return `None`. Keep the mutated object, not the method call result.",
+        "status": "curated",
+        "generator": "manual-gap-merge-rm010",
+        "model": null,
+        "subtopic_id": "w3-return-behavior-core",
+        "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples",
+        "details": [
+          {
+            "id": "kp-manual-mutating-methods-none-d1",
+            "kind": "table",
+            "title": "Common `None` traps",
+            "table": {
+              "headers": [
+                "Code",
+                "What comes back"
+              ],
+              "rows": [
+                [
+                  "function with no `return` hit",
+                  "None"
+                ],
+                [
+                  "l1.sort()",
+                  "None"
+                ],
+                [
+                  "l1.append(x)",
+                  "None"
+                ],
+                [
+                  "s.upper()",
+                  "new string"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
         "ai_examples": [
           {
             "id": "ai-example-1",
@@ -7960,17 +8199,17 @@
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
           },
-          {
-            "id": "ai-example-4",
-            "kind": "correct",
-            "title": "pass as stub",
-            "code": "def adder(n1, n2):\n    if type(n1) == int and type(n2) == int:\n        result = n1 + n2\n    else:\n        pass  # placeholder — won't cause IndentationError\n    return result",
-            "why": "Does nothing. Used as a placeholder when an indented block is required but you have nothing to put there yet (stub). After a colon you must have an indented block — pass satisfies this.",
-            "output": "",
-            "status": "curated",
-            "subtopic_id": "w3-return-behavior-core",
-            "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
-          },
+      {
+        "id": "ai-example-4",
+        "kind": "correct",
+        "title": "Mutating method returns `None`",
+        "code": "l1 = [3, 1, 2]\nresult = l1.sort()\nprint(result)\nprint(l1)",
+        "why": "A missing `return` is not the only source of `None`: mutating methods such as `sort()` often change the object in place and return `None`.",
+        "output": "",
+        "status": "curated",
+        "subtopic_id": "w3-return-behavior-core",
+        "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
+      },
           {
             "id": "ai-example-5",
             "kind": "correct",
@@ -7982,36 +8221,36 @@
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
           },
-          {
-            "id": "ai-example-6",
-            "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def adder(n1, n2):\n    total = n1 + n2\na = adder(1, 2)\nprint(a)",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
-            "status": "curated",
+      {
+        "id": "ai-example-6",
+        "kind": "correct",
+        "title": "Computed a local variable but forgot to return it",
+        "code": "def adder(n1, n2):\n    total = n1 + n2\na = adder(1, 2)\nprint(a)",
+        "why": "Trace the returned value, not just what gets printed while the function runs.",
+        "output": "",
+        "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
           },
-          {
-            "id": "ai-example-7",
-            "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3\na = powers(3)\nprint(a)",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
-            "status": "curated",
+      {
+        "id": "ai-example-7",
+        "kind": "correct",
+        "title": "A tuple return stays one tuple value",
+        "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3\na = powers(3)\nprint(a)",
+        "why": "Trace the returned value, not just what gets printed while the function runs.",
+        "output": "",
+        "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
           },
-          {
-            "id": "ai-example-8",
-            "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3\npower2, power3 = powers(3)\nprint(power2, power3)",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
-            "status": "curated",
+      {
+        "id": "ai-example-8",
+        "kind": "correct",
+        "title": "Unpack a tuple return into multiple names",
+        "code": "def powers(n1):\n    return n1 ** 2, n1 ** 3\npower2, power3 = powers(3)\nprint(power2, power3)",
+        "why": "Trace the returned value, not just what gets printed while the function runs.",
+        "output": "",
+        "status": "curated",
             "subtopic_id": "w3-return-behavior-core",
             "subtopic_title": "return, Implicit None, Multiple Returns, pass, and Single-Element Tuples"
           }
@@ -8053,8 +8292,8 @@
           "id": "w3-scope-core",
           "title": "Global vs Local Names and Scope Errors",
           "order": 1,
-          "summary": "Assignment inside a function creates a local name unless `global` or `nonlocal` says otherwise. Reading a local before assignment raises `UnboundLocalError`.",
-          "item_ids": {
+  "summary": "Assignment inside a function creates a local name unless `global` or `nonlocal` says otherwise. Reading a local before assignment raises `UnboundLocalError`.",
+  "item_ids": {
             "lecture_snippet_ids": [
               "ks-2a6510492d"
             ],
@@ -8077,10 +8316,20 @@
               "cs-5f3502b450",
               "cs-9e64a99f31"
             ],
-            "example_ids": [],
-            "key_point_ids": []
-          }
-        }
+    "example_ids": [
+      "manual-scope-local-name",
+      "manual-scope-unbound",
+      "manual-scope-global-change",
+      "manual-scope-rebind-parameter"
+    ],
+    "key_point_ids": [
+      "kp-manual-scope-local",
+      "kp-manual-scope-unbound",
+      "kp-manual-scope-global",
+      "kp-manual-scope-return-outside"
+    ]
+  }
+}
       ],
       "exam_stats": {
         "total_hits": 7,
@@ -8457,23 +8706,27 @@
             "id": "kp-manual-scope-unbound",
             "text": "If a function assigns to a name anywhere, Python treats that name as local throughout that function unless `global` or `nonlocal` says otherwise."
           },
-          {
-            "id": "kp-manual-scope-global",
-            "text": "Use `global x` only when the function should rebind the global name `x`; mutating an object passed in as an argument does not require `global`."
-          }
-        ],
+      {
+        "id": "kp-manual-scope-global",
+        "text": "Use `global x` only when the function should rebind the global name `x`; mutating an object passed in as an argument does not require `global`."
+      },
+      {
+        "id": "kp-manual-scope-return-outside",
+        "text": "A local variable disappears after the function ends. If you need that value outside the function, return it and assign the result in the caller."
+      }
+    ],
         "ai_examples": [
-          {
-            "id": "manual-scope-local-name",
-            "kind": "correct",
-            "title": "Parameter names stay local to the function",
-            "code": "def adder(n1, n2):\n    return n1 + n2\n\nprint(adder(1, 2))\nprint(n1)",
-            "output": "3\nNameError",
-            "why": "After the function call, `n1` and `n2` do not exist outside the function body.",
-            "status": "curated",
-            "subtopic_id": "w3-scope-core",
-            "subtopic_title": "Global vs Local Names and Scope Errors"
-          },
+      {
+        "id": "manual-scope-local-name",
+        "kind": "correct",
+        "title": "Local names disappear after the call",
+        "code": "def adder(n1, n2):\n    return n1 + n2\n\nprint(adder(1, 2))\nprint(n1)",
+        "output": "3\nNameError",
+        "why": "After the function call, `n1` and `n2` no longer exist outside the function body. Return the value if the caller needs to use it later.",
+        "status": "curated",
+        "subtopic_id": "w3-scope-core",
+        "subtopic_title": "Global vs Local Names and Scope Errors"
+      },
           {
             "id": "manual-scope-unbound",
             "kind": "correct",
@@ -8547,7 +8800,7 @@
           "id": "w3-arguments-core",
           "title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps",
           "order": 1,
-          "summary": "Match arguments by position, keyword, defaults, `*args`, and `**kwargs`. Avoid mutable default traps by using `None` and creating the list or dict inside the function.",
+    "summary": "Match arguments by position, keyword, defaults, `*args`, and `**kwargs`. Avoid mutable default traps by using `None` and creating the list or dict inside the function, and remember that multiple return values come back as one tuple.",
           "item_ids": {
             "lecture_snippet_ids": [
               "ks-40fee04740",
@@ -8579,16 +8832,18 @@
               "ai-example-2",
               "ai-example-3",
               "ai-example-4",
-              "ai-example-5",
-              "ai-example-6",
-              "ai-example-7",
-              "ai-example-8"
-            ],
-            "key_point_ids": [
-              "kp-1",
-              "kp-2",
-              "kp-3"
-            ]
+      "ai-example-5",
+      "ai-example-6",
+      "ai-example-7",
+      "ai-example-8",
+      "manual-args-kwargs-return"
+    ],
+    "key_point_ids": [
+      "kp-1",
+      "kp-2",
+      "kp-3",
+      "kp-manual-args-kwargs-return"
+    ]
           }
         }
       ],
@@ -9087,11 +9342,11 @@
               }
             ]
           },
-          {
-            "id": "kp-3",
-            "text": "Default values are part of the function HEADER (not the call). When argument is omitted, the default is used. Keyword args in a call use =. CRITICAL: mutable defaults are evaluated ONCE at def time — never use mutable defaults; use None instead.",
-            "status": "curated",
-            "generator": "lecture-first-build",
+      {
+        "id": "kp-3",
+        "text": "Default values are part of the function HEADER (not the call). When argument is omitted, the default is used. Keyword args in a call use =. CRITICAL: mutable defaults are evaluated ONCE at def time — never use mutable defaults; use None instead.",
+        "status": "curated",
+        "generator": "lecture-first-build",
             "model": null,
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps",
@@ -9105,12 +9360,52 @@
               {
                 "id": "kp-3-d2",
                 "kind": "example",
-                "title": "Mutable default BUG",
-                "code": "def main(addition, l1=[]):\n    l1.append(addition)\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [2, 3] ← BUG: l1 persists!"
-              }
-            ]
+            "title": "Mutable default BUG",
+            "code": "def main(addition, l1=[]):\n    l1.append(addition)\n    return l1\nprint(main(2))  # [2]\nprint(main(3))  # [2, 3] ← BUG: l1 persists!"
           }
-        ],
+        ]
+      },
+      {
+        "id": "kp-manual-args-kwargs-return",
+        "text": "A flexible header can mix fixed parameters, defaults, `*args`, and `**kwargs`, and a `return a, b` statement sends one tuple back to the caller that can be unpacked later.",
+        "status": "curated",
+        "generator": "manual-gap-merge-rm010",
+        "model": null,
+        "subtopic_id": "w3-arguments-core",
+        "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps",
+        "details": [
+          {
+            "id": "kp-manual-args-kwargs-return-d1",
+            "kind": "table",
+            "title": "Flexible signature reference",
+            "table": {
+              "headers": [
+                "Piece",
+                "Meaning"
+              ],
+              "rows": [
+                [
+                  "first, second=0",
+                  "fixed parameters, one with a default"
+                ],
+                [
+                  "*args",
+                  "extra positional arguments as a tuple"
+                ],
+                [
+                  "**kwargs",
+                  "extra keyword arguments as a dict"
+                ],
+                [
+                  "return a, b",
+                  "returns one tuple that can be unpacked"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
         "ai_examples": [
           {
             "id": "ai-example-1",
@@ -9145,14 +9440,14 @@
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
           },
-          {
-            "id": "ai-example-4",
-            "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def calc(**kwargs):\n    return kwargs['first'] + 2*kwargs['second'] + 3*kwargs['third']\nprint(calc(third=4, second=2, first=3))",
-            "why": "Arguments can be passed by name (keyword). **kwargs collects undefined keyword arguments into a dict. Order in function definition: positional, *args, keyword-with-defaults, **kwargs.",
-            "output": "",
-            "status": "curated",
+      {
+        "id": "ai-example-4",
+        "kind": "correct",
+        "title": "`**kwargs` behaves like a dict",
+        "code": "def calc(**kwargs):\n    return kwargs['first'] + 2*kwargs['second'] + 3*kwargs['third']\nprint(calc(third=4, second=2, first=3))",
+        "why": "Arguments can be passed by name (keyword). **kwargs collects undefined keyword arguments into a dict. Order in function definition: positional, *args, keyword-with-defaults, **kwargs.",
+        "output": "",
+        "status": "curated",
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
           },
@@ -9178,28 +9473,39 @@
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
           },
-          {
-            "id": "ai-example-7",
-            "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def adder(n1, n2):\n    return n1 + n2\nprint(adder(1, 2))",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
-            "status": "curated",
+      {
+        "id": "ai-example-7",
+        "kind": "correct",
+        "title": "Return value with required positional args",
+        "code": "def adder(n1, n2):\n    return n1 + n2\nprint(adder(1, 2))",
+        "why": "Trace the returned value, not just what gets printed while the function runs.",
+        "output": "",
+        "status": "curated",
             "subtopic_id": "w3-arguments-core",
             "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
           },
-          {
-            "id": "ai-example-8",
-            "kind": "correct",
-            "title": "Function return value and trace",
-            "code": "def multiplier(first, second=2):\n    return first * second\nprint(multiplier(3))",
-            "why": "Trace the returned value, not just what gets printed while the function runs.",
-            "output": "",
-            "status": "curated",
-            "subtopic_id": "w3-arguments-core",
-            "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
-          }
+      {
+        "id": "ai-example-8",
+        "kind": "correct",
+        "title": "Default argument still returns one value",
+        "code": "def multiplier(first, second=2):\n    return first * second\nprint(multiplier(3))",
+        "why": "Trace the returned value, not just what gets printed while the function runs.",
+        "output": "",
+        "status": "curated",
+        "subtopic_id": "w3-arguments-core",
+        "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
+      },
+      {
+        "id": "manual-args-kwargs-return",
+        "kind": "correct",
+        "title": "Flexible header plus tuple return",
+        "code": "def collect(first, *args, scale=1, **kwargs):\n    return first * scale, args, kwargs\n\nresult, extras, options = collect(2, 3, 4, scale=10, unit='cm')\nprint(result)\nprint(extras)\nprint(options['unit'])",
+        "output": "20\n(3, 4)\ncm",
+        "why": "This combines the most important exam mechanics in one place: fixed parameters, `*args`, `**kwargs`, and unpacking a tuple returned by the function.",
+        "status": "curated",
+        "subtopic_id": "w3-arguments-core",
+        "subtopic_title": "Positional, Keyword, Default, *args, **kwargs, and Mutable Argument Traps"
+      }
         ],
         "recommended_ids": [
           "exam-intro_python_sample_final_24_25-23-w3-arguments",
@@ -9789,16 +10095,42 @@
               }
             ]
           },
+      {
+        "id": "kp-3",
+        "text": "`lambda x: expr` names one element at a time, and `map(f, seq)` returns a lazy iterable. Wrap it in `list(...)` when you need to inspect or print the mapped results.",
+        "status": "curated",
+        "generator": "lecture-first-build",
+        "model": null,
+        "subtopic_id": "w3-higher-order-patterns-core",
+        "subtopic_title": "Nested Functions, Factories, lambda, map, filter, reduce, and sorted(key=...)",
+        "details": [
           {
-            "id": "kp-3",
-            "text": "def function_factory(increment): def adder(n1): return n1 + increment return adder add4 = function_factory(4) add5 = function_factory (5) print(add4(3)) print(add5(3))",
-            "status": "curated",
-            "generator": "lecture-first-build",
-            "model": null,
-            "subtopic_id": "w3-higher-order-patterns-core",
-            "subtopic_title": "Nested Functions, Factories, lambda, map, filter, reduce, and sorted(key=...)",
-            "details": []
+            "id": "kp-3-d1",
+            "kind": "table",
+            "title": "Compact lambda / map reference",
+            "table": {
+              "headers": [
+                "Pattern",
+                "Meaning"
+              ],
+              "rows": [
+                [
+                  "lambda x: x * 2",
+                  "inline function for one value"
+                ],
+                [
+                  "map(f, seq)",
+                  "apply `f` to each element lazily"
+                ],
+                [
+                  "list(map(f, seq))",
+                  "materialize the mapped results for display"
+                ]
+              ]
+            }
           }
+        ]
+      }
         ],
         "ai_examples": [
           {
@@ -9834,17 +10166,17 @@
             "subtopic_id": "w3-higher-order-patterns-core",
             "subtopic_title": "Nested Functions, Factories, lambda, map, filter, reduce, and sorted(key=...)"
           },
-          {
-            "id": "ai-example-4",
-            "kind": "correct",
-            "title": "Elementwise transformation with `map`/`lambda`",
-            "code": "print((lambda x, y: 2*x*y)(4, 3))",
-            "why": "Apply the lambda/function to one element first, then extend that same transformation to the rest of the Series or iterable.",
-            "output": "",
-            "status": "curated",
-            "subtopic_id": "w3-higher-order-patterns-core",
-            "subtopic_title": "Nested Functions, Factories, lambda, map, filter, reduce, and sorted(key=...)"
-          },
+      {
+        "id": "ai-example-4",
+        "kind": "correct",
+        "title": "`map` can combine multiple iterables",
+        "code": "left = [1, 2, 3]\nright = [10, 20, 30]\nprint(list(map(lambda x, y: x + y, left, right)))",
+        "why": "A lambda can take multiple parameters, and `map(...)` then feeds one element from each iterable into that lambda on every step.",
+        "output": "",
+        "status": "curated",
+        "subtopic_id": "w3-higher-order-patterns-core",
+        "subtopic_title": "Nested Functions, Factories, lambda, map, filter, reduce, and sorted(key=...)"
+      },
           {
             "id": "ai-example-5",
             "kind": "correct",
@@ -10629,6 +10961,28 @@
             "status": "curated",
             "subtopic_id": "w4-string-operations-and-methods-core",
             "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module"
+          },
+          {
+            "id": "manual-string-indexing-reference",
+            "kind": "correct",
+            "title": "Indexing, negative indices, and slices",
+            "code": "s = 'python'\nprint(s[0], s[-1])\nprint(s[1:4])\nprint(s[::2])\nprint(s[::-1])",
+            "why": "This compact reference covers the most repeated string-selection patterns: direct indexing, negative indexing, exclusive-stop slicing, step slicing, and reversal.",
+            "output": "p n\nyth\npto\nnohtyp",
+            "status": "curated",
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module"
+          },
+          {
+            "id": "manual-string-output-construction",
+            "kind": "correct",
+            "title": "Join values into exam-style output text",
+            "code": "names = ['Ada', 'Bob', 'Cleo']\nbody = ', '.join(names[:-1])\nprint(f'{body}, and {names[-1]}')\nprint('{:.2f}'.format(3.5))",
+            "why": "Use `join` for the repeated separator, then add the custom tail separately when the output must end with words like `, and ...`.",
+            "output": "Ada, Bob, and Cleo\n3.50",
+            "status": "curated",
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module"
           }
         ],
         "ai_summary": {
@@ -10842,6 +11196,101 @@
                 "kind": "example",
                 "title": "replace() returns a new string",
                 "code": "number = '020-525-1400'\ncleaned = number.replace('-', '')\nprint(number)   # '020-525-1400'\nprint(cleaned)  # '0205251400'"
+              }
+            ]
+          },
+          {
+            "id": "kp-8",
+            "text": "Indexing and slicing are exam staples: `s[i]` gets one character, `s[-1]` starts from the end, and slices use an exclusive stop with optional step values such as `s[1:5]`, `s[::2]`, and `s[::-1]`.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm009",
+            "model": null,
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
+            "details": [
+              {
+                "id": "kp-8-d1",
+                "kind": "table",
+                "title": "Indexing and slicing quick rules",
+                "table": {
+                  "headers": [
+                    "Pattern",
+                    "Meaning",
+                    "Trap"
+                  ],
+                  "rows": [
+                    [
+                      "s[0], s[-1]",
+                      "first / last character",
+                      "single-index access can raise IndexError"
+                    ],
+                    [
+                      "s[a:b]",
+                      "start inclusive, stop exclusive",
+                      "safe even if b is past the end"
+                    ],
+                    [
+                      "s[::2]",
+                      "every second character",
+                      "step changes which positions survive"
+                    ],
+                    [
+                      "s[::-1]",
+                      "reversed string",
+                      "negative step walks from right to left"
+                    ]
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "kp-9",
+            "text": "Boolean string predicates answer slightly different questions: `.islower()` and `.isupper()` need at least one cased character, `.isdigit()` checks digits only, and spaces or punctuation usually make the result `False`.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm009",
+            "model": null,
+            "subtopic_id": "w4-string-operations-and-methods-core",
+            "subtopic_title": "Slicing with Step, Search, replace, join, strip, and the string Module",
+            "details": [
+              {
+                "id": "kp-9-d1",
+                "kind": "table",
+                "title": "Predicate truth table",
+                "table": {
+                  "headers": [
+                    "Input",
+                    "Check",
+                    "Result"
+                  ],
+                  "rows": [
+                    [
+                      "'abc'.islower()",
+                      "all cased chars lowercase",
+                      "True"
+                    ],
+                    [
+                      "'Abc'.islower()",
+                      "contains uppercase",
+                      "False"
+                    ],
+                    [
+                      "'123'.isdigit()",
+                      "all chars are digits",
+                      "True"
+                    ],
+                    [
+                      "'abc!'.islower()",
+                      "punctuation ignored, cased chars still lowercase",
+                      "True"
+                    ],
+                    [
+                      "'abc 1'.isdigit()",
+                      "letters/spaces are not digits",
+                      "False"
+                    ]
+                  ]
+                }
               }
             ]
           }
@@ -11089,7 +11538,9 @@
               "ai-example-8",
               "manual-string-format-method",
               "manual-string-islower-method",
-              "manual-string-repetition"
+              "manual-string-repetition",
+              "manual-string-indexing-reference",
+              "manual-string-output-construction"
             ],
             "key_point_ids": [
               "kp-1",
@@ -11099,7 +11550,9 @@
               "kp-5",
               "kp-6",
               "kp-7",
-              "kp-manual-string-method-results"
+              "kp-manual-string-method-results",
+              "kp-8",
+              "kp-9"
             ],
             "lecture_snippet_ids": [
               "ks-5198d93ec1",
@@ -11210,13 +11663,15 @@
               "ai-example-1",
               "ai-example-2",
               "ai-example-3",
-              "ai-example-4"
+              "ai-example-4",
+              "ai-example-5"
             ],
             "key_point_ids": [
               "kp-1",
               "kp-2",
               "kp-3",
-              "kp-4"
+              "kp-4",
+              "kp-5"
             ]
           }
         }
@@ -11376,6 +11831,46 @@
                 "code": "score = 91\nprint('Score: {:04d}'.format(score))"
               }
             ]
+          },
+          {
+            "id": "kp-5",
+            "text": "Use f-strings for direct interpolation and `.format(...)` when the template string already exists; both support width, alignment, and precision specs such as `{:03d}` and `{:.2f}`.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm009",
+            "model": null,
+            "subtopic_id": "w4-string-formatting-core",
+            "subtopic_title": "f-strings Basics, Formatting, and Debug Form",
+            "details": [
+              {
+                "id": "kp-5-d1",
+                "kind": "table",
+                "title": "Formatting patterns at a glance",
+                "table": {
+                  "headers": [
+                    "Goal",
+                    "f-string",
+                    ".format(...)"
+                  ],
+                  "rows": [
+                    [
+                      "insert a value",
+                      "f'{name}'",
+                      "'{}'.format(name)"
+                    ],
+                    [
+                      "zero-pad an int",
+                      "f'{n:03d}'",
+                      "'{:03d}'.format(n)"
+                    ],
+                    [
+                      "2 decimals",
+                      "f'{x:.2f}'",
+                      "'{:.2f}'.format(x)"
+                    ]
+                  ]
+                }
+              }
+            ]
           }
         ],
         "ai_examples": [
@@ -11419,6 +11914,17 @@
             "code": "name = 'Jan'\nscore = 7\nprint('Student {} scored {:03d}'.format(name, score))",
             "why": "The official resit material still uses `.format(...)`, so it is worth recognizing positional placeholders and width specs alongside f-strings.",
             "output": "Student Jan scored 007",
+            "status": "curated",
+            "subtopic_id": "w4-string-formatting-core",
+            "subtopic_title": "f-strings Basics, Formatting, and Debug Form"
+          },
+          {
+            "id": "ai-example-5",
+            "kind": "correct",
+            "title": "Build formatted output with custom separators",
+            "code": "cities = ['Amsterdam', 'Utrecht', 'Leiden']\ntext = ', '.join(cities[:-1]) + ', and ' + cities[-1]\nprint(f'Visited: {text}')\nprint('Average: {:.1f}'.format(7.25))",
+            "why": "When the output text has both repeated separators and a custom final phrase, build the list part first and then wrap it in an f-string or `.format(...)` template.",
+            "output": "Visited: Amsterdam, Utrecht, and Leiden\nAverage: 7.2",
             "status": "curated",
             "subtopic_id": "w4-string-formatting-core",
             "subtopic_title": "f-strings Basics, Formatting, and Debug Form"
@@ -11521,17 +12027,17 @@
             "subtopic_id": "w4-oop-fundamentals-core",
             "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
           },
-          {
-            "id": "ai-example-6",
-            "kind": "correct",
-            "title": "Subclassing `str`",
-            "code": "#\nclass New_str(str):\n    def index(self, needle, start = 0):\n        return self.find(needle, start)\n\na = New_str(\"abcd\")\nprint(a.upper()) \nprint(a.find(\"d\")) \nprint(a.find(\"e\")) \nprint(a.index(\"d\")) \nprint(a.index(\"e\"))",
-            "why": "You can subclass a built-in type to add custom methods while keeping the original string behavior.",
-            "output": "",
-            "status": "curated",
-            "subtopic_id": "w4-oop-fundamentals-core",
-            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
-          },
+      {
+        "id": "ai-example-6",
+        "kind": "correct",
+        "title": "`self` is passed automatically in method calls",
+        "code": "class Clock:\n    def set_hour(self, hour):\n        self.hour = hour\n\nc = Clock()\nc.set_hour(9)\n# c.set_hour(c, 9)  # wrong: passes one argument too many",
+        "why": "Writing `obj.method(x)` already passes `self` for you. Inside the method, store lasting state on `self.attr`.",
+        "output": "",
+        "status": "curated",
+        "subtopic_id": "w4-oop-fundamentals-core",
+        "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
+      },
           {
             "id": "manual-oop-attrs",
             "kind": "correct",
@@ -11565,17 +12071,28 @@
             "subtopic_id": "w4-oop-fundamentals-core",
             "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
           },
-          {
-            "id": "manual-oop-state-compare",
-            "kind": "correct",
-            "title": "Trace `self` state across multiple method calls",
-            "code": "class Book:\n    def __init__(self, title):\n        self.title = title\n        self.scores = []\n\n    def add_review(self, score):\n        self.scores.append(score)\n\n    def average(self):\n        return sum(self.scores) / len(self.scores)\n\n    def better_than(self, other):\n        return self.average() > other.average()\n\nbook_1 = Book(\"A\")\nbook_2 = Book(\"B\")\nfor score in [5, 3, 3]:\n    book_1.add_review(score)\nfor score in [4, 4, 4]:\n    book_2.add_review(score)\nprint(book_1.better_than(book_2))",
-            "output": "False",
-            "why": "Exam OOP reasoning often hinges on updating `self` in one method and then comparing derived state in a later method call.",
-            "status": "curated",
-            "subtopic_id": "w4-oop-fundamentals-core",
-            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
-          }
+      {
+        "id": "manual-oop-state-compare",
+        "kind": "correct",
+        "title": "Trace `self` state across multiple method calls",
+        "code": "class Book:\n    def __init__(self, title):\n        self.title = title\n        self.scores = []\n\n    def add_review(self, score):\n        self.scores.append(score)\n\n    def average(self):\n        return sum(self.scores) / len(self.scores)\n\n    def better_than(self, other):\n        return self.average() > other.average()\n\nbook_1 = Book(\"A\")\nbook_2 = Book(\"B\")\nfor score in [5, 3, 3]:\n    book_1.add_review(score)\nfor score in [4, 4, 4]:\n    book_2.add_review(score)\nprint(book_1.better_than(book_2))",
+        "output": "False",
+        "why": "Exam OOP reasoning often hinges on updating `self` in one method and then comparing derived state in a later method call.",
+        "status": "curated",
+        "subtopic_id": "w4-oop-fundamentals-core",
+        "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
+      },
+      {
+        "id": "manual-oop-compare-none-case",
+        "kind": "correct",
+        "title": "Return `None` when neither object clearly wins",
+        "code": "class Book:\n    def __init__(self, title, scores):\n        self.title = title\n        self.scores = scores\n\n    def average(self):\n        return sum(self.scores) / len(self.scores)\n\n    def winner_against(self, other):\n        if self.average() > other.average():\n            return self.title\n        if self.average() < other.average():\n            return other.title\n        return None",
+        "output": "",
+        "why": "When an exam asks for asymmetric comparison logic, spell out both winner branches and the tie case instead of relying on one Boolean comparison only.",
+        "status": "curated",
+        "subtopic_id": "w4-oop-fundamentals-core",
+        "subtopic_title": "Class Definition, __init__, self, and Attribute Basics"
+      }
         ],
         "ai_summary": {
           "status": "curated",
@@ -11747,6 +12264,23 @@
             ]
           },
           {
+            "id": "kp-manual-self-attr",
+            "text": "Use `self.attr = ...` to store per-object state. A bare assignment like `attr = ...` inside a method only creates or updates a local variable.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm010",
+            "model": null,
+            "subtopic_id": "w4-oop-fundamentals-core",
+            "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
+            "details": [
+              {
+                "id": "kp-manual-self-attr-d1",
+                "kind": "example",
+                "title": "Store state on `self`, not in a local",
+                "code": "class Counter:\n    def __init__(self):\n        self.count = 0\n\n    def bump(self):\n        count = self.count + 1\n        self.count = count"
+              }
+            ]
+          },
+          {
             "id": "kp-3",
             "text": "`self.x` is per object; a class attribute is shared until an instance shadows it with its own value.",
             "status": "curated",
@@ -11773,11 +12307,11 @@
             "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
             "details": []
           },
-          {
-            "id": "kp-manual-init-defaults",
-            "text": "Constructor defaults can make arguments optional, but mutable per-instance state should start from `None` and be created inside `__init__`.",
-            "status": "curated",
-            "generator": "manual-gap-merge-rm008",
+      {
+        "id": "kp-manual-init-defaults",
+        "text": "Constructor defaults can make arguments optional, but mutable per-instance state should start from `None` and be created inside `__init__`.",
+        "status": "curated",
+        "generator": "manual-gap-merge-rm008",
             "model": null,
             "subtopic_id": "w4-oop-fundamentals-core",
             "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
@@ -11791,12 +12325,48 @@
               {
                 "id": "kp-manual-init-defaults-d2",
                 "kind": "example",
-                "title": "Fresh list per object",
-                "code": "class Book:\n    def __init__(self, title, review_scores=None):\n        self.title = title\n        self.review_scores = [] if review_scores is None else review_scores"
-              }
-            ]
+            "title": "Fresh list per object",
+            "code": "class Book:\n    def __init__(self, title, review_scores=None):\n        self.title = title\n        self.review_scores = [] if review_scores is None else review_scores"
           }
-        ],
+        ]
+      },
+      {
+        "id": "kp-manual-oop-compare",
+        "text": "Comparison methods often combine state from `self` and `other`. Write the winning condition(s) explicitly, and return a clear fallback such as `None` when neither object clearly wins.",
+        "status": "curated",
+        "generator": "manual-gap-merge-rm010",
+        "model": null,
+        "subtopic_id": "w4-oop-fundamentals-core",
+        "subtopic_title": "Class Definition, __init__, self, and Attribute Basics",
+        "details": [
+          {
+            "id": "kp-manual-oop-compare-d1",
+            "kind": "table",
+            "title": "Comparison method template",
+            "table": {
+              "headers": [
+                "Case",
+                "Return"
+              ],
+              "rows": [
+                [
+                  "self score > other score",
+                  "winner based on `self`"
+                ],
+                [
+                  "self score < other score",
+                  "winner based on `other`"
+                ],
+                [
+                  "tie / no clear winner",
+                  "explicit fallback such as `None`"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
         "lecture_snippets": [
           {
             "id": "ks-06b21ad349",
@@ -11974,22 +12544,25 @@
               "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
               "exam-intro_python_sample_final_24_25-2-w5-pandas-core-structures"
             ],
-            "example_ids": [
-              "ai-example-1",
-              "ai-example-2",
-              "ai-example-3",
-              "ai-example-6",
-              "manual-oop-constructor-defaults",
-              "manual-oop-state-compare",
-              "manual-oop-init-defaults",
-              "manual-oop-attrs"
-            ],
+    "example_ids": [
+      "ai-example-1",
+      "ai-example-2",
+      "ai-example-3",
+      "ai-example-6",
+      "manual-oop-constructor-defaults",
+      "manual-oop-state-compare",
+      "manual-oop-compare-none-case",
+      "manual-oop-init-defaults",
+      "manual-oop-attrs"
+    ],
             "key_point_ids": [
               "kp-1",
               "kp-2",
+              "kp-manual-self-attr",
               "kp-3",
               "kp-4",
-              "kp-manual-init-defaults"
+              "kp-manual-init-defaults",
+              "kp-manual-oop-compare"
             ],
             "lecture_snippet_ids": [
               "ks-06b21ad349",
@@ -12007,8 +12580,8 @@
             ]
           },
           "order": 1,
-          "summary": "A class defines attributes and methods; `__init__` runs when you create an object and stores instance data on `self`.",
-          "title": "Class Definition, __init__, self, and Attribute Basics"
+  "summary": "A class defines attributes and methods; `__init__` runs when you create an object and stores instance data on `self`. Comparison methods usually read derived state from both `self` and `other` and may need an explicit tie case.",
+  "title": "Class Definition, __init__, self, Attributes, and Comparison Logic"
         }
       ],
       "topic": "OOP Fundamentals",
@@ -12330,9 +12903,9 @@
       "subtopics": [
         {
           "id": "w5-pandas-core-structures-core",
-          "title": "Series, DataFrame, and Creation Patterns",
+      "title": "Series, DataFrame, Creation, and Column-Shape Rules",
           "order": 1,
-          "summary": "A Series is 1D labeled data; a DataFrame is a 2D labeled table. Know common constructors and whether an operation returns a Series or a DataFrame.",
+      "summary": "A Series is 1D labeled data; a DataFrame is a 2D labeled table. Know common constructors, single-vs-double bracket selection, and when pandas expects a row selector plus a column selector.",
           "item_ids": {
             "lecture_snippet_ids": [
               "ks-052ed25923",
@@ -12356,8 +12929,19 @@
               "cs-8ec741987c",
               "cs-b069af91f4"
             ],
-            "example_ids": [],
-            "key_point_ids": []
+        "example_ids": [
+          "manual-pandas-import",
+          "manual-pandas-series",
+          "manual-pandas-df",
+          "manual-pandas-select-shape",
+          "manual-pandas-invalid-two-axis"
+        ],
+        "key_point_ids": [
+          "kp-manual-series-default-index",
+          "kp-manual-df-constructor",
+          "kp-manual-series-vs-df",
+          "kp-manual-pandas-two-axis"
+        ]
           }
         }
       ],
@@ -12738,7 +13322,7 @@
         ],
         "ai_summary": {
           "status": "curated",
-          "content": "A Series is 1D labeled data; a DataFrame is a 2D labeled table. Know common constructors and whether an operation returns a Series or a DataFrame.",
+      "content": "A Series is 1D labeled data; a DataFrame is a 2D labeled table. Know common constructors, single-vs-double bracket selection, and which selectors require `.loc` or `.iloc`.",
           "generator": "lecture-first-build",
           "model": null
         },
@@ -12781,20 +13365,96 @@
           "generator": "lecture-first-build",
           "model": null
         },
-        "key_points_to_remember": [
-          {
-            "id": "kp-manual-series-default-index",
-            "text": "A `Series` is 1D labeled data; if you do not supply an index, pandas uses `0, 1, 2, ...`."
-          },
+    "key_points_to_remember": [
+      {
+        "id": "kp-manual-series-default-index",
+        "text": "A `Series` is 1D labeled data; if you do not supply an index, pandas uses `0, 1, 2, ...`."
+      },
           {
             "id": "kp-manual-df-constructor",
             "text": "A `DataFrame` is a 2D table; a dict of column names to equal-length lists is the standard constructor pattern."
           },
+      {
+        "id": "kp-manual-series-vs-df",
+        "text": "Single-column brackets return a `Series`, while a list of column names returns a `DataFrame`: `df['A']` -> Series, `df[['A']]` -> one-column DataFrame, `df[['A', 'B']]` -> two-column DataFrame.",
+        "details": [
           {
-            "id": "kp-manual-series-vs-df",
-            "text": "`df['A']` gives a `Series`, while `df[['A']]` gives a one-column `DataFrame`."
+            "id": "kp-manual-series-vs-df-d1",
+            "kind": "table",
+            "title": "Column-selection shape rules",
+            "table": {
+              "headers": [
+                "Code",
+                "Returns",
+                "Why it matters"
+              ],
+              "rows": [
+                [
+                  "df['A']",
+                  "Series",
+                  "one column, one bracket pair"
+                ],
+                [
+                  "df[['A']]",
+                  "DataFrame",
+                  "list of columns keeps 2D shape"
+                ],
+                [
+                  "df[['A', 'B']]",
+                  "DataFrame",
+                  "multi-column subset"
+                ]
+              ]
+            }
           }
-        ],
+        ]
+      },
+      {
+        "id": "kp-manual-pandas-two-axis",
+        "text": "Plain `df[...]` is for column selection or a row mask. If you need both rows and columns, switch to `.loc[row_sel, col_sel]` or `.iloc[row_sel, col_sel]` instead of writing `df[row, col]`.",
+        "details": [
+          {
+            "id": "kp-manual-pandas-two-axis-d1",
+            "kind": "table",
+            "title": "Valid vs invalid two-axis selection",
+            "table": {
+              "headers": [
+                "Form",
+                "Valid?",
+                "Use for"
+              ],
+              "rows": [
+                [
+                  "df['A']",
+                  "yes",
+                  "one column"
+                ],
+                [
+                  "df[['A', 'B']]",
+                  "yes",
+                  "multiple columns"
+                ],
+                [
+                  "df.loc[2:4, ['A']]",
+                  "yes",
+                  "label-based row + column selection"
+                ],
+                [
+                  "df.iloc[1:3, [0]]",
+                  "yes",
+                  "position-based row + column selection"
+                ],
+                [
+                  "df[2, 'A']",
+                  "no",
+                  "use `.loc` or `.iloc` for two axes"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
         "ai_examples": [
           {
             "id": "manual-pandas-import",
@@ -12828,16 +13488,26 @@
             "subtopic_id": "w5-pandas-core-structures-core",
             "subtopic_title": "Series, DataFrame, and Creation Patterns"
           },
-          {
-            "id": "manual-pandas-select-shape",
-            "kind": "correct",
-            "title": "`df['A']` versus `df[['A']]`",
-            "code": "df['A']      # Series\ndf[['A']]    # one-column DataFrame",
-            "why": "Check the brackets carefully: one pair returns a `Series`, two pairs return a `DataFrame`.",
-            "status": "curated",
-            "subtopic_id": "w5-pandas-core-structures-core",
-            "subtopic_title": "Series, DataFrame, and Creation Patterns"
-          }
+      {
+        "id": "manual-pandas-select-shape",
+        "kind": "correct",
+        "title": "Single brackets vs list-of-columns brackets",
+        "code": "df['A']          # Series\ndf[['A']]        # one-column DataFrame\ndf[['A', 'B']]   # two-column DataFrame",
+        "why": "Single-column brackets drop to 1D `Series` shape; wrapping the column name(s) in a list keeps a 2D `DataFrame`.",
+        "status": "curated",
+        "subtopic_id": "w5-pandas-core-structures-core",
+        "subtopic_title": "Series, DataFrame, and Creation Patterns"
+      },
+      {
+        "id": "manual-pandas-invalid-two-axis",
+        "kind": "correct",
+        "title": "Use `.loc` or `.iloc` for row-plus-column selection",
+        "code": "df.loc[2:4, ['A']]\ndf.iloc[1:3, [0]]\n# invalid shortcut:\n# df[2, 'A']",
+        "why": "Once both a row selector and a column selector appear, switch to `.loc[...]` or `.iloc[...]` instead of plain `df[...]`.",
+        "status": "curated",
+        "subtopic_id": "w5-pandas-core-structures-core",
+        "subtopic_title": "Series, DataFrame, and Creation Patterns"
+      }
         ],
         "recommended_ids": [
           "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
@@ -12871,9 +13541,9 @@
       "subtopics": [
         {
           "id": "w5-inspecting-and-selecting-data-core",
-          "title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing",
+      "title": "head, tail, describe, loc, iloc, Valid Selection, and Boolean Indexing",
           "order": 1,
-          "summary": "Use `head`, `tail`, and `describe` to inspect quickly. Use `.loc` for labels, `.iloc` for integer positions, and boolean masks for row filtering.",
+      "summary": "Use `head`, `tail`, and `describe` to inspect quickly. Use `.loc` for labels, `.iloc` for integer positions, and boolean masks for row filtering; avoid invalid mixed indexing shortcuts.",
           "item_ids": {
             "lecture_snippet_ids": [
               "ks-0114a2cff0",
@@ -13182,7 +13852,7 @@
         ],
         "ai_summary": {
           "status": "curated",
-          "content": "Use `head`, `tail`, and `describe` to inspect quickly. Use `.loc` for labels, `.iloc` for integer positions, and boolean masks for row filtering.",
+      "content": "Use `head`, `tail`, and `describe` to inspect quickly. Use `.loc` for labels, `.iloc` for integer positions, and boolean masks for row filtering; avoid invalid mixed indexing shortcuts.",
           "generator": "lecture-first-build",
           "model": null
         },
@@ -13333,17 +14003,63 @@
               }
             ]
           },
+      {
+        "id": "kp-6",
+        "text": "Selection rule: plain `df[...]` handles columns or a row mask, while `.loc[row_sel, col_sel]` and `.iloc[row_sel, col_sel]` handle both axes explicitly. `df[row, col]` is not the shortcut you want.",
+        "status": "curated",
+        "generator": "lecture-first-build",
+        "model": null,
+        "subtopic_id": "w5-inspecting-and-selecting-data-core",
+        "subtopic_title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing",
+        "details": [
           {
-            "id": "kp-6",
-            "text": "Pattern to remember: df.loc[df.index % 2 == 0, [\"B\"]]",
-            "status": "curated",
-            "generator": "lecture-first-build",
-            "model": null,
-            "subtopic_id": "w5-inspecting-and-selecting-data-core",
-            "subtopic_title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing",
-            "details": []
+            "id": "kp-6-d1",
+            "kind": "table",
+            "title": "Valid vs invalid Pandas selection",
+            "table": {
+              "headers": [
+                "Code",
+                "Valid?",
+                "Meaning"
+              ],
+              "rows": [
+                [
+                  "df.loc[2:4, ['B']]",
+                  "yes",
+                  "label-based rows + columns"
+                ],
+                [
+                  "df.iloc[1:4, [1]]",
+                  "yes",
+                  "position-based rows + columns"
+                ],
+                [
+                  "df.loc[df['A'] > 0, ['B', 'C']]",
+                  "yes",
+                  "boolean-mask rows + named columns"
+                ],
+                [
+                  "df[df['A'] > 0]",
+                  "yes",
+                  "row filtering only"
+                ],
+                [
+                  "df[2, 'B']",
+                  "no",
+                  "use `.loc` or `.iloc`"
+                ]
+              ]
+            }
+          },
+          {
+            "id": "kp-6-d2",
+            "kind": "example",
+            "title": "Even-index row pattern",
+            "code": "df.loc[df.index % 2 == 0, ['B']]"
           }
-        ],
+        ]
+      }
+    ],
         "ai_examples": [
           {
             "id": "ai-example-1",
@@ -13411,28 +14127,28 @@
             "subtopic_id": "w5-inspecting-and-selecting-data-core",
             "subtopic_title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing"
           },
-          {
-            "id": "ai-example-7",
-            "kind": "correct",
-            "title": "import pandas as pd",
-            "code": "import pandas as pd\nd1 = {10:['A', 'B', 'C', 'D'], 13:[153, 160, 150, 190], 12:[55, 70, 60, 80], 17:[10, 11, 12, 13]}\ndf1 = pd.DataFrame (d1, index=[3, 2, 1, 0])\nprint(df1)\n\nprint(df1.loc[df1.loc[:,13] < 155])\nprint(df1.loc[[3,1]])\nprint(df1.iloc[::2])",
-            "why": "Read the slice as `start:stop:step`; with a negative step Python walks right-to-left and still excludes the stop position.",
-            "output": "",
-            "status": "curated",
-            "subtopic_id": "w5-inspecting-and-selecting-data-core",
-            "subtopic_title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing"
-          },
-          {
-            "id": "ai-example-8",
-            "kind": "correct",
-            "title": "import pandas as pd",
-            "code": "import pandas as pd\nd1 = {10:['A', 'B', 'C', 'D'], 13:[153, 160, 150, 190], 12:[55, 70, 60, 80], 17:[10, 11, 12, 13]}\ndf1 = pd.DataFrame (d1, index=[3, 2, 1, 0])\nprint(df1)\n\n\nprint(df1.loc[[True, True, False, False], [False, True, False, True]])\nprint(df1.loc[[True]*2 + [False]*2, [False, True]*2])\nprint(df1.loc[[3,2], [13, 17]])\nprint(df1.iloc[:2, [1, -1]])",
-            "why": "Use `.loc[:, column] = ...` when the assignment should fill or update an entire column by label.",
-            "output": "",
-            "status": "curated",
-            "subtopic_id": "w5-inspecting-and-selecting-data-core",
-            "subtopic_title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing"
-          }
+      {
+        "id": "ai-example-7",
+        "kind": "correct",
+        "title": "Label, mask, and step-based row selection",
+        "code": "import pandas as pd\nd1 = {10:['A', 'B', 'C', 'D'], 13:[153, 160, 150, 190], 12:[55, 70, 60, 80], 17:[10, 11, 12, 13]}\ndf1 = pd.DataFrame (d1, index=[3, 2, 1, 0])\nprint(df1)\n\nprint(df1.loc[df1.loc[:,13] < 155])\nprint(df1.loc[[3,1]])\nprint(df1.iloc[::2])",
+        "why": "Use `.loc[...]` for label-based masks and explicit labels, and `.iloc[...]` when the selector is based on integer positions such as `::2`.",
+        "output": "",
+        "status": "curated",
+        "subtopic_id": "w5-inspecting-and-selecting-data-core",
+        "subtopic_title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing"
+      },
+      {
+        "id": "ai-example-8",
+        "kind": "correct",
+        "title": "Valid vs invalid indexing forms",
+        "code": "df.loc[2:4, ['B']]\ndf.iloc[1:4, [1]]\ndf.loc[df['A'] > 0, ['B', 'C']]\n# invalid shortcut:\n# df[2, 'B']",
+        "why": "Keep the rule simple: plain `df[...]` is not the place for a row selector plus a column selector. Use `.loc` or `.iloc` when two axes are involved.",
+        "output": "",
+        "status": "curated",
+        "subtopic_id": "w5-inspecting-and-selecting-data-core",
+        "subtopic_title": "head, tail, describe, loc, iloc, Result Types, and Boolean Indexing"
+      }
         ],
         "recommended_ids": [
           "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
@@ -13582,16 +14298,16 @@
             "subtopic_id": "w5-working-with-values-core",
             "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
           },
-          {
-            "id": "manual-working-values-axis-apply",
-            "kind": "correct",
-            "title": "`apply(axis=0)` vs `apply(axis=1)`",
-            "code": "df.loc['Av'] = df.apply(lambda x: x.mean(), axis=0)\ndf['Avg'] = df.apply(lambda x: x.mean(), axis=1)",
-            "why": "`axis=0` works column by column; `axis=1` works row by row.",
-            "output": "",
-            "status": "curated",
-            "subtopic_id": "w5-working-with-values-core",
-            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+      {
+        "id": "manual-working-values-axis-apply",
+        "kind": "correct",
+        "title": "`map` vs `apply(axis=0)` vs `apply(axis=1)`",
+        "code": "s.map(lambda x: x * 2)\ndf.apply(lambda col: col.mean(), axis=0)\ndf.apply(lambda row: row['A'] + row['B'], axis=1)",
+        "why": "`map` is elementwise on one Series, `apply(..., axis=0)` works column by column, and `apply(..., axis=1)` works row by row.",
+        "output": "",
+        "status": "curated",
+        "subtopic_id": "w5-working-with-values-core",
+        "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
           },
           {
             "id": "ai-example-7",
@@ -13604,17 +14320,17 @@
             "subtopic_id": "w5-working-with-values-core",
             "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
           },
-          {
-            "id": "ai-example-8",
-            "kind": "correct",
-            "title": "import pandas as pd",
-            "code": "import pandas as pd\nd1 = {'A':[2, 5, 6], 'B':[3, 4, 7]}\ndf1 = pd.DataFrame (d1)\nprint(df1)\n\ndf2 = df1.loc[:]\ndf2 = df2.applymap(lambda x: 3 * x)\nprint(df2)",
-            "why": "Use `.loc[:, column] = ...` when the assignment should fill or update an entire column by label.",
-            "output": "",
-            "status": "curated",
-            "subtopic_id": "w5-working-with-values-core",
-            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
-          },
+      {
+        "id": "ai-example-8",
+        "kind": "correct",
+        "title": "Vectorized column arithmetic",
+        "code": "df['C'] = df['A'] + df['B']\ndf['D'] = df['A'] - df['B']",
+        "why": "If the exam asks for elementwise column arithmetic, direct Series expressions are usually the clearest solution and do not need `apply`.",
+        "output": "",
+        "status": "curated",
+        "subtopic_id": "w5-working-with-values-core",
+        "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+      },
           {
             "id": "manual-pandas-split-into-columns",
             "kind": "correct",
@@ -13626,17 +14342,28 @@
             "subtopic_id": "w5-working-with-values-core",
             "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
           },
-          {
-            "id": "manual-pandas-map-column-sum",
-            "kind": "correct",
-            "title": "Trace `map(lambda x: x + df['B'].sum())`",
-            "code": "import pandas as pd\n\ndf = pd.DataFrame({\"A\": [1, 2], \"B\": [10, 20]})\nresult = df[\"A\"].map(lambda x: x + df[\"B\"].sum())\nprint(result.tolist())",
-            "output": "[31, 32]",
-            "why": "`df[\"B\"].sum()` is computed from the whole column, so each element from `A` gets the same total from `B` added to it.",
-            "status": "curated",
-            "subtopic_id": "w5-working-with-values-core",
-            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
-          }
+      {
+        "id": "manual-pandas-map-column-sum",
+        "kind": "correct",
+        "title": "Trace `map(lambda x: x + df['B'].sum())`",
+        "code": "import pandas as pd\n\ndf = pd.DataFrame({\"A\": [1, 2], \"B\": [10, 20]})\nresult = df[\"A\"].map(lambda x: x + df[\"B\"].sum())\nprint(result.tolist())",
+        "output": "[31, 32]",
+        "why": "`df[\"B\"].sum()` is computed from the whole column, so each element from `A` gets the same total from `B` added to it.",
+        "status": "curated",
+        "subtopic_id": "w5-working-with-values-core",
+        "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+      },
+      {
+        "id": "manual-pandas-filter-aggregate",
+        "kind": "correct",
+        "title": "Filter rows, then aggregate one column",
+        "code": "result = df.loc[df['A'] > 0, 'B'].mean()\nprint(result)",
+        "output": "",
+        "why": "A common Pandas exam pattern is: build a boolean mask first, then run `mean()`, `sum()`, or `count()` on the selected column.",
+        "status": "curated",
+        "subtopic_id": "w5-working-with-values-core",
+        "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+      }
         ],
         "ai_summary": {
           "status": "curated",
@@ -13757,40 +14484,75 @@
               }
             ]
           },
+      {
+        "id": "kp-5",
+        "text": "Use `Series.map(f)` for elementwise work on one Series. It expects a function, dict, or mapping-style Series; for arithmetic that already works columnwise, write the vectorized expression directly instead.",
+        "status": "curated",
+        "generator": "lecture-first-build",
+        "model": null,
+        "subtopic_id": "w5-working-with-values-core",
+        "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+        "details": [
           {
-            "id": "kp-5",
-            "text": "Applies a function (often a lambda) to every element of a Series.",
-            "status": "curated",
-            "generator": "lecture-first-build",
-            "model": null,
-            "subtopic_id": "w5-working-with-values-core",
-            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
-            "details": [
-              {
-                "id": "kp-5-d1",
-                "kind": "example",
-                "title": "Formatting with map",
-                "code": "df['W_g'] = df['Weight'].map(lambda x: f'{x*1000} g')"
-              }
-            ]
+            "id": "kp-5-d1",
+            "kind": "example",
+            "title": "Formatting with map",
+            "code": "df['W_g'] = df['Weight'].map(lambda x: f'{x*1000} g')"
           },
           {
-            "id": "kp-6",
-            "text": "Applies a function along an axis (0 for columns, 1 for rows) of a DataFrame.",
-            "status": "curated",
-            "generator": "lecture-first-build",
-            "model": null,
-            "subtopic_id": "w5-working-with-values-core",
-            "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
-            "details": [
-              {
-                "id": "kp-6-d1",
-                "kind": "example",
-                "title": "Row-wise average",
-                "code": "df['Avg'] = df.apply(lambda x: x.mean(), axis=1)"
-              }
-            ]
+            "id": "kp-5-d2",
+            "kind": "table",
+            "title": "`map` vs direct column arithmetic",
+            "table": {
+              "headers": [
+                "Pattern",
+                "Best when",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "s.map(f)",
+                  "one value in, one value out",
+                  "df['W_g'] = df['Weight'].map(...)"
+                ],
+                [
+                  "df['A'] + df['B']",
+                  "plain vectorized arithmetic",
+                  "df['C'] = df['A'] + df['B']"
+                ],
+                [
+                  "df.apply(f, axis=1)",
+                  "row logic needs multiple columns",
+                  "df.apply(lambda row: ..., axis=1)"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "kp-6",
+        "text": "Use `DataFrame.apply(f, axis=0)` columnwise and `axis=1` rowwise. Reach for `apply` only when the function needs a whole row or column; otherwise direct column expressions are usually shorter and clearer.",
+        "status": "curated",
+        "generator": "lecture-first-build",
+        "model": null,
+        "subtopic_id": "w5-working-with-values-core",
+        "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+        "details": [
+          {
+            "id": "kp-6-d1",
+            "kind": "example",
+            "title": "Row-wise average",
+            "code": "df['Avg'] = df.apply(lambda x: x.mean(), axis=1)"
           },
+          {
+            "id": "kp-6-d2",
+            "kind": "example",
+            "title": "Columnwise mean",
+            "code": "df.loc['Av'] = df.apply(lambda col: col.mean(), axis=0)"
+          }
+        ]
+      },
           {
             "id": "kp-7",
             "text": "Represented by np.nan. Use .isna() to detect and .fillna() to replace them.",
@@ -13808,11 +14570,11 @@
               }
             ]
           },
-          {
-            "id": "kp-manual-drop-missing",
-            "text": "Use `.drop(...)` to remove labels and `.dropna()` to remove incomplete rows or columns; use `.fillna(...)` when you want to keep the shape and replace the missing values instead.",
-            "status": "curated",
-            "generator": "manual-gap-merge-rm008",
+      {
+        "id": "kp-manual-drop-missing",
+        "text": "Use `.drop(...)` to remove labels and `.dropna()` to remove incomplete rows or columns; use `.fillna(...)` when you want to keep the shape and replace the missing values instead.",
+        "status": "curated",
+        "generator": "manual-gap-merge-rm008",
             "model": null,
             "subtopic_id": "w5-working-with-values-core",
             "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
@@ -13826,12 +14588,58 @@
               {
                 "id": "kp-manual-drop-missing-d2",
                 "kind": "example",
-                "title": "Removing rows with missing values",
-                "code": "df.dropna()"
-              }
-            ]
+            "title": "Removing rows with missing values",
+            "code": "df.dropna()"
           }
-        ],
+        ]
+      },
+      {
+        "id": "kp-manual-filter-aggregate",
+        "text": "Filter first, then aggregate the resulting Series or DataFrame: `sum()`, `mean()`, `count()`, and `sort_values(...)` are common exam follow-ups after a boolean mask.",
+        "status": "curated",
+        "generator": "manual-gap-merge-rm009",
+        "model": null,
+        "subtopic_id": "w5-working-with-values-core",
+        "subtopic_title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply",
+        "details": [
+          {
+            "id": "kp-manual-filter-aggregate-d1",
+            "kind": "example",
+            "title": "Filter then take the mean",
+            "code": "df.loc[df['A'] > 0, 'B'].mean()"
+          },
+          {
+            "id": "kp-manual-filter-aggregate-d2",
+            "kind": "table",
+            "title": "Common follow-up operations",
+            "table": {
+              "headers": [
+                "Goal",
+                "Pattern"
+              ],
+              "rows": [
+                [
+                  "sum selected values",
+                  "df.loc[mask, 'B'].sum()"
+                ],
+                [
+                  "mean selected values",
+                  "df.loc[mask, 'B'].mean()"
+                ],
+                [
+                  "count selected rows",
+                  "df.loc[mask, 'B'].count()"
+                ],
+                [
+                  "sort rows by a column",
+                  "df.sort_values('B', ascending=False)"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
         "lecture_snippets": [
           {
             "id": "ks-305a41a33e",
@@ -14011,21 +14819,23 @@
               "ai-example-6",
               "ai-example-7",
               "ai-example-8",
-              "manual-pandas-split-into-columns",
-              "manual-pandas-map-column-sum",
-              "manual-working-values-string-vs-map",
-              "manual-working-values-axis-apply"
-            ],
-            "key_point_ids": [
-              "kp-1",
+          "manual-pandas-split-into-columns",
+          "manual-pandas-map-column-sum",
+          "manual-pandas-filter-aggregate",
+          "manual-working-values-string-vs-map",
+          "manual-working-values-axis-apply"
+        ],
+        "key_point_ids": [
+          "kp-1",
               "kp-2",
               "kp-3",
               "kp-4",
               "kp-5",
-              "kp-6",
-              "kp-7",
-              "kp-manual-drop-missing"
-            ],
+          "kp-6",
+          "kp-7",
+          "kp-manual-drop-missing",
+          "kp-manual-filter-aggregate"
+        ],
             "lecture_snippet_ids": [
               "ks-305a41a33e",
               "ks-f8eec928e1",
@@ -14041,8 +14851,8 @@
             ]
           },
           "order": 1,
-          "summary": "Sort, fill or drop missing values, compare or broadcast columns, and apply vectorized string or Series methods. Prefer vectorized operations before row-wise `apply`.",
-          "title": "Sorting, Missing Data, Broadcasting, Vectorized Strings, isin, map, and apply"
+      "summary": "Sort, filter, aggregate, fill or drop missing values, compare or broadcast columns, and apply vectorized string or Series methods. Prefer direct column arithmetic before row-wise `apply`.",
+      "title": "Sorting, Missing Data, Aggregation, Broadcasting, Vectorized Strings, isin, map, and apply"
         }
       ],
       "topic": "Working With Values",
@@ -14455,7 +15265,9 @@
               "ai-example-5",
               "ai-example-6",
               "ai-example-7",
-              "ai-example-8"
+              "ai-example-8",
+              "manual-comprehension-syntax-core",
+              "manual-comprehension-conditional-patterns"
             ],
             "key_point_ids": [
               "kp-1",
@@ -14465,7 +15277,8 @@
               "kp-5",
               "kp-6",
               "kp-7",
-              "kp-8"
+              "kp-8",
+              "kp-manual-comprehension-syntax"
             ]
           }
         }
@@ -15024,6 +15837,56 @@
                 "code": "res = [val // (i + 6) for i, val in enumerate([46, 48])]"
               }
             ]
+          },
+          {
+            "id": "kp-manual-comprehension-syntax",
+            "text": "Read comprehension syntax left to right: output expression first, then `for`, then an optional trailing `if`; inline `a if cond else b` belongs in the output expression, not after the loop.",
+            "status": "curated",
+            "generator": "manual-gap-merge-rm009",
+            "model": null,
+            "subtopic_id": "w6-comprehensions-core",
+            "subtopic_title": "List/Dict/Set Comprehensions, Nested Variants, Logic Filters, Walrus, and enumerate Patterns",
+            "details": [
+              {
+                "id": "kp-manual-comprehension-syntax-d1",
+                "kind": "table",
+                "title": "Syntax-first comprehension reference",
+                "table": {
+                  "headers": [
+                    "Target",
+                    "Template",
+                    "Exam cue"
+                  ],
+                  "rows": [
+                    [
+                      "list",
+                      "[expr for x in seq if cond]",
+                      "filter at the end"
+                    ],
+                    [
+                      "list with else",
+                      "[a if cond else b for x in seq]",
+                      "conditional expression stays before `for`"
+                    ],
+                    [
+                      "dict",
+                      "{key: value for x in seq}",
+                      "`key: value` must appear before `for`"
+                    ],
+                    [
+                      "set",
+                      "{expr for x in seq}",
+                      "curly braces without `:`"
+                    ],
+                    [
+                      "generator",
+                      "(expr for x in seq)",
+                      "lazy, not a stored list"
+                    ]
+                  ]
+                }
+              }
+            ]
           }
         ],
         "ai_examples": [
@@ -15110,6 +15973,28 @@
             "title": "Divide by index plus offset",
             "code": "res = [val // (i + 6) for i, val in enumerate([46, 48])]",
             "why": "Use enumerate() to access both the index and the value of items within a comprehension.",
+            "output": "",
+            "status": "curated",
+            "subtopic_id": "w6-comprehensions-core",
+            "subtopic_title": "List/Dict/Set Comprehensions, Nested Variants, Logic Filters, Walrus, and enumerate Patterns"
+          },
+          {
+            "id": "manual-comprehension-syntax-core",
+            "kind": "correct",
+            "title": "One-line syntax reference for list, dict, and set comprehensions",
+            "code": "evens = [x for x in nums if x % 2 == 0]\nlabels = {name: len(name) for name in names}\nunique_lengths = {len(name) for name in names}",
+            "why": "These three forms cover the main exam-recognition patterns: list output, `key: value` dict output, and set comprehensions without a colon.",
+            "output": "",
+            "status": "curated",
+            "subtopic_id": "w6-comprehensions-core",
+            "subtopic_title": "List/Dict/Set Comprehensions, Nested Variants, Logic Filters, Walrus, and enumerate Patterns"
+          },
+          {
+            "id": "manual-comprehension-conditional-patterns",
+            "kind": "correct",
+            "title": "Filter vs transform inside a comprehension",
+            "code": "flipped = [letter.lower() if letter.isupper() else letter.upper() for letter in letters]\npositives = [value for value in nums if value > 0]",
+            "why": "Use trailing `if` to filter items out entirely; use `a if cond else b` before `for` when every input should still produce one output value.",
             "output": "",
             "status": "curated",
             "subtopic_id": "w6-comprehensions-core",
@@ -15648,21 +16533,43 @@
             "subtopic_id": "w6-datetime-core",
             "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
           },
-          {
-            "id": "manual-datetime-strftime-loop",
-            "kind": "correct",
-            "title": "Do datetime math before `strftime` turns values into strings",
-            "code": "from datetime import datetime, timedelta\n\nday = datetime(2024, 1, 1)\nlabels = []\nfor _ in range(3):\n    labels.append(day.strftime(\"%Y-%m-%d\"))\n    day += timedelta(days=1)\nprint(labels)",
-            "output": "['2024-01-01', '2024-01-02', '2024-01-03']",
-            "why": "After `strftime`, the value is plain text, so increment the datetime object first and only store formatted strings as the final display step.",
-            "status": "curated",
-            "subtopic_id": "w6-datetime-core",
-            "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
-          }
+      {
+        "id": "manual-datetime-strftime-loop",
+        "kind": "correct",
+        "title": "Do datetime math before `strftime` turns values into strings",
+        "code": "from datetime import datetime, timedelta\n\nday = datetime(2024, 1, 1)\nlabels = []\nfor _ in range(3):\n    labels.append(day.strftime(\"%Y-%m-%d\"))\n    day += timedelta(days=1)\nprint(labels)",
+        "output": "['2024-01-01', '2024-01-02', '2024-01-03']",
+        "why": "After `strftime`, the value is plain text, so increment the datetime object first and only store formatted strings as the final display step.",
+        "status": "curated",
+        "subtopic_id": "w6-datetime-core",
+        "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
+      },
+      {
+        "id": "manual-datetime-add-before-format",
+        "kind": "correct",
+        "title": "Parse, do arithmetic, then format",
+        "code": "from datetime import datetime, timedelta\n\ndt = datetime.strptime('2024-05-20 14:30', '%Y-%m-%d %H:%M')\nupdated = dt + timedelta(days=2, minutes=15)\nprint(updated.strftime('%Y-%m-%d %H:%M'))",
+        "output": "2024-05-22 14:45",
+        "why": "The safe order is parse -> work with the datetime object -> format the final answer as text.",
+        "status": "curated",
+        "subtopic_id": "w6-datetime-core",
+        "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
+      },
+      {
+        "id": "manual-datetime-year-month-day",
+        "kind": "correct",
+        "title": "Datetime attributes stay on the object, not on the formatted string",
+        "code": "from datetime import datetime\n\ndt = datetime.strptime('03-02-2013', '%d-%m-%Y')\nprint(dt.year, dt.month, dt.day)\nprint(dt.strftime('%Y-%m-%d'))",
+        "output": "2013 2 3\n2013-02-03",
+        "why": "After `strptime`, you can still read `.year`, `.month`, and `.day`; after `strftime`, you only have plain text.",
+        "status": "curated",
+        "subtopic_id": "w6-datetime-core",
+        "subtopic_title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
+      }
         ],
         "ai_summary": {
           "status": "curated",
-          "content": "Use `datetime.now()` for current time, `strftime`/`strptime` for formatting and parsing, ISO/week helpers for calendar fields, and `timedelta` for date arithmetic.",
+      "content": "Use `datetime.now()` for current time, `strftime`/`strptime` for formatting and parsing, core format codes for exam-style date strings, and `timedelta` for date arithmetic before formatting.",
           "generator": "lecture-first-build",
           "model": null
         },
@@ -15731,11 +16638,96 @@
             "id": "kp-manual-datetime-iso",
             "text": "Use `isoformat()` for an ISO-style timestamp, `isoweekday()` for Monday=1..Sunday=7, and `isocalendar()` when you need ISO year/week information."
           },
+      {
+        "id": "kp-manual-datetime-day-of-year",
+        "text": "The day number within the year can be formatted with `%j` or computed with `(dt - datetime(dt.year, 1, 1)).days + 1`."
+      },
+      {
+        "id": "kp-manual-datetime-format-codes",
+        "text": "Memorize the core format codes: `%Y` year, `%m` month, `%d` day, `%H` hour, `%M` minute, `%S` second, `%j` day-of-year.",
+        "details": [
           {
-            "id": "kp-manual-datetime-day-of-year",
-            "text": "The day number within the year can be formatted with `%j` or computed with `(dt - datetime(dt.year, 1, 1)).days + 1`."
+            "id": "kp-manual-datetime-format-codes-d1",
+            "kind": "table",
+            "title": "Core datetime format codes",
+            "table": {
+              "headers": [
+                "Code",
+                "Meaning",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "%Y",
+                  "4-digit year",
+                  "2024"
+                ],
+                [
+                  "%m",
+                  "2-digit month",
+                  "05"
+                ],
+                [
+                  "%d",
+                  "2-digit day",
+                  "20"
+                ],
+                [
+                  "%H",
+                  "hour (24h)",
+                  "14"
+                ],
+                [
+                  "%M",
+                  "minute",
+                  "30"
+                ],
+                [
+                  "%S",
+                  "second",
+                  "09"
+                ],
+                [
+                  "%j",
+                  "day of year",
+                  "141"
+                ]
+              ]
+            }
           }
-        ],
+        ]
+      },
+      {
+        "id": "kp-manual-datetime-objects-vs-strings",
+        "text": "`strptime(...)` returns a `datetime`, while `strftime(...)` returns a string. Do arithmetic and attribute access on the datetime object first, then format to text at the end.",
+        "details": [
+          {
+            "id": "kp-manual-datetime-objects-vs-strings-d1",
+            "kind": "table",
+            "title": "Object vs string workflow",
+            "table": {
+              "headers": [
+                "Operation",
+                "Return type",
+                "Can use `.year` / `+ timedelta(...)`?"
+              ],
+              "rows": [
+                [
+                  "datetime.strptime(...)",
+                  "datetime",
+                  "yes"
+                ],
+                [
+                  "dt.strftime(...)",
+                  "str",
+                  "no"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
         "lecture_snippets": [
           {
             "id": "ks-e643ee5e77",
@@ -15952,24 +16944,28 @@
               "exam-intro_python_sample_final_24_25-9-w6-datetime",
               "exam-intro_python_sample_final_24_25-10-w6-datetime"
             ],
-            "example_ids": [
-              "manual-datetime-overlap",
-              "manual-datetime-strftime-loop",
-              "manual-datetime-format",
-              "manual-datetime-parse",
-              "manual-datetime-delta",
-              "manual-datetime-replace",
-              "manual-datetime-iso",
-              "manual-datetime-day-of-year"
-            ],
-            "key_point_ids": [
-              "kp-manual-datetime-now",
-              "kp-manual-datetime-format",
-              "kp-manual-datetime-delta",
-              "kp-manual-datetime-replace",
-              "kp-manual-datetime-iso",
-              "kp-manual-datetime-day-of-year"
-            ],
+        "example_ids": [
+          "manual-datetime-overlap",
+          "manual-datetime-strftime-loop",
+          "manual-datetime-format",
+          "manual-datetime-parse",
+          "manual-datetime-delta",
+          "manual-datetime-replace",
+          "manual-datetime-iso",
+          "manual-datetime-day-of-year",
+          "manual-datetime-add-before-format",
+          "manual-datetime-year-month-day"
+        ],
+        "key_point_ids": [
+          "kp-manual-datetime-now",
+          "kp-manual-datetime-format",
+          "kp-manual-datetime-delta",
+          "kp-manual-datetime-replace",
+          "kp-manual-datetime-iso",
+          "kp-manual-datetime-day-of-year",
+          "kp-manual-datetime-format-codes",
+          "kp-manual-datetime-objects-vs-strings"
+        ],
             "lecture_snippet_ids": [
               "ks-e643ee5e77",
               "ks-755c23c4be",
@@ -15989,8 +16985,8 @@
             ]
           },
           "order": 1,
-          "summary": "Use `datetime.now()` for current time, `strftime`/`strptime` for formatting and parsing, ISO/week helpers for calendar fields, and `timedelta` for date arithmetic.",
-          "title": "now, Timestamps, strftime, strptime, timedelta, and Date Arithmetic"
+      "summary": "Use `datetime.now()` for current time, `strftime`/`strptime` for formatting and parsing, core format codes for exam-style date strings, and `timedelta` for date arithmetic before formatting.",
+      "title": "now, Parse/Format Codes, strftime, strptime, timedelta, and Date Arithmetic"
         }
       ],
       "topic": "Datetime",

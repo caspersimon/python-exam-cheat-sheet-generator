@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import json
-import re
 import subprocess
-from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +13,12 @@ from pipelines.shared import (
     extract_json_blob,
 )
 from pipelines.vision_exam_pipeline_bank import merge_review_drop
+from pipelines.vision_exam_pipeline_eval_helpers import (
+    candidate_snippet_families_for_question,
+    evaluation_prompt,
+    normalize_family_selection,
+    normalize_near_identical_pieces,
+)
 from pipelines.vision_exam_pipeline_review import _evaluation_file, _write_evaluation_work_packets
 from pipelines.vision_exam_pipeline_shared import (
     QUESTION_BANK_FILE,
@@ -218,129 +222,6 @@ def auto_capture_missing_questions(
     }
 
 
-_TOKEN_RE = re.compile(r"[a-zA-Z_]{3,}")
-
-
-def _tokenize(text: str) -> set[str]:
-    return {token.lower() for token in _TOKEN_RE.findall(text or "")}
-
-
-def _candidate_items_for_question(
-    *,
-    question: dict[str, Any],
-    selectable_items: list[dict[str, Any]],
-    limit: int = 18,
-) -> list[dict[str, Any]]:
-    snapshot = _safe_dict(question.get("question_snapshot"))
-    seed_context = _safe_dict(question.get("seed_context"))
-    prioritized = {
-        _safe_str(item_id)
-        for item_id in _safe_list(seed_context.get("available_seed_snippet_ids"))
-        if _safe_str(item_id)
-    }
-    question_text = "\n".join(
-        [
-            _safe_str(snapshot.get("topic")),
-            _safe_str(snapshot.get("question")),
-            json.dumps(_safe_dict(snapshot.get("options")), ensure_ascii=False),
-            _safe_str(snapshot.get("code_context")),
-        ]
-    )
-    question_tokens = _tokenize(question_text)
-    scored = []
-    for item in selectable_items:
-        if not isinstance(item, dict):
-            continue
-        item_id = _safe_str(item.get("item_id"))
-        item_text = " ".join(
-            [
-                _safe_str(item.get("topic")),
-                _safe_str(item.get("subtopic_title")),
-                _safe_str(item.get("search_text")),
-            ]
-        )
-        item_tokens = _tokenize(item_text)
-        overlap = len(question_tokens & item_tokens)
-        score = overlap
-        if item_id in prioritized:
-            score += 20
-        if _safe_str(snapshot.get("topic")) and _safe_str(snapshot.get("topic")).lower() in item_text.lower():
-            score += 4
-        if item.get("bucket") == "recommended":
-            score += 2
-        if item.get("item_type") in {"key_point", "key_point_detail", "ai_common_question"}:
-            score += 1
-        scored.append((score, len(item_text), item))
-    scored.sort(key=lambda row: (-row[0], row[1], _safe_str(row[2].get("item_id"))))
-    chosen = [row[2] for row in scored[:limit]]
-    return [
-        {
-            "item_id": _safe_str(item.get("item_id")),
-            "week": int(item.get("week") or 0),
-            "item_type": _safe_str(item.get("item_type")),
-            "bucket": _safe_str(item.get("bucket")),
-            "topic": _safe_str(item.get("topic")),
-            "subtopic_title": _safe_str(item.get("subtopic_title")),
-            "search_text": _safe_str(item.get("search_text"))[:280],
-        }
-        for item in chosen
-        if _safe_str(item.get("item_id"))
-    ]
-
-
-def _evaluation_prompt(*, question: dict[str, Any], candidates: list[dict[str, Any]]) -> str:
-    return f"""
-You are evaluating which selectable snippets help a student answer a Python exam question with zero prior Python knowledge.
-
-Question JSON:
-{json.dumps(_safe_dict(question.get("question_snapshot")), ensure_ascii=False)}
-
-Candidate selectable snippets:
-{json.dumps(candidates, ensure_ascii=False)}
-
-Return ONLY one JSON object with EXACT keys:
-{{
-  "best_single_snippet": {{"item_id": "", "rationale": ""}},
-  "top_three_snippets": [
-    {{"item_id": "", "rationale": ""}}
-  ],
-  "minimal_sufficient_snippets": [
-    {{"item_id": "", "rationale": ""}}
-  ],
-  "answerability": {{
-    "status": "certain|partial|insufficient",
-    "confidence": "high|medium|low",
-    "rationale": "",
-    "usable_without_prior_python_knowledge": true
-  }},
-  "gap_analysis": {{
-    "summary": "",
-    "missing_concepts": [""],
-    "proposed_fix": ""
-  }},
-  "suggested_changes": [
-    {{
-      "kind": "edit_existing|add_new",
-      "target_item_id": "",
-      "proposal": "",
-      "why_helpful": "",
-      "why_maybe_unnecessary": "",
-      "recommended_direction": "add_this|consider_instead|skip"
-    }}
-  ]
-}}
-
-Rules:
-- Only choose `item_id` values that appear in the candidate list.
-- `top_three_snippets` must contain 1-3 unique items.
-- `minimal_sufficient_snippets` must contain 1-6 unique items.
-- If the snippets are not enough, still choose the closest useful items and explain the gap.
-- If no existing snippet should be edited, leave `target_item_id` as "" for an `add_new` suggestion.
-- If no changes are needed, return `suggested_changes: []`.
-- Keep rationales concise and specific.
-""".strip()
-
-
 def _normalize_ranked_snippets(values: Any, *, valid_ids: set[str], max_items: int) -> list[dict[str, Any]]:
     items = []
     seen: set[str] = set()
@@ -392,6 +273,11 @@ def auto_evaluate_questions(
     payload = _read_json(path)
     selectable_items = _read_json(selectable_items_path)
     valid_ids = {_safe_str(item.get("item_id")) for item in selectable_items if isinstance(item, dict) and _safe_str(item.get("item_id"))}
+    valid_snippet_ids = {
+        _safe_str(item.get("snippet_id"))
+        for item in selectable_items
+        if isinstance(item, dict) and _safe_str(item.get("snippet_id"))
+    }
     updated = 0
     for question in _safe_list(payload.get("questions")):
         if not isinstance(question, dict):
@@ -401,20 +287,84 @@ def auto_evaluate_questions(
             continue
         if status == "completed":
             continue
-        candidates = _candidate_items_for_question(question=question, selectable_items=selectable_items)
+        candidates = candidate_snippet_families_for_question(question=question, selectable_items=selectable_items)
         parsed = _run_gemini_json(
-            _evaluation_prompt(question=question, candidates=candidates),
+            evaluation_prompt(question=question, candidates=candidates),
             model=model,
             timeout_seconds=timeout_seconds,
         )
+        question["near_identical_past_exam_pieces"] = normalize_near_identical_pieces(
+            parsed.get("near_identical_past_exam_pieces"),
+            valid_piece_ids=valid_ids,
+            valid_snippet_ids=valid_snippet_ids,
+        )
+        best_family = normalize_family_selection(
+            parsed.get("best_snippet_family"),
+            valid_snippet_ids=valid_snippet_ids,
+            valid_piece_ids=valid_ids,
+            piece_field="critical_piece_ids",
+            max_piece_count=3,
+        )
+        question["best_snippet_family"] = best_family
+        question["supporting_snippet_families"] = [
+            family
+            for family in [
+                normalize_family_selection(
+                    value,
+                    valid_snippet_ids=valid_snippet_ids,
+                    valid_piece_ids=valid_ids,
+                    piece_field="critical_piece_ids",
+                    max_piece_count=3,
+                )
+                for value in _safe_list(parsed.get("supporting_snippet_families"))
+            ]
+            if family
+        ][:2]
+        question["minimal_snippet_families"] = [
+            family
+            for family in [
+                normalize_family_selection(
+                    value,
+                    valid_snippet_ids=valid_snippet_ids,
+                    valid_piece_ids=valid_ids,
+                    piece_field="needed_piece_ids",
+                    max_piece_count=6,
+                )
+                for value in _safe_list(parsed.get("minimal_snippet_families"))
+            ]
+            if family
+        ][:6]
         best = _safe_dict(parsed.get("best_single_snippet"))
         best_id = _safe_str(best.get("item_id"))
-        question["best_single_snippet"] = {
-            "item_id": best_id if best_id in valid_ids else "",
-            "rationale": _safe_str(best.get("rationale")),
-        } if best_id in valid_ids else None
-        question["top_three_snippets"] = _normalize_ranked_snippets(parsed.get("top_three_snippets"), valid_ids=valid_ids, max_items=3)
-        question["minimal_sufficient_snippets"] = _normalize_ranked_snippets(parsed.get("minimal_sufficient_snippets"), valid_ids=valid_ids, max_items=6)
+        if best_family and _safe_list(best_family.get("critical_piece_ids")):
+            question["best_single_snippet"] = {
+                "item_id": _safe_list(best_family.get("critical_piece_ids"))[0],
+                "rationale": _safe_str(best_family.get("rationale")),
+            }
+        else:
+            question["best_single_snippet"] = {
+                "item_id": best_id if best_id in valid_ids else "",
+                "rationale": _safe_str(best.get("rationale")),
+            } if best_id in valid_ids else None
+        top_three = []
+        if best_family and _safe_list(best_family.get("critical_piece_ids")):
+            top_three.append(
+                {
+                    "item_id": _safe_list(best_family.get("critical_piece_ids"))[0],
+                    "rationale": _safe_str(best_family.get("rationale")),
+                }
+            )
+        for family in _safe_list(question.get("supporting_snippet_families")):
+            piece_ids = _safe_list(_safe_dict(family).get("critical_piece_ids"))
+            if piece_ids:
+                top_three.append({"item_id": piece_ids[0], "rationale": _safe_str(_safe_dict(family).get("rationale"))})
+        question["top_three_snippets"] = top_three[:3] or _normalize_ranked_snippets(parsed.get("top_three_snippets"), valid_ids=valid_ids, max_items=3)
+        minimal = []
+        for family in _safe_list(question.get("minimal_snippet_families")):
+            piece_ids = _safe_list(_safe_dict(family).get("needed_piece_ids"))
+            if piece_ids:
+                minimal.append({"item_id": piece_ids[0], "rationale": _safe_str(_safe_dict(family).get("rationale"))})
+        question["minimal_sufficient_snippets"] = minimal[:6] or _normalize_ranked_snippets(parsed.get("minimal_sufficient_snippets"), valid_ids=valid_ids, max_items=6)
         answerability = _safe_dict(parsed.get("answerability"))
         question["answerability"] = {
             "status": _safe_str(answerability.get("status")) or "partial",
@@ -434,7 +384,8 @@ def auto_evaluate_questions(
         review_meta["requires_human_review"] = True
         review_meta["reviewed_at"] = timestamp_utc()
         review_meta["model"] = model
-        review_meta["candidate_item_count"] = len(candidates)
+        review_meta["candidate_item_count"] = sum(len(_safe_list(candidate.get("pieces"))) for candidate in candidates)
+        review_meta["candidate_snippet_families"] = candidates
         question["review_meta"] = review_meta
         updated += 1
         if limit and updated >= limit:

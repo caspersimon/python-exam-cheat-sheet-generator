@@ -1,0 +1,10 @@
+{
+  "updated_at": "2026-03-24T10:43:09Z",
+  "event": "done",
+  "round": "round2",
+  "completed_questions": 168,
+  "remaining_questions": 0,
+  "stale_batches": 0,
+  "last_exit_code": 0,
+  "last_error": ""
+}

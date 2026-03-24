@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 import json
-from collections import Counter, defaultdict
+from collections import defaultdict
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
+from pipelines.vision_exam_pipeline_selectable import build_selectable_items_snapshot, snippet_family_index
 from pipelines.vision_exam_pipeline_shared import (
-    ANALYTICS_DIR,
-    ANALYTICS_SCHEMA,
     EVALUATIONS_DIR,
     EVALUATION_SCHEMA,
     EVALUATION_STATUSES,
@@ -17,34 +16,15 @@ from pipelines.vision_exam_pipeline_shared import (
     SYNTHESIS_DIR,
     SYNTHESIS_SCHEMA,
     WORK_PACKET_DIR,
-    _card_week,
     _normalize_question_options,
     _read_json,
     _safe_dict,
     _safe_list,
     _safe_str,
     _write_json,
-    iter_selectable_items,
-    load_topic_cards,
     portable_path,
     timestamp_utc,
 )
-
-
-def build_selectable_items_snapshot(
-    *,
-    output_path: Path = SELECTABLE_ITEMS_FILE,
-) -> list[dict[str, Any]]:
-    cards = load_topic_cards()
-    weeks_by_card = {card["id"]: _card_week(card) for card in cards if isinstance(card, dict) and card.get("id")}
-    items = []
-    for item in iter_selectable_items(cards):
-        if isinstance(item, dict):
-            snapshot = dict(item)
-            snapshot["week"] = int(weeks_by_card.get(_safe_str(item.get("card_id"))) or 0)
-            items.append(snapshot)
-    _write_json(output_path, items)
-    return items
 
 
 def _findings_index(findings_paths: list[Path]) -> dict[tuple[str, int], list[dict[str, Any]]]:
@@ -70,6 +50,10 @@ def _default_answerability() -> dict[str, Any]:
 
 def _default_gap_analysis() -> dict[str, Any]:
     return {"summary": "", "missing_concepts": [], "proposed_fix": ""}
+
+
+def _default_near_identical() -> list[dict[str, Any]]:
+    return []
 
 def _evaluation_status_for_question(*, question: dict[str, Any], existing: dict[str, Any]) -> str:
     existing_status = _safe_str(existing.get("status"))
@@ -111,6 +95,7 @@ def build_evaluation_scaffold(
     findings_paths: list[Path] | None = None,
 ) -> dict[str, Any]:
     selectable_by_id = {item["item_id"]: item for item in selectable_items if isinstance(item, dict) and item.get("item_id")}
+    selectable_by_snippet = snippet_family_index(selectable_items)
     existing_questions = {
         _safe_str(question.get("question_id")): question
         for question in _safe_list(_safe_dict(existing_payload).get("questions"))
@@ -156,10 +141,18 @@ def build_evaluation_scaffold(
                     "best_single_snippet": existing.get("best_single_snippet"),
                     "top_three_snippets": _safe_list(existing.get("top_three_snippets")),
                     "minimal_sufficient_snippets": _safe_list(existing.get("minimal_sufficient_snippets")),
+                    "near_identical_past_exam_pieces": _safe_list(existing.get("near_identical_past_exam_pieces")) or _default_near_identical(),
+                    "best_snippet_family": _safe_dict(existing.get("best_snippet_family")),
+                    "supporting_snippet_families": _safe_list(existing.get("supporting_snippet_families")),
+                    "minimal_snippet_families": _safe_list(existing.get("minimal_snippet_families")),
                     "answerability": _safe_dict(existing.get("answerability")) or _default_answerability(),
                     "gap_analysis": _gap_analysis_for_question(existing=existing, status=status),
                     "suggested_changes": _safe_list(existing.get("suggested_changes")),
-                    "review_meta": {"requires_human_review": True, "reviewed_at": _safe_str(_safe_dict(existing.get("review_meta")).get("reviewed_at"))},
+                    "review_meta": {
+                        "requires_human_review": True,
+                        "reviewed_at": _safe_str(_safe_dict(existing.get("review_meta")).get("reviewed_at")),
+                        "snippet_family_count": len(selectable_by_snippet),
+                    },
                 }
             )
         for blocked in _safe_list(_safe_dict(exam).get("blocked_questions")):
@@ -182,6 +175,10 @@ def build_evaluation_scaffold(
                     "best_single_snippet": None,
                     "top_three_snippets": [],
                     "minimal_sufficient_snippets": [],
+                    "near_identical_past_exam_pieces": [],
+                    "best_snippet_family": {},
+                    "supporting_snippet_families": [],
+                    "minimal_snippet_families": [],
                     "answerability": _default_answerability(),
                     "gap_analysis": {
                         "summary": _safe_str(blocked.get("reason")),
@@ -278,6 +275,34 @@ def validate_evaluation_payload(payload: dict[str, Any], *, selectable_items: li
                     item_id = _safe_str(snippet.get("item_id"))
                     if item_id and item_id not in valid_item_ids:
                         errors.append(f"{question_id}: unknown snippet reference {item_id}")
+        for field in ["near_identical_past_exam_pieces"]:
+            for snippet in _safe_list(item.get(field)):
+                if isinstance(snippet, dict):
+                    item_id = _safe_str(snippet.get("item_id"))
+                    if item_id and item_id not in valid_item_ids:
+                        errors.append(f"{question_id}: unknown near-identical piece reference {item_id}")
+        valid_snippet_ids = {
+            _safe_str(candidate.get("snippet_id"))
+            for candidate in _safe_list(_safe_dict(item.get("review_meta")).get("candidate_snippet_families"))
+            if _safe_str(_safe_dict(candidate).get("snippet_id"))
+        }
+        best_family = _safe_dict(item.get("best_snippet_family"))
+        if best_family:
+            snippet_id = _safe_str(best_family.get("snippet_id"))
+            if valid_snippet_ids and snippet_id and snippet_id not in valid_snippet_ids:
+                errors.append(f"{question_id}: unknown best_snippet_family {snippet_id}")
+            for piece_id in _safe_list(best_family.get("critical_piece_ids")):
+                if _safe_str(piece_id) and _safe_str(piece_id) not in valid_item_ids:
+                    errors.append(f"{question_id}: unknown critical piece {piece_id}")
+        for field_name, piece_field in [("supporting_snippet_families", "critical_piece_ids"), ("minimal_snippet_families", "needed_piece_ids")]:
+            for family in _safe_list(item.get(field_name)):
+                if isinstance(family, dict):
+                    snippet_id = _safe_str(family.get("snippet_id"))
+                    if valid_snippet_ids and snippet_id and snippet_id not in valid_snippet_ids:
+                        errors.append(f"{question_id}: unknown snippet family {snippet_id}")
+                    for piece_id in _safe_list(family.get(piece_field)):
+                        if _safe_str(piece_id) and _safe_str(piece_id) not in valid_item_ids:
+                            errors.append(f"{question_id}: unknown piece reference {piece_id}")
         for suggestion in _safe_list(item.get("suggested_changes")):
             if isinstance(suggestion, dict):
                 target_item_id = _safe_str(suggestion.get("target_item_id"))
@@ -344,139 +369,6 @@ def synthesize_suggestions(*, round_name: str, evaluation_path: Path | None = No
     }
     _write_json(_synthesis_file(round_name), synthesis)
     return synthesis
-
-
-def _analytics_file(round_name: str) -> Path:
-    return ANALYTICS_DIR / f"{round_name}.json"
-
-
-def _analytics_report_file(round_name: str) -> Path:
-    return ANALYTICS_DIR / f"{round_name}.md"
-
-
-def _comparison_summary(current: dict[str, Any], baseline: dict[str, Any]) -> dict[str, Any]:
-    current_counts = Counter(_safe_str(_safe_dict(item.get("answerability")).get("status")) for item in _safe_list(current.get("questions")))
-    baseline_counts = Counter(_safe_str(_safe_dict(item.get("answerability")).get("status")) for item in _safe_list(baseline.get("questions")))
-    return {
-        key: {
-            "current": int(current_counts.get(key, 0)),
-            "baseline": int(baseline_counts.get(key, 0)),
-            "delta": int(current_counts.get(key, 0) - baseline_counts.get(key, 0)),
-        }
-        for key in sorted(set(current_counts) | set(baseline_counts))
-        if key
-    }
-
-
-def build_ranking_analytics(
-    *,
-    round_name: str,
-    evaluation_payload: dict[str, Any],
-    selectable_items: list[dict[str, Any]],
-    baseline_payload: dict[str, Any] | None = None,
-) -> tuple[dict[str, Any], str]:
-    selectable_by_id = {item["item_id"]: item for item in selectable_items if isinstance(item, dict) and item.get("item_id")}
-    completed = [item for item in _safe_list(evaluation_payload.get("questions")) if _safe_str(_safe_dict(item).get("status")) == "completed"]
-    status_counts = Counter(_safe_str(_safe_dict(item).get("status")) for item in _safe_list(evaluation_payload.get("questions")))
-    answerability_counts = Counter(_safe_str(_safe_dict(item.get("answerability")).get("status")) for item in completed)
-    week_stats: dict[int, dict[str, set[str]]] = defaultdict(lambda: {"top1": set(), "top3": set(), "minimal": set(), "all": set()})
-
-    for item_id, item in selectable_by_id.items():
-        week = int(item.get("week") or 0)
-        if week > 0:
-            week_stats[week]["all"].add(item_id)
-    for evaluation in completed:
-        best = _safe_dict(evaluation.get("best_single_snippet"))
-        item_id = _safe_str(best.get("item_id"))
-        if item_id in selectable_by_id:
-            week_stats[int(selectable_by_id[item_id].get("week") or 0)]["top1"].add(item_id)
-        for bucket_name, key in [("top_three_snippets", "top3"), ("minimal_sufficient_snippets", "minimal")]:
-            for snippet in _safe_list(evaluation.get(bucket_name)):
-                item_id = _safe_str(_safe_dict(snippet).get("item_id"))
-                if item_id in selectable_by_id:
-                    week_stats[int(selectable_by_id[item_id].get("week") or 0)][key].add(item_id)
-
-    weeks_payload = []
-    for week in sorted(week for week in week_stats if week > 0):
-        stats = week_stats[week]
-        never_used = sorted(stats["all"] - stats["minimal"])
-        weeks_payload.append(
-            {
-                "week": week,
-                "top1_unique_snippets": len(stats["top1"]),
-                "top3_unique_snippets": len(stats["top3"]),
-                "minimal_set_unique_snippets": len(stats["minimal"]),
-                "minimal_set_unused_snippets": len(never_used),
-                "unused_snippet_ids": never_used[:50],
-            }
-        )
-
-    insights = []
-    if not completed:
-        insights.append("No completed question-to-snippet evaluations yet. Ranking decisions should wait until round reviews are filled in.")
-    elif weeks_payload:
-        top_week = max(weeks_payload, key=lambda row: row["minimal_set_unique_snippets"])
-        insights.append(f"Week {top_week['week']} currently has the broadest minimal-set footprint with {top_week['minimal_set_unique_snippets']} unique snippets.")
-
-    analytics = {
-        "schema_version": ANALYTICS_SCHEMA,
-        "generated_at": timestamp_utc(),
-        "round": round_name,
-        "input_evaluations_path": portable_path(_evaluation_file(round_name)),
-        "summary": {
-            "total_evaluations": len(_safe_list(evaluation_payload.get("questions"))),
-            "completed_evaluations": len(completed),
-            "status_counts": dict(status_counts),
-            "answerability_counts": dict(answerability_counts),
-        },
-        "weeks": weeks_payload,
-        "insights": insights,
-        "comparison": _comparison_summary(evaluation_payload, baseline_payload or {}) if baseline_payload else {},
-    }
-
-    lines = [
-        f"# Ranking Analytics ({round_name})",
-        "",
-        f"- Total evaluations: `{analytics['summary']['total_evaluations']}`",
-        f"- Completed evaluations: `{analytics['summary']['completed_evaluations']}`",
-        f"- Status counts: `{json.dumps(analytics['summary']['status_counts'], ensure_ascii=False, sort_keys=True)}`",
-    ]
-    if analytics["summary"]["answerability_counts"]:
-        lines.append(f"- Answerability counts: `{json.dumps(analytics['summary']['answerability_counts'], ensure_ascii=False, sort_keys=True)}`")
-    lines.extend(["", "## Week Summary", ""])
-    if weeks_payload:
-        lines.append("| Week | Top 1 unique | Top 3 unique | Minimal-set unique | Minimal-set unused |")
-        lines.append("|---|---:|---:|---:|---:|")
-        for row in weeks_payload:
-            lines.append(f"| {row['week']} | {row['top1_unique_snippets']} | {row['top3_unique_snippets']} | {row['minimal_set_unique_snippets']} | {row['minimal_set_unused_snippets']} |")
-    else:
-        lines.append("No completed evaluations yet.")
-    if insights:
-        lines.extend(["", "## Insights", ""])
-        for insight in insights:
-            lines.append(f"- {insight}")
-    return analytics, "\n".join(lines) + "\n"
-
-
-def write_ranking_analytics(
-    *,
-    round_name: str,
-    baseline_round: str = "",
-    selectable_items_path: Path = SELECTABLE_ITEMS_FILE,
-) -> dict[str, Any]:
-    evaluations = _read_json(_evaluation_file(round_name))
-    selectable_items = _read_json(selectable_items_path) if selectable_items_path.exists() else build_selectable_items_snapshot()
-    baseline = _read_json(_evaluation_file(baseline_round)) if baseline_round and _evaluation_file(baseline_round).exists() else None
-    analytics, markdown = build_ranking_analytics(
-        round_name=round_name,
-        evaluation_payload=evaluations,
-        selectable_items=selectable_items,
-        baseline_payload=baseline,
-    )
-    _write_json(_analytics_file(round_name), analytics)
-    _analytics_report_file(round_name).parent.mkdir(parents=True, exist_ok=True)
-    _analytics_report_file(round_name).write_text(markdown, encoding="utf-8")
-    return analytics
 
 
 def validate_all(

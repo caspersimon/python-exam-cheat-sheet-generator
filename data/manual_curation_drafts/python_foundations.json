@@ -1,0 +1,1058 @@
+{
+  "id": "python-foundations",
+  "title": "Python Foundations",
+  "summary": "Core syntax, name/object reasoning, operator logic, and condition-building rules that recur across the early-course exams. This manual draft keeps only dense, exam-useful material and removes noisy cross-topic spillover from the generated intake.",
+  "source_refs": {
+    "exam_builder_parent_topic": "python-foundations",
+    "topic_card_ids": [
+      "w1-python-basics",
+      "w1-objects-and-names",
+      "w1-operators-and-truth",
+      "w2-conditions"
+    ],
+    "review_packets": []
+  },
+  "main_topics": [
+    {
+      "id": "python-basics",
+      "title": "Python Basics",
+      "summary": "Read code literally: know what Python ignores, how one statement can span lines, and which backslashes do or do not create escapes.",
+      "source_refs": {
+        "topic_card_id": "w1-python-basics",
+        "exam_builder_topic_id": "python-basics"
+      },
+      "sections": {
+        "must_know": {
+          "snippets": [
+            {
+              "id": "python-basics-syntax-rules",
+              "title": "Comments, Logical Lines, and Raw Strings",
+              "summary": "Most beginner syntax mistakes here come from forgetting what `#` ignores, when Python allows line continuation, and how raw strings treat backslashes.",
+              "source_refs": {
+                "exam_builder_snippet_ids": [
+                  "snippet-subtopic-w1-python-basics-w1-python-basics-execution-model",
+                  "snippet-item-manual-comments",
+                  "snippet-item-manual-logical-lines"
+                ],
+                "topic_card_piece_ids": [
+                  "manual-comments",
+                  "manual-logical-lines",
+                  "ai-example-4",
+                  "ai-example-5",
+                  "ai-example-6"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "python-basics-syntax-rules-table",
+                  "piece_type": "reference_table",
+                  "title": "Syntax rules you should recall instantly",
+                  "content": {
+                    "headers": [
+                      "Pattern",
+                      "What Python does",
+                      "Example"
+                    ],
+                    "rows": [
+                      [
+                        "# comment",
+                        "ignores everything after `#` on that logical line",
+                        "x = 3  # ignored text"
+                      ],
+                      [
+                        "open brackets",
+                        "statement can continue on later physical lines",
+                        "nums = [\\n  1,\\n  2\\n]"
+                      ],
+                      [
+                        "backslash `\\\\`",
+                        "explicitly continues one statement onto the next line",
+                        "a = 'hi' + \\\\\\n    ' there'"
+                      ],
+                      [
+                        "raw string `r'...'`",
+                        "backslashes are kept literally; quotes still must match",
+                        "r'c:\\\\temp\\\\file.txt'"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "manual-comments",
+                      "manual-logical-lines",
+                      "ai-example-4",
+                      "ai-example-5",
+                      "ai-example-6"
+                    ]
+                  }
+                },
+                {
+                  "id": "python-basics-syntax-rules-code",
+                  "piece_type": "code_example",
+                  "title": "Compact syntax examples",
+                  "content": {
+                    "code": "x = 3  # comment does not execute\\nprint(x)\\n\\npath = r'c:\\\\new\\\\folder'\\n\\nnumbers = [\\n    1,\\n    2,\\n    3,\\n]",
+                    "note": "Use brackets whenever possible; use an explicit backslash only when there is no bracketed structure to hold the continuation."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "manual-comments",
+                      "manual-logical-lines",
+                      "ai-example-4"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "python-basics-escape-sequences",
+              "title": "Escape Sequences and Quote Choices",
+              "summary": "Keep one tiny reference for newline, tab, backslash, and quote escaping so you do not have to reconstruct them from memory in a syntax question.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "ai-example-4",
+                  "ai-example-7",
+                  "manual-string-literals-example"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "python-basics-escape-sequences-table",
+                  "piece_type": "reference_table",
+                  "title": "Small escapes worth recognizing instantly",
+                  "content": {
+                    "headers": [
+                      "Pattern",
+                      "Meaning",
+                      "Example output"
+                    ],
+                    "rows": [
+                      [
+                        "\\n",
+                        "newline",
+                        "Line 1 then Line 2 on the next line"
+                      ],
+                      [
+                        "\\t",
+                        "tab",
+                        "horizontal spacing"
+                      ],
+                      [
+                        "\\\\",
+                        "literal backslash",
+                        "c:\\\\new\\\\folder"
+                      ],
+                      [
+                        "quote escape",
+                        "literal quote inside a string",
+                        "use the other quote style or escape it"
+                      ]
+                    ],
+                    "text": "This is intentionally tiny: it is here for exact syntax and output questions, not for prose explanation."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ai-example-4",
+                      "ai-example-7",
+                      "manual-string-literals-example"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "exam_patterns": {
+          "snippets": [
+            {
+              "id": "python-basics-read-it-literally",
+              "title": "Read Tiny Syntax Fragments Literally",
+              "summary": "Week-1 basics questions are often solved by tracing exactly what Python reads, not by overthinking intent.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "cs-09e2b215ee",
+                  "cs-7498cfc507",
+                  "cs-814a07a136"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "python-basics-read-it-literally-code",
+                  "piece_type": "code_example",
+                  "title": "Literal reading beats guessing",
+                  "content": {
+                    "code": "print('Hello World')  # prints only Hello World\\n# print(_, __, ___)  -> the whole line is a comment if it starts with #\\n123 * 1               # plain arithmetic, no hidden meaning",
+                    "note": "If Python sees a valid literal expression, it evaluates that expression only. Ignore the story in your head and trace the actual tokens."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "cs-09e2b215ee",
+                      "cs-7498cfc507",
+                      "cs-814a07a136"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "useful_backup": {
+          "snippets": [
+            {
+              "id": "python-basics-execution-model",
+              "title": "Execution Precision Mental Model",
+              "summary": "Useful as a fallback reminder when two syntax options look similar.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "kp-1",
+                  "ks-95be7f9418"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "python-basics-execution-model-text",
+                  "piece_type": "explanation",
+                  "title": "Python is precise, not forgiving",
+                  "content": {
+                    "text": "Python translates your script step by step, so tiny syntax differences matter. If two options look almost the same, assume Python will care about the exact tokens, indentation, and delimiters."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-1",
+                      "ks-95be7f9418"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "objects-and-names",
+      "title": "Objects and Names",
+      "summary": "Know what a name points to, which objects can change in place, and when code is creating a new object versus sharing the old one.",
+      "source_refs": {
+        "topic_card_id": "w1-objects-and-names",
+        "exam_builder_topic_id": "objects-and-names"
+      },
+      "sections": {
+        "must_know": {
+          "snippets": [
+            {
+              "id": "objects-and-names-binding",
+              "title": "Names Bind to Objects",
+              "summary": "This is the main mental model: names point at objects; rebinding changes the name-object link, while mutation changes a mutable object in place.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "kp-1",
+                  "kp-3",
+                  "kp-9"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "objects-and-names-binding-table",
+                  "piece_type": "reference_table",
+                  "title": "What changes in each case?",
+                  "content": {
+                    "headers": [
+                      "Action",
+                      "Effect",
+                      "Example"
+                    ],
+                    "rows": [
+                      [
+                        "rebind a name",
+                        "name points to a different object",
+                        "x = 3; x = '3'"
+                      ],
+                      [
+                        "mutate a list/dict/set",
+                        "same object, changed contents",
+                        "lst[0] = 99"
+                      ],
+                      [
+                        "call a method on an immutable value",
+                        "usually returns a new object; original stays unchanged",
+                        "s = 'abc'; s.upper()"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-1",
+                      "kp-3",
+                      "aiq-2"
+                    ]
+                  }
+                },
+                {
+                  "id": "objects-and-names-binding-code",
+                  "piece_type": "code_example",
+                  "title": "Rebinding versus mutation",
+                  "content": {
+                    "code": "name = [1, 2, 3]\\nalias = name\\nname[0] = 99\\nprint(alias)   # [99, 2, 3]\\n\\ns = 'abc'\\ns.upper()\\nprint(s)       # 'abc' (unchanged)",
+                    "note": "Lists are mutable; strings are not. A method call on a string does not update the original variable unless you reassign."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-2",
+                      "kp-manual-aliasing-copy",
+                      "aiq-2"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "objects-and-names-mutable-vs-immutable",
+              "title": "Mutable, Immutable, and Copying",
+              "summary": "Many exam traps reduce to three questions: is the object mutable, are two names sharing it, and did slicing create a copy?",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "kp-2",
+                  "kp-6",
+                  "kp-manual-aliasing-copy"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "objects-and-names-mutable-vs-immutable-table",
+                  "piece_type": "reference_table",
+                  "title": "Fast mutability check",
+                  "content": {
+                    "headers": [
+                      "Type",
+                      "Mutable?",
+                      "Typical trap"
+                    ],
+                    "rows": [
+                      [
+                        "int, float, str, tuple",
+                        "no",
+                        "operation gives a new value/object"
+                      ],
+                      [
+                        "list, dict, set",
+                        "yes",
+                        "an alias sees in-place changes"
+                      ],
+                      [
+                        "slice `seq[:]`",
+                        "new object",
+                        "copy of the outer sequence"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-2",
+                      "kp-6",
+                      "kp-manual-aliasing-copy"
+                    ]
+                  }
+                },
+                {
+                  "id": "objects-and-names-mutable-vs-immutable-code",
+                  "piece_type": "code_example",
+                  "title": "Aliasing versus slicing copy",
+                  "content": {
+                    "code": "l1 = [1, 2, 3]\\nl2 = l1\\nl3 = l1[:]\\nl1[0] = 99\\nprint(l2)  # [99, 2, 3]\\nprint(l3)  # [1, 2, 3]",
+                    "note": "`l2 = l1` shares the same list. `l1[:]` creates a new outer list."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-manual-aliasing-copy-d1",
+                      "aiq-6"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "exam_patterns": {
+          "snippets": [
+            {
+              "id": "objects-and-names-slicing-and-range-trace",
+              "title": "Trace Slices and Indexed Assignment Carefully",
+              "summary": "These questions are usually about excluded stop values, negative indices, or using values as indices by mistake.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "aiq-3",
+                  "kp-6-d1",
+                  "kp-6-d2"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "objects-and-names-slicing-and-range-trace-text",
+                  "piece_type": "explanation",
+                  "title": "Three rules that resolve most slice questions",
+                  "content": {
+                    "text": "For `seq[start:end:step]`, start is included, end is excluded, and a negative step walks right-to-left. When squaring list elements with a loop over indices, use `range(len(x))`, not the element values themselves."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "aiq-3",
+                      "kp-6"
+                    ]
+                  }
+                },
+                {
+                  "id": "objects-and-names-slicing-and-range-trace-code",
+                  "piece_type": "code_example",
+                  "title": "Correct index-based update pattern",
+                  "content": {
+                    "code": "mylist = [0] * len(x)\\nfor i in range(len(x)):\\n    mylist[i] = x[i] ** 2",
+                    "note": "Looping with `for i in x` gives element values, not safe positions."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "aiq-3"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "objects-and-names-mutable-defaults",
+              "title": "Mutable Default Argument Trap",
+              "summary": "A default list or dict is created once when the function is defined, not each time the function is called.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "aiq-7"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "objects-and-names-mutable-defaults-code",
+                  "piece_type": "code_example",
+                  "title": "Use `None`, then create the object inside",
+                  "content": {
+                    "code": "def f(lst=None):\\n    if lst is None:\\n        lst = []\\n    return lst",
+                    "note": "This avoids sharing one default list across multiple calls."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "aiq-7"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "useful_backup": {
+          "snippets": [
+            {
+              "id": "objects-and-names-builtins-and-naming",
+              "title": "Core Types and Naming Rules",
+              "summary": "Low-friction reference material for early exam questions.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "kp-4",
+                  "kp-5"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "objects-and-names-builtins-and-naming-table",
+                  "piece_type": "reference_table",
+                  "title": "Built-in types and name rules",
+                  "content": {
+                    "headers": [
+                      "Thing",
+                      "Remember"
+                    ],
+                    "rows": [
+                      [
+                        "core types",
+                        "`int`, `float`, `str`, `bool`, `tuple`, `list`, `dict`, `set`"
+                      ],
+                      [
+                        "valid names",
+                        "letters, digits, underscores; cannot start with a digit"
+                      ],
+                      [
+                        "case sensitivity",
+                        "`name` and `Name` are different"
+                      ],
+                      [
+                        "avoid shadowing",
+                        "do not reuse names like `list`, `print`, `sorted`"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-4",
+                      "kp-5"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "operators-and-truth",
+      "title": "Operators and Truth",
+      "summary": "Arithmetic, comparisons, and boolean logic questions are mostly about operator meaning, precedence, and a few recurring traps.",
+      "source_refs": {
+        "topic_card_id": "w1-operators-and-truth",
+        "exam_builder_topic_id": "operators-and-truth"
+      },
+      "sections": {
+        "must_know": {
+          "snippets": [
+            {
+              "id": "operators-and-truth-arithmetic-reference",
+              "title": "Arithmetic Operator Reference",
+              "summary": "The highest-yield early-operator facts are `/` vs `//`, `%`, `**`, and the reminder that `^` is not exponentiation.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "kp-1",
+                  "ai-example-1"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "operators-and-truth-arithmetic-reference-table",
+                  "piece_type": "reference_table",
+                  "title": "Arithmetic operators at a glance",
+                  "content": {
+                    "headers": [
+                      "Operator",
+                      "Meaning",
+                      "Example"
+                    ],
+                    "rows": [
+                      [
+                        "/",
+                        "true division, returns float",
+                        "4 / 2 -> 2.0"
+                      ],
+                      [
+                        "//",
+                        "floor division",
+                        "5 // 2 -> 2"
+                      ],
+                      [
+                        "%",
+                        "remainder",
+                        "5 % 2 -> 1"
+                      ],
+                      [
+                        "**",
+                        "exponentiation",
+                        "4 ** 3 -> 64"
+                      ],
+                      [
+                        "^",
+                        "bitwise XOR, not power",
+                        "do not use for exponentiation"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-1"
+                    ]
+                  }
+                },
+                {
+                  "id": "operators-and-truth-arithmetic-reference-code",
+                  "piece_type": "code_example",
+                  "title": "Floor division and modulo identity",
+                  "content": {
+                    "code": "print(5 // 3, 5 % 3)\\nprint(-5 // 3, -5 % 3)\\n# (a // b) * b + a % b == a",
+                    "note": "This identity is reliable even when negative numbers make the floor result look surprising."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ai-example-1"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "operators-and-truth-comparison-and-logic",
+              "title": "Comparison and Boolean Logic",
+              "summary": "Comparison operators return booleans, and precedence is a common exam trap.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "kp-2",
+                  "kp-3",
+                  "ai-example-4",
+                  "ai-example-8"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "operators-and-truth-comparison-and-logic-table",
+                  "piece_type": "reference_table",
+                  "title": "Comparison and logic rules",
+                  "content": {
+                    "headers": [
+                      "Rule",
+                      "Remember"
+                    ],
+                    "rows": [
+                      [
+                        "comparison result",
+                        "`==`, `!=`, `<`, `>`, `<=`, `>=` always produce `True` or `False`"
+                      ],
+                      [
+                        "`==` vs `is`",
+                        "`==` compares value; `is` compares object identity"
+                      ],
+                      [
+                        "precedence",
+                        "`not` before `and`, and `and` before `or`"
+                      ],
+                      [
+                        "safe habit",
+                        "add parentheses when the intended grouping is not obvious"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-2",
+                      "kp-3",
+                      "ai-example-8"
+                    ]
+                  }
+                },
+                {
+                  "id": "operators-and-truth-comparison-and-logic-code",
+                  "piece_type": "code_example",
+                  "title": "Precedence trap",
+                  "content": {
+                    "code": "a = 1; b = 3\\nprint(a == 1 or a == 2 and b == 1 or b == 2)\\nprint((a == 1 or a == 2) and (b == 1 or b == 2))",
+                    "note": "The first line is parsed as `a == 1 or (a == 2 and b == 1) or b == 2`."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ai-example-4"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "exam_patterns": {
+          "snippets": [
+            {
+              "id": "operators-and-truth-negative-floor-division",
+              "title": "Negative Floor-Division and Modulo",
+              "summary": "This exact pattern recurs because students often expect truncation toward zero instead of flooring.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "ai-example-1",
+                  "cs-266616a010"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "operators-and-truth-negative-floor-division-code",
+                  "piece_type": "code_example",
+                  "title": "Outputs with negative numerators",
+                  "content": {
+                    "code": "print(-5 // 3, -5 % 3)  # -2 1\\nprint(-5 // 2, -5 % 2)  # -3 1",
+                    "note": "`//` rounds down to the next lower integer, so it can be smaller than simple truncation."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ai-example-1",
+                      "cs-266616a010"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "operators-and-truth-float-and-sequence-traps",
+              "title": "Float Precision and Ordered Comparison Traps",
+              "summary": "The exam often mixes one numeric precision surprise with one ordered-versus-unordered comparison surprise.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "ai-example-2",
+                  "ai-example-3"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "operators-and-truth-float-and-sequence-traps-code",
+                  "piece_type": "code_example",
+                  "title": "Two classic comparison pitfalls",
+                  "content": {
+                    "code": "print(1.1 + 2.2 == 3.3)          # False\\nprint([1, 2] == [2, 1])          # False\\nprint({1, 2} == {2, 1})          # True",
+                    "note": "Lists/tuples/strings are ordered. Sets and dict equality ignore insertion order."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ai-example-2",
+                      "ai-example-3"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "useful_backup": {
+          "snippets": [
+            {
+              "id": "operators-and-truth-quick-boolean-reminder",
+              "title": "Quick Boolean Reminder",
+              "summary": "Tiny fallback reminder when a condition question becomes a logic puzzle.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "kp-3"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "operators-and-truth-quick-boolean-reminder-text",
+                  "piece_type": "explanation",
+                  "title": "`and`, `or`, `not` in one line",
+                  "content": {
+                    "text": "`x and y` is true only if both are true. `x or y` is false only if both are false. `not x` flips a boolean."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "kp-3"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "operators-and-truth-equality-vs-identity",
+              "title": "`==` compares values; `is` compares identity",
+              "summary": "This is a small but classic distractor, especially when two options print the same thing but use different operators.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "ai-example-8",
+                  "kp-2"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "operators-and-truth-equality-vs-identity-table",
+                  "piece_type": "reference_table",
+                  "title": "Value test versus identity test",
+                  "content": {
+                    "headers": [
+                      "Expression",
+                      "Checks",
+                      "Use it for"
+                    ],
+                    "rows": [
+                      [
+                        "a == b",
+                        "same value",
+                        "normal equality questions"
+                      ],
+                      [
+                        "a is b",
+                        "same object in memory",
+                        "identity / None checks"
+                      ],
+                      [
+                        "x is None",
+                        "identity to the singleton None",
+                        "preferred None check"
+                      ]
+                    ],
+                    "text": "If the exam is not specifically about object identity, `==` is usually the intended operator."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ai-example-8",
+                      "kp-2"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "conditions",
+      "title": "Conditions",
+      "summary": "Condition questions usually test three things: how branching syntax is structured, how truthiness and membership work, and whether compound logic is grouped correctly.",
+      "source_refs": {
+        "topic_card_id": "w2-conditions",
+        "exam_builder_topic_id": "conditions"
+      },
+      "sections": {
+        "must_know": {
+          "snippets": [
+            {
+              "id": "conditions-branching-and-ternary",
+              "title": "if / elif / else and Ternary Expressions",
+              "summary": "Know when to use a full branch block and when a single conditional expression is enough.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "ks-c19999c074",
+                  "manual-conditional-expression",
+                  "kp-manual-ternary"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "conditions-branching-and-ternary-table",
+                  "piece_type": "reference_table",
+                  "title": "Branching choices",
+                  "content": {
+                    "headers": [
+                      "Form",
+                      "Use it when",
+                      "Example"
+                    ],
+                    "rows": [
+                      [
+                        "if / elif / else",
+                        "branches need statements or multiple actions",
+                        "full block with indentation"
+                      ],
+                      [
+                        "x if cond else y",
+                        "you only need one resulting value",
+                        "label = 'pass' if score >= 10 else 'fail'"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ks-c19999c074",
+                      "manual-conditional-expression",
+                      "kp-manual-ternary"
+                    ]
+                  }
+                },
+                {
+                  "id": "conditions-branching-and-ternary-code",
+                  "piece_type": "code_example",
+                  "title": "Block form versus expression form",
+                  "content": {
+                    "code": "if score >= 18:\n    label = 'excellent'\nelif score >= 10:\n    label = 'pass'\nelse:\n    label = 'fail'\n\nshort_label = 'pass' if score >= 10 else 'fail'",
+                    "note": "Keep the full indented skeleton in mind for branch questions; use the ternary form only when one value is chosen."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "manual-conditional-expression",
+                      "ks-c19999c074"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "conditions-truthiness-and-membership",
+              "title": "Truthiness and `in`",
+              "summary": "A lot of conditions can be solved by knowing which values are falsy and what membership tests actually check.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "snippet-subtopic-w2-conversion-and-truthiness-w2-conversion-and-truthiness-core",
+                  "ks-4b427a2425"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "conditions-truthiness-and-membership-table",
+                  "piece_type": "reference_table",
+                  "title": "Truthy/falsy and membership rules",
+                  "content": {
+                    "headers": [
+                      "Pattern",
+                      "Result",
+                      "Remember"
+                    ],
+                    "rows": [
+                      [
+                        "[], (), {}, set(), '', 0, 0.0, None",
+                        "falsy",
+                        "empty/zero values fail a condition"
+                      ],
+                      [
+                        "non-empty collection / non-zero number",
+                        "truthy",
+                        "passes a condition"
+                      ],
+                      [
+                        "key in dict",
+                        "checks keys",
+                        "`4 in {1:4, 2:3}` is False"
+                      ],
+                      [
+                        "'1' in '123'",
+                        "substring test",
+                        "works on strings too"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ks-4b427a2425",
+                      "snippet-subtopic-w2-conversion-and-truthiness-w2-conversion-and-truthiness-core"
+                    ]
+                  }
+                },
+                {
+                  "id": "conditions-truthiness-and-membership-code",
+                  "piece_type": "code_example",
+                  "title": "`in` examples worth memorizing",
+                  "content": {
+                    "code": "print(1 in [1, 2, 3])    # True\\nprint('1' in '123')    # True\\nprint(1 in {1: 4, 2: 3}) # True\\nprint(4 in {1: 4, 2: 3}) # False",
+                    "note": "For dictionaries, membership tests keys, not values."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "ks-4b427a2425"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "exam_patterns": {
+          "snippets": [
+            {
+              "id": "conditions-precedence-trap",
+              "title": "Parenthesize Compound Conditions",
+              "summary": "A frequent exam pattern is that the unparenthesized condition is legal Python but means something different from what students intended.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "manual-bool-precedence",
+                  "kp-manual-precedence",
+                  "ai-example-1"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "conditions-precedence-trap-code",
+                  "piece_type": "code_example",
+                  "title": "The classic precedence trap",
+                  "content": {
+                    "code": "a = 1; b = 3\\nprint(a == 1 or a == 2 and b == 1 or b == 2)\\nprint((a == 1 or a == 2) and (b == 1 or b == 2))",
+                    "note": "If the logic matters, parenthesize. Do not rely on memory under exam pressure."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "manual-bool-precedence",
+                      "kp-manual-precedence",
+                      "ai-example-1"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "conditions-filtering-pattern",
+              "title": "Filter by Applying the Condition to Each Element",
+              "summary": "When a function accepts a `condition`, trace one element first and keep the elements where the condition returns `True`.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "manual-filter-condition",
+                  "exam-trial_midterm-6-w2-conditions"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "conditions-filtering-pattern-code",
+                  "piece_type": "code_example",
+                  "title": "Condition-driven filtering",
+                  "content": {
+                    "code": "def main(lst, condition):\\n    return [x for x in lst if condition(x)]\\n\\nmain([1, 2, 3, 4], lambda x: x % 2 != 0)  # [1, 3]",
+                    "note": "The lambda keeps odd values here because `x % 2 != 0` is true only for odd numbers."
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "manual-filter-condition",
+                      "exam-trial_midterm-6-w2-conditions"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "useful_backup": {
+          "snippets": [
+            {
+              "id": "conditions-explicit-conversion",
+              "title": "Convert Before Comparing Mixed Types",
+              "summary": "Useful backup for conditions that mix strings, ints, floats, and booleans.",
+              "source_refs": {
+                "topic_card_piece_ids": [
+                  "snippet-subtopic-w2-conversion-and-truthiness-w2-conversion-and-truthiness-core",
+                  "exam-midterm_2024-2-w2-conditions"
+                ]
+              },
+              "pieces": [
+                {
+                  "id": "conditions-explicit-conversion-table",
+                  "piece_type": "reference_table",
+                  "title": "Common conversions and traps",
+                  "content": {
+                    "headers": [
+                      "Goal",
+                      "Do this",
+                      "Trap"
+                    ],
+                    "rows": [
+                      [
+                        "string to int",
+                        "`int('3')`",
+                        "`'3' == 3` is false because the types differ"
+                      ],
+                      [
+                        "string to float",
+                        "`float('3.0')`",
+                        "invalid numeric text raises `ValueError`"
+                      ],
+                      [
+                        "numeric truth",
+                        "`0` is false, non-zero is true",
+                        "`True == 1` and `False == 0` in numeric contexts"
+                      ],
+                      [
+                        "invalid integer text",
+                        "int('1a')",
+                        "raises `ValueError`"
+                      ],
+                      [
+                        "mix string and int directly",
+                        "str(1) + \"2\" or int(\"2\") + 1",
+                        "'1' + 2 raises `TypeError`"
+                      ]
+                    ]
+                  },
+                  "source_refs": {
+                    "derived_from": [
+                      "snippet-subtopic-w2-conversion-and-truthiness-w2-conversion-and-truthiness-core",
+                      "exam-midterm_2024-2-w2-conditions"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

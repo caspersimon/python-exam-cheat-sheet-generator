@@ -1,0 +1,540 @@
+{
+  "id": "functions-and-program-flow",
+  "title": "Functions and Program Flow",
+  "summary": "Manual curation draft for the shipped UI. This parent topic keeps only compact, exam-useful material for function syntax, imports, flexible arguments, scope/return behavior, and lambda-style patterns.",
+  "source_inputs": [
+    "data/exam_builder_topics.json",
+    "topic_cards.json",
+    "data/vision_exam_pipeline/review_packets/round1.json",
+    "data/vision_exam_pipeline/analytics/round1.json"
+  ],
+  "main_topics": [
+    {
+      "id": "functions-and-imports",
+      "title": "Functions and Imports",
+      "summary": "Defining a function, calling it correctly, and knowing which names an import statement actually creates.",
+      "sections": {
+        "must_know": [
+          {
+            "id": "fi-call-return-basics",
+            "title": "Define with `def`, call with `()`, and return the value you want the caller to use",
+            "format": "code_example",
+            "content": {
+              "text": "Use `def name(params):` to define a function. Call it with `name(...)`. `print(...)` only displays a value; `return` sends it back to the caller.",
+              "code": "def add(a, b):\n    return a + b\n\nresult = add(2, 3)\nprint(result)  # 5"
+            },
+            "source_refs": [
+              "topic_cards.json#w1-functions-and-imports:kp-2",
+              "topic_cards.json#w3-defining-and-calling-functions:kp-1",
+              "topic_cards.json#w3-defining-and-calling-functions:kp-3"
+            ]
+          },
+          {
+            "id": "fi-import-binding-reference",
+            "title": "Import name-binding reference",
+            "format": "reference_table",
+            "content": {
+              "text": "The important exam question is not what module was imported, but which name is actually available afterwards.",
+              "table": {
+                "headers": [
+                  "Statement",
+                  "Use this name later",
+                  "Not this"
+                ],
+                "rows": [
+                  [
+                    "import math",
+                    "math.pi",
+                    "pi"
+                  ],
+                  [
+                    "import math as m",
+                    "m.pi",
+                    "math.pi"
+                  ],
+                  [
+                    "from math import pi",
+                    "pi",
+                    "math.pi"
+                  ],
+                  [
+                    "from math import pi as constant",
+                    "constant",
+                    "pi"
+                  ]
+                ]
+              }
+            },
+            "source_refs": [
+              "topic_cards.json#w1-functions-and-imports:kp-1",
+              "topic_cards.json#w1-functions-and-imports:ai-example-1",
+              "topic_cards.json#w1-functions-and-imports:ai-example-2",
+              "topic_cards.json#w1-functions-and-imports:ai-example-5"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "id": "fi-alias-trap",
+            "title": "Alias trap: the alias replaces the old module name in your code",
+            "format": "reference_table",
+            "content": {
+              "table": {
+                "headers": [
+                  "Code",
+                  "Works?",
+                  "Why"
+                ],
+                "rows": [
+                  [
+                    "import math as constants\\nconstants.pi",
+                    "Yes",
+                    "You must use the alias you created."
+                  ],
+                  [
+                    "import math as constants\\nmath.pi",
+                    "No",
+                    "The bare name `math` was never bound."
+                  ],
+                  [
+                    "from math import pi as constant\\nconstant * r ** 2",
+                    "Yes",
+                    "The imported name is `constant`."
+                  ]
+                ]
+              }
+            },
+            "source_refs": [
+              "topic_cards.json#w1-functions-and-imports:exam-intro_python_sample_final_24_25-24-w2-conditions"
+            ]
+          },
+          {
+            "id": "fi-branch-return-shape",
+            "title": "In multi-branch function questions, check both the logic and the exact return shape",
+            "format": "concept",
+            "content": {
+              "text": "A function can fail an exam question even when the math is almost right. Check three things: every branch assigns the needed values, the function returns the requested object shape, and helper code is used as a value rather than left as a function object."
+            },
+            "source_refs": [
+              "topic_cards.json#w1-functions-and-imports:exam-midterm_2023-12-w1-functions-and-imports"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "id": "fi-builtins-mini-reference",
+            "title": "Useful built-ins that often appear inside small helper functions",
+            "format": "reference_table",
+            "content": {
+              "table": {
+                "headers": [
+                  "Call",
+                  "Purpose",
+                  "Typical result"
+                ],
+                "rows": [
+                  [
+                    "int('123')",
+                    "string to integer",
+                    "123"
+                  ],
+                  [
+                    "float('123')",
+                    "string to float",
+                    "123.0"
+                  ],
+                  [
+                    "str(123.0)",
+                    "number to string",
+                    "'123.0'"
+                  ],
+                  [
+                    "round(x, 2)",
+                    "round for display/checking",
+                    "2 decimals"
+                  ]
+                ]
+              }
+            },
+            "source_refs": [
+              "topic_cards.json#w1-functions-and-imports:kp-1-d2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "flexible-arguments-and-kwargs",
+      "title": "Flexible Arguments and kwargs",
+      "summary": "Reading function headers with defaults, `*args`, and `**kwargs`, and tracing what a call actually passes in.",
+      "sections": {
+        "must_know": [
+          {
+            "id": "fa-signature-reference",
+            "title": "Read the function header from left to right",
+            "format": "reference_table",
+            "content": {
+              "table": {
+                "headers": [
+                  "Header piece",
+                  "Meaning"
+                ],
+                "rows": [
+                  [
+                    "x",
+                    "required positional parameter"
+                  ],
+                  [
+                    "y=0",
+                    "optional parameter with a default"
+                  ],
+                  [
+                    "*args",
+                    "extra positional arguments as a tuple"
+                  ],
+                  [
+                    "**kwargs",
+                    "extra keyword arguments as a dict"
+                  ],
+                  [
+                    "return a, b",
+                    "one tuple comes back"
+                  ]
+                ]
+              }
+            },
+            "source_refs": [
+              "topic_cards.json#w3-arguments:kp-1",
+              "topic_cards.json#w3-arguments:kp-2",
+              "topic_cards.json#w3-arguments:kp-manual-args-kwargs-return"
+            ]
+          },
+          {
+            "id": "fa-defaults-and-none-fix",
+            "title": "Defaults are evaluated once; never use a mutable object as the default",
+            "format": "code_example",
+            "content": {
+              "text": "A list or dict default persists across calls. Use `None` and create a fresh container inside the function.",
+              "code": "def collect(item, items=None):\n    if items is None:\n        items = []\n    items.append(item)\n    return items"
+            },
+            "source_refs": [
+              "topic_cards.json#w3-arguments:kp-3",
+              "topic_cards.json#w3-arguments:ai-example-6"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "id": "fa-keyword-order-pattern",
+            "title": "Keyword arguments can appear in any order as long as the names match",
+            "format": "code_example",
+            "content": {
+              "code": "def calc(first, second, third):\n    return first + 2 * second + 3 * third\n\nprint(calc(third=4, second=2, first=3))  # 19",
+              "text": "The call order does not matter here because the argument names decide where each value goes."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-arguments:kp-2-d1",
+              "topic_cards.json#w3-arguments:ai-example-3"
+            ]
+          },
+          {
+            "id": "fa-mixed-flexible-header-pattern",
+            "title": "Mixed header pattern: required values first, then extras, then named options",
+            "format": "code_example",
+            "content": {
+              "code": "def multiply(*args, factor=2):\n    total = 1\n    for num in args:\n        total *= num\n    return total * factor",
+              "text": "Common exam move: `*args` collects the numbers, while a named option like `factor=` stays readable in the call."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-arguments:exam-midterm_2024-14-w3-arguments"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "id": "fa-tuple-return-unpack",
+            "title": "Flexible header plus tuple return",
+            "format": "code_example",
+            "content": {
+              "code": "def collect(first, *args, scale=1, **kwargs):\n    return first * scale, args, kwargs\n\nresult, extras, options = collect(2, 3, 4, scale=10, unit='cm')\nprint(result)   # 20\nprint(extras)   # (3, 4)\nprint(options)  # {'unit': 'cm'}",
+              "text": "This is compact but high-value because it combines the most common header features in one traceable example."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-arguments:manual-args-kwargs-return"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "scope-and-return-behavior",
+      "title": "Scope and Return Behavior",
+      "summary": "What names exist where, how values escape a function, and why `None` appears so often in function questions.",
+      "sections": {
+        "must_know": [
+          {
+            "id": "sr-scope-rules",
+            "title": "Scope rules to check before tracing any function",
+            "format": "reference_table",
+            "content": {
+              "table": {
+                "headers": [
+                  "Rule",
+                  "Consequence"
+                ],
+                "rows": [
+                  [
+                    "Parameter names and assigned names inside a function are local by default.",
+                    "They cannot be used outside that function."
+                  ],
+                  [
+                    "If a function assigns to a name anywhere, Python treats that name as local throughout that function.",
+                    "You can get `UnboundLocalError` even before the assignment line."
+                  ],
+                  [
+                    "`global x` rebinds the global name `x`.",
+                    "Use it only when you really want to change the global."
+                  ],
+                  [
+                    "`nonlocal x` rebinds the nearest enclosing local name `x`.",
+                    "Use it in nested functions when you want the inner function to update the outer function's variable."
+                  ],
+                  [
+                    "If the caller needs a value later, return it and assign the result.",
+                    "Do not expect local names to survive the call."
+                  ]
+                ]
+              }
+            },
+            "source_refs": [
+              "topic_cards.json#w3-scope:kp-manual-scope-local",
+              "topic_cards.json#w3-scope:kp-manual-scope-unbound",
+              "topic_cards.json#w3-scope:kp-manual-scope-global",
+              "topic_cards.json#w3-scope:kp-manual-scope-return-outside"
+            ]
+          },
+          {
+            "id": "sr-return-vs-print",
+            "title": "`return` sends a value back; `print` only shows it",
+            "format": "concept",
+            "content": {
+              "text": "A function that prints a value but does not return it still returns `None`. In exam traces, always ask: what comes back to the caller?"
+            },
+            "source_refs": [
+              "topic_cards.json#w3-return-behavior:kp-1",
+              "topic_cards.json#w3-return-behavior:ai-example-5",
+              "topic_cards.json#w3-return-behavior:ai-example-6"
+            ]
+          },
+          {
+            "id": "sr-none-traps",
+            "title": "Common `None` traps",
+            "format": "reference_table",
+            "content": {
+              "table": {
+                "headers": [
+                  "Code shape",
+                  "What comes back"
+                ],
+                "rows": [
+                  [
+                    "function reaches end with no `return`",
+                    "None"
+                  ],
+                  [
+                    "branch that never hits a `return`",
+                    "None"
+                  ],
+                  [
+                    "l1.sort() / l1.append(x)",
+                    "None"
+                  ],
+                  [
+                    "s.upper()",
+                    "new string"
+                  ]
+                ]
+              }
+            },
+            "source_refs": [
+              "topic_cards.json#w3-return-behavior:kp-2",
+              "topic_cards.json#w3-return-behavior:kp-manual-mutating-methods-none",
+              "topic_cards.json#w3-defining-and-calling-functions:kp-2"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "id": "sr-local-name-outside-function",
+            "title": "Local-name error: computing a value inside the function does not make it global",
+            "format": "code_example",
+            "content": {
+              "code": "def power(num, factor):\n    result = num ** factor\n    return result\n\nprint(result)",
+              "text": "`result` is local to `power`, so `print(result)` outside the function fails."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-scope:exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
+              "topic_cards.json#w3-scope:exam-Resit 22/23-2-w3-scope"
+            ]
+          },
+          {
+            "id": "sr-unboundlocal-pattern",
+            "title": "Self-reference after assignment makes the name local and uninitialized",
+            "format": "code_example",
+            "content": {
+              "code": "b = 1\n\ndef main(a):\n    b = b\n    return a\n\nprint(main(1))",
+              "text": "Because `b` is assigned inside `main`, Python treats it as local from the start of the function. The right-hand `b` has no value yet."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-scope:manual-scope-unbound"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "id": "sr-one-element-tuple-pass",
+            "title": "Small syntax traps worth keeping in backup",
+            "format": "reference_table",
+            "content": {
+              "table": {
+                "headers": [
+                  "Pattern",
+                  "Meaning"
+                ],
+                "rows": [
+                  [
+                    "(1)",
+                    "just the integer 1"
+                  ],
+                  [
+                    "(1,)",
+                    "one-element tuple"
+                  ],
+                  [
+                    "pass",
+                    "placeholder statement; does nothing"
+                  ]
+                ]
+              }
+            },
+            "source_refs": [
+              "topic_cards.json#w3-return-behavior:kp-3",
+              "topic_cards.json#w3-return-behavior:kp-4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "lambda-and-higher-order-patterns",
+      "title": "Lambda and Higher-Order Patterns",
+      "summary": "Small inline functions, `map(...)`, `sorted(..., key=...)`, and the few recurring higher-order patterns that show up in exams.",
+      "sections": {
+        "must_know": [
+          {
+            "id": "lh-lambda-map-sorted-reference",
+            "title": "Compact lambda / map / sorted reference",
+            "format": "reference_table",
+            "content": {
+              "table": {
+                "headers": [
+                  "Pattern",
+                  "Use"
+                ],
+                "rows": [
+                  [
+                    "lambda x: x * 2",
+                    "small inline function for one value"
+                  ],
+                  [
+                    "list(map(f, seq))",
+                    "apply `f` to every element and materialize the result"
+                  ],
+                  [
+                    "sorted(seq, key=f)",
+                    "sort by a computed comparison key"
+                  ],
+                  [
+                    "sorted(seq, key=f, reverse=True)",
+                    "same key, descending order"
+                  ]
+                ]
+              }
+            },
+            "source_refs": [
+              "topic_cards.json#w3-higher-order-patterns:kp-2",
+              "topic_cards.json#w3-higher-order-patterns:kp-3",
+              "topic_cards.json#w3-higher-order-patterns:ai-example-8"
+            ]
+          },
+          {
+            "id": "lh-map-is-lazy",
+            "title": "`map(...)` is lazy; wrap it in `list(...)` when the question expects visible values",
+            "format": "code_example",
+            "content": {
+              "code": "nums = [1, 2, 3]\nprint(list(map(lambda x: x * 2, nums)))  # [2, 4, 6]",
+              "text": "A common wrong option prints the raw `map` object instead of materializing the mapped values."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-higher-order-patterns:ai-example-3",
+              "topic_cards.json#w3-higher-order-patterns:kp-3"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "id": "lh-sort-key-pattern",
+            "title": "Sort by a property, not by the raw value",
+            "format": "code_example",
+            "content": {
+              "code": "def sort_list(x):\n    return sorted(x, key=lambda num: abs(num), reverse=True)",
+              "text": "This exact exam pattern checks whether you know that `key=` computes the comparison value and `reverse=True` flips the final order."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-higher-order-patterns:exam-midterm_2023-11-w3-higher-order-patterns"
+            ]
+          },
+          {
+            "id": "lh-function-list-pattern",
+            "title": "Apply several functions to the same input",
+            "format": "code_example",
+            "content": {
+              "code": "funcs = [square, cube]\nfor i in my_list:\n    results = map(lambda f: f(i), funcs)\n    print(list(results))",
+              "text": "Read `lambda f: f(i)` as: take one function from `funcs`, call it on the current number `i`, then collect the outputs."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-higher-order-patterns:exam-midterm_2023-13-w3-higher-order-patterns"
+            ]
+          },
+          {
+            "id": "lh-whole-list-vs-one-element",
+            "title": "Check whether the function expects one number or the whole list",
+            "format": "concept",
+            "content": {
+              "text": "Many distractors fail because they pass the entire list into a function that was written for a single element. `map(f, [1,2,3])` calls `f(1)`, then `f(2)`, then `f(3)`; `f([1,2,3])` is a completely different call."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-higher-order-patterns:exam-trial_midterm-17-w3-higher-order-patterns",
+              "topic_cards.json#w3-higher-order-patterns:exam-midterm_2024-19-w3-higher-order-patterns"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "id": "lh-function-factory",
+            "title": "Nested function / factory pattern",
+            "format": "code_example",
+            "content": {
+              "code": "def function_factory(increment):\n    def adder(n1):\n        return n1 + increment\n    return adder\n\nadd4 = function_factory(4)\nprint(add4(3))  # 7",
+              "text": "Lower-frequency than `lambda` and `map`, but still worth keeping as backup because it tests the idea that functions are objects and can be returned."
+            },
+            "source_refs": [
+              "topic_cards.json#w3-higher-order-patterns:kp-1",
+              "topic_cards.json#w3-higher-order-patterns:ai-example-1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

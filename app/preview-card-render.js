@@ -10,97 +10,25 @@ function buildPreviewCard(entry, layout) {
   const dragHint = locked ? "&#128274;" : "&#8942;";
   const dragHintTitle = locked ? "Card locked" : "Drag card";
 
-  const keyPointBlocks = [];
-  const aiQuestionBlocks = [];
-  const exampleBlocks = [];
-  const recommendedBlocks = [];
-  const additionalBlocks = [];
-
   cards.forEach((sourceCard) => {
     const selection = selectionsByCard[sourceCard.id];
     if (!selection) {
       return;
     }
-    ensureSelectionOverrides(selection);
 
-    if (selection.sections.aiQuestions) {
-      commonQuestionItems(sourceCard)
-        .filter((item) => (selection.selected.aiQuestions || []).includes(item.id))
-        .forEach((item) => {
-          aiQuestionBlocks.push(renderPreviewCommonQuestion(previewId, sourceCard, selection, item));
+    getExamCardSections(sourceCard).forEach((section) => {
+      const snippetBlocks = section.snippets
+        .map((snippet) => renderPreviewSnippetBlock(previewId, sourceCard, selection, section, snippet))
+        .filter(Boolean);
+
+      if (snippetBlocks.length) {
+        sections.push({
+          label: section.title,
+          content: snippetBlocks.join(""),
         });
-    }
-
-    if (selection.sections.keyPoints) {
-      getSelectedKeyPointGroups(sourceCard, selection).forEach((group) => {
-        keyPointBlocks.push(renderPreviewKeyPointGroup(sourceCard, selection, group));
-      });
-    }
-
-    if (selection.sections.aiExamples) {
-      usefulAIExamples(sourceCard)
-        .filter((item) => selection.selected.aiExamples.includes(item.id))
-        .forEach((item) => {
-          const effective = getPreviewAIExampleOverride(selection, item.id, item);
-          const kindLabel = item.kind === "incorrect" ? "Incorrect" : "Correct";
-          exampleBlocks.push(`
-            <div class="preview-item-block">
-              ${renderPreviewItemActions(previewId, sourceCard.id, "aiExample", item.id, "aiExamples")}
-              <p><strong>${escapeHtml(kindLabel)} • ${renderInlineCode(effective.title || "Code example")}</strong></p>
-              ${renderCodeBlock(effective.code || "")}
-              ${effective.output ? `<p><strong>Output / Result:</strong></p>${renderOutputBlock(effective.output || "")}` : ""}
-            </div>
-          `);
-        });
-    }
-
-    if (selection.sections.recommended) {
-      getSelectedSourceItemsForPreview(sourceCard, selection, "recommended").forEach((sourceItem) => {
-        recommendedBlocks.push(renderPreviewSourceItem(previewId, sourceCard, selection, sourceItem, "recommended"));
-      });
-    }
-
-    if (selection.sections.additional) {
-      getSelectedSourceItemsForPreview(sourceCard, selection, "additional").forEach((sourceItem) => {
-        additionalBlocks.push(renderPreviewSourceItem(previewId, sourceCard, selection, sourceItem, "additional"));
-      });
-    }
+      }
+    });
   });
-
-  if (keyPointBlocks.length) {
-    sections.push({
-      label: "Key Points for Reference",
-      content: `<div class="preview-kp-list">${keyPointBlocks.join("")}</div>`,
-    });
-  }
-
-  if (aiQuestionBlocks.length) {
-    sections.push({
-      label: "Common Exam Questions",
-      content: aiQuestionBlocks.join(""),
-    });
-  }
-
-  if (exampleBlocks.length) {
-    sections.push({
-      label: "Code Examples",
-      content: exampleBlocks.join(""),
-    });
-  }
-
-  if (recommendedBlocks.length) {
-    sections.push({
-      label: "Recommended",
-      content: recommendedBlocks.join(""),
-    });
-  }
-
-  if (additionalBlocks.length) {
-    sections.push({
-      label: "Additional",
-      content: additionalBlocks.join(""),
-    });
-  }
 
   if (!sections.length) {
     return null;
@@ -161,7 +89,7 @@ function buildPreviewCard(entry, layout) {
   return cardElement;
 }
 
-function renderPreviewItemActions(previewCardId, sourceCardId, itemType, itemId, sectionKey) {
+function renderPreviewItemActions(previewCardId, sourceCardId, pieceId, itemType) {
   return `
     <div class="preview-item-actions">
       <button
@@ -170,9 +98,8 @@ function renderPreviewItemActions(previewCardId, sourceCardId, itemType, itemId,
         data-role="preview-edit-item"
         data-card-id="${escapeHtml(previewCardId || "")}"
         data-source-card-id="${escapeHtml(sourceCardId || "")}"
-        data-item-type="${escapeHtml(itemType)}"
-        data-item-id="${escapeHtml(itemId)}"
-        data-section="${escapeHtml(sectionKey)}"
+        data-piece-id="${escapeHtml(pieceId)}"
+        data-item-type="${escapeHtml(itemType || "piece")}"
         title="Edit item"
         aria-label="Edit item"
       >
@@ -184,9 +111,8 @@ function renderPreviewItemActions(previewCardId, sourceCardId, itemType, itemId,
         data-role="preview-delete-item"
         data-card-id="${escapeHtml(previewCardId || "")}"
         data-source-card-id="${escapeHtml(sourceCardId || "")}"
-        data-item-type="${escapeHtml(itemType)}"
-        data-item-id="${escapeHtml(itemId)}"
-        data-section="${escapeHtml(sectionKey)}"
+        data-piece-id="${escapeHtml(pieceId)}"
+        data-item-type="${escapeHtml(itemType || "piece")}"
         title="Delete item"
         aria-label="Delete item"
       >
@@ -196,104 +122,67 @@ function renderPreviewItemActions(previewCardId, sourceCardId, itemType, itemId,
   `;
 }
 
-function getSelectedSourceItemsForPreview(card, selection, sectionKey) {
-  const split = getSourceSplit(card);
-  const selectedIds = new Set(selection.selected[sectionKey] || []);
-  const bucket = sectionKey === "recommended" ? split.recommended : split.additional;
-  return bucket.filter((item) => selectedIds.has(item.id));
-}
-
-function getSelectedKeyPointGroups(card, selection) {
-  const selectedIds = new Set(selection.selected.keyPoints || []);
-  return keyPointGroups(card)
-    .map((group) => {
-      const selectedDetails = group.details.filter((detail) => selectedIds.has(detail.id));
-      const pointSelected = selectedIds.has(group.id);
-      if (!pointSelected && !selectedDetails.length) {
-        return null;
-      }
-      return {
-        ...group,
-        pointSelected,
-        selectedDetails,
-      };
-    })
-    .filter(Boolean);
-}
-
-function renderPreviewKeyPointGroup(sourceCard, selection, group) {
-  const keyPointText = getPreviewKeyPointOverride(selection, group.id, group.text);
-  const title = group.pointSelected
-    ? `<p class="preview-kp-main">${renderInlineCode(keyPointText)}</p>`
-    : `<p class="preview-kp-main"><span class="preview-kp-ref">Reference:</span> ${renderInlineCode(keyPointText)}</p>`;
-
-  const detailHtml = group.selectedDetails.length
-    ? `<div class="preview-kp-details">${group.selectedDetails
-        .map((detail) => renderPreviewKeyPointDetail(sourceCard.id, selection, detail))
-        .join("")}</div>`
-    : "";
+function renderPreviewSnippetBlock(previewCardId, sourceCard, selection, section, snippet) {
+  const selectedSet = new Set(selection.selected?.pieces || []);
+  const selectedPieces = snippet.pieces.filter((piece) => selectedSet.has(piece.id));
+  if (!selectedPieces.length) {
+    return "";
+  }
 
   return `
-    <div class="preview-kp-group preview-item-block">
-      ${renderPreviewItemActions(sourceCard.id, sourceCard.id, "keyPoint", group.id, "keyPoints")}
-      ${title}
-      ${detailHtml}
+    <div class="preview-source-item preview-item-block">
+      <p class="preview-source-title"><strong>${renderInlineCode(snippet.title)}</strong></p>
+      ${snippet.snippetType === "past_exam_question" ? `<p class="preview-item-note">Past exam</p>` : ""}
+      ${selectedPieces.map((piece) => renderPreviewPiece(previewCardId, sourceCard, selection, section, snippet, piece)).join("")}
     </div>
   `;
 }
 
-function renderPreviewCommonQuestion(previewCardId, sourceCard, selection, item) {
-  const effective = getPreviewAIQuestionOverride(selection, item.id, item);
+function renderPreviewPiece(previewCardId, sourceCard, selection, section, snippet, piece) {
+  const effective = getPieceOverride(selection, piece);
   return `
-    <div class="preview-item-block preview-question-block">
-      ${renderPreviewItemActions(previewCardId, sourceCard.id, "aiQuestion", item.id, "aiQuestions")}
-      <p class="preview-kp-main"><strong>${renderInlineCode(effective.summary)}</strong></p>
-      ${effective.detail ? `<p>${renderInlineCode(effective.detail)}</p>` : ""}
-      ${effective.extra ? `<p>${renderInlineCode(effective.extra)}</p>` : ""}
-      ${effective.table ? renderPreviewTable(effective.table) : ""}
-      ${effective.code ? renderCodeBlock(effective.code) : ""}
+    <div class="preview-item-block preview-piece-block">
+      ${renderPreviewItemActions(previewCardId, sourceCard.id, piece.id, piece.pieceType)}
+      <p class="preview-piece-title"><strong>${renderInlineCode(effective.title || piece.title)}</strong></p>
+      ${renderPreviewPieceBody(effective)}
     </div>
   `;
 }
 
-function renderPreviewKeyPointDetail(sourceCardId, selection, detail) {
-  const overridden = getPreviewKeyPointDetailOverride(selection, detail.id);
-  if (overridden) {
+function renderPreviewPieceBody(piece) {
+  const content = piece.content || {};
+
+  if (piece.pieceType === "reference_table") {
+    const text = String(content.text || "").trim();
+    const table = {
+      headers: Array.isArray(content.headers) ? content.headers : [],
+      rows: Array.isArray(content.rows) ? content.rows : [],
+    };
     return `
-      <div class="preview-kp-detail-block preview-item-block">
-        ${renderPreviewItemActions(sourceCardId, sourceCardId, "keyPointDetail", detail.id, "keyPoints")}
-        <p class="preview-kp-detail"><strong>${escapeHtml(detail.title || "Detail")}:</strong> ${renderInlineCode(overridden)}</p>
-      </div>
+      ${text ? `<p>${renderInlineCode(text)}</p>` : ""}
+      ${table.headers.length && table.rows.length ? renderPreviewTable(table) : ""}
     `;
   }
 
-  const actions = renderPreviewItemActions(sourceCardId, sourceCardId, "keyPointDetail", detail.id, "keyPoints");
-  if (detail.table) {
+  if (piece.pieceType === "code_example") {
     return `
-      <div class="preview-kp-detail-block preview-item-block">
-        ${actions}
-        <p class="preview-kp-detail-title"><strong>${escapeHtml(detail.title || "Table detail")}</strong></p>
-        ${renderPreviewTable(detail.table)}
-      </div>
+      ${content.text ? `<p>${renderInlineCode(content.text)}</p>` : ""}
+      ${content.code ? renderCodeBlock(content.code) : ""}
+      ${content.output ? `<p><strong>Output:</strong></p>${renderOutputBlock(content.output)}` : ""}
     `;
   }
-  if (detail.code) {
+
+  if (piece.pieceType === "past_exam_piece") {
     return `
-      <div class="preview-kp-detail-block preview-item-block">
-        ${actions}
-        <p class="preview-kp-detail-title"><strong>${escapeHtml(detail.title || "Code detail")}</strong></p>
-        ${renderCodeBlock(detail.code)}
-      </div>
+      ${renderQuestionContent(content.question || "", content.code_context || "")}
+      ${renderOptions(content.options || {})}
+      ${content.correct ? `<p class="answer-chip">Correct: ${escapeHtml(String(content.correct).toUpperCase())}</p>` : ""}
+      ${content.explanation ? `<p>${renderInlineCode(content.explanation)}</p>` : ""}
     `;
   }
-  const text = normalizeTruncatedDisplayText(detail.text || detail.title || "Optional detail");
-  return `
-    <p class="preview-kp-detail preview-item-block">
-      ${actions}
-      ${detail.title ? `<strong>${escapeHtml(detail.title)}:</strong> ` : ""}
-      ${renderInlineCode(text)}
-    </p>
-  `;
+
+  const text = normalizeTruncatedDisplayText(String(content.text || "").trim());
+  return text ? `<p>${renderInlineCode(text)}</p>` : "";
 }
 
 function renderPreviewTable(table) {
@@ -310,106 +199,4 @@ function renderPreviewTable(table) {
       </table>
     </div>
   `;
-}
-
-function renderPreviewSourceItem(previewCardId, sourceCard, selection, sourceItem, sectionKey) {
-  const override = getPreviewSourceOverride(selection, sourceItem.id, sourceItem.header);
-  const header = override?.header || sourceItem.header;
-  const body = override?.body ? renderAutoBlock(override.body) : renderSourceItemBody(sourceItem);
-  return `
-    <div class="preview-source-item preview-item-block">
-      ${renderPreviewItemActions(previewCardId, sourceCard.id, "sourceItem", sourceItem.id, sectionKey)}
-      <p class="preview-source-title"><strong>${escapeHtml(header)}</strong></p>
-      ${body}
-    </div>
-  `;
-}
-
-function ensureSelectionOverrides(selection) {
-  if (!selection || typeof selection !== "object") {
-    return { aiQuestions: {}, keyPoints: {}, keyPointDetails: {}, aiExamples: {}, sources: {} };
-  }
-  if (!selection.overrides || typeof selection.overrides !== "object") {
-    selection.overrides = {};
-  }
-  const overrides = selection.overrides;
-  if (!overrides.aiQuestions || typeof overrides.aiQuestions !== "object") {
-    overrides.aiQuestions = {};
-  }
-  if (!overrides.keyPoints || typeof overrides.keyPoints !== "object") {
-    overrides.keyPoints = {};
-  }
-  if (!overrides.keyPointDetails || typeof overrides.keyPointDetails !== "object") {
-    overrides.keyPointDetails = {};
-  }
-  if (!overrides.aiExamples || typeof overrides.aiExamples !== "object") {
-    overrides.aiExamples = {};
-  }
-  if (!overrides.sources || typeof overrides.sources !== "object") {
-    overrides.sources = {};
-  }
-  return overrides;
-}
-
-function getPreviewAIQuestionOverride(selection, itemId, fallback) {
-  const overrides = ensureSelectionOverrides(selection);
-  const value = overrides.aiQuestions[itemId];
-  if (!value || typeof value !== "object") {
-    return fallback;
-  }
-  return {
-    ...fallback,
-    summary: typeof value.summary === "string" && value.summary.trim() ? value.summary.trim() : fallback.summary,
-    detail: typeof value.detail === "string" && value.detail.trim() ? value.detail.trim() : fallback.detail,
-    extra: typeof value.extra === "string" && value.extra.trim() ? value.extra.trim() : fallback.extra,
-    table: fallback.table || null,
-    code: typeof value.code === "string" && value.code.trim() ? value.code : fallback.code,
-  };
-}
-
-function getPreviewKeyPointOverride(selection, keyPointId, fallbackText) {
-  const overrides = ensureSelectionOverrides(selection);
-  const value = overrides.keyPoints[keyPointId];
-  if (typeof value === "string" && value.trim()) {
-    return value.trim();
-  }
-  return fallbackText;
-}
-
-function getPreviewKeyPointDetailOverride(selection, detailId) {
-  const overrides = ensureSelectionOverrides(selection);
-  const value = overrides.keyPointDetails[detailId];
-  if (typeof value === "string" && value.trim()) {
-    return value.trim();
-  }
-  return "";
-}
-
-function getPreviewAIExampleOverride(selection, exampleId, fallback) {
-  const overrides = ensureSelectionOverrides(selection);
-  const value = overrides.aiExamples[exampleId];
-  if (!value || typeof value !== "object") {
-    return fallback;
-  }
-  return {
-    ...fallback,
-    title: typeof value.title === "string" && value.title.trim() ? value.title.trim() : fallback.title,
-    code: typeof value.code === "string" && value.code.trim() ? value.code : fallback.code,
-    output: typeof value.output === "string" && value.output.trim() ? value.output : fallback.output,
-    why: typeof value.why === "string" && value.why.trim() ? value.why.trim() : fallback.why,
-  };
-}
-
-function getPreviewSourceOverride(selection, itemId, fallbackHeader) {
-  const overrides = ensureSelectionOverrides(selection);
-  const value = overrides.sources[itemId];
-  if (!value || typeof value !== "object") {
-    return null;
-  }
-  const header = typeof value.header === "string" && value.header.trim() ? value.header.trim() : fallbackHeader;
-  const body = typeof value.body === "string" && value.body.trim() ? value.body : "";
-  if (!body && header === fallbackHeader) {
-    return null;
-  }
-  return { header, body };
 }

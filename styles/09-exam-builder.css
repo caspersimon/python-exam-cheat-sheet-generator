@@ -1,0 +1,71 @@
+.topic-parent-summary {
+  margin: 0 0 12px;
+  padding: 0 4px;
+}
+
+.exam-topic-detail .topic-detail-summary {
+  max-width: 68ch;
+}
+
+.exam-snippet-card {
+  gap: 14px;
+}
+
+.exam-snippet-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.exam-snippet-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.exam-snippet-copy h5 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.exam-snippet-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.exam-piece-row {
+  display: grid;
+  gap: 10px;
+  padding-block: 10px;
+  border-top: 1px solid rgba(6, 53, 46, 0.08);
+}
+
+.exam-piece-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.exam-piece-preview p:last-child,
+.preview-piece-block p:last-child {
+  margin-bottom: 0;
+}
+
+.preview-piece-title,
+.preview-item-note {
+  margin: 0 0 6px;
+}
+
+.preview-item-note {
+  color: var(--muted-text, #66756d);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 880px) {
+  .exam-snippet-head {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+}

@@ -1,0 +1,509 @@
+{
+  "parent_topic_id": "pandas-data-work",
+  "parent_topic_title": "Pandas Data Work",
+  "manual_curation_version": 1,
+  "curated_on": "2026-03-24",
+  "curation_notes": [
+    "This draft aggressively merges repetitive week-5 pandas snippets into exam-usable parent-topic summaries.",
+    "Weak one-line duplicates and low-signal micro-snippets were omitted unless they added a concrete exam distinction."
+  ],
+  "main_topics": [
+    {
+      "id": "pandas-core-structures",
+      "title": "Pandas Core Structures",
+      "sections": {
+        "must_know": [
+          {
+            "title": "Know the three base objects cold: `Series`, `DataFrame`, and the default index",
+            "summary": "A `Series` is one labeled column of data. A `DataFrame` is a 2D table built most often from a dict of equal-length lists. If you do not supply an index, pandas gives `0, 1, 2, ...` automatically.",
+            "example": "import pandas as pd\ns = pd.Series([153, 160, 150], name='Length')\ndf = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})",
+            "why_kept": "This is foundational and cleaner than shipping several separate low-value constructor snippets.",
+            "source_basis": [
+              "manual-pandas-df",
+              "manual-pandas-import",
+              "ks-052ed25923",
+              "ks-9a5d2c05fb"
+            ],
+            "pieces": [
+              {
+                "id": "pandas-core-objects-table",
+                "piece_type": "reference_table",
+                "title": "Series, DataFrame, and default index",
+                "content": {
+                  "headers": [
+                    "Object",
+                    "Think of it as",
+                    "Default index if omitted"
+                  ],
+                  "rows": [
+                    [
+                      "Series",
+                      "one labeled column",
+                      "0, 1, 2, ..."
+                    ],
+                    [
+                      "DataFrame",
+                      "2D table of aligned columns",
+                      "0, 1, 2, ..."
+                    ]
+                  ],
+                  "text": "A DataFrame is most often built from a dict of equal-length lists."
+                },
+                "source_refs": [
+                  "manual-pandas-df",
+                  "manual-pandas-import",
+                  "ks-052ed25923",
+                  "ks-9a5d2c05fb"
+                ]
+              },
+              {
+                "id": "pandas-core-objects-code",
+                "piece_type": "code_example",
+                "title": "Know the three base objects cold: `Series`, `DataFrame`, and the default index",
+                "content": {
+                  "text": "A `Series` is one labeled column of data. A `DataFrame` is a 2D table built most often from a dict of equal-length lists. If you do not supply an index, pandas gives `0, 1, 2, ...` automatically.",
+                  "code": "import pandas as pd\ns = pd.Series([153, 160, 150], name='Length')\ndf = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})"
+                },
+                "source_refs": [
+                  "manual-pandas-df",
+                  "manual-pandas-import",
+                  "ks-052ed25923",
+                  "ks-9a5d2c05fb"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Shape rule that keeps appearing on exams: `df['A']` vs `df[['A']]`",
+            "summary": "`df['A']` returns a `Series` (1D). `df[['A']]` returns a one-column `DataFrame` (2D). Use the list form whenever the question explicitly wants a DataFrame back.",
+            "example": "df['A']        # Series\ndf[['A']]      # one-column DataFrame\ndf[['A', 'B']] # two-column DataFrame",
+            "why_kept": "This is one of the highest-payoff pandas distinctions and should be stated once, clearly, instead of repeated in fragmented forms.",
+            "source_basis": [
+              "manual-series-vs-dataframe",
+              "kp-manual-series-vs-df-d1"
+            ],
+            "pieces": [
+              {
+                "id": "pandas-shape-rules-table",
+                "piece_type": "reference_table",
+                "title": "Selection shape rules",
+                "content": {
+                  "headers": [
+                    "Form",
+                    "Returns",
+                    "Why it matters"
+                  ],
+                  "rows": [
+                    [
+                      "df['A']",
+                      "Series",
+                      "one column, 1D"
+                    ],
+                    [
+                      "df[['A']]",
+                      "DataFrame",
+                      "one-column table, stays 2D"
+                    ],
+                    [
+                      "df[['A', 'B']]",
+                      "DataFrame",
+                      "multi-column subset"
+                    ]
+                  ],
+                  "text": "When the prompt explicitly wants a DataFrame back, keep the selection 2D."
+                },
+                "source_refs": [
+                  "manual-series-vs-dataframe",
+                  "kp-manual-series-vs-df-d1"
+                ]
+              },
+              {
+                "id": "pandas-shape-rules-code",
+                "piece_type": "code_example",
+                "title": "Shape rule that keeps appearing on exams: `df['A']` vs `df[['A']]`",
+                "content": {
+                  "text": "`df['A']` returns a `Series` (1D). `df[['A']]` returns a one-column `DataFrame` (2D). Use the list form whenever the question explicitly wants a DataFrame back.",
+                  "code": "df['A']        # Series\ndf[['A']]      # one-column DataFrame\ndf[['A', 'B']] # two-column DataFrame"
+                },
+                "source_refs": [
+                  "manual-series-vs-dataframe",
+                  "kp-manual-series-vs-df-d1"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Use direct column arithmetic for derived columns before reaching for `map` or `apply`",
+            "summary": "If the task is plain elementwise column math, write the vectorized expression directly. Do not wrap simple column addition or subtraction in `map(...)` or row-wise `apply(...)` unless the question truly needs custom per-value or per-row logic.",
+            "example": "df['C'] = df['A'] + df['B']\ndf['D'] = df['A'] - df['B']",
+            "why_kept": "This merges the strongest Week 5 pattern with the most common mistake pattern.",
+            "source_basis": [
+              "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+              "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
+              "snippet-item-kp-5-d2"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "title": "Creating a new column from existing columns",
+            "summary": "Exam questions repeatedly test whether you understand that new columns are assigned by column name and filled with vectorized Series results.",
+            "pattern": "df['C'] = df['A'] + df['B']\n# or\ndf.loc[:, 'C'] = df.loc[:, 'A'] + df.loc[:, 'B']",
+            "watch_out": [
+              "Do not write `df['A' + 'B']`.",
+              "Do not use a row label like `df.loc['C']` when the goal is a new column."
+            ],
+            "source_basis": [
+              "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+              "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures"
+            ]
+          },
+          {
+            "title": "The classic trap: `map` is not a shortcut for vectorized arithmetic",
+            "summary": "`Series.map(...)` expects a function, dict, or mapping-like Series. If the whole expression already works elementwise, use the vectorized form directly.",
+            "pattern": "(s - s.mean())**2",
+            "anti_pattern": "s.map((s - s.mean())**2)",
+            "source_basis": [
+              "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+              "kp-5"
+            ]
+          },
+          {
+            "title": "Constructor and selection cheat table",
+            "summary": "A compact table for the constructors and access forms that look similar but return different shapes.",
+            "pieces": [
+              {
+                "id": "pandas-construct-select-table",
+                "piece_type": "reference_table",
+                "title": "Constructor and selection cheat table",
+                "content": {
+                  "headers": [
+                    "Pattern",
+                    "Use it for"
+                  ],
+                  "rows": [
+                    [
+                      "pd.Series([10, 20, 30])",
+                      "one labeled column"
+                    ],
+                    [
+                      "pd.DataFrame({'A': [1, 2], 'B': [3, 4]})",
+                      "2D table"
+                    ],
+                    [
+                      "df['A']",
+                      "one column as Series"
+                    ],
+                    [
+                      "df[['A']]",
+                      "one-column DataFrame"
+                    ]
+                  ],
+                  "text": "This gives you the constructor and shape rules in one glance."
+                },
+                "source_refs": [
+                  "manual-pandas-df",
+                  "manual-series-vs-dataframe"
+                ]
+              }
+            ],
+            "source_refs": [
+              "manual-pandas-df",
+              "manual-series-vs-dataframe"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "title": "Index alignment can silently create `NaN` values",
+            "summary": "When pandas combines Series or DataFrames, it aligns by index labels. If indices do not match, the result can fill with `NaN` instead of doing row-by-row arithmetic by position.",
+            "example": "df2 += pd.DataFrame({'A': [2, 5, 6], 'B': [3, 4, 7]}, index=[4, 5, 6])",
+            "why_backup": "Useful and exam-relevant, but less core than constructors, shape, and direct column arithmetic.",
+            "source_basis": [
+              "cs-b069af91f4"
+            ]
+          },
+          {
+            "title": "DatetimeIndex matters only when the index actually stores dates",
+            "summary": "If the DataFrame index is a `DatetimeIndex`, rows can be filtered using date attributes like `.month`. This is worth keeping as a backup, not a headline rule.",
+            "example": "df.loc[[r for r in df.index if r.month == 4]]",
+            "why_backup": "Legitimate pattern, but too specialized to sit in shipped must-know content.",
+            "source_basis": [
+              "ks-75cf35c8b4"
+            ]
+          }
+        ]
+      },
+      "dropped_or_merged": [
+        "Merged repeated constructor/alias snippets into one clean basics rule.",
+        "Dropped noisy dataframe-mutation examples that are harder to memorize than they are worth for the UI."
+      ]
+    },
+    {
+      "id": "inspecting-and-selecting-data",
+      "title": "Inspecting and Selecting Data",
+      "sections": {
+        "must_know": [
+          {
+            "title": "Selection rule in one sentence: plain `df[...]` is not for two axes",
+            "summary": "Use plain `df[...]` for column selection or a boolean row mask. The moment both a row selector and a column selector appear, switch to `.loc[row_sel, col_sel]` or `.iloc[row_sel, col_sel]`.",
+            "example": "df['A']\ndf[df['A'] > 0]\ndf.loc[2:4, ['B']]\ndf.iloc[1:4, [1]]\n# not: df[2, 'B']",
+            "why_kept": "This is the clearest repeated weakness and should be shipped as a flagship snippet.",
+            "source_basis": [
+              "manual-pandas-selection",
+              "kp-manual-pandas-two-axis-d1",
+              "kp-6"
+            ]
+          },
+          {
+            "title": "Know the `loc` vs `iloc` slicing difference exactly",
+            "summary": "`.loc` is label-based and includes the stop label in a slice. `.iloc` is integer-position based and excludes the stop position, like normal Python slicing.",
+            "example": "df.loc['First':'Third', ['Name', 'Weight']]\ndf.iloc[0:2, 0:1]",
+            "why_kept": "Students confuse these constantly, and the distinction directly affects exam answers.",
+            "source_basis": [
+              "manual-pandas-selection",
+              "ks-57ff66f9f1",
+              "ks-dfc064979d"
+            ]
+          },
+          {
+            "title": "Selection shape is part of the answer, not a side detail",
+            "summary": "A scalar selector often collapses the result to a `Series`; wrapping labels in a list usually keeps a `DataFrame`. When the prompt says 'return a DataFrame', preserve 2D shape intentionally.",
+            "example": "df.loc[2]      # Series\ndf.loc[[2]]    # DataFrame\ndf.loc[df.index % 2 == 0, ['B']]  # DataFrame, not Series",
+            "why_kept": "Several exam questions turn entirely on result shape.",
+            "source_basis": [
+              "ks-99fe849762",
+              "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+              "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data"
+            ]
+          },
+          {
+            "title": "Valid vs invalid two-axis selection",
+            "summary": "This is the table that helps you reject impossible pandas indexing forms immediately.",
+            "pieces": [
+              {
+                "id": "pandas-valid-invalid-table",
+                "piece_type": "reference_table",
+                "title": "Valid vs invalid selection forms",
+                "content": {
+                  "headers": [
+                    "Code",
+                    "Valid?",
+                    "Meaning"
+                  ],
+                  "rows": [
+                    [
+                      "df.loc[2:4, ['B']]",
+                      "yes",
+                      "label-based rows + named columns"
+                    ],
+                    [
+                      "df.iloc[1:4, [1]]",
+                      "yes",
+                      "position-based rows + columns"
+                    ],
+                    [
+                      "df.loc[df['A'] > 0, ['B', 'C']]",
+                      "yes",
+                      "boolean mask rows + named columns"
+                    ],
+                    [
+                      "df[df['A'] > 0]",
+                      "yes",
+                      "row filtering only"
+                    ],
+                    [
+                      "df[2, 'B']",
+                      "no",
+                      "plain df[...] is not for two axes"
+                    ]
+                  ],
+                  "text": "Switch to `.loc[...]` or `.iloc[...]` as soon as you need both rows and columns."
+                },
+                "source_refs": [
+                  "manual-pandas-selection",
+                  "kp-manual-pandas-two-axis-d1"
+                ]
+              }
+            ],
+            "source_refs": [
+              "manual-pandas-selection",
+              "kp-manual-pandas-two-axis-d1"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "title": "Select one column for rows that satisfy a row rule",
+            "summary": "Build the row condition first, then choose the target column(s). If the task wants a DataFrame, keep the column selector as a list.",
+            "pattern": "df.loc[df.index % 2 == 0, ['B']]",
+            "watch_out": [
+              "`df.loc[2::2, 'B']` may return a Series instead of the required DataFrame.",
+              "`df[2, 4, 6, 'B']` is invalid."
+            ],
+            "source_basis": [
+              "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+              "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data"
+            ]
+          },
+          {
+            "title": "Boolean mask plus explicit columns is the safest exam default",
+            "summary": "When the prompt mixes filtering and selection, `df.loc[mask, columns]` is usually the clearest and least error-prone form.",
+            "pattern": "mask = df['A'] > 0\nresult = df.loc[mask, ['B', 'C']]",
+            "source_basis": [
+              "manual-pandas-selection",
+              "ai-example-8",
+              "kp-5"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "title": "Quick inspection helpers",
+            "summary": "Use `.head(n)` and `.tail(n)` to inspect rows and `.describe()` for summary statistics. These are useful, but they should stay backup material rather than taking premium UI space.",
+            "example": "df.head(3)\ndf.tail(2)\ndf.describe()",
+            "why_backup": "Helpful for orientation, but rarely the decisive concept in multiple-choice exam questions.",
+            "source_basis": [
+              "ai-example-1",
+              "ks-0114a2cff0"
+            ]
+          }
+        ]
+      },
+      "dropped_or_merged": [
+        "Collapsed many near-duplicate loc/iloc examples into one rule-first selection snippet.",
+        "Dropped low-value toy indexing examples that repeat the same distinction without adding a new exam pattern."
+      ]
+    },
+    {
+      "id": "working-with-values",
+      "title": "Working With Values",
+      "sections": {
+        "must_know": [
+          {
+            "title": "Default mental model: vectorized column expressions first, `map`/`apply` only when needed",
+            "summary": "If the job is straightforward arithmetic or string work that pandas already supports elementwise, write the expression directly. Use `Series.map(...)` for one value in -> one value out on a single Series. Use `DataFrame.apply(..., axis=1)` only when the logic genuinely needs multiple columns from the same row.",
+            "example": "df['total'] = df['A'] + df['B']\ns.map(lambda x: x + 1)\ndf.apply(lambda row: row['A'] + row['B'], axis=1)",
+            "why_kept": "This merges the strongest surviving Week 5 value-transformation rules into one exam-usable decision rule.",
+            "source_basis": [
+              "manual-pandas-values",
+              "kp-5-d2",
+              "kp-5",
+              "kp-6"
+            ]
+          },
+          {
+            "title": "Filter first, then aggregate or sort",
+            "summary": "A very common exam pattern is: build a mask, select rows or one column, then run `sum()`, `mean()`, `count()`, or `sort_values(...)` on the result.",
+            "example": "mask = df['A'] > 0\nresult = df.loc[mask, 'B'].mean()\ndf.sort_values('B', ascending=False)",
+            "why_kept": "This is one of the most reusable pandas exam workflows and deserves its own must-know summary.",
+            "source_basis": [
+              "manual-pandas-filter-aggregate",
+              "kp-manual-filter-aggregate-d2",
+              "manual-pandas-values"
+            ]
+          },
+          {
+            "title": "Use the vectorized text tools pandas already gives you",
+            "summary": "Use `.str` methods for built-in string operations over a whole Series, and `isin(...)` for membership tests over many values at once.",
+            "example": "s.str.upper().str.count('A')\ndf[df['city'].isin(['A', 'B'])]",
+            "why_kept": "This is clearer and more compact than shipping separate tiny snippets for `.str`, `isin`, and string filtering.",
+            "source_basis": [
+              "ks-115ab52188",
+              "ks-2bed6c308f",
+              "kp-3",
+              "kp-4"
+            ]
+          },
+          {
+            "title": "Choose between vectorized math, `map`, and `apply` with a quick table",
+            "summary": "This restores one of the high-value decision aids that is easy to scan under exam pressure.",
+            "pieces": [
+              {
+                "id": "pandas-map-apply-table",
+                "piece_type": "reference_table",
+                "title": "Value-transformation decision table",
+                "content": {
+                  "headers": [
+                    "Need",
+                    "Use",
+                    "Example"
+                  ],
+                  "rows": [
+                    [
+                      "simple column arithmetic",
+                      "vectorized expression",
+                      "df['A'] + df['B']"
+                    ],
+                    [
+                      "one value in -> one value out on a Series",
+                      "Series.map(...)",
+                      "s.map(lambda x: x + 1)"
+                    ],
+                    [
+                      "row logic using multiple columns",
+                      "DataFrame.apply(..., axis=1)",
+                      "df.apply(lambda row: row['A'] + row['B'], axis=1)"
+                    ]
+                  ],
+                  "text": "Use the simplest shape-preserving option that matches the task."
+                },
+                "source_refs": [
+                  "manual-pandas-values",
+                  "kp-5",
+                  "kp-6"
+                ]
+              }
+            ],
+            "source_refs": [
+              "manual-pandas-values",
+              "kp-5",
+              "kp-6"
+            ]
+          }
+        ],
+        "exam_patterns": [
+          {
+            "title": "Text splitting: choose output shape on purpose",
+            "summary": "If you want one derived Series, `map(...)` can be enough. If you want multiple new DataFrame columns, use `.str.split(..., expand=True)`.",
+            "pattern": "s.map(lambda x: x.split('; ')[0])\n# or\ndf[['municipality', 'province']] = df['place'].str.split('; ', expand=True)",
+            "watch_out": [
+              "Do not treat `Series.split(...)` as if pandas strings worked like plain Python strings.",
+              "Choose `expand=True` only when the target is multiple columns."
+            ],
+            "source_basis": [
+              "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+              "manual-pandas-split-into-columns"
+            ]
+          },
+          {
+            "title": "Missing values: decide whether to keep shape or drop data",
+            "summary": "Use `.fillna(...)` if you want to preserve the table and replace missing values. Use `.dropna()` when incomplete rows or columns should disappear entirely.",
+            "pattern": "df.fillna('No value')\ndf.dropna()",
+            "source_basis": [
+              "kp-manual-drop-missing",
+              "ks-18a9645168"
+            ]
+          }
+        ],
+        "useful_backup": [
+          {
+            "title": "Sorting and scalar broadcasting are good support patterns, not front-page content",
+            "summary": "Keep `sort_values(...)` vs `sort_index(...)` and scalar broadcasting in reserve because they matter, but they are less often the decisive snippet than filtering, shape, and map/apply decisions.",
+            "example": "df.sort_values(by='score', ascending=False)\ndf['Height'] += 10",
+            "why_backup": "These belong in backup because they are useful follow-ups, not the clearest parent-topic anchors.",
+            "source_basis": [
+              "ai-example-1",
+              "ai-example-2",
+              "ks-f8eec928e1"
+            ]
+          }
+        ]
+      },
+      "dropped_or_merged": [
+        "Merged separate snippets for sort, map, apply, isin, and string methods into a smaller set of decision rules.",
+        "Dropped weak standalone one-liners such as isolated `drop(...)`/`dropna()` examples unless they supported a broader exam pattern."
+      ]
+    }
+  ]
+}
