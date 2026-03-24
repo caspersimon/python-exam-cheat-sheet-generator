@@ -75,6 +75,12 @@ Raw material ingestion for post-midterm content is also available through:
 - `scripts/validate_extracted_material.py`
 - `scripts/import_extracted_materials.py`
 
+Important boundary:
+
+- the raw-ingestion pipeline may use OCR/text extraction fallbacks for messy source material
+- the separate vision-first exam curation pipeline must not use OCR, `pdftotext`, or deterministic text-layer extraction for exam question capture
+- see `docs/VISION_EXAM_PIPELINE.md` and `data/vision_exam_pipeline/README.md` for the exam-specific workflow
+
 Testing/QA automation:
 
 - `scripts/smoke_ui_playwright.js`: browser smoke flow + screenshot/probe generation.

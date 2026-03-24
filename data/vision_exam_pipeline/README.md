@@ -13,6 +13,16 @@ Key files:
 - `analytics/<round>.json` and `analytics/<round>.md`: ranking-prep summaries
 - `work_packets/extractions/*.json`: per-exam capture packets
 - `work_packets/evaluations/<round>/*.json`: per-exam evaluation packets
+- `OVERNIGHT_EXECUTION_BOARD.md`: mutable coordination board for the current snippet-completeness phase
+
+Execution docs:
+
+- `data/vision_exam_pipeline/RUNBOOK.md`
+- `docs/curation/SNIPPET_COMPLETENESS_EXECUTION_CHECKLIST.md`
+- `docs/curation/OVERNIGHT_AGENT_RUNBOOK.md`
+- `docs/VISION_EXAM_PIPELINE.md`
+- `data/vision_exam_pipeline/plan_after_manual_synthesis.md`
+- `data/vision_exam_pipeline/review_packets/round1_manual_synthesis.md`
 
 Workflow:
 
@@ -25,6 +35,7 @@ python3 scripts/vision_exam_pipeline.py dispatch-evaluations --round round1 --fi
 python3 scripts/vision_exam_pipeline.py synthesize-suggestions --round round1
 python3 scripts/vision_exam_pipeline.py generate-ranking-analytics --round round1
 python3 scripts/vision_exam_pipeline.py generate-review-packet --round round1
+python3 scripts/vision_exam_pipeline.py status --round round1
 python3 scripts/vision_exam_pipeline.py validate --evaluation-round round1
 ```
 

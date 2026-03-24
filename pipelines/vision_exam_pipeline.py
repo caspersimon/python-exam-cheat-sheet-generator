@@ -26,6 +26,9 @@ from pipelines.vision_exam_pipeline_review import (
     write_evaluation_scaffold,
     write_ranking_analytics,
 )
+from pipelines.vision_exam_pipeline_status import (
+    build_pipeline_status,
+)
 from pipelines.vision_exam_pipeline_shared import (
     ANALYTICS_DIR,
     COMPLETENESS_FILE,
@@ -63,6 +66,7 @@ __all__ = [
     "auto_evaluate_questions",
     "build_completeness_report",
     "build_evaluation_scaffold",
+    "build_pipeline_status",
     "build_ranking_analytics",
     "build_review_packet",
     "build_selectable_items_snapshot",

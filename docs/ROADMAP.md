@@ -24,6 +24,7 @@ Current implementation handoff:
 | RM-006 | Medium | planned | Topic Explorer UX | Continue densifying the Topic Explorer sidebar and source rails so long weeks remain fast to scan without layout bloat. | [Template](./specs/SPEC_TEMPLATE.md) |
 | RM-007 | Medium | planned | Topic curation | Merge the densest remaining topic clusters inside the new course-outline buckets without losing evidence quality. | [RM-007](./specs/RM-007-course-outline-topic-merging.md) |
 | RM-008 | High | in_progress | Exam discoverability | Surface exact exam-match snippets in the right topic rails, reduce critical reliance on `additional`, and evaluate making high-value `ai_summary` content selectable. | [RM-008](./specs/RM-008-exam-snippet-discoverability.md) |
+| RM-009 | High | in_progress | Vision exam pipeline | Keep the vision-first exam workflow resumable and use it to drive the current completeness-first snippet curation round. | [RM-009](./specs/RM-009-vision-first-exam-curation-pipeline.md) |
 
 ## Triage Rules
 

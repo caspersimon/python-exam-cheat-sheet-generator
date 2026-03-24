@@ -3,10 +3,10 @@
 ## Metadata
 
 - ID: `RM-009`
-- Status: `planned`
+- Status: `in_progress`
 - Priority: `High`
 - Owner: `codex/human`
-- Last Updated: `2026-03-23`
+- Last Updated: `2026-03-24`
 
 ## Problem
 
@@ -65,6 +65,28 @@ Use the existing render packet pattern from `scripts/exam_coverage_audit.py` as 
 - Start with the seven unique exam sources already covered by the audit packet.
 - Reuse the existing rendered PNG packet when it matches the current source PDFs.
 - Review the question bank and evaluation summaries before implementing any snippet reclassification or UI changes.
+
+## Current Follow-Up
+
+The pipeline itself is now in active use and has produced:
+
+- a complete canonical question bank
+- a first completed evaluation round
+- synthesis and analytics artifacts
+- human/manual review packets
+
+The current follow-up phase is deliberately completeness-first:
+
+- improve the snippet corpus using the approved manual synthesis decisions
+- avoid premature UI/topic-architecture refactors
+- rerun grading only after the snippet corpus is stronger
+
+Operator docs for this follow-up live in:
+
+- `docs/curation/SNIPPET_COMPLETENESS_EXECUTION_CHECKLIST.md`
+- `docs/curation/OVERNIGHT_AGENT_RUNBOOK.md`
+- `docs/VISION_EXAM_PIPELINE.md`
+- `data/vision_exam_pipeline/RUNBOOK.md`
 
 ## Open Questions
 

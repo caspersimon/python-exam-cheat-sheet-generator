@@ -87,6 +87,12 @@ The existing render packet remains the practical starting point for this workflo
 
 See [RM-009 Vision-First Exam Curation Pipeline](specs/RM-009-vision-first-exam-curation-pipeline.md) for the implementation contract and review checkpoints.
 
+Current execution docs for the snippet-completeness follow-up round:
+
+- `docs/curation/SNIPPET_COMPLETENESS_EXECUTION_CHECKLIST.md`
+- `docs/curation/OVERNIGHT_AGENT_RUNBOOK.md`
+- `data/vision_exam_pipeline/OVERNIGHT_EXECUTION_BOARD.md`
+
 Current entrypoint:
 
 ```bash
@@ -98,6 +104,7 @@ python3 scripts/vision_exam_pipeline.py dispatch-evaluations --round round1 --fi
 python3 scripts/vision_exam_pipeline.py synthesize-suggestions --round round1
 python3 scripts/vision_exam_pipeline.py generate-ranking-analytics --round round1
 python3 scripts/vision_exam_pipeline.py generate-review-packet --round round1
+python3 scripts/vision_exam_pipeline.py status --round round1
 python3 scripts/vision_exam_pipeline.py validate --evaluation-round round1
 ```
 

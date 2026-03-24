@@ -10,6 +10,29 @@ Technical handoff for coding agents and contributors working on this repository.
 - No backend/runtime services required
 - Source dataset and generated card data are JSON files in repo
 
+## Current Overnight Focus
+
+If the active task is the post-synthesis snippet completeness round, start here first:
+
+- `docs/curation/SNIPPET_COMPLETENESS_EXECUTION_CHECKLIST.md`
+- `docs/curation/OVERNIGHT_AGENT_RUNBOOK.md`
+- `data/vision_exam_pipeline/OVERNIGHT_EXECUTION_BOARD.md`
+- `data/vision_exam_pipeline/plan_after_manual_synthesis.md`
+- `data/vision_exam_pipeline/review_packets/round1_manual_synthesis.md`
+
+Quick state command:
+
+```bash
+python3 scripts/vision_exam_pipeline.py status --round round1
+```
+
+Important for this phase:
+
+- optimize for snippet completeness, not UI/topic architecture changes
+- treat metadata architecture ideas as future-facing only for now
+- be conservative about pruning before the next grading pass
+- do not use OCR, `pdftotext`, or deterministic text extraction for exam question capture in the vision exam pipeline
+
 ## Current Snapshot (2026-03-22)
 
 - `topic_cards.json`: **27 total cards**

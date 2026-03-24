@@ -22,6 +22,7 @@ from pipelines.vision_exam_pipeline import (
     TMP_ROOT,
     auto_capture_missing_questions,
     auto_evaluate_questions,
+    build_pipeline_status,
     build_selectable_items_snapshot,
     merge_review_drop,
     prepare_page_manifest,
@@ -99,6 +100,9 @@ def _parse_args() -> argparse.Namespace:
     review_packet = subparsers.add_parser("generate-review-packet", help="Build a human-friendly review packet for one evaluation round.")
     review_packet.add_argument("--round", required=True)
     review_packet.add_argument("--selectable-items-path", type=Path, default=SELECTABLE_ITEMS_FILE)
+
+    status = subparsers.add_parser("status", help="Summarize the current pipeline state for one evaluation round.")
+    status.add_argument("--round", default="round1")
 
     validate = subparsers.add_parser("validate", help="Validate question-bank and evaluation snippet references.")
     validate.add_argument("--evaluation-round", default="", help="Optional evaluation round to validate.")
@@ -205,6 +209,10 @@ def main() -> int:
             selectable_items_path=args.selectable_items_path,
         )
         print(json.dumps({"review_packet_path": str(ROOT / "data" / "vision_exam_pipeline" / "review_packets" / f"{args.round}.md"), "theme_count": payload["summary"]["theme_count"]}))
+        return 0
+
+    if args.command == "status":
+        print(json.dumps(build_pipeline_status(round_name=args.round), ensure_ascii=False, indent=2))
         return 0
 
     errors = validate_all(
