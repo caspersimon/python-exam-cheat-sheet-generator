@@ -1,0 +1,155 @@
+{
+  "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+  "question_updates": [
+    {
+      "number": 19,
+      "topic": "trial-dictionary-1",
+      "question": "You have to write a function called main that accepts a dictionary as an input argument. Both the keys and the values of the input are integers.\n\nReturn another dictionary that has the same keys as the input argument. For each output key, the corresponding value should be calculated as the sum of those values from the input dictionary, whose keys are smaller than, or equal to, the output key in question.\n\nFor example:\nmain({5: 1, 2: 5, 4: 2})\nshould return a dictionary that is equal to:\n{5: 8, 2: 5, 4: 7}\n\nWhich of the following programs works as intended?",
+      "options": {
+        "a": "def main(d1):\n    running_total = 0\n    d2 = {}\n    for key in sorted(d1.keys()):\n        running_total += d1[key]\n        d2[key] = running_total\n    return d2",
+        "b": "def main(d):\n    result = {}\n    for output_key in d.keys():\n        result[output_key] = sum([v for k, v in d.items() if k <= output_key])\n    return result",
+        "c": "Both of the above works as intended",
+        "d": "None of the above work as intended"
+      },
+      "correct": "c",
+      "explanation": "Option A builds cumulative sums over the sorted keys, and option B directly computes the sum of values whose keys are less than or equal to each output key. Both produce the intended dictionary values.",
+      "code_context": "Example target behavior:\nmain({5: 1, 2: 5, 4: 2})\n# returns a dictionary equal to {5: 8, 2: 5, 4: 7}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 20,
+      "topic": "trial-dictionary-2",
+      "question": "What is the result of the following program?\n\nl1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]\n\nd1 = {}\nfor key, value in zip(l1, l2):\n    d1[key] = value\n\nd2 = {}\nfor key, value in enumerate(l2, 1):\n    d2[key] = value\n\nprint(d1 == d2)",
+      "options": {
+        "a": "True",
+        "b": "False",
+        "c": "An error message.",
+        "d": "None of the above"
+      },
+      "correct": "a",
+      "explanation": "zip(l1, l2) creates key-value pairs (1,2), (2,3), (3,4), and (4,5). enumerate(l2, 1) produces the same pairs, so d1 and d2 are equal and the comparison prints True.",
+      "code_context": "l1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]\n\nd1 = {}\nfor key, value in zip(l1, l2):\n    d1[key] = value\n\nd2 = {}\nfor key, value in enumerate(l2, 1):\n    d2[key] = value\n\nprint(d1 == d2)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 21,
+      "topic": "trial-dictionary-3",
+      "question": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}\n\nThe following codes all print the same value, except one. Which one?",
+      "options": {
+        "a": "result = 0\nfor key, value in d1:\n    result += value\nprint(result)",
+        "b": "result = 0\nfor key in d1.keys():\n    result += d1[key]\nprint(result)",
+        "c": "result = 0\nfor value in d1.values():\n    result += value\nprint(result)",
+        "d": "result = sum(d1.values())\nprint(result)"
+      },
+      "correct": "a",
+      "explanation": "Iterating directly over a dictionary yields keys, not key-value pairs, so `for key, value in d1:` does not work as intended. The other three options all sum the dictionary values and print the same result.",
+      "code_context": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-12.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 22,
+      "topic": "trial-functions-1",
+      "question": "You have the following string\nx = 'Amsterdam'\n\nWhich script, using the count string method, would print the following value:\n1",
+      "options": {
+        "a": "print(count(x, 'a'))",
+        "b": "print(x.count('a'))",
+        "c": "Both scripts would deliver that result",
+        "d": "Neither script would deliver that result"
+      },
+      "correct": "b",
+      "explanation": "The string method must be called on the string object itself, so `x.count('a')` is the correct form. In 'Amsterdam', there is one lowercase 'a', while the initial uppercase 'A' is not counted.",
+      "code_context": "x = 'Amsterdam'",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-12.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 23,
+      "topic": "trial-functions-2",
+      "question": "Take a look at the following function definition.\n\ndef calculation(func, *args):\n    result = 0\n    for el in args:\n        result += func(el)\n    return result\n\nWhich of the following function calls would return the number 30 as a result?",
+      "options": {
+        "a": "calculation(lambda x: x + 5, 1, 2, 3, 4)",
+        "b": "calculation(lambda x: x**2, 1, 2, 3, 4)",
+        "c": "Both function calls would lead to that result",
+        "d": "Neither function call would lead to that result"
+      },
+      "correct": "c",
+      "explanation": "For option A, the function returns 6 + 7 + 8 + 9 = 30. For option B, it returns 1 + 4 + 9 + 16 = 30. Both calls therefore produce 30.",
+      "code_context": "def calculation(func, *args):\n    result = 0\n    for el in args:\n        result += func(el)\n    return result",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-13.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 24,
+      "topic": "trial-functions-3",
+      "question": "If you know the radius r of a circle and you want to calculate its area, you need the value of pi from the math package and apply the formula:\nπr²\n\nSuppose that the variable r already contains the radius of the circle. Which script does not print the correct answer for the area?",
+      "options": {
+        "a": "import math\nprint(math.pi * r ** 2)",
+        "b": "from math import pi\nprint(pi * r ** 2)",
+        "c": "import math as constants\nprint(math.pi * r ** 2)",
+        "d": "from math import pi as constant\nprint(constant * r ** 2)"
+      },
+      "correct": "c",
+      "explanation": "Option C imports the module under the name `constants`, but then tries to access `math.pi`, where `math` is not defined. The other options all reference pi correctly and would print the correct area.",
+      "code_context": "Area formula: πr²",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-13.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

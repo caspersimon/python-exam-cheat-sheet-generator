@@ -1,0 +1,207 @@
+{
+  "exam_id": "sample-final-plus-answers",
+  "question_updates": [
+    {
+      "number": 1,
+      "topic": "vehicle class defaults",
+      "question": "You'd like to define a class called Vehicle. It should have two attributes: name and mode, which you want to be initialized during object creation.\nThe name attribute can be any string, and it must be passed to the object during creation. The mode attribute is also a string, but it doesn't necessarily need to be passed to the object constructor. If it isn't specified at object construction, then the mode attribute should be equal to the string \"land\".\nFor example, if we create a Vehicle object as:\nmy_car = Vehicle(\"Mazda\")\nthen the following two conditions should both be true:\nmy_car.name == \"Mazda\"\nmy_car.mode == \"land\"\nWhich of the following code segments achieves what you want?",
+      "options": {
+        "a": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+        "b": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+        "c": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        return name, mode",
+        "d": "class Vehicle:\n    def __init__(vehicle_name, vehicle_mode):\n        name = vehicle_name\n        mode = vehicle_mode"
+      },
+      "correct": "a",
+      "explanation": "Option A correctly defines the constructor with `self`, stores both attributes on the instance, and gives `vehicle_mode` the default value `\"land\"`.",
+      "code_context": "my_car = Vehicle(\"Mazda\")\nmy_car.name == \"Mazda\"\nmy_car.mode == \"land\"",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-03.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "Question 1 option code is small in the rendered page and should be human-confirmed during merge review."
+        ]
+      }
+    },
+    {
+      "number": 2,
+      "topic": "book rating output",
+      "question": "Take a look at the following class definition.\n\nSuppose that we create a Book object and call its add_review method three times, like this:\nbook_1 = Book(\"The Lightning Thief\", \"Rick Riordan\")\nbook_1.add_review(5)\nbook_1.add_review(3)\nbook_1.add_review(3)\n\nWhat will then the following command print to the screen?\nprint(book_1.show_rating())",
+      "options": {
+        "a": "3.7",
+        "b": "4",
+        "c": "None",
+        "d": "3.67"
+      },
+      "correct": "a",
+      "explanation": "The stored review scores are 5, 3, and 3. Their average is 11 / 3 = 3.666..., and the method rounds that to one decimal place, giving 3.7.",
+      "code_context": "class Book:\n    def __init__(self, title, author, review_scores=None):\n        self.title = title\n        self.author = author\n        self.review_scores = review_scores if review_scores else []\n\n    def add_review(self, score):\n        self.review_scores.append(score)\n\n    def show_rating(self):\n        if self.review_scores:\n            return round(sum(self.review_scores) / len(self.review_scores), 1)\n\nbook_1 = Book(\"The Lightning Thief\", \"Rick Riordan\")\nbook_1.add_review(5)\nbook_1.add_review(3)\nbook_1.add_review(3)\nprint(book_1.show_rating())",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-05.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 3,
+      "topic": "student grade formatting",
+      "question": "Imagine that you have a list called students, which is populated by a number of dictionaries.\nEach dictionary in the students list has two keys: \"Name\" and \"Grade\". The corresponding values are student names (as strings) and course grades (as floats).\nFor each student, you'd like to print the following text to the screen:\n[NAME] has received a grade of [GRADE].\nwhere [NAME] is substituted by the name of the student and [GRADE] is substituted by the actual course grade. The course grade should be displayed to one decimal place after the decimal point.\nFor example, if\nstudents = [{\"Name\": \"Adam\", \"Grade\": 75}, {\"Name\": \"Bernard\", \"Grade\": 80}]\nthen you'd like to see the following two lines printed to the screen:\nAdam has received a grade of 75.\nBernard has received a grade of 80.\nWhich of the following code segments will achieve what you want?",
+      "options": {
+        "a": "for student in students:\n    print(f\"{student['Name']} has received a grade of {student['Grade']}. \")",
+        "b": "for student, grade in students.items():\n    print(f\"{student} has received a grade of {student['Grade']}. \")",
+        "c": "for student in students:\n    print(f\"{student['Name']} has received a grade of \" + str(student[\"Grade\"]))",
+        "d": "for student, grade in students.items():\n    print(f'{student} has received a grade of {grade}.')"
+      },
+      "correct": "a",
+      "explanation": "Option A iterates through the list of dictionaries and prints each student's name together with that student's grade. The other options incorrectly call `.items()` on the list or use the wrong data access pattern.",
+      "code_context": "students = [{\"Name\": \"Adam\", \"Grade\": 75}, {\"Name\": \"Bernard\", \"Grade\": 80}]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-07.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "Question 3 option text should be human-confirmed for exact spacing/punctuation around the printed sentence."
+        ]
+      }
+    },
+    {
+      "number": 4,
+      "topic": "phone number formatting",
+      "question": "You need to write a function called format_phone_number that formats phone numbers.\nThe output of the function should be a string that represents a 10-digit number. The input argument is also a string with 10 digits, but the digits may be separated by dashes (the \"-\" character) at various places.\nFor example, the following function calls:\nformat_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\nshould all return the string:\n\"0205251400\"\nWhich of the following code segments does not achieve what you want?",
+      "options": {
+        "a": "def format_phone_number(number):\n    number.replace(\"-\", \"\")\n    return number",
+        "b": "def format_phone_number(number):\n    return number.replace(\"-\", \"\")",
+        "c": "def format_phone_number(number):\n    digits = []\n    for char in number:\n        if char in \"0123456789\":\n            digits.append(char)\n    return \"\".join(digits)",
+        "d": "def format_phone_number(number):\n    return \"\".join(number.split(\"-\"))"
+      },
+      "correct": "a",
+      "explanation": "Option A calls `replace` but does not store its result, so it returns the original unchanged string. The other options all build and return the digits without the dashes.",
+      "code_context": "format_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\n# should all return \"0205251400\"",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-09.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 5,
+      "topic": "pandas even-row selection",
+      "question": "You have a pandas DataFrame called df that looks like this, when printed:\n\n      A    B    C    D\n1   9.1  9.5  9.0  6.9\n2   6.4  8.2  7.5  1.7\n3   2.5  5.3  8.8  3.0\n4   6.7  3.6  7.2  6.9\n5   8.4  1.9  8.2  3.3\n6   8.1  8.4  9.9  2.2\n\nSuppose that you'd like to create a new DataFrame that looks like this, when printed:\n\n      B\n2   8.2\n4   3.6\n6   8.4\n\nWhich of the following code lines will achieve what you want?",
+      "options": {
+        "a": "df.loc[df.index % 2 == 0, [\"B\"]]",
+        "b": "df[2, 4, 6, \"B\"]",
+        "c": "df.iloc[[2, 4, 6], 2]",
+        "d": "df.loc[2::2, \"B\"]"
+      },
+      "correct": "a",
+      "explanation": "Option A filters the even-numbered row labels and keeps column `B` as a one-column DataFrame, matching the printed target. The other options use invalid indexing, select the wrong column/positions, or return a Series instead of the shown DataFrame.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-11.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 6,
+      "topic": "pandas df2 derivation",
+      "question": "There are two pandas DataFrames: df1 and df2. They look like this, when printed:\nprint(df1)\n\n     A    B    C    D\n1  5.0  8.2  9.5  4.4\n2  6.0  2.4  9.1  3.3\n3  3.2  5.2  8.9  3.6\n4  7.8  8.7  7.9  8.0\n5  1.2  9.7  2.9  3.0\n\nprint(df2)\n\n     A    C    D\n4  7.8  7.9  8.0\n3  3.2  8.9  3.6\n2  6.0  9.1  3.3\n\nWhich of the following code lines could not have created df2 from df1?",
+      "options": {
+        "a": "df2 = df1.sort_index(ascending=False).loc[:, [\"A\", \"C\", \"D\"]]",
+        "b": "df2 = df1.iloc[[3, 2, 1], [0, 2, 3]]",
+        "c": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"D\", ascending=False)",
+        "d": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"C\")"
+      },
+      "correct": "a",
+      "explanation": "Option A would keep all five rows after sorting the index descending, so it would not produce the shown three-row df2. The other options can all produce rows 4, 3, and 2 with columns A, C, and D in the displayed order.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-13.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 7,
+      "topic": "datetime month parser",
+      "question": "Take a look at the following code segment.\n\nfrom datetime import datetime\n\ndef get_months(date_strings):\n    dates = []\n    for date_str in date_strings:\n        if \"-\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%d-%m-%Y\"))\n        elif \"/\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%m/%d/%Y\"))\n        else:\n            dates.append(None)\n    return [date.month if date is not None else None for date in dates]\n\nSuppose that you call the function like this:\nget_months([\"03/02/2013\", \"03.02.2013\", \"03-02-2013\"])\nWhat does the function call return?",
+      "options": {
+        "a": "[3, None, 2]",
+        "b": "[2, None, 3]",
+        "c": "[3, 2]",
+        "d": "[2, 3]"
+      },
+      "correct": "a",
+      "explanation": "`\"03/02/2013\"` is parsed with `%m/%d/%Y`, so its month is 3. `\"03.02.2013\"` matches neither separator rule and becomes `None`. `\"03-02-2013\"` is parsed with `%d-%m-%Y`, so its month is 2.",
+      "code_context": "from datetime import datetime\n\ndef get_months(date_strings):\n    dates = []\n    for date_str in date_strings:\n        if \"-\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%d-%m-%Y\"))\n        elif \"/\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%m/%d/%Y\"))\n        else:\n            dates.append(None)\n    return [date.month if date is not None else None for date in dates]\n\nget_months([\"03/02/2013\", \"03.02.2013\", \"03-02-2013\"])",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-15.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 8,
+      "topic": "dictionary comprehension lengths",
+      "question": "You have a list of strings called list_1, in which every element is unique.\nWhich of the following code lines will create a dictionary, in which the keys are the elements of list_1 and the values are the number of characters in the corresponding key?",
+      "options": {
+        "a": "{item: len(item) for item in list_1}",
+        "b": "[len(item) for item in list_1]",
+        "c": "{item for item in list_1 if len(item) > 0}",
+        "d": "{len(item): item for item in list_1}"
+      },
+      "correct": "a",
+      "explanation": "Option A is the only dictionary comprehension that maps each string to its own length. Option B makes a list, Option C makes a set, and Option D reverses the intended key-value direction.",
+      "code_context": "list_1 = [ ... ]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-17.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

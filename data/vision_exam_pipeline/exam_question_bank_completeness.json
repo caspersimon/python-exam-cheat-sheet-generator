@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-03-23T18:24:26Z",
+  "question_bank_schema_version": "1.0",
+  "overall_status": "complete",
+  "summary": {
+    "canonical_exam_count": 7,
+    "complete_exam_count": 7,
+    "incomplete_exam_count": 0,
+    "reviewed_question_count": 168,
+    "expected_question_count": 168
+  },
+  "exams": [
+    {
+      "exam_id": "sample-final-plus-answers",
+      "title": "2025 Sample Final Plus Answers",
+      "expected_questions": 24,
+      "present_questions": 24,
+      "blocked_questions": 0,
+      "human_confirmed_questions": 0,
+      "missing_without_reason": [],
+      "status": "complete"
+    },
+    {
+      "exam_id": "final-exam-solutions-for-python-programming-62oop21",
+      "title": "2022 Final Exam",
+      "expected_questions": 24,
+      "present_questions": 24,
+      "blocked_questions": 0,
+      "human_confirmed_questions": 0,
+      "missing_without_reason": [],
+      "status": "complete"
+    },
+    {
+      "exam_id": "final-exam-study-guide-trial-python-basics-2023",
+      "title": "2023 Trial Final Study Guide",
+      "expected_questions": 24,
+      "present_questions": 24,
+      "blocked_questions": 0,
+      "human_confirmed_questions": 0,
+      "missing_without_reason": [],
+      "status": "complete"
+    },
+    {
+      "exam_id": "introduction-to-python-trial-final-exam-solutions-py22",
+      "title": "2024 Trial Final",
+      "expected_questions": 24,
+      "present_questions": 24,
+      "blocked_questions": 0,
+      "human_confirmed_questions": 0,
+      "missing_without_reason": [],
+      "status": "complete"
+    },
+    {
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "title": "2023 Resit Exam Guidelines",
+      "expected_questions": 24,
+      "present_questions": 24,
+      "blocked_questions": 0,
+      "human_confirmed_questions": 0,
+      "missing_without_reason": [],
+      "status": "complete"
+    },
+    {
+      "exam_id": "resit-solutions-for-introduction-to-python-35761538",
+      "title": "2023 Resit Solutions",
+      "expected_questions": 24,
+      "present_questions": 24,
+      "blocked_questions": 0,
+      "human_confirmed_questions": 0,
+      "missing_without_reason": [],
+      "status": "complete"
+    },
+    {
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "title": "Trial Final Later-Course Focus",
+      "expected_questions": 24,
+      "present_questions": 24,
+      "blocked_questions": 0,
+      "human_confirmed_questions": 0,
+      "missing_without_reason": [],
+      "status": "complete"
+    }
+  ]
+}

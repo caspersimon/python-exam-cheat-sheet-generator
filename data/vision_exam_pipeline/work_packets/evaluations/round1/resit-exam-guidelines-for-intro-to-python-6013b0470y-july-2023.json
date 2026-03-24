@@ -1,0 +1,2102 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-03-23T19:45:32Z",
+  "round": "round1",
+  "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+  "question_count": 24,
+  "pending_question_ids": [],
+  "captured_pending_human_confirmation_ids": [],
+  "blocked_question_ids": [],
+  "questions": [
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q01",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q01",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 1,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice - Question-ID: 357615",
+        "question": "Suppose you have a list called x containing tuples, where\nx = [(1, 2), (3, 4), (5, 6), (7, 8)]\n\nWhich of the following lines of code will print True?",
+        "options": {
+          "a": "print(x[0][1] * x[-3][0] == x[2][1])",
+          "b": "print(x[1][0] + x[-2][0] == x[-1][1])",
+          "c": "print(x[-1][0] - x[-2][0] == x[0][1])",
+          "d": "All lines of code will print True."
+        },
+        "correct": "d",
+        "explanation": "All three expressions evaluate to True: 2 * 3 = 6 equals x[2][1], 3 + 5 = 8 equals x[-1][1], and 7 - 5 = 2 equals x[0][1].",
+        "code_context": "x = [(1, 2), (3, 4), (5, 6), (7, 8)]"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 1,
+            "question_summary": "Suppose you have a list called x containing tuples, where x = [(1, 2), (3, 4), (5, 6), (7, 8)] Which of the following lines of code will print True?",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets"
+            ],
+            "evidence_topics": [
+              "Lists and Sets"
+            ],
+            "evidence_buckets": [
+              "additional"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets",
+        "rationale": "This snippet is a verbatim match for the question and provides the step-by-step arithmetic evaluation for each option (e.g., explaining that Option A evaluates to 2 * 3 == 6)."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets",
+          "rationale": "Verbatim match with explicit evaluation logic for the expressions."
+        },
+        {
+          "item_id": "exam-Resit 22/23-1-w2-lists-and-sets",
+          "rationale": "Another verbatim match that confirms all options evaluate to True, providing redundant but helpful verification."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-1-w2-lists-and-sets",
+          "rationale": "This single snippet provides the full answer and the logic required to verify it."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate snippets contain the exact question and the full evaluation of the code logic, making it trivial to answer even without prior knowledge.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the specific answer is provided, there is no general explanation of how nested indexing or negative indexing works for a student to apply to similar but different problems.",
+        "missing_concepts": [
+          "Negative indexing (e.g., x[-1] refers to the last element)",
+          "Nested indexing (e.g., x[i][j] accesses element j within the i-th sub-element)"
+        ],
+        "proposed_fix": "Add a theoretical reference card or key point snippet explaining Python indexing rules (0-based, negative indexing, and multi-dimensional access)."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Key Point: Python List & Tuple Indexing. 1. Indexing starts at 0. 2. Negative indices count from the end (-1 is the last item, -2 is second to last). 3. For nested structures like x = [(a, b)], x[0][1] accesses the second item of the first tuple.",
+          "why_helpful": "This would allow the student to understand *why* x[0][1] is 2, rather than just relying on a matched example.",
+          "why_maybe_unnecessary": "The exact question already exists in the exam bank snippets, so for this specific exam, the student can just match the pattern.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:07:37Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q02",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q02",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 2,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice - Question-ID: 357607",
+        "question": "Executing the following program will produce an error. Why?",
+        "options": {
+          "a": "The function called power should not return the string 'The result of {} ** {} is: {}'.format(num, factor, result), but the value of result.",
+          "b": "** is not a valid Python operator.",
+          "c": "The syntax used in the return statement to format the string is incorrect.",
+          "d": "Result is a local name that cannot be referenced outside of the function power."
+        },
+        "correct": "d",
+        "explanation": "`result` is defined inside the function `power`, so it is local to that function. The statement `print(result)` outside the function therefore raises a name error because `result` is not defined there.",
+        "code_context": "def power(num, factor):\n    result = num ** factor\n    return 'The result of {} ** {} is: {}'.format(num, factor, result)\nprint(result)"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 2,
+            "question_summary": "Executing the following program will produce an error. Why?",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope"
+            ],
+            "evidence_topics": [
+              "Scope"
+            ],
+            "evidence_buckets": [
+              "additional"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
+        "rationale": "This snippet contains a nearly identical question and provides a clear explanation that variables defined inside a function are local and cannot be accessed in the global scope."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
+          "rationale": "Provides a direct example of the error in the question, identifying 'result' as a local variable."
+        },
+        {
+          "item_id": "ks-2a6510492d",
+          "rationale": "Explains the fundamental concept of local and global scope, defining local names as those assigned inside a function."
+        },
+        {
+          "item_id": "ks-00b2983ca8",
+          "rationale": "Explicitly states that 'local names are gone after function ends', which directly explains why the print(result) call fails."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "ks-2a6510492d",
+          "rationale": "Provides the theoretical foundation for local names and scope."
+        },
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-2-w3-scope",
+          "rationale": "Applies the theory to the exact code structure presented in the question."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The snippets provide both the theoretical definition of local scope and a direct application of that concept to a code snippet identical to the one in the question.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The available snippets cover the topic comprehensively.",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:07:51Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q03",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q03",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 3,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice - Question-ID: 355235",
+        "question": "What will be printed by the following code segment?",
+        "options": {
+          "a": "['a', 'None', '123']",
+          "b": "[[]]",
+          "c": "[]",
+          "d": "[None]"
+        },
+        "correct": "d",
+        "explanation": "The code appends list-typed elements to `y`, but the return expression uses `append`, which itself returns `None`. The page marks option D as correct, so the intended evaluated output is `[None]`.",
+        "code_context": "def main(x):\n    y = list()\n    for i in x:\n        if type(i) == type(x):\n            y.append(i)\n\n    return [y.append(i)]\n\nresult = main(['a', 'None', [], {}, '123', 0.05, 111])\nprint(result)"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 3,
+            "question_summary": "What will be printed by the following code segment?",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Test Resit - Introduction to Python - 22/23-3-w1-objects-and-names"
+            ],
+            "evidence_topics": [
+              "Objects and Names"
+            ],
+            "evidence_buckets": [
+              "additional"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Test Resit - Introduction to Python - 22/23-3-w1-objects-and-names"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Resit 22/23-3-w3-return-behavior",
+        "rationale": "This snippet explains the logic of `type(i) == type(x)`, helping the student understand that the loop identifies elements whose type matches the container (i.e., identifying lists within the list)."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Resit 22/23-3-w3-return-behavior",
+          "rationale": "Explains the type-checking loop logic which is identical to the first half of the question code."
+        },
+        {
+          "item_id": "exam-midterm_2023-16-w2-lists-and-sets",
+          "rationale": "Shows the `.append()` method in use, which is necessary for recognizing what the code is attempting to do with the list."
+        },
+        {
+          "item_id": "exam-midterm_2024-1-w3-return-behavior",
+          "rationale": "Includes 'None' as a possible output option (Option D), which aligns with the correct answer in the target question."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-Resit 22/23-3-w3-return-behavior",
+          "rationale": "Covers the type-comparison logic used in the filter loop."
+        },
+        {
+          "item_id": "exam-midterm_2023-16-w2-lists-and-sets",
+          "rationale": "Shows basic list modification methods like append."
+        }
+      ],
+      "answerability": {
+        "status": "partial",
+        "confidence": "medium",
+        "rationale": "The snippets perfectly explain the type-filtering logic (identifying the empty list `[]`). However, no snippet explains that the `.append()` method returns `None`. A zero-knowledge student would likely conclude the answer is `[[]]` (Option B) because they understand the filter, but miss the 'trick' where the return statement wraps the result of an `append` call.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The available snippets cover loop logic and type identification but miss critical technical details regarding method return values and post-loop variable scope.",
+        "missing_concepts": [
+          "The list.append() method modifies the list in-place and returns None.",
+          "The loop variable (i) remains accessible and holds its last value after a for-loop completes."
+        ],
+        "proposed_fix": "Add a snippet or documentation item explaining that in-place methods (append, remove, sort, extend) return None, specifically contrasting `return mylist` with `return mylist.append(x)`."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet titled 'List Methods and Return Values': Common list methods like .append(), .remove(), and .sort() perform actions 'in-place'. This means they change the list but return the value None. If you see code like 'print(mylist.append(5))' or 'return [mylist.append(5)]', the output will be None or [None].",
+          "why_helpful": "This addresses the specific 'trap' in the question that separates students who understand loop logic from those who understand Python's method return conventions.",
+          "why_maybe_unnecessary": "It is a very specific technical detail, but it is a recurring theme in 'Return Behavior' exam questions.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:08:19Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q04",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q04",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 4,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "function defaults and loops",
+        "question": "Suppose you have the following function, which takes two integers as arguments:\n\nWhat will be printed by the following line of code:\nprint(main(1))",
+        "options": {
+          "a": "This code produces an error as there is a missing argument when calling main.",
+          "b": "['1 * 1 = 1',\n '1 * 2 = 2',\n '1 * 3 = 3',\n '1 * 4 = 4',\n '1 * 5 = 5',\n '1 * 6 = 6',\n '1 * 7 = 7',\n '1 * 8 = 8',\n '1 * 9 = 9',\n '1 * 10 = 10']",
+          "c": "The code produces a syntax error because of the line:\n    table.append(f'{x} * {i} = {x*i}')",
+          "d": "['1 * 1 = 1',\n '1 * 2 = 2',\n '1 * 3 = 3',\n '1 * 4 = 4',\n '1 * 5 = 5',\n '1 * 6 = 6',\n '1 * 7 = 7',\n '1 * 8 = 8',\n '1 * 9 = 9',\n '1 * 10 = 10',\n '1 * 11 = 11']"
+        },
+        "correct": "b",
+        "explanation": "`main(1)` is valid because `y` has default value `11`. The loop starts at `i = 1` and runs while `i < y`, so it appends the multiplication strings for 1 through 10 and stops before 11.",
+        "code_context": "def main(x, y=11):\n    table = []\n    i = 1\n    while i < y:\n        table.append(f'{x} * {i} = {x*i}')\n        i += 1\n    return table\n\nprint(main(1))"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 4,
+            "question_summary": "Suppose you have the following function, which takes two integers as arguments: What will be printed by the following line of code: print(main(1))",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops"
+            ],
+            "evidence_topics": [
+              "Loops"
+            ],
+            "evidence_buckets": [
+              "additional"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops",
+        "rationale": "This is an identical question with an explanation that explicitly states y=11 is a default argument and the loop runs from 1 to 10."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops",
+          "rationale": "Directly answers the specific question and explains the default argument and loop logic."
+        },
+        {
+          "item_id": "exam-Resit 22/23-4-w3-arguments",
+          "rationale": "Another direct match for the question, reinforcing the behavior of the default argument y=11."
+        },
+        {
+          "item_id": "exam-midterm_2023-9-w3-arguments",
+          "rationale": "Provides a clear example of how multiple default arguments work and how they are overridden or kept when calling the function."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-4-w2-loops",
+          "rationale": "Provides the exact solution and logic for the while loop and default value."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The exact question and explanation are present in the provided snippets, making the answer directly accessible.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The existing snippets provide a 1:1 match for the question, so there are no functional gaps for this specific test case.",
+        "missing_concepts": [],
+        "proposed_fix": "No fix required as the exact content is available."
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:08:32Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q05",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q05",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 5,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "list slicing and sets",
+        "question": "Suppose you have a list called x, where:\nx = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]\n\nWhich of the following code segments will print the following list?\n[5, 4, 3, 2, 1]",
+        "options": {
+          "a": "y = list(set(x))\nprint(sorted(y, reverse = True))",
+          "b": "print(x[::-2])",
+          "c": "Both lines of code will print that output.",
+          "d": "Neither line of code will print that output."
+        },
+        "correct": "c",
+        "explanation": "Option A removes duplicates and sorts descending, which gives `[5, 4, 3, 2, 1]`. Option B takes every second element from the end of the symmetric list and also prints `[5, 4, 3, 2, 1]`.",
+        "code_context": "x = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]\n# target output:\n# [5, 4, 3, 2, 1]"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 5,
+            "question_summary": "Suppose you have a list called x, where: Which of the following code segments will print the following list? [5, 4, 3, 2, 1]",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets"
+            ],
+            "evidence_topics": [
+              "Lists and Sets"
+            ],
+            "evidence_buckets": [
+              "additional"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+        "rationale": "This snippet contains the exact question and a clear explanation of both Option A (set/sorting) and Option B (slicing), though the text for Option B is slightly truncated."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+          "rationale": "Identical question match; explains set(x) for uniqueness and reverse sorting."
+        },
+        {
+          "item_id": "exam-Resit 22/23-5-w1-functions-and-imports",
+          "rationale": "Another identical match providing a slightly different wording for the explanation of Option A."
+        },
+        {
+          "item_id": "exam-midterm_2023-14-w2-loops",
+          "rationale": "Provides additional context for list slicing syntax [start:stop:step], which helps decode the [::-2] logic."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+          "rationale": "Contains the literal question and answer logic for both methods being tested."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The snippets provide the exact question and explain why both segments produce the desired output, specifically mentioning set-based deduplication and reverse-step slicing.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets provide the direct answer, but the explanation for the slicing logic ([::-2]) is cut off in the available search text.",
+        "missing_concepts": [
+          "Negative step slicing mechanics (stepping backwards)"
+        ],
+        "proposed_fix": "Ensure the explanation for slicing in the snippet is fully captured to clarify that -2 steps backwards by two elements."
+      },
+      "suggested_changes": [
+        {
+          "kind": "edit_existing",
+          "target_item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+          "proposal": "Update search_text to include: 'Option B uses slicing [::-2] to step backwards through the list by 2, which skips the duplicates and reverses the order.'",
+          "why_helpful": "It clarifies the 'magic' of the slicing syntax which is currently truncated in the snippet.",
+          "why_maybe_unnecessary": "The student might infer the result because it is a direct match of a known exam question.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:08:46Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q06",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q06",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 6,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "keyword arguments",
+        "question": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments.\n\nFor example, if you call the function as:\nmain(apple=1.99, banana=0.99, orange=1.49)\nit should return:\n4.47\n\nWhich of the following functions will return the intended value?",
+        "options": {
+          "a": "def main(**kwargs):\n    total = 0\n    for item, price in kwargs.items():\n        total += item\n    return total",
+          "b": "def main(**kwargs):\n    total = 0\n    for price in kwargs.values():\n        total += price\n    return total",
+          "c": "def main(**kwargs):\n    total = 0\n    for item, price in kwargs.keys():\n        total += price\n    return total",
+          "d": "All functions will return the intended value."
+        },
+        "correct": "b",
+        "explanation": "To sum the numeric keyword-argument values, the function must iterate over `kwargs.values()`. Option A adds the string keys instead of the prices, and Option C incorrectly tries to unpack `kwargs.keys()`.",
+        "code_context": "main(apple=1.99, banana=0.99, orange=1.49)\n# should return 4.47"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 6,
+            "question_summary": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments. For ex",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments"
+            ],
+            "evidence_topics": [
+              "Arguments"
+            ],
+            "evidence_buckets": [
+              "additional"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
+        "rationale": "This snippet contains the exact prompt of the question, providing the student with the context of summing keyword argument values, although it lacks the specific code implementation for the correct answer."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
+          "rationale": "Identical question prompt; identifies the task as summing flexible keyword argument values."
+        },
+        {
+          "item_id": "exam-midterm_2023-10-w3-arguments",
+          "rationale": "Explains that flexible keyword arguments are handled as key-value pairs, which helps a student understand that the input is a dictionary-like object."
+        },
+        {
+          "item_id": "exam-trial_midterm-19-w2-dictionaries-and-mappings",
+          "rationale": "Shows basic dictionary iteration ('for letter in string') and access ('counts[letter]'), providing a conceptual bridge to how dictionaries are handled in loops."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
+          "rationale": "Matches the exam question context perfectly."
+        },
+        {
+          "item_id": "exam-midterm_2023-10-w3-arguments",
+          "rationale": "Connects 'keyword arguments' to 'key-value pairs'."
+        }
+      ],
+      "answerability": {
+        "status": "partial",
+        "confidence": "medium",
+        "rationale": "While the exact question text is present in the snippets, the critical technical detail (choosing between .values(), .items(), and .keys()) is not explicitly explained. A student with zero knowledge would know *what* they are trying to do but not *which method* provides the numeric values vs. the string keys.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets provide the 'what' (summing keyword arguments) but lack the 'how' (dictionary methods for iteration).",
+        "missing_concepts": [
+          "Difference between .keys(), .values(), and .items() in dictionary iteration",
+          "Syntax for unpacking items in a loop (e.g., 'for k, v in kwargs.items()')",
+          "The fact that **kwargs acts as a dictionary inside the function"
+        ],
+        "proposed_fix": "Add a dedicated 'Dictionary Iteration' snippet that explicitly labels what each method returns (keys, values, or both)."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Title: Dictionary & **kwargs Iteration. Content: 'def main(**kwargs): \\n  # kwargs.keys() -> names (strings)\\n  # kwargs.values() -> values (numbers/data)\\n  # kwargs.items() -> both (name, value)\\n  for val in kwargs.values(): total += val'",
+          "why_helpful": "This directly addresses the trap in the exam question by explaining the return types of dictionary methods.",
+          "why_maybe_unnecessary": "If the student already understands basic dictionary concepts from a general programming background, they might guess correctly, but for a zero-knowledge student, this is essential.",
+          "recommended_direction": "add_this"
+        },
+        {
+          "kind": "edit_existing",
+          "target_item_id": "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
+          "proposal": "Expand search_text to include the solution logic: 'To sum prices passed as keywords, iterate over kwargs.values() to get the numbers, not the keys.'",
+          "why_helpful": "Turns a placeholder into a functional solution reference for that specific recurring exam question.",
+          "why_maybe_unnecessary": "",
+          "recommended_direction": "consider_instead"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:09:09Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q07",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q07",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 7,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Dictionaries and Mappings",
+        "question": "Assume you already have a list of strings called words.\n\nYou need to create a dictionary called word_lengths, where the keys are the strings in the list words and the values are their lengths.\n\nWhich of the following code segments will work as intended?",
+        "options": {
+          "a": "word_lengths = {length: word for word, length in enumerate(words)}",
+          "b": "word_lengths = {len: word for word in words}",
+          "c": "word_lengths = {word: len(word) for word in words}",
+          "d": "word_lengths = {word: len for word, len in words}"
+        },
+        "correct": "c",
+        "explanation": "The dictionary comprehension in C maps each word to the length of that word. The other options either reverse key/value order or use invalid logic.",
+        "code_context": ""
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+        "rationale": "This snippet contains the exact question text, including the list 'words' and the goal to create 'word_lengths', effectively serving as a direct answer key."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "rationale": "Directly matches the question and likely provides the correct code segment in its full text."
+        },
+        {
+          "item_id": "exam-extra_practice-5-w2-dictionaries-and-mappings",
+          "rationale": "Features a similar 'Which of the following code segments will work' format for dictionary creation, helping the student recognize patterns in dictionary logic."
+        },
+        {
+          "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+          "rationale": "Shows a scenario where keys (names) are mapped to values (ages), reinforcing the concept of transforming lists into dictionary pairs."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "rationale": "As an identical question, this is sufficient to solve the problem by recognition."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate snippets include the identical question from a previous exam (Resit 22/23).",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While a direct match exists, there is no conceptual explanation of the dictionary comprehension syntax ({key: value for item in iterable}).",
+        "missing_concepts": [
+          "Dictionary Comprehension Syntax",
+          "Dictionary Unpacking Rules"
+        ],
+        "proposed_fix": "Add a conceptual key point or AI-generated section specifically defining the syntax and common pitfalls (like key/value order) of dictionary comprehensions."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a 'Key Point' explaining Dictionary Comprehensions: '{k: v for k in list}' where 'k' is the key and 'v' is the value. Emphasize that the key comes before the colon.",
+          "why_helpful": "It gives the student the 'rule' instead of just a specific answer, allowing them to solve variations of the question.",
+          "why_maybe_unnecessary": "The direct match in the exam snippets might be enough for a student looking for a quick fix.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:09:28Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q08",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q08",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 8,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Dictionaries and Mappings",
+        "question": "You are given two lists, called students and grades.\n\nThe students list contains strings representing the names of students.\nThe grades list contains integers representing the students' corresponding grade levels.\n\nYou need to create a dictionary called grade_counts that counts the number of students in each grade level. That is, the keys of the dictionary are the grade levels and the values are the number of students in that grade.\n\nFor example, if you have:\nstudents = ['A', 'B', 'C', 'D', 'E', 'F']\ngrades = [9, 10, 9, 11, 10, 9]\n\nthen the created dictionary grade_counts should be:\n{9: 3, 10: 2, 11: 1}\n\nWhich of the following code segments will work as intended?",
+        "options": {
+          "a": "grade_counts = {}\nfor grade in grades:\n    if grade not in grade_counts:\n        grade_counts[grade] = 0\n    grade_counts[grade] += 1",
+          "b": "grade_counts = {}\nfor student, grade in zip(students, grades):\n    if grade in grade_counts:\n        grade_counts[grade].append(student)\n    else:\n        grade_counts[grade] = [student]",
+          "c": "Both of the given options will work as intended.",
+          "d": "None of the given options will work as intended."
+        },
+        "correct": "a",
+        "explanation": "A counts how many times each grade appears. B builds lists of students per grade instead of counting them.",
+        "code_context": "students = ['A', 'B', 'C', 'D', 'E', 'F']\ngrades = [9, 10, 9, 11, 10, 9]"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-extra_practice-5-w2-dictionaries-and-mappings",
+        "rationale": "This snippet contains the exact question text, the expected output, and explicitly states that 'Option a' is the correct answer."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-extra_practice-5-w2-dictionaries-and-mappings",
+          "rationale": "Exact match for the question and identifies the correct code segment."
+        },
+        {
+          "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "rationale": "Demonstrates the same pattern: creating a dictionary from a list where the keys are the list items. It also confirms that a similar 'Option A' logic is valid for this pattern."
+        },
+        {
+          "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+          "rationale": "Provides context for creating a dictionary from two parallel lists (names and ages), which mirrors the students and grades structure."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-extra_practice-5-w2-dictionaries-and-mappings",
+          "rationale": "Since this is the identical question with the answer provided, it is sufficient on its own."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate list includes the exact question from the exam bank along with the solution.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "No gaps exist because the exact question is present in the source materials.",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:09:51Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q09",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q09",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 9,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Dictionaries and Mappings",
+        "question": "You have a dictionary that represents the scores of students in a math competition:\nmath_scores = {'John': 85, 'Sarah': 92, 'Michael': 78, 'Emma': 90, 'David': 82}\n\nYou want to find and print the names of the students who scored above the average score.\n\nWhich of the following code segments will work as intended?",
+        "options": {
+          "a": "average_score = sum(math_scores.values()) / len(math_scores)\nfor student in math_scores.keys():\n    if math_scores[student] > average_score:\n        print(student)",
+          "b": "for student in math_scores:\n    if math_scores[student] > (sum(math_scores.values()) / len(math_scores)):\n        print(student)",
+          "c": "Both code segments will work as intended.",
+          "d": "None of the code segments will work as intended."
+        },
+        "correct": "c",
+        "explanation": "Both snippets correctly print the names whose scores are above the average. A computes the average once, while B recomputes it inside the loop but still produces the right result.",
+        "code_context": "math_scores = {'John': 85, 'Sarah': 92, 'Michael': 78, 'Emma': 90, 'David': 82}"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-extra_practice-4-w2-dictionaries-and-mappings",
+        "rationale": "This snippet is an exact match for the question, containing the same 'math_scores' dictionary, the same scenario, and mentions the code segments 'a' and 'b'."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-extra_practice-4-w2-dictionaries-and-mappings",
+          "rationale": "Identical question and data structure; directly answers the problem."
+        },
+        {
+          "item_id": "exam-Trial final - Introduction to Python - 22/23-6-w2-dictionaries-and-mappings",
+          "rationale": "Demonstrates calculating an average from a dictionary, which is the core logic required for the math scores problem."
+        },
+        {
+          "item_id": "exam-trial-final-exam-py22-6-w2-dictionaries-and-mappings",
+          "rationale": "Shows a structurally identical dictionary (employee_ratings) and the goal of finding/printing specific names based on values."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-extra_practice-4-w2-dictionaries-and-mappings",
+          "rationale": "Contains the specific problem text and data, making it the most direct reference for a student with no prior knowledge."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate list includes a snippet that is an exact replica of the question. Even without Python knowledge, the student can match the 'math_scores' variable and the problem description to the snippet.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While an exact match exists, the snippet text in 'exam-extra_practice-4' mentions an indentation error in Option A, whereas the target question's answer is 'c' (both work). This could cause confusion.",
+        "missing_concepts": [
+          "sum() and len() functions on dictionary values",
+          "Explicit confirmation that both iterating via .keys() and iterating directly over a dictionary yield the same keys."
+        ],
+        "proposed_fix": "Add a conceptual snippet explaining that sum(d.values()) / len(d) is the standard way to find a dictionary average, and that 'for k in d' is equivalent to 'for k in d.keys()'."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a 'Dictionary Analytics' snippet: 'To calculate average: avg = sum(my_dict.values()) / len(my_dict). To find items above average: for key in my_dict: if my_dict[key] > avg: print(key). Note: for key in my_dict is the same as for key in my_dict.keys().'",
+          "why_helpful": "It explains the underlying logic of the two options (A and B) in the question, clarifying why they are functionally identical despite different syntax.",
+          "why_maybe_unnecessary": "The student might just rely on matching the exact question if they find snippet 4.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:10:10Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q10",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q10",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 10,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "String Methods",
+        "question": "What is the output of the following code segment?\n\nx = 'Hello, World!'\nprint([char for char in x if char.islower()])",
+        "options": {
+          "a": "['e', 'l', 'l', 'o', 'o', 'r', 'l', 'd']",
+          "b": "['e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!']",
+          "c": "['h', 'e', 'l', 'l', 'o', 'w', 'o', 'r', 'l', 'd']",
+          "d": "['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd']"
+        },
+        "correct": "a",
+        "explanation": "The comprehension keeps only the lowercase letters in the string. Punctuation, spaces, and uppercase letters are skipped by islower().",
+        "code_context": "x = 'Hello, World!'\nprint([char for char in x if char.islower()])"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-trial-final-exam-py22-7-w2-lists-and-sets",
+        "rationale": "Explains the logic of list comprehensions as a filter ('keeps numbers that satisfy conditions'), which is the core structure of the code segment."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-trial-final-exam-py22-7-w2-lists-and-sets",
+          "rationale": "Clarifies how the 'if' condition inside a list comprehension acts as a filter for elements."
+        },
+        {
+          "item_id": "exam-trial_midterm-19-w2-dictionaries-and-mappings",
+          "rationale": "Demonstrates string iteration using 'for letter in string', helping a beginner understand how the comprehension traverses 'x'."
+        },
+        {
+          "item_id": "kp-2",
+          "rationale": "Explains that methods are functions attached to objects (like .islower() to char) and that they return values."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-trial-final-exam-py22-7-w2-lists-and-sets",
+          "rationale": "Explains the comprehension filtering logic."
+        },
+        {
+          "item_id": "exam-trial_midterm-19-w2-dictionaries-and-mappings",
+          "rationale": "Shows string iteration."
+        }
+      ],
+      "answerability": {
+        "status": "partial",
+        "confidence": "medium",
+        "rationale": "The structural logic (comprehension and iteration) is covered by existing snippets, but the specific behavior of '.islower()'—particularly that it returns False for spaces and punctuation—is not documented in any candidate snippet.",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "The student can understand 'how' the loop runs but not 'what' the specific filter (.islower) does with non-alphabetic characters like ' ', '!', and ','.",
+        "missing_concepts": [
+          "islower() method definition",
+          "islower() behavior on non-alphabetic characters (spaces/symbols)"
+        ],
+        "proposed_fix": "Add a Key Point detailing common string boolean methods (islower, isupper, isdigit) and their results on various character types."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Key Point: String Case Testing. .islower() returns True ONLY if the character is a lowercase letter. It returns False for uppercase letters, spaces, and punctuation (e.g., 'a'.islower() is True, but 'A', ' ', and '!' are False).",
+          "why_helpful": "Directly explains why spaces and punctuation are excluded from the result list in the question.",
+          "why_maybe_unnecessary": "A student might guess 'islower' refers only to lowercase letters, but 'zero knowledge' implies they might not know if a comma has a case.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:10:30Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q11",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q11",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 11,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Functions and Imports",
+        "question": "What will be the output of the following code segment?\n\nlist1 = [5, 10, 15, 20]\nlist2 = [2, 4, 6, 8]\nresult = []\n\nfor a, b in zip(list1, list2):\n    result.append(a // b)\n\nprint(result)",
+        "options": {
+          "a": "[1, 2, 3, 4]",
+          "b": "[2, 2, 2, 2]",
+          "c": "[6, 12, 18, 24]",
+          "d": "[2.5, 2.5, 2.5, 2.5]"
+        },
+        "correct": "b",
+        "explanation": "The code uses floor division (`//`) on each pair from zip, so the results are 2, 2, 2, and 2.",
+        "code_context": "list1 = [5, 10, 15, 20]\nlist2 = [2, 4, 6, 8]\nresult = []\n\nfor a, b in zip(list1, list2):\n    result.append(a // b)\n\nprint(result)"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "aiq-2",
+        "rationale": "Explains the `append` method, which is the only list-modifying operation in the question's code. However, it does not explain the loop structure or the math operators."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "aiq-2",
+          "rationale": "Clarifies how `.append()` works with lists, which is central to building the result list."
+        },
+        {
+          "item_id": "ks-b6a39f66a2",
+          "rationale": "Explains that `print` is a built-in function used to output arguments to the screen, helping a novice understand the final line."
+        },
+        {
+          "item_id": "exam-midterm_2024-15-w1-functions-and-imports",
+          "rationale": "Shows a `for x in lst` loop and `.append()`, providing some pattern matching for how elements move from one list to another."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "aiq-2",
+          "rationale": "Covers list mutation (append)."
+        },
+        {
+          "item_id": "ks-b6a39f66a2",
+          "rationale": "Covers output (print)."
+        },
+        {
+          "item_id": "exam-midterm_2024-15-w1-functions-and-imports",
+          "rationale": "Shows basic loop iteration and list accumulation."
+        }
+      ],
+      "answerability": {
+        "status": "insufficient",
+        "confidence": "high",
+        "rationale": "Crucial concepts are missing: the `zip()` function, which pairs elements from two lists, and the floor division operator `//`. Without knowing `zip()`, a student won't know that 'a' comes from list1 and 'b' from list2. Without knowing `//`, they cannot perform the calculation required to distinguish between options (b) and (d).",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "The current snippets do not define the 'zip' function or the 'floor division' operator, both of which are required to solve the logic and the arithmetic of the question.",
+        "missing_concepts": [
+          "zip() function for parallel iteration",
+          "floor division operator (//)",
+          "unpacking multiple variables in a for loop (for a, b in ...)"
+        ],
+        "proposed_fix": "Add a manual or AI-generated snippet specifically covering common Python operators (//, %, **) and the built-in zip() function."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Title: Python Arithmetic Operators. Content: + (addition), - (subtraction), * (multiplication), / (division), // (floor division: divides and rounds down to nearest integer), % (modulo: remainder), ** (exponentiation). Example: 5 // 2 results in 2.",
+          "why_helpful": "Directly explains the // operator used in the code context to reach the correct answer.",
+          "why_maybe_unnecessary": "Basic math might be assumed, but floor division is specific to programming languages.",
+          "recommended_direction": "add_this"
+        },
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Title: Parallel Iteration with zip(). Content: The zip() function takes multiple iterables (like lists) and aggregates them into tuples. Example: for a, b in zip([1, 2], [3, 4]): prints (1, 3) then (2, 4).",
+          "why_helpful": "Explains how the 'for a, b in zip(list1, list2)' loop processes both lists simultaneously.",
+          "why_maybe_unnecessary": "None; it is critical for this specific question.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:10:47Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q12",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q12",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 12,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Sequences and Access",
+        "question": "Suppose you have a list called numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].\nWhich of the following lines of code will not create a list with the name subset and the value [10, 8, 6, 4, 2]?",
+        "options": {
+          "a": "subset = numbers[::-2][::-1]",
+          "b": "subset = numbers[-1::-2]",
+          "c": "subset = numbers[::-1][::2]",
+          "d": "subset = numbers[::-2]"
+        },
+        "correct": "a",
+        "explanation": "A reverses the reversed-even slice, producing [2, 4, 6, 8, 10] instead of the requested list. The other three options all evaluate to [10, 8, 6, 4, 2].",
+        "code_context": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-extra_practice-6-w1-sequences-and-access",
+        "rationale": "This snippet is the exact same question and provides the logic for why negative steps like [::-2] and [-1::-2] produce the desired list."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-extra_practice-6-w1-sequences-and-access",
+          "rationale": "Identical question and explanation of negative slicing logic."
+        },
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+          "rationale": "Shows another example of list manipulation to achieve a reversed sequence [5, 4, 3, 2, 1]."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
+          "rationale": "Explains the mechanics of slicing with a step (range(0, 7, 3)) and partition slicing (x[0:3])."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-extra_practice-6-w1-sequences-and-access",
+          "rationale": "Directly answers the question."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "One of the snippets is the exact exam question being asked, including the start of an explanation that validates the correct slicing logic for multiple options.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the exact answer is present, a student without the specific 'extra practice' snippet would struggle to understand nested slicing (like option A or C) because the concepts of 'slice of a slice' aren't explicitly taught in a general way in the other snippets.",
+        "missing_concepts": [
+          "Nested slicing (applying a second slice to the result of a first slice)",
+          "Formal definition of [start:stop:step] syntax"
+        ],
+        "proposed_fix": "Add a foundational snippet or subtopic detail explaining that 'numbers[a:b:c][x:y:z]' applies the second slice to the intermediate list produced by the first."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Title: Nested Slicing Logic. Content: Slicing creates a new list. You can apply another slice immediately after: my_list[start:stop:step][new_start:new_stop:new_step]. The second slice acts on the results of the first.",
+          "why_helpful": "This helps the student evaluate options A and C which use two sets of brackets.",
+          "why_maybe_unnecessary": "The student might just find the exact matching question snippet and stop there.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:11:05Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q13",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q13",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 13,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice",
+        "question": "You have a string variable called sentence:\nsentence = 'I bought a book about programming. The book has a lot of exercises. I enjoy reading a good book.'\n\nYou want to replace only the second occurrence of \"book\" with \"novel\" in the sentence and save this as new_sentence.\n\nSo:\nprint(new_sentence)\nshould print:\nI bought a book about programming. The novel has a lot of exercises. I enjoy reading a good book.\n\nWhich of the following code segments will work as intended?\n\nHint:\nThe string find() method takes three arguments: value, start and end. The first argument is required and is the value to search for. The second and third argument are optional, they are indices specifying where to start and end the search, respectively.",
+        "options": {
+          "a": "index = sentence.find('book')\nindex = sentence.find('book', index + 1)\nnew_sentence = sentence[:index] + 'novel' + sentence[index + 4:]",
+          "b": "new_sentence = sentence.replace(\"book\", \"novel\", 2)\nnew_sentence = new_sentence.replace(\"novel\", \"book\", 1)",
+          "c": "Both options will work as intended.",
+          "d": "None of the given options will work as intended."
+        },
+        "correct": "c",
+        "explanation": "Option A finds the second occurrence and replaces it by slicing. Option B first replaces the first two occurrences of \"book\" with \"novel\" and then changes only the first replaced occurrence back to \"book\", leaving only the second occurrence replaced.",
+        "code_context": "sentence = 'I bought a book about programming. The book has a lot of exercises. I enjoy reading a good book.'"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-midterm_2023-14-w2-loops",
+        "rationale": "While the topic is loops, this snippet explicitly demonstrates string slicing syntax (`alphabet[1::2]`), which is the fundamental mechanism used in Option A of the question to surgically replace text."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-midterm_2023-14-w2-loops",
+          "rationale": "Provides the only direct syntax example of string slicing (accessing parts of a string using brackets)."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
+          "rationale": "Involves extracting specific substrings from complex strings (URLs), mirroring the logic needed to find specific indices in the question."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
+          "rationale": "Deals with strings where characters (dashes) need to be handled/formatted, which conceptually relates to the .replace() logic in Option B."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-midterm_2023-14-w2-loops",
+          "rationale": "Slicing syntax reference."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
+          "rationale": "String parsing logic reference."
+        }
+      ],
+      "answerability": {
+        "status": "insufficient",
+        "confidence": "low",
+        "rationale": "The candidate snippets are almost entirely irrelevant to the specific 'replace' count argument and the specific 'find' start-index argument. While the question provides a hint for .find(), no snippet explains that .replace(old, new, count) limits replacements to the first N occurrences, which is critical to understanding why Option B works. Slicing is shown but not explained in a way that helps a zero-knowledge student understand `sentence[index + 4:]`.",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "There is a complete lack of documentation or examples for string methods with optional arguments (like count in replace or start in find) and no clear explanation of 'surgical' string reconstruction using concatenation and slicing.",
+        "missing_concepts": [
+          "str.replace(old, new, count) - the 'maxreplace' parameter",
+          "str.find(sub, start) - the 'start' index parameter beyond what is in the question hint",
+          "Using slicing for index-based string reconstruction (sentence[:i] + 'new' + sentence[i+n:])"
+        ],
+        "proposed_fix": "Add a snippet or topic card specifically covering 'String Manipulation and Surgical Replacement' that demonstrates find(), index-based slicing, and the count parameter in replace()."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a card titled 'Targeted String Modification' showing: 1. .replace('text', 'new', 1) only replaces the first match; 2. .find('text', 5) starts searching after index 5; 3. sentence[:5] + 'new' + sentence[10:] replaces characters between index 5 and 10.",
+          "why_helpful": "This directly maps to the mechanics of both Option A and Option B, allowing a student to verify the multi-step replacement logic in Option B and the slicing offsets in Option A.",
+          "why_maybe_unnecessary": "The question contains a hint for find(), but it is insufficient for a zero-knowledge student to confidently evaluate the replace() logic or the math behind index+4 slicing.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:11:34Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q14",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q14",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 14,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice",
+        "question": "You have the following objects loaded in Python:\nfruits = [\"apple\", \"banana\", \"orange\"]\ncount = 3\n\nYou want to print the following sentence:\nI have 3 fruits: apple, banana, and orange.\n\nWhich of the following code fragments will achieve the desired output?",
+        "options": {
+          "a": "message = f\"I have {count} fruits: {', '.join(fruits)}.\"\nprint(message)",
+          "b": "message = f\"I have {count} fruits: {fruits[0]}, {fruits[1]}, and {fruits[2]}.\"\nprint(message)",
+          "c": "Both code fragments will achieve the desired output.",
+          "d": "Neither of the code fragments will achieve the desired output."
+        },
+        "correct": "b",
+        "explanation": "Option B matches the requested sentence exactly, including the word \"and\" before the final fruit. Option A joins the list as \"apple, banana, orange\" and does not produce the exact requested wording.",
+        "code_context": "fruits = [\"apple\", \"banana\", \"orange\"]\ncount = 3"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
+        "rationale": "This snippet involves formatting a string with variables from a list of items (Name and Grade), which is the closest conceptual match to the f-string formatting required by the question."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
+          "rationale": "Contextual match for printing formatted strings using data from lists."
+        },
+        {
+          "item_id": "exam-midterm_2023-14-w2-loops",
+          "rationale": "Shows list/string indexing syntax (e.g., [1::2]), which is necessary to understand Option B's use of fruits[0], fruits[1], etc."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "rationale": "Mentions string methods like .map() and splitting, providing some context for string manipulation methods like .join()."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
+          "rationale": "Provides the 'string with placeholders' pattern."
+        },
+        {
+          "item_id": "exam-midterm_2023-14-w2-loops",
+          "rationale": "Provides the indexing syntax."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "rationale": "Provides string manipulation context."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-3-w1-objects-and-names",
+          "rationale": "Shows a list of dictionaries, helping a student understand how lists store multiple items."
+        }
+      ],
+      "answerability": {
+        "status": "insufficient",
+        "confidence": "low",
+        "rationale": "No snippet explicitly demonstrates f-string syntax (f\"...\") or the .join() method. A student with zero knowledge would not know that .join(fruits) omits the word 'and', nor would they confirm that the f-string syntax in Option B is valid for inserting list elements.",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "The primary gaps are f-string interpolation syntax and the behavior of the string .join() method compared to manual indexing.",
+        "missing_concepts": [
+          "f-string syntax and variable interpolation",
+          "String .join() method behavior",
+          "List indexing syntax (list[n])"
+        ],
+        "proposed_fix": "Add a snippet or reading material item that explicitly compares f-strings using indexing vs f-strings using .join() for list elements."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet showing: f'Items: {items[0]}, {items[1]}' and comparing it to ', '.join(items).",
+          "why_helpful": "This directly addresses the core logic of the question: distinguishing between a simple join and specific formatting requirements like 'and' before the last item.",
+          "why_maybe_unnecessary": "If the student has access to a 'String Fundamentals' cheat sheet section not included in these exam snippets.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:11:57Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q15",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q15",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 15,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice",
+        "question": "A company wants to extract the components of email addresses. An email address consists of the local part, which comes before the \"@\" symbol and a domain name, which comes after the \"@\" symbol.\n\nYou need to create a function called main() which accepts a flexible number of strings representing email addresses and returns a DataFrame. Your DataFrame should have a column called 'local' which contains the local parts and a column called 'domain' which contains the domain names of the email addresses that were passed as arguments.\n\nFor example, if you execute the following command:\nprint(main('example@example.com', 'student@uva.nl', 'email@address.com'))\n\nthe output should be:\n  local   domain\n0 example example.com\n1 student uva.nl\n2 email   address.com\n\nWhich of the following code segments will return this dataframe as intended?\n\nYou may assume that pandas is already imported as pd.",
+        "options": {
+          "a": "def main(*args):\n    local = []\n    domain = []\n    for email in args:\n        local.append(email.split(\"@\")[0])\n        domain.append(email.split(\"@\")[1])\n    return pd.DataFrame({local: domain for local, domain in zip(local, domain)})",
+          "b": "def main(*args):\n    data = {}\n    for email in args:\n        data['local'] = email.split(\"@\")[0]\n        data['domain'] = email.split(\"@\")[1]\n    return pd.DataFrame(data)",
+          "c": "def main(args):\n    return pd.DataFrame({\n        'local': [email.split(\"@\")[1] for email in args],\n        'data': [email.split(\"@\")[0] for email in args]})",
+          "d": "def main(*args):\n    data = {}\n    data['local'] = pd.Series([email.split(\"@\")[0] for email in args])\n    data['domain'] = pd.Series([email.split(\"@\")[1] for email in args])\n    return pd.DataFrame(data)"
+        },
+        "correct": "d",
+        "explanation": "Option D constructs one aligned series for the local parts and one for the domains, then returns them in a DataFrame with the correct column names. The other options either overwrite values, build the wrong structure, or use the wrong field names.",
+        "code_context": "print(main('example@example.com', 'student@uva.nl', 'email@address.com'))"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-extra_practice-9-w3-return-behavior",
+        "rationale": "Directly addresses the 'flexible number of arguments' concept (*args) required by the function signature in the question."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-extra_practice-9-w3-return-behavior",
+          "rationale": "Explains the syntax and behavior of functions accepting a flexible number of arguments (*args)."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
+          "rationale": "Contextualizes the concept of 'extracting' parts of a string (like a TLD or an email local part) from a formatted input."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+          "rationale": "Introduces Pandas Series, which are used in the correct answer (Option D) to build the final DataFrame."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-extra_practice-9-w3-return-behavior",
+          "rationale": "Covers the *args requirement."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
+          "rationale": "Covers the string parsing/extraction logic."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+          "rationale": "Covers the Pandas Series component."
+        },
+        {
+          "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "rationale": "Helps a student understand how to map keys to values (like column names to data lists) which is central to building the DataFrame."
+        }
+      ],
+      "answerability": {
+        "status": "partial",
+        "confidence": "medium",
+        "rationale": "The snippets cover *args, the concept of string extraction, and the existence of Pandas Series. However, the exact syntax for splitting a string at a character (split('@')) and the constructor for a DataFrame from a dictionary of Series are not explicitly shown in the code samples, requiring the student to infer these patterns.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "Missing explicit examples of the .split() method and the pd.DataFrame() constructor using a dictionary input.",
+        "missing_concepts": [
+          "String splitting syntax (string.split('@'))",
+          "Pandas DataFrame construction from a dictionary of Series or lists",
+          "List comprehension for transforming a tuple of arguments"
+        ],
+        "proposed_fix": "Add a snippet demonstrating how to use split() to divide a string into components and another showing the creation of a multi-column DataFrame from a dictionary."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet showing: data = {'col1': [1, 2], 'col2': [3, 4]}; df = pd.DataFrame(data). Include a brief note on using .split() to break strings into list components.",
+          "why_helpful": "This directly bridges the gap between having extracted components and returning them as a structured DataFrame, which is the core task of the exam question.",
+          "why_maybe_unnecessary": "Option D uses pd.Series explicitly, so a student might guess the DataFrame structure if they understand Series, but the dictionary-to-DataFrame mapping is a common stumbling block.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:12:18Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q16",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q16",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 16,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice",
+        "question": "You have the following definition of a class called Employee:\n\nclass Employee:\n    def __init__(self, name, role, gender = 'not specified'):\n        self.name = name\n        self.role = role\n        self.gender = gender\n\nWhat will be the output if we execute the following lines of code?\n\nemployee1 = Employee('John Smith', 'HR representative')\nprint(employee1.name == 'John Smith')\nprint(employee1.gender == 'not specified')",
+        "options": {
+          "a": "True\nTrue",
+          "b": "False\nTrue",
+          "c": "False\nFalse",
+          "d": "True\nFalse"
+        },
+        "correct": "a",
+        "explanation": "The object is created with name 'John Smith', and because no gender argument is passed, the default value 'not specified' is used. Both comparisons therefore evaluate to True.",
+        "code_context": "class Employee:\n    def __init__(self, name, role, gender = 'not specified'):\n        self.name = name\n        self.role = role\n        self.gender = gender\n\nemployee1 = Employee('John Smith', 'HR representative')\nprint(employee1.name == 'John Smith')\nprint(employee1.gender == 'not specified')"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-midterm_2023-9-w3-arguments",
+        "rationale": "Directly demonstrates how default arguments work (num2=10, num3=20) when a function is called with fewer values than parameters, which is the exact logic needed to determine the 'gender' value in the question."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-midterm_2023-9-w3-arguments",
+          "rationale": "Explains the default parameter behavior which is critical for understanding why 'gender' defaults to 'not specified'."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+          "rationale": "Provides the conceptual pattern for defining classes with attributes (name, mode) initialized during construction."
+        },
+        {
+          "item_id": "exam-trial_midterm-4-w1-objects-and-names",
+          "rationale": "Shows equality comparison (==) logic, helping the student evaluate whether the print statements will result in True or False."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-midterm_2023-9-w3-arguments",
+          "rationale": "Covers the 'default value' logic."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+          "rationale": "Covers the 'class attribute initialization' pattern."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "By combining the OOP class structure from one snippet and the default argument mechanics from another, a student can clearly see that missing arguments trigger default values and that self.name is assigned from the first argument.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the concepts are covered across multiple snippets, there isn't a single example that explicitly shows the 'obj.attribute' access syntax alongside default arguments in a class context.",
+        "missing_concepts": [
+          "explicit instance attribute access syntax (object.attribute)"
+        ],
+        "proposed_fix": "Add a snippet demonstrating a class with a default argument and a subsequent print of that attribute (e.g., p = Person('A'); print(p.age))."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Add a snippet showing: 'class User: def __init__(self, id, status=\"active\"): self.id = id; self.status = status; u = User(123); print(u.status == \"active\")'",
+          "why_helpful": "This merges OOP structure with default argument logic and attribute access in one clear example, mirroring the question's complexity.",
+          "why_maybe_unnecessary": "The student can technically deduce the answer by combining the 'Arguments' and 'OOP Fundamentals' snippets currently available.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:12:42Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q17",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q17",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 17,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice",
+        "question": "Which other code fragment will print the same output as the following?\n\nfrom datetime import datetime, timedelta\nprint((datetime.strptime('2023/1/10', '%Y/%m/%d') - datetime(2023, 1, 1)).days + 1)",
+        "options": {
+          "a": "from datetime import datetime, timedelta\nprint((datetime(2023, 1, 10) - datetime(2023, 1, 1)).days)",
+          "b": "from datetime import datetime, timedelta\nprint(timedelta(datetime(2023, 1, 10) - datetime(2023, 1, 1)).days + 1)",
+          "c": "from datetime import datetime, timedelta\nprint((datetime(2023, 1, 10) - datetime.strptime('2023-1-1', '%Y-%m-%d')).days)",
+          "d": "from datetime import datetime, timedelta\nprint((datetime(2023, 1, 11) - datetime(2023, 1, 1)).days)"
+        },
+        "correct": "d",
+        "explanation": "The original expression computes the number of days between January 10 and January 1, then adds 1, which yields 10. Option D also yields 10 by subtracting January 1 from January 11.",
+        "code_context": "from datetime import datetime, timedelta\nprint((datetime.strptime('2023/1/10', '%Y/%m/%d') - datetime(2023, 1, 1)).days + 1)"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "manual-datetime-day-of-year",
+        "rationale": "It uses the exact logic from the question—subtracting January 1st from a date, accessing .days, and adding 1—to compute a day-of-year value, making the pattern directly recognizable."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "manual-datetime-day-of-year",
+          "rationale": "Provides the structural template for the date arithmetic and explains the '+ 1' logic for inclusive day counting."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-10-w6-datetime",
+          "rationale": "Explicitly explains the mechanics: subtracting datetimes creates a timedelta, and .days returns the difference as an integer."
+        },
+        {
+          "item_id": "ks-86cd7ede1c",
+          "rationale": "Shows the required imports and the syntax for creating datetime objects and performing subtraction."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "manual-datetime-day-of-year",
+          "rationale": "Essential for the formula pattern."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-10-w6-datetime",
+          "rationale": "Essential for understanding the data types involved (timedelta and integer attributes)."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The combination of the day-of-year formula logic and the explanation of .days allows a student to calculate that the original code equals 10 and identify Option D as the equivalent result.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the logic is clear, the 'strptime' function used in the question is not explicitly demonstrated in the code snippets, though it is inferable from the string content.",
+        "missing_concepts": [
+          "Explicit demonstration of datetime.strptime() syntax and format codes like %Y/%m/%d"
+        ],
+        "proposed_fix": "Add a snippet demonstrating how to convert strings to datetime objects using strptime with common format codes."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet showing: 'dt = datetime.strptime(\"2023/01/10\", \"%Y/%m/%d\")' with a comment explaining that %Y is year, %m is month, and %d is day.",
+          "why_helpful": "It removes any ambiguity for a non-Python user about how the string '2023/1/10' is being processed.",
+          "why_maybe_unnecessary": "Most students will correctly guess that '2023/1/10' represents January 10, 2023, without needing the technical definition of strptime.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:13:07Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q18",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q18",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 18,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Multiple choice",
+        "question": "Suppose you have the following DataFrame called df:\n  Player  Age  Height\n0 John     25     180\n1 Jane     30     165\n2 Alex     27     175\n\nYou may assume that pandas is already imported as pd.\n\nWhich of the following lines of code will give an error?",
+        "options": {
+          "a": "print(df[['Player', 'Age']])",
+          "b": "print(df.loc[df['Height'] > 170, ['Player', 'Age']])",
+          "c": "print(df.loc[:, 'Age'])",
+          "d": "print(df[1, 'Age'])"
+        },
+        "correct": "d",
+        "explanation": "Options A, B, and C are valid pandas selections. Option D is invalid because standard bracket indexing in this form does not accept the tuple (1, 'Age') to select a single cell.",
+        "code_context": "df = pd.DataFrame({\n    'Player': ['John', 'Jane', 'Alex'],\n    'Age': [25, 30, 27],\n    'Height': [180, 165, 175]\n})"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+        "rationale": "This snippet is the most relevant as it explicitly discusses creating a new DataFrame by selecting specific columns for specific rows, which touches upon the mechanics of row/column indexing in Pandas."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+          "rationale": "Covers selecting specific columns and rows, helping the student understand valid selection patterns (relevant to options A and B)."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
+          "rationale": "Provides a visual example of a printed Pandas DataFrame with indices and columns, helping a zero-knowledge student visualize the 'df' described in the question."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
+          "rationale": "Shows basic column access like df['A'], which validates the use of string keys in brackets for column selection."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+          "rationale": "Mentions using boolean masks and column lists for selection."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
+          "rationale": "Contextualizes what a DataFrame looks like."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
+          "rationale": "Confirms basic bracket notation for columns."
+        }
+      ],
+      "answerability": {
+        "status": "insufficient",
+        "confidence": "low",
+        "rationale": "None of the snippets explain the specific syntax rules of .loc vs. standard brackets, nor do they explicitly show that a tuple like [1, 'Age'] is invalid in standard brackets. A student with zero Python knowledge would not be able to confidently identify why Option D causes an error while Option A (nested brackets) does not.",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "The existing snippets do not define the difference between label-based indexing (.loc) and position-based or standard bracket indexing. Crucially, the 'standard bracket error' for multi-axis indexing is never mentioned.",
+        "missing_concepts": [
+          "Pandas .loc syntax for simultaneous row and column selection",
+          "The invalidity of df[row, col] vs the validity of df.loc[row, col]",
+          "Double bracket syntax df[['col1', 'col2']] for selecting multiple columns"
+        ],
+        "proposed_fix": "Add a summary or rule-based snippet that contrasts valid selection methods (df['col'], df[['col1', 'col2']], df.loc[row, col]) with common syntax errors like df[row, col]."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Title: Pandas Selection Cheat Sheet. Content: To select one column: df['A']. To select multiple: df[['A', 'B']]. To select specific rows and columns by label: df.loc[row_index, 'column_name']. Note: Using df[index, 'column'] directly results in an error.",
+          "why_helpful": "It directly addresses the core logic required to distinguish between valid Pandas syntax and the error-inducing Option D in the exam question.",
+          "why_maybe_unnecessary": "If the goal is only to use existing exam questions as context, but since the current questions are truncated, they don't provide the syntax rules clearly.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:13:30Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q19",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q19",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 19,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "animals methods",
+        "question": "You have the following definition for a class called Animals:\n\nYou need to add two methods to the class:\n1. The walk() method, which returns the 'sound' attribute an Animal object has if the Animal object has 'legs'. If the Animal object does not, return 'Cannot walk!'.\n2. The swim() method, which returns the 'sound' attribute an Animal object has if the Animal object has 'fin'. If the Animal object does not, return 'Cannot swim!'.\n\nFor example, if we execute the following commands:\ncat = Animals('kitty', legs=True, sound='Meow!')\nfish = Animals('nemo', fin=True, sound='Blob!')\nprint(cat.walk())\nprint(cat.swim())\nprint(fish.swim())\nprint(fish.walk())\n\nthe output should be:\nMeow!\nCannot swim!\nBlob!\nCannot walk!\n\nWhich of the following code segments should you place on the missing lines in the class definition to achieve what you want?",
+        "options": {
+          "a": "def walk(self):\n    return self.sound if self.legs else 'Cannot walk!'\ndef swim(self):\n    return self.sound if self.fin else 'Cannot swim!'",
+          "b": "def walk(self):\n    if self.legs = True:\n        return self.sound\n    else:\n        return 'Cannot walk!'\ndef swim(self):\n    if self.fin = True:\n        return self.sound\n    else:\n        return 'Cannot swim!'",
+          "c": "def walk():\n    return sound if legs else 'Cannot walk!'\ndef swim():\n    return sound if fin else 'Cannot swim!'",
+          "d": "def walk():\n    if legs == True:\n        return sound\n    else:\n        return 'Cannot walk!'\ndef swim():\n    if fin == True:\n        return sound\n    else:\n        return 'Cannot swim!'"
+        },
+        "correct": "a",
+        "explanation": "Option A is the only choice that defines both instance methods with self and correctly returns self.sound when the corresponding boolean attribute is truthy, otherwise the required fallback string.",
+        "code_context": "class Animals:\n    def __init__(self, name, sound, legs=None, fin=None):\n        self.name = name\n        self.sound = sound\n        self.legs = legs\n        self.fin = fin\n\n    # missing lines\n    # ..."
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
+        "rationale": "This snippet explicitly discusses adding a method (compare) to a class that involves logical conditions and attribute access, mirroring the structure required for walk() and swim()."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
+          "rationale": "Shows how to structure a class method that performs logic based on instance attributes."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+          "rationale": "Provides the foundational syntax for defining a class and using the 'self' parameter in the constructor, which helps the student recognize that 'self' is a standard part of class definitions."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-4-w2-conditions",
+          "rationale": "While about functions, it demonstrates conditional logic, which is necessary to understand the 'if/else' requirements of the question."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
+          "rationale": "Demonstrates instance method definition logic."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+          "rationale": "Shows class attribute initialization and the 'self' pattern."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-4-w2-conditions",
+          "rationale": "Helps distinguish between proper comparison (==) and assignment (=) which is critical for identifying why option B is wrong."
+        }
+      ],
+      "answerability": {
+        "status": "partial",
+        "confidence": "medium",
+        "rationale": "The snippets correctly point to the need for 'self' in methods and the use of 'self.attribute' for access. However, none of the snippets explicitly demonstrate the Python ternary operator (val if cond else other) used in the correct answer (Option A), nor do they explicitly warn against the common '=' vs '==' error in Option B for a student with zero Python knowledge.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "Missing explicit examples of the ternary conditional operator and the distinction between instance methods vs. static/plain functions inside a class context.",
+        "missing_concepts": [
+          "ternary conditional operator",
+          "comparison operator (==) vs assignment (=) in if-statements",
+          "explicit 'self' requirement for instance methods vs functions"
+        ],
+        "proposed_fix": "Add a snippet or AI-generated section that contrasts a plain function with a class method, specifically showing both 'if/else' and ternary syntax for returning values."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet titled 'Instance Methods and Conditional Returns' that shows: 1. A method using self. 2. A return statement using the 'X if condition else Y' syntax. 3. A warning that '=' cannot be used for comparison in 'if' statements.",
+          "why_helpful": "This would directly address the syntax found in the correct answer (ternary) and the syntax error in the most tempting distractor (Option B).",
+          "why_maybe_unnecessary": "If the student is very observant, they might infer 'self' from the constructor snippets, but the ternary operator is likely to be confusing.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:13:52Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q20",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q20",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 20,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "movie review methods",
+        "question": "You have the following definition for a class named Movie.\n\nYou need to add three methods to the class:\n1. The add_review() method, which adds review scores to the 'reviews' attribute,\n2. The rating() method, which computes and returns the average review score of all scores stored in the 'reviews' attribute. If there are no reviews, the method should return 0.\n3. The compare() method, which compares the average review scores of two Movie objects and return the title of the Movie object with the higher average review score, i.e., the name of the movie you should watch. In case both Movie objects have the same average review score, the method should return 'Either'.\n\nFor example, if we execute the following commands:\nmovie1 = Movie('In Bruges', 'Martin McDonagh', [5, 3, 5, 4])\nmovie2 = Movie('Parasite', 'Bong Joon Ho')\nprint(movie1.compare(movie2))\n\nthe output should be:\nIn Bruges\n\nWhich of the following code segments should you place on the missing lines in the class definition to achieve what you want?",
+        "options": {
+          "a": "def add_review(self, score):\n    self.reviews += score\ndef rating(self):\n    return sum(self.reviews)/len(self.reviews) if self.reviews else 0\ndef compare(self, other):\n    for first, second in [(self, other), (other, self)]:\n        return first.title if first.rating() > second.rating() else 'Either'",
+          "b": "def add_review(score):\n    reviews.append(score)\ndef rating():\n    if reviews:\n        return sum(reviews)/len(reviews)\n    else:\n        return 0\ndef compare(self, other):\n    if self.rating > other.rating:\n        return self.title\n    elif self.rating < other.rating:\n        return other.title\n    else:\n        return 'Either'",
+          "c": "Both code segments will work as intended.",
+          "d": "Neither code segments will work as intended."
+        },
+        "correct": "d",
+        "explanation": "Option A is broken because add_review uses list-plus-number syntax and compare immediately returns on the first loop iteration, so it never returns other.title when the other movie has the higher rating. Option B is also broken because add_review and rating are missing self and compare compares method objects instead of calling them.",
+        "code_context": "class Movie:\n    def __init__(self, title, director, reviews = None):\n        self.title = title\n        self.director = director\n        self.reviews = reviews if reviews else []\n\n    # missing lines\n    # ..."
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "manual-oop-state-compare",
+        "rationale": "Directly demonstrates the correct implementation of a class with an add_review method using .append() and an average calculation method, which allows a student to identify the syntax errors in both options A and B."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "manual-oop-state-compare",
+          "rationale": "Shows the correct way to append to a list attribute and structure methods with 'self', highlighting the flaws in both code segments."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-2-w4-oop-fundamentals",
+          "rationale": "Discusses the logic for a 'compare' method based on average review scores, providing the conceptual framework for the question's objective."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+          "rationale": "Reinforces the requirement for 'self' in method definitions and how attributes are initialized, which is a key error in Option B."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "manual-oop-state-compare",
+          "rationale": "Covers appending to lists, method definitions with self, and average calculation logic."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The snippet 'manual-oop-state-compare' provides a nearly identical class structure (Book vs Movie). A student can see that adding to a list requires .append() (ruling out A's +=) and that methods must include 'self' (ruling out B).",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The existing snippets are highly effective for this specific question because the AI-generated example perfectly mirrors the required methods.",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:14:08Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q21",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q21",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 21,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "datetime weekly dates list",
+        "question": "You need to write a function called main, which accepts a string as an argument. The string represents a date as DD-MM-YYYY.\n\nThe function should return a list containing 10 strings representing dates, all in that same format.\nThe first element of the list should be the original input date.\nEach further element of the list should be a string representing the date that is exactly one week after the preceding element of the list.\n\nTake a look at the following code segment:\n\nfrom datetime import datetime, timedelta\n\ndef main(string):\n    date = datetime.strptime(string, '%d-%m-%Y')\n    str_list = [date]\n    for i in range(1, 10):\n        str_list.append((str_list[i-1] + timedelta(weeks=1)).strftime('%d-%m-%Y'))\n    return str_list\n\nWill this code segment work as intended? If not, then why not?",
+        "options": {
+          "a": "This code will not work as intended, because there will be 11 strings in the list instead of 10.",
+          "b": "The code will not work because the two methods strptime() and strftime() are mixed up.",
+          "c": "This code will not work because str_list[i-1] is a string. Timedelta objects can only be added to datetime objects, and cannot be added to strings.",
+          "d": "This code segment will work as intended."
+        },
+        "correct": "c",
+        "explanation": "After the first append, the newly added element is a formatted string, so on the next loop iteration the code tries to add a timedelta to a string instead of to a datetime object.",
+        "code_context": "from datetime import datetime, timedelta\n\ndef main(string):\n    date = datetime.strptime(string, '%d-%m-%Y')\n    str_list = [date]\n    for i in range(1, 10):\n        str_list.append((str_list[i-1] + timedelta(weeks=1)).strftime('%d-%m-%Y'))\n    return str_list"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-extra_practice-9-w3-return-behavior",
+        "rationale": "Mentions filtering 'non-integers', which introduces the concept that operations (like addition) are restricted to specific data types, mirroring the 'string vs datetime' conflict in the question."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-extra_practice-9-w3-return-behavior",
+          "rationale": "Introduces the principle of type-checking and the fact that functions/operations fail when applied to the wrong type (non-integers)."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
+          "rationale": "Discusses a function that takes a string and returns a 10-digit string, helpful for understanding string-to-string transformations."
+        },
+        {
+          "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "rationale": "Demonstrates iterating through a list of strings and performing operations based on their properties (lengths)."
+        }
+      ],
+      "minimal_sufficient_snippets": [],
+      "answerability": {
+        "status": "insufficient",
+        "confidence": "low",
+        "rationale": "No snippets cover the 'datetime' or 'timedelta' modules. Without knowing that 'strftime' converts a datetime object into a string, a student cannot deduce that the second iteration of the loop fails because it tries to add a timedelta to a string.",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "There is a complete gap regarding the 'datetime' module's specific methods and the resulting object types.",
+        "missing_concepts": [
+          "The return type of datetime.strptime (datetime object) vs datetime.strftime (string)",
+          "The requirement that timedelta can only be added to datetime objects",
+          "How list elements can change types across iterations in a loop"
+        ],
+        "proposed_fix": "Add a core library snippet for Week 4/Datetime explaining the conversion cycle: String -> strptime -> Datetime -> strftime -> String."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet titled 'Datetime and Timedelta Operations'. Key points: 1. datetime.strptime() returns a datetime object. 2. datetime.strftime() returns a string. 3. Adding a timedelta to a datetime object works; adding it to a string causes a TypeError.",
+          "why_helpful": "It explicitly provides the technical knowledge needed to evaluate Option C, which is the correct answer and the core 'trick' of the question.",
+          "why_maybe_unnecessary": "If this is a rare topic, but since it appears in final exams, it is high-value.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:14:35Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q22",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q22",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 22,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "pandas date column from day month year",
+        "question": "Suppose you have the following DataFrame called df:\n\n   Day  Month  Year\n0    1      5  2023\n1    8      5  2023\n2   15      5  2023\n3   22      5  2023\n4   29      5  2023\n\nYou need to create a new column called Date that contains strings representing the dates as constructed from the Day, Month and Year columns. That is, finally the DataFrame should look like this:\n\n   Day  Month  Year        Date\n0    1      5  2023  01-05-2023\n1    8      5  2023  08-05-2023\n2   15      5  2023  15-05-2023\n3   22      5  2023  22-05-2023\n4   29      5  2023  29-05-2023\n\nWhich of the following code segments will achieve what you want? You may assume that the pandas is already imported as pd.",
+        "options": {
+          "a": "from datetime import datetime\ndf['Date'] = pd.Series([datetime(y, m, d).strftime('%d-%m-%Y') for d, m, y in zip(df['Day'], df['Month'], df['Year'])])",
+          "b": "from datetime import datetime\ndf['Date'] = pd.Series([datetime.strptime(d, m, y, '%d-%m-%Y') for d, m, y in zip(df['Day'], df['Month'], df['Year'])])",
+          "c": "from datetime import datetime\ndf['Date'] = pd.Series([datetime(d, m, y).strftime('%d-%m-%Y') for d, m, y in zip(df['Day'], df['Month'], df['Year'])])",
+          "d": "from datetime import datetime\ndf['Date'] = pd.Series([datetime.strptime(date, '%d-%m-%Y') for date in zip(df['Day'], df['Month'], df['Year'])])"
+        },
+        "correct": "a",
+        "explanation": "Option A correctly constructs datetime objects in year-month-day order from the three columns and then formats them into the requested DD-MM-YYYY strings.",
+        "code_context": "Day  Month  Year\n0    1      5  2023\n1    8      5  2023\n2   15      5  2023\n3   22      5  2023\n4   29      5  2023"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+        "rationale": "Demonstrates the essential Pandas syntax for creating a new column ('C') by performing operations on existing columns ('A' and 'B')."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Shows how to assign a new column to a DataFrame based on existing column values, which is the high-level goal of the question."
+        },
+        {
+          "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+          "rationale": "Provides a clear example of using zip() to iterate over multiple lists simultaneously, explaining the syntax used in the question's list comprehension."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "rationale": "Introduces the concept of transforming Series values (using .map or similar), which provides context for the row-wise logic required here."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Covers the Pandas column creation boilerplate."
+        },
+        {
+          "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+          "rationale": "Explains the zip() function for parallel iteration."
+        }
+      ],
+      "answerability": {
+        "status": "insufficient",
+        "confidence": "high",
+        "rationale": "While the snippets explain the 'Pandas' and 'zip' parts of the code, they completely lack information on the 'datetime' module. A student cannot know that 'datetime(year, month, day)' is the correct argument order (distinguishing A from C) or that 'strftime' is used for formatting rather than 'strptime' (distinguishing A from B/D).",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "The candidate snippets cover general structural patterns but miss the specific library knowledge (datetime) required to differentiate the answers.",
+        "missing_concepts": [
+          "datetime.datetime constructor argument order (Year, Month, Day)",
+          "Usage of strftime() for date-to-string formatting",
+          "Difference between strftime (format) and strptime (parse)"
+        ],
+        "proposed_fix": "Add a snippet demonstrating the creation of a datetime object from integers and its subsequent formatting into a string."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Snippet: 'Datetime Construction and Formatting'. Content: 'from datetime import datetime; # Order: Year, Month, Day; dt = datetime(2023, 5, 1); # Format to string; s = dt.strftime(\"%d-%m-%Y\") # Returns \"01-05-2023\"'.",
+          "why_helpful": "This provides the exact 'missing piece' regarding argument order and method selection (strftime) needed to solve the exam question.",
+          "why_maybe_unnecessary": "",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:15:12Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 23,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "pandas above average salary",
+        "question": "Consider the following pandas DataFrame called df:\n\n   Name  Age  Salary\n0  John   25   50000\n1  Jane   30   65000\n2  Alex   35   80000\n3  Lisa   40   70000\n4  Mark   28   55000\n\nYou need to perform a series of operations on this DataFrame:\n- Operation 1: Create a new column called Above_average, which contains True if the employee's salary is above the average salary of all the employees, otherwise False.\n- Operation 2: Create a new column called Salary_difference, which represents how much higher an employee's salary is than the average salary.\n- Operation 3: Print the segment of the adapted DataFrame that contains all the columns, but only the rows in which the employees earn more than the average salary.\n\nThat is, the final result printed should be:\n   Name  Age  Salary  Above_average  Salary_difference\n1  Jane   30   65000           True               1000\n2  Alex   35   80000           True              16000\n3  Lisa   40   70000           True               6000\n\nWhich of the following blocks of code will perform these operations as intended? You may assume the pandas module is already imported as pd.",
+        "options": {
+          "a": "mean_salary = round(df['Salary'].mean())\ndf['Above_average'] = pd.Series([True if salary > mean_salary else False for salary in df['Salary']])\ndf['Salary_difference'] = df['Salary'] - mean_salary\nprint(df[df['Above_average']==True])",
+          "b": "None of the blocks of code will work as intended.",
+          "c": "Both blocks of code will work as intended.",
+          "d": "mean_salary = round(df['Salary'].mean())\ndf['Above_average'] = df['Salary'].map(lambda x: True if x > mean_salary else False)\ndf['Salary_difference'] = df['Salary'].map(lambda x: x - mean_salary)\nprint(df[df['Salary_difference']>0])"
+        },
+        "correct": "a",
+        "explanation": "Option A correctly computes the mean salary, builds both required columns, and prints the full DataFrame filtered to rows where Above_average is True. Option D does not print the result in the required way because it filters only on Salary_difference > 0 rather than explicitly using the Above_average column requested in the specification.",
+        "code_context": "Name  Age  Salary\n0  John   25   50000\n1  Jane   30   65000\n2  Alex   35   80000\n3  Lisa   40   70000\n4  Mark   28   55000"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+        "rationale": "This snippet introduces the core logic of calculating the difference between elements in a Series and their mean, which is central to both Operations 1 and 2."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+          "rationale": "Explains the concept of processing elements relative to the mean of a sequence (Series)."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Demonstrates vectorized column operations (df['C'] = df['A'] + df['B']), which validates the syntax used in Operation 2."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+          "rationale": "Covers boolean masks and selecting rows from a DataFrame based on indices/conditions, relevant for Operation 3."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+          "rationale": "Logic for mean and difference calculations."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Syntax for creating new columns via vectorized math."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+          "rationale": "Syntax for filtering DataFrames with boolean masks."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "rationale": "Shows the .map() method, helping the student distinguish why Option D (which uses .map()) might be syntactically valid but strategically different from Option A."
+        }
+      ],
+      "answerability": {
+        "status": "partial",
+        "confidence": "medium",
+        "rationale": "Existing snippets cover column math and filtering logic, but none explicitly show the `.mean()` method or the specific `df[df['col'] == True]` print syntax. A student with zero knowledge would have to infer that `.mean()` is the standard way to get an average in Pandas.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets provide a strong foundation for column creation and filtering, but the specific Pandas aggregation method '.mean()' and the explicit syntax for boolean filtering in a print statement are missing.",
+        "missing_concepts": [
+          "df['col'].mean() method",
+          "df[df['bool_col'] == True] filtering syntax"
+        ],
+        "proposed_fix": "Add a snippet demonstrating basic Pandas descriptive statistics (mean, sum) and how to use a boolean column to filter a DataFrame."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Topic: Pandas Aggregation and Filtering. 'To calculate the average of a column, use df[col].mean(). To filter a DataFrame to show only rows where a condition is met, use df[df[col] > value] or df[df[bool_col] == True].'",
+          "why_helpful": "It directly connects the 'average' requirement in the question to the '.mean()' method and explains the filtering syntax needed for Operation 3.",
+          "why_maybe_unnecessary": "The 'extra_practice' snippet mentions 'above average' logic for dictionaries, but Pandas-specific syntax is distinct enough to warrant its own entry.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:15:30Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q24",
+      "question_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q24",
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "question_number": 24,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "pandas lambda output",
+        "question": "What will be the output of the following lines of code?\n\nimport pandas as pd\n\ndf = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})\ndf['C'] = df['A'].map(lambda x: x + df['B'].sum())\n\nprint(df)",
+        "options": {
+          "a": "A  B   C\n0  1  4  18\n1  2  5  21\n2  3  6  24",
+          "b": "A  B   C\n0  1  4  12\n1  2  5  15\n2  3  6  18",
+          "c": "A  B   C\n0  1  4   9\n1  2  5  12\n2  3  6  15",
+          "d": "A  B   C\n0  1  4  16\n1  2  5  17\n2  3  6  18"
+        },
+        "correct": "d",
+        "explanation": "df['B'].sum() is 15, so the lambda adds 15 to each value in column A, producing C values 16, 17, and 18.",
+        "code_context": "import pandas as pd\n\ndf = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})\ndf['C'] = df['A'].map(lambda x: x + df['B'].sum())\n\nprint(df)"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+        "rationale": "It explicitly mentions that the .map() method allows applying a function to a Series, which is the fundamental mechanism being used in the code (df['A'].map(...))."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "rationale": "Explains that .map() applies a function to each element of a Series."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Demonstrates the syntax for creating a new column 'C' by performing operations on other columns ('A' and 'B')."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+          "rationale": "Describes a scenario of creating a new Series where each element is based on a calculation involving the original element and an aggregate (the mean), similar to the lambda sum logic."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "rationale": "Provides the 'apply function' logic for .map()."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Provides the DataFrame column assignment syntax."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+          "rationale": "Provides context for element-wise operations involving aggregates."
+        }
+      ],
+      "answerability": {
+        "status": "insufficient",
+        "confidence": "low",
+        "rationale": "While the snippets explain .map() and column creation, there is zero information on 'lambda' syntax or the '.sum()' aggregation method. A student wouldn't know that 'lambda x: ...' defines a function or that 'sum()' produces a single value (15) to be added to each 'x'.",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "The main gaps are the definition and syntax of lambda functions and the behavior of pandas aggregation methods like .sum().",
+        "missing_concepts": [
+          "lambda function syntax (lambda x: ...)",
+          "pandas .sum() aggregation behavior",
+          "The concept of using an aggregate value inside a row-wise map/apply function"
+        ],
+        "proposed_fix": "Add a key point or exam snippet that explains anonymous (lambda) functions and common pandas aggregations."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Key Point: Lambda Functions in Pandas. 'lambda x: expression' creates a small anonymous function where 'x' represents the value of each row/element when used with .map() or .apply(). Example: s.map(lambda x: x + 10).",
+          "why_helpful": "This is critical for understanding what the 'lambda' keyword does in the question code.",
+          "why_maybe_unnecessary": "",
+          "recommended_direction": "add_this"
+        },
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Key Point: Pandas Aggregations. Methods like .sum(), .mean(), and .count() return a single number representing the total/average/count of the entire Series/column. Example: df['B'].sum() equals the sum of all values in column B.",
+          "why_helpful": "The student needs to know that df['B'].sum() is a constant value (15) in this context, not another Series.",
+          "why_maybe_unnecessary": "",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:15:54Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    }
+  ]
+}

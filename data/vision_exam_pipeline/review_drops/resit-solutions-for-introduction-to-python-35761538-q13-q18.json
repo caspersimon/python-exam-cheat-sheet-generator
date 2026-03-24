@@ -1,0 +1,156 @@
+{
+  "exam_id": "resit-solutions-for-introduction-to-python-35761538",
+  "question_updates": [
+    {
+      "number": 13,
+      "topic": "string - find - 3",
+      "question": "You have a string variable called sentence:\nsentence = 'I bought a book about programming. The book has a lot of exercises. I enjoy reading a good book.'\n\nYou want to replace only the second occurrence of \"book\" with \"novel\" in the sentence and save this as new_sentence.\n\nSo:\nprint(new_sentence)\nshould print:\nI bought a book about programming. The novel has a lot of exercises. I enjoy reading a good book.\n\nWhich of the following code segments will work as intended?\n\nHint:\nThe string find() method takes three arguments: value, start and end. The first argument is required and is the value to search for. The second and third argument are optional, they are indices specifying where to start and end the search, respectively.",
+      "options": {
+        "a": "index = sentence.find('book')\nindex = sentence.find('book', index + 1)\nnew_sentence = sentence[:index] + 'novel' + sentence[index + 4:]",
+        "b": "new_sentence = sentence.replace(\"book\", \"novel\", 2)\nnew_sentence = new_sentence.replace(\"novel\", \"book\", 1)",
+        "c": "Both options will work as intended.",
+        "d": "None of the options will work as intended."
+      },
+      "correct": "c",
+      "explanation": "Option A finds the second occurrence and replaces it by slicing. Option B first replaces the first two occurrences of \"book\" with \"novel\" and then changes only the first replaced occurrence back to \"book\", so only the second occurrence remains replaced.",
+      "code_context": "sentence = 'I bought a book about programming. The book has a lot of exercises. I enjoy reading a good book.'",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-08.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 14,
+      "topic": "string - fstring - 3",
+      "question": "You have the following objects loaded in Python:\nfruits = [\"apple\", \"banana\", \"orange\"]\ncount = 3\n\nYou want to print the following sentence:\nI have 3 fruits: apple, banana, and orange.\n\nWhich of the following code fragments will achieve the desired output?",
+      "options": {
+        "a": "message = f\"I have {count} fruits: {', '.join(fruits)}.\"\nprint(message)",
+        "b": "message = f\"I have {count} fruits: {fruits[0]}, {fruits[1]}, and {fruits[2]}.\"\nprint(message)",
+        "c": "Both code fragments will achieve the desired output.",
+        "d": "Neither of the code fragments will achieve the desired output."
+      },
+      "correct": "b",
+      "explanation": "Option B matches the required sentence exactly, including the word \"and\" before the final fruit. Option A joins the list without \"and\", so it does not produce the exact requested output.",
+      "code_context": "fruits = [\"apple\", \"banana\", \"orange\"]\ncount = 3",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-08.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 15,
+      "topic": "string - operations - 3",
+      "question": "A company wants to extract the components of email addresses. An email address consists of the local part, which comes before the \"@\" symbol and a domain name, which comes after the \"@\" symbol.\n\nYou need to create a function called main() which accepts a flexible number of strings representing email addresses and returns a DataFrame. Your DataFrame should have a column called 'local' which contains the local parts and a column called 'domain' which contains the domain names of the email addresses that were passed as arguments.\n\nFor example, if you execute the following command:\nprint(main('example@example.com', 'student@uva.nl', 'email@address.com'))\n\nthe output should be:\n  local   domain\n0 example example.com\n1 student uva.nl\n2 email   address.com\n\nWhich of the following code segments will return this dataframe as intended?\n\nYou may assume that pandas is already imported as pd.",
+      "options": {
+        "a": "def main(*args):\n    data = {}\n    data['local'] = pd.Series([email.split(\"@\")[0] for email in args])\n    data['domain'] = pd.Series([email.split(\"@\")[1] for email in args])\n    return pd.DataFrame(data)",
+        "b": "def main(args):\n    return pd.DataFrame({\n        'local': [email.split(\"@\")[1] for email in args],\n        'data': [email.split(\"@\")[0] for email in args]})",
+        "c": "def main(*args):\n    data = {}\n    for email in args:\n        data['local'] = email.split(\"@\")[0]\n        data['domain'] = email.split(\"@\")[1]\n    return pd.DataFrame(data)",
+        "d": "def main(*args):\n    local = []\n    domain = []\n    for email in args:\n        local.append(email.split(\"@\")[0])\n        domain.append(email.split(\"@\")[1])\n    return pd.DataFrame({local: domain for local, domain in zip(local, domain)})"
+      },
+      "correct": "a",
+      "explanation": "Option A builds aligned pandas Series for the local parts and domains, then returns them in a DataFrame with the correct column names. The other options either swap fields, overwrite values, or construct the DataFrame incorrectly.",
+      "code_context": "print(main('example@example.com', 'student@uva.nl', 'email@address.com'))",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-09.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 16,
+      "topic": "6_OOP_Easy_1",
+      "question": "You have the following definition of a class called Employee:\n\nclass Employee:\n    def __init__(self, name, role, gender = 'not specified'):\n        self.name = name\n        self.role = role\n        self.gender = gender\n\nWhat will be the output if we execute the following lines of code?\n\nemployee1 = Employee('John Smith', 'HR representative')\nprint(employee1.name == 'John Smith')\nprint(employee1.gender == 'not specified')",
+      "options": {
+        "a": "True\nTrue",
+        "b": "True\nFalse",
+        "c": "False\nTrue",
+        "d": "False\nFalse"
+      },
+      "correct": "a",
+      "explanation": "The name comparison is true because the object stores 'John Smith', and the gender comparison is also true because the default value 'not specified' is used when no gender is provided.",
+      "code_context": "class Employee:\n    def __init__(self, name, role, gender = 'not specified'):\n        self.name = name\n        self.role = role\n        self.gender = gender\n\nemployee1 = Employee('John Smith', 'HR representative')\nprint(employee1.name == 'John Smith')\nprint(employee1.gender == 'not specified')",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 17,
+      "topic": "8_Datetime_Easy_2",
+      "question": "Which other code fragment will print the same output as the following?\n\nfrom datetime import datetime, timedelta\nprint((datetime.strptime('2023/1/10', '%Y/%m/%d') - datetime(2023, 1, 1)).days + 1)",
+      "options": {
+        "a": "from datetime import datetime, timedelta\nprint(timedelta(datetime(2023, 1, 10) - datetime(2023, 1, 1)).days)",
+        "b": "from datetime import datetime, timedelta\nprint(timedelta(datetime(2023, 1, 10) - datetime(2023, 1, 1)).days + 1)",
+        "c": "from datetime import datetime, timedelta\nprint((datetime(2023, 1, 10) - datetime.strptime('2023-1-1', '%Y-%m-%d')).days)",
+        "d": "from datetime import datetime, timedelta\nprint((datetime(2023, 1, 11) - datetime(2023, 1, 1)).days)"
+      },
+      "correct": "d",
+      "explanation": "The original code computes the difference in days between January 10 and January 1, then adds 1, yielding 10. Option D also yields 10 by subtracting January 1 from January 11.",
+      "code_context": "from datetime import datetime, timedelta\nprint((datetime.strptime('2023/1/10', '%Y/%m/%d') - datetime(2023, 1, 1)).days + 1)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Option A/B formatting is small in the rendered page and should be human-confirmed if exact punctuation matters; the correct answer is still clear from the logic of the visible options."
+        ]
+      }
+    },
+    {
+      "number": 18,
+      "topic": "pandas - easy - 3",
+      "question": "Suppose you have the following DataFrame called df:\n  Player  Age  Height\n0 John     25     180\n1 Jane     30     165\n2 Alex     27     175\n\nYou may assume that pandas is already imported as pd.\n\nWhich of the following lines of code will give an error?",
+      "options": {
+        "a": "print(df.loc[:, 'Age'])",
+        "b": "print(df.loc[df['Height'] > 170, ['Player', 'Age']])",
+        "c": "print(df[['Player', 'Age']])",
+        "d": "print(df[1, 'Age'])"
+      },
+      "correct": "d",
+      "explanation": "Options A, B, and C are valid pandas selections. Option D is invalid because standard bracket indexing does not accept the tuple (1, 'Age') in this form.",
+      "code_context": "df = pd.DataFrame({\n    'Player': ['John', 'Jane', 'Alex'],\n    'Age': [25, 30, 27],\n    'Height': [180, 165, 175]\n})",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "exam_id": "final-exam-solutions-for-python-programming-62oop21",
+  "question_updates": [
+    {
+      "number": 23,
+      "topic": "List logic 2",
+      "question": "Which of the following programs creates a new list y, in which the elements are those elements of list x that are equal to their indices?\nYou can assume x consists of unique integers.\n\nFor example, if:\nx = [0, 2, 4, 3, 5, 9, 6, 7, 8, 1, 10]\nthen the program should create a new list y such that:\ny = [0, 3, 6, 7, 8, 10]",
+      "options": {
+        "a": "y = []\nfor i, j in enumerate(x):\n    if i == j:\n        y.append(i)",
+        "b": "y = []\nfor i, j in enumerate(x):\n    if i == j:\n        y.append(j)",
+        "c": "y = [i for i in x if i == x.index(i)]",
+        "d": "All three programs would work as intended"
+      },
+      "correct": "d",
+      "explanation": "In A and B, whenever `i == j`, appending either `i` or `j` gives the same value because the index equals the element. In C, `x.index(i)` returns the position of `i`, so the comprehension keeps exactly the elements equal to their indices. Therefore all three programs work.",
+      "code_context": "x = [0, 2, 4, 3, 5, 9, 6, 7, 8, 1, 10]\n# target result:\ny = [0, 3, 6, 7, 8, 10]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-14.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 24,
+      "topic": "List loop 2",
+      "question": "Assume that you have a list called x, which is a list of multiple sub-lists containing integers.\n\nWhich of the following programs will create a new list y that is equal to the sub-list of x whose sum of elements is the highest?\n\nYou can assume that the sum of elements in each sub-list is a different number, so that there is only one that is the highest.\n\nFor example, if:\nx = [[8, 20, 300], [7, 8, 9], [10, 11, 12], [40, 5, 6]]\nthen y should be:\ny = [8, 20, 300]",
+      "options": {
+        "a": "y = max(x)",
+        "b": "z = []\nfor i in x:\n    z.append(sum(i))\ny = x[z.index(max(z))]",
+        "c": "x.sort()\ny = x[-1]",
+        "d": "y = [i for i in x if sum(i) == max(x)]"
+      },
+      "correct": "b",
+      "explanation": "Option B computes the sum of each sub-list, finds the position of the largest sum, and then returns the corresponding original sub-list. The other options compare lists lexicographically or compare a numeric sum against `max(x)`, which is a list.",
+      "code_context": "x = [[8, 20, 300], [7, 8, 9], [10, 11, 12], [40, 5, 6]]\n# target result:\ny = [8, 20, 300]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-15.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

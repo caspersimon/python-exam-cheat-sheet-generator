@@ -1,0 +1,230 @@
+{
+  "exam_id": "introduction-to-python-trial-final-exam-solutions-py22",
+  "question_updates": [
+    {
+      "number": 16,
+      "topic": "9_OOP_Easy_2",
+      "question": "You have the following definition of a class called Flight. What would be the output if we execute the following statements?",
+      "options": {
+        "a": "'long'\n'cheap'",
+        "b": "'short'\n'expensive'",
+        "c": "'long'\n'expensive'",
+        "d": "'short'\n'cheap'"
+      },
+      "correct": "a",
+      "explanation": "The first condition sets the KLM flight to Singapore to duration 'long', and the second condition sets the EasyJet flight to Spain to price 'cheap', so the two prints output 'long' and then 'cheap'.",
+      "code_context": "class Flight:\n    def __init__(self, airline, destination):\n        self.airline = airline\n        self.destination = destination\n\n        if self.airline == 'KLM' and self.destination == 'Singapore':\n            self.duration = 'long'\n            self.price = 'expensive'\n\n        if self.airline == 'EasyJet' and self.destination == 'Spain':\n            self.duration = 'short'\n            self.price = 'cheap'\n\nprint(Flight('KLM', 'Singapore').duration)\nprint(Flight('EasyJet', 'Spain').price)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-09.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 17,
+      "topic": "6-string - operations - 1",
+      "question": "Consider the following code snippet. Which operation in the code snippet contains an error?",
+      "options": {
+        "a": "Operation 1",
+        "b": "Operation 2",
+        "c": "Operation 3",
+        "d": "None of the operations contains an error."
+      },
+      "correct": "b",
+      "explanation": "Operation 2 is incorrect because join should be called as the separator string's method with a single iterable argument, for example '-'.join(word_list).",
+      "code_context": "text = \"The universe is vast and full of mysteries!\"\n\n# Operation 1:\nword_list = []\nfor word in text.split():\n    word_list.append(word[::-1])\n\n# Operation 2:\njoined_text = ' '.join(word_list, '-')\n\n# Operation 3:\nreplaced_text = text.replace(\"mysteries\", \"secrets\")",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 18,
+      "topic": "6-strings - find - 2",
+      "question": "Suppose you have the following variables called sentence1 and sentence2 which contain strings. The sentences contain names, but they are not properly capitalized. You want to create a new string object called paragraph, with the proper nouns capitalized in the two sentences and the two sentences connected into one big string.\n\nThat is, if we execute the following line of code:\nprint(paragraph)\nthe output should be:\n\"Harry, Ron, and Hermione walked through the halls of Hogwarts; their footsteps echoing off the stone walls.\nThe Marauder's map in Harry's hands revealed the secret passageways and hidden rooms of the castle.\"\n\nWhich of the following code segments achieves what you want?",
+      "options": {
+        "a": "names = ['harry', 'ron', 'hermione', 'hogwarts', 'marauder']\nfor name in names:\n    sentence1[sentence1.find(name)] = name.capitalize()\n    sentence2[sentence2.find(name)] = name.capitalize()\nparagraph = sentence1 + \" \" + sentence2",
+        "b": "names = ['harry', 'ron', 'hermione', 'hogwarts', 'marauder']\nfor word, name in zip(sentence1, names):\n    if word == name:\n        sentence1 = sentence1.replace(word, name.capitalize())\nfor word, name in zip(sentence2, names):\n    if word == name:\n        sentence2 = sentence2.replace(word, name.capitalize())\nparagraph = sentence1 + \" \" + sentence2",
+        "c": "names = ['harry', 'ron', 'hermione', 'hogwarts', 'marauder']\nnew1 = ' '.join([word.capitalize() if word in names else word for word in sentence1])\nnew2 = ' '.join([word.capitalize() if word in names else word for word in sentence2])\nparagraph = new1 + \" \" + new2",
+        "d": "for word in ['harry', 'ron', 'hermione', 'hogwarts', 'marauder']:\n    sentence1 = sentence1.replace(word, word.capitalize())\n    sentence2 = sentence2.replace(word, word.capitalize())\nparagraph = sentence1 + \" \" + sentence2"
+      },
+      "correct": "d",
+      "explanation": "Option D correctly replaces each lowercase proper noun with its capitalized version in both strings and then concatenates the two sentences into paragraph.",
+      "code_context": "sentence1 = \"harry, ron, and hermione walked through the halls of hogwarts; their footsteps echoing off the stone walls.\"\nsentence2 = \"The marauder's map in harry's hands revealed the secret passageways and hidden rooms of the castle.\"",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 19,
+      "topic": "7-pandas - hard - 2",
+      "question": "Consider the following pandas DataFrame called df, and assume that Pandas is already imported.\n\nYou need to perform a series of operations on this DataFrame:\n- Operation 1: Create a new column called Name_Length that contains the length of each person's name\n- Operation 2: Replace all occurrences of the occupation 'Engineer' with 'Software Developer'\n- Operation 3: Extract the last two characters of each person's name and store them in a new column called Name_Suffix\n\nWhich of the following blocks of code performs these operations as intended?",
+      "options": {
+        "a": "df['Name_Length'] = df['Name'].map(lambda x: len(x))\ndf['Occupation'] = ['Software Developer' if x == 'Engineer' else x for x in df['Occupation']]\ndf['Name_Suffix'] = df['Name'].map(lambda x: x[-2:])",
+        "b": "df['Name_Length'] = len(df['Name'])\ndf['Occupation'] = ['Software Developer' if x == 'Engineer' else x for x in df['Occupation']]\ndf['Name_Suffix'] = df['Name'].lambda x: x[-2:]",
+        "c": "df['Name_Length'] = len(df['Name'])\ndf['Occupation'].map(lambda x: 'Software Developer' if x == 'Engineer' else x)\ndf['Name_Suffix'] = df['Name'].map(lambda x: x[:-2])",
+        "d": "df['Name_Length'] = df['Name'].map(len)\ndf['Occupation'] = df['Occupation'].map(lambda x: 'Software Developer' if x == 'Engineer' else x)\ndf['Name_Suffix'] = df['Name'].map(lambda x: x[-2:-1])"
+      },
+      "correct": "a",
+      "explanation": "Option A correctly maps each name to its length, replaces only the Engineer entries, and slices the final two characters with x[-2:].",
+      "code_context": "   Name  Age Occupation\n0  John   25    Student\n1   Jane  30   Engineer\n2   Alex  35   Scientist\n3   Lisa  40      Doctor\n4   Mark  28   Architect",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-12.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 20,
+      "topic": "7-pandas - lambda - 2",
+      "question": "What will be printed by the following code?",
+      "options": {
+        "a": "  Product  Units  Price\n2       C    200     15\n0       A    100     10\n3       D     72     13\n1       B     45     19",
+        "b": "  Product  Units  Price\n1       B     50     19\n0       A    100     10\n3       D     80     13\n2       C    200     15",
+        "c": "  Product  Units  Price\n2       C    200     15\n0       A    100     10\n3       D     80     13\n1       B     50     19",
+        "d": "  Product  Units  Price\n2       C    200     15\n3       D     80     13\n0       A    100     10\n1       B     50     19"
+      },
+      "correct": "c",
+      "explanation": "UnitsCorrected and Revenue are used only for sorting; df1 keeps the original Units and Price columns, and sorting by descending revenue gives rows C, A, D, B.",
+      "code_context": "import pandas as pd\nd = {'Product':['A', 'B', 'C', 'D'], 'Units':[100, 50, 200, 80], 'Price':[10, 19, 15, 13]}\ndf = pd.DataFrame(d)\ndf.loc[:, 'UnitsCorrected'] = df.loc[:, 'Units'].map(lambda x: 0.9*x if x < 100 else x)\ndf.loc[:, 'Revenue'] = df.loc[:, 'UnitsCorrected'] * df.loc[:, 'Price']\ndf = df.sort_values(by='Revenue', ascending=False)\ndf1 = df.loc[:, ['Product', 'Units', 'Price']]\nprint(df1)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-13.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 21,
+      "topic": "8_Datetime_Function_2",
+      "question": "You have the following definition for a class called Calendar.\n\nThe method check_overlap() should return True if there are two overlapping events and False if the two events are not overlapping.\n\nFor example, if we have the following Calendar objects:\nevent1 = Calendar('Coffee meeting', '01-06-2023 9:30', 20)\nevent2 = Calendar('Writing session', '01-06-2023 10:00', 150)\nevent3 = Calendar('Lunch meeting', '01-06-2023 12:00', 45)\n\nthe following command should return False:\nprint(event1.check_overlap(event2))\n\nand the following command returns True:\nprint(event2.check_overlap(event3))\n\nDoes the code segment given above do what you want? If not, then why not?\n\nHint:\nThe timedelta functions contains the following parameters: days, seconds, microseconds, milliseconds, minutes, hours, and weeks. All the parameters are optional and 0 by default. The timedelta object that is created using this function represents a duration.",
+      "options": {
+        "a": "The code segment works as intended.",
+        "b": "This code segment does not work because the condition provided after the return keyword is incorrect.",
+        "c": "This code segment does not work because the syntax to parse the input string to create a datetime object is incorrect.",
+        "d": "This code segment does not work because the __init__ method needs 4 parameters and only 3 arguments are passed."
+      },
+      "correct": "a",
+      "explanation": "The datetime format string matches the input values, timedelta(minutes=length) creates the correct end time, and the overlap condition correctly detects whether two intervals intersect.",
+      "code_context": "from datetime import datetime, timedelta\n\nclass Calendar():\n    def __init__(self, event, start, length):\n        self.event = event\n        self.start = datetime.strptime(start, '%d-%m-%Y %H:%M')\n        self.end = self.start + timedelta(minutes=length)\n    def check_overlap(self, other):\n        return self.start < other.end and self.end > other.start",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-14.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 22,
+      "topic": "8_Datetime_Hard_1",
+      "question": "You want to create a DataFrame called df that has the following format:\n\n         Day  Month  Year\n01-01-23    1      1  2023\n08-01-23    8      1  2023\n15-01-23   15      1  2023\n22-01-23   22      1  2023\n29-01-23   29      1  2023\n\nWhich of the following code segments achieves what you want?\n\nYou may assume that the datetime and timedelta classes are already imported from the datetime module, as well as the pandas module (via: import pandas as pd).\n\nHint:\nThe timedelta functions contains the following parameters: days, seconds, microseconds, milliseconds, minutes, hours, and weeks. All the parameters are optional and 0 by default. The timedelta object that is created using this function represents a duration.",
+      "options": {
+        "a": "dates = [(datetime(2023, 1, 1) + timedelta(weeks=1*i)) for i in range(5)]\ndata = {'Day': [date.day for date in dates],\n        'Month': [date.month for date in dates],\n        'Year': [date.year for date in dates]}\ndf = pd.DataFrame(data, index=[date.strftime('%d-%m-%y') for date in dates])",
+        "b": "dates = [(datetime(2023, 1, 1) + timedelta(days=7*i)).strftime('%d-%m-%y') for i in range(5)]\ndata = {'Day': [date.day for date in dates],\n        'Month': [date.month for date in dates],\n        'Year': [date.year for date in dates]}\ndf = pd.DataFrame(data, index=dates)",
+        "c": "day = pd.Series([(datetime(2023, 1, 1) + timedelta(weeks=1*i)).day for i in range(5)])\nmonth = pd.Series([(datetime(2023, 1, 1) + timedelta(weeks=1*i)).month for i in range(5)])\nyear = pd.Series([(datetime(2023, 1, 1) + timedelta(weeks=1*i)).year for i in range(5)])\ndf = pd.DataFrame(data=[day, month, year])",
+        "d": "df = pd.DataFrame(index=[(datetime(2023, 1, 1) + timedelta(weeks=1*i)) for i in range(5)],\n                  {'Day': [date.days for date in index],\n                   'Month': [date.months for date in index],\n                   'Year': [date.year for date in index]})"
+      },
+      "correct": "a",
+      "explanation": "Option A keeps real datetime objects long enough to derive day, month, year, and then formats those dates into the desired string index for the DataFrame.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-15.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 23,
+      "topic": "9_OOP_Function_3",
+      "question": "You have the following definition of a class called Pack.\n\nYou want to add to this class a method called fitting() that calculates how many times another object of the class Pack would fit inside this object.\nThe method should return the number of times these other objects would fit completely in this object, and the final value.\nThe final value is the sum of all values of all objects that fit in it, plus the value of the carrying object self.\n\nFor example, if we execute the lines of code:\nbackpack = Pack(size=15, value=20)\nbook = Pack(size=4, value=10)\nbackpack.fitting(book)\n\nthe output should be:\nAmount: 3. Value: 50.\n\nWhich of the following code segments should you place on the missing lines in the class definition to achieve what you want?",
+      "options": {
+        "a": "def fitting(self, other):\n    if self.size > other.size:\n        self.total = (self.size // other.size) * other.value + self.value\n        return f'Amount: {self.size // other.size}. Value: {self.total}.'\n    else:\n        return f'Amount: 0. Value: {self.value}.'",
+        "b": "def fitting(self, other):\n    if self.size > other.size:\n        return f'Amount: {self.size // other.size}. Value: {other.value * other.size}.'\n    else:\n        return f'Amount: 0. Value: {self.value}.'",
+        "c": "def fitting(self, other):\n    self.amount = self.size / other.size\n    self.total = self.amount * other.value\n    return f'Amount: {self.amount}. Value: {self.total}.'",
+        "d": "def fitting(self, other):\n    self.amount = self.size / other.size\n    self.total = self.amount * other.value\n    return 'Amount: {}. Value: {}.'.format(self.amount, self.value if self.size > other.size else self.total)"
+      },
+      "correct": "a",
+      "explanation": "Option A uses integer floor division to count only full fits, adds the carried items' value plus self.value, and returns zero items with self.value when the other object does not fit.",
+      "code_context": "class Pack:\n    def __init__(self, size, value = 0):\n        self.size = size\n        self.value = value\n\n    # missing lines\n    # ...",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-16.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 24,
+      "topic": "9_OOP_Hard_1",
+      "question": "You have the following definition for a class called Piece.\n\nAnd the creation of three objects with the help of the class definition:\na = Piece(diagonal=True, straight=False, initial_position=(0, 0))\nb = Piece(diagonal=False, straight=True, initial_position=(4, 3))\nc = Piece(diagonal=True, straight=True, initial_position=(9, 6))\n\nIf we run the following statements:\nprint(a.check_move((4, 4)))\nprint(b.check_move((5, 5)))\nprint(c.check_move((6, 6)))\n\nThis will print 3 Boolean values. Of these values, how many times will this be True?",
+      "options": {
+        "a": "0",
+        "b": "1",
+        "c": "2",
+        "d": "3"
+      },
+      "correct": "b",
+      "explanation": "The first move fails because the row and column differences are both 4, which is above the allowed maximum of 3. The second fails because a straight-only piece cannot move diagonally. The third succeeds because a piece that can move straight and diagonally may move along the same column within 3 steps, so exactly one result is True.",
+      "code_context": "class Piece:\n    def __init__(self, diagonal, straight, initial_position):\n        self.diagonal = diagonal\n        self.straight = straight\n        self.initial_position = initial_position\n\n    def check_move(self, target_position):\n        self.target_position = target_position\n        self.row_diff = self.target_position[0] - self.initial_position[0]\n        if abs(self.row_diff) > 3:\n            return False\n        self.col_diff = self.target_position[1] - self.initial_position[1]\n        if abs(self.col_diff) > 3:\n            return False\n\n        if self.diagonal and (not self.straight):\n            return abs(self.row_diff) == abs(self.col_diff)\n        if self.straight and (not self.diagonal):\n            return abs(self.row_diff) == 0 or abs(self.col_diff) == 0\n        if self.straight and self.diagonal:\n            return (abs(self.row_diff) == abs(self.col_diff)) or (abs(self.row_diff) == 0 or abs(self.col_diff) == 0)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-17.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

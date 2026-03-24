@@ -1,0 +1,83 @@
+{
+  "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+  "question_updates": [
+    {
+      "number": 4,
+      "topic": "6-strings-2",
+      "question": "You need to write a function called format_phone_number that formats phone numbers. The output of the function should be a string that represents a 10-digit number. The input argument is also a string with 10 digits, but the digits may be separated by dashes (the \"-\" character, at various places).\n\nFor example, the following function calls:\nformat_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\nshould all return the string:\n\"0205251400\"\n\nWhich of the following code segments does not achieve what you want?",
+      "options": {
+        "a": "def format_phone_number(number):\n    number.replace(\"-\", \"\")\n    return number",
+        "b": "def format_phone_number(number):\n    return number.replace(\"-\", \"\")",
+        "c": "def format_phone_number(number):\n    digits = []\n    for char in number:\n        if char in \"0123456789\":\n            digits.append(char)\n    return \"\".join(digits)",
+        "d": "def format_phone_number(number):\n    return \"\".join(number.split(\"-\"))"
+      },
+      "correct": "a",
+      "explanation": "Option A does not work because strings are immutable and number.replace(\"-\", \"\") returns a new string that is ignored. The function then returns the original unmodified number.",
+      "code_context": "format_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\n# all should return \"0205251400\"",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-04.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    },
+    {
+      "number": 5,
+      "topic": "7-pandas-new_column-1",
+      "question": "You have a pandas DataFrame called df. It has a column called \"A\" and a column called \"B\". Both contain numbers.\n\nYou'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?",
+      "options": {
+        "a": "df[\"C\"] = df[\"A\"] + df[\"B\"]",
+        "b": "df[\"C\"] = df[\"A\"].map(lambda x: x + df[\"B\"])",
+        "c": "df[\"C\"] = df.columns[\"A\" + \"B\"]",
+        "d": "df[\"C\"] = df[\"A\" + \"B\"]"
+      },
+      "correct": "a",
+      "explanation": "Option A performs elementwise addition between columns A and B and stores the result in column C. The other options either misuse map, index into the columns object incorrectly, or look for a non-existent combined column name.",
+      "code_context": "df has numeric columns \"A\" and \"B\"; column \"C\" should contain their sum.",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-04.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    },
+    {
+      "number": 6,
+      "topic": "7-pandas-selection-1",
+      "question": "You have a pandas DataFrame called df that looks like this, when printed:\n\n     A    B    C    D\n1  9.1  9.5  9.0  6.0\n2  6.4  8.2  7.5  1.7\n3  2.5  5.3  8.8  3.0\n4  6.7  3.6  7.2  6.9\n5  8.4  1.9  8.2  3.3\n6  8.1  8.4  9.9  2.2\n\nSuppose that you'd like to create a new DataFrame that only contains those elements of column \"B\" in df that have an even-numbered index. Which of the following code lines will achieve what you want?",
+      "options": {
+        "a": "df.loc[df.index % 2 == 0, [\"B\"]]",
+        "b": "df[2, 4, 6, \"B\"]",
+        "c": "df.iloc[[2, 4, 6], 2]",
+        "d": "df.loc[2::2, \"B\"]"
+      },
+      "correct": "a",
+      "explanation": "Option A filters rows whose index is even and selects column B while keeping the result as a DataFrame by using [[\"B\"]]. Option D would return a Series, not a DataFrame, and the other options do not select the requested data correctly.",
+      "code_context": "df printed as:\n\n     A    B    C    D\n1  9.1  9.5  9.0  6.0\n2  6.4  8.2  7.5  1.7\n3  2.5  5.3  8.8  3.0\n4  6.7  3.6  7.2  6.9\n5  8.4  1.9  8.2  3.3\n6  8.1  8.4  9.9  2.2",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-05.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    }
+  ]
+}

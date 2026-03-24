@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-03-23T16:24:36Z",
+  "question_bank_path": "data/vision_exam_pipeline/exam_question_bank.json",
+  "packet_count": 7,
+  "packets": [
+    {
+      "exam_id": "sample-final-plus-answers",
+      "expected_questions": 24,
+      "captured_questions": 24,
+      "pending_questions": 0,
+      "packet_path": "data/vision_exam_pipeline/work_packets/extractions/sample-final-plus-answers.json"
+    },
+    {
+      "exam_id": "final-exam-solutions-for-python-programming-62oop21",
+      "expected_questions": 24,
+      "captured_questions": 5,
+      "pending_questions": 19,
+      "packet_path": "data/vision_exam_pipeline/work_packets/extractions/final-exam-solutions-for-python-programming-62oop21.json"
+    },
+    {
+      "exam_id": "final-exam-study-guide-trial-python-basics-2023",
+      "expected_questions": 24,
+      "captured_questions": 6,
+      "pending_questions": 18,
+      "packet_path": "data/vision_exam_pipeline/work_packets/extractions/final-exam-study-guide-trial-python-basics-2023.json"
+    },
+    {
+      "exam_id": "introduction-to-python-trial-final-exam-solutions-py22",
+      "expected_questions": 24,
+      "captured_questions": 7,
+      "pending_questions": 17,
+      "packet_path": "data/vision_exam_pipeline/work_packets/extractions/introduction-to-python-trial-final-exam-solutions-py22.json"
+    },
+    {
+      "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+      "expected_questions": 24,
+      "captured_questions": 6,
+      "pending_questions": 18,
+      "packet_path": "data/vision_exam_pipeline/work_packets/extractions/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023.json"
+    },
+    {
+      "exam_id": "resit-solutions-for-introduction-to-python-35761538",
+      "expected_questions": 24,
+      "captured_questions": 7,
+      "pending_questions": 17,
+      "packet_path": "data/vision_exam_pipeline/work_packets/extractions/resit-solutions-for-introduction-to-python-35761538.json"
+    },
+    {
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "expected_questions": 24,
+      "captured_questions": 6,
+      "pending_questions": 18,
+      "packet_path": "data/vision_exam_pipeline/work_packets/extractions/trial-final-exam-solutions-introduction-to-python-3077951.json"
+    }
+  ]
+}

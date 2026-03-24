@@ -1,0 +1,3000 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-03-23T19:45:43Z",
+  "round": "round1",
+  "requires_human_review": true,
+  "input_evaluations_path": "data/vision_exam_pipeline/evaluations/round1.json",
+  "summary": {
+    "evaluation_count": 168,
+    "completed_evaluation_count": 168,
+    "suggestion_count": 151
+  },
+  "suggestions": [
+    {
+      "suggestion_id": "round1:1",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: 'Comparing Objects with Multiple Criteria'. Snippet: 'When comparing two objects (A, B) based on multiple rules, remember that ! (A > B) does not imply (B > A). Example: def compare(self, other): if self.val > other.val and self.count >= other.count: return self; if other.val > self.val and other.count >= self.count: return other; return None'",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q02"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This directly addresses the logical pitfall in Option A and explains the necessity of the structure in Option B."
+      ],
+      "cons": [
+        "Some students might infer the logic if they are strong in general boolean reasoning."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:10",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet demonstrating: count = sum([val == target for val in collection]). Show that this results in an integer, even if the count is zero.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q10"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This is the core 'trick' of the exam question. Without seeing that sum handles booleans, a student might incorrectly choose options B or D."
+      ],
+      "cons": [
+        "The student might infer it if they see 'grade_counts' examples that work, but it's a leap for a 'zero knowledge' persona."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:100",
+      "kind": "edit_existing",
+      "target_item_id": "exam-extra_practice-4-w2-dictionaries-and-mappings",
+      "proposal": "Ensure the 'search_text' includes the full code for options a and b and clarifies why both work, matching the provided question explanation.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q09"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "The current snippet cut-off mentions an indentation error for Option A, which contradicts the 'Correct: C' (both work) answer in the exam question. Aligning these prevents student confusion."
+      ],
+      "cons": [
+        "The student can likely infer the logic from the code patterns even if the explanation is cut off."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:101",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Key Point: Boolean String Methods. Methods like .islower(), .isupper(), and .isdigit() return True only if the string contains at least one character and all characters meet the criteria. Importantly, .islower() returns False for spaces, punctuation, and numbers as they are not lowercase letters.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q10"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "It provides the missing definition needed to definitively choose option (a) over (b) or (c) by clarifying that symbols and spaces are excluded."
+      ],
+      "cons": [
+        "A student might intuitively guess that 'islower' only applies to letters, but 'zero prior knowledge' requires explicit confirmation."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:102",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a common question snippet: 'How do zip() and floor division (//) work?'. Content: `zip(list1, list2)` pairs elements by index: (list1[0], list2[0]), (list1[1], list2[1]). `//` is floor division, which divides and rounds down to the whole number (e.g., 5 // 2 = 2).",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q11"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "Directly addresses the two primary 'black boxes' in the question for a non-Python user."
+      ],
+      "cons": [
+        "Basic math might be assumed, but zip is definitely a specific Python syntax that needs explanation."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:103",
+      "kind": "edit_existing",
+      "target_item_id": "exam-extra_practice-6-w1-sequences-and-access",
+      "proposal": "Expand the search text/explanation to explicitly define why option A ([::-2][::-1]) results in [2, 4, 6, 8, 10] (it reverses the reversed slice).",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q12"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "The current snippet text is truncated and might confuse students if the option letters (a, b, c, d) are shuffled in the exam."
+      ],
+      "cons": [
+        "The logic 'starts at -1, step -2' is already present and might be enough for a smart student to eliminate options."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:104",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Common String Operations' showing: 1. text.replace('a', 'b', 1) to replace only the first occurrence; 2. index-based slicing like text[:5] and text[10:]; 3. concatenating slices with +.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q13"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "This would allow a student to verify both Option A (slicing) and Option B (replace with count) without prior knowledge."
+      ],
+      "cons": [
+        "The question hints at find(), but find() alone isn't enough to understand the replacement logic in the options."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:105",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet explaining f-strings: f'Hello {name}' replaces {name} with the variable value.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q14"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "Essential to understand how both Option A and Option B work."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:106",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet explaining list indexing: fruits[0] is the first item, fruits[1] is the second.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q14"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "Necessary to decode what Option B is actually doing."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:107",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet explaining ', '.join(list): Result is 'item1, item2, item3' with no 'and'.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q14"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "Allows the student to realize Option A is a distractor that produces a different string than requested."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:108",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: 'df = pd.DataFrame({\"part1\": [x.split(\"-\")[0] for x in args], \"part2\": [x.split(\"-\")[1] for x in args]})'",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q15"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "This pattern perfectly matches the logic required in the question (Option A), showing how to map processed strings into DataFrame columns."
+      ],
+      "cons": [
+        "Students might be able to piece this together if they understand Dictionaries and Series separately, but a combined example is much clearer for beginners."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:109",
+      "kind": "edit_existing",
+      "target_item_id": "exam-intro_python_sample_final_24_25-1-w5-pandas-core-structures",
+      "proposal": "Update the search_text to show a snippet of the code for the Vehicle class, specifically including a default value for the 'mode' attribute (e.g., mode='land').",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q16"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "It would show the exact pattern used in the question (OOP + Default Arg) in a single visual context."
+      ],
+      "cons": [
+        "The logic can currently be synthesized by looking at two different snippets."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:11",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a 'Topic Detail' or 'Cheat Sheet' item for Week 8 (Datetime) covering: 1. datetime(year, month, day, hour, minute) 2. timedelta(minutes=N) 3. Comparing datetimes using <, >, ==.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q12"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This would give the student the specific syntax needed to evaluate Options A and D, and recognize that Option B/C are invalid comparisons."
+      ],
+      "cons": [
+        "Only unnecessary if the student is expected to infer library usage from the provided 'code_context' in the question, but 'zero knowledge' implies they need a reference."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:110",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: String to Datetime Parsing (strptime)\nContent: datetime.strptime(string, format) converts text to a date object. \nFormat codes: %Y (4-digit year), %m (month 01-12), %d (day 01-31), %H (hour), %M (minute).\nExample: datetime.strptime('2023/1/10', '%Y/%m/%d') creates a date for Jan 10, 2023.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q17"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "It removes the small inferential leap required to understand that strptime is creating a date for January 10th based on the provided format string."
+      ],
+      "cons": [
+        "Most students will guess the meaning of '%Y/%m/%d' correctly given the sample string '2023/1/10'."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:111",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Pandas Indexing Rules' snippet showing: 1. df['ColName'] (Valid), 2. df[['C1', 'C2']] (Valid), 3. df.loc[index, 'Col'] (Valid), 4. df[index, 'Col'] (Error).",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q18"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "It directly maps to the four options in the question, allowing a student to identify the error through pattern matching."
+      ],
+      "cons": [
+        "If a student already knows dictionary-like indexing, they might guess D is wrong, but .loc (A/B) would still be confusing."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:112",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Conditional Expressions vs Statements' showing: 'return \"Yes\" if check else \"No\"' is equivalent to 'if check: return \"Yes\" else: return \"No\"'.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q19"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "Directly enables a student to recognize that both option (a) and (b) in the question are functionally identical."
+      ],
+      "cons": [
+        "A student might guess if they understand standard 'if' blocks, but they won't be certain."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:113",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet explaining 'self' as a reference to the current instance, used to access attributes defined in __init__.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q19"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "Ensures the student understands that 'self.legs' refers to the value passed during 'cat = Animals(..., legs=True)'."
+      ],
+      "cons": [
+        "The existing 'Vehicle' class snippet hints at this, but doesn't explain the lookup mechanism within a method."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:114",
+      "kind": "edit_existing",
+      "target_item_id": "manual-oop-state-compare",
+      "proposal": "Add a compare method: def is_better(self, other): return self.average() > other.average()",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q20"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "This would show the necessity of using brackets () when calling a method on both self and another object, directly addressing the 'd' answer rationale."
+      ],
+      "cons": [
+        "The existing snippet already helps eliminate A and B based on the self parameter and list mutation syntax."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:115",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a card for 'Datetime and Timedelta Arithmetic'. Explicitly state: 'datetime.strptime()' returns an object you can do math with. 'obj.strftime()' returns a STRING for display. You CANNOT add a timedelta to a string. Example: (date_obj + timedelta) works, but (date_string + timedelta) fails.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q21"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "This directly explains the 'b' distractor in the question, which is the correct answer."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:116",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Datetime Formatting' that shows: from datetime import datetime; dt = datetime(2023, 5, 1); print(dt.strftime('%d-%m-%Y'))",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q22"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "This provides the missing link for the student to understand the constructor order and the formatting codes required to pick Option A over C or B."
+      ],
+      "cons": [
+        "Only if the student is expected to already know the datetime library, but the prompt specifies 'zero prior knowledge'."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:117",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Pandas Boolean Filtering' showing: df_filtered = df[df['Salary'] > 50000].",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q23"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "This directly enables the student to understand the syntax for Operation 3."
+      ],
+      "cons": [
+        "Snippet exam-intro_python_sample_final_24_25-6 mentions boolean masks, but the code snippet in the preview is cut off."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:118",
+      "kind": "edit_existing",
+      "target_item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+      "proposal": "Ensure the example code includes a lambda with a condition, e.g., s.map(lambda x: 'High' if x > 10 else 'Low').",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q23"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "It validates the syntax used in Option B of the question."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:119",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a key point (e.g., kp-pandas-lambda-agg) that shows: 'df['C'] = df['A'].map(lambda x: x + constant)' and explains that 'lambda x' represents each value in column 'A'.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q24"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "This bridge is necessary to understand how the lambda variable 'x' interacts with the result of 'df['B'].sum()'."
+      ],
+      "cons": [
+        "If the student already understands functions and basic aggregation, the existing .map() snippet might be enough to guess."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:12",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet explaining Python's negative indexing (e.g., index -1 is the last item, -2 is second to last) and nested indexing (e.g., x[0][1] accesses the second element of the first item).",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q13"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "It would move the student from 'pattern matching' against old exams to actually understanding the logic required to solve the indexing math independently."
+      ],
+      "cons": [
+        "The existing exam snippets are so similar that the student will likely find the answer by visual comparison alone."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:120",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Instance Attributes and 'self'. Content: 'To make an attribute available on an object (like my_car.name), you must assign it to self inside the __init__ method (e.g., self.name = vehicle_name). Without self, the variable only exists temporarily during creation.'",
+      "source_question_ids": [
+        "sample-final-plus-answers-q01"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "Provides a clear reason to choose Option A over Option D, as Option D defines variables without self."
+      ],
+      "cons": [
+        "Option A is already the most likely choice for a student matching the default value syntax provided in 'manual-init-default'."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:121",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Common Math Built-ins for Lists. Content: Use `sum(list)` to add all numbers, `len(list)` to count items, and `round(number, 1)` to round to one decimal place. Example: `round(10/3, 1)` returns `3.3`.",
+      "source_question_ids": [
+        "sample-final-plus-answers-q02"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "The question relies on a calculation involving all three of these functions. Without knowing what 'round(..., 1)' does, a student might guess 4 (b) or 3.67 (d)."
+      ],
+      "cons": [
+        "Students might infer sum/len from context, but 'round(..., 1)' is more specific."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:122",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Printing List of Dictionaries with Formatting. Content: To iterate through a list of dicts: `for item in my_list: print(f\"{item['key']}\")`. To format decimals to 1 place: `{value:.1f}`.",
+      "source_question_ids": [
+        "sample-final-plus-answers-q03"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "The exam question specifically mentions one decimal place, but Option A in the JSON actually omits the format specifier. Providing the specific syntax ensures the student can handle variations where precision is required."
+      ],
+      "cons": [
+        "The 'source_exam' snippets likely already contain the full solution in the actual rendered card."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:123",
+      "kind": "edit_existing",
+      "target_item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+      "proposal": "Add the text of the DataFrame 'df' (rows 1-6) to this snippet so it is fully self-contained without needing to look at 'exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data'.",
+      "source_question_ids": [
+        "sample-final-plus-answers-q05"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It ensures the student has both the data context and the solution logic in a single view, which is critical for zero-knowledge students."
+      ],
+      "cons": [
+        "The student can select multiple snippets, but a single consolidated card is more efficient for a cheat sheet."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:124",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Datetime Formatting Cheat Sheet' snippet listing %d (day), %m (month), %Y (year), and %H:%M (time).",
+      "source_question_ids": [
+        "sample-final-plus-answers-q07"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It empowers the student to decode any strptime format string rather than just recognizing this specific exam solution."
+      ],
+      "cons": [
+        "The database already contains many specific exam questions covering these codes individually."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:125",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Datetime Cheat Sheet' snippet: '%d: Day (01-31), %m: Month (01-12), %Y: Year (4-digit). datetime.strptime(str, format) parses strings; object.month extracts the month integer.'",
+      "source_question_ids": [
+        "sample-final-plus-answers-q09"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It would allow students to solve any datetime parsing question rather than relying on finding a verbatim copy of the exam question."
+      ],
+      "cons": [
+        "The verbatim snippet already exists in this specific dataset."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:126",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Comprehension Syntax' summary card: 1. Dictionary: {key: value for item in iterable}, 2. List: [value for item in iterable], 3. Set: {value for item in iterable}.",
+      "source_question_ids": [
+        "sample-final-plus-answers-q11"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It allows the student to answer any variation of this question (e.g., 'create a set' or 'create a list') rather than just memorizing this specific instance."
+      ],
+      "cons": [
+        "The existing snippets already label the types, which might be enough for a single-question exam."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:127",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet defining string case methods (.upper(), .lower(), .islower()) and the syntax for 'if-else' logic inside a list comprehension.",
+      "source_question_ids": [
+        "sample-final-plus-answers-q12"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "Essential for a zero-knowledge student to evaluate why 'islower()' is the correct check vs the 'in alphabet' check used in Option B."
+      ],
+      "cons": [
+        "Snippet 12 provides a shortcut, but it's risky due to conflicting rationales between exams."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:128",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Sequence Properties' card showing that len([]) == 0, len({}) == 0, and len('') == 0, and explaining that a == b == c is only True if all three are identical.",
+      "source_question_ids": [
+        "sample-final-plus-answers-q17"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It bridges the gap for absolute beginners who might not know {} is a dictionary or that comparisons can be chained in Python."
+      ],
+      "cons": [
+        "The existing 'intro_python_sample_final' snippet already hints at this logic."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:129",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "List Comprehension: [expression for item in iterable] creates a new list by running the expression for every item. Example: [i*2 for i in range(3)] generates [0, 2, 4].",
+      "source_question_ids": [
+        "sample-final-plus-answers-q18"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It helps students understand that the brackets in the answer aren't just for a list, but are a loop that generates sublists."
+      ],
+      "cons": [
+        "The student might infer the behavior from the direct-match snippet provided in the exam-intro snippet."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:13",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet explaining the range() function: range(0, 10) produces numbers 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. The number 10 is not included.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q14"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This directly addresses the confusion between range(0, 20) and range(0, 21) which is the primary distractor in options A and C."
+      ],
+      "cons": [
+        "Students might infer it from the 'while i < 11' explanation, but it is a risky assumption for a total beginner."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:130",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet explaining 'Sorted Dictionary Iteration': 'To process a dictionary in order of its keys, use `for key in sorted(my_dict.keys()):`. This ensures you visit keys from smallest to largest, which is useful for calculating running totals.'",
+      "source_question_ids": [
+        "sample-final-plus-answers-q19"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It directly explains the logic behind Option B, which is often the more confusing part of this specific question for beginners."
+      ],
+      "cons": [
+        "The 'best' snippet already tells the student that both options work, which might be enough for a 'cheat sheet' context."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:131",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet: 'zip(l1, l2) creates pairs of elements from two lists at the same index. enumerate(l, start) creates pairs of (index, element), where the index starts at the specified value (default 0).'",
+      "source_question_ids": [
+        "sample-final-plus-answers-q20"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It allows a student to derive the answer logically if the lists or indices were modified, rather than relying on a memorized exam answer."
+      ],
+      "cons": [
+        "The direct exam match already provides the answer for this specific question."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:132",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet detailing that Python string methods like .count(), .find(), and .index() are case-sensitive by default (e.g., 'A' != 'a').",
+      "source_question_ids": [
+        "sample-final-plus-answers-q22"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It ensures the student understands why the answer is 1 and not 2, reinforcing the logic behind the specific example provided in the question."
+      ],
+      "cons": [
+        "The syntax rule (dot notation vs function call) is the primary hurdle for the question, which is already covered."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:133",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Lambda Basics' that explains: 'lambda x: x + 5' means 'take x and add 5 to it'.",
+      "source_question_ids": [
+        "sample-final-plus-answers-q23"
+      ],
+      "source_exams": [
+        "sample-final-plus-answers"
+      ],
+      "pros": [
+        "It allows the student to perform the calculation themselves rather than just relying on matching the search text of a previous exam question."
+      ],
+      "cons": [
+        "The existing sample final snippet already performs the calculation for the student."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:134",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Topic: OOP Fundamentals. Content: In Python, `__init__` is used to set attributes on a new object. Use `self.attribute_name = value`. Always include `self` as the first parameter. Example: `class MyClass: def __init__(self, val): self.val = val`",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q01"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "This helps the student eliminate Option D (missing self) and Option C (incorrectly using return instead of self assignment)."
+      ],
+      "cons": [
+        "Option A is the only one showing both the correct default value syntax AND self-assignment, so the existing snippets might be enough to guess correctly."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:135",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a key point: 'The round(value, n) function rounds a number to n decimal places. Example: round(3.6666, 1) results in 3.7.'",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q02"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "The question requires choosing between 3.7 and 3.67; knowing how the '1' in round(..., 1) works is the final step to the correct answer."
+      ],
+      "cons": [
+        "The term 'round' is intuitive enough for many students to guess the behavior correctly given the options."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:136",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Key Point: F-String Float Formatting. Syntax: f'{value:.1f}' rounds to 1 decimal place. Example: price = 5.0; print(f'{price:.2f}') outputs 5.00.",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q03"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "This provides the underlying logic for rounding, which is a core part of the question's 'distractor' logic (ensuring the student knows how to get 7.5 instead of 7.500000)."
+      ],
+      "cons": [
+        "Since the exact question is already in the database, the student might just copy the answer without needing the rule."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:137",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a conceptual snippet explaining 'Pandas Column Arithmetic' that shows how df['C'] = df['A'] + df['B'] performs a row-by-row sum and stores it in 'C'.",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q05"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "It helps the student understand the 'why' and apply the knowledge to variations (e.g., subtraction or multiplication) rather than just memorizing one specific question."
+      ],
+      "cons": [
+        "The student can already answer this exact question because it is duplicated in the exam snippets."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:138",
+      "kind": "edit_existing",
+      "target_item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+      "proposal": "Update the 'topic' from 'string-operations-and-methods' to 'Inspecting and Selecting Data' or 'Pandas Indexing'.",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q06"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "The current tag is misleading as the content is about Pandas DataFrame selection, not string manipulation."
+      ],
+      "cons": [
+        "The search_text is already accurate and will be found by the RAG system regardless of the label."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:139",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a foundational snippet explaining that .loc[2:4] includes labels 2, 3, and 4, whereas .iloc[[3, 2, 1]] selects the 4th, 3rd, and 2nd rows respectively.",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q07"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "This allows the student to understand why the other options (B, C, D) *could* have created df2, rather than just knowing why A could not."
+      ],
+      "cons": [
+        "The direct explanation for Option A in the existing snippet is already sufficient to select the right answer."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:14",
+      "kind": "edit_existing",
+      "target_item_id": "ks-2a6510492d",
+      "proposal": "Global and local scope\nLocal names: defined inside a function (parameter names + any assignment inside). This applies to all functions, including those nested inside others. Only known inside the function. Global names: defined outside any function, known everywhere EXCEPT when a same-named local exists (local dominates).",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q15"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "It explicitly bridges the gap between simple local variables and variables defined in nested function structures, which is the core of this specific exam question."
+      ],
+      "cons": [
+        "The current definition 'defined inside a function' already technically covers nested functions, and the exam options don't require distinguishing between 'local' and 'non-local'."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:140",
+      "kind": "edit_existing",
+      "target_item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+      "proposal": "Expand the snippet text to include the full logic: 'The .map(lambda x: x.split(\"; \")[0]) method allows applying the split function to each element and taking the first part.'",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q08"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "The current text cuts off at '(like spli'. Showing the full code ensures a student can confidently identify Option A without guessing 'lambda' syntax."
+      ],
+      "cons": [
+        "The current text is already highly suggestive of the correct answer."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:141",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a reference snippet for Datetime format strings: %Y (4-digit year), %y (2-digit year), %m (month), %d (day), %H (hour), %M (minute), %S (second).",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q09"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "This would allow a student to solve any datetime parsing question, even if the specific question isn't in the database."
+      ],
+      "cons": [
+        "The specific exam question snippet already provides the necessary interpretation for this particular task."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:142",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet explaining that 'datetime(year, month, day)' requires day to be at least 1, and that you cannot directly add an integer to a timedelta object (you must add another timedelta or convert to int first).",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q10"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "It would allow a student to systematically eliminate options B, C, and D rather than just identifying A as plausible."
+      ],
+      "cons": [
+        "The current 'best snippet' is so similar to the correct answer that most students will pick A regardless."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:143",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "A syntax reference card for list comprehensions showing: 1. [f(x) for x in list if cond] (filtering) vs 2. [f(x) if cond else g(x) for x in list] (transformation).",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q12"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "The question's main challenge is the syntax placement of the 'if-else' (Option A vs B). A direct syntax guide would make the choice trivial for a non-Python user by showing that 'if-else' must come before the 'for' keyword."
+      ],
+      "cons": [
+        "The existing exam snippet already points to 'conditional logic' which might be enough for an intuitive student to pick the only syntactically plausible option (A)."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:144",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Conceptual Card: 'Comparison Rules by Type'. Rule 1: Integers and Floats are equal if they represent the same number (e.g., 3 == 3.0 is True). Rule 2: Strings are never equal to numbers (e.g., '3' == 3 is False). Rule 3: Chained comparisons (a == b == c) are treated as (a == b) AND (b == c).",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q13"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "It abstracts the logic from the exam snippets into a clear set of rules that a student can apply to any similar question."
+      ],
+      "cons": [
+        "The explanation in the sample final exam snippet already provides this information, though in a question-specific context."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:145",
+      "kind": "edit_existing",
+      "target_item_id": "exam-intro_python_sample_final_24_25-14-w2-loops",
+      "proposal": "Correct the snippet text to point to Option A and add a brief trace: 'In iteration 1: i=1, prev=0. After print, prev becomes 1. In iteration 2: i=2, prev=1...'",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q14"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "Prevents confusion caused by the current typo and reinforces the 'state-tracking' mechanic."
+      ],
+      "cons": [
+        "The student might infer the logic from the code options regardless of the snippet's letter label."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:146",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: 'my_list = [True, False]; len([]); my_list[0] # Returns True'.",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q17"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "This covers two minor gaps: that an empty list has length 0, and that [0] is used to retrieve the first item."
+      ],
+      "cons": [
+        "A student might guess that 'empty' means 0 length and that indices start at 0 based on general logic."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:147",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Core Concept' snippet for List Comprehensions: Syntax: [expression for item in iterable]. This creates a new list by applying 'expression' to each 'item' in the sequence (like range). Example: [x*2 for x in [1,2,3]] results in [2,4,6].",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q18"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "It bridges the gap for students who see the range/slicing logic explained but don't recognize the structural 'wrapper' of the list comprehension."
+      ],
+      "cons": [
+        "The direct explanation in the exam snippet might be enough for a student to simply pick the matching option without fully 'understanding' the loop."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:148",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: 'for key in sorted(prices.keys()): ...' and another showing 'sub_total = sum([val for key, val in d.items() if key < 10])'.",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q19"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "This directly maps to the syntax used in Options A and B, allowing a student to recognize the patterns."
+      ],
+      "cons": [
+        "If the goal is only to teach dictionary creation, existing snippets are okay, but for this specific logic question, they are inadequate."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:149",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Topic: Iteration Helpers. Snippet: 'zip(l1, l2)' pairs elements by position: (l1[0], l2[0]), (l1[1], l2[1]). 'enumerate(l, start=0)' pairs index with value: (start, l[0]), (start+1, l[1]). These pairs are often used to populate dictionaries with d[key] = value.",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q20"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "It allows a student to derive the result for any list content rather than just matching a specific example."
+      ],
+      "cons": [
+        "The verbatim match in the existing exam snippets already solves this specific question perfectly."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:15",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a 'Python Idioms' snippet: 'To pair adjacent elements in a list `L`, use `zip(L[:-1], L[1:])`. This creates pairs of (current, next). Alternatively, an indexed loop would use `range(len(L)-1)` to avoid an index-out-of-bounds error when accessing `L[i+1]`.'",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q16"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "It directly explains the syntax used in the correct answer (Option B) and clarifies the boundary conditions that make Option A incorrect."
+      ],
+      "cons": [
+        "If the course focuses more on manual indexing than built-in idioms, but given it appears on the exam, it is necessary."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:150",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a knowledge snippet: 'Built-in functions and Dictionaries: Functions like sum(), min(), and max() can be applied directly to dictionary views. Example: result = sum(my_dict.values()) correctly totals all values.'",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q21"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "This would explicitly cover option (d) in the question, ensuring a student doesn't have to guess if sum() works on .values()."
+      ],
+      "cons": [
+        "Option (a) is so clearly identified as an error by the best snippet that the student can identify it by elimination anyway."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:151",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Lambda and Operators' that explains: 1. lambda x: [expression] creates a small function. 2. ** is the power operator (e.g., 2**3 is 8). 3. *args allows passing any number of values as a list.",
+      "source_question_ids": [
+        "trial-final-exam-solutions-introduction-to-python-3077951-q23"
+      ],
+      "source_exams": [
+        "trial-final-exam-solutions-introduction-to-python-3077951"
+      ],
+      "pros": [
+        "It bridges the gap from 'pattern matching the answer' to 'understanding the code' for a true zero-knowledge student."
+      ],
+      "cons": [
+        "The student can already find the answer by matching the '30' and the numbers in the intro_python_sample_final snippet."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:16",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet: 'In Python, two dictionaries are considered equal (==) if they contain the same set of key-value pairs. The order in which the pairs were added does not affect equality. Example: {1: 'a', 2: 'b'} == {2: 'b', 1: 'a'} is True.'",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q17"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "Directly addresses the core concept of the exam question which is currently completely unrepresented in the available snippets."
+      ],
+      "cons": [
+        "Only unnecessary if we want students to guess based on general intuition that 'content is what matters', but that is risky for an exam."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:17",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet demonstrating dictionary iteration using .items() (e.g., 'for k, v in d.items()') and clarifying that 'for x in d.items()' makes 'x' a tuple where 'x[1]' is the value. Also include a clear distinction between // (integer/floor division) and / (true division).",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q18"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This would directly enable the student to solve option C (understanding items and indexing) and D (recognizing why the division results in a different value/type)."
+      ],
+      "cons": [
+        "If the student can guess that .items() provides both key and value and that x[1] follows standard indexing, but the division distinction is rarely intuitive to non-programmers."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:18",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: String Methods and Immutability. Content: Strings in Python are immutable; methods like .replace() return a NEW string rather than modifying the original. Usage: s.replace('old', 'new', 1) replaces only the first occurrence.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q19"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This directly addresses the mechanics required to solve the question: the need for assignment (s1 = ...) and the effect of the third argument."
+      ],
+      "cons": [
+        "If the course assumes students already know basic string manipulation from earlier weeks, but the prompt specifies 'zero prior knowledge'."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:19",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Understanding **kwargs and .keys(). Code: def show_keys(**kwargs): return list(kwargs.keys()). Call: show_keys(first='val1', second='val2'). Output: ['first', 'second'].",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q20"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This would explicitly teach the student that the 'keys' in keyword arguments are the names used in the call, not the values assigned to them."
+      ],
+      "cons": [
+        "One might argue that 'keys' is a semantically intuitive word, but in programming 'key' vs 'value' is a specific distinction that needs defining for a novice."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:2",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'String Manipulation Reference' card that explicitly shows: 1) 'text.split(\".\")' returns a list, 2) 'list[-1]' gets the last item, 3) 'text.find(\"x\")' returns an integer index.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q03"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "It allows a student with zero knowledge to logically evaluate why option 'a' fails (it splits on dots first, making the extension the last item) vs why 'b' and 'c' succeed (they isolate the host first)."
+      ],
+      "cons": [
+        "The student can technically 'solve' the exam by just finding the exact match snippet provided."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:20",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Snippet: Comparison Operators. x >= y means 'x is greater than or equal to y'. x < y means 'x is less than y'. Example: 0 >= 0 is True.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q21"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "Ensures a student with zero coding background doesn't second-guess the meaning of the mathematical symbols in Python."
+      ],
+      "cons": [
+        "Most students recognize >= and < from basic math."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:21",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a topic card titled 'Lambda Functions and List Mapping'. It should show: 1. `list(map(lambda x: x*2, my_list))`, 2. `[ (lambda x: x*2)(i) for i in my_list ]`, and 3. `f = lambda x: x*2; [f(i) for i in my_list]`.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q22"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This would directly address all three options (a, b, and c) in the question, allowing a student to recognize the patterns as equivalent."
+      ],
+      "cons": [
+        "Only unnecessary if the student is expected to already know basic functional programming concepts, but the prompt assumes zero knowledge."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:22",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "A snippet explaining 'enumerate(iterable)': 'The enumerate() function adds a counter to an iterable and returns it as an enumerate object. Example: for index, value in enumerate(['a', 'b']): print(index, value) outputs 0 a and 1 b.'",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q23"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "Directly explains how variables 'i' and 'j' are populated in the loop options (a and b)."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:23",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "A snippet explaining list comprehensions: '[expression for item in list if condition] creates a new list by applying the expression to each item that meets the condition.'",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q23"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "Enables the student to understand the syntax of Option C."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:24",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: 'prices = [10, 50, 20]; max_price = max(prices); best_index = prices.index(max_price); items = [\"apple\", \"pear\", \"banana\"]; print(items[best_index])'",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q24"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This directly demonstrates the index-retrieval pattern used in the correct answer (Option B)."
+      ],
+      "cons": [
+        "If the student already understands that indices link related lists, they might guess it, but it's a specific technical hurdle."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:25",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet titled 'List Membership and Branching' with search text: 'To check if a value exists in a list, use the \"in\" operator: if item in my_list:. Use \"else:\" to handle cases where it is not found.'",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q01"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This directly teaches the 'zero-knowledge' student the exact syntax needed to choose Option A over the incorrect loop or return-based options."
+      ],
+      "cons": [
+        "If the student is expected to deduce syntax from other exam questions not listed here."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:26",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet explaining 'Iteration with Counters and Multiple Lists'. Examples: enumerate(mylist, start=1) and zip(listA, listB).",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q05"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This would allow a student to solve the problem by understanding the syntax (zip and enumerate) rather than just relying on finding a duplicate question."
+      ],
+      "cons": [
+        "Since the duplicate question already exists in the exam bank, a student using the cheat sheet specifically for this course would likely find the direct answer anyway."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:27",
+      "kind": "edit_existing",
+      "target_item_id": "exam-Trial final - Introduction to Python - 22/23-6-w2-dictionaries-and-mappings",
+      "proposal": "Ensure the full text including the correct code segment and the explanation (why direct slicing fails) is visible in the snippet search text.",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q06"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "It would provide the 'why' instead of just being a match, allowing the student to learn the underlying rule (no slicing on dicts)."
+      ],
+      "cons": [
+        "The student can already find the answer by matching the exact question text."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:28",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet explaining: 'In list comprehensions, [expression_if_true if condition else expression_if_false for item in list] transforms every item based on the condition.'",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q07"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "It directly addresses the syntax gap for conditional transformations in comprehensions."
+      ],
+      "cons": [
+        "Clever students might infer the 'if-else' logic from general English, but formal confirmation is safer."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:29",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet: labels = ['A', 'B']; msg = str(1) + labels[0]; print(msg). Explanation: str() converts numbers to text, '+' joins text, and [0] accesses the first item in a list.",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q08"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This fills the 'zero-knowledge' gap regarding the specific syntax of list indexing and string building used in the question."
+      ],
+      "cons": [
+        "Indexing and '+' for strings are often considered intuitive enough for students to guess correctly if they understand the loop."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:3",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a 'Python Method Cheat Sheet' snippet: 1. Strings: .lower(), .replace(), .strip() return NEW strings. 2. Lists: .sort(), .append(), .reverse() return NONE (mutate in place). 3. Functions: sorted(x) returns a NEW sorted list, len(x) returns an int. 4. Warning: You cannot call .replace() on a list!",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q04"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This allows a student to solve the logic (Option D fails because it's a list; Option B/C fail because they return None) even if they don't find the exact duplicate question."
+      ],
+      "cons": [
+        "The presence of the exact exam question in the database makes this redundant for this specific task."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:30",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a 'Key Concept' snippet for List Slicing: 'To extract a portion of a list, use the syntax mylist[start:stop:step]. start is inclusive, stop is exclusive, and step determines the interval between elements. Example: x[1:10:2] starts at index 1 and takes every 2nd element.'",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q09"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This directly provides the syntax rules required to decode the question's blanks."
+      ],
+      "cons": [
+        "Only unnecessary if the student has already covered basic sequence operations, but the prompt assumes zero prior knowledge."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:31",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Implicit Return Values' explaining: 'In Python, if a function completes its execution without hitting a return statement, it automatically returns the special value None.'",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q10"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This is the specific 'trick' of the question. Without this rule, a student with zero knowledge might assume the function causes an error or prints nothing."
+      ],
+      "cons": [
+        "Advanced students might guess 'None' by process of elimination if they realize no other value is returned, but it is a specific language feature that warrants a snippet."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:32",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a key point or AI common question explaining built-in list methods: .index(item) to find a position, and clarify that indexing starts at 0.",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q11"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This would allow the student to evaluate option 'c' (x.index(9)) which evaluates to 9."
+      ],
+      "cons": [
+        "If the student infers that 'index' means 'position' and counts from 0, they might guess correctly, but it is not explicitly taught in the snippets."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:33",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing a function: def stats(*args):\n    total = 0\n    product = 1\n    squares = []\n    for n in args:\n        total += n\n        product *= n\n        squares.append(n**2)\n    return total, product, squares",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q12"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This covers every missing concept: the product identity (1), the *= operator, the ** exponentiation, and the append() method."
+      ],
+      "cons": [
+        "If students are expected to know basic operators from other contexts, but for zero Python knowledge, this is critical."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:34",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet explaining string formatting: 'The .format() method inserts values into strings. Positional placeholders like {0} and {1} correspond to the order of arguments in .format(first, second). Named placeholders like {name} require matching keywords in .format(name=\"value\").'",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q13"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "It directly enables a student to understand why Option A (positional) works and why Options C/D (named vs positional mismatch) fail."
+      ],
+      "cons": [
+        "Only if the student already knows Python, but the goal is zero prior knowledge."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:35",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet illustrating the equivalence of df['col'], df.loc[:, 'col'], and df.iloc[:, col_index] for column selection.",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q14"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "It directly addresses the core of the question (multiple ways to select the same data) which is a common pattern in introductory Python exams."
+      ],
+      "cons": [
+        "Basic bracket notation is often sufficient for simple tasks, but this specific question tests 'all of the above' scenarios."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:36",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a 'Datetime Formatting Reference' snippet: 'Use datetime.strptime(text, format) to read a date, and date.strftime(format) to write it. Format codes: %d=day, %m=month, %Y=year (e.g., \"%d-%m\" -> \"02-05\"). timedelta(days=n) adds or subtracts n days.'",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q15"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "It provides the exact translation key needed to interpret the input string and construct the output string."
+      ],
+      "cons": [
+        "While Python-specific, some students might guess %m=month and %d=day, but it is risky without confirmation."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:37",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "A snippet titled 'OOP: Calculated Attributes' showing a class Rectangle(width, height) that sets self.area = width * height. It should include a comment: 'Rectangle(2, 5) makes width=2, height=5, and area=10'.",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q16"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "It directly mirrors the logic of the question (Shape with area = height * length), making the trace obvious to a non-programmer."
+      ],
+      "cons": [
+        "The 'Vehicle' snippet covers 80% of the logic; the user might be able to 'jump' the remaining gap."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:38",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Sentence Reconstruction. Content: 'To turn a sentence into a list of words, use sentence.split(). To turn a list of words back into a sentence with spaces, use \" \".join(words_list).'",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q17"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This directly provides the syntax for the only two parts of the code not explained by the question's internal hints."
+      ],
+      "cons": [
+        "A student might infer split/join from the context of the options, but it's a high cognitive load for zero-knowledge users."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:39",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a card for 'Essential String Methods' covering split(), join(), and replace().",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q18"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This would provide the direct definitions needed for all three code segments (a, b, and c) in the question."
+      ],
+      "cons": [
+        "Only unnecessary if the user assumes the student can guess method names based on English meaning."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:4",
+      "kind": "edit_existing",
+      "target_item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+      "proposal": "Expand search_text to include the explanation: 'Option A is incorrect because .map() expects a function (like a lambda) or a dictionary to map values, not a pre-computed Series of the same length.'",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q05"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "It directly addresses the 'why' of the question, making the answer obvious to a student without prior knowledge."
+      ],
+      "cons": [
+        "The student might be able to infer this from the generic .map() description in other snippets."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:40",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet demonstrating: df_filtered = df[(df['A'] > 5) & (df['B'] == 'Yes')] and df['New'] = ['High' if x > 10 else 'Low' for x in df['A']]",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q19"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This would directly illustrate the two most complex parts of the question: combining boolean filters and using list comprehensions for data transformation."
+      ],
+      "cons": [
+        "The student might infer masking from the single-condition example, though the '&' operator is a specific technical hurdle."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:41",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Row-wise Calculations with Lambda. Content: To create a column based on multiple other columns, use df.apply(lambda row: expression, axis=1). For example: df['Total'] = df.apply(lambda r: r['A'] + r['B'] if r['C'] > 0 else 0, axis=1).",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q20"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This directly maps to the correct answer's pattern, explaining both the multi-column access (row['Col']) and the conditional logic."
+      ],
+      "cons": [
+        "If the student is expected to infer lambda from general function application, but that is unlikely for a 'zero knowledge' persona."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:42",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Working with Datetimes. Content: Use `datetime.strptime(date_string, format)` to convert a string to a datetime OBJECT. Use `dt_object.strftime(format)` to convert it back to a STRING. Use `timedelta(days=n)` to add/subtract days from a datetime object.",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q21"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This provides the missing technical knowledge required to understand why the code returns objects (Option B) instead of the desired strings."
+      ],
+      "cons": [
+        "The topic might be covered in later weeks, but since the question is about Datetime Function 3, it's essential for this specific task."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:43",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Parsing Time Strings and Minute Arithmetic\nfrom datetime import datetime, timedelta\nstart_str = '9:30'\nh, m = start_str.split(':')\nstart_dt = datetime(2023, 6, 1, int(h), int(m))\nend_dt = start_dt + timedelta(minutes=20)\nprint(f'End: {end_dt.strftime(\"%H:%M\")}')",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q22"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This directly models the logic required in the __init__ method of the question, specifically the combination of string splitting, int conversion, and timedelta usage."
+      ],
+      "cons": [
+        "A student might guess split() based on common sense, but the timedelta(minutes=...) syntax is hard to intuit without an example."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:44",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet for a 'Circle' class that has a 'radius' attribute, an 'area(self)' method, and a 'summary(self)' method that returns f'Area is {self.area()}'.",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q23"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "This would explicitly teach the student that methods need 'self' as an argument and 'self.' prefix with parentheses to be called, directly addressing the distractors in options C and D."
+      ],
+      "cons": [
+        "It is a fundamental OOP concept, but 'zero knowledge' students require an explicit code example of method-to-method calling."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:45",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet (e.g., 'OOP Method with List and Enumerate') that shows a class 'Inventory' with an 'items' list, an 'add_item' method using '.append()', and a 'get_indexed_items' method returning a dictionary using 'enumerate(self.items, start=1)'.",
+      "source_question_ids": [
+        "final-exam-study-guide-trial-python-basics-2023-q24"
+      ],
+      "source_exams": [
+        "final-exam-study-guide-trial-python-basics-2023"
+      ],
+      "pros": [
+        "Directly demonstrates the mechanics needed to solve '9_OOP_Hard_2', specifically list mutation and dictionary generation with custom start indices."
+      ],
+      "cons": [
+        "If the student already understands list basics from a separate 'Lists' section, this might be redundant, but for zero-knowledge students, this bridge is vital."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:46",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Arithmetic and Logic Basics: Explain that 'x % 2 == 0' checks if a number is even (no remainder) and 'x % 2 != 0' checks if it is odd. Explain that range(11) creates numbers 0 to 10.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q01"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This allows the student to verify Option B and Option A independently rather than relying on a verbatim question match."
+      ],
+      "cons": [
+        "If the goal is purely 'cheating' by pattern matching, the existing verbatim snippet is sufficient."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:47",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Nested Functions and Enclosing Scope. Content: Python allows defining a function (inner) inside another function (outer). The inner function can access variables defined in the outer function (its enclosing scope) as well as global variables. Example: def outer(x): y=10; def inner(z): return x+y+z; return inner.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q02"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "It explains the structure of the code context, which involves nested functions—a concept not explicitly covered in the 'Global vs Local' snippet."
+      ],
+      "cons": [
+        "A student might simply follow the trace in the existing exam-match snippet without needing the formal definition of nested scopes."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:48",
+      "kind": "edit_existing",
+      "target_item_id": "exam-trial-final-exam-py22-4-w2-dictionaries-and-mappings",
+      "proposal": "Update the search_text/content to include the correct code segment: 'roman_nums = {num: roman for num, roman in zip(range(1, 6), ['I', 'II', 'III', 'IV', 'V'])}'.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q04"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "It provides the direct answer and the exact syntax for the comprehension + zip pattern."
+      ],
+      "cons": [
+        "If the goal is to teach the principle rather than give the answer, a generic zip-comprehension example might be better."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:49",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a summary snippet for 'Dictionary Comprehensions' showing: {k: v for k, v in zip(keys, values)} and explaining that range(1, 6) produces 1, 2, 3, 4, 5.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q04"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "It bridges the gap between the individual components (zip and comprehension) and explains the range function logic."
+      ],
+      "cons": [
+        "None; this is a core missing piece for zero-knowledge users."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:5",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet demonstrating element-wise subtraction: df['diff'] = df['X'] - df['Y'].",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q06"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "It removes the slight leap of faith required to assume '-' works exactly like '+'."
+      ],
+      "cons": [
+        "The 'sum' example is already extremely suggestive of the correct answer."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:50",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a 'Python Syntax' card for the 'zip()' function that shows: for x, y in zip(list1, list2): ...",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q05"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "It clarifies how the loop in the correct answer manages to access both 'name' and 'age' simultaneously without using an index variable."
+      ],
+      "cons": [
+        "The student might infer the behavior from the context of the question/answer pair, but a definition ensures certainty."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:51",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Dictionary Max/Min Patterns' reference card. Example: To find the key with highest value, use max_val = max(d.values()) then loop if val == max_val. To find highest key alphabetically, use max(d).",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q06"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This helps a student solve variants of the question (e.g., finding the lowest rating) without relying on seeing the exact problem beforehand."
+      ],
+      "cons": [
+        "The student already has the exact answer in the existing exam snippet."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:52",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet: 'The zip(a, b) function creates pairs of elements from two lists. item[0] refers to the first element in the pair, and item[1] to the second. Multiplying a string by an integer (e.g., \"a\" * 3) repeats the string that many times (\"aaa\").'",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q08"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "Directly addresses the two most obscure parts of the question for a beginner: zip and string multiplication."
+      ],
+      "cons": [
+        "Only if the student is expected to guess that 'multiplication' of a string and number behaves like repetition."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:53",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Slicing Cheatsheet' snippet: 'Python slicing follows the format list[start:stop:step]. Start is inclusive, stop is exclusive. Indices can be negative: -1 is the last element, -2 is second-to-last. Example: mylist[0:5:2] takes every 2nd element from index 0 up to (but not including) index 5.'",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q09"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This provides the exact mechanical rules required to solve any slicing problem without prior coding experience."
+      ],
+      "cons": [
+        "If the goal is only to provide existing exam examples, but those examples currently lack explanatory power for this specific problem."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:54",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet titled 'Using Enumerate' with code: `for index, char in enumerate('abc'): print(index, char)`. Explanation: 'enumerate' gives the position (0, 1, 2) and the character ('a', 'b', 'c') at the same time.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q10"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "Directly explains the 'untraceable' part of the question for a beginner."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:55",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet for the 'in' operator: `if 5 in [1, 5, 10]: # This is True`. Explanation: The 'in' keyword checks if a value exists inside a list.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q10"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "Explains the conditional logic `if index in x` which determines which letters are appended."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:56",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "A snippet demonstrating 'len()' on a string and the difference between '/' and '//' operators, as well as basic '[0]' indexing.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q11"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This would allow a student to solve Option C (len and floor division) and Option B (indexing the result of a split)."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:57",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a new AI Example titled 'Numeric Operations and Tuples'. Content: 'To square a number use x**2. To check if a number is even, use num % 2 == 0. To return two values together, use return (value1, value2).'",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q12"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This directly addresses the missing syntactical knowledge required to verify the math in Option A vs Option B."
+      ],
+      "cons": [
+        "The student might guess the meaning of % and ** from context or general programming knowledge, but for 'zero prior knowledge', it is essential."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:58",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Python String Formatting' that includes: 1. f-strings: f'Hello {name}', 2. .format(): 'Hello {}'.format(name), and 3. Concatenation: 'Hello ' + name + ' is ' + str(age).",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q13"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This would directly allow a student to recognize that all three options in the exam question perform the same task correctly."
+      ],
+      "cons": [
+        "If the student has already seen these in basic lecture notes, but the goal is to help a student with 'zero prior knowledge' using only snippets."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:59",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a new snippet from Week 5 lecture materials (Inspecting and Selecting Data) that states: 'When selecting a single column from a DataFrame: using a string label (e.g., df['A']) returns a Series, while using a list of one label (e.g., df[['A']]) returns a one-column DataFrame.'",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q14"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This directly addresses the core concept of the exam question regarding return types."
+      ],
+      "cons": [
+        "If the goal is only to provide exam question examples, adding a theoretical rule might deviate from the current snippet style."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:6",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a conceptual snippet titled 'Pandas Selection Rules' that explains: 1. .loc[start:stop] is label-based and INCLUDES stop. 2. .iloc[start:stop] is zero-indexed position-based and EXCLUDES stop. 3. Boolean masks return only rows where the condition is True.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q07"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This provides the 'rules of the game' that allow a student to logically deduce why Option A includes row 2 (label 2) while Option D starts at row 3 (position 2)."
+      ],
+      "cons": [
+        "If the student finds the full solution in the expanded 'Trial' exam snippet (item 6), they might just memorize the answer pattern."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:60",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Datetime Formatting Cheatsheet' snippet. It should show: %Y (Year 2023), %m (Month 01-12), %d (Day 01-31), %H, %M, %S. Include an example: datetime.strptime('2023-06-01', '%Y-%m-%d').",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q15"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This allows students to translate the strings in the options into actual dates and compare them to the original code's dates."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:61",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing a class where attributes are set conditionally, e.g., 'if age > 18: self.status = \"adult\" else: self.status = \"minor\"'.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q16"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "It directly mirrors the 'logic-heavy' constructor pattern seen in this exam question, reducing the mental leap for a novice."
+      ],
+      "cons": [
+        "Basic OOP and Basic Conditions are present, and their combination is logically intuitive."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:62",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: separator = '-'; words = ['a', 'b', 'c']; result = separator.join(words).",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q17"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "It would allow the student to see that .join() is called on the string separator and takes only the list as an argument, making the error in ' '.join(word_list, '-') (two arguments) obvious."
+      ],
+      "cons": [
+        "Process of elimination might be sufficient for an exam setting if all other operations are clearly validated."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:63",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a new 'String Operations' snippet that covers: 1. str.replace(old, new) for substitution. 2. str.capitalize() and str.title() for casing. 3. '+' for joining strings. 4. An explicit note that strings cannot be modified in-place (no sentence[i] = 'X').",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q18"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This question tests basic string method knowledge. Without a reference to these specific methods, a student cannot confidently select 'd' over 'a' or 'c'."
+      ],
+      "cons": [
+        "It is only unnecessary if the student has access to the full Python documentation or has already memorized basic string syntax."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:64",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet illustrating: 1) Using .map(lambda x: x[-n:]) to extract suffixes. 2) Using list comprehension [value if condition else other for x in series] to replace specific values in a column. 3) Comparing .map(len) vs map(lambda x: len(x)).",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q19"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This would directly address the 'hard' components of the question (Operations 2 and 3) which are currently unsupported by the recommended snippets."
+      ],
+      "cons": [
+        "Basic pattern matching might lead a student to Option A, but they wouldn't understand 'why' it works without these concepts."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:65",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: df = df.sort_values(by='col', ascending=False) with a comment: '# Sorts the table by the values in \"col\", from highest to lowest'.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q20"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "Essential for determining which rows appear first in the final output (Product C then A)."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:66",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet explaining lambda: 'df[\"A\"].map(lambda x: x*2) means apply the rule \"take x and return x times 2\" to every row in column A'.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q20"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "The most difficult syntactic hurdle for a zero-knowledge student in this specific problem."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:67",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet showing: 'from datetime import datetime, timedelta; dt = datetime.strptime(\"23-03-2026 14:00\", \"%d-%m-%Y %H:%M\"); end = dt + timedelta(minutes=30)'.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q21"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This would allow a student to verify the syntax for parsing (strptime) and time addition (timedelta) used in the question."
+      ],
+      "cons": [
+        "The question hint provides some info on timedelta, but not on strptime or format strings."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:68",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet explaining the logic for checking if two time intervals (start1, end1) and (start2, end2) overlap: 'start1 < end2 and end1 > start2'.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q21"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "This is a common exam pattern that is difficult to deduce with zero prior logic/programming knowledge."
+      ],
+      "cons": [
+        "Some students might be able to figure this out logically if they draw it, but it's a high cognitive load."
+      ],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:69",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet titled 'Datetime Attribute Extraction and Formatting'. Content: 'Given dt = datetime(2023, 1, 1), use dt.day, dt.month, and dt.year to get integers. Use dt.strftime(\"%d-%m-%y\") to create a formatted string like \"01-01-23\".'",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q22"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "Directly provides the information needed to distinguish between the datetime object (needed for attributes) and the formatted string (needed for the index)."
+      ],
+      "cons": [
+        "The student might guess based on the intuitive names of '.day' and '.year', but they wouldn't know 'strftime' or how it differs from a raw object."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:7",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Pandas Filtering and Sorting. Content: Use df.loc[condition] to filter rows. Conditions: df['col'] == 'val', df['col'].isin(['a', 'b']), or ~ (not). Use df.sort_values('col', ascending=False) to sort by a column in descending order.",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q08"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "It directly explains the functions used in the exam question options (isin, sort_values, ascending)."
+      ],
+      "cons": [
+        "If this information is expected to be in a lecture-based summary snippet that was simply not included in this search batch."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:70",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "A reference card for Python Arithmetic Operators: + (addition), - (subtraction), * (multiplication), / (division), // (floor division/integer), % (modulo). Include an example like '15 // 4 = 3 (fits 3 times)'.",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q23"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "The question hinges on calculating how many times something 'fits completely', which requires // instead of /."
+      ],
+      "cons": [
+        "Students might infer // is 'special' for integers given the context 'Amount: 3' in the example output."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:71",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet explaining 'self' and tuple indexing. Example: 'In Python classes, self.attribute refers to the data stored in that object. If a variable represents a position like (row, col), position[0] gets the row and position[1] gets the col.'",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q24"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "The question relies heavily on understanding that initial_position[0] is a number being subtracted from target_position[0]. Without knowing what the brackets do, the math is impossible to trace."
+      ],
+      "cons": [
+        "Some students might guess indexing based on other languages, but it's risky for zero-knowledge users."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:72",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet for common built-in functions: 'abs(x) returns the absolute (positive) value of a number. For example, abs(-3) is 3.'",
+      "source_question_ids": [
+        "introduction-to-python-trial-final-exam-solutions-py22-q24"
+      ],
+      "source_exams": [
+        "introduction-to-python-trial-final-exam-solutions-py22"
+      ],
+      "pros": [
+        "The logic for distance (row_diff > 3) and diagonal movement (abs(row_diff) == abs(col_diff)) requires knowing what abs() does."
+      ],
+      "cons": [
+        "Abs is common in math, but its specific Python syntax should be confirmed."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:73",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Key Point: Python List & Tuple Indexing. 1. Indexing starts at 0. 2. Negative indices count from the end (-1 is the last item, -2 is second to last). 3. For nested structures like x = [(a, b)], x[0][1] accesses the second item of the first tuple.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q01"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This would allow the student to understand *why* x[0][1] is 2, rather than just relying on a matched example."
+      ],
+      "cons": [
+        "The exact question already exists in the exam bank snippets, so for this specific exam, the student can just match the pattern."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:74",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'List Methods and Return Values': Common list methods like .append(), .remove(), and .sort() perform actions 'in-place'. This means they change the list but return the value None. If you see code like 'print(mylist.append(5))' or 'return [mylist.append(5)]', the output will be None or [None].",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q03"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This addresses the specific 'trap' in the question that separates students who understand loop logic from those who understand Python's method return conventions."
+      ],
+      "cons": [
+        "It is a very specific technical detail, but it is a recurring theme in 'Return Behavior' exam questions."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:75",
+      "kind": "edit_existing",
+      "target_item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+      "proposal": "Update search_text to include: 'Option B uses slicing [::-2] to step backwards through the list by 2, which skips the duplicates and reverses the order.'",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q05"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "It clarifies the 'magic' of the slicing syntax which is currently truncated in the snippet."
+      ],
+      "cons": [
+        "The student might infer the result because it is a direct match of a known exam question."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:76",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Dictionary & **kwargs Iteration. Content: 'def main(**kwargs): \\n  # kwargs.keys() -> names (strings)\\n  # kwargs.values() -> values (numbers/data)\\n  # kwargs.items() -> both (name, value)\\n  for val in kwargs.values(): total += val'",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q06"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This directly addresses the trap in the exam question by explaining the return types of dictionary methods."
+      ],
+      "cons": [
+        "If the student already understands basic dictionary concepts from a general programming background, they might guess correctly, but for a zero-knowledge student, this is essential."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:77",
+      "kind": "edit_existing",
+      "target_item_id": "exam-Test Resit - Introduction to Python - 22/23-6-w3-arguments",
+      "proposal": "Expand search_text to include the solution logic: 'To sum prices passed as keywords, iterate over kwargs.values() to get the numbers, not the keys.'",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q06"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "Turns a placeholder into a functional solution reference for that specific recurring exam question."
+      ],
+      "cons": [],
+      "recommended_direction": "consider_instead",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:78",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Key Point' explaining Dictionary Comprehensions: '{k: v for k in list}' where 'k' is the key and 'v' is the value. Emphasize that the key comes before the colon.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q07"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "It gives the student the 'rule' instead of just a specific answer, allowing them to solve variations of the question."
+      ],
+      "cons": [
+        "The direct match in the exam snippets might be enough for a student looking for a quick fix."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:79",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a 'Dictionary Analytics' snippet: 'To calculate average: avg = sum(my_dict.values()) / len(my_dict). To find items above average: for key in my_dict: if my_dict[key] > avg: print(key). Note: for key in my_dict is the same as for key in my_dict.keys().'",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q09"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "It explains the underlying logic of the two options (A and B) in the question, clarifying why they are functionally identical despite different syntax."
+      ],
+      "cons": [
+        "The student might just rely on matching the exact question if they find snippet 4."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:8",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: my_dict = {item.split(':')[0]: int(item.split(':')[1]) for item in my_list}",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q09"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "This matches the exact syntax pattern used in Option A, allowing a student to recognize the structure."
+      ],
+      "cons": [
+        "Some students might infer it from the 'word_lengths' question if the solution to that question used a comprehension."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:80",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Key Point: String Case Testing. .islower() returns True ONLY if the character is a lowercase letter. It returns False for uppercase letters, spaces, and punctuation (e.g., 'a'.islower() is True, but 'A', ' ', and '!' are False).",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q10"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "Directly explains why spaces and punctuation are excluded from the result list in the question."
+      ],
+      "cons": [
+        "A student might guess 'islower' refers only to lowercase letters, but 'zero knowledge' implies they might not know if a comma has a case."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:81",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Python Arithmetic Operators. Content: + (addition), - (subtraction), * (multiplication), / (division), // (floor division: divides and rounds down to nearest integer), % (modulo: remainder), ** (exponentiation). Example: 5 // 2 results in 2.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q11"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "Directly explains the // operator used in the code context to reach the correct answer."
+      ],
+      "cons": [
+        "Basic math might be assumed, but floor division is specific to programming languages."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:82",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Parallel Iteration with zip(). Content: The zip() function takes multiple iterables (like lists) and aggregates them into tuples. Example: for a, b in zip([1, 2], [3, 4]): prints (1, 3) then (2, 4).",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q11"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "Explains how the 'for a, b in zip(list1, list2)' loop processes both lists simultaneously."
+      ],
+      "cons": [
+        "None; it is critical for this specific question."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:83",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Nested Slicing Logic. Content: Slicing creates a new list. You can apply another slice immediately after: my_list[start:stop:step][new_start:new_stop:new_step]. The second slice acts on the results of the first.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q12"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This helps the student evaluate options A and C which use two sets of brackets."
+      ],
+      "cons": [
+        "The student might just find the exact matching question snippet and stop there."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:84",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a card titled 'Targeted String Modification' showing: 1. .replace('text', 'new', 1) only replaces the first match; 2. .find('text', 5) starts searching after index 5; 3. sentence[:5] + 'new' + sentence[10:] replaces characters between index 5 and 10.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q13"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This directly maps to the mechanics of both Option A and Option B, allowing a student to verify the multi-step replacement logic in Option B and the slicing offsets in Option A."
+      ],
+      "cons": [
+        "The question contains a hint for find(), but it is insufficient for a zero-knowledge student to confidently evaluate the replace() logic or the math behind index+4 slicing."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:85",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: f'Items: {items[0]}, {items[1]}' and comparing it to ', '.join(items).",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q14"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This directly addresses the core logic of the question: distinguishing between a simple join and specific formatting requirements like 'and' before the last item."
+      ],
+      "cons": [
+        "If the student has access to a 'String Fundamentals' cheat sheet section not included in these exam snippets."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:86",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: data = {'col1': [1, 2], 'col2': [3, 4]}; df = pd.DataFrame(data). Include a brief note on using .split() to break strings into list components.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q15"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This directly bridges the gap between having extracted components and returning them as a structured DataFrame, which is the core task of the exam question."
+      ],
+      "cons": [
+        "Option D uses pd.Series explicitly, so a student might guess the DataFrame structure if they understand Series, but the dictionary-to-DataFrame mapping is a common stumbling block."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:87",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a snippet showing: 'class User: def __init__(self, id, status=\"active\"): self.id = id; self.status = status; u = User(123); print(u.status == \"active\")'",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q16"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This merges OOP structure with default argument logic and attribute access in one clear example, mirroring the question's complexity."
+      ],
+      "cons": [
+        "The student can technically deduce the answer by combining the 'Arguments' and 'OOP Fundamentals' snippets currently available."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:88",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: 'dt = datetime.strptime(\"2023/01/10\", \"%Y/%m/%d\")' with a comment explaining that %Y is year, %m is month, and %d is day.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q17"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "It removes any ambiguity for a non-Python user about how the string '2023/1/10' is being processed."
+      ],
+      "cons": [
+        "Most students will correctly guess that '2023/1/10' represents January 10, 2023, without needing the technical definition of strptime."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:89",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Title: Pandas Selection Cheat Sheet. Content: To select one column: df['A']. To select multiple: df[['A', 'B']]. To select specific rows and columns by label: df.loc[row_index, 'column_name']. Note: Using df[index, 'column'] directly results in an error.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q18"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "It directly addresses the core logic required to distinguish between valid Pandas syntax and the error-inducing Option D in the exam question."
+      ],
+      "cons": [
+        "If the goal is only to use existing exam questions as context, but since the current questions are truncated, they don't provide the syntax rules clearly."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:9",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet showing: result = dict(zip(keys_list, values_list))",
+      "source_question_ids": [
+        "final-exam-solutions-for-python-programming-62oop21-q09"
+      ],
+      "source_exams": [
+        "final-exam-solutions-for-python-programming-62oop21"
+      ],
+      "pros": [
+        "Explicitly validates Option B's logic for students who have never seen zip()."
+      ],
+      "cons": [
+        "Option B is quite intuitive if 'zip' is assumed to 'pair things up', but for zero-knowledge, it needs proof."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:90",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Instance Methods and Conditional Returns' that shows: 1. A method using self. 2. A return statement using the 'X if condition else Y' syntax. 3. A warning that '=' cannot be used for comparison in 'if' statements.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q19"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This would directly address the syntax found in the correct answer (ternary) and the syntax error in the most tempting distractor (Option B)."
+      ],
+      "cons": [
+        "If the student is very observant, they might infer 'self' from the constructor snippets, but the ternary operator is likely to be confusing."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:91",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Create a snippet titled 'Datetime and Timedelta Operations'. Key points: 1. datetime.strptime() returns a datetime object. 2. datetime.strftime() returns a string. 3. Adding a timedelta to a datetime object works; adding it to a string causes a TypeError.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q21"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "It explicitly provides the technical knowledge needed to evaluate Option C, which is the correct answer and the core 'trick' of the question."
+      ],
+      "cons": [
+        "If this is a rare topic, but since it appears in final exams, it is high-value."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:92",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Snippet: 'Datetime Construction and Formatting'. Content: 'from datetime import datetime; # Order: Year, Month, Day; dt = datetime(2023, 5, 1); # Format to string; s = dt.strftime(\"%d-%m-%Y\") # Returns \"01-05-2023\"'.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q22"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This provides the exact 'missing piece' regarding argument order and method selection (strftime) needed to solve the exam question."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:93",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Topic: Pandas Aggregation and Filtering. 'To calculate the average of a column, use df[col].mean(). To filter a DataFrame to show only rows where a condition is met, use df[df[col] > value] or df[df[bool_col] == True].'",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "It directly connects the 'average' requirement in the question to the '.mean()' method and explains the filtering syntax needed for Operation 3."
+      ],
+      "cons": [
+        "The 'extra_practice' snippet mentions 'above average' logic for dictionaries, but Pandas-specific syntax is distinct enough to warrant its own entry."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:94",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Key Point: Lambda Functions in Pandas. 'lambda x: expression' creates a small anonymous function where 'x' represents the value of each row/element when used with .map() or .apply(). Example: s.map(lambda x: x + 10).",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q24"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "This is critical for understanding what the 'lambda' keyword does in the question code."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:95",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Key Point: Pandas Aggregations. Methods like .sum(), .mean(), and .count() return a single number representing the total/average/count of the entire Series/column. Example: df['B'].sum() equals the sum of all values in column B.",
+      "source_question_ids": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q24"
+      ],
+      "source_exams": [
+        "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023"
+      ],
+      "pros": [
+        "The student needs to know that df['B'].sum() is a constant value (15) in this context, not another Series."
+      ],
+      "cons": [],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:96",
+      "kind": "edit_existing",
+      "target_item_id": "exam-Resit 22/23-5-w1-functions-and-imports",
+      "proposal": "Ensure the text includes: 'Option B uses slicing [::-2], which starts from the end of the list and takes every second element, resulting in [5, 4, 3, 2, 1].'",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q05"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "It allows a zero-knowledge student to manually verify the slicing result rather than just taking the snippet's word for it."
+      ],
+      "cons": [
+        "The student may already be convinced by the explanation of Option A and the knowledge that 'Both' is an option."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:97",
+      "kind": "edit_existing",
+      "target_item_id": "exam-Resit 22/23-6-w3-arguments",
+      "proposal": "Append the correct code solution and a brief explanation: 'Use **kwargs to capture keyword arguments as a dictionary; use kwargs.values() to iterate over and sum only the values (prices).'",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q06"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "It directly answers the 'how' for a student who recognizes the problem but doesn't know the specific dictionary method names."
+      ],
+      "cons": [
+        "The student might infer it if they have a general 'Dictionary Methods' snippet elsewhere, but specialized **kwargs help is better."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:98",
+      "kind": "edit_existing",
+      "target_item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+      "proposal": "Update the search_text to include the full solution code for option C: word_lengths = {word: len(word) for word in words}.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q07"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "The current snippet cuts off at 'Option A is a vali', which might lead a student to think A is the answer, even though the provided question says C is correct."
+      ],
+      "cons": [
+        "Snippet 16 provides the conceptual backing, but clarity is always better."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    },
+    {
+      "suggestion_id": "round1:99",
+      "kind": "add_new",
+      "target_item_id": "",
+      "proposal": "Add a 'Key Point' snippet titled 'Counting with Dictionaries' that explains: To count items, check if the item is a key. If not, set it to 0. Then, increment by 1.",
+      "source_question_ids": [
+        "resit-solutions-for-introduction-to-python-35761538-q08"
+      ],
+      "source_exams": [
+        "resit-solutions-for-introduction-to-python-35761538"
+      ],
+      "pros": [
+        "This would allow a student to solve the problem by understanding the logic rather than just finding the identical question in the database."
+      ],
+      "cons": [
+        "The direct match snippet already ensures the student can answer the specific exam question correctly."
+      ],
+      "recommended_direction": "add_this",
+      "human_review_status": "pending"
+    }
+  ]
+}

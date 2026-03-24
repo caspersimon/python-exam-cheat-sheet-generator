@@ -1,0 +1,161 @@
+{
+  "exam_id": "final-exam-solutions-for-python-programming-62oop21",
+  "question_updates": [
+    {
+      "number": 6,
+      "topic": "7-pandas-2",
+      "question": "You have a pandas DataFrame called df. It has a column called \"A\" and a column called \"B\". Both contain numbers.\n\nYou'd like to create a column called \"C\", which contains the difference of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?",
+      "options": {
+        "a": "df[\"C\"] = df[\"A\"] - df[\"B\"]",
+        "b": "df[\"C\"] = df[\"A\"].map(lambda x: x - df[\"B\"])",
+        "c": "df[\"C\"] = df.columns[\"A\"] - df.columns[\"B\"]",
+        "d": "df[\"C\"] = df.apply(df[\"A\"] - df[\"B\"])"
+      },
+      "correct": "a",
+      "explanation": "Subtracting one numeric Series from another directly creates the elementwise difference needed for column C.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-05.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Captured manually from zoomed image crops without OCR."
+        ]
+      }
+    },
+    {
+      "number": 7,
+      "topic": "7-pandas-3",
+      "question": "You have a pandas DataFrame called df that looks like this, when printed:\n\n      A    B    C    D\n1   8.7  4.6  9.5  7.0\n2   7.3  1.5  6.3  7.1\n3   4.3  9.0  2.9  3.3\n4   4.8  2.5  5.1  3.0\n5   1.6  1.4  6.7  3.5\n6   2.4  3.7  7.6  1.3\n\nSuppose that you'd like to create a new Series that only contains those elements of column \"D\" of df that are smaller than 5.0. So the Series should look like this, when printed:\n\n3    3.3\n4    3.0\n5    3.5\n6    1.3\nName: D, dtype: float64\n\nWhich of the following code lines will not achieve what you want?",
+      "options": {
+        "a": "df.loc[2:6, df.columns[-1]]",
+        "b": "df.loc[df[\"D\"] < 5, \"D\"]",
+        "c": "df.loc[3:6, \"D\"]",
+        "d": "df.iloc[2:6, 3]"
+      },
+      "correct": "a",
+      "explanation": "Option A slices rows 2 through 6 from the last column but does not filter out values that are 5.0 or larger, so it includes values that should not be in the result.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-06.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Captured manually from zoomed image crops without OCR."
+        ]
+      }
+    },
+    {
+      "number": 8,
+      "topic": "7-pandas-4",
+      "question": "You have two DataFrames: df1 and df2. They look like this when printed:\n\nprint(df1)\n\n   Age  Height  Female        City Language\n0   23     167    True      Berlin   German\n1   36     175    True   Frankfurt   German\n2   17     182   False   Antwerpen    Dutch\n3   25     177    True    Eindhoven    Dutch\n4   36     178   False        Lyon   French\n5   52     185   False       Basel   German\n6   46     168    True   Innsbruck   German\n\nprint(df2)\n\n   Age  Height  Female        City Language\n5   52     185   False       Basel   German\n4   36     178   False        Lyon   French\n1   36     175    True   Frankfurt   German\n6   46     168    True   Innsbruck   German\n0   23     167    True      Berlin   German\n\nWhich of the following code segments could have created df2 from df1?",
+      "options": {
+        "a": "df1.loc[df1[\"Language\"].isin([\"French\", \"German\"])].sort_values(\"Height\", ascending=False)",
+        "b": "df1.loc[df1[\"Language\"] != \"Dutch\"].sort_values(\"Age\", ascending=False)",
+        "c": "df1.loc[~df1[\"Language\"].isin([\"Dutch\"]), [\"Age\", \"Height\", \"City\", \"Language\"]].sort_index(ascending=False)",
+        "d": "df1.loc[df1[\"Language\"] != \"Dutch\"].sort_index(axis=1)"
+      },
+      "correct": "a",
+      "explanation": "Option A filters out the Dutch rows and then sorts the remaining rows by Height in descending order, matching df2 exactly.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Captured manually from zoomed image crops without OCR."
+        ]
+      }
+    },
+    {
+      "number": 9,
+      "topic": "8-comprehensions-1",
+      "question": "You have a list of mountain peaks and their heights in meters, all formatted as \"[PEAK NAME]: [HEIGHT]m\". For example, a few elements of the list are:\n\"Denali: 6,190m\", \"Aconcagua: 6,961m\", \"Kilimanjaro: 5,895m\", ...\n\nAs you can see, the comma (\",\") is used as a thousand separator in the height. The list is called mountains.\n\nYou'd like to create a dictionary called peaks from the mountains list. The peak names would be the keys, and the corresponding integer values. Continuing the example above, a few key-value pairs of the peaks dictionary should be:\n\"Denali\": 6190, \"Aconcagua\": 6961, \"Kilimanjaro\": 5895, ...\n\nWhich of the following two code segments achieves what you want?",
+      "options": {
+        "a": "peaks = {peak.split(\":\")[0]: int(peak.split(\": \")[1][:-1].replace(\",\", \"\")) for peak in mountains}",
+        "b": "names = [peak.split(\":\")[0] for peak in mountains]\nheights = [int(peak.split(\": \")[1].replace(\",\", \"\").replace(\"m\", \"\")) for peak in mountains]\npeaks = dict(zip(names, heights))",
+        "c": "Both code segments above achieve the intended outcome.",
+        "d": "Neither of the two code segments above achieves the intended outcome."
+      },
+      "correct": "c",
+      "explanation": "Both solutions strip off the trailing m, remove the thousands separator, convert the height to an integer, and pair each mountain name with its numeric height.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Captured manually from zoomed image crops without OCR."
+        ]
+      }
+    },
+    {
+      "number": 10,
+      "topic": "8-comprehensions-2",
+      "question": "You have a dictionary called grades, in which the keys are unique student ID's (as strings) and the corresponding values are each student's Python course grades (as floats).\n\nYou'd like to create another dictionary called grade_curve, in which the keys are the 18 possible Dutch course grades (1.0, 1.5, 2.0, ..., 10) as floats, and the corresponding (integer) values are the number of students in grades who have that particular grade.\n\nTake a look at the following code segment to create the grade_curve dictionary.\n\ndutch_grades = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0,\n                6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0]\ngrade_curve = {grade: sum([v == grade for v in grades.values()]) for grade in dutch_grades}\n\nDo you think this code segment will always work as intended? If not, then why not?",
+      "options": {
+        "a": "Yes, the code will always work as intended.",
+        "b": "The code will not work as intended if there are certain grades that no student has received. That will lead to an error in constructing the dictionary comprehension.",
+        "c": "The code will not work as intended, because the keys of the grades dictionary are not used in the list comprehension inside the sum function.",
+        "d": "The code will not work as intended, because including a list comprehension inside a dictionary comprehension will lead to a Python syntax error."
+      },
+      "correct": "a",
+      "explanation": "The inner comparison list produces True and False values for every grade entry, and sum counts the matches, including zero when no student received that grade.",
+      "code_context": "dutch_grades = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0]\ngrade_curve = {grade: sum([v == grade for v in grades.values()]) for grade in dutch_grades}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-08.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Captured manually from zoomed image crops without OCR."
+        ]
+      }
+    },
+    {
+      "number": 11,
+      "topic": "8-datetime-1",
+      "question": "What does the following code segment print to the screen?\n\nfrom datetime import datetime, timedelta\n\ndate = datetime.strptime(\"04.05.2020\", \"%m.%d.%Y\")\nprint((date + timedelta(days=-10)).strftime(\"%d-%m-%Y\"))",
+      "options": {
+        "a": "26-03-2020",
+        "b": "04-24-2020",
+        "c": "15-04-2020",
+        "d": "05-14-2020"
+      },
+      "correct": "a",
+      "explanation": "The string is parsed as 5 April 2020 using month.day.year format, and subtracting 10 days yields 26 March 2020, which is then formatted as day-month-year.",
+      "code_context": "from datetime import datetime, timedelta\n\ndate = datetime.strptime(\"04.05.2020\", \"%m.%d.%Y\")\nprint((date + timedelta(days=-10)).strftime(\"%d-%m-%Y\"))",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-08.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Captured manually from zoomed image crops without OCR."
+        ]
+      }
+    }
+  ]
+}

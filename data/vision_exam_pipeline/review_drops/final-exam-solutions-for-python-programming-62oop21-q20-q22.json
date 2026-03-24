@@ -1,0 +1,80 @@
+{
+  "exam_id": "final-exam-solutions-for-python-programming-62oop21",
+  "question_updates": [
+    {
+      "number": 20,
+      "topic": "final-functions-2",
+      "question": "Take a look at the following function definition.\n\nWhat will be returned by the following function call:\nglue(a='e', b='d')",
+      "options": {
+        "a": "ab",
+        "b": "cd",
+        "c": "ba",
+        "d": "dc"
+      },
+      "correct": "c",
+      "explanation": "The function iterates over the keyword names in insertion order (`a`, then `b`) and prepends each key to the current result. Starting from the empty string, that produces `a`, then `ba`.",
+      "code_context": "def glue(**kwargs):\n    result = ''\n    for el in kwargs.keys():\n        result = el + result\n    return result",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-13.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 21,
+      "topic": "final-functions-3",
+      "question": "Take a look at the following function definition.\n\nWhat will be printed to the screen by the following code?\nprint(tester())",
+      "options": {
+        "a": "1",
+        "b": "-1",
+        "c": "0",
+        "d": "None"
+      },
+      "correct": "a",
+      "explanation": "The default argument is `0`, which satisfies the non-negative condition, so the function returns `1` and `print` outputs `1`.",
+      "code_context": "def tester(i1 = 0):\n    if i1 >= 0:\n        return 1\n\n    if i1 < 0:\n        return -1",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-13.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 22,
+      "topic": "List lambda 2",
+      "question": "Assume that you have a variable called x, which contains a list of integers.\n\nWhich of the following code segments will create another list that has every element of x multiplied by 2?\n\nFor example, if\nx = [1, 2, 3, 4, 5]\nthen which of the following code segments will result in the list:\n[2, 4, 6, 8, 10]",
+      "options": {
+        "a": "list(map(lambda i : i * 2, x))",
+        "b": "[(lambda i : i * 2)(item) for item in x]",
+        "c": "y = lambda i : i * 2\n[y(i) for i in x]",
+        "d": "All three code segments would work as intended"
+      },
+      "correct": "d",
+      "explanation": "Each option constructs the doubled list correctly: `map` with a lambda, an immediately called lambda inside a list comprehension, and a named lambda used inside a list comprehension all apply `i * 2` to every element of `x`.",
+      "code_context": "x = [1, 2, 3, 4, 5]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-14.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

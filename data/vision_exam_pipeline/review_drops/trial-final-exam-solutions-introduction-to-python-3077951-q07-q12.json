@@ -1,0 +1,156 @@
+{
+  "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+  "question_updates": [
+    {
+      "number": 7,
+      "topic": "7-pandas-sorting-1",
+      "question": "There are two pandas DataFrames: df1 and df2. They look like this, when printed:\n\nprint(df1)\n\n     A    B    C    D\n1  5.0  8.2  9.5  4.4\n2  6.0  2.4  9.1  3.3\n3  3.2  5.2  8.9  3.6\n4  7.8  8.7  7.9  8.0\n5  1.2  9.7  2.9  3.0\n\nprint(df2)\n\n     A    C    D\n4  7.8  7.9  8.0\n3  3.2  8.9  3.6\n2  6.0  9.1  3.3\n\nWhich of the following code lines could not have created df2 from df1?",
+      "options": {
+        "a": "df2 = df1.sort_index(ascending=False)[[\"A\", \"C\", \"D\"]]",
+        "b": "df2 = df1.iloc[[3, 2, 1], [0, 2, 3]]",
+        "c": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"D\", ascending=False)",
+        "d": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"C\")"
+      },
+      "correct": "a",
+      "explanation": "Option A sorts the entire DataFrame by index in descending order and would include rows 5 and 1 as well, so it would not match df2. The other options all produce rows 4, 3, and 2 with columns A, C, and D.",
+      "code_context": "print(df1)\n\n     A    B    C    D\n1  5.0  8.2  9.5  4.4\n2  6.0  2.4  9.1  3.3\n3  3.2  5.2  8.9  3.6\n4  7.8  8.7  7.9  8.0\n5  1.2  9.7  2.9  3.0\n\nprint(df2)\n\n     A    C    D\n4  7.8  7.9  8.0\n3  3.2  8.9  3.6\n2  6.0  9.1  3.3",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-05.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 8,
+      "topic": "7-pandas-string-1",
+      "question": "There is a pandas Series called s, which contains Dutch municipality and corresponding province names, separated by a semicolon and a whitespace. The following, for example, is an element of this Series: \"Amsterdam; Noord-Holland\".\n\nYou'd like to create a new Series that only contains the municipality names from s in the same order. Which of the following code lines will achieve what you want?",
+      "options": {
+        "a": "s.map(lambda x: x.split(\"; \")[0])",
+        "b": "s.split(\"; \")[0]",
+        "c": "s.lambda(x.split(\"; \"))",
+        "d": "s.str[:9]"
+      },
+      "correct": "a",
+      "explanation": "Option A applies split('; ') to each element in the Series and takes the first part, which is the municipality name. The other options either do not operate elementwise or do not reliably extract the municipality name.",
+      "code_context": "Example element in s:\n\"Amsterdam; Noord-Holland\"",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-06.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 9,
+      "topic": "8-datetime-1",
+      "question": "Take a look at the following code segment.\n\nfrom datetime import datetime\n\ndef get_months(date_strings):\n    dates = []\n    for date_str in date_strings:\n        if \"-\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%d-%m-%Y\"))\n        elif \"/\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%m/%d/%Y\"))\n        else:\n            dates.append(None)\n    return [date.month if date is not None else None for date in dates]\n\nSuppose that you call the function like this:\nget_months([\"03/02/2013\", \"03.02.2013\", \"03-02-2013\"])\n\nWhat does the function call return?",
+      "options": {
+        "a": "[3, None, 2]",
+        "b": "[2, None, 3]",
+        "c": "[3, 2]",
+        "d": "[2, 3]"
+      },
+      "correct": "a",
+      "explanation": "\"03/02/2013\" matches %m/%d/%Y and gives month 3, \"03.02.2013\" matches neither branch and becomes None, and \"03-02-2013\" matches %d-%m-%Y and gives month 2.",
+      "code_context": "from datetime import datetime\n\ndef get_months(date_strings):\n    dates = []\n    for date_str in date_strings:\n        if \"-\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%d-%m-%Y\"))\n        elif \"/\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%m/%d/%Y\"))\n        else:\n            dates.append(None)\n    return [date.month if date is not None else None for date in dates]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-06.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 10,
+      "topic": "8-datetime-2",
+      "question": "Suppose that you want to write a function called day_of_year that takes a datetime value and returns the number of the day that the datetime value represents within the year. The return value is therefore always an integer between 1 and 366.\n\nFor example, the function call:\nday_of_year(datetime(2022, 2, 1))\nshould return the integer:\n32\n\nWhich of the following code segments will achieve what you want? (You can assume that the datetime and timedelta classes are already imported from the datetime module.)",
+      "options": {
+        "a": "def day_of_year(dt):\n    return (dt - datetime(dt.year, 1, 1)).days + 1",
+        "b": "def day_of_year(dt):\n    return timedelta(dt - datetime(dt.year, 1, 1)) + 1",
+        "c": "def day_of_year(dt):\n    return dt - datetime(dt.year, 1, 1) + 1",
+        "d": "def day_of_year(dt):\n    return (dt - datetime(dt.year, 1, 0)).days"
+      },
+      "correct": "a",
+      "explanation": "Subtracting January 1 of the same year gives the zero-based offset in days, and adding 1 converts it to the day number within the year. The other options either return or manipulate timedeltas incorrectly or use an invalid date.",
+      "code_context": "Example target behavior:\nday_of_year(datetime(2022, 2, 1))\n# returns 32",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 11,
+      "topic": "8-dict_comprehension-1",
+      "question": "You have a list of strings called list_1, in which every element is unique.\n\nWhich of the following code lines will create a dictionary, in which the keys are the elements of list_1 and the values are the number of characters in the corresponding key?",
+      "options": {
+        "a": "{item: len(item) for item in list_1}",
+        "b": "[len(item) for item in list_1]",
+        "c": "{item for item in list_1 if len(item) > 0}",
+        "d": "{len(item): item for item in list_1}"
+      },
+      "correct": "a",
+      "explanation": "Option A is the dictionary comprehension that maps each string to its length. Option B creates a list, option C creates a set, and option D reverses the intended key-value relation.",
+      "code_context": "list_1 contains unique strings.",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 12,
+      "topic": "8-list_comprehension-1",
+      "question": "Suppose that you have a list of letters called list_1. Some letters are upper case, others are in lower case.\n\nYou'd like to create another list that contains the same letters in the same order, but you want to turn every upper case letter into its lower case version, and every lower case letter into its upper case version.\n\nWhich of the following code lines will achieve what you want?",
+      "options": {
+        "a": "[letter.upper() if letter.islower() else letter.lower() for letter in list_1]",
+        "b": "[letter.upper() for letter in list_1 if letter.islower() else letter.lower()]",
+        "c": "[letter.lower() for letter in list_1 if letter.isupper()] + [letter.upper() for letter in list_1 if letter.islower()]",
+        "d": "[letter.capitalize() for letter in list_1 if not letter.iscapitalized()]"
+      },
+      "correct": "a",
+      "explanation": "Option A flips the case of each letter while preserving the original order of the list. The other options either have invalid comprehension syntax, change the order, or use a non-existent string method.",
+      "code_context": "list_1 contains letters with mixed case.",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Option D uses the method name exactly as it appears in the rendered page; it looks like 'iscapitalized()'."
+        ]
+      }
+    }
+  ]
+}

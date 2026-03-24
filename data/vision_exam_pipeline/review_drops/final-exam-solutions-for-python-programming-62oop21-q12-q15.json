@@ -1,0 +1,105 @@
+{
+  "exam_id": "final-exam-solutions-for-python-programming-62oop21",
+  "question_updates": [
+    {
+      "number": 12,
+      "topic": "8-datetime-2",
+      "question": "Suppose you have the following definition for a Meeting class, which records basic information about meetings in a calendar application.\n\nYou would like to add a method called lunch_meeting to this class, which returns a boolean value indicating whether there is any overlap between the official lunchtime (12:30 - 13:00) and the time of the meeting.\n\nFor example, if you construct a Meeting object as:\nmy_meeting = Meeting('Ask for salary raise', \"25-05-2022\", start_time='12:00', length=45)\nthen the method call:\nmy_meeting.lunch_meeting()\nshould return the boolean value True.\n\nWhich of the following code segments will achieve what you want?",
+      "options": {
+        "a": "def lunch_meeting(self):\n    lunch_start = datetime(self.date.year, self.date.month, self.date.day, 12, 30)\n    lunch_end = lunch_start + timedelta(minutes=30)\n    return self.start < lunch_end and self.end > lunch_start",
+        "b": "def lunch_meeting(self):\n    return self.start < \"13:00\" and self.end > \"12:30\"",
+        "c": "def lunch_meeting(self):\n    return start_time <= \"13:00\" and start_time + length > \"12:30\"",
+        "d": "def lunch_meeting(self):\n    lunch_start = datetime(self.date.year, self.date.month, self.date.day, 12, 30)\n    lunch_end = datetime(self.date.year, self.date.month, self.date.day, 13, 0)\n    return self.start >= lunch_end or self.end <= lunch_start"
+      },
+      "correct": "a",
+      "explanation": "Option A constructs the lunch interval on the same date and uses the standard interval-overlap check. The other options compare datetimes to strings, reference names that are not in scope, or use the non-overlap condition instead.",
+      "code_context": "from datetime import datetime, timedelta\n\nclass Meeting:\n    def __init__(self, topic, date, start_time=\"09:00\", length=30):\n        self.topic = topic\n        self.date = datetime.strptime(date, '%d-%m-%Y')\n        self.start = datetime(self.date.year, self.date.month, self.date.day,\n                              int(start_time.split(':')[0]), int(start_time.split(':')[1]))\n        self.length = timedelta(minutes=length)\n        self.end = self.start + self.length",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-09.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 13,
+      "topic": "Basic logic 2",
+      "question": "Suppose you have a variable x which contains a list of tuples, as follows:\n\nx = [(1, 2), (3, 4), (5, 6), (7, 8)]\n\nChoose the correct output for the following line of code.\n\n(x[0][1] * x[-3][0]) == (x[-1][1] - x[-4][1])",
+      "options": {
+        "a": "True",
+        "b": "False",
+        "c": "NameError",
+        "d": "SyntaxError"
+      },
+      "correct": "a",
+      "explanation": "The left-hand side is 2 * 3 = 6 and the right-hand side is 8 - 2 = 6, so the comparison evaluates to True.",
+      "code_context": "x = [(1, 2), (3, 4), (5, 6), (7, 8)]\n(x[0][1] * x[-3][0]) == (x[-1][1] - x[-4][1])",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-09.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 14,
+      "topic": "Basic loop 2",
+      "question": "Which of the following code segments will print every even number between 0 and 20 (including 0 and 20) to the screen?",
+      "options": {
+        "a": "for i in range(0, 20):\n    if i % 2 == 0:\n        print(i)",
+        "b": "i = 0\nwhile i <= 20:\n    if i % 2 == 0:\n        print(i)\n    i += 1",
+        "c": "for i in list(range(0, 20)):\n    print(i if i % 2 == 0 else None)",
+        "d": "i = 0\nwhile i < 21:\n    print(i)\n    i += 1"
+      },
+      "correct": "b",
+      "explanation": "Option B checks every integer from 0 through 20 inclusive and prints only the even ones. Option A never reaches 20, option C also prints None for odd numbers, and option D prints every number.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 15,
+      "topic": "Basic scope 2",
+      "question": "Choose the correct statement about the program below:",
+      "options": {
+        "a": "a is a global variable. b, c, d are local variables.",
+        "b": "a, b are global variables. c, d are local variables.",
+        "c": "a, b, c, d are global variables.",
+        "d": "a, c, d are global variables. b is a local variable."
+      },
+      "correct": "a",
+      "explanation": "`a` is defined at module level, so it is global. `b` is local to `outer`, and `c` and `d` are local to `inner`.",
+      "code_context": "a = 1\ndef outer(b):\n    b = 2\n    def inner(c):\n        d = 3\n        return a + c + d\n    return inner(4) + b",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

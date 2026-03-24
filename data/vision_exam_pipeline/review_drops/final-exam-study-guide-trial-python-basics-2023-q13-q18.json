@@ -1,0 +1,157 @@
+{
+  "exam_id": "final-exam-study-guide-trial-python-basics-2023",
+  "question_updates": [
+    {
+      "number": 13,
+      "topic": "6-string - fstring - 2",
+      "question": "You have the following objects loaded in Python:\nitem = \"laptop\"\nprice = 1299.99\n\nYou need to print the following sentence:\nThe laptop is priced at $1299.99.\n\nWhich of the following lines of code works as intended?",
+      "options": {
+        "a": "message = \"The {0} is priced at ${1}.\".format(item, price)\nprint(message)",
+        "b": "message = \"The {0} is priced at ${1}.\".format(item, price)\nprint(mesage)",
+        "c": "message = \"The {item} costs ${price}.\".format(price, item)\nprint(message)",
+        "d": "message = \"The {item} costs ${price}.\".format(price, item)\nprint(message)"
+      },
+      "correct": "a",
+      "explanation": "Option A correctly uses positional placeholders and prints the defined variable `message`. Option B appears to use a misspelled variable name in the print call, and C/D mix named placeholders with positional arguments.",
+      "code_context": "item = \"laptop\"\nprice = 1299.99",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-09.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Option B's printed variable name appears to be `mesage` in the rendered page and should be human-confirmed."
+        ]
+      }
+    },
+    {
+      "number": 14,
+      "topic": "7-pandas - easy - 1",
+      "question": "Suppose you have run the following block of code:\n\nimport pandas as pd\ndata = {'A': [1, 2, 3],\n        'B': [4, 5, 6],\n        'C': [7, 8, 9]}\ndf = pd.DataFrame(data)\n\nWhich of the following lines of code give(s) the following output?\n1    4\n2    5\n3    6\nName: B, dtype: int64",
+      "options": {
+        "a": "df.loc[:, 'B']",
+        "b": "df['B'].loc[:]",
+        "c": "df['B']",
+        "d": "All of the given lines."
+      },
+      "correct": "d",
+      "explanation": "Each of A, B, and C selects the same Series containing column `B`, so the correct choice is that all listed lines produce the shown output.",
+      "code_context": "import pandas as pd\ndata = {'A': [1, 2, 3],\n        'B': [4, 5, 6],\n        'C': [7, 8, 9]}\ndf = pd.DataFrame(data)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-09.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 15,
+      "topic": "8_Datetime_Easy_1",
+      "question": "Which code segment gives the same output as the following?\n\ndate = datetime.strptime(\"05.12.2023\", \"%m.%d.%Y\")\nprint((date + timedelta(days=-10)).strftime(\"%d-%m-%Y\"))\n\nYou may assume that datetime and timedelta classess are already imported from the datetime module.",
+      "options": {
+        "a": "print(datetime.strptime('22-05-2023', '%d.%m.%Y'))",
+        "b": "print('02-05-2023')",
+        "c": "print(datetime.strptime('05.22.2023', '%d-%m-%Y'))",
+        "d": "date = datetime.strptime('10/05/2023', '%d/%m/%Y')\nprint((date + timedelta(days=5)).strftime('%m-%d-%Y'))"
+      },
+      "correct": "b",
+      "explanation": "The original code parses May 12, 2023 and subtracts 10 days, so the printed result is the string `02-05-2023`.",
+      "code_context": "date = datetime.strptime(\"05.12.2023\", \"%m.%d.%Y\")\nprint((date + timedelta(days=-10)).strftime(\"%d-%m-%Y\"))",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 16,
+      "topic": "9_OOP_Easy_3",
+      "question": "You have the following definition for a class called Shape:\n\nWhat would be the output if we execute the following commands?\n\nprint(Shape(5, 3).area == Shape(1, 15).length)",
+      "options": {
+        "a": "True",
+        "b": "False",
+        "c": "An error",
+        "d": "None of the given options."
+      },
+      "correct": "a",
+      "explanation": "`Shape(5, 3).area` is `5 * 3 = 15`, and `Shape(1, 15).length` is `15`, so the comparison evaluates to `True`.",
+      "code_context": "class Shape:\n    def __init__(self, height, length):\n        self.height = height\n        self.length = length\n        self.area = self.height * self.length\n\nprint(Shape(5, 3).area == Shape(1, 15).length)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 17,
+      "topic": "6-string - operations - 2",
+      "question": "Write a function called shuffle_sentence that takes a string as an argument and returns a new string where the words are shuffled randomly.\n\nFor example, if your function is called as:\nshuffle_sentence(\"Hello, how are you today?\")\nthen it could return a shuffled string like:\n'how today? you Hello, are'\n\nWhich of the following programs work(s) according to the requirements?\n\nHints:\nThe shuffle() function is a method from the random module. The shuffle() method takes a sequence, like a list, and reorganizes the order of the items. This method changes the original list; it does not return a new list.\nThe reversed() function computes the reverse of a given sequence object and returns it in the form of a list.",
+      "options": {
+        "a": "def shuffle_sentence(sentence):\n    words = sentence.split()\n    return ' '.join(reversed(words))",
+        "b": "import random\n\ndef shuffle_sentence(sentence):\n    words = sentence.split()\n    random.shuffle(words)\n    return ' '.join(words)",
+        "c": "Both of the programs work.",
+        "d": "Neither of the programs work."
+      },
+      "correct": "b",
+      "explanation": "Option B is the only one that actually shuffles the words randomly. Option A only reverses the word order, which does not satisfy the random-shuffle requirement.",
+      "code_context": "shuffle_sentence(\"Hello, how are you today?\")\n# could return: 'how today? you Hello, are'",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 18,
+      "topic": "6-strings - find & replace - 1",
+      "question": "Consider the following line of code:\n\ntext = \"The demand for oil has been increasing. Natural gas is a crucial commodity in many industries. The price of oil has also been rising.\"\n\nYou want to create a new string called new_text where all occurances of \"oil\" are replaced by \"natural gas\".\n\nSo:\nprint(new_text)\nshould return:\n\"The demand for natural gas has been increasing. Natural gas is a crucial commodity in many industries. The price of natural gas has also been rising.\"\n\nWhich of the following code segments achieve(s) what you want?",
+      "options": {
+        "a": "new_text = ' '.join([word if word != 'oil' else 'natural gas' for word in text.split()])",
+        "b": "new_text = text.replace(\"oil\", \"natural gas\")",
+        "c": "new_text = text.split()\nfor index, word in enumerate(new_text):\n    if word == 'oil':\n        new_text[index] = 'natural gas'\nnew_text = ' '.join(new_text)",
+        "d": "All of the given options works as intended."
+      },
+      "correct": "d",
+      "explanation": "All three code fragments replace each occurrence of the standalone word `oil` with `natural gas`, so the correct answer is that all of them achieve the requested result.",
+      "code_context": "text = \"The demand for oil has been increasing. Natural gas is a crucial commodity in many industries. The price of oil has also been rising.\"\nprint(new_text)\n# should return:\n# \"The demand for natural gas has been increasing. Natural gas is a crucial commodity in many industries. The price of natural gas has also been rising.\"",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "The source image uses the misspelling `occurances`; that spelling was preserved from the rendered page."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "exam_id": "final-exam-study-guide-trial-python-basics-2023",
+  "question_updates": [
+    {
+      "number": 7,
+      "topic": "2-list - comprehension - 2",
+      "question": "What is the output of the following code segment?",
+      "options": {
+        "a": "[1, 4, 3, 8, 5]",
+        "b": "[2, 4, 6, 8, 10]",
+        "c": "[1, 2, 3, 4, 5]",
+        "d": "[2, 2, 6, 4, 10]"
+      },
+      "correct": "a",
+      "explanation": "The list comprehension doubles only the even numbers and leaves the odd numbers unchanged, so the result is [1, 4, 3, 8, 5].",
+      "code_context": "numbers = [1, 2, 3, 4, 5]\nresult = [x * 2 if x % 2 == 0 else x for x in numbers]\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-05.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 8,
+      "topic": "2-list - manipulation - 2",
+      "question": "What is the output of the following code segment?",
+      "options": {
+        "a": "['10a', '30c']",
+        "b": "[10, 20, 30, 40]",
+        "c": "['a', 'b', 'c', 'd']",
+        "d": "['10a', '20b', '30c', '40d']"
+      },
+      "correct": "a",
+      "explanation": "The loop keeps only even indices from enumerate(list1), so it uses indices 0 and 2 and appends the concatenated strings '10a' and '30c'.",
+      "code_context": "list1 = [10, 20, 30, 40]\nlist2 = ['a', 'b', 'c', 'd']\n\nresult = []\n\nfor index, value in enumerate(list1):\n    if index % 2 == 0:\n        result.append(str(value) + list2[index])\n\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-05.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 9,
+      "topic": "2-list - slicing - 2",
+      "question": "Suppose you have a list called mylist. You want to extract every third element starting from index 1 (inclusive) to the last index (inclusive) from that list using the following line of code:\nsubset = mylist[___:___:___]\n\nFor example, if you have:\nmylist = [10, 15, 20, 25, 30, 35, 40, 45]\n\nthen executing the following command:\nprint(subset)\n\nshould return:\n[15, 30, 45]\n\nWhat should the blanks be filled with?",
+      "options": {
+        "a": "1:len(mylist):3",
+        "b": "0:len(mylist):3",
+        "c": "1:len(mylist)-1:3",
+        "d": "0:len(mylist)-1:3"
+      },
+      "correct": "a",
+      "explanation": "Starting at index 1 and stepping by 3 gives positions 1, 4, and 7, which are 15, 30, and 45. Using len(mylist) as the stop value includes the last valid stepped element.",
+      "code_context": "subset = mylist[___:___:___]\nmylist = [10, 15, 20, 25, 30, 35, 40, 45]\nprint(subset)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-06.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 10,
+      "topic": "3_Function_Argument_1",
+      "question": "Suppose you have the following function:\n\nWhat will be printed by the following line of code?\nprint(main())",
+      "options": {
+        "a": "True",
+        "b": "False",
+        "c": "0",
+        "d": "None"
+      },
+      "correct": "d",
+      "explanation": "The default value of x is 0, so neither if-condition runs and the function reaches the end without returning anything, which prints None.",
+      "code_context": "def main(x = 0):\n    if x > 0:\n        return True\n\n    if x < 0:\n        return False\n\nprint(main())",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-06.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 11,
+      "topic": "3_Function_Built-in_3",
+      "question": "Suppose you have a variable called x which contains a list of integers as follows:\nx = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n\nWhich of the following lines will produce an output that is different from the rest?",
+      "options": {
+        "a": "print(len(x))",
+        "b": "print(sorted(x, reverse=True)[0])",
+        "c": "print(x.index(9))",
+        "d": "print(sum(x[4:6]))"
+      },
+      "correct": "a",
+      "explanation": "len(x) is 10, while sorted(x, reverse=True)[0] is 9, x.index(9) is 9, and sum(x[4:6]) is 4 + 5 = 9.",
+      "code_context": "x = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 12,
+      "topic": "3_Function_Flexible-Argument_1",
+      "question": "You want to write a function called main which accepts a flexible number of integers as arguments.\n\nThe function should return a dictionary with the following key-value pairs:\n- key 'sum' has a value which is the sum of all the integers passed as arguments\n- key 'pro' has a value which is the multiplicative product of all the integers passed as arguments\n- key 'pow' has a value which is a list of all the squares of the integers passed as arguments\n\nWhich of the following lines of code will complete the function to give what you need?",
+      "options": {
+        "a": "x['sum'] = sum(args)\nx['pro'] = 1\nx['pow'] = []\nfor i in args:\n    x['pro'] *= i\n    x['pow'].append(i**2)",
+        "b": "x['sum'] = sum(args)\nx['pro'] = i for i in args\nx['pow'] = [i**2 for i in args]",
+        "c": "for i in args:\n    x['sum'] = sum(args)\n    x['pro'] *= i\n    x['pow'] = [i**2 for i in args]",
+        "d": "None of the given options."
+      },
+      "correct": "a",
+      "explanation": "Option A correctly stores the sum, initializes the product accumulator to 1 before multiplying through the arguments, and builds the list of squares for each integer.",
+      "code_context": "def main(*args):\n    x = {}\n\n    # missing lines\n    # ...\n\n    return x",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Option text for question 12, especially options B and C, is small in the rendered page and should be human-confirmed."
+        ]
+      }
+    }
+  ]
+}

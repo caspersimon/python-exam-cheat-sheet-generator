@@ -1,0 +1,80 @@
+{
+  "exam_id": "resit-solutions-for-introduction-to-python-35761538",
+  "question_updates": [
+    {
+      "number": 5,
+      "topic": "Functions Built-in",
+      "question": "Suppose you have a list called x, where:\n\nx = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]\n\nWhich of the following code segments will print the following list?\n[5, 4, 3, 2, 1]",
+      "options": {
+        "a": "y = list(set(x))\nprint(sorted(y, reverse = True))",
+        "b": "print(x[::-2])",
+        "c": "Both lines of code will print that output.",
+        "d": "Neither line of code will print that output."
+      },
+      "correct": "c",
+      "explanation": "Both snippets produce [5, 4, 3, 2, 1]. The first removes duplicates and sorts the unique values in reverse order, and the second slices every second element from the reversed list.",
+      "code_context": "x = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-04.png"
+        ],
+        "notes": [
+          "Legacy record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 6,
+      "topic": "Function Flexible Argument",
+      "question": "You need to write a function called main which accepts a flexible number of keyword arguments. The function should compute and return the sum of the values of the arguments.\n\nFor example, if you call the function as:\nmain(apple=1.99, banana=0.99, orange=1.49)\nit should return:\n4.47\n\nWhich of the following functions will return the intended value?",
+      "options": {
+        "a": "def main(**kwargs):\n    total = 0\n    for item, price in kwargs.items():\n        total += item\n    return total",
+        "b": "def main(**kwargs):\n    total = 0\n    for price in kwargs.values():\n        total += price\n    return total",
+        "c": "def main(**kwargs):\n    total = 0\n    for item, price in kwargs.keys():\n        total += price\n    return total",
+        "d": "All functions will return the intended value."
+      },
+      "correct": "b",
+      "explanation": "B sums the keyword argument values, which is exactly what the function should do. A incorrectly adds the keyword names, and C iterates over keys in a way that does not match the intended structure.",
+      "code_context": "def main(**kwargs):\n    # Sum the values passed as keyword arguments",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-04.png"
+        ],
+        "notes": [
+          "Legacy record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 7,
+      "topic": "Dictionaries Comprehension",
+      "question": "Assume you already have a list of strings called words.\n\nYou need to create a dictionary called word_lengths, where the keys are the strings in the list words and the values are their lengths.\n\nWhich of the following code segments will work as intended?",
+      "options": {
+        "a": "word_lengths = {length: word for word, length in enumerate(words)}",
+        "b": "word_lengths = {len: word for word in words}",
+        "c": "word_lengths = {word: len(word) for word in words}",
+        "d": "word_lengths = {len: word for word, len in words}"
+      },
+      "correct": "c",
+      "explanation": "The dictionary comprehension in C maps each word to its length. The other options either reverse the key/value order or use invalid comprehension logic.",
+      "code_context": "words = ['example', 'python', 'exam']",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-05.png"
+        ],
+        "notes": [
+          "Legacy record re-verified from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

@@ -14,6 +14,47 @@ Related generated audit artifact:
 
 This report records coverage for homework exercises and assessment questions against the current `topic_cards.json` output.
 
+## Exam Curation Data
+
+`data/study_db.json` remains the canonical course-content database, but the vision-first exam-curation workflow keeps its review products separate from the main study DB.
+
+Vision-only capture rule:
+
+- exam pages are rendered to PNGs and reviewed by agents with vision
+- exam question capture should not rely on `pdftotext`, OCR, or other deterministic text-layer extraction
+- legacy imports in `data/import_payloads/post_midterm_assessments/` and `data/import_payloads/post_midterm_agent/` are treated as seed material, not final ground truth, until they are superseded by reviewed vision records
+
+Derived exam artifacts live under `data/vision_exam_pipeline/` as separate JSON products:
+
+- `page_manifest.json`
+  - persistent manifest of target exams and rendered/reused page PNG paths
+- `exam_question_bank.json`
+  - canonical per-exam reviewed question bank with alias metadata, provenance, and blocked question slots
+- `exam_question_bank_completeness.json`
+  - completeness report that fails open questions into explicit blocked slots
+- `selectable_items_snapshot.json`
+  - stable snapshot of the current selectable snippet universe used for review rounds
+- `evaluations/<round>.json`
+  - per-question snippet evaluation records, answerability notes, and suggested changes
+- `synthesis/<round>.json`
+  - grouped edit/addition suggestions with pros, cons, and human-review status
+- `analytics/<round>.json` and `analytics/<round>.md`
+  - week-level snippet-usage distributions and ranking-prep summaries
+- `review_packets/<round>.json` and `review_packets/<round>.md`
+  - human-facing review packet that clusters round findings into decision-ready themes and top-snippet summaries
+- `work_packets/extractions/*.json`
+  - per-exam vision-review capture packets
+- `work_packets/evaluations/<round>/*.json`
+  - per-exam question-to-snippet review packets
+
+The current render-and-review packet used by the audit workflow is still the fastest way to bootstrap those artifacts:
+
+- `tmp/exam_coverage_audit/manifest.json`
+- `tmp/exam_coverage_audit/selectable_items.json`
+- `tmp/exam_coverage_audit/pages/<exam-id>/page-XX.png`
+
+See [RM-009 Vision-First Exam Curation Pipeline](../specs/RM-009-vision-first-exam-curation-pipeline.md) for the workflow contract.
+
 ## Raw Source Materials
 
 Course/source files are organized under `materials/`:

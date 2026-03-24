@@ -1,0 +1,81 @@
+{
+  "exam_id": "final-exam-study-guide-trial-python-basics-2023",
+  "question_updates": [
+    {
+      "number": 19,
+      "topic": "7-pandas - hard - 1",
+      "question": "Consider the following pandas DataFrame called df:\n\n   Name  Age  Gender  Salary\n0  John   25    Male   50000\n1  Jane   30  Female   65000\n2  Alex   35    Male   80000\n3  Lisa   40  Female   70000\n4  Mark   28    Male   55000\n\nYou need to perform a series of operations on this DataFrame.\n- Operation 1: Select all rows where the age is greater than 30 and the gender is \"Male\".\n- Operation 2: Create a new column called Sex_abbr of which the values should be \"F\" if gender is \"Female\" and \"M\" if gender is \"Male\".\n- Operation 3: Calculate the average salary of all employees.\n\nWhich of the following blocks of code performs these operations as intended?",
+      "options": {
+        "a": "df_operation1 = df[(df['Age'] > 30) & (df['Gender'] == 'Male')]\ndf['Sex_abbr'] = ['M' if x == 'Male' else 'F' for x in df['Gender']]\ndf_operation3 = df['Salary'].mean()",
+        "b": "df_operation1 = df.loc(df['Age'] > 30) & df.loc(df['Gender'] == 'Male')\ndf['Sex_abbr'] = ['M' if x == 'Male' else 'F' for x in df['Gender']]\ndf_operation3 = df['Salary'].mean()",
+        "c": "df_operation1 = df.loc(df['Age'] > 30) & df.loc(df['Gender'] == 'Male')\ndf['Sex_abbr'] = df['Gender'].map(lambda x: 'M' if x == 'Male' else 'F')\ndf_operation3 = df['Salary'].sum()/len(df)",
+        "d": "df_operation1 = df[df['Age'] > 30 & df['Gender'] == 'Male']\ndf['Sex_abbr'].map(lambda x: 'M' if x == 'Male' else 'F' for x in df['Gender'])\ndf_operation3 = df['Salary'].sum()/len(df)"
+      },
+      "correct": "a",
+      "explanation": "Option A correctly filters rows with both conditions using boolean masking, builds the abbreviation column from the Gender column, and computes the average salary with mean().",
+      "code_context": "Name  Age  Gender  Salary\n0  John  25  Male  50000\n1  Jane  30  Female  65000\n2  Alex  35  Male  80000\n3  Lisa  40  Female  70000\n4  Mark  28  Male  55000",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-12.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Some punctuation in the non-selected option code snippets is small in the rendered PNG and should be human-confirmed."
+        ]
+      }
+    },
+    {
+      "number": 20,
+      "topic": "7-pandas - lambda - 1",
+      "question": "Consider the following pandas DataFrame called df:\n\n   Name  Performance_review  Salary\n0  John                    2   50000\n1  Jane                    4   65000\n2  Alex                    3   80000\n3  Lisa                    2   70000\n4  Mark                    1   55000\n\nYou want to create a new column called Bonus that compute each employee's bonus based on their salary and performance review using the following formula:\n- if the performance review is less than 4, the bonus is 0.\n- if the performance review is 4 or 5, the bonus is 5% of the salary.\n\nWhich of the following code snippets works as intended?",
+      "options": {
+        "a": "df['Bonus'] = df.apply(lambda row: row['Salary']*0.05 if row['Performance_review']>=4 else 0, axis=1)",
+        "b": "df['Bonus'] = df['Salary'].apply(lambda x: x*0.05 if df['Performance_review']>=4 else 0)",
+        "c": "df['Bonus'] = map(df['Salary'].apply(lambda x: x*0.05 if df['Performance_review']>4 else 0))",
+        "d": "df['Bonus'] = df['Salary'].map(lambda row: row*0.05 if df['Performance_review']>=4 else 0)"
+      },
+      "correct": "a",
+      "explanation": "Option A evaluates each row, checks the row's Performance_review value, and returns either 5% of Salary or 0 for that employee.",
+      "code_context": "Name  Performance_review  Salary\n0  John  2  50000\n1  Jane  4  65000\n2  Alex  3  80000\n3  Lisa  2  70000\n4  Mark  1  55000",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-12.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 21,
+      "topic": "8_Datetime_Function_3",
+      "question": "You want to create a function called main which take an integer and a flexible number of strings as arguments. The strings represent dates in the format of DD MM YYYY. The day, month and year can be separated by different characters.\n\nYour function should look for the string inputs which represent dates as DD-MM-YYYY or DD/MM/YYYY and return those strings in the format of DD.MM.YYYY in a list. Furthermore, the dates represented by the strings should be shifted by the amount of days as given by the integer argument.\n\nFor example, if we call your function as:\nmain(3, '25/06/2003', '26.06.2003', '27-06-2003', '28:06:2023', '29-06-2023', '30.06.2023')\n\nthe output should be:\n['28.06.2003', '30.06.2003', '02.07.2023']\n\nTake a look at the following code segment. Does it do what is intended? If not, then why not?",
+      "options": {
+        "a": "The code segment works as intended.",
+        "b": "This code segment does not work because the function will return a list of datetime objects, not a list of strings representing dates.",
+        "c": "This code segment does not work because the strftime() method cannot be applied to NoneType object.",
+        "d": "This code segment produces an error because you cannot concatenate strings and timedelta."
+      },
+      "correct": "b",
+      "explanation": "The function parses matching inputs and adds the day offset, but it appends datetime objects and never converts them back to strings in DD.MM.YYYY format before returning.",
+      "code_context": "def main(delta, *args):\n    dates = []\n    for string in args:\n        if '-' in string:\n            dates.append(datetime.strptime(string, '%d-%m-%Y') + timedelta(days=delta))\n        elif '/' in string:\n            dates.append(datetime.strptime(string, '%d/%m/%Y') + timedelta(days=delta))\n        else:\n            dates.append(None)\n    return [date for date in dates if type(date) != None]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-13.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

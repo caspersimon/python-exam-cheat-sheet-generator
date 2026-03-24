@@ -52,6 +52,55 @@ Notes:
 - It mirrors the current UI's selectable-item rules, so `ai_summary` is excluded while key-point details and both source buckets are included.
 - It is intended for manual or agent-led vision review of the rendered PNG pages, not text-layer parsing or OCR.
 
+## Vision-First Exam Curation
+
+The next exam-curation phase treats rendered page images as the review source of truth and keeps extracted question/ranking artifacts as separate JSON products under `data/`.
+
+Pipeline contract:
+
+1. Render each target exam PDF to page PNGs.
+2. Have agents review the PNGs with vision only, with no `pdftotext`, OCR, or other text-layer extraction.
+3. Store the reviewed questions in a persistent question bank.
+4. Score each question against selectable snippets, key points, and common exam questions.
+5. Synthesize edit/addition suggestions and ranking analytics for human review before any UI or preset changes.
+
+Derived artifact families now live under `data/vision_exam_pipeline/`:
+
+- `data/vision_exam_pipeline/page_manifest.json`
+- `data/vision_exam_pipeline/exam_question_bank.json`
+- `data/vision_exam_pipeline/exam_question_bank_completeness.json`
+- `data/vision_exam_pipeline/selectable_items_snapshot.json`
+- `data/vision_exam_pipeline/evaluations/<round>.json`
+- `data/vision_exam_pipeline/synthesis/<round>.json`
+- `data/vision_exam_pipeline/analytics/<round>.json`
+- `data/vision_exam_pipeline/analytics/<round>.md`
+- `data/vision_exam_pipeline/review_packets/<round>.json`
+- `data/vision_exam_pipeline/review_packets/<round>.md`
+- `data/vision_exam_pipeline/work_packets/extractions/*.json`
+- `data/vision_exam_pipeline/work_packets/evaluations/<round>/*.json`
+
+The existing render packet remains the practical starting point for this workflow:
+
+- `tmp/exam_coverage_audit/manifest.json`
+- `tmp/exam_coverage_audit/selectable_items.json`
+- `tmp/exam_coverage_audit/pages/<exam-id>/page-XX.png`
+
+See [RM-009 Vision-First Exam Curation Pipeline](specs/RM-009-vision-first-exam-curation-pipeline.md) for the implementation contract and review checkpoints.
+
+Current entrypoint:
+
+```bash
+python3 scripts/vision_exam_pipeline.py prepare-pages
+python3 scripts/vision_exam_pipeline.py seed-question-bank
+python3 scripts/vision_exam_pipeline.py audit-completeness
+python3 scripts/vision_exam_pipeline.py dispatch-extraction
+python3 scripts/vision_exam_pipeline.py dispatch-evaluations --round round1 --findings tmp/exam_coverage_audit/seed_exact_matches.json
+python3 scripts/vision_exam_pipeline.py synthesize-suggestions --round round1
+python3 scripts/vision_exam_pipeline.py generate-ranking-analytics --round round1
+python3 scripts/vision_exam_pipeline.py generate-review-packet --round round1
+python3 scripts/vision_exam_pipeline.py validate --evaluation-round round1
+```
+
 ## Maintenance Audit
 
 ```bash

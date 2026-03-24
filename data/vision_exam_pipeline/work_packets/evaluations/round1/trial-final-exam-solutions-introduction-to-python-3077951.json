@@ -1,0 +1,1998 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-03-23T19:45:32Z",
+  "round": "round1",
+  "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+  "question_count": 24,
+  "pending_question_ids": [],
+  "captured_pending_human_confirmation_ids": [],
+  "blocked_question_ids": [],
+  "questions": [
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q01",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q01",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 1,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "6-OOP-1",
+        "question": "You'd like to define a class called Vehicle. It should have two attributes: \"name\" and \"mode\", which you want to be initialized at the time of object construction.\n\nThe \"name\" attribute can be any string, and it must be passed to the object constructor. The \"mode\" attribute is also a string, but it doesn't necessarily need to be passed to the object constructor, then the \"mode\" attribute should be equal to \"land\".\n\nFor example, if we create a Vehicle object as:\nmy_car = Vehicle(\"Mazda\")\nthen the following two conditions should both be true:\nmy_car.name == \"Mazda\"\nmy_car.mode == \"land\"\n\nWhich of the following code segments achieves what you want?",
+        "options": {
+          "a": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+          "b": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode):\n        self.name = vehicle_name\n        self.mode = vehicle_mode",
+          "c": "class Vehicle:\n    def __init__(self, vehicle_name, vehicle_mode=\"land\"):\n        return name, mode",
+          "d": "class Vehicle:\n    def __init__(vehicle_name, vehicle_mode):\n        name = vehicle_name\n        mode = vehicle_mode"
+        },
+        "correct": "a",
+        "explanation": "Option A defines an initializer with a required vehicle name and a default mode of \"land\", then stores both on the instance using self.",
+        "code_context": "my_car = Vehicle(\"Mazda\")\nmy_car.name == \"Mazda\"\nmy_car.mode == \"land\""
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 1,
+            "question_summary": "You'd like to define a class called Vehicle. It should have two attributes: \"name\" and \"mode\", which you want to be initialized at the time of object construction. The \"name\" attri",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals"
+            ],
+            "evidence_topics": [
+              "OOP Fundamentals"
+            ],
+            "evidence_buckets": [
+              "recommended"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "manual-init-default",
+        "rationale": "This snippet explicitly addresses the core concept of the question: using default values in the `__init__` constructor (e.g., `vehicle_mode='land'`) to make arguments optional."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "manual-init-default",
+          "rationale": "Directly explains the syntax for optional constructor arguments and default values required for the 'mode' attribute."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+          "rationale": "Contains the exact problem statement, allowing a student to recognize the question and apply the relevant concept."
+        },
+        {
+          "item_id": "aiq-4",
+          "rationale": "Reinforces the concept of required vs flexible arguments, which helps in understanding how 'name' and 'mode' interact in the constructor."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "manual-init-default",
+          "rationale": "Explains the default value mechanic."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-1-w4-oop-fundamentals",
+          "rationale": "Provides the specific context/requirements."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The 'manual-init-default' snippet provides the exact code pattern (class definition, __init__ method, and default parameter value) needed to identify Option A as correct.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The existing snippets cover the 'default value' mechanic well, but don't explicitly explain why Option D (missing 'self') or Option C (using 'return') are incorrect for constructors.",
+        "missing_concepts": [
+          "The role of 'self' as the first parameter in instance methods",
+          "The fact that __init__ should not return values"
+        ],
+        "proposed_fix": "Add a snippet explaining basic class structure and the necessity of 'self' for attribute assignment."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Topic: OOP Fundamentals. Content: In Python, `__init__` is used to set attributes on a new object. Use `self.attribute_name = value`. Always include `self` as the first parameter. Example: `class MyClass: def __init__(self, val): self.val = val`",
+          "why_helpful": "This helps the student eliminate Option D (missing self) and Option C (incorrectly using return instead of self assignment).",
+          "why_maybe_unnecessary": "Option A is the only one showing both the correct default value syntax AND self-assignment, so the existing snippets might be enough to guess correctly.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:33:38Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q02",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q02",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 2,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "6-OOP-2",
+        "question": "Take a look at the following class definition.\n\nSuppose that we create a Book object and call its add_review method three times, like this:\nbook_1 = Book(\"The Lightning Thief\", \"Rick Riordan\")\nbook_1.add_review(5)\nbook_1.add_review(3)\nbook_1.add_review(3)\n\nWhat will the following command print to the screen?\nprint(book_1.show_rating())",
+        "options": {
+          "a": "3.7",
+          "b": "4",
+          "c": "None",
+          "d": "3.67"
+        },
+        "correct": "a",
+        "explanation": "The reviews are 5, 3, and 3, so the average is 11 / 3 = 3.666..., which show_rating rounds to one decimal place, giving 3.7.",
+        "code_context": "class Book:\n    def __init__(self, title, author, review_scores=None):\n        self.title = title\n        self.author = author\n        self.review_scores = review_scores if review_scores else []\n\n    def add_review(self, score):\n        self.review_scores.append(score)\n\n    def show_rating(self):\n        if self.review_scores:\n            return round(sum(self.review_scores) / len(self.review_scores), 1)\n\nbook_1 = Book(\"The Lightning Thief\", \"Rick Riordan\")\nbook_1.add_review(5)\nbook_1.add_review(3)\nbook_1.add_review(3)\nprint(book_1.show_rating())"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 2,
+            "question_summary": "Take a look at the following class definition. Suppose that we create a Book object and call its add_review method three times, like this: book_1 = Book(\"The Lightning Thief\", \"Ric",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals"
+            ],
+            "evidence_topics": [
+              "OOP Fundamentals"
+            ],
+            "evidence_buckets": [
+              "recommended"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "manual-oop-state-compare",
+        "rationale": "This snippet provides a near-perfect structural and logical mirror of the question. It explicitly demonstrates how to 'Trace self state across multiple method calls' using a list of scores and calculating an average with sum() and len()."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "manual-oop-state-compare",
+          "rationale": "Explains the core logic of maintaining state in a list and calculating a numerical average within a class method."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-2-w4-oop-fundamentals",
+          "rationale": "Directly matches the exam question, allowing the student to see the exact scenario and options they are likely to encounter."
+        },
+        {
+          "item_id": "kp-manual-init-defaults-d2",
+          "rationale": "Clarifies the specific 'review_scores=None' to '[]' initialization pattern used in the question's constructor, which is a common source of confusion for beginners."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "manual-oop-state-compare",
+          "rationale": "Covers the internal logic of the method calls and averaging."
+        },
+        {
+          "item_id": "kp-manual-init-defaults-d2",
+          "rationale": "Covers the initialization logic for the mutable list attribute."
+        },
+        {
+          "item_id": "ks-06b21ad349",
+          "rationale": "Provides the foundational context that a class is a 'blueprint' and __init__ is the constructor."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "Between the exact question match and the AI-generated logic mirror, a student can easily connect the pattern of adding items to a list and then calculating an average. The only minor leap is the round() function.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The coverage for OOP state management and list manipulation is excellent. The only missing element is an explicit definition of the built-in round() function's behavior with the second argument.",
+        "missing_concepts": [
+          "The round(number, ndigits) built-in function"
+        ],
+        "proposed_fix": "Add a snippet explaining common math built-ins like round(), especially highlighting how the second argument controls decimal precision."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Add a key point: 'The round(value, n) function rounds a number to n decimal places. Example: round(3.6666, 1) results in 3.7.'",
+          "why_helpful": "The question requires choosing between 3.7 and 3.67; knowing how the '1' in round(..., 1) works is the final step to the correct answer.",
+          "why_maybe_unnecessary": "The term 'round' is intuitive enough for many students to guess the behavior correctly given the options.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:34:07Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q03",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q03",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 3,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "6-strings-1",
+        "question": "Imagine that you have a list called students, which is populated by a number of dictionaries.\n\nEach dictionary in the students list has two keys: \"Name\" and \"Grade\". The corresponding values are student names (as strings) and course grades (as floats).\n\nFor each student, you'd like to print the following text to the screen:\n[NAME] has received a grade of [GRADE].\nwhere [NAME] is substituted by the name of the student and [GRADE] is substituted by the actual course grade. The course grade should be displayed to one decimal place after the decimal point.\n\nFor example, if:\nstudents = [{\"Name\": \"Adam\", \"Grade\": 7.5}, {\"Name\": \"Bernard\", \"Grade\": 8.0}]\nthen you'd like to see the following two lines printed to the screen:\nAdam has received a grade of 7.5.\nBernard has received a grade of 8.0.\n\nWhich of the following code segments will achieve what you want?",
+        "options": {
+          "a": "for student in students:\n    print(f\"{student['Name']} has received a grade of {student['Grade']:.1f}.\")",
+          "b": "for student, grade in students.items():\n    print(f\"{student} has received a grade of {grade:.1f}.\")",
+          "c": "for student in students:\n    print(f\"{student[\\\"Name\\\"]} has received a grade of {student[\\\"Grade\\\"]:.1f}.\")",
+          "d": "for student, grade in students:\n    print(f\"{student} has received a grade of {grade:.1f}.\")"
+        },
+        "correct": "a",
+        "explanation": "Option A iterates through each dictionary in the list and formats the student's name and grade correctly to one decimal place. The other options use the wrong iteration pattern or invalid access pattern for this data structure.",
+        "code_context": "students = [{\"Name\": \"Adam\", \"Grade\": 7.5}, {\"Name\": \"Bernard\", \"Grade\": 8.0}]"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 3,
+            "question_summary": "Imagine that you have a list called students, which is populated by a number of dictionaries. Each dictionary in the students list has two keys: \"Name\" and \"Grade\". The correspondi",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Trial final exam Introduction to Python-3-w1-objects-and-names"
+            ],
+            "evidence_topics": [
+              "Objects and Names"
+            ],
+            "evidence_buckets": [
+              "additional"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Trial final exam Introduction to Python-3-w1-objects-and-names"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
+        "rationale": "This snippet is a near-exact match of the current question, including the specific requirement for displaying grades to one decimal place, allowing a student to identify the pattern immediately."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
+          "rationale": "Matches the question prompt and constraints (list of dictionaries, f-string rounding) perfectly."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-3-w1-objects-and-names",
+          "rationale": "Another exact match of the problem scenario (students list with Name/Grade dictionaries)."
+        },
+        {
+          "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "rationale": "Provides context on iterating through lists to create or access dictionaries, which helps clarify why list iteration (Option A) is correct over dict.items() (Option B)."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-3-w3-defining-and-calling-functions",
+          "rationale": "Matches the exact question."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-3-w1-objects-and-names",
+          "rationale": "Matches the exact question."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate snippets contain the exact question from previous exam iterations. A student can match the 'students' list and 'one decimal place' requirement directly to the resources.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the exact question exists in the bank, there is a lack of a generalized 'F-String Formatting Cheat Sheet' that explains the syntax for rounding floats (e.g., .1f), which would help a student understand *why* the answer is correct rather than just pattern matching.",
+        "missing_concepts": [
+          "f-string float precision syntax (:.nf)",
+          "difference between list iteration and dictionary .items() iteration"
+        ],
+        "proposed_fix": "Add a dedicated key point or subtopic detail specifically for 'String Formatting with F-Strings' that explicitly demonstrates float rounding."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Key Point: F-String Float Formatting. Syntax: f'{value:.1f}' rounds to 1 decimal place. Example: price = 5.0; print(f'{price:.2f}') outputs 5.00.",
+          "why_helpful": "This provides the underlying logic for rounding, which is a core part of the question's 'distractor' logic (ensuring the student knows how to get 7.5 instead of 7.500000).",
+          "why_maybe_unnecessary": "Since the exact question is already in the database, the student might just copy the answer without needing the rule.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:34:30Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q04",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q04",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 4,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "6-strings-2",
+        "question": "You need to write a function called format_phone_number that formats phone numbers. The output of the function should be a string that represents a 10-digit number. The input argument is also a string with 10 digits, but the digits may be separated by dashes (the \"-\" character, at various places).\n\nFor example, the following function calls:\nformat_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\nshould all return the string:\n\"0205251400\"\n\nWhich of the following code segments does not achieve what you want?",
+        "options": {
+          "a": "def format_phone_number(number):\n    number.replace(\"-\", \"\")\n    return number",
+          "b": "def format_phone_number(number):\n    return number.replace(\"-\", \"\")",
+          "c": "def format_phone_number(number):\n    digits = []\n    for char in number:\n        if char in \"0123456789\":\n            digits.append(char)\n    return \"\".join(digits)",
+          "d": "def format_phone_number(number):\n    return \"\".join(number.split(\"-\"))"
+        },
+        "correct": "a",
+        "explanation": "Option A does not work because strings are immutable and number.replace(\"-\", \"\") returns a new string that is ignored. The function then returns the original unmodified number.",
+        "code_context": "format_phone_number(\"020-525-1400\")\nformat_phone_number(\"020-5251400\")\nformat_phone_number(\"020-525-14-00\")\n# all should return \"0205251400\""
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 4,
+            "question_summary": "You need to write a function called format_phone_number that formats phone numbers. The output of the function should be a string that represents a 10-digit number. The input argum",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions"
+            ],
+            "evidence_topics": [
+              "Defining and Calling Functions"
+            ],
+            "evidence_buckets": [
+              "additional"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-4-w2-conditions",
+        "rationale": "This snippet explicitly states that 'Strings in Python are immutable' and that '.replace() returns a new string but does not modify the original,' which directly explains why Option A is the code segment that fails."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-4-w2-conditions",
+          "rationale": "Provides the direct conceptual and specific explanation for the failure of the replace method in Option A."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
+          "rationale": "Contains the full problem description for the 'format_phone_number' task, providing necessary context."
+        },
+        {
+          "item_id": "aiq-2",
+          "rationale": "Introduces the important concept of whether a method 'mutates the list in place,' helping the student distinguish between in-place mutation and returning a new object."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-4-w2-conditions",
+          "rationale": "Contains the exact logic needed to identify Option A as the incorrect implementation."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "Snippet 'exam-intro_python_sample_final_24_25-4-w2-conditions' contains the verbatim explanation and rationale for the correct answer, specifically addressing string immutability and the behavior of the .replace() method.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The available snippets provide both the problem context and the specific technical explanation required to answer the question correctly.",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:34:56Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q05",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q05",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 5,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "7-pandas-new_column-1",
+        "question": "You have a pandas DataFrame called df. It has a column called \"A\" and a column called \"B\". Both contain numbers.\n\nYou'd like to create a column called \"C\", which contains the sum of the numbers in columns \"A\" and \"B\". Which of the following code lines will achieve what you want?",
+        "options": {
+          "a": "df[\"C\"] = df[\"A\"] + df[\"B\"]",
+          "b": "df[\"C\"] = df[\"A\"].map(lambda x: x + df[\"B\"])",
+          "c": "df[\"C\"] = df.columns[\"A\" + \"B\"]",
+          "d": "df[\"C\"] = df[\"A\" + \"B\"]"
+        },
+        "correct": "a",
+        "explanation": "Option A performs elementwise addition between columns A and B and stores the result in column C. The other options either misuse map, index into the columns object incorrectly, or look for a non-existent combined column name.",
+        "code_context": "df has numeric columns \"A\" and \"B\"; column \"C\" should contain their sum."
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 5,
+            "question_summary": "You have a pandas DataFrame called df. It has a column called \"A\" and a column called \"B\". Both contain numbers. You'd like to create a column called \"C\", which contains the sum of",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures"
+            ],
+            "evidence_topics": [
+              "Pandas Core Structures"
+            ],
+            "evidence_buckets": [
+              "recommended"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+        "rationale": "This snippet contains the exact question and specifically mentions 'Vectorized addition in Pandas', which explains the logic required to identify option A as the correct answer."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Directly matches the question and provides the concept of vectorized addition."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-5-w5-pandas-core-structures",
+          "rationale": "An exact replica of the question text from a different exam source."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+          "rationale": "Demonstrates the syntax for mathematical operations between Pandas structures to create a new Series/column."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Provides both the solution and the technical rationale for why the operation works."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate snippets contain the exact exam question and its correct answer, making it trivial for a student to answer correctly.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets provide the specific answer to this question but lack a general conceptual rule about the syntax of Pandas column assignment.",
+        "missing_concepts": [
+          "General syntax for DataFrame column creation (df['new'] = expression)",
+          "Explicit definition of element-wise (vectorized) operations versus scalar operations"
+        ],
+        "proposed_fix": "Add a foundational 'Pandas Key Point' snippet that generalizes the pattern: 'To create a new column based on others, use the syntax: df[\"New\"] = df[\"Col1\"] + df[\"Col2\"]'."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Add a conceptual snippet explaining 'Pandas Column Arithmetic' that shows how df['C'] = df['A'] + df['B'] performs a row-by-row sum and stores it in 'C'.",
+          "why_helpful": "It helps the student understand the 'why' and apply the knowledge to variations (e.g., subtraction or multiplication) rather than just memorizing one specific question.",
+          "why_maybe_unnecessary": "The student can already answer this exact question because it is duplicated in the exam snippets.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:35:24Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q06",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q06",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 6,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "7-pandas-selection-1",
+        "question": "You have a pandas DataFrame called df that looks like this, when printed:\n\n     A    B    C    D\n1  9.1  9.5  9.0  6.0\n2  6.4  8.2  7.5  1.7\n3  2.5  5.3  8.8  3.0\n4  6.7  3.6  7.2  6.9\n5  8.4  1.9  8.2  3.3\n6  8.1  8.4  9.9  2.2\n\nSuppose that you'd like to create a new DataFrame that only contains those elements of column \"B\" in df that have an even-numbered index. Which of the following code lines will achieve what you want?",
+        "options": {
+          "a": "df.loc[df.index % 2 == 0, [\"B\"]]",
+          "b": "df[2, 4, 6, \"B\"]",
+          "c": "df.iloc[[2, 4, 6], 2]",
+          "d": "df.loc[2::2, \"B\"]"
+        },
+        "correct": "a",
+        "explanation": "Option A filters rows whose index is even and selects column B while keeping the result as a DataFrame by using [[\"B\"]]. Option D would return a Series, not a DataFrame, and the other options do not select the requested data correctly.",
+        "code_context": "df printed as:\n\n     A    B    C    D\n1  9.1  9.5  9.0  6.0\n2  6.4  8.2  7.5  1.7\n3  2.5  5.3  8.8  3.0\n4  6.7  3.6  7.2  6.9\n5  8.4  1.9  8.2  3.3\n6  8.1  8.4  9.9  2.2"
+      },
+      "seed_context": {
+        "exact_match_findings": [
+          {
+            "question_number": 6,
+            "question_summary": "You have a pandas DataFrame called df that looks like this, when printed: A B C D 1 9.1 9.5 9.0 6.0 2 6.4 8.2 7.5 1.7 3 2.5 5.3 8.8 3.0 4 6.7 3.6 7.2 6.9 5 8.4 1.9 8.2 3.3 6 8.1 8.",
+            "score": 3,
+            "evidence_item_ids": [
+              "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data"
+            ],
+            "evidence_topics": [
+              "Inspecting and Selecting Data"
+            ],
+            "evidence_buckets": [
+              "recommended"
+            ],
+            "rationale": "This exact practice-exam question is already available as a selectable exam snippet in the builder.",
+            "ai_summary_would_help": false,
+            "ai_summary_note": ""
+          }
+        ],
+        "available_seed_snippet_ids": [
+          "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data"
+        ],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+        "rationale": "This snippet provides the exact reasoning required: it explains that Option A is correct because it uses a boolean mask on the index for even numbers and specifies ['B'] as a list to ensure the result is a DataFrame."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+          "rationale": "Contains the explicit logic for the correct answer, including the mask and the list-selection for DataFrame output."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
+          "rationale": "Matches the exact question text and data table provided in the prompt, providing perfect context."
+        },
+        {
+          "item_id": "exam-midterm_2023-14-w2-loops",
+          "rationale": "Explains the [start:stop:step] slicing syntax (1::2), which helps a student understand why Option D (2::2) might be tempting but potentially incorrect compared to the boolean mask."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+          "rationale": "Provides the 'why' for the correct answer."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
+          "rationale": "Provides the 'what' (the specific problem setup)."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The snippets contain an identical question and a clear explanation of the specific syntax nuances (boolean mask vs slicing, and Series vs DataFrame return types).",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets are highly effective. The only minor issue is a metadata mismatch where a key Pandas snippet is tagged with 'string-operations'.",
+        "missing_concepts": [
+          "Explicit difference between .loc slicing (which returns a Series if a single string is passed) and list-passing (which returns a DataFrame)."
+        ],
+        "proposed_fix": "Ensure snippets explaining .loc explicitly contrast df.loc[rows, 'col'] vs df.loc[rows, ['col']]."
+      },
+      "suggested_changes": [
+        {
+          "kind": "edit_existing",
+          "target_item_id": "exam-intro_python_sample_final_24_25-6-w4-string-operations-and-methods",
+          "proposal": "Update the 'topic' from 'string-operations-and-methods' to 'Inspecting and Selecting Data' or 'Pandas Indexing'.",
+          "why_helpful": "The current tag is misleading as the content is about Pandas DataFrame selection, not string manipulation.",
+          "why_maybe_unnecessary": "The search_text is already accurate and will be found by the RAG system regardless of the label.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:35:43Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q07",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q07",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 7,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "7-pandas-sorting-1",
+        "question": "There are two pandas DataFrames: df1 and df2. They look like this, when printed:\n\nprint(df1)\n\n     A    B    C    D\n1  5.0  8.2  9.5  4.4\n2  6.0  2.4  9.1  3.3\n3  3.2  5.2  8.9  3.6\n4  7.8  8.7  7.9  8.0\n5  1.2  9.7  2.9  3.0\n\nprint(df2)\n\n     A    C    D\n4  7.8  7.9  8.0\n3  3.2  8.9  3.6\n2  6.0  9.1  3.3\n\nWhich of the following code lines could not have created df2 from df1?",
+        "options": {
+          "a": "df2 = df1.sort_index(ascending=False)[[\"A\", \"C\", \"D\"]]",
+          "b": "df2 = df1.iloc[[3, 2, 1], [0, 2, 3]]",
+          "c": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"D\", ascending=False)",
+          "d": "df2 = df1.loc[2:4, [\"A\", \"C\", \"D\"]].sort_values(\"C\")"
+        },
+        "correct": "a",
+        "explanation": "Option A sorts the entire DataFrame by index in descending order and would include rows 5 and 1 as well, so it would not match df2. The other options all produce rows 4, 3, and 2 with columns A, C, and D.",
+        "code_context": "print(df1)\n\n     A    B    C    D\n1  5.0  8.2  9.5  4.4\n2  6.0  2.4  9.1  3.3\n3  3.2  5.2  8.9  3.6\n4  7.8  8.7  7.9  8.0\n5  1.2  9.7  2.9  3.0\n\nprint(df2)\n\n     A    C    D\n4  7.8  7.9  8.0\n3  3.2  8.9  3.6\n2  6.0  9.1  3.3"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
+        "rationale": "This snippet contains the exact logic and explanation for why Option A is the correct answer to this specific question, explicitly stating that sort_index would result in a 5-row DataFrame instead of the required 3 rows."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
+          "rationale": "Provides the direct answer and logic for the specific question."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-6-w5-inspecting-and-selecting-data",
+          "rationale": "Shows a similar Pandas DataFrame structure and selection context."
+        },
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-5-w4-string-fundamentals",
+          "rationale": "Reinforces the context of Pandas DataFrame column operations."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-7-w4-string-fundamentals",
+          "rationale": "This snippet alone provides the solution and the reasoning required to identify the correct choice."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "One of the candidate snippets is an exact match for the question and explanation, making the answer clear even to a student with no prior knowledge.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets provide the direct answer but lack general definitions for the specific Pandas methods used in the alternative (incorrect) options.",
+        "missing_concepts": [
+          "Explicit difference between .loc (label-based, inclusive) and .iloc (position-based, exclusive)",
+          "Behavior of .sort_values vs .sort_index in Pandas"
+        ],
+        "proposed_fix": "Add a snippet explaining the syntax and slicing rules for .loc and .iloc to help students verify options B, C, and D."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Add a foundational snippet explaining that .loc[2:4] includes labels 2, 3, and 4, whereas .iloc[[3, 2, 1]] selects the 4th, 3rd, and 2nd rows respectively.",
+          "why_helpful": "This allows the student to understand why the other options (B, C, D) *could* have created df2, rather than just knowing why A could not.",
+          "why_maybe_unnecessary": "The direct explanation for Option A in the existing snippet is already sufficient to select the right answer.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:36:15Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q08",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q08",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 8,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "7-pandas-string-1",
+        "question": "There is a pandas Series called s, which contains Dutch municipality and corresponding province names, separated by a semicolon and a whitespace. The following, for example, is an element of this Series: \"Amsterdam; Noord-Holland\".\n\nYou'd like to create a new Series that only contains the municipality names from s in the same order. Which of the following code lines will achieve what you want?",
+        "options": {
+          "a": "s.map(lambda x: x.split(\"; \")[0])",
+          "b": "s.split(\"; \")[0]",
+          "c": "s.lambda(x.split(\"; \"))",
+          "d": "s.str[:9]"
+        },
+        "correct": "a",
+        "explanation": "Option A applies split('; ') to each element in the Series and takes the first part, which is the municipality name. The other options either do not operate elementwise or do not reliably extract the municipality name.",
+        "code_context": "Example element in s:\n\"Amsterdam; Noord-Holland\""
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+        "rationale": "This snippet describes the exact scenario of a Series 's' with municipality and province names separated by '; ' and explicitly identifies the '.map()' method as the solution for applying a function like split."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "rationale": "Directly matches the question scenario and explains the use of the .map() method for elementwise transformation."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-5-w5-pandas-core-structures",
+          "rationale": "Provides a conceptual example of creating a new Series from an existing one based on a calculation (square of difference), reinforcing the 's.operation' pattern."
+        },
+        {
+          "item_id": "exam-Trial final exam Introduction to Python-4-w3-defining-and-calling-functions",
+          "rationale": "Mentions splitting strings based on separators (dashes in this case), which helps a student understand what the 'split' part of the correct option does."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "rationale": "This snippet is independently sufficient as it contains the exact problem statement and identifies '.map()' and 'split' as the mechanics for the solution."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The best snippet is a near-perfect match for the question text and directly names the required method (.map) and logic (split).",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the direct match is excellent, there is no explanation of 'lambda' syntax or how '[0]' indexes the result of a split.",
+        "missing_concepts": [
+          "lambda syntax",
+          "indexing split results"
+        ],
+        "proposed_fix": "Add a snippet explaining that 'lambda x: x.split(...)[0]' is a concise way to take the first part of every string in a collection."
+      },
+      "suggested_changes": [
+        {
+          "kind": "edit_existing",
+          "target_item_id": "exam-intro_python_sample_final_24_25-8-w4-string-fundamentals",
+          "proposal": "Expand the snippet text to include the full logic: 'The .map(lambda x: x.split(\"; \")[0]) method allows applying the split function to each element and taking the first part.'",
+          "why_helpful": "The current text cuts off at '(like spli'. Showing the full code ensures a student can confidently identify Option A without guessing 'lambda' syntax.",
+          "why_maybe_unnecessary": "The current text is already highly suggestive of the correct answer.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:36:41Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q09",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q09",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 9,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "8-datetime-1",
+        "question": "Take a look at the following code segment.\n\nfrom datetime import datetime\n\ndef get_months(date_strings):\n    dates = []\n    for date_str in date_strings:\n        if \"-\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%d-%m-%Y\"))\n        elif \"/\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%m/%d/%Y\"))\n        else:\n            dates.append(None)\n    return [date.month if date is not None else None for date in dates]\n\nSuppose that you call the function like this:\nget_months([\"03/02/2013\", \"03.02.2013\", \"03-02-2013\"])\n\nWhat does the function call return?",
+        "options": {
+          "a": "[3, None, 2]",
+          "b": "[2, None, 3]",
+          "c": "[3, 2]",
+          "d": "[2, 3]"
+        },
+        "correct": "a",
+        "explanation": "\"03/02/2013\" matches %m/%d/%Y and gives month 3, \"03.02.2013\" matches neither branch and becomes None, and \"03-02-2013\" matches %d-%m-%Y and gives month 2.",
+        "code_context": "from datetime import datetime\n\ndef get_months(date_strings):\n    dates = []\n    for date_str in date_strings:\n        if \"-\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%d-%m-%Y\"))\n        elif \"/\" in date_str:\n            dates.append(datetime.strptime(date_str, \"%m/%d/%Y\"))\n        else:\n            dates.append(None)\n    return [date.month if date is not None else None for date in dates]"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-9-w6-datetime",
+        "rationale": "This snippet is a direct match for the question and includes an explanation of how the different date formats are parsed and which components correspond to the month."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-9-w6-datetime",
+          "rationale": "Directly explains the logic of the code and the resulting values for each input string."
+        },
+        {
+          "item_id": "exam-trial_midterm-6-w2-conditions",
+          "rationale": "Helps a beginner understand the general structure of a function that iterates through a list and returns a new list based on conditions."
+        },
+        {
+          "item_id": "exam-midterm_2023-9-w3-arguments",
+          "rationale": "Provides context on how function calls and returns work in Python, helping trace the execution."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-9-w6-datetime",
+          "rationale": "Contains the exact code logic and explains the interpretation of the strptime format codes (%m vs %d)."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate list contains the exact question with an explanation that breaks down the code's behavior for each input string.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The existing snippets are highly effective because one of them is a perfect match for the question. A minor gap exists in providing a general reference for datetime format codes.",
+        "missing_concepts": [
+          "General table of datetime.strptime format codes (e.g., %m, %d, %Y, %b)"
+        ],
+        "proposed_fix": "Add a summary card or 'cheat sheet' snippet specifically for Datetime format directives."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Add a reference snippet for Datetime format strings: %Y (4-digit year), %y (2-digit year), %m (month), %d (day), %H (hour), %M (minute), %S (second).",
+          "why_helpful": "This would allow a student to solve any datetime parsing question, even if the specific question isn't in the database.",
+          "why_maybe_unnecessary": "The specific exam question snippet already provides the necessary interpretation for this particular task.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:36:59Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q10",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q10",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 10,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "8-datetime-2",
+        "question": "Suppose that you want to write a function called day_of_year that takes a datetime value and returns the number of the day that the datetime value represents within the year. The return value is therefore always an integer between 1 and 366.\n\nFor example, the function call:\nday_of_year(datetime(2022, 2, 1))\nshould return the integer:\n32\n\nWhich of the following code segments will achieve what you want? (You can assume that the datetime and timedelta classes are already imported from the datetime module.)",
+        "options": {
+          "a": "def day_of_year(dt):\n    return (dt - datetime(dt.year, 1, 1)).days + 1",
+          "b": "def day_of_year(dt):\n    return timedelta(dt - datetime(dt.year, 1, 1)) + 1",
+          "c": "def day_of_year(dt):\n    return dt - datetime(dt.year, 1, 1) + 1",
+          "d": "def day_of_year(dt):\n    return (dt - datetime(dt.year, 1, 0)).days"
+        },
+        "correct": "a",
+        "explanation": "Subtracting January 1 of the same year gives the zero-based offset in days, and adding 1 converts it to the day number within the year. The other options either return or manipulate timedeltas incorrectly or use an invalid date.",
+        "code_context": "Example target behavior:\nday_of_year(datetime(2022, 2, 1))\n# returns 32"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-10-w6-datetime",
+        "rationale": "This snippet explicitly explains the logic required: subtracting two datetime objects yields a timedelta, and the '.days' attribute must be accessed to get an integer difference."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-10-w6-datetime",
+          "rationale": "Directly explains the relationship between datetime subtraction, timedelta objects, and the .days attribute."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-3-w3-defining-and-calling-functions",
+          "rationale": "Helps a zero-knowledge student recognize the basic 'def function_name(argument):' syntax used in the options."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-10-w6-datetime",
+          "rationale": "Provides the specific technical knowledge (timedelta and .days) to distinguish the correct answer from the distractors."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The sample final snippet contains a search text that almost perfectly mirrors the question's logic, explaining that subtraction results in a timedelta and that .days provides the integer needed.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The existing snippets cover the core logic (timedelta/days), but don't explicitly state that datetime days must be 1-indexed (invalidating option D's day=0) or that you can't add an integer to a timedelta object directly (invalidating option B/C more strictly).",
+        "missing_concepts": [
+          "datetime constructor constraints (day range 1-31)",
+          "timedelta arithmetic restrictions (cannot add int to timedelta)"
+        ],
+        "proposed_fix": "Add a small reference snippet or 'AI Common Question' about basic datetime and timedelta arithmetic rules."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet explaining that 'datetime(year, month, day)' requires day to be at least 1, and that you cannot directly add an integer to a timedelta object (you must add another timedelta or convert to int first).",
+          "why_helpful": "It would allow a student to systematically eliminate options B, C, and D rather than just identifying A as plausible.",
+          "why_maybe_unnecessary": "The current 'best snippet' is so similar to the correct answer that most students will pick A regardless.",
+          "recommended_direction": "consider_instead"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:37:22Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q11",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q11",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 11,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "8-dict_comprehension-1",
+        "question": "You have a list of strings called list_1, in which every element is unique.\n\nWhich of the following code lines will create a dictionary, in which the keys are the elements of list_1 and the values are the number of characters in the corresponding key?",
+        "options": {
+          "a": "{item: len(item) for item in list_1}",
+          "b": "[len(item) for item in list_1]",
+          "c": "{item for item in list_1 if len(item) > 0}",
+          "d": "{len(item): item for item in list_1}"
+        },
+        "correct": "a",
+        "explanation": "Option A is the dictionary comprehension that maps each string to its length. Option B creates a list, option C creates a set, and option D reverses the intended key-value relation.",
+        "code_context": "list_1 contains unique strings."
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-11-w3-defining-and-calling-functions",
+        "rationale": "This snippet contains the exact same question text and explicitly identifies Option A as the correct answer, explaining that it is a standard dictionary comprehension."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-11-w3-defining-and-calling-functions",
+          "rationale": "Directly matches the question text and provides the correct answer with a brief explanation of the comprehension types."
+        },
+        {
+          "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "rationale": "Presents a functionally identical problem (mapping a list of strings to their lengths) and confirms Option A as the solution."
+        },
+        {
+          "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+          "rationale": "Provides additional context on creating dictionaries from existing list data, reinforcing the mapping concept."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-11-w3-defining-and-calling-functions",
+          "rationale": "Literal match for the question; sufficient on its own to identify the answer."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate snippets include a verbatim match for the exam question, including the options and the correct answer designation.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The existing snippets are excellent because they contain the exact question or identical logic. No gaps identified for this specific question.",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:37:38Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q12",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q12",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 12,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "8-list_comprehension-1",
+        "question": "Suppose that you have a list of letters called list_1. Some letters are upper case, others are in lower case.\n\nYou'd like to create another list that contains the same letters in the same order, but you want to turn every upper case letter into its lower case version, and every lower case letter into its upper case version.\n\nWhich of the following code lines will achieve what you want?",
+        "options": {
+          "a": "[letter.upper() if letter.islower() else letter.lower() for letter in list_1]",
+          "b": "[letter.upper() for letter in list_1 if letter.islower() else letter.lower()]",
+          "c": "[letter.lower() for letter in list_1 if letter.isupper()] + [letter.upper() for letter in list_1 if letter.islower()]",
+          "d": "[letter.capitalize() for letter in list_1 if not letter.iscapitalized()]"
+        },
+        "correct": "a",
+        "explanation": "Option A flips the case of each letter while preserving the original order of the list. The other options either have invalid comprehension syntax, change the order, or use a non-existent string method.",
+        "code_context": "list_1 contains letters with mixed case."
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-12-w2-conditions",
+        "rationale": "This snippet describes the exact same problem (flipping letter case in a list) and confirms that conditional logic within a code line is the correct approach, making it an almost direct answer key."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-12-w2-conditions",
+          "rationale": "Direct conceptual match for the problem statement and mentions the use of conditional logic."
+        },
+        {
+          "item_id": "exam-Test Exam 07-06-22-4-w3-defining-and-calling-functions",
+          "rationale": "Mentions checking upper/lower case versions of letters, providing context that case sensitivity is a standard consideration in these types of problems."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-12-w2-conditions",
+          "rationale": "Provides the necessary confirmation that case flipping in lists is a known problem solvable with conditional comprehension logic."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The best snippet is a direct analog of the question, providing both the goal and the logic (conditional comprehension) required to solve it. A student can match the 'flip case' intent directly to the snippet's description.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the snippet confirms the logic, it doesn't explicitly display the syntax pattern [X if condition else Y for item in list] vs [X for item in list if condition else Y], which is the primary technical distractor (Option A vs B).",
+        "missing_concepts": [
+          "explicit ternary conditional syntax in list comprehensions"
+        ],
+        "proposed_fix": "Add a lecture snippet or reference card that explicitly shows the syntax for list comprehensions with if-else clauses (transformation) vs if-only clauses (filtering)."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "A syntax reference card for list comprehensions showing: 1. [f(x) for x in list if cond] (filtering) vs 2. [f(x) if cond else g(x) for x in list] (transformation).",
+          "why_helpful": "The question's main challenge is the syntax placement of the 'if-else' (Option A vs B). A direct syntax guide would make the choice trivial for a non-Python user by showing that 'if-else' must come before the 'for' keyword.",
+          "why_maybe_unnecessary": "The existing exam snippet already points to 'conditional logic' which might be enough for an intuitive student to pick the only syntactically plausible option (A).",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:38:09Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q13",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q13",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 13,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Basic logic",
+        "question": "Suppose you have three variables x, y, z as follows:\n\nx = 'x'\ny = 3\nz = 3.0\n\nWhat are the outputs of the following lines of code?\nprint(x == y)\nprint(y == z)\nprint(x == z)\nprint(x == y == z)",
+        "options": {
+          "a": "False\nTrue\nFalse\nFalse",
+          "b": "True\nTrue\nTrue\nTrue",
+          "c": "False\nFalse\nFalse\nTrue",
+          "d": "True\nFalse\nFalse\nFalse"
+        },
+        "correct": "a",
+        "explanation": "The string 'x' is not equal to the integer 3 or the float 3.0, so the first and third comparisons are False. The integer 3 and float 3.0 are equal in Python, so the second comparison is True. The chained comparison is False because x == y is False.",
+        "code_context": "x = 'x'\ny = 3\nz = 3.0\nprint(x == y)\nprint(y == z)\nprint(x == z)\nprint(x == y == z)"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+        "rationale": "This snippet is a near-perfect match for the question logic. Its explanation explicitly details the rules for string vs. number comparisons, integer vs. float equality (3 == 3.0), and the exact decomposition of chained comparisons (x == y == z)."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+          "rationale": "Directly explains every component of the question's logic, including type-mismatch comparisons and chained equality."
+        },
+        {
+          "item_id": "exam-trial_midterm-4-w1-objects-and-names",
+          "rationale": "Reinforces the concept that int 3 and float 3.0 are equal (x == y) while strings are not (x != z), providing a secondary example of the same cross-type comparison rules."
+        },
+        {
+          "item_id": "aiq-5",
+          "rationale": "Useful for understanding how variables are assigned and compared across different types (int, float, string) in a multi-variable scenario."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+          "rationale": "This snippet alone provides all three necessary rules: 1. 'str' == 'int/float' is False. 2. 'int' == 'float' is True if values match. 3. 'a == b == c' is evaluated as '(a == b) and (b == c)'."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "Snippet 'exam-intro_python_sample_final_24_25-13-w1-objects-and-names' contains an explanation that explicitly answers the exact logic required for all four lines of the code in the question.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The current snippets are excellent, especially the sample final snippet which covers the chained comparison logic which is usually the hardest part for beginners.",
+        "missing_concepts": [
+          "Explicit definition of types (str, int, float) would be helpful as a reference, though the behavior is clear from the examples."
+        ],
+        "proposed_fix": "Add a summary card covering cross-type equality rules and chained comparison evaluation."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Conceptual Card: 'Comparison Rules by Type'. Rule 1: Integers and Floats are equal if they represent the same number (e.g., 3 == 3.0 is True). Rule 2: Strings are never equal to numbers (e.g., '3' == 3 is False). Rule 3: Chained comparisons (a == b == c) are treated as (a == b) AND (b == c).",
+          "why_helpful": "It abstracts the logic from the exam snippets into a clear set of rules that a student can apply to any similar question.",
+          "why_maybe_unnecessary": "The explanation in the sample final exam snippet already provides this information, though in a question-specific context.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:38:43Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q14",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q14",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 14,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Basic loop",
+        "question": "You need to write a simple loop that iterates over the integers from 1 to 10, and in each iteration, prints the sum of the current and the previous number. In the first iteration, just take the previous number to be 0.\n\nFor example:\n1 + 0 = 1\n2 + 1 = 3\n3 + 2 = 5\n...\n10 + 9 = 19\n\nChoose the program that will print the correct output (i.e. only the sums).",
+        "options": {
+          "a": "previous = 0\nfor i in range(1, 11):\n    print(i + previous)\n    previous = i",
+          "b": "i = 0\nwhile i <= 10:\n    print(i + (i - 1))\n    i += 1",
+          "c": "Both of the above",
+          "d": "Neither of the above"
+        },
+        "correct": "a",
+        "explanation": "A keeps track of the previous number and prints each sum correctly from 1 + 0 through 10 + 9. B does not use the required previous-value logic and prints the wrong sums.",
+        "code_context": "previous = 0\nfor i in range(1, 11):\n    print(i + previous)\n    previous = i"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-14-w2-loops",
+        "rationale": "This snippet describes the exact logic and goal of the question (iterating 1-10, summing current and previous) and provides a direct contextual match, even though its internal explanation mistakenly identifies 'Option B' instead of 'Option A'."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-14-w2-loops",
+          "rationale": "Identifies the core problem pattern and logic requirements."
+        },
+        {
+          "item_id": "aiq-3",
+          "rationale": "Explicitly explains that 'stop' is excluded in range(), which is critical for a student to know that range(1, 11) targets the integers 1 to 10."
+        },
+        {
+          "item_id": "ks-bddafc66a0",
+          "rationale": "Provides the basic syntax for 'for' loops and shows an example of updating a 'total' variable, which mirrors the 'previous' state-tracking pattern."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-14-w2-loops",
+          "rationale": "Problem-specific logic."
+        },
+        {
+          "item_id": "aiq-3",
+          "rationale": "Understanding the range() function's boundary behavior."
+        },
+        {
+          "item_id": "ks-bddafc66a0",
+          "rationale": "Basic for-loop syntax and variable initialization pattern."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The combination of the direct problem-match snippet (even with its label typo) and the 'range' explanation provides all the semantic components needed to identify why 'Option A' is correct (it starts at 1, goes to 10, and updates state at the end).",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets cover the specific problem logic and the range boundary. However, the explanation in the best snippet has a typo (referring to B instead of A) which could be confusing for zero-knowledge students.",
+        "missing_concepts": [
+          "Explicit state-tracking (updating a variable like 'previous' at the end of a loop)"
+        ],
+        "proposed_fix": "Add or edit a snippet to explicitly explain 'State Variables' in loops: why the update happens at the bottom and how it affects the next iteration."
+      },
+      "suggested_changes": [
+        {
+          "kind": "edit_existing",
+          "target_item_id": "exam-intro_python_sample_final_24_25-14-w2-loops",
+          "proposal": "Correct the snippet text to point to Option A and add a brief trace: 'In iteration 1: i=1, prev=0. After print, prev becomes 1. In iteration 2: i=2, prev=1...'",
+          "why_helpful": "Prevents confusion caused by the current typo and reinforces the 'state-tracking' mechanic.",
+          "why_maybe_unnecessary": "The student might infer the logic from the code options regardless of the snippet's letter label.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:39:08Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q15",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q15",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 15,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "Basic scope",
+        "question": "Executing the following program will produce an error. Why?\n\ndef cube(num):\n    result = num ** 3\n    return f'The cube of {num} is: {result}.'\n\nprint(result)",
+        "options": {
+          "a": "Result is a local variable and cannot be referenced outside of the function",
+          "b": "** is not a valid Python operator.",
+          "c": "The syntax of the f-string is incorrect.",
+          "d": "You can only use either print or return, but not both."
+        },
+        "correct": "a",
+        "explanation": "result is created inside the function, so it is local to cube and is not available at the top level where print(result) is executed.",
+        "code_context": "def cube(num):\n    result = num ** 3\n    return f'The cube of {num} is: {result}.'\n\nprint(result)"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-15-w2-conditions",
+        "rationale": "This snippet is a near-perfect match for the question, explicitly mentioning the 'cube' function and the variable 'result', and explaining that it cannot be accessed from the global scope."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-15-w2-conditions",
+          "rationale": "Directly matches the specific code context (cube function, result variable) and logic of the question."
+        },
+        {
+          "item_id": "ks-2a6510492d",
+          "rationale": "Provides the formal conceptual rule for local vs. global scope, explaining that names defined inside a function are only known inside that function."
+        },
+        {
+          "item_id": "manual-local-name",
+          "rationale": "Offers a clear, simple example showing that names (parameters or locals) fail when printed outside the function body."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-15-w2-conditions",
+          "rationale": "Provides the direct answer to the identical pattern."
+        },
+        {
+          "item_id": "ks-2a6510492d",
+          "rationale": "Supplies the underlying theoretical principle of scope."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "Snippet 'exam-intro_python_sample_final_24_25-15-w2-conditions' contains a virtually identical question and explanation. Combined with the lecture note on scope (ks-2a6510492d), a student can easily deduce the correct answer.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippet coverage is excellent. There is a direct match in the exam snippets and a clear conceptual explanation in the lecture snippets.",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:39:24Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q16",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q16",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 16,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "List lambda",
+        "question": "You already have a list named list_1 with 2 lambda functions as follows:\n\nlist_1 = [lambda a, b: a + b, lambda a, b: a * b]\n\nWhat would be printed by the following code snippet?\nprint(list_1[0](1, 2) ** list_1[1](1, 2))",
+        "options": {
+          "a": "6",
+          "b": "7",
+          "c": "8",
+          "d": "9"
+        },
+        "correct": "d",
+        "explanation": "list_1[0](1, 2) returns 3 and list_1[1](1, 2) returns 2, so the expression becomes 3 ** 2, which is 9.",
+        "code_context": "list_1 = [lambda a, b: a + b, lambda a, b: a * b]\nprint(list_1[0](1, 2) ** list_1[1](1, 2))"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns",
+        "rationale": "This snippet is an exact duplicate of the target question, providing the identical code context, answer, and a clear breakdown of the lambda evaluation and exponentiation (3 ** 2 = 9)."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns",
+          "rationale": "Directly answers the question with a full explanation of the logic."
+        },
+        {
+          "item_id": "exam-midterm_2023-13-w3-higher-order-patterns",
+          "rationale": "Provides additional context for functions defined with the ** operator (n**2 and n**3), reinforcing that ** means exponentiation."
+        },
+        {
+          "item_id": "exam-midterm_2023-14-w2-loops",
+          "rationale": "Shows general list indexing and printing syntax, which helps a novice understand how items are accessed from a collection."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-16-w3-higher-order-patterns",
+          "rationale": "On its own, this snippet provides the exact question, the math involved, and the final answer."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "One of the snippets is the exact question being asked, including the explanation of how lambda parameters are applied and the meaning of the exponentiation operator.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "No gaps exist for this specific question because the database contains the identical exam item. However, for a student with zero knowledge, a general summary of 'lambda' syntax would be beneficial for similar but non-identical questions.",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:39:42Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q17",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q17",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 17,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "List logic",
+        "question": "You have the following function called main:\n\ndef main(x):\n    y = []\n    for i in x:\n        if len(i) == 0:\n            y.append(True)\n        else:\n            y.append(False)\n    return y[0] == y[1] == y[2]\n\nWhat are the outputs of the following lines:\nmain([[], (), []])\nmain([[1], [2, 2], [3, 3, 3]])\nmain([[1], [2], [3]])",
+        "options": {
+          "a": "True\nTrue\nTrue",
+          "b": "True\nFalse\nTrue",
+          "c": "True\nFalse\nFalse",
+          "d": "False\nFalse\nTrue"
+        },
+        "correct": "a",
+        "explanation": "For the first call, each element has length 0, so y becomes [True, True, True] and the comparison is True. In the second and third calls, each element has non-zero length, so y becomes [False, False, False] and the chained equality is also True.",
+        "code_context": "def main(x):\n    y = []\n    for i in x:\n        if len(i) == 0:\n            y.append(True)\n        else:\n            y.append(False)\n    return y[0] == y[1] == y[2]"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+        "rationale": "Crucially explains how chained equality (x == y == z) is evaluated as (x == y) and (y == z), which is the core logic of the return statement."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+          "rationale": "Explains chained equality evaluation (x == y == z) and boolean comparisons."
+        },
+        {
+          "item_id": "exam-trial_midterm-6-w2-conditions",
+          "rationale": "Provides an almost identical structural template: initializing an empty list, looping through an input list, using an if-condition, and appending results."
+        },
+        {
+          "item_id": "exam-extra_practice-1-w2-lists-and-sets",
+          "rationale": "Demonstrates the use of the len() function on collections like lists and sets to check for equality."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-13-w1-objects-and-names",
+          "rationale": "Clarifies the chained equality logic required to solve the return value."
+        },
+        {
+          "item_id": "exam-trial_midterm-6-w2-conditions",
+          "rationale": "Shows the list-building pattern (y = [], for loop, append) used in the question."
+        },
+        {
+          "item_id": "exam-extra_practice-1-w2-lists-and-sets",
+          "rationale": "Confirms len() is used to count elements in a collection."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The snippets cover the code structure (loop/append), the usage of len(), and most importantly, the non-obvious evaluation of chained equality (x == y == z). A student can map these parts directly to the question logic.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the logic is covered, there is no explicit mention that empty structures like [] or () have a length of 0, nor an explanation of list indexing (y[0]).",
+        "missing_concepts": [
+          "Length of empty collections ([], (), {}) is 0",
+          "List indexing syntax (y[0], y[1]) for accessing elements"
+        ],
+        "proposed_fix": "Add a snippet demonstrating that len([]) is 0 and showing how to access the first element of a list using [0]."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet showing: 'my_list = [True, False]; len([]); my_list[0] # Returns True'.",
+          "why_helpful": "This covers two minor gaps: that an empty list has length 0, and that [0] is used to retrieve the first item.",
+          "why_maybe_unnecessary": "A student might guess that 'empty' means 0 length and that indices start at 0 based on general logic.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:40:03Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q18",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q18",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 18,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "List loop",
+        "question": "How do you break a list into a list of lists, in which a sub-list consists of 3 values each?\n\nFor example, if the original list x is:\nx = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']\nthen how would you create:\ny = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]",
+        "options": {
+          "a": "y = [x[i:i + 3] for i in range(0, 7, 3)]",
+          "b": "y = [x[0::3] for i, enumerate(x)]",
+          "c": "Both of the above work",
+          "d": "Neither of the above works"
+        },
+        "correct": "a",
+        "explanation": "A slices the list into consecutive groups of three elements. B does not produce the required nested lists.",
+        "code_context": "x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
+        "rationale": "This snippet contains the exact question and provides a step-by-step explanation of why Option A is correct, detailing the range generation (0, 3, 6) and the corresponding slice indices."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
+          "rationale": "Directly answers the question and explains the slicing logic for partitioning a list."
+        },
+        {
+          "item_id": "exam-midterm_2023-14-w2-loops",
+          "rationale": "Illustrates the [start:stop:step] slicing syntax, which helps a student understand the 'step' parameter used in the correct answer's range."
+        },
+        {
+          "item_id": "exam-Test Resit - Introduction to Python - 22/23-5-w2-lists-and-sets",
+          "rationale": "Provides additional examples of slicing and list manipulation, reinforcing the concept of extracting sub-parts of a sequence."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-18-w2-conditions",
+          "rationale": "The explanation within this snippet is enough for a student to match the logic of 'range' and 'slicing' to Option A in the question."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "Snippet 'exam-intro_python_sample_final_24_25-18-w2-conditions' is a direct match for the question and explicitly explains the mechanics of the correct answer.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets provide the direct answer. However, they assume the student understands the 'for i in ...' syntax of list comprehensions, even if the mapping to range values is explained.",
+        "missing_concepts": [
+          "List comprehension syntax ([... for ... in ...])"
+        ],
+        "proposed_fix": "Add a foundational snippet explaining that list comprehensions create a new list by running an operation for every item in an iterable like range()."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a 'Core Concept' snippet for List Comprehensions: Syntax: [expression for item in iterable]. This creates a new list by applying 'expression' to each 'item' in the sequence (like range). Example: [x*2 for x in [1,2,3]] results in [2,4,6].",
+          "why_helpful": "It bridges the gap for students who see the range/slicing logic explained but don't recognize the structural 'wrapper' of the list comprehension.",
+          "why_maybe_unnecessary": "The direct explanation in the exam snippet might be enough for a student to simply pick the matching option without fully 'understanding' the loop.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:41:02Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q19",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q19",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 19,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "trial-dictionary-1",
+        "question": "You have to write a function called main that accepts a dictionary as an input argument. Both the keys and the values of the input are integers.\n\nReturn another dictionary that has the same keys as the input argument. For each output key, the corresponding value should be calculated as the sum of those values from the input dictionary, whose keys are smaller than, or equal to, the output key in question.\n\nFor example:\nmain({5: 1, 2: 5, 4: 2})\nshould return a dictionary that is equal to:\n{5: 8, 2: 5, 4: 7}\n\nWhich of the following programs works as intended?",
+        "options": {
+          "a": "def main(d1):\n    running_total = 0\n    d2 = {}\n    for key in sorted(d1.keys()):\n        running_total += d1[key]\n        d2[key] = running_total\n    return d2",
+          "b": "def main(d):\n    result = {}\n    for output_key in d.keys():\n        result[output_key] = sum([v for k, v in d.items() if k <= output_key])\n    return result",
+          "c": "Both of the above works as intended",
+          "d": "None of the above work as intended"
+        },
+        "correct": "c",
+        "explanation": "Option A builds cumulative sums over the sorted keys, and option B directly computes the sum of values whose keys are less than or equal to each output key. Both produce the intended dictionary values.",
+        "code_context": "Example target behavior:\nmain({5: 1, 2: 5, 4: 2})\n# returns a dictionary equal to {5: 8, 2: 5, 4: 7}"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "aiq-5",
+        "rationale": "Shows a function returning a dictionary where values are calculated using aggregate functions like sum(), which is core to both options."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "aiq-5",
+          "rationale": "Demonstrates dictionary construction with calculated values (total, min, max)."
+        },
+        {
+          "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+          "rationale": "Introduces the concept of filtering values when creating a dictionary, relevant to the 'if k <= output_key' logic in Option B."
+        },
+        {
+          "item_id": "exam-Resit 22/23-7-w2-dictionaries-and-mappings",
+          "rationale": "Shows basic dictionary creation from a list of strings, helping with the syntax of 'd2[key] = value'."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "aiq-5",
+          "rationale": "Syntax for returning dictionaries with calculated values."
+        },
+        {
+          "item_id": "exam-trial-final-exam-py22-5-w2-dictionaries-and-mappings",
+          "rationale": "Logic for conditional dictionary entry creation."
+        },
+        {
+          "item_id": "exam-Trial final - Introduction to Python - 22/23-6-w2-dictionaries-and-mappings",
+          "rationale": "Context for accessing dictionary values by key for calculations."
+        }
+      ],
+      "answerability": {
+        "status": "insufficient",
+        "confidence": "high",
+        "rationale": "While the snippets show dictionary creation and sum(), they lack critical concepts: the sorted() function for keys (Option A), the list comprehension syntax [v for k,v in d.items()] (Option B), and the .items() method itself. A student with zero knowledge would not be able to verify if these specific Python constructs work.",
+        "usable_without_prior_python_knowledge": false
+      },
+      "gap_analysis": {
+        "summary": "Missing core syntax for dictionary iteration and sorting.",
+        "missing_concepts": [
+          "sorted() function behavior on dictionary keys",
+          "List comprehension with filtering syntax",
+          "dictionary.items() method for key-value iteration",
+          "Cumulative/running total pattern in a loop"
+        ],
+        "proposed_fix": "Add a snippet demonstrating sorted(d.keys()) and a snippet showing a basic list comprehension used to filter and sum data."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet showing: 'for key in sorted(prices.keys()): ...' and another showing 'sub_total = sum([val for key, val in d.items() if key < 10])'.",
+          "why_helpful": "This directly maps to the syntax used in Options A and B, allowing a student to recognize the patterns.",
+          "why_maybe_unnecessary": "If the goal is only to teach dictionary creation, existing snippets are okay, but for this specific logic question, they are inadequate.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:42:23Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q20",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q20",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 20,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "trial-dictionary-2",
+        "question": "What is the result of the following program?\n\nl1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]\n\nd1 = {}\nfor key, value in zip(l1, l2):\n    d1[key] = value\n\nd2 = {}\nfor key, value in enumerate(l2, 1):\n    d2[key] = value\n\nprint(d1 == d2)",
+        "options": {
+          "a": "True",
+          "b": "False",
+          "c": "An error message.",
+          "d": "None of the above"
+        },
+        "correct": "a",
+        "explanation": "zip(l1, l2) creates key-value pairs (1,2), (2,3), (3,4), and (4,5). enumerate(l2, 1) produces the same pairs, so d1 and d2 are equal and the comparison prints True.",
+        "code_context": "l1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]\n\nd1 = {}\nfor key, value in zip(l1, l2):\n    d1[key] = value\n\nd2 = {}\nfor key, value in enumerate(l2, 1):\n    d2[key] = value\n\nprint(d1 == d2)"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
+        "rationale": "This snippet is a verbatim match for the exam question, explicitly stating that d1 (from zip) and d2 (from enumerate) result in the same dictionary {1: 2, 2: 3, 3: 4, 4: 5}, thus making the comparison True."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
+          "rationale": "Provides the direct answer to the exact code scenario and comparison logic described in the question."
+        },
+        {
+          "item_id": "ks-65c4de2e9d",
+          "rationale": "Explains the fundamental rule that dictionaries are 'unordered for equality', which is the conceptual basis for why d1 == d2 evaluates to True even if constructed via different iterators."
+        },
+        {
+          "item_id": "exam-trial_midterm-10-w2-dictionaries-and-mappings",
+          "rationale": "Offers visual examples of dictionary values and keys being manipulated, helping a novice recognize the 'd[key] = value' pattern."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-20-w3-defining-and-calling-functions",
+          "rationale": "Since this snippet explicitly contains the solution and the final state of the dictionaries for this specific question, it is sufficient on its own."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate list includes a snippet that is a direct hit for the exact question being asked, providing the answer and the logic in one place.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The current snippets provide a 'shortcut' to the answer but don't explain the mechanics of 'zip' and 'enumerate' in a way that allows a student to solve a variation of the question (e.g., if the lists were different).",
+        "missing_concepts": [
+          "The mechanical pairing process of zip(l1, l2).",
+          "The incremental counter behavior of enumerate(l, start)."
+        ],
+        "proposed_fix": "Add a foundational lecture snippet that defines zip and enumerate as pair-generating functions often used for dictionary population."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Topic: Iteration Helpers. Snippet: 'zip(l1, l2)' pairs elements by position: (l1[0], l2[0]), (l1[1], l2[1]). 'enumerate(l, start=0)' pairs index with value: (start, l[0]), (start+1, l[1]). These pairs are often used to populate dictionaries with d[key] = value.",
+          "why_helpful": "It allows a student to derive the result for any list content rather than just matching a specific example.",
+          "why_maybe_unnecessary": "The verbatim match in the existing exam snippets already solves this specific question perfectly.",
+          "recommended_direction": "add_this"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:44:05Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q21",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q21",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 21,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "trial-dictionary-3",
+        "question": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}\n\nThe following codes all print the same value, except one. Which one?",
+        "options": {
+          "a": "result = 0\nfor key, value in d1:\n    result += value\nprint(result)",
+          "b": "result = 0\nfor key in d1.keys():\n    result += d1[key]\nprint(result)",
+          "c": "result = 0\nfor value in d1.values():\n    result += value\nprint(result)",
+          "d": "result = sum(d1.values())\nprint(result)"
+        },
+        "correct": "a",
+        "explanation": "Iterating directly over a dictionary yields keys, not key-value pairs, so `for key, value in d1:` does not work as intended. The other three options all sum the dictionary values and print the same result.",
+        "code_context": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
+        "rationale": "This snippet is an exact match for the question logic and provides the specific explanation that iterating directly over a dictionary (for key, value in d1) only yields keys, causing a ValueError during unpacking."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
+          "rationale": "Directly identifies the error in option (a) and explains why it differs from the others."
+        },
+        {
+          "item_id": "ks-adb6d9f967",
+          "rationale": "Provides the fundamental rules for dictionary iteration (.keys(), .values(), .items()), which validates options (b) and (c)."
+        },
+        {
+          "item_id": "exam-trial_midterm-10-w2-dictionaries-and-mappings",
+          "rationale": "Shows the exact dictionary structure used in the question and demonstrates extracting values and keys as sequences."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions",
+          "rationale": "Explains the failure mode of iterating directly without .items()."
+        },
+        {
+          "item_id": "ks-adb6d9f967",
+          "rationale": "Explains the correct syntax for the valid options."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "Snippet 'exam-intro_python_sample_final_24_25-21-w3-defining-and-calling-functions' contains the precise question and explanation, while 'ks-adb6d9f967' covers the underlying mechanics.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The existing snippets are highly effective. A minor gap exists regarding the explicit behavior of the 'sum()' function when applied directly to a dictionary view (option d).",
+        "missing_concepts": [
+          "behavior of sum() on dict_values objects"
+        ],
+        "proposed_fix": "Add a snippet demonstrating that 'sum()' works on dictionary views just like it does on lists."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Add a knowledge snippet: 'Built-in functions and Dictionaries: Functions like sum(), min(), and max() can be applied directly to dictionary views. Example: result = sum(my_dict.values()) correctly totals all values.'",
+          "why_helpful": "This would explicitly cover option (d) in the question, ensuring a student doesn't have to guess if sum() works on .values().",
+          "why_maybe_unnecessary": "Option (a) is so clearly identified as an error by the best snippet that the student can identify it by elimination anyway.",
+          "recommended_direction": "consider_instead"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:44:25Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q22",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q22",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 22,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "trial-functions-1",
+        "question": "You have the following string\nx = 'Amsterdam'\n\nWhich script, using the count string method, would print the following value:\n1",
+        "options": {
+          "a": "print(count(x, 'a'))",
+          "b": "print(x.count('a'))",
+          "c": "Both scripts would deliver that result",
+          "d": "Neither script would deliver that result"
+        },
+        "correct": "b",
+        "explanation": "The string method must be called on the string object itself, so `x.count('a')` is the correct form. In 'Amsterdam', there is one lowercase 'a', while the initial uppercase 'A' is not counted.",
+        "code_context": "x = 'Amsterdam'"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-22-w2-conditions",
+        "rationale": "This snippet is a near-identical match to the exam question itself. it explicitly states that .count() is a string method requiring dot notation (x.count('a')) and confirms it is not a standalone function, directly answering the question."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-22-w2-conditions",
+          "rationale": "Directly provides the answer and explains the syntax requirement for the count method."
+        },
+        {
+          "item_id": "ks-ab66f3bab6",
+          "rationale": "Provides the general underlying principle: methods are called with dot notation (obj.method()), which explains why 'x.count()' is correct while 'count(x)' is not."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-22-w2-conditions",
+          "rationale": "Identifies the specific method and syntax required for the string 'Amsterdam'."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "Snippet 'exam-intro_python_sample_final_24_25-22-w2-conditions' contains the exact question and its solution, while the lecture snippet explains the 'why' behind the syntax.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The current snippets are excellent for this specific question because it is a direct repeat from a sample exam.",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:44:34Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q23",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q23",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 23,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "trial-functions-2",
+        "question": "Take a look at the following function definition.\n\ndef calculation(func, *args):\n    result = 0\n    for el in args:\n        result += func(el)\n    return result\n\nWhich of the following function calls would return the number 30 as a result?",
+        "options": {
+          "a": "calculation(lambda x: x + 5, 1, 2, 3, 4)",
+          "b": "calculation(lambda x: x**2, 1, 2, 3, 4)",
+          "c": "Both function calls would lead to that result",
+          "d": "Neither function call would lead to that result"
+        },
+        "correct": "c",
+        "explanation": "For option A, the function returns 6 + 7 + 8 + 9 = 30. For option B, it returns 1 + 4 + 9 + 16 = 30. Both calls therefore produce 30.",
+        "code_context": "def calculation(func, *args):\n    result = 0\n    for el in args:\n        result += func(el)\n    return result"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-23-w3-arguments",
+        "rationale": "This snippet is a near-perfect match for the target question, providing the exact logic (summing 6+7+8+9 and 1+4+9+16) and the correct answer (C)."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-23-w3-arguments",
+          "rationale": "Directly contains the logic and solution for the specific math/logic puzzle in the question."
+        },
+        {
+          "item_id": "exam-midterm_2024-15-w1-functions-and-imports",
+          "rationale": "Provides a structural template for passing a lambda as a 'condition' argument and calling it inside a loop, which mirrors the target code."
+        },
+        {
+          "item_id": "exam-trial_midterm-3-w1-objects-and-names",
+          "rationale": "Explains the *args syntax (flexible arguments) and demonstrates iterating over them with a loop, which is essential for understanding the function's behavior."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-23-w3-arguments",
+          "rationale": "Provides the direct answer and internal calculation logic."
+        },
+        {
+          "item_id": "exam-trial_midterm-3-w1-objects-and-names",
+          "rationale": "Clarifies how *args works as a list-like iterable."
+        },
+        {
+          "item_id": "exam-midterm_2024-15-w1-functions-and-imports",
+          "rationale": "Demonstrates the syntax for defining and calling a lambda passed as a variable."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "The candidate snippets include the exact exam question from a different year/sample. A student can match the '30' result and the calculation breakdown directly.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "While the answer is present, the snippets lack a concise 'definition' of lambda syntax (lambda x: ...) for someone with zero programming knowledge.",
+        "missing_concepts": [
+          "Explicit definition of lambda syntax",
+          "Square operator (**2) clarification"
+        ],
+        "proposed_fix": "Add a conceptual snippet for 'Anonymous Functions (Lambda)' that explicitly states 'lambda x: x**2' means 'take x and return x squared'."
+      },
+      "suggested_changes": [
+        {
+          "kind": "add_new",
+          "target_item_id": "",
+          "proposal": "Create a snippet titled 'Lambda and Operators' that explains: 1. lambda x: [expression] creates a small function. 2. ** is the power operator (e.g., 2**3 is 8). 3. *args allows passing any number of values as a list.",
+          "why_helpful": "It bridges the gap from 'pattern matching the answer' to 'understanding the code' for a true zero-knowledge student.",
+          "why_maybe_unnecessary": "The student can already find the answer by matching the '30' and the numbers in the intro_python_sample_final snippet.",
+          "recommended_direction": "consider_instead"
+        }
+      ],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:44:53Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    },
+    {
+      "evaluation_id": "round1:trial-final-exam-solutions-introduction-to-python-3077951-q24",
+      "question_id": "trial-final-exam-solutions-introduction-to-python-3077951-q24",
+      "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+      "question_number": 24,
+      "status": "completed",
+      "question_snapshot": {
+        "topic": "trial-functions-3",
+        "question": "If you know the radius r of a circle and you want to calculate its area, you need the value of pi from the math package and apply the formula:\nπr²\n\nSuppose that the variable r already contains the radius of the circle. Which script does not print the correct answer for the area?",
+        "options": {
+          "a": "import math\nprint(math.pi * r ** 2)",
+          "b": "from math import pi\nprint(pi * r ** 2)",
+          "c": "import math as constants\nprint(math.pi * r ** 2)",
+          "d": "from math import pi as constant\nprint(constant * r ** 2)"
+        },
+        "correct": "c",
+        "explanation": "Option C imports the module under the name `constants`, but then tries to access `math.pi`, where `math` is not defined. The other options all reference pi correctly and would print the correct area.",
+        "code_context": "Area formula: πr²"
+      },
+      "seed_context": {
+        "exact_match_findings": [],
+        "available_seed_snippet_ids": [],
+        "provenance_review_status": "agent_reviewed_pending_human_confirmation"
+      },
+      "best_single_snippet": {
+        "item_id": "exam-intro_python_sample_final_24_25-24-w2-conditions",
+        "rationale": "This snippet is a direct match for the question logic. It explicitly explains that 'import math as constants' requires using 'constants.pi' and that 'math.pi' becomes unavailable, which is the exact reason option C is incorrect."
+      },
+      "top_three_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-24-w2-conditions",
+          "rationale": "Directly addresses the import aliasing ('import as') mechanic and why the original name is no longer defined."
+        },
+        {
+          "item_id": "ks-b6a39f66a2",
+          "rationale": "Explains that 'print' is a function used to output arguments to the screen, which helps a novice understand what the code intends to do."
+        },
+        {
+          "item_id": "exam-midterm_2023-13-w3-higher-order-patterns",
+          "rationale": "While not directly about imports, it demonstrates the use of the '**2' operator for squaring numbers, confirming the math formula syntax."
+        }
+      ],
+      "minimal_sufficient_snippets": [
+        {
+          "item_id": "exam-intro_python_sample_final_24_25-24-w2-conditions",
+          "rationale": "Provides the specific rule required to identify the incorrect option."
+        }
+      ],
+      "answerability": {
+        "status": "certain",
+        "confidence": "high",
+        "rationale": "Snippet 'exam-intro_python_sample_final_24_25-24-w2-conditions' contains a verbatim explanation of the 'import as' concept applied to the math module and the circle area problem.",
+        "usable_without_prior_python_knowledge": true
+      },
+      "gap_analysis": {
+        "summary": "The snippets provide a perfect match for the specific technical hurdle (module aliasing) and the general syntax (print, power operator).",
+        "missing_concepts": [],
+        "proposed_fix": ""
+      },
+      "suggested_changes": [],
+      "review_meta": {
+        "requires_human_review": true,
+        "reviewed_at": "2026-03-23T19:45:32Z",
+        "model": "gemini-3-flash-preview",
+        "candidate_item_count": 18
+      }
+    }
+  ]
+}

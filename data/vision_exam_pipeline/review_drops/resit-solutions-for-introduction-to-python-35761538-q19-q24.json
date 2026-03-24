@@ -1,0 +1,159 @@
+{
+  "exam_id": "resit-solutions-for-introduction-to-python-35761538",
+  "question_updates": [
+    {
+      "number": 19,
+      "topic": "6_OOP_Function_1",
+      "question": "You have the following definition for a class called Animals:\n\nclass Animals:\n    def __init__(self, name, sound, legs=None, fin=None):\n        self.name = name\n        self.sound = sound\n        self.legs = legs\n        self.fin = fin\n\n    # missing lines\n    # ...\n\nYou need to add two methods to the class:\n1. The walk() method, which returns the 'sound' attribute an Animal object has if the Animal object has 'legs'. If the Animal object does not, return 'Cannot walk!'.\n2. The swim() method, which returns the 'sound' attribute an Animal object has if the Animal object has 'fin'. If the Animal object does not, return 'Cannot swim!'.\n\nFor example, if we execute the following commands:\ncat = Animals('kitty', legs=True, sound='Meow!')\nfish = Animals('nemo', fin=True, sound='Blob!')\nprint(cat.walk())\nprint(cat.swim())\nprint(fish.swim())\nprint(fish.walk())\n\nthe output should be:\nMeow!\nCannot swim!\nBlob!\nCannot walk!\n\nWhich of the following code segments should you place on the missing lines in the class definition to achieve what you want?",
+      "options": {
+        "a": "def walk(self):\n    return self.sound if self.legs else 'Cannot walk!'\ndef swim(self):\n    return self.sound if self.fin else 'Cannot swim!'",
+        "b": "def walk(self):\n    if self.legs == True:\n        return self.sound\n    else:\n        return 'Cannot walk!'\ndef swim(self):\n    if self.fin == True:\n        return self.sound\n    else:\n        return 'Cannot swim!'",
+        "c": "Both code segments will work as intended.",
+        "d": "Neither code segment will work as intended."
+      },
+      "correct": "c",
+      "explanation": "Both shown method implementations use the instance attributes to return the animal's sound when the relevant boolean attribute is present and the required fallback message otherwise.",
+      "code_context": "class Animals:\n    def __init__(self, name, sound, legs=None, fin=None):\n        self.name = name\n        self.sound = sound\n        self.legs = legs\n        self.fin = fin\n\ncat = Animals('kitty', legs=True, sound='Meow!')\nfish = Animals('nemo', fin=True, sound='Blob!')\nprint(cat.walk())\nprint(cat.swim())\nprint(fish.swim())\nprint(fish.walk())",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-12.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "The lower-left answer labels are partially obscured in the rendered PNG; option text and the selected outcome were reconstructed from the visible code blocks and question structure."
+        ]
+      }
+    },
+    {
+      "number": 20,
+      "topic": "6_OOP_Hard_3",
+      "question": "You have the following definition for a class named Movie.\n\nclass Movie:\n    def __init__(self, title, director, reviews = None):\n        self.title = title\n        self.director = director\n        self.reviews = reviews if reviews else []\n\n    # missing lines\n    # ...\n\nYou need to add three methods to the class:\n1. The add_review() method, which adds review scores to the 'reviews' attribute.\n2. The rating() method, which computes and returns the average review score of all scores stored in the 'reviews' attribute. If there are no reviews, the method should return 0.\n3. The compare() method, which compares the average review scores of two Movie objects and returns the title of the Movie object with the higher average review score, i.e., the name of the movie you should watch. In case both Movie objects have the same average review score, the method should return 'Either'.\n\nFor example, if we execute the following commands:\nmovie1 = Movie('In Bruges', 'Martin McDonagh', [5, 3, 5, 4])\nmovie2 = Movie('Parasite', 'Bong Joon Ho')\nprint(movie1.compare(movie2))\n\nthe output should be:\nIn Bruges\n\nWhich of the following code segments should you place on the missing lines in the class definition to achieve what you want?",
+      "options": {
+        "a": "def add_review(self, score):\n    self.reviews += score\ndef rating(self):\n    return sum(self.reviews)/len(self.reviews) if self.reviews else 0\ndef compare(self, other):\n    for first, second in [(self, other), (other, self)]:\n        return first.title if first.rating() > second.rating() else 'Either'",
+        "b": "def add_review(score):\n    reviews.append(score)\ndef rating():\n    if reviews:\n        return sum(reviews)/len(reviews)\n    else:\n        return 0\ndef compare(self, other):\n    if self.rating > other.rating:\n        return self.title\n    elif self.rating < other.rating:\n        return other.title\n    else:\n        return 'Either'",
+        "c": "Both code segments will work as intended.",
+        "d": "Neither code segment will work as intended."
+      },
+      "correct": "d",
+      "explanation": "The first code segment is broken because it tries to add an integer directly to a list and its compare logic cannot return the other movie's title correctly. The second code segment omits self where needed and compares method objects instead of method results.",
+      "code_context": "class Movie:\n    def __init__(self, title, director, reviews = None):\n        self.title = title\n        self.director = director\n        self.reviews = reviews if reviews else []\n\nmovie1 = Movie('In Bruges', 'Martin McDonagh', [5, 3, 5, 4])\nmovie2 = Movie('Parasite', 'Bong Joon Ho')\nprint(movie1.compare(movie2))",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-13.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Some punctuation in the non-selected code options is small in the rendered PNG and should be human-confirmed."
+        ]
+      }
+    },
+    {
+      "number": 21,
+      "topic": "8_Datetime_Function_1",
+      "question": "You need to write a function called main, which accepts a string as an argument. The string represents a date as DD-MM-YYYY.\n\nThe function should return a list containing 10 strings representing dates, all in that same format.\nThe first element of the list should be the original input date.\nEach further element of the list should be a string representing the date that is exactly one week after the preceding element of the list.\n\nTake a look at the following code segment:\n\nfrom datetime import datetime, timedelta\n\ndef main(string):\n    date = datetime.strptime(string, '%d-%m-%Y')\n    str_list = [date]\n    for i in range(1, 10):\n        str_list.append((str_list[i-1] + timedelta(weeks=1)).strftime('%d-%m-%Y'))\n    return str_list\n\nWill this code segment work as intended? If not, then why not?",
+      "options": {
+        "a": "The code will not work because the two methods strptime() and strftime() are mixed up.",
+        "b": "This code will not work because str_list[i-1] is a string. Timedelta objects can only be added to datetime objects, and cannot be added to strings.",
+        "c": "This code will not work as intended, because there will be 11 strings in the list instead of 10.",
+        "d": "This code segment will work as intended."
+      },
+      "correct": "b",
+      "explanation": "After the first append inside the loop, the list contains formatted date strings. On the next iteration the code tries to add a timedelta to that string, which is not allowed.",
+      "code_context": "from datetime import datetime, timedelta\n\ndef main(string):\n    date = datetime.strptime(string, '%d-%m-%Y')\n    str_list = [date]\n    for i in range(1, 10):\n        str_list.append((str_list[i-1] + timedelta(weeks=1)).strftime('%d-%m-%Y'))\n    return str_list",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-14.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 22,
+      "topic": "8_Datetime_Hard_3",
+      "question": "Suppose you have the following DataFrame called df:\n\n   Day  Month  Year\n0    1      5  2023\n1    8      5  2023\n2   15      5  2023\n3   22      5  2023\n4   29      5  2023\n\nYou need to create a new column called Date that contains strings representing the dates as constructed from the Day, Month and Year columns. That is, finally the DataFrame should look like this:\n\n   Day  Month  Year        Date\n0    1      5  2023  01-05-2023\n1    8      5  2023  08-05-2023\n2   15      5  2023  15-05-2023\n3   22      5  2023  22-05-2023\n4   29      5  2023  29-05-2023\n\nWhich of the following code segments will achieve what you want? You may assume that the pandas module is already imported as pd.",
+      "options": {
+        "a": "from datetime import datetime\ndf['Date'] = pd.Series([datetime(y, m, d).strftime('%d-%m-%Y') for d, m, y in zip(df['Day'], df['Month'], df['Year'])])",
+        "b": "from datetime import datetime\ndf['Date'] = pd.Series([datetime.strptime(d, m, y, '%d-%m-%Y') for d, m, y in zip(df['Day'], df['Month'], df['Year'])])",
+        "c": "from datetime import datetime\ndf['Date'] = pd.Series([datetime(d, m, y).strftime('%d-%m-%Y') for d, m, y in zip(df['Day'], df['Month'], df['Year'])])",
+        "d": "from datetime import datetime\ndf['Date'] = pd.Series([datetime.strptime(date, '%d-%m-%Y') for date in zip(df['Day'], df['Month'], df['Year'])])"
+      },
+      "correct": "a",
+      "explanation": "Option A builds real datetime objects using year, month, and day in the correct order and then formats each one as DD-MM-YYYY.",
+      "code_context": "Day  Month  Year\n0  1  5  2023\n1  8  5  2023\n2  15  5  2023\n3  22  5  2023\n4  29  5  2023",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-15.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Some small punctuation in the non-selected option snippets is hard to read in the rendered PNG and should be human-confirmed."
+        ]
+      }
+    },
+    {
+      "number": 23,
+      "topic": "pandas - hard - 3",
+      "question": "Consider the following pandas DataFrame called df:\n\n   Name  Age  Salary\n0  John   25   50000\n1  Jane   30   65000\n2  Alex   35   80000\n3  Lisa   40   70000\n4  Mark   28   55000\n\nYou need to perform a series of operations on this DataFrame.\n- Operation 1: Create a new column called Above_average, which contains True if the employee's salary is above the average salary of all the employees, otherwise False.\n- Operation 2: Create a new column called Salary_difference, which represents how much higher an employee's salary is than the average salary.\n- Operation 3: Print the segment of the adapted DataFrame that contains all the columns, but only the rows in which the employees earn more than the average salary.\n\nThat is, the final result printed should be:\n   Name  Age  Salary  Above_average  Salary_difference\n1  Jane   30   65000           True                100\n2  Alex   35   80000           True              16000\n3  Lisa   40   70000           True               6000\n\nWhich of the following blocks of code will perform these operations as intended? You may assume the pandas module is already imported as pd.",
+      "options": {
+        "a": "mean_salary = round(df['Salary'].mean())\ndf['Above_average'] = pd.Series([True if salary > mean_salary else False for salary in df['Salary']])\ndf['Salary_difference'] = df['Salary'] - mean_salary\nprint(df[df['Above_average']==True])",
+        "b": "mean_salary = round(df['Salary'].mean())\ndf['Above_average'] = df['Salary'].map(lambda x: True if x > mean_salary else False)\ndf['Salary_difference'] = df['Salary'].map(lambda x: x - mean_salary)\nprint(df[df['Salary_difference']>0])",
+        "c": "Both blocks of code will work as intended.",
+        "d": "None of the blocks of code will work as intended."
+      },
+      "correct": "c",
+      "explanation": "Both code blocks compute the rounded mean salary, derive an above-average indicator, compute salary differences from that mean, and filter the rows with positive differences.",
+      "code_context": "Name  Age  Salary\n0  John  25  50000\n1  Jane  30  65000\n2  Alex  35  80000\n3  Lisa  40  70000\n4  Mark  28  55000",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-16.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 24,
+      "topic": "pandas - lambda - 3",
+      "question": "What will be the output of the following lines of code?\n\nimport pandas as pd\n\ndf = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})\ndf['C'] = df['A'].map(lambda x: x + df['B'].sum())\n\nprint(df)",
+      "options": {
+        "a": "   A  B   C\n0  1  4  16\n1  2  5  17\n2  3  6  18",
+        "b": "   A  B   C\n0  1  4  18\n1  2  5  21\n2  3  6  24",
+        "c": "   A  B   C\n0  1  4  12\n1  2  5  15\n2  3  6  18",
+        "d": "   A  B   C\n0  1  4   9\n1  2  5  12\n2  3  6  15"
+      },
+      "correct": "a",
+      "explanation": "df['B'].sum() is 15, so the lambda adds 15 to each value in column A, producing 16, 17, and 18 in column C.",
+      "code_context": "import pandas as pd\n\ndf = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})\ndf['C'] = df['A'].map(lambda x: x + df['B'].sum())\n\nprint(df)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-17.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "The option-letter area is partially obscured in the rendered PNG, but the four visible output tables were transcribed from top to bottom as options a through d."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "exam_id": "introduction-to-python-trial-final-exam-solutions-py22",
+  "question_updates": [
+    {
+      "number": 1,
+      "topic": "1_Basics_Logic_3",
+      "question": "Suppose you have a variable called x which contains an integer between 0 and 10 (both are inclusive).\n\nWhich of the following programs will tell you whether x contains an odd or even number?",
+      "options": {
+        "a": "if x in list(range(11))[::2]:\n    print('Even number')\nelse:\n    print('Odd number')",
+        "b": "if x % 2 != 0:\n    print('Odd number')\nelse:\n    print('Even number')",
+        "c": "if x in [1, 3, 5, 7, 9]:\n    print('Odd number')\nelse:\n    print('Even number')",
+        "d": "All of the programs work as intended."
+      },
+      "correct": "d",
+      "explanation": "Option A checks membership in the even numbers from 0 through 10, option B checks oddness with modulo, and option C checks membership in the odd numbers from 1 through 9. All three correctly classify x as odd or even in the stated range.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-02.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    },
+    {
+      "number": 2,
+      "topic": "1_Basics_Scope_2",
+      "question": "Take a look at the following code segment. Will executing this code segment produce an error? If yes, then why?",
+      "options": {
+        "a": "This code will produce an error because a is a global name that is referenced inside the local scope of inner().",
+        "b": "This code will not produce any error and will return 30.",
+        "c": "This code will produce an error because c is not defined before referencing.",
+        "d": "This code will not produce any error and will return 50."
+      },
+      "correct": "b",
+      "explanation": "The function inner receives c as its argument, so c is defined. It can also read the global a. inner(5) returns 1 + 5 + 4 = 10, and outer returns 10 * 3 = 30.",
+      "code_context": "a = 1\ndef outer(b):\n    b = 3\n    def inner(c):\n        d = 4\n        return a + c + d\n    return inner(5) * b\nouter(5)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-02.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    },
+    {
+      "number": 3,
+      "topic": "1_Basics_Variables_2",
+      "question": "What will be returned by the following code segment?",
+      "options": {
+        "a": "[0, None, 2, 3, None, 5, 6, 7, 8, None]",
+        "b": "[0, 1.0, 2, 3, 3.50, 5, 6, 7, 8, 9]",
+        "c": "[None, 1.0, None, None, 3.5, None, None, None, None, '9']",
+        "d": "[0, None, 2, 3, None, 5, 6, 7, 8, 9]"
+      },
+      "correct": "a",
+      "explanation": "The function appends each item if its exact type is int; otherwise it appends None. In the given list, 1.0, 3.50, and '9' are not ints, so those positions become None.",
+      "code_context": "def main(list_1):\n    list_2 = []\n    for item in list_1:\n        if type(item) == int:\n            list_2.append(item)\n        else:\n            list_2.append(None)\n    return list_2\n\nmain([0, 1.0, 2, 3, 3.50, 5, 6, 7, 8, '9'])",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-03.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    },
+    {
+      "number": 4,
+      "topic": "2-dictionaries - comprehension - 2",
+      "question": "You have to create a dictionary called roman_nums where the keys are the integers from 1 to 5 (both are inclusive) and the values are their corresponding Roman numeral symbols.\n\nThat is, if we execute the following command:\nprint(roman_nums)\nthe output should be:\n{1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V'}\n\nWhich of the following code segments works as intended?",
+      "options": {
+        "a": "roman_nums = {num: roman for num, roman in zip(range(1, 6), ['I', 'II', 'III', 'IV', 'V'])}",
+        "b": "roman_nums = {roman: num for roman, num in zip(['I', 'II', 'III', 'IV', 'V'], range(1, 6))}",
+        "c": "roman_nums = {num: ['I', 'II', 'III', 'IV', 'V'][num] for num in range(1, 6)}",
+        "d": "roman_nums = {num: roman for num, roman in zip(range(1, 6), 'I II III IV V')}"
+      },
+      "correct": "a",
+      "explanation": "Option A zips the integers 1 through 5 with the five Roman numeral strings and builds the required dictionary. The other options either reverse the keys and values, use incorrect indexing, or iterate over a plain string instead of the intended list of numerals.",
+      "code_context": "",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-03.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    },
+    {
+      "number": 5,
+      "topic": "2-dictionaries - manipulation - 2",
+      "question": "You have two lists representing the names and ages of individuals:\nnames = ['Alice', 'Bob', 'Charlie', 'David']\nages = [25, 30, 35, 40]\n\nYou need to create a dictionary called person_dict where the keys are the names and the values are the ages.\nHowever, you want to only include the names that start with the letter 'A' or with the letter 'C'.\n\nSo executing the following command:\nprint(person_dict)\nshould give the following output:\n{'Alice': 25, 'Charlie': 35}\n\nWhich of the following code segments works as intended?",
+      "options": {
+        "a": "person_dict = {}\nfor name, age in zip(names, ages):\n    if name[0] == 'A' or name[0] == 'C':\n        person_dict[name] = age",
+        "b": "person_dict = {}\nfor i, name in enumerate(names):\n    if name[0] == 'A' or name[0] == 'C':\n        person_dict[i] = ages[i]",
+        "c": "person_dict = {}\nfor name, age in zip(names, ages):\n    if name[0] == 'A' or name[0] == 'C':\n        person_dict.append(name:age)",
+        "d": "person_dict = {}\nfor i, name in enumerate(names):\n    for j, letter in enumerate(name):\n        if letter == 'A' or letter == 'C':\n            person_dict[i] = ages[j]"
+      },
+      "correct": "a",
+      "explanation": "Option A correctly iterates over names and ages together and stores only the names beginning with A or C as keys mapped to their ages. The other options use indices as keys, invalid dictionary syntax, or incorrect nested-loop logic.",
+      "code_context": "names = ['Alice', 'Bob', 'Charlie', 'David']\nages = [25, 30, 35, 40]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-04.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    },
+    {
+      "number": 6,
+      "topic": "2-dictionaries - slicing - 2",
+      "question": "You have the following dictionary that represents the performance ratings of employees in a company:\nemployee_ratings = {'John': 8, 'Sarah': 9, 'Michael': 7, 'Emma': 9, 'David': 6}\n\nYou need to find and print the name of the employee(s) with the highest performance rating.\n\nWhich of the following code segments works as intended?",
+      "options": {
+        "a": "max_rating = max(employee_ratings.values())\nfor employee, rating in employee_ratings.items():\n    if rating == max_rating:\n        print(employee)",
+        "b": "max_rating_employee = max(employee_ratings.keys())\nfor employee, rating in employee_ratings.items():\n    if employee == max_rating_employee:\n        print(employee)",
+        "c": "Both of the given options are correct.",
+        "d": "None of the given options are correct."
+      },
+      "correct": "a",
+      "explanation": "Option A correctly computes the maximum rating value and prints every employee whose rating matches it. Option B instead finds the maximum key lexicographically, not the employee with the highest rating.",
+      "code_context": "employee_ratings = {'John': 8, 'Sarah': 9, 'Michael': 7, 'Emma': 9, 'David': 6}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-04.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    },
+    {
+      "number": 7,
+      "topic": "2-list - comprehension - 1",
+      "question": "What is the output of the following code segment?",
+      "options": {
+        "a": "[2, 4]",
+        "b": "[3, 4, 5]",
+        "c": "[4]",
+        "d": "[]"
+      },
+      "correct": "c",
+      "explanation": "The list comprehension keeps values x from [1, 2, 3, 4, 5] only when x is even and greater than 2. The only value satisfying both conditions is 4.",
+      "code_context": "numbers = [1, 2, 3, 4, 5]\nresult = [x for x in numbers if x % 2 == 0 and x > 2]\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/introduction-to-python-trial-final-exam-solutions-py22/page-05.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Legacy record re-verified from PNG pages."
+        ]
+      }
+    }
+  ]
+}

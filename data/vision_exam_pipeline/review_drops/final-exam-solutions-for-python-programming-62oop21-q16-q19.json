@@ -1,0 +1,106 @@
+{
+  "exam_id": "final-exam-solutions-for-python-programming-62oop21",
+  "question_updates": [
+    {
+      "number": 16,
+      "topic": "final-dictionary-1",
+      "question": "You have to write a function called main, which takes a list of unique integers as an argument and returns a dictionary.\n\nThe output dictionary should consist of all key-value pairs for which the key is an element of the input list and the value is the next element of the input list. When there is no \"next element\" any more, leave the key-value pair out of the dictionary.\n\nFor example, if your function is called as:\nmain([1, 3, 2, 4])\nthen it should return the dictionary:\n{1: 3, 3: 2, 2: 4}\n\nWhich of the following programs work(s) according to the requirements?",
+      "options": {
+        "a": "def main(l1):\n    result = {}\n    index = 0\n    while True:\n        index = index + 1\n        if index >= len(l1):\n            break\n        else:\n            result[l1[index]] = l1[index + 1]\n    return result",
+        "b": "def main(l1):\n    result = {}\n    for index, value in zip(l1[:-1], l1[1:]):\n        result[index] = value\n    return result",
+        "c": "Both programs work as required",
+        "d": "Neither of the two programs works as required"
+      },
+      "correct": "b",
+      "explanation": "Option B correctly zips each element with the following element and builds the required dictionary. Option A starts at index 1 and eventually tries to access past the end of the list.",
+      "code_context": "main([1, 3, 2, 4])\n# should return {1: 3, 3: 2, 2: 4}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 17,
+      "topic": "final-dictionary-2",
+      "question": "What will be printed by the following program?",
+      "options": {
+        "a": "True",
+        "b": "False",
+        "c": "An error message",
+        "d": "None"
+      },
+      "correct": "a",
+      "explanation": "Dictionary equality compares key-value contents rather than insertion order. Since both dictionaries contain the same pairs, the comparison prints True.",
+      "code_context": "d1 = {1: 5, 4: 6}\nd2 = {4: 6, 1: 5}\nprint(d1 == d2)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 18,
+      "topic": "final-dictionary-3",
+      "question": "d1 = {1: 2, 2: 1}\n\nThe following code segments all print exactly the same output, except for one. Which one?",
+      "options": {
+        "a": "result = 1\nfor x in d1.values():\n    result *= x\nprint(result)",
+        "b": "result = -1\nfor x in d1.keys():\n    result += d1[x]\nprint(result)",
+        "c": "result = 4\nfor x in d1.items():\n    result = result // x[1]\nprint(result)",
+        "d": "result = -4\nfor x in d1:\n    result /= d1[x]\nprint(result)"
+      },
+      "correct": "d",
+      "explanation": "A, B, and C all print 2. Option D uses true division starting from -4, so it prints -2.0 instead, making it the odd one out.",
+      "code_context": "d1 = {1: 2, 2: 1}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-12.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 19,
+      "topic": "final-functions-1",
+      "question": "Suppose that you have a string called s1, which contains several letters. The letter \"x\" and the letter \"y\" occur exactly once in the string, and \"x\" always precedes \"y\".\n\nYou'd like to print out a string that looks just like s1, except that the letters \"x\" and \"y\" should be swapped.\n\nFor example, if:\ns1 = \"axbyc\"\nthen you'd like to print:\naybxc\n\nReminder: The replace string method has a third argument, which allows you to specify the maximum number of replacements you want to make, counting from left to right.",
+      "options": {
+        "a": "s1 = s1.replace('x', 'y', 1).replace('y', 'x', 1)\nprint(s1)",
+        "b": "s1 = s1.replace('y', 'x', 1).replace('x', 'y', 1)\nprint(s1)",
+        "c": "s1.replace('x', 'y', 1).replace('y', 'x', 1)\nprint(s1)",
+        "d": "s1.replace('y', 'x', 1).replace('x', 'y', 1)\nprint(s1)"
+      },
+      "correct": "b",
+      "explanation": "Option B first changes the single y to x, then changes the first x from left to right back to y, which swaps the two letters. Options C and D do not assign the new string back to s1, and A changes the first replacement back incorrectly.",
+      "code_context": "s1 = \"axbyc\"\n# desired printed result: aybxc",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-solutions-for-python-programming-62oop21/page-12.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Option D's trailing `print(s1)` line is implied by the rendered pattern but should be human-confirmed from the source page."
+        ]
+      }
+    }
+  ]
+}

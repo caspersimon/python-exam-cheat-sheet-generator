@@ -1,0 +1,155 @@
+{
+  "exam_id": "trial-final-exam-solutions-introduction-to-python-3077951",
+  "question_updates": [
+    {
+      "number": 13,
+      "topic": "Basic logic",
+      "question": "Suppose you have three variables x, y, z as follows:\n\nx = 'x'\ny = 3\nz = 3.0\n\nWhat are the outputs of the following lines of code?\nprint(x == y)\nprint(y == z)\nprint(x == z)\nprint(x == y == z)",
+      "options": {
+        "a": "False\nTrue\nFalse\nFalse",
+        "b": "True\nTrue\nTrue\nTrue",
+        "c": "False\nFalse\nFalse\nTrue",
+        "d": "True\nFalse\nFalse\nFalse"
+      },
+      "correct": "a",
+      "explanation": "The string 'x' is not equal to the integer 3 or the float 3.0, so the first and third comparisons are False. The integer 3 and float 3.0 are equal in Python, so the second comparison is True. The chained comparison is False because x == y is False.",
+      "code_context": "x = 'x'\ny = 3\nz = 3.0\nprint(x == y)\nprint(y == z)\nprint(x == z)\nprint(x == y == z)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 14,
+      "topic": "Basic loop",
+      "question": "You need to write a simple loop that iterates over the integers from 1 to 10, and in each iteration, prints the sum of the current and the previous number. In the first iteration, just take the previous number to be 0.\n\nFor example:\n1 + 0 = 1\n2 + 1 = 3\n3 + 2 = 5\n...\n10 + 9 = 19\n\nChoose the program that will print the correct output (i.e. only the sums).",
+      "options": {
+        "a": "previous = 0\nfor i in range(1, 11):\n    print(i + previous)\n    previous = i",
+        "b": "i = 0\nwhile i <= 10:\n    print(i + (i - 1))\n    i += 1",
+        "c": "Both of the above",
+        "d": "Neither of the above"
+      },
+      "correct": "a",
+      "explanation": "A keeps track of the previous number and prints each sum correctly from 1 + 0 through 10 + 9. B does not use the required previous-value logic and prints the wrong sums.",
+      "code_context": "previous = 0\nfor i in range(1, 11):\n    print(i + previous)\n    previous = i",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 15,
+      "topic": "Basic scope",
+      "question": "Executing the following program will produce an error. Why?\n\ndef cube(num):\n    result = num ** 3\n    return f'The cube of {num} is: {result}.'\n\nprint(result)",
+      "options": {
+        "a": "Result is a local variable and cannot be referenced outside of the function",
+        "b": "** is not a valid Python operator.",
+        "c": "The syntax of the f-string is incorrect.",
+        "d": "You can only use either print or return, but not both."
+      },
+      "correct": "a",
+      "explanation": "result is created inside the function, so it is local to cube and is not available at the top level where print(result) is executed.",
+      "code_context": "def cube(num):\n    result = num ** 3\n    return f'The cube of {num} is: {result}.'\n\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-08.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 16,
+      "topic": "List lambda",
+      "question": "You already have a list named list_1 with 2 lambda functions as follows:\n\nlist_1 = [lambda a, b: a + b, lambda a, b: a * b]\n\nWhat would be printed by the following code snippet?\nprint(list_1[0](1, 2) ** list_1[1](1, 2))",
+      "options": {
+        "a": "6",
+        "b": "7",
+        "c": "8",
+        "d": "9"
+      },
+      "correct": "d",
+      "explanation": "list_1[0](1, 2) returns 3 and list_1[1](1, 2) returns 2, so the expression becomes 3 ** 2, which is 9.",
+      "code_context": "list_1 = [lambda a, b: a + b, lambda a, b: a * b]\nprint(list_1[0](1, 2) ** list_1[1](1, 2))",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-08.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 17,
+      "topic": "List logic",
+      "question": "You have the following function called main:\n\ndef main(x):\n    y = []\n    for i in x:\n        if len(i) == 0:\n            y.append(True)\n        else:\n            y.append(False)\n    return y[0] == y[1] == y[2]\n\nWhat are the outputs of the following lines:\nmain([[], (), []])\nmain([[1], [2, 2], [3, 3, 3]])\nmain([[1], [2], [3]])",
+      "options": {
+        "a": "True\nTrue\nTrue",
+        "b": "True\nFalse\nTrue",
+        "c": "True\nFalse\nFalse",
+        "d": "False\nFalse\nTrue"
+      },
+      "correct": "a",
+      "explanation": "For the first call, each element has length 0, so y becomes [True, True, True] and the comparison is True. In the second and third calls, each element has non-zero length, so y becomes [False, False, False] and the chained equality is also True.",
+      "code_context": "def main(x):\n    y = []\n    for i in x:\n        if len(i) == 0:\n            y.append(True)\n        else:\n            y.append(False)\n    return y[0] == y[1] == y[2]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-09.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 18,
+      "topic": "List loop",
+      "question": "How do you break a list into a list of lists, in which a sub-list consists of 3 values each?\n\nFor example, if the original list x is:\nx = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']\nthen how would you create:\ny = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]",
+      "options": {
+        "a": "y = [x[i:i + 3] for i in range(0, 7, 3)]",
+        "b": "y = [x[0::3] for i, enumerate(x)]",
+        "c": "Both of the above work",
+        "d": "Neither of the above works"
+      },
+      "correct": "a",
+      "explanation": "A slices the list into consecutive groups of three elements. B does not produce the required nested lists.",
+      "code_context": "x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/trial-final-exam-solutions-introduction-to-python-3077951/page-09.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

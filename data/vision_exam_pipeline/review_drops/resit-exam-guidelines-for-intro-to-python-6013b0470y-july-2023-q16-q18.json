@@ -1,0 +1,81 @@
+{
+  "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+  "question_updates": [
+    {
+      "number": 16,
+      "topic": "Multiple choice",
+      "question": "You have the following definition of a class called Employee:\n\nclass Employee:\n    def __init__(self, name, role, gender = 'not specified'):\n        self.name = name\n        self.role = role\n        self.gender = gender\n\nWhat will be the output if we execute the following lines of code?\n\nemployee1 = Employee('John Smith', 'HR representative')\nprint(employee1.name == 'John Smith')\nprint(employee1.gender == 'not specified')",
+      "options": {
+        "a": "True\nTrue",
+        "b": "False\nTrue",
+        "c": "False\nFalse",
+        "d": "True\nFalse"
+      },
+      "correct": "a",
+      "explanation": "The object is created with name 'John Smith', and because no gender argument is passed, the default value 'not specified' is used. Both comparisons therefore evaluate to True.",
+      "code_context": "class Employee:\n    def __init__(self, name, role, gender = 'not specified'):\n        self.name = name\n        self.role = role\n        self.gender = gender\n\nemployee1 = Employee('John Smith', 'HR representative')\nprint(employee1.name == 'John Smith')\nprint(employee1.gender == 'not specified')",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 17,
+      "topic": "Multiple choice",
+      "question": "Which other code fragment will print the same output as the following?\n\nfrom datetime import datetime, timedelta\nprint((datetime.strptime('2023/1/10', '%Y/%m/%d') - datetime(2023, 1, 1)).days + 1)",
+      "options": {
+        "a": "from datetime import datetime, timedelta\nprint((datetime(2023, 1, 10) - datetime(2023, 1, 1)).days)",
+        "b": "from datetime import datetime, timedelta\nprint(timedelta(datetime(2023, 1, 10) - datetime(2023, 1, 1)).days + 1)",
+        "c": "from datetime import datetime, timedelta\nprint((datetime(2023, 1, 10) - datetime.strptime('2023-1-1', '%Y-%m-%d')).days)",
+        "d": "from datetime import datetime, timedelta\nprint((datetime(2023, 1, 11) - datetime(2023, 1, 1)).days)"
+      },
+      "correct": "d",
+      "explanation": "The original expression computes the number of days between January 10 and January 1, then adds 1, which yields 10. Option D also yields 10 by subtracting January 1 from January 11.",
+      "code_context": "from datetime import datetime, timedelta\nprint((datetime.strptime('2023/1/10', '%Y/%m/%d') - datetime(2023, 1, 1)).days + 1)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023/page-10.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Option B contains a small formatting detail that should be human-confirmed from the page, but the marked correct answer is clearly D."
+        ]
+      }
+    },
+    {
+      "number": 18,
+      "topic": "Multiple choice",
+      "question": "Suppose you have the following DataFrame called df:\n  Player  Age  Height\n0 John     25     180\n1 Jane     30     165\n2 Alex     27     175\n\nYou may assume that pandas is already imported as pd.\n\nWhich of the following lines of code will give an error?",
+      "options": {
+        "a": "print(df[['Player', 'Age']])",
+        "b": "print(df.loc[df['Height'] > 170, ['Player', 'Age']])",
+        "c": "print(df.loc[:, 'Age'])",
+        "d": "print(df[1, 'Age'])"
+      },
+      "correct": "d",
+      "explanation": "Options A, B, and C are valid pandas selections. Option D is invalid because standard bracket indexing in this form does not accept the tuple (1, 'Age') to select a single cell.",
+      "code_context": "df = pd.DataFrame({\n    'Player': ['John', 'Jane', 'Alex'],\n    'Age': [25, 30, 27],\n    'Height': [180, 165, 175]\n})",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023/page-11.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

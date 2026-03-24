@@ -1,0 +1,206 @@
+{
+  "exam_id": "sample-final-plus-answers",
+  "question_updates": [
+    {
+      "number": 17,
+      "topic": "Empty-sequence equality chain",
+      "question": "You have the following function called main:\ndef main(x):\n    y = []\n    for i in x:\n        if len(i) == 0:\n            y.append(True)\n        else:\n            y.append(False)\n    return y[0] == y[1] == y[2]\n\nWhat will be printed by the following lines:\nprint(main([{}, {}, {}]))\nprint(main([[1], [2, 2], [3, 3, 3]]))\nprint(main([[1], [2], [3]]))",
+      "options": {
+        "a": "True\nFalse\nFalse",
+        "b": "False\nFalse\nTrue",
+        "c": "True\nFalse\nTrue",
+        "d": "True\nTrue\nTrue"
+      },
+      "correct": "d",
+      "explanation": "The first call builds [True, True, True], the second call builds [False, False, False], and the third call also builds [False, False, False]. In all three cases the chained equality compares three identical booleans, so each printed result is True.",
+      "code_context": "def main(x):\n    y = []\n    for i in x:\n        if len(i) == 0:\n            y.append(True)\n        else:\n            y.append(False)\n    return y[0] == y[1] == y[2]\n\nprint(main([{}, {}, {}]))\nprint(main([[1], [2, 2], [3, 3, 3]]))\nprint(main([[1], [2], [3]]))",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-23.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 18,
+      "topic": "List chunking into sublists",
+      "question": "How do you break a list into a list of lists, where each sublist contains 3 elements?\nFor example:\nIf you have the original list x as:\nx = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']\nHow do you create:\ny = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]",
+      "options": {
+        "a": "y = [x[i:(i + 3)] for i in range(0, 7, 3)]",
+        "b": "y = [x[i[0]::3] for i in enumerate(x)]",
+        "c": "Both of the above work",
+        "d": "Neither of above works"
+      },
+      "correct": "a",
+      "explanation": "Option A slices the list in chunks of length 3 starting at indices 0, 3, and 6, which produces the three required sublists in order.",
+      "code_context": "x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']\ny = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-24.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 19,
+      "topic": "Dictionary running totals",
+      "question": "You have to write a function called main that accepts a dictionary as an input argument.\nBoth the keys and the values of the input are integers.\nReturn another dictionary that has the same keys as the input argument. For each output key, the corresponding value should be calculated as the sum of those values from the input dictionary whose keys are smaller than or equal to the output key in question.\nFor example:\nmain({5: 1, 2: 5, 4: 2})\nshould return a dictionary that is equal to:\n{5: 8, 2: 5, 4: 7}\nWhich of the following programs works as intended?",
+      "options": {
+        "a": "def main(d):\n    result = {}\n    for output_key in d.keys():\n        result[output_key] = sum([v for k, v in d.items() if k <= output_key])\n    return result",
+        "b": "def main(d1):\n    running_total = 0\n    d2 = {}\n    for key in sorted(d1.keys()):\n        running_total += d1[key]\n        d2[key] = running_total\n    return d2",
+        "c": "Both of the above work as intended",
+        "d": "None of the above works as intended"
+      },
+      "correct": "c",
+      "explanation": "The first program computes each output value by summing all input values whose keys are less than or equal to the current key. The second program accumulates values in ascending key order, which yields the same running totals for each key.",
+      "code_context": "main({5: 1, 2: 5, 4: 2})\n# expected result:\n# {5: 8, 2: 5, 4: 7}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-25.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 20,
+      "topic": "Dictionary equality with zip and enumerate",
+      "question": "What is the result of the following program?\n\nl1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]\n\nd1 = {}\nfor key, value in zip(l1, l2):\n    d1[key] = value\n\nd2 = {}\nfor key, value in enumerate(l2, 1):\n    d2[key] = value\n\nprint(d1 == d2)",
+      "options": {
+        "a": "True",
+        "b": "False",
+        "c": "An error message.",
+        "d": "None of the above"
+      },
+      "correct": "a",
+      "explanation": "zip(l1, l2) produces key-value pairs (1,2), (2,3), (3,4), and (4,5). enumerate(l2, 1) produces the same key-value pairs, so d1 and d2 are equal and the comparison prints True.",
+      "code_context": "l1 = [1, 2, 3, 4]\nl2 = [2, 3, 4, 5]\n\nd1 = {}\nfor key, value in zip(l1, l2):\n    d1[key] = value\n\nd2 = {}\nfor key, value in enumerate(l2, 1):\n    d2[key] = value\n\nprint(d1 == d2)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-27.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "The preceding rendered page is an empty feedback/interstitial page; the verified question appears on page-27.png."
+        ]
+      }
+    },
+    {
+      "number": 21,
+      "topic": "Dictionary iteration semantics",
+      "question": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}\nThe following codes all print the same value, except one. Which one?",
+      "options": {
+        "a": "result = 0\nfor key, value in d1:\n    result += value\nprint(result)",
+        "b": "result = 0\nfor key in d1.keys():\n    result += d1[key]\nprint(result)",
+        "c": "result = 0\nfor value in d1.values():\n    result += value\nprint(result)",
+        "d": "result = sum(d1.values())\nprint(result)"
+      },
+      "correct": "a",
+      "explanation": "Iterating directly over a dictionary yields keys, not (key, value) pairs, so `for key, value in d1:` is invalid. The other three variants all sum the dictionary values correctly.",
+      "code_context": "d1 = {1: 10, 2: 20, 3: 30, 4: 40}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-28.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 22,
+      "topic": "String count method",
+      "question": "You have the following string\nx = 'Amsterdam'\nWhich script, using the count string method, would print the following value:\n1",
+      "options": {
+        "a": "print(count(x, 'a'))",
+        "b": "print(x.count('a'))",
+        "c": "Both scripts would deliver that result",
+        "d": "Neither script would deliver that result"
+      },
+      "correct": "b",
+      "explanation": "The string method `count` must be called on the string object itself. `x.count('a')` returns 1 for the lowercase 'a' in 'Amsterdam'.",
+      "code_context": "x = 'Amsterdam'",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-29.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 23,
+      "topic": "Higher-order function returning 30",
+      "question": "Take a look at the following function definition.\n\ndef calculation(func, *args):\n    result = 0\n    for el in args:\n        result += func(el)\n    return result\n\nWhich of the following function calls would return the number 30 as a result?",
+      "options": {
+        "a": "calculation(lambda x: x + 5, 1, 2, 3, 4)",
+        "b": "calculation(lambda x: x**2, 1, 2, 3, 4)",
+        "c": "Both function calls would lead to that result",
+        "d": "Neither function call would lead to that result"
+      },
+      "correct": "c",
+      "explanation": "The first call returns (1+5)+(2+5)+(3+5)+(4+5)=30, and the second returns 1^2+2^2+3^2+4^2=30. Both produce the requested result.",
+      "code_context": "def calculation(func, *args):\n    result = 0\n    for el in args:\n        result += func(el)\n    return result",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-30.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 24,
+      "topic": "Circle area imports and aliases",
+      "question": "If you know the radius r of a circle and you want to calculate its area, you need the value of pi from the math package and apply the formula:\nπr²\nSuppose that the variable r already contains the radius of the circle. Which script does not print the correct answer for the area?",
+      "options": {
+        "a": "import math\nprint(math.pi * r ** 2)",
+        "b": "from math import pi\nprint(pi * r ** 2)",
+        "c": "import math as constants\nprint(math.pi * r ** 2)",
+        "d": "from math import pi as constant\nprint(constant * r ** 2)"
+      },
+      "correct": "c",
+      "explanation": "Option C aliases the module as `constants`, so `math.pi` is not defined there. The other three options reference pi correctly.",
+      "code_context": "# area formula\n# pi * r ** 2",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/sample-final-plus-answers/page-31.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

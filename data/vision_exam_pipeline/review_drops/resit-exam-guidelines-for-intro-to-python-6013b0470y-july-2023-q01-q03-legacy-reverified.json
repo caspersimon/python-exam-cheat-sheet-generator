@@ -1,0 +1,81 @@
+{
+  "exam_id": "resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023",
+  "question_updates": [
+    {
+      "number": 1,
+      "topic": "Multiple choice - Question-ID: 357615",
+      "question": "Suppose you have a list called x containing tuples, where\nx = [(1, 2), (3, 4), (5, 6), (7, 8)]\n\nWhich of the following lines of code will print True?",
+      "options": {
+        "a": "print(x[0][1] * x[-3][0] == x[2][1])",
+        "b": "print(x[1][0] + x[-2][0] == x[-1][1])",
+        "c": "print(x[-1][0] - x[-2][0] == x[0][1])",
+        "d": "All lines of code will print True."
+      },
+      "correct": "d",
+      "explanation": "All three expressions evaluate to True: 2 * 3 = 6 equals x[2][1], 3 + 5 = 8 equals x[-1][1], and 7 - 5 = 2 equals x[0][1].",
+      "code_context": "x = [(1, 2), (3, 4), (5, 6), (7, 8)]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023/page-03.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 2,
+      "topic": "Multiple choice - Question-ID: 357607",
+      "question": "Executing the following program will produce an error. Why?",
+      "options": {
+        "a": "The function called power should not return the string 'The result of {} ** {} is: {}'.format(num, factor, result), but the value of result.",
+        "b": "** is not a valid Python operator.",
+        "c": "The syntax used in the return statement to format the string is incorrect.",
+        "d": "Result is a local name that cannot be referenced outside of the function power."
+      },
+      "correct": "d",
+      "explanation": "`result` is defined inside the function `power`, so it is local to that function. The statement `print(result)` outside the function therefore raises a name error because `result` is not defined there.",
+      "code_context": "def power(num, factor):\n    result = num ** factor\n    return 'The result of {} ** {} is: {}'.format(num, factor, result)\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023/page-03.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 3,
+      "topic": "Multiple choice - Question-ID: 355235",
+      "question": "What will be printed by the following code segment?",
+      "options": {
+        "a": "['a', 'None', '123']",
+        "b": "[[]]",
+        "c": "[]",
+        "d": "[None]"
+      },
+      "correct": "d",
+      "explanation": "The code appends list-typed elements to `y`, but the return expression uses `append`, which itself returns `None`. The page marks option D as correct, so the intended evaluated output is `[None]`.",
+      "code_context": "def main(x):\n    y = list()\n    for i in x:\n        if type(i) == type(x):\n            y.append(i)\n\n    return [y.append(i)]\n\nresult = main(['a', 'None', [], {}, '123', 0.05, 111])\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023/page-03.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "Question 3 return line is small in the rendered PNG and should be human-confirmed during merge review."
+        ]
+      }
+    }
+  ]
+}

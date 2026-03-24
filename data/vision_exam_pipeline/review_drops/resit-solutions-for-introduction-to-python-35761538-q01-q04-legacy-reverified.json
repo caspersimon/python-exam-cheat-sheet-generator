@@ -1,0 +1,109 @@
+{
+  "exam_id": "resit-solutions-for-introduction-to-python-35761538",
+  "question_updates": [
+    {
+      "number": 1,
+      "topic": "1_Basics_Logic_1",
+      "question": "Suppose you have a list called x containing tuples, where\nx = [(1, 2), (3, 4), (5, 6), (7, 8)]\n\nWhich of the following lines of code will print True?",
+      "options": {
+        "a": "print(x[0][1] * x[-3][0] == x[2][1])",
+        "b": "print(x[1][0] + x[-2][0] == x[-1][1])",
+        "c": "print(x[-1][0] - x[-2][0] == x[0][1])",
+        "d": "All lines of code will print True."
+      },
+      "correct": "d",
+      "explanation": "The three code lines evaluate to 2 * 3 == 6, 3 + 5 == 8, and 7 - 5 == 2, so each one is True. Therefore the correct choice is that all lines print True.",
+      "code_context": "x = [(1, 2), (3, 4), (5, 6), (7, 8)]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-02.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "The left option labels are partially obscured by the rendered page overlay, but the visible option texts and the selected outcome verify the answer."
+        ]
+      }
+    },
+    {
+      "number": 2,
+      "topic": "1_Basics_Scope_1",
+      "question": "Executing the following program will produce an error. Why?\n\ndef power(num, factor):\n    result = num ** factor\n    return 'The result of {} ** {} is: {}.'.format(num, factor, result)\nprint(result)",
+      "options": {
+        "a": "Result is a local name that cannot be referenced outside of the function power.",
+        "b": "** is not a valid Python operator.",
+        "c": "The syntax used in the return statement to format the string is incorrect.",
+        "d": "The function called power should not return the string 'The result of {} ** {} is: {}.'.format(num, factor, result), but the value of result."
+      },
+      "correct": "a",
+      "explanation": "`result` is defined inside the function, so it has local scope. The line `print(result)` is outside the function and therefore cannot access that local variable.",
+      "code_context": "def power(num, factor):\n    result = num ** factor\n    return 'The result of {} ** {} is: {}.'.format(num, factor, result)\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-02.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "The selected answer text is visible in bold on the rendered page; left-side option labels are partially obscured by the overlay."
+        ]
+      }
+    },
+    {
+      "number": 3,
+      "topic": "1_Basics_Variables_3",
+      "question": "What will be printed by the following code segment?\n\ndef main(x):\n    y = list()\n    for i in x:\n        if type(i) == type(x):\n            y.append(i)\n    return y\n\nresult = main(['a', 'None', [], {}, '123', 0.05, 111])\nprint(result)",
+      "options": {
+        "a": "['a', 'None', '123']",
+        "b": "[[]]",
+        "c": "[None]",
+        "d": "[]"
+      },
+      "correct": "b",
+      "explanation": "The function appends only elements whose type matches the type of `x`, which is `list`. Among the provided elements, only `[]` is itself a list, so the printed result is `[[]]`.",
+      "code_context": "def main(x):\n    y = list()\n    for i in x:\n        if type(i) == type(x):\n            y.append(i)\n    return y\n\nresult = main(['a', 'None', [], {}, '123', 0.05, 111])\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-03.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "The right edge of the input list is slightly clipped in the rendered PNG, but the visible options and the function logic confirm the selected answer `[[]]`."
+        ]
+      }
+    },
+    {
+      "number": 4,
+      "topic": "3_Function_Argument_3",
+      "question": "Suppose you have the following function, which takes two integers as arguments:\n\ndef main(x, y=11):\n    table = []\n    i = 1\n    while i < y:\n        table.append(f'{x} * {i} = {x*i}')\n        i += 1\n    return table\n\nWhat will be printed by the following line of code:\nprint(main(1))",
+      "options": {
+        "a": "['1 * 1 = 1', '1 * 2 = 2', '1 * 3 = 3', '1 * 4 = 4', '1 * 5 = 5', '1 * 6 = 6', '1 * 7 = 7', '1 * 8 = 8', '1 * 9 = 9', '1 * 10 = 10']",
+        "b": "['1 * 1 = 1', '1 * 2 = 2', '1 * 3 = 3', '1 * 4 = 4', '1 * 5 = 5', '1 * 6 = 6', '1 * 7 = 7', '1 * 8 = 8', '1 * 9 = 9', '1 * 10 = 10', '1 * 11 = 11']",
+        "c": "This code produces an error as there is a missing argument when calling main.",
+        "d": "The code produces a syntax error because of the line:\n            table.append(f'{x} * {i} = {x*i}')"
+      },
+      "correct": "a",
+      "explanation": "When `main(1)` is called, `y` uses its default value `11`. The loop runs for `i` values 1 through 10, so it returns a list of ten multiplication strings from `1 * 1 = 1` through `1 * 10 = 10`.",
+      "code_context": "def main(x, y=11):\n    table = []\n    i = 1\n    while i < y:\n        table.append(f'{x} * {i} = {x*i}')\n        i += 1\n    return table",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-03.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "The left option labels are partially obscured by the overlay, but the visible answer texts and the selected outcome verify the correct option."
+        ]
+      }
+    }
+  ]
+}

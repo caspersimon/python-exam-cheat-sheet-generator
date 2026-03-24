@@ -1,0 +1,82 @@
+{
+  "exam_id": "final-exam-study-guide-trial-python-basics-2023",
+  "question_updates": [
+    {
+      "number": 22,
+      "topic": "8_Datetime_Hard_2",
+      "question": "You want to define a class called Calendar, which has four attributes that are initialized at the time of object construction:\n1. The 'event' attribute can be any string,\n2. The 'date' attribute is a string representing a date as 'DD-MM-YYYY',\n3. The 'start' attribute is a string representing the time as 'HH:MM', and\n4. The 'length' attribute is an integer representing the amount of minutes.\n\nThe class should also have a method called get_details() that gives a description of Calendar objects.\n\nFor example, if we execute the following commands;\nevent1 = Calendar('Coffee meeting', '01-06-2023', '9:30', 20)\nprint(event1.get_details())\n\nthe output should be:\nCoffee meeting: 01-06-2023, 9:30-9:50.\n\nWhich of the following code segments gives you what you want?",
+      "options": {
+        "a": "class Calendar():\n    def __init__(self, event, date, start, length):\n        self.event = event\n        self.date = datetime.strptime(date, '%d-%m-%Y')\n        self.start = datetime(self.date.year, self.date.month, self.date.day, int(start.split(':')[0]), int(start.split(':')[1]))\n        self.end = self.start + timedelta(minutes=length)\n    def get_details(self):\n        return f'{self.event}: {self.date.strftime(\"%d-%m-%Y\")}, {self.start.hour}:{self.start.minute}-{self.end.hour}:{self.end.minute}.'",
+        "b": "class Calendar():\n    def __init__(self, event, date, start, length):\n        self.event = event\n        self.date = date\n        self.start = datetime(self.date, hour=start.split(':')[0], minute=start.split(':')[1])\n        self.length = timedelta(minutes=length)\n        self.end = self.start + self.length\n    def get_details(self):\n        return f'{self.event}: {self.date}, {self.start.hour}:{self.start.minute}-{self.end.hour}:{self.end.minute}.'",
+        "c": "class Calendar():\n    def __init__(self, event, date, start, length):\n        self.event = event\n        self.date = date\n        self.start = datetime(self.date, hour=start.hour, minute=start.minute)\n        self.end = self.self.start + timedelta(minutes=length)\n    def get_details(self):\n        return f'{self.event}: {self.date}, {self.start.hour}:{self.start.minute}-{self.end.hour}:{self.end.minute}.'",
+        "d": "class Calendar():\n    def __init__(self, event, date, start, length):\n        self.event = event\n        self.date = datetime.strptime(date, '%d-%m-%Y')\n        self.start.hour = start.hour\n        self.start.minute = start.minute\n        self.end = self.start + timedelta(minutes=length)\n    def get_details(self):\n        return f'{self.event}: {self.date.strftime(\"%d-%m-%Y\")}, {self.start.hour}:{self.start.minute}-{self.end.hour}:{self.end.minute}.'"
+      },
+      "correct": "a",
+      "explanation": "Option A is the only choice that correctly parses the date string, combines the parsed date with the split start time to build a datetime, adds the duration in minutes, and formats the requested details string.",
+      "code_context": "event1 = Calendar('Coffee meeting', '01-06-2023', '9:30', 20)\nprint(event1.get_details())\n# output:\n# Coffee meeting: 01-06-2023, 9:30-9:50.",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-14.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Some small format-code and punctuation characters in the non-selected option snippets are hard to read in the rendered PNG and should be human-confirmed."
+        ]
+      }
+    },
+    {
+      "number": 23,
+      "topic": "9_OOP_Function_2",
+      "question": "You have the following definition for a class called Employee:\n\nclass Employee:\n    def __init__(self, name, role, salary):\n        self.name = name\n        self.role = role\n        self.salary = salary\n    # ...\n\nYou want to add three methods to this class:\n1. The holiday_bonus() method which computes and returns the holiday bonus, which is 8.0% of the yearly salary,\n2. The year_end_bonus() method which computes and returns the year end bonus, which is 8.3% of the yearly salary\n3. The payment_overview() method which returns a payment overview of the employee using the following format:\n[Name] receives $[salary] monthly, $[holiday bonus] in May and $[year end bonus] in December.\n\nFor example, if we execute the following commands:\nemployee1 = Employee('John Smith', 'HR representative', 2500)\nprint(employee1.holiday_bonus())\nprint(employee1.year_end_bonus())\nprint(employee1.payment_overview())\n\nthe output should be:\n2400.0\n2490.0\nJohn Smith receives $2500 monthly, $2400.0 in May and $2490.0 in December.\n\nWhich of the following code segments should you place on the blank in the class definition to achieve what you want?",
+      "options": {
+        "a": "def holiday_bonus(self):\n    return self.salary * 12 * 0.080\ndef year_end_bonus(self):\n    return self.salary * 12 * 0.083\ndef payment_overview(self):\n    return f'{self.name} receives ${self.salary} monthly, ${self.holiday_bonus()} in May and ${self.year_end_bonus()} in December.'",
+        "b": "def payment_overview(self):\n    return f'{self.name} receives ${self.salary} monthly, ${self.salary*12*0.08} in May and ${self.salary*12*0.083} in December.'",
+        "c": "def holiday_bonus():\n    self.holiday_bonus = self.salary * 12 * 0.080\ndef year_end_bonus():\n    self.year_end_bonus = self.salary * 12 * 0.083\ndef payment_overview(self):\n    return f'{self.name} receives ${self.salary} monthly, ${self.holiday_bonus} in May and ${self.year_end_bonus} in December.'",
+        "d": "def payment_overview(self):\n    self.holiday_bonus = self.salary * 12 * 0.080\n    self.year_end_bonus = self.salary * 12 * 0.083\n    return f'{self.name} receives ${self.salary} monthly, ${self.holiday_bonus} in May and ${self.year_end_bonus} in December.'"
+      },
+      "correct": "a",
+      "explanation": "Option A defines all three requested methods, computes the two bonuses from the yearly salary, and uses those method results in the overview string.",
+      "code_context": "class Employee:\n    def __init__(self, name, role, salary):\n        self.name = name\n        self.role = role\n        self.salary = salary\n    # ...\n\nemployee1 = Employee('John Smith', 'HR representative', 2500)\nprint(employee1.holiday_bonus())\nprint(employee1.year_end_bonus())\nprint(employee1.payment_overview())",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-15.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 24,
+      "topic": "9_OOP_Hard_2",
+      "question": "You have the following definitions for a class called Car:\n\nclass Car:\n    def __init__(self, brand, model):\n        self.brand = brand\n        self.model = model\n\n    def get_description(self):\n        return f\"{self.brand}, {self.model}\"\n\nYou want to create another class called Garage, which has two attributes that are initialized during object construction:\n- The 'capacity' attribute, which is an integer and must be passed to the object constructor.\n- The 'cars' attribute, which is an empty list.\n\nThe Garage class should also have two methods:\n1. The add_car() method, which adds Car objects to a Garage object. New Car objects can only be added if there is still capacity in the Garage object. If not, the method should return \"Capacity reached.\"\n2. The check_garage() method, which reports the Car objects that have been added to the Garage object. The method should return a dictionary in which the keys are the counts of Car objects starting from 1 and the values are the Car objects' descriptions.\n\nFor example, if we execute the following commands:\nmy_garage = Garage(2)\nmy_garage.add_car(Car(\"Toyota\", \"Camry\"))\nmy_garage.add_car(Car(\"Honda\", \"Accord\"))\nprint(my_garage.check_garage())\n\nthe output should be:\n{1: 'Toyota, Camry', 2: 'Honda, Accord'}\n\nWhich of the following code segments achieve(s) what you want?",
+      "options": {
+        "a": "class Garage:\n    def __init__(self, capacity, cars = []):\n        self.capacity = capacity\n\n    def add_car(self, car):\n        self.cars += car if len(self.cars) < self.capacity else return 'Capacity reached.'\n\n    def check_garage(self, car):\n        return {index: car.get_description() for index, car in enumerate(self.cars, start=1)}",
+        "b": "class Garage:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.cars = []\n\n    def add_car(self, car):\n        if len(self.cars) < self.capacity:\n            self.cars.append(car)\n        else:\n            return 'Capacity reached.'\n\n    def check_garage(self):\n        output = {}\n        for index, car in enumerate(self.cars, start=1):\n            output[index] = car.get_description()\n        return output",
+        "c": "Both of the above will work.",
+        "d": "None of the above will work."
+      },
+      "correct": "b",
+      "explanation": "Option B initializes capacity and an empty cars list, appends cars only when capacity remains, returns the required message when full, and builds the requested dictionary in check_garage().",
+      "code_context": "class Car:\n    def __init__(self, brand, model):\n        self.brand = brand\n        self.model = model\n\n    def get_description(self):\n        return f\"{self.brand}, {self.model}\"\n\nmy_garage = Garage(2)\nmy_garage.add_car(Car(\"Toyota\", \"Camry\"))\nmy_garage.add_car(Car(\"Honda\", \"Accord\"))\nprint(my_garage.check_garage())\n# output:\n# {1: 'Toyota, Camry', 2: 'Honda, Accord'}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-16.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only.",
+          "Some punctuation in non-selected option A is small in the rendered PNG and should be human-confirmed."
+        ]
+      }
+    }
+  ]
+}

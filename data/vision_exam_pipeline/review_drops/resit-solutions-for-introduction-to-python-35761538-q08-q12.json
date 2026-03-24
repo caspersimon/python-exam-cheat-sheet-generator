@@ -1,0 +1,130 @@
+{
+  "exam_id": "resit-solutions-for-introduction-to-python-35761538",
+  "question_updates": [
+    {
+      "number": 8,
+      "topic": "Dictionaries and Mappings",
+      "question": "You are given two lists, called students and grades:\n- The students list contains strings representing the names of students.\n- The grades list contains integers representing the students' corresponding grade levels.\n\nYou need to create a dictionary called grade_counts that counts the number of students in each grade level. That is, the keys of the dictionary are the grade levels and the values are the number of students in that grade.\n\nFor example, if you have:\nstudents = ['A', 'B', 'C', 'D', 'E', 'F']\ngrades = [9, 10, 9, 11, 10, 9]\n\nthen the created dictionary grade_counts should be:\n{9: 3, 10: 2, 11: 1}\n\nWhich of the following code segments will work as intended?",
+      "options": {
+        "a": "grade_counts = {}\nfor grade in grades:\n    if grade not in grade_counts:\n        grade_counts[grade] = 0\n    grade_counts[grade] += 1",
+        "b": "grade_counts = {}\nfor student, grade in zip(students, grades):\n    if grade in grade_counts:\n        grade_counts[grade].append(student)\n    else:\n        grade_counts[grade] = [student]",
+        "c": "Both of the given options will work as intended.",
+        "d": "None of the given options will work as intended."
+      },
+      "correct": "a",
+      "explanation": "A counts how many times each grade appears, which matches the requested dictionary. B stores lists of students per grade, so it does not produce counts.",
+      "code_context": "students = ['A', 'B', 'C', 'D', 'E', 'F']\ngrades = [9, 10, 9, 11, 10, 9]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-05.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 9,
+      "topic": "Dictionaries and Mappings",
+      "question": "You have a dictionary that represents the scores of students in a math competition:\nmath_scores = {'John': 85, 'Sarah': 92, 'Michael': 78, 'Emma': 90, 'David': 82}\n\nYou want to find and print the names of the students who scored above the average score.\n\nWhich of the following code segments will work as intended?",
+      "options": {
+        "a": "average_score = sum(math_scores.values()) / len(math_scores)\nfor student in math_scores.keys():\n    if math_scores[student] > average_score:\n        print(student)",
+        "b": "for student in math_scores:\n    if math_scores[student] > (sum(math_scores.values()) / len(math_scores)):\n        print(student)",
+        "c": "Both code segments will work as intended.",
+        "d": "None of the code segments will work as intended."
+      },
+      "correct": "c",
+      "explanation": "Both snippets correctly print the names whose scores are above the average. A computes the average once, while B recomputes it inside the loop but still produces the correct result.",
+      "code_context": "math_scores = {'John': 85, 'Sarah': 92, 'Michael': 78, 'Emma': 90, 'David': 82}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-05.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 10,
+      "topic": "String Methods",
+      "question": "What is the output of the following code segment?\n\nx = 'Hello, World!'\nprint([char for char in x if char.islower()])",
+      "options": {
+        "a": "['e', 'l', 'l', 'o', 'o', 'r', 'l', 'd']",
+        "b": "['e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!']",
+        "c": "['h', 'e', 'l', 'l', 'o', 'w', 'o', 'r', 'l', 'd']",
+        "d": "['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd']"
+      },
+      "correct": "a",
+      "explanation": "The comprehension keeps only the lowercase letters in the string. Punctuation, spaces, and uppercase letters are skipped by islower().",
+      "code_context": "x = 'Hello, World!'\nprint([char for char in x if char.islower()])",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-06.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 11,
+      "topic": "Functions and Imports",
+      "question": "What will be the output of the following code segment?\n\nlist1 = [5, 10, 15, 20]\nlist2 = [2, 4, 6, 8]\nresult = []\n\nfor a, b in zip(list1, list2):\n    result.append(a // b)\n\nprint(result)",
+      "options": {
+        "a": "[1, 2, 3, 4]",
+        "b": "[2, 2, 2, 2]",
+        "c": "[6, 12, 18, 24]",
+        "d": "[2.5, 2.5, 2.5, 2.5]"
+      },
+      "correct": "b",
+      "explanation": "The code uses floor division (`//`) on each pair from zip, so the results are 2, 2, 2, and 2.",
+      "code_context": "list1 = [5, 10, 15, 20]\nlist2 = [2, 4, 6, 8]\nresult = []\n\nfor a, b in zip(list1, list2):\n    result.append(a // b)\n\nprint(result)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 12,
+      "topic": "Sequences and Access",
+      "question": "Suppose you have a list called numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].\nWhich of the following lines of code will not create a list with the name subset and the value [10, 8, 6, 4, 2]?",
+      "options": {
+        "a": "subset = numbers[::-2][::-1]",
+        "b": "subset = numbers[-1::-2]",
+        "c": "subset = numbers[::-1][::2]",
+        "d": "subset = numbers[::-2]"
+      },
+      "correct": "a",
+      "explanation": "A reverses the reversed-even slice, producing [2, 4, 6, 8, 10] instead of the requested list. The other three options all evaluate to [10, 8, 6, 4, 2].",
+      "code_context": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/resit-solutions-for-introduction-to-python-35761538/page-07.png"
+        ],
+        "notes": [
+          "Reviewed from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}

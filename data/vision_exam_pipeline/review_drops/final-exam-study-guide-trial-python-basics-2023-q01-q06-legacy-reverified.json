@@ -1,0 +1,156 @@
+{
+  "exam_id": "final-exam-study-guide-trial-python-basics-2023",
+  "question_updates": [
+    {
+      "number": 1,
+      "topic": "1_Basics_Logic_2",
+      "question": "Suppose you already have: (i) a list of strings called europe which contain the names of all European countries, and (ii) a string variable called destination.\n\nYou want to write a program to advice Dutch residents on the documents they need to prepare before traveling:\n- If they travel within Europe, your program should print \"No passport needed. Bring your ID card.\"\n- If they travel outside of Europe, the program should print \"Please bring your passport.\"\n\nWhich of the following code segment will achieve what you need?",
+      "options": {
+        "a": "if destination in europe:\n    print('No passport needed. Bring your ID card.')\nelse:\n    print('Please bring your passport.')",
+        "b": "if destination in europe:\n    return 'No passport needed. Bring your ID card.'\nelif destination not in europe:\n    return 'Please bring your passport.'",
+        "c": "for country in europe:\n    if destination = country:\n        print('No passport needed. Bring your ID card.')\n    else:\n        print('Please bring your passport.')",
+        "d": "for country in europe:\n    if destination != country:\n        return 'Please bring your passport.'\n    else:\n        return 'No passport needed. Bring your ID card.'"
+      },
+      "correct": "a",
+      "explanation": "Option A directly checks whether destination is in the list of European countries and prints the correct message in each case. The other options either use the wrong control flow or invalid syntax.",
+      "code_context": "europe = [...]\ndestination = ...",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-02.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 2,
+      "topic": "1_Basics_Scope_3",
+      "question": "Calling the function func_10 will produce an error. Which line of the following code segment produces the error?",
+      "options": {
+        "a": "'var_2 = var_1 * var'\nThis line produces the error because func_2() was not called and assigning the value to var_1, thus var_1 was referenced before being defined.",
+        "b": "'var_1 = var * 2'\nThis line produces the error because Python is confused about which value var should have.",
+        "c": "'def func_2(var):'\nThis line produces the error because the name var is already used for the argument of func_1() and cannot be used again as the name of the argument for func_2().",
+        "d": "'return var_2'\nThis line produces the error because one function cannot return two outputs."
+      },
+      "correct": "a",
+      "explanation": "The inner function func_2 is defined but never called, so var_1 is never assigned before the line var_2 = var_1 * var tries to use it.",
+      "code_context": "def func_1(var):\n    def func_2(var):\n        var_1 = var * 2\n        return var_1\n    var_2 = var_1 * var\n    return var_2",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-03.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 3,
+      "topic": "1_Basics_Variables_1",
+      "question": "What is the output of the following code segment?",
+      "options": {
+        "a": "[str, int, NoneType, bool, float, str, dict]",
+        "b": "[str, int, NoneType, bool, float, bool, dict]",
+        "c": "[str, int, NoneType, bool, float, str, list]",
+        "d": "[str, float, NoneType, bool, int, str, dict]"
+      },
+      "correct": "a",
+      "explanation": "The function appends the type of each element in the input list in order: string, integer, NoneType, boolean, float, string, and dictionary.",
+      "code_context": "def main(list_1):\n    list_2 = []\n    for item in list_1:\n        list_2.append(type(item))\n    return list_2\n\nmain(['abc', 0, None, True, 123.456, 'False', {}])",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-03.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 4,
+      "topic": "2-dictionaries - comprehension - 1",
+      "question": "You have to create a dictionary called vowels_ASCII where the keys are the lowercase vowels (a, e, i, o, u) and the values are their corresponding ASCII values.\n\nThe ASCII (American Standard Code for Information Interchange) is a character encoding standard that assigns unique numerical values to characters.\n\nThat is, if we execute the following command:\nprint(vowels_ASCII)\n\nthe output should be:\n{'a': 97, 'e': 101, 'i': 105, 'o': 111, 'u': 117}\n\nWhich of the code segments work(s) as intended?\n\nHint: the ord() function returns a unique numerical value to a character. The function takes a unit-length text as an argument and returns the assigned unique numerical value.\n\nFor example:\nord('a')\n\nreturns:\n97",
+      "options": {
+        "a": "vowels_ASCII = {vowel: ord(vowel) for vowel in 'aeiou'}",
+        "b": "vowels_ASCII = {vowel: ord(vowel) for vowel in 'aeiou' if vowel in 'aeiou'}",
+        "c": "Both of the code segments work correctly.",
+        "d": "Neither of the code segments work correctly."
+      },
+      "correct": "c",
+      "explanation": "Both comprehensions produce the same dictionary because the extra condition in option B is always true for characters drawn from 'aeiou'.",
+      "code_context": "print(vowels_ASCII)\n# expected: {'a': 97, 'e': 101, 'i': 105, 'o': 111, 'u': 117}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-04.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    },
+    {
+      "number": 5,
+      "topic": "2-dictionaries - manipulation - 1",
+      "question": "Suppose you have three variables called player1_goals, player2_goals, and player3_goals. Each of the variables contains a list of integers that represents the number of goals scored by the football players in five different matches:\n\nplayer1_goals = [2, 1, 3, 2, 1]\nplayer2_goals = [0, 1, 1, 3, 2]\nplayer3_goals = [1, 0, 2, 1, 3]\n\nYou want to create a dictionary called match_goals where the keys are the match numbers (starting from 1) and the values are a tuple containing the total goals scored by each player in that match.\n\nSo, if we execute the following command:\nprint(match_goals)\n\nthe output should be:\n{1: (2, 0, 1), 2: (1, 1, 0), 3: (3, 1, 2), 4: (2, 3, 1), 5: (1, 2, 3)}\n\nWhich of the following code segments works as intended?",
+      "options": {
+        "a": "match_goals = {}\nfor i, (goals1, goals2, goals3) in enumerate(zip(player1_goals, player2_goals, player3_goals), start=1):\n    match_goals[i] = (goals1, goals2, goals3)",
+        "b": "match_goals = {}\nfor i, (goals1, goals2, goals3) in enumerate(zip(player1_goals, player2_goals, player3_goals), start=1):\n    match_goals[i] = [goals1 + goals2 + goals3]",
+        "c": "match_goals = {}\nfor i, (goals1, goals2, goals3) in enumerate(zip(player1_goals, player2_goals, player3_goals)):\n    match_goals[i] = [goals1, goals2, goals3]",
+        "d": "match_goals = {}\nfor i, (goals1, goals2, goals3) in enumerate(zip(player1_goals, player2_goals, player3_goals)):\n    match_goals[i] = (goals1, goals2, goals3)"
+      },
+      "correct": "a",
+      "explanation": "Option A uses enumerate with start=1 to create the correct match-number keys and stores each triple of goal counts as a tuple. The other options either use the wrong value shape or start indexing from 0.",
+      "code_context": "player1_goals = [2, 1, 3, 2, 1]\nplayer2_goals = [0, 1, 1, 3, 2]\nplayer3_goals = [1, 0, 2, 1, 3]\nprint(match_goals)",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-05.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only.",
+          "Options C and D are small in the rendered page and should be human-confirmed if exact bracket style matters."
+        ]
+      }
+    },
+    {
+      "number": 6,
+      "topic": "2-dictionaries - slicing - 1",
+      "question": "You have the following dictionary that represents the monthly sales of a store:\nmonthly_sales = {'January': 1500, 'February': 2200, 'March': 1800, 'April': 2400, 'May': 2000, 'June': 2800}\n\nYou need to calculate the average sales for the first three months (January, February, and March). Which of the following code segments works as intended?",
+      "options": {
+        "a": "sales_subset = [monthly_sales[key] for key in list(monthly_sales.keys())[:3]]\naverage_sales = sum(sales_subset) / len(sales_subset)\nprint(average_sales)",
+        "b": "sales_subset = monthly_sales[:3]\naverage_sales = sum(sales_subset) / len(sales_subset)\nprint(average_sales)",
+        "c": "sales_subset = list(monthly_sales.items())[:3]\naverage_sales = sum(sales_subset) / len(sales_subset)\nprint(average_sales)",
+        "d": "sales_subset = monthly_sales['January':'March']\naverage_sales = sum(sales_subset.values()) / len(sales_subset)\nprint(average_sales)"
+      },
+      "correct": "a",
+      "explanation": "Option A first collects the values for the first three keys into a list and then computes the average correctly. The other options attempt unsupported dictionary slicing or try to sum tuples instead of numeric values.",
+      "code_context": "monthly_sales = {'January': 1500, 'February': 2200, 'March': 1800, 'April': 2400, 'May': 2000, 'June': 2800}",
+      "provenance": {
+        "review_status": "agent_reviewed_pending_human_confirmation",
+        "review_pass": 1,
+        "human_confirmed": false,
+        "page_refs": [
+          "tmp/exam_coverage_audit/pages/final-exam-study-guide-trial-python-basics-2023/page-05.png"
+        ],
+        "notes": [
+          "Legacy-seeded record re-verified from rendered PNG pages only."
+        ]
+      }
+    }
+  ]
+}
