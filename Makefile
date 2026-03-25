@@ -15,6 +15,7 @@ check-js:
 	node --check app/render-card-sections.js
 	node --check app/text-render-utils.js
 	node --check app/card-interactions.js
+	node --check app/preview-staged-workspace.js
 	node --check app/preview-render.js
 	node --check app/preview-card-render.js
 	node --check app/preview-history.js

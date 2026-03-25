@@ -2,13 +2,16 @@ function renderSwipe() {
   const filteredTopics = getFilteredTopics();
   const activeTopic = ensureExplorerNavigation(filteredTopics);
   const selectedTotals = getSelectedItemTotals();
+  const includedCount = getIncludedPreviewEntries().length;
+  const stagedCount = getStagedPreviewEntries().length;
 
   refs.acceptedCount.textContent = String(selectedTotals.snippets);
   refs.rejectedCount.textContent = String(selectedTotals.items);
   refs.remainingCount.textContent = String(filteredTopics.length);
 
   refs.progressText.textContent = [
-    `${selectedTotals.snippets} snippets staged`,
+    `${stagedCount} staged snippets`,
+    `${includedCount} on canvas`,
     `${selectedTotals.items} pieces selected`,
     `${filteredTopics.length} topics visible`,
   ].join(" • ");
@@ -18,7 +21,9 @@ function renderSwipe() {
     .slice(0, 40)
     .forEach((entry) => {
       const li = document.createElement("li");
-      li.textContent = `${entry.snippet.title} · ${entry.snippet.subtopicTitle}`;
+      li.textContent = `${entry.snippet.title} · ${entry.snippet.subtopicTitle} (${
+        entry.selection?.selected?.inPreview ? "on canvas" : "staged"
+      })`;
       refs.acceptedTopicsList.appendChild(li);
     });
 

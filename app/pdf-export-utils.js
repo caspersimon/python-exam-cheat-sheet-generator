@@ -10,7 +10,6 @@ const supportPromptState = {
   acceptBtn: null,
   declineBtn: null,
   closeBtn: null,
-  neverBtn: null,
   active: false,
   eventsBound: false,
 };
@@ -266,8 +265,7 @@ function ensureSupportPromptModal() {
   const acceptBtn = document.getElementById("supportPromptAcceptBtn");
   const declineBtn = document.getElementById("supportPromptDeclineBtn");
   const closeBtn = document.getElementById("supportPromptCloseBtn");
-  const neverBtn = document.getElementById("supportPromptNeverBtn");
-  if (!overlay || !acceptBtn || !declineBtn || !closeBtn || !neverBtn) {
+  if (!overlay || !acceptBtn || !declineBtn || !closeBtn) {
     return null;
   }
 
@@ -275,7 +273,6 @@ function ensureSupportPromptModal() {
   supportPromptState.acceptBtn = acceptBtn;
   supportPromptState.declineBtn = declineBtn;
   supportPromptState.closeBtn = closeBtn;
-  supportPromptState.neverBtn = neverBtn;
 
   if (!supportPromptState.eventsBound) {
     supportPromptState.eventsBound = true;
@@ -296,10 +293,6 @@ function ensureSupportPromptModal() {
       suppressSupportPromptForever();
       hideSupportPrompt();
       window.open(SUPPORT_PAGE_URL, "_blank", "noopener,noreferrer");
-    });
-    neverBtn.addEventListener("click", () => {
-      suppressSupportPromptForever();
-      hideSupportPrompt();
     });
 
     document.addEventListener("keydown", (event) => {

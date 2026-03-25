@@ -20,29 +20,32 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Newsreader:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&family=Merriweather:wght@400;700&family=Lora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260325d" />
-    <script defer src="./app/state-and-init.js?v=20260325d"></script>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260325g" />
+    <script defer src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script defer src="./app/state-and-init.js?v=20260325e"></script>
     <script defer src="./app/exam-builder-data.js?v=20260325b"></script>
-    <script defer src="./app/splash-storage.js?v=20260325c"></script>
-    <script defer src="./app/preview-pointer.js?v=20260322h"></script>
+    <script defer src="./app/splash-storage.js?v=20260325e"></script>
+    <script defer src="./app/preview-pointer.js?v=20260325e"></script>
     <script defer src="./app/view-and-data.js?v=20260325b"></script>
-    <script defer src="./app/topic-selection.js?v=20260325b"></script>
+    <script defer src="./app/topic-selection.js?v=20260325e"></script>
     <script defer src="./app/topic-detail-subtopics.js?v=20260325c"></script>
-    <script defer src="./app/render-card-sections.js?v=20260325b"></script>
+    <script defer src="./app/render-card-sections.js?v=20260325e"></script>
     <script defer src="./app/text-render-utils.js?v=20260325c"></script>
     <script defer src="./app/code-render-utils.js?v=20260322h"></script>
     <script defer src="./app/card-interactions.js?v=20260325b"></script>
     <script defer src="./app/preview-auto-layout-content-signals.js?v=20260325c"></script>
     <script defer src="./app/preview-auto-layout-helpers.js?v=20260325b"></script>
     <script defer src="./app/preview-auto-layout.js?v=20260325b"></script>
-    <script defer src="./app/preview-render.js?v=20260325c"></script>
-    <script defer src="./app/preview-card-render.js?v=20260325b"></script>
-    <script defer src="./app/preview-history.js?v=20260322h"></script>
-    <script defer src="./app/preview-edit-modal.js?v=20260322h"></script>
-    <script defer src="./app/preview-editing.js?v=20260325b"></script>
+    <script defer src="./app/preview-staged-workspace.js?v=20260325e"></script>
+    <script defer src="./app/preview-render.js?v=20260325e"></script>
+    <script defer src="./app/preview-card-render.js?v=20260325e"></script>
+    <script defer src="./app/preview-history.js?v=20260325e"></script>
+    <script defer src="./app/preview-edit-modal.js?v=20260325f"></script>
+    <script defer src="./app/preview-editing.js?v=20260325e"></script>
     <script defer src="./app/smart-fit-utils.js?v=20260325c"></script>
     <script defer src="./app/layout-export-utils.js?v=20260325d"></script>
-    <script defer src="./app/pdf-export-utils.js?v=20260325d"></script>
+    <script defer src="./app/pdf-export-utils.js?v=20260325e"></script>
     <script defer src="./app/main.js?v=20260322h"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
@@ -106,18 +109,32 @@
           <h2 id="previewHeading" class="sr-only">Preview and Export Workspace</h2>
           <p id="overflowNotice" class="warning hidden" role="alert" aria-live="assertive"></p>
 
-          <div id="sheetStage" class="sheet-stage">
-            <div class="sheet-page-stack" data-page="1">
-              <header class="page-label">Page 1</header>
-              <article class="sheet-page" data-page="1">
-                <div id="page1Content" class="page-content"></div>
-              </article>
-            </div>
-            <div class="sheet-page-stack" data-page="2">
-              <header class="page-label">Page 2</header>
-              <article class="sheet-page" data-page="2">
-                <div id="page2Content" class="page-content"></div>
-              </article>
+          <div class="preview-workspace">
+            <aside class="staged-sidebar panel" aria-label="Staged snippets">
+              <header class="staged-sidebar-head">
+                <div>
+                  <h3>Staged Snippets</h3>
+                  <p class="muted">Drag snippets onto Page 1 or Page 2 when you want to place them.</p>
+                </div>
+                <span id="stagedSnippetCount" class="staged-count-chip" aria-live="polite">0</span>
+              </header>
+              <button id="addAllStagedBtn" class="ghost-btn compact-btn staged-add-all-btn" type="button">Add all staged</button>
+              <div id="stagedSnippetList" class="staged-snippet-list"></div>
+            </aside>
+
+            <div id="sheetStage" class="sheet-stage">
+              <div class="sheet-page-stack" data-page="1">
+                <header class="page-label">Page 1</header>
+                <article class="sheet-page" data-page="1">
+                  <div id="page1Content" class="page-content"></div>
+                </article>
+              </div>
+              <div class="sheet-page-stack" data-page="2">
+                <header class="page-label">Page 2</header>
+                <article class="sheet-page" data-page="2">
+                  <div id="page2Content" class="page-content"></div>
+                </article>
+              </div>
             </div>
           </div>
         </section>
@@ -372,7 +389,6 @@
           <button id="supportPromptAcceptBtn" class="solid-btn" type="button">Buy Me a Coffee</button>
           <button id="supportPromptDeclineBtn" class="ghost-btn support-prompt-decline" type="button">Maybe later</button>
         </div>
-        <button id="supportPromptNeverBtn" class="support-prompt-never" type="button">Don't ask again on this device</button>
       </div>
     </div>
   </body>

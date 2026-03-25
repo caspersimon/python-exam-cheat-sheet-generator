@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
 const {
+  addAllStagedSnippetsToCanvas,
   acceptCards,
   acceptNextDialog,
   dismissSplash,
@@ -59,6 +60,7 @@ async function run() {
 
     await page.click("#goToPreviewBtn", { timeout: 5000 });
     await page.waitForSelector("#previewView.active", { timeout: 10000 });
+    await addAllStagedSnippetsToCanvas(page);
 
     const previewCards = await page.locator(".preview-card").count();
     if (previewCards < 1) {

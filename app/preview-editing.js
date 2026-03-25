@@ -20,6 +20,27 @@ function handlePreviewEditingClick(event) {
     return;
   }
 
+  const sendBackBtn = event.target.closest("[data-role='preview-send-back']");
+  if (sendBackBtn) {
+    event.preventDefault();
+    sendPreviewCardBackward(sendBackBtn.dataset.cardId || "");
+    return;
+  }
+
+  const bringFrontBtn = event.target.closest("[data-role='preview-bring-front']");
+  if (bringFrontBtn) {
+    event.preventDefault();
+    bringPreviewCardForward(bringFrontBtn.dataset.cardId || "");
+    return;
+  }
+
+  const attachParentBtn = event.target.closest("[data-role='preview-attach-parent']");
+  if (attachParentBtn) {
+    event.preventDefault();
+    attachDetachedPieceToParent(attachParentBtn.dataset.cardId || "");
+    return;
+  }
+
   const deleteCardBtn = event.target.closest("[data-role='preview-delete-card']");
   if (deleteCardBtn) {
     event.preventDefault();
@@ -45,6 +66,13 @@ function handlePreviewEditingClick(event) {
   if (deleteItemBtn) {
     event.preventDefault();
     deletePreviewItem(deleteItemBtn.dataset.sourceCardId || "", deleteItemBtn.dataset.pieceId || "");
+    return;
+  }
+
+  const detachItemBtn = event.target.closest("[data-role='preview-detach-item']");
+  if (detachItemBtn) {
+    event.preventDefault();
+    detachPreviewItem(detachItemBtn.dataset.sourceCardId || "", detachItemBtn.dataset.pieceId || "");
     return;
   }
 
@@ -77,17 +105,23 @@ function deletePreviewCard(previewId) {
     return;
   }
 
-  const confirmed = window.confirm(`Remove "${entry.snippet.title}" from the cheat sheet preview?`);
+  const isDetachedPieceCard = entry.entryType === "detached-piece";
+  const confirmed = window.confirm(
+    isDetachedPieceCard
+      ? `Delete detached piece "${entry.snippet.title}" from the cheat sheet?`
+      : `Move "${entry.snippet.title}" back to staged snippets?`
+  );
   if (!confirmed) {
     return;
   }
 
-  pushPreviewHistorySnapshot(`Remove card "${entry.snippet.title}"`);
-  const draft = ensureDraft(entry.snippet);
-  draft.selected.pieces = [];
-  draft.overrides = { pieces: {} };
-
-  delete state.previewCards[previewId];
+  if (isDetachedPieceCard) {
+    pushPreviewHistorySnapshot(`Delete detached piece "${entry.snippet.title}"`);
+    removeDetachedPiece(previewId);
+  } else {
+    pushPreviewHistorySnapshot(`Stage snippet "${entry.snippet.title}"`);
+    stageSnippetFromPreview(previewId);
+  }
   renderAll();
 }
 
@@ -150,6 +184,26 @@ function togglePreviewCardLock(previewId) {
   schedulePersistState();
 }
 
+function bringPreviewCardForward(previewId) {
+  if (!previewId || !state.previewCards?.[previewId]) {
+    return;
+  }
+  const entry = getPreviewEntry(previewId);
+  pushPreviewHistorySnapshot(`Bring "${entry?.snippet?.title || previewId}" to front`);
+  bringPreviewCardToFront(previewId);
+  renderPreview();
+}
+
+function sendPreviewCardBackward(previewId) {
+  if (!previewId || !state.previewCards?.[previewId]) {
+    return;
+  }
+  const entry = getPreviewEntry(previewId);
+  pushPreviewHistorySnapshot(`Send "${entry?.snippet?.title || previewId}" to back`);
+  sendPreviewCardToBack(previewId);
+  renderPreview();
+}
+
 async function editPreviewCardTitle(previewId) {
   if (!previewId) {
     return;
@@ -189,6 +243,14 @@ function deletePreviewItem(snippetId, pieceId) {
     return;
   }
 
+  const detachedPiece = getDetachedPieceById(snippetId);
+  if (detachedPiece) {
+    pushPreviewHistorySnapshot(`Delete detached piece "${detachedPiece.title}"`);
+    removeDetachedPiece(snippetId);
+    renderAll();
+    return;
+  }
+
   const context = getDraftSnippetContext(snippetId);
   if (!context) {
     return;
@@ -199,13 +261,50 @@ function deletePreviewItem(snippetId, pieceId) {
   pushPreviewHistorySnapshot(`Delete piece in "${snippet.title}"`);
   draft.selected.pieces = (draft.selected.pieces || []).filter((id) => id !== pieceId);
   delete overrides.pieces[pieceId];
-  renderPreview();
+  if (!draft.selected.pieces.length) {
+    draft.selected.inPreview = false;
+    delete state.previewCards[snippet.id];
+  }
+  renderAll();
 }
 
 async function editPreviewItem(snippetId, pieceId) {
   if (!snippetId || !pieceId) {
     return;
   }
+
+  const detachedPiece = getDetachedPieceById(snippetId);
+  if (detachedPiece) {
+    const currentDetached = {
+      title: detachedPiece.title,
+      bodyMarkdown: detachedPiece.bodyMarkdown,
+      bodyBlocks: detachedPiece.bodyBlocks,
+      kind: detachedPiece.pieceKind || "paragraph",
+    };
+    const values = await requestPreviewEditValues(
+      buildPieceEditRequest(
+        {
+          topicTitle: detachedPiece.topicTitle || "Detached",
+          subtopicTitle: detachedPiece.subtopicTitle || "Detached piece",
+        },
+        currentDetached
+      )
+    );
+    if (!values) {
+      return;
+    }
+
+    const nextDetached = buildPieceOverrideFromValues(currentDetached, values);
+    pushPreviewHistorySnapshot(`Edit detached piece "${detachedPiece.title}"`);
+    if (!nextDetached) {
+      removeDetachedPiece(snippetId);
+    } else {
+      updateDetachedPiece(snippetId, nextDetached);
+    }
+    renderAll();
+    return;
+  }
+
   const context = getDraftSnippetContext(snippetId);
   if (!context) {
     return;
@@ -232,6 +331,47 @@ async function editPreviewItem(snippetId, pieceId) {
   pushPreviewHistorySnapshot(`Edit piece in "${snippet.title}"`);
   ensureSelectionOverrides(draft).pieces[pieceId] = nextOverride;
   renderPreview();
+}
+
+function detachPreviewItem(snippetId, pieceId) {
+  if (!snippetId || !pieceId) {
+    return;
+  }
+  const snippet = findSnippetById(snippetId);
+  if (!snippet) {
+    return;
+  }
+
+  pushPreviewHistorySnapshot(`Detach piece from "${snippet.title}"`);
+  const detachedId = detachPieceFromSnippet(snippetId, pieceId);
+  if (!detachedId) {
+    return;
+  }
+  renderAll();
+}
+
+function attachDetachedPieceToParent(detachedId) {
+  if (!detachedId) {
+    return;
+  }
+  const detached = getDetachedPieceById(detachedId);
+  if (!detached) {
+    return;
+  }
+
+  const parentSnippet = findSnippetById(detached.sourceSnippetId);
+  const parentTitle = parentSnippet?.title || detached.sourceSnippetId;
+  const confirmed = window.confirm(`Attach this detached piece back to "${parentTitle}"?`);
+  if (!confirmed) {
+    return;
+  }
+
+  pushPreviewHistorySnapshot(`Attach detached piece back to "${parentTitle}"`);
+  const attached = addDetachedPieceBackToParent(detachedId);
+  if (!attached) {
+    return;
+  }
+  renderAll();
 }
 
 function buildPieceEditRequest(snippet, piece) {

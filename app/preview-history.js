@@ -5,6 +5,7 @@ function capturePreviewSnapshot() {
     drafts: deepClone(state.drafts),
     previewCards: deepClone(state.previewCards),
     previewZCounter: Number(state.previewZCounter) || 1,
+    detachedPieces: deepClone(state.detachedPieces || {}),
   };
 }
 
@@ -36,6 +37,7 @@ function restorePreviewSnapshot(snapshot) {
   state.drafts = deepClone(snapshot.drafts || {});
   state.previewCards = deepClone(snapshot.previewCards || {});
   state.previewZCounter = clamp(Number(snapshot.previewZCounter) || 1, 1, 99999);
+  state.detachedPieces = deepClone(snapshot.detachedPieces || {});
   return true;
 }
 

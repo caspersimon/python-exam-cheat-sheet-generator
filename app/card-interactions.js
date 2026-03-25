@@ -40,6 +40,10 @@ function handleCardInputChange(event) {
     next.delete(pieceId);
   }
   draft.selected.pieces = [...next];
+  if (!draft.selected.pieces.length) {
+    draft.selected.inPreview = false;
+    delete state.previewCards[snippet.id];
+  }
   renderAll();
 }
 
@@ -123,6 +127,9 @@ function selectAllSubtopicPieces(subtopicId) {
   subtopic.snippets.forEach((snippet) => {
     const draft = ensureDraft(snippet);
     draft.selected.pieces = [...new Set([...(draft.selected.pieces || []), ...getSnippetSelectablePieceIds(snippet)])];
+    if (typeof draft.selected.inPreview !== "boolean") {
+      draft.selected.inPreview = false;
+    }
   });
   renderAll();
 }
@@ -142,6 +149,10 @@ function clearSubtopicPieces(subtopicId) {
         delete overrides.pieces[pieceId];
       }
     });
+    if (!draft.selected.pieces.length) {
+      draft.selected.inPreview = false;
+      delete state.previewCards[snippet.id];
+    }
   });
   renderAll();
 }
@@ -153,6 +164,9 @@ function selectAllSnippetPieces(snippetId) {
   }
   const draft = ensureDraft(snippet);
   draft.selected.pieces = [...new Set([...(draft.selected.pieces || []), ...getSnippetSelectablePieceIds(snippet)])];
+  if (typeof draft.selected.inPreview !== "boolean") {
+    draft.selected.inPreview = false;
+  }
   renderAll();
 }
 
@@ -170,6 +184,10 @@ function clearSnippetPieces(snippetId) {
       delete overrides.pieces[pieceId];
     }
   });
+  if (!draft.selected.pieces.length) {
+    draft.selected.inPreview = false;
+    delete state.previewCards[snippet.id];
+  }
   renderAll();
 }
 
@@ -195,7 +213,7 @@ function applyPresetSelection(presetId, { source = "" } = {}) {
   const nextDrafts = {};
   state.snippets.forEach((snippet) => {
     nextDrafts[snippet.id] = {
-      selected: { pieces: [] },
+      selected: { pieces: [], inPreview: false },
       overrides: { pieces: {} },
     };
   });
@@ -207,7 +225,7 @@ function applyPresetSelection(presetId, { source = "" } = {}) {
     }
     if (!nextDrafts[snippet.id]) {
       nextDrafts[snippet.id] = {
-        selected: { pieces: [] },
+        selected: { pieces: [], inPreview: false },
         overrides: { pieces: {} },
       };
     }
@@ -225,6 +243,7 @@ function applyPresetSelection(presetId, { source = "" } = {}) {
   state.previewCards = {};
   state.previewEntries = {};
   state.previewZCounter = 1;
+  state.detachedPieces = {};
   closeDrawers();
   dismissSplash();
   if (source === "splash") {

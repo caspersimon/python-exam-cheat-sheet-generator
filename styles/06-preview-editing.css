@@ -120,14 +120,18 @@ body.preview-edit-modal-open {
 }
 
 .preview-edit-modal-card {
-  width: min(860px, calc(100vw - 30px));
-  max-height: calc(100vh - 36px);
+  width: min(1080px, calc(100vw - 28px));
+  max-height: calc(100vh - 20px);
+  min-width: 760px;
+  min-height: 460px;
   padding: 16px 16px 14px;
   border-radius: 14px;
   background: linear-gradient(180deg, #fffef9, #f6f1e7);
   display: flex;
   flex-direction: column;
   gap: 10px;
+  resize: both;
+  overflow: auto;
 }
 
 .preview-edit-modal-head h3 {
@@ -146,14 +150,17 @@ body.preview-edit-modal-open {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 10px;
 }
 
 .preview-edit-modal-fields {
   min-height: 0;
-  max-height: min(62vh, 640px);
+  max-height: min(74vh, 820px);
   overflow: auto;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   gap: 10px;
   padding-right: 2px;
 }
@@ -161,6 +168,13 @@ body.preview-edit-modal-open {
 .preview-edit-field {
   display: grid;
   gap: 5px;
+}
+
+.preview-edit-field[data-field-kind="markdown"] {
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .preview-edit-field span {
@@ -192,6 +206,28 @@ body.preview-edit-modal-open {
   resize: vertical;
 }
 
+.preview-edit-field .preview-edit-markdown-source {
+  display: none;
+}
+
+.preview-edit-markdown-editor {
+  border: 1px solid rgba(103, 98, 84, 0.22);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fffefb;
+  min-height: 300px;
+  flex: 1;
+}
+
+.preview-edit-markdown-editor .toastui-editor-defaultUI {
+  border: 0;
+  border-radius: 8px;
+}
+
+.preview-edit-markdown-editor .toastui-editor-contents {
+  font-size: 0.88rem;
+}
+
 .preview-edit-field[data-field-kind="code"] textarea {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.84rem;
@@ -219,7 +255,10 @@ body.preview-edit-modal-open {
   .preview-edit-modal-card {
     width: min(100%, 100vw - 24px);
     max-height: calc(100vh - 24px);
+    min-width: 0;
+    min-height: 0;
     padding: 14px 12px 12px;
+    resize: none;
   }
 
   .preview-edit-modal-actions {
@@ -334,20 +373,6 @@ body.support-prompt-open {
   color: #4c5b57;
 }
 
-.support-prompt-never {
-  margin-top: 10px;
-  border: 0;
-  background: transparent;
-  color: #5e7069;
-  font-size: 0.77rem;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.support-prompt-never:hover {
-  color: #30453f;
-}
-
 @media (max-width: 640px) {
   .support-prompt-card {
     width: min(100%, 100vw - 24px);
@@ -362,10 +387,5 @@ body.support-prompt-open {
   .support-prompt-actions .solid-btn,
   .support-prompt-actions .ghost-btn {
     width: 100%;
-  }
-
-  .support-prompt-never {
-    width: 100%;
-    text-align: center;
   }
 }

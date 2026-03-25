@@ -1,5 +1,6 @@
 const previewEditModalState = {
   root: null,
+  card: null,
   title: null,
   subtitle: null,
   form: null,
@@ -9,7 +10,136 @@ const previewEditModalState = {
   resolve: null,
   active: false,
   eventsBound: false,
+  markdownEditors: [],
+  resizeObserver: null,
+  resizeRaf: 0,
 };
+
+function schedulePreviewMarkdownResize() {
+  if (previewEditModalState.resizeRaf) {
+    return;
+  }
+  previewEditModalState.resizeRaf = window.requestAnimationFrame(() => {
+    previewEditModalState.resizeRaf = 0;
+    resizePreviewMarkdownEditorsToFit();
+  });
+}
+
+function resizePreviewMarkdownEditorsToFit() {
+  if (!Array.isArray(previewEditModalState.markdownEditors) || !previewEditModalState.markdownEditors.length) {
+    return;
+  }
+
+  previewEditModalState.markdownEditors.forEach((entry) => {
+    if (!entry?.editor || typeof entry.editor.setHeight !== "function") {
+      return;
+    }
+    const wrapperHeight = entry.wrapperEl?.clientHeight || 0;
+    const labelHeight = entry.labelEl?.offsetHeight || 0;
+    const availableHeight = Math.max(300, wrapperHeight - labelHeight - 20);
+    entry.editor.setHeight(`${Math.round(availableHeight)}px`);
+  });
+}
+
+function handlePreviewMarkdownWindowResize() {
+  schedulePreviewMarkdownResize();
+}
+
+function stopPreviewMarkdownResizeTracking() {
+  if (previewEditModalState.resizeObserver) {
+    previewEditModalState.resizeObserver.disconnect();
+    previewEditModalState.resizeObserver = null;
+  }
+  window.removeEventListener("resize", handlePreviewMarkdownWindowResize);
+  if (previewEditModalState.resizeRaf) {
+    window.cancelAnimationFrame(previewEditModalState.resizeRaf);
+    previewEditModalState.resizeRaf = 0;
+  }
+}
+
+function startPreviewMarkdownResizeTracking() {
+  stopPreviewMarkdownResizeTracking();
+  if (!previewEditModalState.card || !Array.isArray(previewEditModalState.markdownEditors) || !previewEditModalState.markdownEditors.length) {
+    return;
+  }
+
+  if (typeof ResizeObserver === "function") {
+    previewEditModalState.resizeObserver = new ResizeObserver(() => {
+      schedulePreviewMarkdownResize();
+    });
+    previewEditModalState.resizeObserver.observe(previewEditModalState.card);
+  }
+  window.addEventListener("resize", handlePreviewMarkdownWindowResize);
+  schedulePreviewMarkdownResize();
+}
+
+function destroyPreviewMarkdownEditors() {
+  if (!Array.isArray(previewEditModalState.markdownEditors)) {
+    previewEditModalState.markdownEditors = [];
+    return;
+  }
+  previewEditModalState.markdownEditors.forEach((entry) => {
+    if (entry?.editor && typeof entry.editor.destroy === "function") {
+      try {
+        entry.editor.destroy();
+      } catch (_error) {
+        // Toast UI can throw if the host node was already detached.
+      }
+    }
+  });
+  previewEditModalState.markdownEditors = [];
+}
+
+function syncPreviewMarkdownEditors() {
+  if (!Array.isArray(previewEditModalState.markdownEditors) || !previewEditModalState.markdownEditors.length) {
+    return;
+  }
+  previewEditModalState.markdownEditors.forEach((entry) => {
+    if (!entry?.inputEl || !entry.editor || typeof entry.editor.getMarkdown !== "function") {
+      return;
+    }
+    entry.inputEl.value = normalizeNewlines(String(entry.editor.getMarkdown() || ""));
+  });
+}
+
+function mountPreviewMarkdownEditor(wrapper, field, inputEl) {
+  if (!window.toastui?.Editor || !field?.multiline || field.kind !== "markdown") {
+    return null;
+  }
+
+  const editorHost = document.createElement("div");
+  editorHost.className = "preview-edit-markdown-editor";
+  wrapper.appendChild(editorHost);
+  inputEl.classList.add("preview-edit-markdown-source");
+  inputEl.spellcheck = false;
+
+  try {
+    const rows = Math.max(8, Number(field.rows) || 12);
+    const height = Math.max(320, Math.min(780, rows * 28));
+    const editor = new window.toastui.Editor({
+      el: editorHost,
+      height: `${height}px`,
+      initialValue: normalizeNewlines(String(field.value || "")),
+      initialEditType: "wysiwyg",
+      previewStyle: "vertical",
+      hideModeSwitch: false,
+      usageStatistics: false,
+      autofocus: false,
+    });
+    previewEditModalState.markdownEditors.push({
+      fieldId: field.id,
+      inputEl,
+      editor,
+      wrapperEl: wrapper,
+      labelEl: wrapper.querySelector("span"),
+    });
+    return editor;
+  } catch (_error) {
+    inputEl.classList.remove("preview-edit-markdown-source");
+    editorHost.remove();
+    return null;
+  }
+}
 
 function shouldUseNativePromptEditing() {
   if (window.__useNativePromptEditing === true) {
@@ -27,6 +157,7 @@ function ensurePreviewEditModal() {
   }
 
   const root = document.getElementById("previewEditModal");
+  const card = root?.querySelector(".preview-edit-modal-card") || null;
   const title = document.getElementById("previewEditModalTitle");
   const subtitle = document.getElementById("previewEditModalSubtitle");
   const form = document.getElementById("previewEditModalForm");
@@ -39,6 +170,7 @@ function ensurePreviewEditModal() {
   }
 
   previewEditModalState.root = root;
+  previewEditModalState.card = card;
   previewEditModalState.title = title;
   previewEditModalState.subtitle = subtitle;
   previewEditModalState.form = form;
@@ -58,6 +190,7 @@ function ensurePreviewEditModal() {
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+      syncPreviewMarkdownEditors();
       const values = {};
       fields.querySelectorAll("[data-preview-edit-input='true']").forEach((inputEl) => {
         values[inputEl.dataset.fieldId || ""] = inputEl.value;
@@ -89,6 +222,8 @@ function closePreviewEditModal(payload) {
     return;
   }
   previewEditModalState.active = false;
+  stopPreviewMarkdownResizeTracking();
+  destroyPreviewMarkdownEditors();
   previewEditModalState.root?.classList.add("hidden");
   document.body.classList.remove("preview-edit-modal-open");
   const resolver = previewEditModalState.resolve;
@@ -106,6 +241,8 @@ function openPreviewEditModal(config) {
   modal.subtitle.textContent = config.subtitle || "";
   modal.subtitle.classList.toggle("hidden", !config.subtitle);
   modal.saveBtn.textContent = config.saveLabel || "Save";
+  stopPreviewMarkdownResizeTracking();
+  destroyPreviewMarkdownEditors();
   modal.fields.innerHTML = "";
 
   let firstInput = null;
@@ -136,10 +273,18 @@ function openPreviewEditModal(config) {
     inputEl.dataset.fieldId = field.id;
     inputEl.value = String(field.value || "");
     wrapper.appendChild(inputEl);
+
+    const markdownEditor = mountPreviewMarkdownEditor(wrapper, field, inputEl);
     modal.fields.appendChild(wrapper);
 
     if (index === 0) {
-      firstInput = inputEl;
+      if (markdownEditor && typeof markdownEditor.focus === "function") {
+        firstInput = {
+          focus: () => markdownEditor.focus(),
+        };
+      } else {
+        firstInput = inputEl;
+      }
     }
   });
 
@@ -153,6 +298,7 @@ function openPreviewEditModal(config) {
     modal.resolve = resolve;
     modal.active = true;
     window.requestAnimationFrame(() => {
+      startPreviewMarkdownResizeTracking();
       firstInput?.focus();
       firstInput?.select?.();
     });

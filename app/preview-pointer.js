@@ -85,13 +85,39 @@ function prunePreviewCardLayouts(validCardIds) {
   });
 }
 
+function normalizePreviewCardZOrder() {
+  const ordered = Object.entries(state.previewCards || {}).sort((a, b) => {
+    const zA = Number(a?.[1]?.z) || 0;
+    const zB = Number(b?.[1]?.z) || 0;
+    return zA - zB || a[0].localeCompare(b[0]);
+  });
+  ordered.forEach(([cardId], index) => {
+    if (state.previewCards[cardId]) {
+      state.previewCards[cardId].z = index + 1;
+    }
+  });
+  state.previewZCounter = ordered.length + 1;
+}
+
 function bringPreviewCardToFront(cardId) {
   const layout = state.previewCards[cardId];
   if (!layout) {
     return;
   }
+  if (state.previewZCounter >= 9990) {
+    normalizePreviewCardZOrder();
+  }
   layout.z = state.previewZCounter;
   state.previewZCounter += 1;
+}
+
+function sendPreviewCardToBack(cardId) {
+  const layout = state.previewCards[cardId];
+  if (!layout) {
+    return;
+  }
+  layout.z = 0;
+  normalizePreviewCardZOrder();
 }
 
 function applyPreviewCardLayout(cardElement, layout) {

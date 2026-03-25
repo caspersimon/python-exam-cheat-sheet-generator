@@ -61,7 +61,6 @@ function getDefaultPreviewLayout(index, grid) {
     z: index + 1,
   };
 }
-
 function renderPreview() {
   syncPreviewUndoAvailability();
   refs.page1Content.innerHTML = "";
@@ -70,12 +69,16 @@ function renderPreview() {
   refs.page2Content.classList.remove("is-empty");
   refs.previewOrderList.innerHTML = "";
 
+  const stagedEntries = getStagedPreviewEntries();
+  renderStagedSidebar(stagedEntries);
+
   const previewEntries = buildMergedPreviewEntries();
   state.previewEntries = Object.fromEntries(previewEntries.map((entry) => [entry.previewId, entry]));
 
   previewEntries.forEach((entry) => {
     const li = document.createElement("li");
-    li.textContent = `${entry.snippet.title} · ${entry.snippet.subtopicTitle}`;
+    const detachedSuffix = entry.entryType === "detached-piece" ? " (detached)" : "";
+    li.textContent = `${entry.snippet.title}${detachedSuffix} · ${entry.snippet.subtopicTitle}`;
     refs.previewOrderList.appendChild(li);
   });
 
@@ -87,7 +90,12 @@ function renderPreview() {
     prunePreviewCardLayouts(new Set());
     refs.page1Content.classList.add("is-empty");
     refs.page2Content.classList.add("is-empty");
-    refs.page1Content.innerHTML = `<div class="empty-state"><p>No selected content yet.</p><p>Choose exact snippet pieces in the topic explorer before opening Preview & Export.</p></div>`;
+
+    if (stagedEntries.length) {
+      refs.page1Content.innerHTML = `<div class="empty-state"><p><strong>${stagedEntries.length} snippet(s) are staged.</strong></p><p>Drag staged snippets from the sidebar onto Page 1 or Page 2, or use <code>Add all staged</code>.</p></div>`;
+    } else {
+      refs.page1Content.innerHTML = `<div class="empty-state"><p>No selected content yet.</p><p>Choose exact snippet pieces in the topic explorer before opening Preview & Export.</p></div>`;
+    }
     refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
     refs.overflowNotice.classList.add("hidden");
     syncGridControls(grid);
@@ -198,27 +206,6 @@ function syncGridControls(effectiveGrid) {
   if (refs.gridRowsValue) {
     refs.gridRowsValue.textContent = String(state.layout.gridRows);
   }
-}
-
-function buildMergedPreviewEntries() {
-  return getSelectedPreviewEntries()
-    .map(({ snippet, selection }) => ({
-      previewId: snippet.id,
-      card: snippet,
-      snippet,
-      selectionsByCard: {
-        [snippet.id]: selection,
-      },
-    }))
-    .sort((a, b) => {
-      if (a.snippet.topicTitle !== b.snippet.topicTitle) {
-        return a.snippet.topicTitle.localeCompare(b.snippet.topicTitle);
-      }
-      if (a.snippet.subtopicTitle !== b.snippet.subtopicTitle) {
-        return a.snippet.subtopicTitle.localeCompare(b.snippet.subtopicTitle);
-      }
-      return a.snippet.sortOrder - b.snippet.sortOrder || a.snippet.title.localeCompare(b.snippet.title);
-    });
 }
 
 function getPreviewCardTitle(entry, layout) {

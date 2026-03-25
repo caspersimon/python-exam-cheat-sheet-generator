@@ -3,7 +3,7 @@ const fs = require("fs");
 const http = require("http");
 const path = require("path");
 const { chromium } = require("playwright");
-const { acceptCards, dismissSplash } = require("./lib/ui_playwright_common");
+const { addAllStagedSnippetsToCanvas, acceptCards, dismissSplash } = require("./lib/ui_playwright_common");
 const ROOT = path.resolve(__dirname, "..");
 const ARTIFACT_DIR = path.join(ROOT, "data", "test_reports", "artifacts");
 const MIME = {
@@ -439,6 +439,7 @@ async function run() {
     await page.waitForTimeout(350);
     await page.click("#goToPreviewBtn", { timeout: 5000 });
     await page.waitForSelector("#previewView.active", { timeout: 10000 });
+    await addAllStagedSnippetsToCanvas(page);
     if ((await page.locator(".preview-card").count()) < 3) {
       throw new Error("No preview cards available for export canvas guard.");
     }

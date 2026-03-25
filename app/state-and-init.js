@@ -1,5 +1,5 @@
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v3";
-const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v11";
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v12";
 const FRONTEND_BUNDLE_VERSION = "2026-03-25-new-database-hard-cut-presets";
 const FRONTEND_BUNDLE_PATH = "./new_database/exports/frontend_bundle.json";
 const DEFAULT_PAGE_INNER_WIDTH = 758;
@@ -50,6 +50,7 @@ const state = {
   previewCards: {},
   previewEntries: {},
   previewZCounter: 1,
+  detachedPieces: {},
   layout: {
     fontFamily: DEFAULT_FONT_FAMILY,
     fontSize: 8.5,
@@ -112,6 +113,9 @@ const refs = {
   page1Content: document.getElementById("page1Content"),
   page2Content: document.getElementById("page2Content"),
   overflowNotice: document.getElementById("overflowNotice"),
+  stagedSnippetCount: document.getElementById("stagedSnippetCount"),
+  stagedSnippetList: document.getElementById("stagedSnippetList"),
+  addAllStagedBtn: document.getElementById("addAllStagedBtn"),
   sheetStage: document.getElementById("sheetStage"),
 
   searchInput: document.getElementById("searchInput"),
@@ -296,6 +300,13 @@ function bindEvents() {
 
   refs.selectionShell?.addEventListener("change", handleCardInputChange);
   refs.selectionShell?.addEventListener("click", handleCardClick);
+  refs.previewView?.addEventListener("click", handlePreviewWorkspaceClick);
+  refs.previewView?.addEventListener("dragstart", handlePreviewWorkspaceDragStart);
+  refs.previewView?.addEventListener("dragend", handlePreviewWorkspaceDragEnd);
+  refs.page1Content?.addEventListener("dragover", handlePreviewPageDragOver);
+  refs.page2Content?.addEventListener("dragover", handlePreviewPageDragOver);
+  refs.page1Content?.addEventListener("drop", handlePreviewPageDrop);
+  refs.page2Content?.addEventListener("drop", handlePreviewPageDrop);
   refs.presetsDrawer?.addEventListener("click", handleCardClick);
   refs.selectionShell?.addEventListener("mouseover", handleCardMouseOver);
   document.addEventListener("click", (event) => {

@@ -127,6 +127,30 @@ async function acceptCards(page, target, options = {}) {
   return toInt(await page.textContent("#acceptedCount"));
 }
 
+async function addAllStagedSnippetsToCanvas(page) {
+  const addAllButton = page.locator("#addAllStagedBtn");
+  if ((await addAllButton.count()) < 1) {
+    return 0;
+  }
+
+  const stagedCountBefore = toInt(await page.textContent("#stagedSnippetCount").catch(() => "0"));
+  if (stagedCountBefore < 1) {
+    return 0;
+  }
+
+  await addAllButton.click({ timeout: 5000 });
+  await page.waitForFunction(
+    () => {
+      const staged = Number.parseInt(document.querySelector("#stagedSnippetCount")?.textContent || "0", 10);
+      const cards = document.querySelectorAll(".preview-card").length;
+      return cards > 0 || staged === 0;
+    },
+    { timeout: 10000 }
+  );
+
+  return stagedCountBefore;
+}
+
 async function installExportFlowStubs(page, namespace, options = {}) {
   const pdfBlobSize = Number(options.pdfBlobSize) || 2400;
   await page.evaluate(
@@ -190,6 +214,7 @@ async function installExportFlowStubs(page, namespace, options = {}) {
 }
 
 module.exports = {
+  addAllStagedSnippetsToCanvas,
   acceptCards,
   acceptNextDialog,
   dismissSplash,

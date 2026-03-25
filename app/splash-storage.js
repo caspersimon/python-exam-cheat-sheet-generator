@@ -81,6 +81,7 @@ function resetAppProgress() {
   state.previewCards = {};
   state.previewEntries = {};
   state.previewZCounter = 1;
+  state.detachedPieces = {};
   state.layout = {
     fontFamily: DEFAULT_FONT_FAMILY,
     fontSize: 8.5,
@@ -208,7 +209,7 @@ function hydratePersistedState() {
       });
 
       hydratedDrafts[snippetId] = {
-        selected: { pieces: [...new Set(selectedPieces)] },
+        selected: { pieces: [...new Set(selectedPieces)], inPreview: Boolean(draft.selected?.inPreview) },
         overrides: { pieces: cleanOverrides },
       };
     });
@@ -236,11 +237,11 @@ function hydratePersistedState() {
 
   if (raw.previewCards && typeof raw.previewCards === "object") {
     const hydratedLayouts = {};
-    Object.entries(raw.previewCards).forEach(([snippetId, layout]) => {
-      if (!snippetIds.has(snippetId) || !layout || typeof layout !== "object") {
+    Object.entries(raw.previewCards).forEach(([previewId, layout]) => {
+      if (!snippetIds.has(previewId) || !layout || typeof layout !== "object") {
         return;
       }
-      hydratedLayouts[snippetId] = {
+      hydratedLayouts[previewId] = {
         page: layout.page === 2 ? 2 : 1,
         x: Number(layout.x) || 0,
         y: Number(layout.y) || 0,
@@ -253,6 +254,77 @@ function hydratePersistedState() {
       };
     });
     state.previewCards = hydratedLayouts;
+  }
+
+  if (raw.detachedPieces && typeof raw.detachedPieces === "object") {
+    const detached = {};
+    Object.entries(raw.detachedPieces).forEach(([detachedId, entry]) => {
+      if (!detachedId || !entry || typeof entry !== "object") {
+        return;
+      }
+      const sourceSnippetId = String(entry.sourceSnippetId || "").trim();
+      if (!sourceSnippetId || !snippetIds.has(sourceSnippetId)) {
+        return;
+      }
+      const sourcePieceId = String(entry.sourcePieceId || "").trim();
+      if (!sourcePieceId) {
+        return;
+      }
+      const rawPresentation = entry.piecePresentation;
+      const presentation =
+        rawPresentation && typeof rawPresentation === "object" && String(rawPresentation.emphasis || "").trim()
+          ? {
+              emphasis: String(rawPresentation.emphasis || "").trim(),
+              label:
+                String(rawPresentation.label || "").trim() || humanizeTopic(String(rawPresentation.emphasis || "").trim()),
+            }
+          : null;
+      detached[detachedId] = {
+        id: detachedId,
+        sourceSnippetId,
+        sourcePieceId,
+        title: String(entry.title || "").trim() || "Detached piece",
+        bodyMarkdown: String(entry.bodyMarkdown || ""),
+        bodyBlocks: Array.isArray(entry.bodyBlocks) ? deepClone(entry.bodyBlocks) : compileMarkdownBodyBlocks(String(entry.bodyMarkdown || "")),
+        topicTitle: String(entry.topicTitle || "").trim(),
+        subtopicTitle: String(entry.subtopicTitle || "").trim(),
+        pieceKind: String(entry.pieceKind || "paragraph").trim(),
+        piecePresentation: presentation,
+      };
+    });
+    state.detachedPieces = detached;
+
+    if (raw.previewCards && typeof raw.previewCards === "object") {
+      Object.entries(raw.previewCards).forEach(([previewId, layout]) => {
+        if (!detached[previewId] || !layout || typeof layout !== "object") {
+          return;
+        }
+        state.previewCards[previewId] = {
+          page: layout.page === 2 ? 2 : 1,
+          x: Number(layout.x) || 0,
+          y: Number(layout.y) || 0,
+          width: Number(layout.width) || 160,
+          height: Number(layout.height) || 220,
+          z: Number(layout.z) || 1,
+          locked: Boolean(layout.locked),
+          title: typeof layout.title === "string" ? layout.title.trim() : "",
+          ...(layout.summaryOverride !== undefined ? { summaryOverride: String(layout.summaryOverride) } : {}),
+        };
+      });
+    }
+  }
+
+  if (raw.previewCards && typeof raw.previewCards === "object") {
+    Object.keys(raw.previewCards).forEach((previewId) => {
+      const snippet = findSnippetById(previewId);
+      if (!snippet) {
+        return;
+      }
+      const draft = ensureDraft(snippet);
+      if ((draft.selected?.pieces || []).length > 0) {
+        draft.selected.inPreview = true;
+      }
+    });
   }
 
   if (Number.isFinite(raw.previewZCounter)) {
@@ -310,6 +382,7 @@ function persistAppState() {
     layout: state.layout,
     previewCards: state.previewCards,
     previewZCounter: state.previewZCounter,
+    detachedPieces: state.detachedPieces,
   };
   const serialized = JSON.stringify(payload);
   if (serialized === lastPersistedPayload) {
