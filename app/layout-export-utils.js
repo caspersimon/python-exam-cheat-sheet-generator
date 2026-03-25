@@ -147,6 +147,19 @@ function isCanvasLikelyBlank(canvas) {
   return true;
 }
 
+function clearUnlockedPreviewCardLayouts() {
+  if (!state?.previewCards || typeof state.previewCards !== "object") {
+    return;
+  }
+
+  Object.keys(state.previewCards).forEach((cardId) => {
+    const layout = state.previewCards[cardId];
+    if (!Boolean(layout?.locked)) {
+      delete state.previewCards[cardId];
+    }
+  });
+}
+
 async function renderExportPageToCanvas(page, options = {}) {
   if (!page) {
     throw new Error("Export page element is missing.");
@@ -255,7 +268,7 @@ function smartFitLayout() {
     fontSize = 7.5; titleSize = 8.5; cardPadding = 4; codeBlockPadding = 2; codeBlockMargin = 1; lineHeight = 1.04;
   }
 
-  state.layout.autoGrid = false;
+  state.layout.autoGrid = true;
   state.layout.gridColumns = bestCols;
   state.layout.gridRows = bestRows;
   state.layout.fontSize = fontSize;
@@ -267,8 +280,8 @@ function smartFitLayout() {
   state.layout.lineHeight = lineHeight;
   state.layout.letterSpacing = 0;
 
-  // Clear manual position overrides so the new grid takes effect
-  state.previewCards = {};
+  // Recompute only unlocked card geometry so locked cards remain stable anchors.
+  clearUnlockedPreviewCardLayouts();
 
   applyLayoutVariables();
   renderPreview();

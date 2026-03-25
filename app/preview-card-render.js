@@ -33,7 +33,7 @@ function renderPreviewSummaryBlock(previewCardId, snippet) {
   `;
 }
 
-function buildPreviewCard(entry, layout) {
+function buildPreviewCard(entry, layout, isOverflow = false) {
   const { previewId, snippet, selectionsByCard } = entry;
   const selection = selectionsByCard[snippet.id];
   const selectedSet = new Set(selection?.selected?.pieces || []);
@@ -53,7 +53,8 @@ function buildPreviewCard(entry, layout) {
   const parentThemeId = getParentTopicThemeId(snippet);
 
   const cardElement = document.createElement("article");
-  cardElement.className = `preview-card${locked ? " is-locked" : ""}`;
+  const overflowClass = isOverflow ? " is-overflow" : "";
+  cardElement.className = `preview-card${locked ? " is-locked" : ""}${overflowClass}`;
   cardElement.dataset.cardId = previewId;
   cardElement.dataset.locked = String(locked);
   if (parentThemeId) {

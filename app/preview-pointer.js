@@ -25,13 +25,19 @@ function getPreviewPageSize(page) {
   };
 }
 
-function sanitizePreviewCardLayout(rawLayout, fallback = {}) {
+function sanitizePreviewCardLayout(rawLayout, fallback = {}, options = {}) {
   const page = rawLayout?.page === 2 ? 2 : 1;
   const pageSize = getPreviewPageSize(page);
+  const sanitizeMinWidth = Number.isFinite(Number(options.minWidth))
+    ? Math.max(1, Number(options.minWidth))
+    : MIN_PREVIEW_CARD_WIDTH;
+  const sanitizeMinHeight = Number.isFinite(Number(options.minHeight))
+    ? Math.max(1, Number(options.minHeight))
+    : MIN_PREVIEW_CARD_HEIGHT;
   const widthRaw = Number(rawLayout?.width ?? fallback.width ?? 160);
   const heightRaw = Number(rawLayout?.height ?? fallback.height ?? 220);
-  const width = clamp(Number.isFinite(widthRaw) ? widthRaw : 160, MIN_PREVIEW_CARD_WIDTH, pageSize.width);
-  const height = clamp(Number.isFinite(heightRaw) ? heightRaw : 220, MIN_PREVIEW_CARD_HEIGHT, pageSize.height);
+  const width = clamp(Number.isFinite(widthRaw) ? widthRaw : 160, sanitizeMinWidth, pageSize.width);
+  const height = clamp(Number.isFinite(heightRaw) ? heightRaw : 220, sanitizeMinHeight, pageSize.height);
   const xRaw = Number(rawLayout?.x ?? fallback.x ?? 0);
   const yRaw = Number(rawLayout?.y ?? fallback.y ?? 0);
   const x = clamp(Number.isFinite(xRaw) ? xRaw : 0, 0, Math.max(0, pageSize.width - width));
@@ -48,10 +54,12 @@ function sanitizePreviewCardLayout(rawLayout, fallback = {}) {
   return result;
 }
 
-function ensurePreviewCardLayout(cardId, fallback) {
+function ensurePreviewCardLayout(cardId, fallback, options = {}) {
+  const force = Boolean(options.force);
+  const sanitizeOptions = options.sanitizeOptions || {};
   const existing = state.previewCards[cardId];
-  if (existing) {
-    const sanitized = sanitizePreviewCardLayout(existing, fallback);
+  if (existing && (!force || existing.locked)) {
+    const sanitized = sanitizePreviewCardLayout(existing, fallback, sanitizeOptions);
     state.previewCards[cardId] = sanitized;
     state.previewZCounter = Math.max(state.previewZCounter, sanitized.z + 1);
     return sanitized;
@@ -61,7 +69,8 @@ function ensurePreviewCardLayout(cardId, fallback) {
       ...fallback,
       z: state.previewZCounter,
     },
-    fallback
+    fallback,
+    sanitizeOptions
   );
   state.previewCards[cardId] = next;
   state.previewZCounter = Math.max(state.previewZCounter, next.z + 1);
@@ -118,10 +127,7 @@ function handlePreviewPointerDown(event) {
 
   const cardId = card.dataset.cardId;
   const layout = state.previewCards[cardId];
-  if (!cardId || !layout) {
-    return;
-  }
-  if (layout.locked) {
+  if (!cardId || !layout || card.classList.contains("is-locked") || layout.locked) {
     return;
   }
 

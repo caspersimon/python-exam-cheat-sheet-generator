@@ -91,6 +91,44 @@ function deletePreviewCard(previewId) {
   renderAll();
 }
 
+function updatePreviewCardLockUI(cardId, nextLocked) {
+  const cardElement = document.querySelector(`.preview-card[data-card-id="${CSS.escape(cardId)}"]`);
+  if (!cardElement) {
+    return false;
+  }
+
+  const nextLockedBool = Boolean(nextLocked);
+  cardElement.classList.toggle("is-locked", nextLockedBool);
+  cardElement.dataset.locked = String(nextLockedBool);
+
+  const lockButton = cardElement.querySelector("[data-role='preview-toggle-lock']");
+  if (lockButton) {
+    const lockTitle = nextLockedBool ? "Unlock card position and size" : "Lock card position and size";
+    const lockAria = nextLockedBool ? "Unlock card position and size" : "Lock card position and size";
+    const lockIcon = nextLockedBool ? "&#128275;" : "&#128274;";
+    lockButton.dataset.locked = String(nextLockedBool);
+    lockButton.title = lockTitle;
+    lockButton.setAttribute("aria-label", lockAria);
+    const iconSpan = lockButton.querySelector("span");
+    if (iconSpan) {
+      iconSpan.innerHTML = lockIcon;
+    }
+  }
+
+  const cardHead = cardElement.querySelector(".preview-card-head");
+  if (cardHead) {
+    cardHead.title = nextLockedBool ? "Card locked: unlock to move or resize" : "Drag to move this card";
+  }
+
+  const dragHint = cardElement.querySelector(".preview-drag-hint");
+  if (dragHint) {
+    dragHint.title = nextLockedBool ? "Card locked" : "Drag card";
+    dragHint.innerHTML = nextLockedBool ? "&#128274;" : "&#8942;";
+  }
+
+  return true;
+}
+
 function togglePreviewCardLock(previewId) {
   if (!previewId) {
     return;
@@ -104,7 +142,12 @@ function togglePreviewCardLock(previewId) {
   const nextLocked = !Boolean(layout.locked);
   pushPreviewHistorySnapshot(`${nextLocked ? "Lock" : "Unlock"} card "${entry.snippet.title}"`);
   layout.locked = nextLocked;
-  renderPreview();
+  if (!updatePreviewCardLockUI(previewId, nextLocked)) {
+    renderPreview();
+    return;
+  }
+
+  schedulePersistState();
 }
 
 async function editPreviewCardTitle(previewId) {

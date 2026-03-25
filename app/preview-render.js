@@ -81,7 +81,6 @@ function renderPreview() {
 
   const previewCardCount = previewEntries.length;
   const grid = getEffectiveGridSettings(previewCardCount);
-  const capacityPerPage = Math.max(1, grid.columns * grid.rows);
 
   if (!previewCardCount) {
     state.previewEntries = {};
@@ -100,10 +99,59 @@ function renderPreview() {
   const validCardIds = new Set(previewEntries.map((entry) => entry.previewId));
   prunePreviewCardLayouts(validCardIds);
 
-  previewEntries.forEach((entry, index) => {
+  const autoPlan = state.layout.autoGrid ? buildAutoPreviewLayoutPlan(previewEntries, grid) : null;
+  let overflowCardCount = 0;
+  const entryIndexById = new Map(previewEntries.map((entry, index) => [entry.previewId, index]));
+  const renderEntries = state.layout.autoGrid
+    ? [...previewEntries].sort((a, b) => {
+      const planA = autoPlan?.layoutPlan?.get(a.previewId);
+      const planB = autoPlan?.layoutPlan?.get(b.previewId);
+      const layoutA = planA?.layout;
+      const layoutB = planB?.layout;
+
+      if (layoutA && layoutB) {
+        if (layoutA.page !== layoutB.page) {
+          return layoutA.page - layoutB.page;
+        }
+        if (layoutA.y !== layoutB.y) {
+          return layoutA.y - layoutB.y;
+        }
+        if (layoutA.x !== layoutB.x) {
+          return layoutA.x - layoutB.x;
+        }
+        return (layoutA.z || 0) - (layoutB.z || 0);
+      }
+
+      if (!layoutA && !layoutB) {
+        return (entryIndexById.get(a.previewId) || 0) - (entryIndexById.get(b.previewId) || 0);
+      }
+      if (!layoutA) {
+        return 1;
+      }
+      return -1;
+    })
+    : previewEntries;
+
+  renderEntries.forEach((entry) => {
+    const isAuto = Boolean(state.layout.autoGrid);
+    const index = entryIndexById.get(entry.previewId) || 0;
     const fallback = getDefaultPreviewLayout(index, grid);
-    const layout = ensurePreviewCardLayout(entry.previewId, fallback);
-    const cardElement = buildPreviewCard(entry, layout);
+    const autoCardPlan = isAuto ? autoPlan?.layoutPlan?.get(entry.previewId) : null;
+    let layout;
+
+    if (isAuto) {
+      layout = autoPlan?.layoutPlan.get(entry.previewId)?.layout;
+      if (!layout) {
+        layout = ensurePreviewCardLayout(entry.previewId, fallback, { force: true, sanitizeOptions: { minHeight: MIN_PREVIEW_CARD_HEIGHT } });
+      }
+      if (autoCardPlan?.overflow) {
+        overflowCardCount += 1;
+      }
+    } else {
+      layout = ensurePreviewCardLayout(entry.previewId, fallback, { force: false });
+    }
+
+    const cardElement = buildPreviewCard(entry, layout, Boolean(autoCardPlan?.overflow));
     if (!cardElement) {
       return;
     }
@@ -120,10 +168,9 @@ function renderPreview() {
     refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
   }
 
-  const overflowCards = Math.max(0, previewCardCount - capacityPerPage * 2);
-  if (overflowCards > 0) {
+  if (overflowCardCount > 0) {
     refs.overflowNotice.classList.remove("hidden");
-    refs.overflowNotice.textContent = `${overflowCards} selected snippet card(s) exceed the default grid. They were added on page 2 and may overlap; drag or resize to arrange.`;
+    refs.overflowNotice.textContent = `${overflowCardCount} selected snippet card(s) overflowed the two-page auto-pack layout. They were placed page-2-first with reduced fit. Densest cards may keep internal body scroll for full content.`;
   } else {
     refs.overflowNotice.classList.add("hidden");
   }
