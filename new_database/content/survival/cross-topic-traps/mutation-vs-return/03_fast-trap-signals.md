@@ -1,0 +1,3 @@
+- If the method is attached to a **string**, assume it returns a **new string**.
+- If the method name sounds like “change order / add item” on a **list**, assume it mutates and often returns `None`.
+- If the stem wants a **printed final value**, check whether the code stored the returned object or silently discarded it.

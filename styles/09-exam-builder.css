@@ -1,10 +1,92 @@
+[data-parent-theme] {
+  --topic-accent: #376c53;
+  --topic-accent-rgb: 55, 108, 83;
+  --topic-accent-ink: #234438;
+}
+
+[data-parent-theme="survival"] {
+  --topic-accent: #8b6f22;
+  --topic-accent-rgb: 139, 111, 34;
+  --topic-accent-ink: #624f17;
+}
+
+[data-parent-theme="core-python"] {
+  --topic-accent: #376c53;
+  --topic-accent-rgb: 55, 108, 83;
+  --topic-accent-ink: #234438;
+}
+
+[data-parent-theme="functions-and-scope"] {
+  --topic-accent: #6e4b88;
+  --topic-accent-rgb: 110, 75, 136;
+  --topic-accent-ink: #4d3462;
+}
+
+[data-parent-theme="strings"] {
+  --topic-accent: #146c69;
+  --topic-accent-rgb: 20, 108, 105;
+  --topic-accent-ink: #0f4f4d;
+}
+
+[data-parent-theme="dicts-and-comprehensions"] {
+  --topic-accent: #8c6331;
+  --topic-accent-rgb: 140, 99, 49;
+  --topic-accent-ink: #5f3f19;
+}
+
+[data-parent-theme="pandas"] {
+  --topic-accent: #3d5f8d;
+  --topic-accent-rgb: 61, 95, 141;
+  --topic-accent-ink: #284160;
+}
+
+[data-parent-theme="datetime"] {
+  --topic-accent: #8a6b24;
+  --topic-accent-rgb: 138, 107, 36;
+  --topic-accent-ink: #654d18;
+}
+
+[data-parent-theme="oop"] {
+  --topic-accent: #7a4350;
+  --topic-accent-rgb: 122, 67, 80;
+  --topic-accent-ink: #5b2f3a;
+}
+
 .topic-parent-summary {
   margin: 0 0 12px;
   padding: 0 4px;
 }
 
+.topic-nav-item[data-parent-theme]:hover {
+  background: rgba(var(--topic-accent-rgb, 55, 108, 83), 0.08);
+}
+
+.topic-nav-item.is-active[data-parent-theme] {
+  background: rgba(var(--topic-accent-rgb, 55, 108, 83), 0.14);
+  border-left-color: var(--topic-accent, var(--accent-2));
+}
+
 .exam-topic-detail .topic-detail-summary {
   max-width: 68ch;
+}
+
+.topic-sidebar-scroll {
+  display: grid;
+  gap: 8px;
+}
+
+.topic-detail-card[data-parent-theme] .topic-detail-intro {
+  padding-top: 14px;
+  border-top: 4px solid rgba(var(--topic-accent-rgb, 55, 108, 83), 0.82);
+}
+
+.topic-course-chip.topic-course-chip-parent {
+  background: rgba(var(--topic-accent-rgb, 55, 108, 83), 0.12);
+  color: var(--topic-accent-ink, var(--accent));
+}
+
+.topic-detail-card[data-parent-theme] .topic-focus-panel {
+  background: linear-gradient(180deg, rgba(var(--topic-accent-rgb, 55, 108, 83), 0.1), rgba(244, 244, 239, 0.86));
 }
 
 .exam-snippet-card {
@@ -23,6 +105,10 @@
   gap: 4px;
 }
 
+.exam-snippet-copy .muted {
+  margin: 0;
+}
+
 .exam-snippet-copy h5 {
   margin: 0;
   font-size: 1rem;
@@ -35,6 +121,7 @@
 }
 
 .exam-piece-row {
+  position: relative;
   display: grid;
   gap: 10px;
   padding-block: 10px;
@@ -51,9 +138,25 @@
   margin-bottom: 0;
 }
 
+.markdown-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.markdown-list li + li {
+  margin-top: 4px;
+}
+
+.exam-piece-heading,
 .preview-piece-title,
 .preview-item-note {
   margin: 0 0 6px;
+}
+
+.exam-piece-heading,
+.preview-piece-title {
+  display: grid;
+  gap: 6px;
 }
 
 .preview-item-note {
@@ -61,6 +164,52 @@
   font-size: 0.8rem;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+}
+
+.piece-emphasis-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.piece-emphasis-badge--trap {
+  background: rgba(219, 137, 29, 0.14);
+  color: #9a5718;
+}
+
+.exam-piece-row.is-trap {
+  margin-inline: -4px;
+  padding: 10px 10px 10px 14px;
+  border-top-color: rgba(219, 137, 29, 0.18);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255, 246, 228, 0.92), rgba(255, 249, 238, 0.82));
+  box-shadow: inset 0 0 0 1px rgba(219, 137, 29, 0.12);
+}
+
+.exam-piece-row.is-trap::before,
+.preview-piece-block.is-trap::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 999px;
+  background: #db891d;
+}
+
+.preview-piece-block.is-trap {
+  padding: 6px 8px 7px 12px;
+  border-radius: 7px;
+  background: linear-gradient(180deg, rgba(255, 246, 228, 0.94), rgba(255, 249, 238, 0.86));
+  box-shadow: inset 0 0 0 1px rgba(219, 137, 29, 0.12);
 }
 
 @media (max-width: 880px) {

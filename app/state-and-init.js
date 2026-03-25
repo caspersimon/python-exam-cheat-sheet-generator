@@ -1,25 +1,28 @@
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v3";
-const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v9";
-const EXAM_BUILDER_DATASET_VERSION = "2026-03-24-manual-curation-hard-cut";
-const CANONICAL_WEEK_ORDER = [1, 2, 3, 4, 5, 6];
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v10";
+const FRONTEND_BUNDLE_VERSION = "2026-03-25-new-database-hard-cut";
+const FRONTEND_BUNDLE_PATH = "./new_database/exports/frontend_bundle.json";
 const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
+const DEFAULT_COURSE_PHASES = ["pre-midterm", "post-midterm", "mixed"];
+const DEFAULT_RECURRENCE_LEVELS = ["signature", "very-common", "common", "occasional", "rare"];
 
 function buildDefaultNavigationState() {
   return {
     activeTopicId: "",
-    activeParentId: "",
-    expandedParents: {},
     mobileSidebarOpen: false,
   };
 }
 
 const state = {
+  topics: [],
   parentTopics: [],
+  snippets: [],
   cards: [],
   filters: {
     search: "",
-    weeks: new Set(CANONICAL_WEEK_ORDER),
+    coursePhases: new Set(DEFAULT_COURSE_PHASES),
+    recurrenceLevels: new Set(DEFAULT_RECURRENCE_LEVELS),
   },
   drafts: {},
   navigation: buildDefaultNavigationState(),
@@ -75,7 +78,8 @@ const refs = {
   rejectedCount: document.getElementById("rejectedCount"),
   remainingCount: document.getElementById("remainingCount"),
   acceptedTopicsList: document.getElementById("acceptedTopicsList"),
-  weekFilterList: document.getElementById("weekFilterList"),
+  coursePhaseFilterList: document.getElementById("coursePhaseFilterList"),
+  recurrenceFilterList: document.getElementById("recurrenceFilterList"),
 
   previewOrderList: document.getElementById("previewOrderList"),
   page1Content: document.getElementById("page1Content"),
@@ -146,25 +150,28 @@ const previewPointerState = {
 
 async function init() {
   bindEvents();
+  bindPreviewEditingEvents();
   syncViewButtons();
   applyLayoutVariables();
   setLoadingState();
   maybeShowSplash();
 
   try {
-    const response = await fetch(`./data/exam_builder_topics.json?v=${encodeURIComponent(EXAM_BUILDER_DATASET_VERSION)}`);
+    const response = await fetch(`${FRONTEND_BUNDLE_PATH}?v=${encodeURIComponent(FRONTEND_BUNDLE_VERSION)}`);
     if (!response.ok) {
-      throw new Error(`Failed to load exam_builder_topics.json (${response.status})`);
+      throw new Error(`Failed to load frontend bundle (${response.status})`);
     }
 
     const payload = await response.json();
-    const normalized = normalizeExamBuilderPayload(payload);
-    state.parentTopics = normalized.parentTopics;
-    state.cards = normalized.cards;
+    const normalized = normalizeSnippetBankPayload(payload);
+    state.topics = normalized.topics;
+    state.parentTopics = normalized.topics;
+    state.snippets = normalized.snippets;
+    state.cards = normalized.snippets;
 
-    renderWeekFilterControls();
+    renderFilterControls(normalized.availableCoursePhases, normalized.availableRecurrenceLevels);
     hydratePersistedState();
-    ensureExplorerNavigation(getFilteredParentBundles());
+    ensureExplorerNavigation(getFilteredTopics());
     syncFilterControls();
     applyLayoutVariables();
     renderAll();
@@ -173,9 +180,9 @@ async function init() {
     }
   } catch (error) {
     refs.cardHost.innerHTML = `<div class="empty-state">
-      <p><strong>Could not load <code>data/exam_builder_topics.json</code>.</strong></p>
+      <p><strong>Could not load <code>new_database/exports/frontend_bundle.json</code>.</strong></p>
       <p>${escapeHtml(error.message)}</p>
-      <p>Refresh the manually curated dataset at <code>data/exam_builder_topics.json</code>, then serve the repo with <code>python3 -m http.server 4173</code>.</p>
+      <p>Rebuild the bundle with <code>python3 scripts/build_frontend_bundle.py</code>, then serve the repo with <code>python3 -m http.server 4173</code>.</p>
     </div>`;
   }
 }
@@ -260,39 +267,27 @@ function bindEvents() {
       return;
     }
 
-    if (state.view !== "swipe") {
-      const isUndoShortcut =
-        (event.metaKey || event.ctrlKey) &&
-        !event.altKey &&
-        !event.shiftKey &&
-        event.key.toLowerCase() === "z";
-      if (state.view === "preview" && isUndoShortcut && !isEditableKeyTarget(event.target) && !isPreviewEditModalOpen()) {
-        event.preventDefault();
-        undoLastPreviewChange();
+    if ((event.metaKey || event.ctrlKey) && !event.shiftKey && !event.altKey && event.key.toLowerCase() === "z") {
+      if (isEditableKeyTarget(event.target) || isPreviewEditModalOpen()) {
+        return;
       }
-      return;
-    }
-
-    if (isEditableKeyTarget(event.target)) {
-      return;
+      event.preventDefault();
+      undoLastPreviewChange();
     }
   });
 
   refs.autoGridToggle.addEventListener("change", (event) => {
     state.layout.autoGrid = Boolean(event.target.checked);
-    applyLayoutVariables();
     renderPreview();
   });
 
   refs.gridColumnsRange.addEventListener("input", (event) => {
     state.layout.gridColumns = readClampedRangeValue(event.target);
-    applyLayoutVariables();
     renderPreview();
   });
 
   refs.gridRowsRange.addEventListener("input", (event) => {
     state.layout.gridRows = readClampedRangeValue(event.target);
-    applyLayoutVariables();
     renderPreview();
   });
 
@@ -361,22 +356,42 @@ function bindEvents() {
   document.addEventListener("pointercancel", finishPreviewPointerAction);
 }
 
-function renderWeekFilterControls() {
-  if (!refs.weekFilterList) {
+function renderFilterControls(coursePhases, recurrenceLevels) {
+  renderCheckboxFilterGroup(
+    refs.coursePhaseFilterList,
+    "coursePhaseCheck",
+    coursePhases.length ? coursePhases : DEFAULT_COURSE_PHASES,
+    state.filters.coursePhases,
+    "coursePhases"
+  );
+  renderCheckboxFilterGroup(
+    refs.recurrenceFilterList,
+    "recurrenceCheck",
+    recurrenceLevels.length ? recurrenceLevels : DEFAULT_RECURRENCE_LEVELS,
+    state.filters.recurrenceLevels,
+    "recurrenceLevels"
+  );
+}
+
+function renderCheckboxFilterGroup(host, inputClass, values, selectedSet, filterKey) {
+  if (!host) {
     return;
   }
+  host.innerHTML = values
+    .map((value) => {
+      const checked = selectedSet.has(value);
+      return `<label><input class="${inputClass}" type="checkbox" value="${escapeHtml(value)}" ${checked ? "checked" : ""} />${escapeHtml(
+        humanizeTopic(value)
+      )}</label>`;
+    })
+    .join("");
 
-  refs.weekFilterList.innerHTML = CANONICAL_WEEK_ORDER.map((week) => {
-    const checked = state.filters.weeks.has(week);
-    return `<label><input class="weekCheck" type="checkbox" value="${week}" ${checked ? "checked" : ""} />W${week}</label>`;
-  }).join("");
-
-  refs.weekFilterList.querySelectorAll(".weekCheck").forEach((checkbox) => {
+  host.querySelectorAll(`.${inputClass}`).forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
-      const selected = Array.from(refs.weekFilterList.querySelectorAll(".weekCheck"))
-        .filter((el) => el.checked)
-        .map((el) => Number(el.value));
-      state.filters.weeks = new Set(selected);
+      const nextValues = Array.from(host.querySelectorAll(`.${inputClass}`))
+        .filter((entry) => entry.checked)
+        .map((entry) => entry.value);
+      state.filters[filterKey] = new Set(nextValues);
       renderAll();
     });
   });

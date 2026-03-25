@@ -1,21 +1,25 @@
 # Python Exam Cheat Sheet Builder
 
-Build a clean, personalized Python exam cheat sheet from the course topics that actually matter.
+Build a clean, personalized Python exam cheat sheet from the course snippets that actually matter.
 
-This app is made for students. You open a topic, tick the exact key points and examples you want, and the app turns your selections into a compact two-page A4 sheet you can print or export.
+This app is made for students. You open a topic, browse its subtopics, tick the exact snippet pieces you want, and the app turns your selections into a compact two-page A4 sheet you can print or export.
+
+The website now loads from the new Markdown-first snippet bank in [`new_database/`](new_database), using a build-generated frontend bundle at [`new_database/exports/frontend_bundle.json`](new_database/exports/frontend_bundle.json).
 
 Right now the app includes:
 
-- `27` curated Python topics
-- content from weeks `1-6`
-- `18` topics linked to practice-exam hits
+- `8` top-level topics
+- `20` subtopics
+- `46` snippets
+- `134` individually selectable markdown-backed pieces
 - built-in preview, edit, undo, print, PNG, and PDF export tools
 
 ## What You Can Do
 
-- browse topics by week in the sidebar
-- filter for exam-linked material
-- choose exact key points, examples, and snippets instead of taking whole topics
+- browse topics and subtopics in the sidebar
+- filter by `course_phase` and `recurrence_level`
+- search by titles, summaries, keywords, and trap metadata
+- choose exact snippet pieces instead of taking whole topics
 - preview your sheet on two A4 pages before exporting
 - drag, resize, lock, edit, or delete cards in the preview
 - keep your progress in the browser so you can come back later
@@ -23,8 +27,8 @@ Right now the app includes:
 ## How It Works
 
 1. Open the app and click `Get Started`.
-2. Use the left sidebar to jump to a week and topic.
-3. Tick the key points, details, code examples, and snippets you want to keep.
+2. Use the left sidebar to jump to a topic.
+3. Scan subtopics, then tick the exact snippet pieces you want to keep.
 4. Open `Preview & Export` to see your cheat sheet.
 5. Rearrange or edit cards until everything fits the way you want.
 6. Export as `PDF`, `PNG`, or use `Print`.
@@ -51,7 +55,7 @@ Once you have picked enough material, the app builds a printable two-page layout
 
 ## Quick Tips
 
-- Start with exam-linked topics first if you are short on time.
+- Start with the signature and very-common snippets first if you are short on time.
 - Keep only what you would genuinely want to read during revision or right before the exam.
 - Use the preview early instead of waiting until the end.
 - If a card is in the right place, lock it so you do not move it by accident.
@@ -61,6 +65,7 @@ Once you have picked enough material, the app builds a printable two-page layout
 This is a static website, so you do not need a backend or a big setup.
 
 ```bash
+python3 scripts/build_frontend_bundle.py
 python3 -m http.server 8000
 ```
 

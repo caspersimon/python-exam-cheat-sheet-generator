@@ -1,0 +1,2 @@
+- Filter-only `if` goes **after** the `for`.
+- `if ... else ...` for choosing between two values goes **before** the `for`.

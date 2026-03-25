@@ -1,0 +1,3 @@
+- Do not return the “other” object too early; first check whether it really beats `self`.
+- If the class already has helper methods (`average_score`, `rating`, `holiday_bonus`), use them.
+- If the tie rule says `None` or `'Either'`, return exactly that text/value.

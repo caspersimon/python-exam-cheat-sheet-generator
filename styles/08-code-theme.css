@@ -32,12 +32,16 @@
   font-family: "JetBrains Mono", monospace;
   font-size: inherit;
   line-height: inherit;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
 }
 
 .inline-code {
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: break-word;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
 }
 
 .python-code {

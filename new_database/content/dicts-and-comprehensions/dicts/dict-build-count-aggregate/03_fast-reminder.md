@@ -1,0 +1,3 @@
+- Direct iteration over a dict gives keys.
+- `d.values()` gives the numeric values you usually want for `sum`, `max`, `mean`-type logic.
+- If you need both key and value, use `d.items()`.

@@ -9,7 +9,7 @@ function capturePreviewSnapshot() {
 }
 
 function pushPreviewHistorySnapshot(reason = "") {
-  if (!state.cards.length) {
+  if (!state.snippets.length) {
     return;
   }
   if (!Array.isArray(state.previewHistory)) {

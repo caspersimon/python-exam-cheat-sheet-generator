@@ -1,0 +1,3 @@
+- A single dict value like `data['local'] = email.split('@')[0]` inside the loop keeps overwriting the previous value.
+- Column names and extracted values must line up exactly.
+- Every column list passed to `pd.DataFrame(...)` must have the same length.

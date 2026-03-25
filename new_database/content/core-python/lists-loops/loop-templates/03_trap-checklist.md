@@ -1,0 +1,3 @@
+- `range(0, 20)` stops at `19`, not `20`.
+- A `while` loop often needs the increment **inside** the loop.
+- If the stem says “only the even numbers”, reject code that also prints `None` or odd numbers.

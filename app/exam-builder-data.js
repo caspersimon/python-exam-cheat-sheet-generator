@@ -1,200 +1,274 @@
-const EXAM_BUILDER_SECTION_LABELS = {
-  must_know: "Must Know",
-  exam_patterns: "Exam Patterns",
-  useful_backup: "Useful Backup",
-};
+const VALID_PIECE_PRESENTATION_EMPHASIS = new Set(["trap"]);
 
-const EXAM_BUILDER_SECTION_DESCRIPTIONS = {
-  must_know: "The fastest, densest references you should reach for first.",
-  exam_patterns: "Recurring traps, worked comparisons, and exam-style patterns worth recognizing quickly.",
-  useful_backup: "Support material to add when a narrower question still leaves a gap.",
-};
-
-function normalizeExamBuilderPayload(payload) {
-  const parentTopics = Array.isArray(payload?.parent_topics)
-    ? payload.parent_topics.map(normalizeExamParentTopic).filter(Boolean)
-    : [];
-  const cards = flattenExamBuilderTopics(parentTopics);
-  return { parentTopics, cards };
-}
-
-function normalizeExamParentTopic(parentTopic) {
-  if (!parentTopic || typeof parentTopic !== "object") {
-    return null;
-  }
-
-  const mainTopics = Array.isArray(parentTopic.main_topics)
-    ? parentTopic.main_topics.map((topic) => normalizeExamCard(parentTopic, topic)).filter(Boolean)
-    : [];
-
+function normalizeSnippetBankPayload(payload) {
+  const topics = Array.isArray(payload?.topics) ? payload.topics.map(normalizeTopic).filter(Boolean) : [];
+  const snippets = topics.flatMap((topic) => topic.subtopics.flatMap((subtopic) => subtopic.snippets));
   return {
-    id: String(parentTopic.id || "").trim(),
-    title: String(parentTopic.title || "Topic Group").trim(),
-    summary: String(parentTopic.summary || "").trim(),
-    mainTopics,
-  };
-}
-
-function flattenExamBuilderTopics(parentTopics) {
-  return parentTopics.flatMap((parentTopic) => parentTopic.mainTopics || []);
-}
-
-function normalizeExamCard(parentTopic, mainTopic) {
-  if (!mainTopic || typeof mainTopic !== "object") {
-    return null;
-  }
-
-  const mainWeek = Number(mainTopic.main_week || 0);
-  const relatedWeeks = Array.isArray(mainTopic.related_weeks)
-    ? mainTopic.related_weeks.map((value) => Number(value)).filter((value) => Number.isFinite(value) && value > 0)
-    : [];
-  const weeks = [...new Set([mainWeek, ...relatedWeeks].filter((value) => Number.isFinite(value) && value > 0))];
-  const sections = Array.isArray(mainTopic.sections)
-    ? mainTopic.sections.map(normalizeExamSection).filter(Boolean)
-    : [];
-
-  const allSnippets = sections.flatMap((section) => section.snippets);
-  const allPieces = allSnippets.flatMap((snippet) => snippet.pieces);
-  const examHitCount = allSnippets.filter((snippet) => snippet.snippetType === "past_exam_question").length;
-
-  return {
-    id: String(mainTopic.id || "").trim(),
-    topic: String(mainTopic.title || "Topic").trim(),
-    canonical_topic: String(mainTopic.id || "").trim(),
-    parent_topic: String(parentTopic.title || "Topic Group").trim(),
-    parent_topic_id: String(parentTopic.id || "").trim(),
-    summary: String(mainTopic.summary || "").trim(),
-    search_text: String(mainTopic.search_text || `${mainTopic.title || ""} ${parentTopic.title || ""}`).trim(),
-    weeks,
-    related_weeks: relatedWeeks,
-    topic_meta: {
-      week: mainWeek,
-      topic_order: Number(mainTopic.topic_order || 0),
-    },
-    exam_stats: {
-      total_hits: examHitCount,
-      coverage_count: allPieces.length,
-    },
-    sections,
-    snippetCount: allSnippets.length,
-    pieceCount: allPieces.length,
-  };
-}
-
-function normalizeExamSection(section) {
-  if (!section || typeof section !== "object") {
-    return null;
-  }
-
-  const snippets = Array.isArray(section.snippets)
-    ? section.snippets
-        .map(normalizeExamSnippet)
-        .filter(Boolean)
-        .sort((a, b) => Number(a.order || 0) - Number(b.order || 0))
-    : [];
-
-  return {
-    key: String(section.key || "").trim(),
-    title: String(section.title || EXAM_BUILDER_SECTION_LABELS[section.key] || humanizeTopic(section.key || "Section")).trim(),
-    description: String(section.description || EXAM_BUILDER_SECTION_DESCRIPTIONS[String(section.key || "").trim()] || "").trim(),
-    initialVisibleCount: Math.max(1, Number(section.initial_visible_count || 0) || 4),
+    topics,
     snippets,
+    availableCoursePhases: [...new Set(snippets.map((snippet) => snippet.coursePhase).filter(Boolean))],
+    availableRecurrenceLevels: [...new Set(snippets.map((snippet) => snippet.recurrenceLevel).filter(Boolean))],
   };
 }
 
-function normalizeExamSnippet(snippet) {
+function normalizeTopic(topic) {
+  if (!topic || typeof topic !== "object") {
+    return null;
+  }
+
+  const topicSlug = String(topic.topic_slug || "").trim();
+  const title = String(topic.title || "Topic").trim();
+  const description = String(topic.description || "").trim();
+  const subtopics = Array.isArray(topic.subtopics)
+    ? topic.subtopics
+        .map((subtopic) => normalizeSubtopic(topicSlug, title, subtopic))
+        .filter(Boolean)
+        .sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title))
+    : [];
+
+  return {
+    id: topicSlug,
+    topicSlug,
+    title,
+    summary: description,
+    description,
+    sortOrder: Number(topic.sort_order || 0),
+    snippetCount: Number(topic.snippet_count || subtopics.reduce((sum, subtopic) => sum + subtopic.snippets.length, 0)),
+    themeId: topicSlug,
+    subtopics,
+    searchText: [title, description, ...subtopics.map((subtopic) => subtopic.title)].join(" ").toLowerCase(),
+  };
+}
+
+function normalizeSubtopic(topicSlug, topicTitle, subtopic) {
+  if (!subtopic || typeof subtopic !== "object") {
+    return null;
+  }
+
+  const subtopicSlug = String(subtopic.slug || "").trim();
+  const title = String(subtopic.title || "Subtopic").trim();
+  const description = String(subtopic.description || "").trim();
+  const snippets = Array.isArray(subtopic.snippets)
+    ? subtopic.snippets
+        .map((snippet) => normalizeSnippet(topicSlug, topicTitle, subtopicSlug, title, snippet))
+        .filter(Boolean)
+        .sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title))
+    : [];
+
+  return {
+    id: subtopicSlug,
+    subtopicSlug,
+    topicSlug,
+    topicTitle,
+    title,
+    summary: description,
+    description,
+    sortOrder: Number(subtopic.sort_order || 0),
+    snippetCount: Number(subtopic.snippet_count || snippets.length),
+    snippets,
+    searchText: [topicTitle, title, description, ...snippets.map((snippet) => snippet.title)].join(" ").toLowerCase(),
+  };
+}
+
+function normalizeSnippet(topicSlug, topicTitle, subtopicSlug, subtopicTitle, snippet) {
   if (!snippet || typeof snippet !== "object") {
     return null;
   }
 
+  const slug = String(snippet.slug || "").trim();
   const pieces = Array.isArray(snippet.pieces)
     ? snippet.pieces
-        .map(normalizeExamPiece)
+        .map((piece) => normalizePiece(topicSlug, slug, piece))
         .filter(Boolean)
-        .sort((a, b) => Number(a.order || 0) - Number(b.order || 0))
+        .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title))
     : [];
+  const trapSlugs = Array.isArray(snippet.trap_slugs) ? snippet.trap_slugs.map((value) => String(value || "").trim()).filter(Boolean) : [];
+  const trapLabels = Array.isArray(snippet.trap_labels) ? snippet.trap_labels.map((value) => String(value || "").trim()).filter(Boolean) : [];
+  const keywords = Array.isArray(snippet.keywords) ? snippet.keywords.map((value) => String(value || "").trim()).filter(Boolean) : [];
+  const searchBits = [
+    topicTitle,
+    subtopicTitle,
+    snippet.title,
+    snippet.summary,
+    snippet.why,
+    ...keywords,
+    ...trapSlugs,
+    ...trapLabels,
+    ...pieces.map((piece) => piece.title),
+  ];
 
   return {
-    id: String(snippet.id || "").trim(),
+    id: slug,
+    slug,
     title: String(snippet.title || "Snippet").trim(),
-    order: Number(snippet.order || 0),
-    snippetType: String(snippet.snippet_type || "general_snippet").trim(),
-    parentTopic: String(snippet.parent_topic || "").trim(),
-    mainTopic: String(snippet.main_topic || "").trim(),
-    mainWeek: Number(snippet.main_week || 0),
-    relatedTopics: Array.isArray(snippet.related_topics)
-      ? snippet.related_topics.map((value) => String(value || "").trim()).filter(Boolean)
-      : [],
-    relatedWeeks: Array.isArray(snippet.related_weeks)
-      ? snippet.related_weeks.map((value) => Number(value)).filter((value) => Number.isFinite(value) && value > 0)
-      : [],
     summary: String(snippet.summary || "").trim(),
-    sourceRefs: Array.isArray(snippet.source_refs) ? deepClone(snippet.source_refs) : [],
+    why: String(snippet.why || "").trim(),
+    sortOrder: Number(snippet.sort_order || 0),
+    defaultPriority: Number(snippet.default_priority || 0),
+    difficulty: String(snippet.difficulty || "").trim(),
+    coursePhase: String(snippet.course_phase || "").trim(),
+    recurrenceLevel: String(snippet.recurrence_level || "").trim(),
+    examFamilyCount: Number(snippet.exam_family_count || 0),
+    questionRefCount: Number(snippet.question_ref_count || 0),
+    pieceCount: Number(snippet.piece_count || pieces.length),
+    keywords,
+    trapSlugs,
+    trapLabels,
+    topicSlug,
+    topicTitle,
+    subtopicSlug,
+    subtopicTitle,
+    readmePath: String(snippet.readme_path || "").trim(),
+    contentDir: String(snippet.content_dir || "").trim(),
     pieces,
+    searchText: searchBits.join(" ").toLowerCase(),
   };
 }
 
-function normalizeExamPiece(piece) {
-  if (!piece || typeof piece !== "object" || !piece.id) {
+function normalizePiece(topicSlug, snippetSlug, piece) {
+  if (!piece || typeof piece !== "object" || !piece.piece_id) {
     return null;
   }
 
+  const role = String(piece.role || "").trim();
+  const trapSlugs = Array.isArray(piece.trap_slugs) ? piece.trap_slugs.map((value) => String(value || "").trim()).filter(Boolean) : [];
+  const presentation = normalizePiecePresentation(piece.presentation, role);
+
   return {
-    id: String(piece.id || "").trim(),
-    sourcePieceId: String(piece.source_piece_id || "").trim(),
-    pieceType: String(piece.piece_type || "explanation").trim(),
+    id: String(piece.piece_id || "").trim(),
+    pieceId: String(piece.piece_id || "").trim(),
+    pieceSlug: String(piece.piece_slug || "").trim(),
+    order: Number(piece.sort_order || 0),
     title: String(piece.title || "Piece").trim(),
-    order: Number(piece.order || 0),
-    content: deepClone(piece.content || {}),
-    selectable: piece.selectable !== false,
-    sourceRefs: Array.isArray(piece.source_refs) ? deepClone(piece.source_refs) : [],
+    pieceType: String(piece.kind || "paragraph").trim(),
+    kind: String(piece.kind || "paragraph").trim(),
+    role,
+    topicSlug,
+    snippetSlug,
+    defaultSelected: Boolean(piece.default_selected),
+    questionRefCount: Number(piece.question_ref_count || 0),
+    bodyMarkdown: String(piece.body_markdown || ""),
+    bodyBlocks: normalizeBodyBlocks(piece.body_blocks),
+    selectable: true,
+    trapSlugs,
+    trapLabels: Array.isArray(piece.trap_labels) ? piece.trap_labels.map((value) => String(value || "").trim()).filter(Boolean) : [],
+    bodyPath: String(piece.body_path || "").trim(),
+    presentation,
   };
 }
 
-function getExamCardSections(card) {
-  return Array.isArray(card?.sections) ? card.sections : [];
+function normalizePiecePresentation(presentation, role = "") {
+  const explicit = presentation && typeof presentation === "object" ? String(presentation.emphasis || "").trim() : "";
+  const derived = role === "trap" ? "trap" : "";
+  const emphasis = explicit || derived;
+  if (!VALID_PIECE_PRESENTATION_EMPHASIS.has(emphasis)) {
+    return null;
+  }
+  const label =
+    presentation && typeof presentation === "object" && String(presentation.label || "").trim()
+      ? String(presentation.label).trim()
+      : humanizeTopic(emphasis);
+  return { emphasis, label };
 }
 
-function getExamSection(card, sectionKey) {
-  return getExamCardSections(card).find((section) => section.key === sectionKey) || null;
-}
-
-function getExamSnippet(card, snippetId) {
-  return getExamCardSections(card).flatMap((section) => section.snippets).find((snippet) => snippet.id === snippetId) || null;
-}
-
-function findExamPieceContext(card, pieceId) {
-  for (const section of getExamCardSections(card)) {
-    for (const snippet of section.snippets) {
-      const piece = snippet.pieces.find((entry) => entry.id === pieceId);
-      if (piece) {
-        return { section, snippet, piece };
+function normalizeBodyBlocks(blocks) {
+  if (!Array.isArray(blocks)) {
+    return [];
+  }
+  return blocks
+    .map((block) => {
+      if (!block || typeof block !== "object") {
+        return null;
       }
-    }
+      const type = String(block.type || "").trim();
+      if (!type) {
+        return null;
+      }
+      if (type === "paragraph") {
+        return { type, text: String(block.text || "").trim() };
+      }
+      if (type === "code") {
+        return {
+          type,
+          language: String(block.language || "").trim(),
+          code: String(block.code || ""),
+        };
+      }
+      if (type === "list") {
+        return {
+          type,
+          ordered: Boolean(block.ordered),
+          items: Array.isArray(block.items) ? block.items.map((item) => String(item || "")) : [],
+        };
+      }
+      if (type === "table") {
+        return {
+          type,
+          headers: Array.isArray(block.headers) ? block.headers.map((cell) => String(cell || "")) : [],
+          rows: Array.isArray(block.rows)
+            ? block.rows.map((row) => (Array.isArray(row) ? row.map((cell) => String(cell || "")) : []))
+            : [],
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+}
+
+function getTopicThemeId(value) {
+  if (!value || typeof value !== "object") {
+    return "";
   }
-  return null;
+  return String(value.topicSlug || value.topic_slug || value.themeId || value.id || "").trim();
 }
 
-function getAllSelectablePieceIds(card) {
-  return getExamCardSections(card)
-    .flatMap((section) => section.snippets)
-    .flatMap((snippet) => snippet.pieces)
-    .filter((piece) => piece.selectable)
-    .map((piece) => piece.id);
+function getParentTopicThemeId(value) {
+  return getTopicThemeId(value);
 }
 
-function getSectionSelectablePieceIds(card, sectionKey) {
-  const section = getExamSection(card, sectionKey);
-  if (!section) {
-    return [];
+function getPiecePresentation(piece) {
+  if (!piece || typeof piece !== "object" || !piece.presentation) {
+    return null;
   }
-  return section.snippets.flatMap((snippet) => snippet.pieces.filter((piece) => piece.selectable).map((piece) => piece.id));
+  const emphasis = String(piece.presentation.emphasis || "").trim();
+  if (!VALID_PIECE_PRESENTATION_EMPHASIS.has(emphasis)) {
+    return null;
+  }
+  return {
+    emphasis,
+    label: String(piece.presentation.label || humanizeTopic(emphasis)).trim() || humanizeTopic(emphasis),
+  };
 }
 
-function getSnippetSelectablePieceIds(card, snippetId) {
-  const snippet = getExamSnippet(card, snippetId);
+function pieceHasPresentationEmphasis(piece, emphasis) {
+  return getPiecePresentation(piece)?.emphasis === emphasis;
+}
+
+function getSnippetSelectablePieceIds(snippet) {
+  return Array.isArray(snippet?.pieces) ? snippet.pieces.filter((piece) => piece.selectable).map((piece) => piece.id) : [];
+}
+
+function getSubtopicSelectablePieceIds(subtopic) {
+  return Array.isArray(subtopic?.snippets) ? subtopic.snippets.flatMap((snippet) => getSnippetSelectablePieceIds(snippet)) : [];
+}
+
+function getTopicSelectablePieceIds(topic) {
+  return Array.isArray(topic?.subtopics) ? topic.subtopics.flatMap((subtopic) => getSubtopicSelectablePieceIds(subtopic)) : [];
+}
+
+function findSnippetById(snippetId) {
+  return state.snippets.find((snippet) => snippet.id === snippetId) || null;
+}
+
+function findPieceContext(snippet, pieceId) {
   if (!snippet) {
-    return [];
+    return null;
   }
-  return snippet.pieces.filter((piece) => piece.selectable).map((piece) => piece.id);
+  const piece = (snippet.pieces || []).find((entry) => entry.id === pieceId);
+  if (!piece) {
+    return null;
+  }
+  const topic = state.topics.find((entry) => entry.id === snippet.topicSlug) || null;
+  const subtopic = topic?.subtopics.find((entry) => entry.id === snippet.subtopicSlug) || null;
+  return { topic, subtopic, snippet, piece };
 }

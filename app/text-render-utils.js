@@ -199,9 +199,7 @@ function autoBacktickInlineCode(text) {
 }
 
 function renderInlineCode(text) {
-  const value = closeUnbalancedBackticks(
-    normalizeMalformedInlineCode(autoBacktickInlineCode(sanitizeDisplayText(text || "")))
-  );
+  const value = closeUnbalancedBackticks(normalizeMalformedInlineCode(sanitizeDisplayText(text || "")));
   if (!value) {
     return "";
   }
@@ -212,9 +210,21 @@ function renderInlineCode(text) {
       if (idx % 2 === 1) {
         return `<code class="inline-code">${escapeHtml(chunk)}</code>`;
       }
-      return escapeHtml(chunk).replace(/\n+/g, " ");
+      return renderInlineMarkdownDecorations(chunk).replace(/\n+/g, " ");
     })
     .join("");
+}
+
+function decodeDisplayEscapes(text) {
+  return normalizeNewlines(String(text || ""))
+    .replace(/\\n/g, "\n")
+    .replace(/\\t/g, "\t");
+}
+
+function renderInlineRichText(text, { preserveNewlines = false } = {}) {
+  const value = preserveNewlines ? decodeDisplayEscapes(text) : String(text || "");
+  const lines = normalizeNewlines(value).split("\n");
+  return lines.map((line) => renderInlineCode(line)).join("<br>");
 }
 
 function closeUnbalancedBackticks(text) {
@@ -232,4 +242,160 @@ function normalizeMalformedInlineCode(text) {
     .replace(/`\/`/g, "/")
     .replace(/`None`(?=\s+of the above)/g, "None")
     .replace(/`from`(?=\s+(?:the value|right to left|the others|the following))/g, "from");
+}
+
+function renderInlineMarkdownDecorations(text) {
+  const escaped = escapeHtml(String(text || ""));
+  return escaped.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
+function splitMarkdownTableRow(line) {
+  const value = String(line || "").trim().replace(/^\|/, "").replace(/\|$/, "");
+  return value.split("|").map((cell) => cell.trim());
+}
+
+function isMarkdownTableSeparator(line) {
+  const cells = splitMarkdownTableRow(line);
+  return cells.length > 0 && cells.every((cell) => /^:?-{3,}:?$/.test(cell || ""));
+}
+
+function compileMarkdownBodyBlocks(markdown) {
+  const text = normalizeNewlines(String(markdown || "")).replace(/\n+$/g, "");
+  if (!text.trim()) {
+    return [];
+  }
+
+  const lines = text.split("\n");
+  const blocks = [];
+  let index = 0;
+
+  while (index < lines.length) {
+    const line = lines[index];
+    const stripped = line.trim();
+    if (!stripped) {
+      index += 1;
+      continue;
+    }
+
+    if (stripped.startsWith("```")) {
+      const language = stripped.slice(3).trim();
+      const codeLines = [];
+      index += 1;
+      while (index < lines.length && !lines[index].trim().startsWith("```")) {
+        codeLines.push(lines[index]);
+        index += 1;
+      }
+      if (index < lines.length) {
+        index += 1;
+      }
+      blocks.push({ type: "code", language, code: codeLines.join("\n").replace(/\s+$/g, "") });
+      continue;
+    }
+
+    if (index + 1 < lines.length && stripped.includes("|") && lines[index + 1].includes("|") && isMarkdownTableSeparator(lines[index + 1])) {
+      const headers = splitMarkdownTableRow(lines[index]);
+      const rows = [];
+      index += 2;
+      while (index < lines.length && lines[index].trim() && lines[index].includes("|")) {
+        rows.push(splitMarkdownTableRow(lines[index]));
+        index += 1;
+      }
+      blocks.push({ type: "table", headers, rows });
+      continue;
+    }
+
+    const unordered = line.match(/^\s*[-*+]\s+(.*)$/);
+    const ordered = line.match(/^\s*\d+[.)]\s+(.*)$/);
+    if (unordered || ordered) {
+      const isOrdered = Boolean(ordered);
+      const items = [unordered ? unordered[1].trim() : ordered[1].trim()];
+      index += 1;
+      while (index < lines.length) {
+        const candidate = lines[index];
+        if (!candidate.trim()) {
+          break;
+        }
+        const nextUnordered = candidate.match(/^\s*[-*+]\s+(.*)$/);
+        const nextOrdered = candidate.match(/^\s*\d+[.)]\s+(.*)$/);
+        if (isOrdered && nextOrdered) {
+          items.push(nextOrdered[1].trim());
+          index += 1;
+          continue;
+        }
+        if (!isOrdered && nextUnordered) {
+          items.push(nextUnordered[1].trim());
+          index += 1;
+          continue;
+        }
+        if (/^\s{2,}\S/.test(candidate)) {
+          items[items.length - 1] = `${items[items.length - 1]}\n${candidate.trim()}`;
+          index += 1;
+          continue;
+        }
+        break;
+      }
+      blocks.push({ type: "list", ordered: isOrdered, items });
+      continue;
+    }
+
+    const paragraphLines = [stripped.replace(/^>\s?/, "")];
+    index += 1;
+    while (index < lines.length) {
+      const candidate = lines[index];
+      const candidateStripped = candidate.trim();
+      if (!candidateStripped) {
+        break;
+      }
+      if (candidateStripped.startsWith("```")) {
+        break;
+      }
+      if (index + 1 < lines.length && candidateStripped.includes("|") && lines[index + 1].includes("|") && isMarkdownTableSeparator(lines[index + 1])) {
+        break;
+      }
+      if (/^\s*[-*+]\s+/.test(candidate) || /^\s*\d+[.)]\s+/.test(candidate)) {
+        break;
+      }
+      paragraphLines.push(candidateStripped.replace(/^>\s?/, ""));
+      index += 1;
+    }
+    blocks.push({ type: "paragraph", text: paragraphLines.join("\n").trim() });
+  }
+
+  return blocks.filter(Boolean);
+}
+
+function renderMarkdownBodyBlocks(blocks, fallbackMarkdown = "") {
+  const safeBlocks = Array.isArray(blocks) && blocks.length ? blocks : compileMarkdownBodyBlocks(fallbackMarkdown);
+  if (!safeBlocks.length) {
+    const fallback = String(fallbackMarkdown || "").trim();
+    return fallback ? `<p>${renderInlineRichText(fallback, { preserveNewlines: true })}</p>` : "";
+  }
+
+  return safeBlocks
+    .map((block) => {
+      if (!block || typeof block !== "object") {
+        return "";
+      }
+      if (block.type === "paragraph") {
+        return block.text ? `<p>${renderInlineRichText(block.text, { preserveNewlines: true })}</p>` : "";
+      }
+      if (block.type === "code") {
+        return renderCodeBlock(block.code || "", block.language ? `lang-${block.language}` : "");
+      }
+      if (block.type === "list") {
+        const tag = block.ordered ? "ol" : "ul";
+        const items = Array.isArray(block.items) ? block.items : [];
+        return `<${tag} class="markdown-list">${items
+          .map((item) => `<li>${renderInlineRichText(item, { preserveNewlines: true })}</li>`)
+          .join("")}</${tag}>`;
+      }
+      if (block.type === "table") {
+        return renderMiniTable({
+          headers: Array.isArray(block.headers) ? block.headers : [],
+          rows: Array.isArray(block.rows) ? block.rows : [],
+        });
+      }
+      return "";
+    })
+    .join("");
 }

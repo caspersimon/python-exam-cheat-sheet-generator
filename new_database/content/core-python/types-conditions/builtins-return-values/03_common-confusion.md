@@ -1,0 +1,3 @@
+- `sorted(x)` returns a value; `x.sort()` mutates and returns `None`.
+- `type(x)` is not a string like `'int'`; it is the class object `int`.
+- String methods such as `count` and `index` are called **on the string object**.

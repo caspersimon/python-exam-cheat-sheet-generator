@@ -1,0 +1,3 @@
+- `df[mask]` keeps rows where mask is `True`.
+- `df.loc[mask, ['A','B']]` keeps rows by mask and only columns `A`,`B`.
+- For “above average salary” questions, first compute the average, then compare each salary to it.

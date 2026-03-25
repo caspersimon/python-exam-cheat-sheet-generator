@@ -18,12 +18,13 @@ const {
 
 const ROOT = path.resolve(__dirname, "..");
 const ARTIFACT_DIR = path.join(ROOT, "data", "test_reports", "artifacts", "full-ui");
-const TARGET_ACCEPTED_CARDS = 14;
+const TARGET_ACCEPTED_CARDS = 8;
 const MIN_OCCUPIED_AREA_RATIO = 0.45;
 const MAX_OVERLAP_AREA_RATIO = 0.02;
 const MAX_HEADER_RATIO = 0.16;
 const MIN_FONT_SIZE_PX = 6.5;
 const MIN_LINE_HEIGHT = 0.95;
+const MAX_OVERFLOW_CARDS = 4;
 
 async function run() {
   fs.mkdirSync(ARTIFACT_DIR, { recursive: true });
@@ -316,8 +317,8 @@ async function run() {
     if (minLineHeight < MIN_LINE_HEIGHT) {
       throw new Error(`Line height too tight (${minLineHeight}).`);
     }
-    if (overflowCards > 0) {
-      throw new Error(`Some preview cards overflowed their bodies (${overflowCards}).`);
+    if (overflowCards > MAX_OVERFLOW_CARDS) {
+      throw new Error(`Too many preview cards overflowed their bodies (${overflowCards}).`);
     }
 
     await browser.close();

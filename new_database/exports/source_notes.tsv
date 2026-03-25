@@ -1,0 +1,4 @@
+note_slug	severity	question_ids	note
+sample-q08-q11-duplicate	info	sample-final-plus-answers-q08|sample-final-plus-answers-q11	These two questions are exact duplicates in the supplied bank: same prompt, options, and answer.
+family-near-duplicate-sample-vs-later-course	info	sample-final-plus-answers-q01..q24|trial-final-exam-solutions-introduction-to-python-3077951-q01..q24	The current-year sample final and the later-course trial final are strongly related. Treat them as the same exam family during analytics to avoid overcounting recurring patterns.
+family-near-duplicate-resit-pair	info	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q01..q24|resit-solutions-for-introduction-to-python-35761538-q01..q24	The resit guidelines and resit solutions are near-duplicate versions of the same family; dedupe when computing recurrence.

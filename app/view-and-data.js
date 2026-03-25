@@ -55,26 +55,15 @@ function syncViewButtons() {
   refs.previewHeaderActions?.classList.toggle("hidden", state.view !== "preview");
 }
 
-function getFilteredDeck() {
-  return state.cards.filter(cardMatchesFilters);
-}
+function snippetMatchesFilters(snippet) {
+  const selectedCoursePhases = state.filters.coursePhases;
+  if (selectedCoursePhases.size > 0 && snippet.coursePhase && !selectedCoursePhases.has(snippet.coursePhase)) {
+    return false;
+  }
 
-function sortTopicCards(cards) {
-  return [...cards].sort((a, b) => {
-    const orderDelta = Number(a?.topic_meta?.topic_order || 0) - Number(b?.topic_meta?.topic_order || 0);
-    if (orderDelta !== 0) {
-      return orderDelta;
-    }
-    return humanizeTopic(a.topic).localeCompare(humanizeTopic(b.topic));
-  });
-}
-
-function cardMatchesFilters(card) {
-  if (state.filters.weeks.size > 0) {
-    const cardWeeks = Array.isArray(card.weeks) ? card.weeks : [];
-    if (!cardWeeks.some((week) => state.filters.weeks.has(week))) {
-      return false;
-    }
+  const selectedRecurrenceLevels = state.filters.recurrenceLevels;
+  if (selectedRecurrenceLevels.size > 0 && snippet.recurrenceLevel && !selectedRecurrenceLevels.has(snippet.recurrenceLevel)) {
+    return false;
   }
 
   const search = state.filters.search;
@@ -82,101 +71,61 @@ function cardMatchesFilters(card) {
     return true;
   }
 
-  const haystack = [
-    card.topic,
-    card.parent_topic,
-    card.summary,
-    card.search_text,
-    ...getExamCardSections(card).flatMap((section) => section.snippets.map((snippet) => snippet.title)),
-  ]
-    .join(" ")
-    .toLowerCase();
-
-  return haystack.includes(search);
+  return snippet.searchText.includes(search);
 }
 
-function getFilteredParentBundles() {
-  const filteredCards = sortTopicCards(getFilteredDeck());
-  const byParent = new Map();
+function getFilteredTopics() {
+  return state.topics
+    .map((topic) => {
+      const subtopics = topic.subtopics
+        .map((subtopic) => ({
+          ...subtopic,
+          snippets: subtopic.snippets.filter(snippetMatchesFilters),
+        }))
+        .filter((subtopic) => subtopic.snippets.length > 0);
 
-  filteredCards.forEach((card) => {
-    if (!byParent.has(card.parent_topic_id)) {
-      const source = state.parentTopics.find((parentTopic) => parentTopic.id === card.parent_topic_id);
-      byParent.set(card.parent_topic_id, {
-        id: card.parent_topic_id,
-        title: source?.title || card.parent_topic,
-        summary: source?.summary || "",
-        cards: [],
-      });
-    }
-    byParent.get(card.parent_topic_id).cards.push(card);
-  });
+      if (!subtopics.length) {
+        return null;
+      }
 
-  return state.parentTopics
-    .map((parentTopic) => byParent.get(parentTopic.id))
-    .filter((parentTopic) => parentTopic && parentTopic.cards.length > 0);
+      return {
+        ...topic,
+        subtopics,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title));
 }
 
-function ensureExplorerNavigation(filteredParents = getFilteredParentBundles()) {
-  if (!filteredParents.length) {
-    state.navigation.activeParentId = "";
+function ensureExplorerNavigation(filteredTopics = getFilteredTopics()) {
+  if (!filteredTopics.length) {
     state.navigation.activeTopicId = "";
     return null;
   }
 
-  if (!state.navigation || typeof state.navigation !== "object") {
-    state.navigation = buildDefaultNavigationState();
-  }
-
-  filteredParents.forEach((parentTopic, index) => {
-    if (typeof state.navigation.expandedParents[parentTopic.id] !== "boolean") {
-      state.navigation.expandedParents[parentTopic.id] = index === 0;
-    }
-  });
-
-  const visibleCardIds = new Set(filteredParents.flatMap((parentTopic) => parentTopic.cards.map((card) => card.id)));
-  const currentTopicId = String(state.navigation.activeTopicId || "").trim();
-  const activeTopicId = visibleCardIds.has(currentTopicId) ? currentTopicId : filteredParents[0].cards[0].id;
-  const activeParent =
-    filteredParents.find((parentTopic) => parentTopic.cards.some((card) => card.id === activeTopicId)) || filteredParents[0];
-  const activeCard = activeParent.cards.find((card) => card.id === activeTopicId) || activeParent.cards[0];
-
-  state.navigation.activeTopicId = activeCard.id;
-  state.navigation.activeParentId = activeParent.id;
-  state.navigation.expandedParents[activeParent.id] = true;
-
-  return { parentTopic: activeParent, card: activeCard };
+  const visibleTopicIds = new Set(filteredTopics.map((topic) => topic.id));
+  const activeTopicId = visibleTopicIds.has(state.navigation.activeTopicId) ? state.navigation.activeTopicId : filteredTopics[0].id;
+  const activeTopic = filteredTopics.find((topic) => topic.id === activeTopicId) || filteredTopics[0];
+  state.navigation.activeTopicId = activeTopic.id;
+  return activeTopic;
 }
 
-function setActiveTopic(cardId, parentId) {
-  if (!cardId) {
+function setActiveTopic(topicId) {
+  if (!topicId) {
     return;
   }
-  state.navigation.activeTopicId = cardId;
-  state.navigation.activeParentId = parentId || state.navigation.activeParentId;
-  if (parentId) {
-    state.navigation.expandedParents[parentId] = true;
-  }
+  state.navigation.activeTopicId = topicId;
   state.navigation.mobileSidebarOpen = false;
   renderSwipe();
   schedulePersistState();
 }
 
-function toggleParentExpanded(parentId) {
-  if (!parentId) {
-    return;
-  }
-  state.navigation.expandedParents[parentId] = !Boolean(state.navigation.expandedParents[parentId]);
-  renderSwipe();
-  schedulePersistState();
-}
-
-function getParentSelectionSummary(parentTopic) {
-  const cards = Array.isArray(parentTopic?.cards) ? parentTopic.cards : [];
-  const selectedTopics = cards.filter((card) => getSelectionCounts(card).total > 0).length;
-  const selectedItems = cards.reduce((sum, card) => sum + getSelectionCounts(card).total, 0);
+function getTopicSelectionSummary(topic) {
+  const snippets = topic.subtopics.flatMap((subtopic) => subtopic.snippets);
+  const selectedSnippets = snippets.filter((snippet) => getSelectionCounts(snippet).total > 0).length;
+  const selectedPieces = snippets.reduce((sum, snippet) => sum + getSelectionCounts(snippet).total, 0);
   return {
-    topics: selectedTopics,
-    items: selectedItems,
+    snippets: selectedSnippets,
+    items: selectedPieces,
   };
 }

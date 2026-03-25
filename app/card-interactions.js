@@ -2,23 +2,32 @@ function isInteractiveNode(node) {
   return Boolean(node.closest("input,button,label,select,textarea,a,pre,code"));
 }
 
-function getCardById(cardId) {
-  return state.cards.find((entry) => entry.id === cardId) || null;
+function getSnippetById(snippetId) {
+  return findSnippetById(snippetId);
+}
+
+function getSubtopicById(subtopicId) {
+  for (const topic of state.topics) {
+    const subtopic = topic.subtopics.find((entry) => entry.id === subtopicId);
+    if (subtopic) {
+      return subtopic;
+    }
+  }
+  return null;
 }
 
 function handleCardInputChange(event) {
   const input = event.target;
-  const role = input.dataset.role;
-  if (role !== "item-toggle") {
+  if (input.dataset.role !== "item-toggle") {
     return;
   }
 
-  const card = getCardById(input.dataset.cardId || "");
-  if (!card) {
+  const snippet = getSnippetById(input.dataset.snippetId || "");
+  if (!snippet) {
     return;
   }
 
-  const draft = ensureDraft(card);
+  const draft = ensureDraft(snippet);
   const pieceId = input.dataset.pieceId || "";
   if (!pieceId) {
     return;
@@ -38,16 +47,9 @@ function handleCardClick(event) {
   const openTopicTrigger = event.target.closest("[data-role='open-topic']");
   if (openTopicTrigger) {
     event.preventDefault();
-    setActiveTopic(openTopicTrigger.dataset.cardId || "", openTopicTrigger.dataset.parentId || "");
+    setActiveTopic(openTopicTrigger.dataset.topicId || "");
     closeTopicSidebar();
     renderAll();
-    return;
-  }
-
-  const toggleParentTrigger = event.target.closest("[data-role='toggle-parent']");
-  if (toggleParentTrigger) {
-    event.preventDefault();
-    toggleParentExpanded(toggleParentTrigger.dataset.parentId || "");
     return;
   }
 
@@ -60,38 +62,31 @@ function handleCardClick(event) {
     return;
   }
 
-  const selectAllSectionTrigger = event.target.closest("[data-role='select-all-section']");
-  if (selectAllSectionTrigger) {
+  const selectAllSubtopicTrigger = event.target.closest("[data-role='select-all-subtopic']");
+  if (selectAllSubtopicTrigger) {
     event.preventDefault();
-    selectAllSectionPieces(selectAllSectionTrigger.dataset.cardId || "", selectAllSectionTrigger.dataset.sectionKey || "");
+    selectAllSubtopicPieces(selectAllSubtopicTrigger.dataset.subtopicId || "");
     return;
   }
 
-  const clearSectionTrigger = event.target.closest("[data-role='clear-section']");
-  if (clearSectionTrigger) {
+  const clearSubtopicTrigger = event.target.closest("[data-role='clear-subtopic']");
+  if (clearSubtopicTrigger) {
     event.preventDefault();
-    clearSectionPieces(clearSectionTrigger.dataset.cardId || "", clearSectionTrigger.dataset.sectionKey || "");
+    clearSubtopicPieces(clearSubtopicTrigger.dataset.subtopicId || "");
     return;
   }
 
   const selectAllSnippetTrigger = event.target.closest("[data-role='select-all-snippet']");
   if (selectAllSnippetTrigger) {
     event.preventDefault();
-    selectAllSnippetPieces(selectAllSnippetTrigger.dataset.cardId || "", selectAllSnippetTrigger.dataset.snippetId || "");
+    selectAllSnippetPieces(selectAllSnippetTrigger.dataset.snippetId || "");
     return;
   }
 
   const clearSnippetTrigger = event.target.closest("[data-role='clear-snippet']");
   if (clearSnippetTrigger) {
     event.preventDefault();
-    clearSnippetPieces(clearSnippetTrigger.dataset.cardId || "", clearSnippetTrigger.dataset.snippetId || "");
-    return;
-  }
-
-  const toggleSectionExpandedTrigger = event.target.closest("[data-role='toggle-section-expanded']");
-  if (toggleSectionExpandedTrigger) {
-    event.preventDefault();
-    toggleSectionExpanded(toggleSectionExpandedTrigger.dataset.cardId || "", toggleSectionExpandedTrigger.dataset.sectionKey || "");
+    clearSnippetPieces(clearSnippetTrigger.dataset.snippetId || "");
     return;
   }
 
@@ -111,23 +106,54 @@ function handleCardClick(event) {
 
 function handleCardMouseOver(_event) {}
 
-function selectAllSectionPieces(cardId, sectionKey) {
-  const card = getCardById(cardId);
-  if (!card) {
+function selectAllSubtopicPieces(subtopicId) {
+  const subtopic = getSubtopicById(subtopicId);
+  if (!subtopic) {
     return;
   }
-  const draft = ensureDraft(card);
-  draft.selected.pieces = [...new Set([...(draft.selected.pieces || []), ...getSectionSelectablePieceIds(card, sectionKey)])];
+  subtopic.snippets.forEach((snippet) => {
+    const draft = ensureDraft(snippet);
+    draft.selected.pieces = [...new Set([...(draft.selected.pieces || []), ...getSnippetSelectablePieceIds(snippet)])];
+  });
   renderAll();
 }
 
-function clearSectionPieces(cardId, sectionKey) {
-  const card = getCardById(cardId);
-  if (!card) {
+function clearSubtopicPieces(subtopicId) {
+  const subtopic = getSubtopicById(subtopicId);
+  if (!subtopic) {
     return;
   }
-  const draft = ensureDraft(card);
-  const removeIds = new Set(getSectionSelectablePieceIds(card, sectionKey));
+  subtopic.snippets.forEach((snippet) => {
+    const draft = ensureDraft(snippet);
+    const removeIds = new Set(getSnippetSelectablePieceIds(snippet));
+    draft.selected.pieces = (draft.selected.pieces || []).filter((pieceId) => !removeIds.has(pieceId));
+    const overrides = ensureSelectionOverrides(draft);
+    Object.keys(overrides.pieces).forEach((pieceId) => {
+      if (removeIds.has(pieceId)) {
+        delete overrides.pieces[pieceId];
+      }
+    });
+  });
+  renderAll();
+}
+
+function selectAllSnippetPieces(snippetId) {
+  const snippet = getSnippetById(snippetId);
+  if (!snippet) {
+    return;
+  }
+  const draft = ensureDraft(snippet);
+  draft.selected.pieces = [...new Set([...(draft.selected.pieces || []), ...getSnippetSelectablePieceIds(snippet)])];
+  renderAll();
+}
+
+function clearSnippetPieces(snippetId) {
+  const snippet = getSnippetById(snippetId);
+  if (!snippet) {
+    return;
+  }
+  const draft = ensureDraft(snippet);
+  const removeIds = new Set(getSnippetSelectablePieceIds(snippet));
   draft.selected.pieces = (draft.selected.pieces || []).filter((pieceId) => !removeIds.has(pieceId));
   const overrides = ensureSelectionOverrides(draft);
   Object.keys(overrides.pieces).forEach((pieceId) => {
@@ -136,44 +162,6 @@ function clearSectionPieces(cardId, sectionKey) {
     }
   });
   renderAll();
-}
-
-function selectAllSnippetPieces(cardId, snippetId) {
-  const card = getCardById(cardId);
-  if (!card) {
-    return;
-  }
-  const draft = ensureDraft(card);
-  draft.selected.pieces = [...new Set([...(draft.selected.pieces || []), ...getSnippetSelectablePieceIds(card, snippetId)])];
-  renderAll();
-}
-
-function clearSnippetPieces(cardId, snippetId) {
-  const card = getCardById(cardId);
-  if (!card) {
-    return;
-  }
-  const draft = ensureDraft(card);
-  const removeIds = new Set(getSnippetSelectablePieceIds(card, snippetId));
-  draft.selected.pieces = (draft.selected.pieces || []).filter((pieceId) => !removeIds.has(pieceId));
-  const overrides = ensureSelectionOverrides(draft);
-  Object.keys(overrides.pieces).forEach((pieceId) => {
-    if (removeIds.has(pieceId)) {
-      delete overrides.pieces[pieceId];
-    }
-  });
-  renderAll();
-}
-
-function toggleSectionExpanded(cardId, sectionKey) {
-  const card = getCardById(cardId);
-  if (!card) {
-    return;
-  }
-  const draft = ensureDraft(card);
-  draft.ui.expandedSections[sectionKey] = !Boolean(draft.ui.expandedSections[sectionKey]);
-  renderAll();
-  schedulePersistState();
 }
 
 function closeOpenInfoPopovers() {}

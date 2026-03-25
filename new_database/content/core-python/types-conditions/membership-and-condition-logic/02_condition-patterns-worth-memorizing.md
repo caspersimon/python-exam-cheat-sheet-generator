@@ -1,0 +1,4 @@
+- Inside-Europe check: `if destination in europe: ...`
+- Odd/even check: `x % 2 == 0` for even, `x % 2 != 0` for odd.
+- When mixing `and`/`or`, add brackets if there is any doubt.
+- Prefer `if cond:` / `else:` over looping through every possible element unless the question explicitly needs a loop.

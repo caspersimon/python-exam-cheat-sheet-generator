@@ -15,24 +15,23 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260324a" />
-    <script defer src="./app/state-and-init.js?v=20260324a"></script>
-    <script defer src="./app/exam-builder-data.js?v=20260324a"></script>
-    <script defer src="./app/splash-storage.js?v=20260324a"></script>
+    <link rel="stylesheet" href="./styles.css?v=20260325a" />
+    <script defer src="./app/state-and-init.js?v=20260325a"></script>
+    <script defer src="./app/exam-builder-data.js?v=20260325a"></script>
+    <script defer src="./app/splash-storage.js?v=20260325a"></script>
     <script defer src="./app/preview-pointer.js?v=20260322h"></script>
-    <script defer src="./app/course-outline.js?v=20260322h"></script>
-    <script defer src="./app/view-and-data.js?v=20260324a"></script>
-    <script defer src="./app/topic-selection.js?v=20260324a"></script>
+    <script defer src="./app/view-and-data.js?v=20260325a"></script>
+    <script defer src="./app/topic-selection.js?v=20260325a"></script>
     <script defer src="./app/topic-detail-subtopics.js?v=20260322h"></script>
-    <script defer src="./app/render-card-sections.js?v=20260324a"></script>
-    <script defer src="./app/text-render-utils.js?v=20260322h"></script>
+    <script defer src="./app/render-card-sections.js?v=20260325a"></script>
+    <script defer src="./app/text-render-utils.js?v=20260325a"></script>
     <script defer src="./app/code-render-utils.js?v=20260322h"></script>
-    <script defer src="./app/card-interactions.js?v=20260324a"></script>
-    <script defer src="./app/preview-render.js?v=20260324a"></script>
-    <script defer src="./app/preview-card-render.js?v=20260324a"></script>
+    <script defer src="./app/card-interactions.js?v=20260325a"></script>
+    <script defer src="./app/preview-render.js?v=20260325a"></script>
+    <script defer src="./app/preview-card-render.js?v=20260325a"></script>
     <script defer src="./app/preview-history.js?v=20260322h"></script>
     <script defer src="./app/preview-edit-modal.js?v=20260322h"></script>
-    <script defer src="./app/preview-editing.js?v=20260324a"></script>
+    <script defer src="./app/preview-editing.js?v=20260325a"></script>
     <script defer src="./app/layout-export-utils.js?v=20260322h"></script>
     <script defer src="./app/pdf-export-utils.js?v=20260322h"></script>
     <script defer src="./app/main.js?v=20260322h"></script>
@@ -48,7 +47,7 @@
       <header class="app-header">
         <div class="app-header-main">
           <h1>Python Exam Cheat Sheet Builder</h1>
-          <p class="subtitle">Browse the most exam-useful Python topics, select exact snippet pieces, and compress them into a clean two-page A4 cheat sheet.</p>
+          <p class="subtitle">Browse the new markdown-first snippet bank, select exact pieces, and compress them into a clean two-page A4 cheat sheet.</p>
           <p id="progressText" class="header-status-text muted"></p>
         </div>
         <div class="header-actions">
@@ -128,12 +127,17 @@
 
       <label class="field">
         <span>Search snippets</span>
-        <input id="searchInput" type="text" placeholder="e.g. slicing, scope, args" />
+        <input id="searchInput" type="text" placeholder="e.g. slicing, scope, args, trap" />
       </label>
 
       <div class="field week-filter">
-        <span>Week tags</span>
-        <div id="weekFilterList" class="week-filter-list"></div>
+        <span>Course phase</span>
+        <div id="coursePhaseFilterList" class="week-filter-list"></div>
+      </div>
+
+      <div class="field week-filter">
+        <span>Recurrence</span>
+        <div id="recurrenceFilterList" class="week-filter-list"></div>
       </div>
     </aside>
 
@@ -145,11 +149,11 @@
 
       <div class="stat-grid">
         <div>
-          <p class="stat-label">Selected Topics</p>
+          <p class="stat-label">Selected Snippets</p>
           <p id="acceptedCount" class="stat-value">0</p>
         </div>
         <div>
-          <p class="stat-label">Selected Items</p>
+          <p class="stat-label">Selected Pieces</p>
           <p id="rejectedCount" class="stat-value">0</p>
         </div>
         <div>
@@ -158,7 +162,7 @@
         </div>
       </div>
 
-      <h4>Preview Topics</h4>
+      <h4>Preview Snippets</h4>
       <ol id="acceptedTopicsList" class="compact-list"></ol>
     </aside>
 
@@ -247,11 +251,11 @@
       <div class="splash-card">
         <h2 id="splashTitle">Build Your Exam Cheat Sheet In Minutes</h2>
         <p class="splash-lead">
-          Browse by exam topic, start with the highest-value snippets, pick the exact pieces you want, and export a compact 2-page A4 cheat sheet.
+          Browse by topic, open subtopics, pick the exact markdown-backed pieces you want, and export a compact 2-page A4 cheat sheet.
         </p>
         <ul class="splash-points">
-          <li>Use the topic sidebar to jump straight to the concept you need.</li>
-          <li>Select only the exact reference pieces worth precious cheat-sheet space.</li>
+          <li>Use the topic sidebar to jump straight to the concept family you need.</li>
+          <li>Select only the exact snippet pieces worth precious cheat-sheet space.</li>
           <li>Preview, reorder, and export as PDF or PNG.</li>
         </ul>
         <button id="getStartedBtn" class="solid-btn splash-start-btn" type="button">Get Started</button>

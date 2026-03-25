@@ -1,0 +1,3 @@
+- Positional placeholders `{0}`, `{1}` depend on argument order.
+- Named placeholders `{name}` need keyword-style arguments.
+- A perfectly formatted string still fails if you print the wrong variable name (`message` vs `mesage`).

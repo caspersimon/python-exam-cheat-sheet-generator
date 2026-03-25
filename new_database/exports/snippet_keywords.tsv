@@ -1,0 +1,201 @@
+snippet_slug	keyword
+args-and-kwargs	args
+args-and-kwargs	dict
+args-and-kwargs	flexible arguments
+args-and-kwargs	kwargs
+args-and-kwargs	tuple
+both-neither-all-meta-options	all of the above
+both-neither-all-meta-options	both
+both-neither-all-meta-options	meta options
+both-neither-all-meta-options	neither
+builtins-return-values	count
+builtins-return-values	index
+builtins-return-values	len
+builtins-return-values	max
+builtins-return-values	ord
+builtins-return-values	sorted
+builtins-return-values	sum
+builtins-return-values	type
+case-and-capitalization	capitalize
+case-and-capitalization	islower
+case-and-capitalization	isupper
+case-and-capitalization	lower
+case-and-capitalization	upper
+datetime-build-from-parts	datetime constructor
+datetime-build-from-parts	day month year
+datetime-build-from-parts	hour minute
+datetime-overlap-logic	interval
+datetime-overlap-logic	meeting
+datetime-overlap-logic	overlap
+datetime-sequence-generation	sequence
+datetime-sequence-generation	strftime
+datetime-sequence-generation	weekly dates
+datetime-sequence-generation	weeks
+datetime-strptime-strftime	datetime
+datetime-strptime-strftime	format directives
+datetime-strptime-strftime	strftime
+datetime-strptime-strftime	strptime
+datetime-timedelta-day-counts	days
+datetime-timedelta-day-counts	difference
+datetime-timedelta-day-counts	timedelta
+datetime-timedelta-day-counts	weeks
+defaults-keyword-arguments	default parameter
+defaults-keyword-arguments	keyword argument
+defaults-keyword-arguments	optional
+defaults-keyword-arguments	parameter binding
+dict-build-count-aggregate	aggregate
+dict-build-count-aggregate	count
+dict-build-count-aggregate	dict
+dict-build-count-aggregate	values
+dict-build-count-aggregate	zip
+dict-comprehension-patterns	dict comprehension
+dict-comprehension-patterns	len
+dict-comprehension-patterns	ord
+dict-comprehension-patterns	zip
+dict-iteration-equality	dict equality
+dict-iteration-equality	items
+dict-iteration-equality	keys
+dict-iteration-equality	values
+dict-running-totals-and-next-links	cumulative
+dict-running-totals-and-next-links	next item
+dict-running-totals-and-next-links	running total
+dict-running-totals-and-next-links	zip
+find-index-count	count
+find-index-count	find
+find-index-count	index
+find-index-count	search
+fstrings-and-format	f-string
+fstrings-and-format	format
+fstrings-and-format	placeholder
+fstrings-and-format	printing
+higher-order-lambda	function argument
+higher-order-lambda	higher-order
+higher-order-lambda	lambda
+higher-order-lambda	map
+imports-and-aliases	alias
+imports-and-aliases	import
+imports-and-aliases	math
+imports-and-aliases	pi
+list-comprehension-patterns	filter
+list-comprehension-patterns	if else
+list-comprehension-patterns	list comprehension
+list-selection-and-aggregation	equal to index
+list-selection-and-aggregation	filter
+list-selection-and-aggregation	max
+list-selection-and-aggregation	sublist
+list-selection-and-aggregation	sum
+local-vs-global-scope	NameError
+local-vs-global-scope	UnboundLocalError
+local-vs-global-scope	global
+local-vs-global-scope	local
+local-vs-global-scope	scope
+local-vs-global-scope	shadowing
+loop-templates	for
+loop-templates	inclusive
+loop-templates	previous
+loop-templates	range
+loop-templates	while
+mcq-elimination-checklist	does not work
+mcq-elimination-checklist	elimination
+mcq-elimination-checklist	mcq
+mcq-elimination-checklist	strategy
+mcq-elimination-checklist	traps
+mcq-elimination-checklist	works
+membership-and-condition-logic	and
+membership-and-condition-logic	conditions
+membership-and-condition-logic	in
+membership-and-condition-logic	membership
+membership-and-condition-logic	not in
+membership-and-condition-logic	or
+mutation-vs-return	append
+mutation-vs-return	immutable
+mutation-vs-return	mutation
+mutation-vs-return	replace
+mutation-vs-return	returns none
+mutation-vs-return	shuffle
+mutation-vs-return	sort
+nested-indexing-and-negative-indices	indexing
+nested-indexing-and-negative-indices	negative index
+nested-indexing-and-negative-indices	nested lists
+nested-indexing-and-negative-indices	tuples
+oop-compare-and-report-patterns	average score
+oop-compare-and-report-patterns	compare objects
+oop-compare-and-report-patterns	overview
+oop-compare-and-report-patterns	report string
+oop-init-self-defaults	__init__
+oop-init-self-defaults	default attribute
+oop-init-self-defaults	instance attribute
+oop-init-self-defaults	self
+oop-method-calls-and-self	instance method
+oop-method-calls-and-self	method call
+oop-method-calls-and-self	self
+oop-state-and-collection-attributes	append
+oop-state-and-collection-attributes	garage
+oop-state-and-collection-attributes	list attribute
+oop-state-and-collection-attributes	reviews
+oop-state-and-collection-attributes	state
+pandas-boolean-mask-and-indexing	and
+pandas-boolean-mask-and-indexing	boolean mask
+pandas-boolean-mask-and-indexing	filter rows
+pandas-boolean-mask-and-indexing	or
+pandas-build-from-args	*args
+pandas-build-from-args	DataFrame constructor
+pandas-build-from-args	lists as columns
+pandas-loc-iloc	iloc
+pandas-loc-iloc	labels
+pandas-loc-iloc	loc
+pandas-loc-iloc	positions
+pandas-map-vs-apply	apply
+pandas-map-vs-apply	axis=1
+pandas-map-vs-apply	map
+pandas-map-vs-apply	rowwise
+pandas-series-vs-dataframe	DataFrame
+pandas-series-vs-dataframe	Series
+pandas-series-vs-dataframe	shape
+pandas-series-vs-dataframe	single column
+pandas-sort-index-vs-values	ascending
+pandas-sort-index-vs-values	sort_index
+pandas-sort-index-vs-values	sort_values
+pandas-string-and-date-columns	date column
+pandas-string-and-date-columns	map
+pandas-string-and-date-columns	pandas strings
+pandas-string-and-date-columns	replace
+pandas-vectorized-new-columns	column arithmetic
+pandas-vectorized-new-columns	new column
+pandas-vectorized-new-columns	vectorized
+return-none-and-function-end	None
+return-none-and-function-end	append
+return-none-and-function-end	function end
+return-none-and-function-end	return
+set-vs-list-vs-dict	duplicates
+set-vs-list-vs-dict	membership
+set-vs-list-vs-dict	set
+set-vs-list-vs-dict	sorting
+slicing-patterns	chunking
+slicing-patterns	every third
+slicing-patterns	reverse
+slicing-patterns	slice
+slicing-patterns	start stop step
+split-join-replace	join
+split-join-replace	replace
+split-join-replace	split
+split-join-replace	strings
+targeted-string-edit-patterns	anagram
+targeted-string-edit-patterns	replace count
+targeted-string-edit-patterns	second occurrence
+targeted-string-edit-patterns	swap
+types-none-bool-equality	None
+types-none-bool-equality	bool
+types-none-bool-equality	comparison
+types-none-bool-equality	equality
+types-none-bool-equality	truthiness
+types-none-bool-equality	type
+url-email-phone-parsing	email
+url-email-phone-parsing	parse
+url-email-phone-parsing	phone
+url-email-phone-parsing	split
+url-email-phone-parsing	url
+zip-enumerate-core	enumerate
+zip-enumerate-core	index value
+zip-enumerate-core	pairing
+zip-enumerate-core	zip

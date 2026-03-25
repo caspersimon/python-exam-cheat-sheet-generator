@@ -1,0 +1,2 @@
+- Compare **datetimes**, not raw strings like `"13:00"`.
+- If the method asks for overlap, reject the option that returns the non-overlap condition.

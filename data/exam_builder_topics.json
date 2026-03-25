@@ -830,6 +830,10 @@
                       "piece_type": "code_example",
                       "title": "Precedence trap",
                       "order": 2,
+                      "presentation": {
+                        "emphasis": "trap",
+                        "label": "Trap"
+                      },
                       "content": {
                         "text": "The first line is parsed as `a == 1 or (a == 2 and b == 1) or b == 2`.",
                         "code": "a = 1; b = 3\nprint(a == 1 or a == 2 and b == 1 or b == 2)\nprint((a == 1 or a == 2) and (b == 1 or b == 2))",

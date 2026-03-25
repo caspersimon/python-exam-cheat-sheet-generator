@@ -1,0 +1,6 @@
+exam_family	title	sort_order	member_exam_ids	member_exam_titles	question_count	post_midterm_count	pre_midterm_count
+2022-final	2022 final	1	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	24	13	11
+2023-trial	2023 trial	2	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	24	14	10
+2024-trial	2024 trial	3	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	24	14	10
+2023-resit-family	2023 resit family	4	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023|resit-solutions-for-introduction-to-python-35761538	2023 Resit Exam Guidelines | 2023 Resit Solutions	24	15	9
+2025-sample-family	2025 sample-family / later-course family	5	sample-final-plus-answers|trial-final-exam-solutions-introduction-to-python-3077951	2025 Sample Final Plus Answers | Trial Final Later-Course Focus	24	13	11

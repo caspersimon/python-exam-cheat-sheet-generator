@@ -1,8 +1,11 @@
-.PHONY: check-js check-py check-lines test setup-playwright smoke-ui full-ui stress-layout-ui export-canvas-guard-ui gemini-ui-protocol gemini-benchmark gemini-prompt-experiments gemini-health quality-dashboard maintenance-audit leave-better leave-better-ui validate
+.PHONY: build-frontend-bundle check-js check-py check-lines test setup-playwright smoke-ui full-ui stress-layout-ui export-canvas-guard-ui gemini-ui-protocol gemini-benchmark gemini-prompt-experiments gemini-health quality-dashboard maintenance-audit leave-better leave-better-ui validate
 
 PW_TMP := /tmp/pwtmp
 PW_NODE_PATH := $(PW_TMP)/node_modules
 PW_CLI := $(PW_NODE_PATH)/.bin/playwright
+
+build-frontend-bundle:
+	python3 scripts/build_frontend_bundle.py
 
 check-js:
 	node --check app/state-and-init.js
@@ -25,9 +28,9 @@ check-js:
 	node --check scripts/full_ui_playwright.js
 	node --check scripts/stress_layout_playwright.js
 
-check-py:
+check-py: build-frontend-bundle
 	python3 -m py_compile build_topic_cards.py generate_ai_sections.py generate_key_points_and_recommendations.py enrich_key_point_details.py
-	python3 -m py_compile scripts/add_week_material.py scripts/migrate_study_database.py scripts/gemini_test_protocol.py scripts/maintenance_audit.py scripts/gemini_capability_benchmark.py scripts/gemini_prompt_experiments.py scripts/gemini_model_health.py scripts/quality_dashboard.py scripts/validate_extracted_material.py scripts/vision_exam_pipeline.py
+	python3 -m py_compile scripts/add_week_material.py scripts/build_frontend_bundle.py scripts/migrate_study_database.py scripts/gemini_test_protocol.py scripts/maintenance_audit.py scripts/gemini_capability_benchmark.py scripts/gemini_prompt_experiments.py scripts/gemini_model_health.py scripts/quality_dashboard.py scripts/validate_extracted_material.py scripts/vision_exam_pipeline.py
 	python3 -m py_compile $$(find pipelines -name '*.py' -type f)
 
 check-lines:
@@ -41,16 +44,16 @@ setup-playwright:
 	npm install --prefix $(PW_TMP) playwright
 	$(PW_CLI) install chromium
 
-smoke-ui: setup-playwright
+smoke-ui: build-frontend-bundle setup-playwright
 	NODE_PATH=$(PW_NODE_PATH) node scripts/smoke_ui_playwright.js
 
-full-ui: setup-playwright
+full-ui: build-frontend-bundle setup-playwright
 	NODE_PATH=$(PW_NODE_PATH) node scripts/full_ui_playwright.js
 
-stress-layout-ui: setup-playwright
+stress-layout-ui: build-frontend-bundle setup-playwright
 	NODE_PATH=$(PW_NODE_PATH) node scripts/stress_layout_playwright.js
 
-export-canvas-guard-ui: setup-playwright
+export-canvas-guard-ui: build-frontend-bundle setup-playwright
 	NODE_PATH=$(PW_NODE_PATH) node scripts/export_canvas_guard_playwright.js
 
 gemini-ui-protocol:

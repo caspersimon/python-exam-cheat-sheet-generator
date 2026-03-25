@@ -1,0 +1,4 @@
+- `a == b == c` means `(a == b) and (b == c)`.
+- `sum([cond1, cond2, ...])` counts how many conditions are `True`.
+- If a function hits the end without `return`, it returns `None`.
+- `type(x)` gives the class object, e.g. `int`, `str`, `dict`.

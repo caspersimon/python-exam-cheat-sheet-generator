@@ -5,70 +5,58 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-DATASET_PATH = ROOT / "data" / "exam_builder_topics.json"
+DATASET_PATH = ROOT / "new_database" / "exports" / "frontend_bundle.json"
 
-VALID_PIECE_TYPES = {"reference_table", "code_example", "explanation", "past_exam_piece"}
+VALID_BLOCK_TYPES = {"paragraph", "table", "code", "list"}
+VALID_EMPHASIS = {"trap"}
 
 
-class ExamBuilderDatasetTests(unittest.TestCase):
+class FrontendBundleTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.payload = json.loads(DATASET_PATH.read_text(encoding="utf-8"))
 
-    def test_parent_topics_exist(self) -> None:
-        parent_topics = self.payload.get("parent_topics")
-        self.assertIsInstance(parent_topics, list)
-        self.assertEqual(7, len(parent_topics))
+    def test_topics_shape_is_valid(self) -> None:
+        topics = self.payload.get("topics")
+        self.assertIsInstance(topics, list)
+        self.assertGreaterEqual(len(topics), 1)
 
-    def test_manual_sections_shape_is_valid(self) -> None:
+    def test_bundle_uses_topic_subtopic_snippet_piece_hierarchy(self) -> None:
         seen_piece_ids: set[str] = set()
 
-        for parent_topic in self.payload["parent_topics"]:
-            self.assertTrue(parent_topic["id"])
-            self.assertTrue(parent_topic["title"])
+        for topic in self.payload["topics"]:
+            self.assertTrue(topic["topic_slug"])
+            self.assertTrue(topic["title"])
+            self.assertIsInstance(topic["subtopics"], list)
 
-            for main_topic in parent_topic["main_topics"]:
-                self.assertTrue(main_topic["id"])
-                self.assertTrue(main_topic["title"])
-                self.assertEqual(parent_topic["title"], main_topic["parent_topic"])
-                self.assertIsInstance(main_topic.get("sections"), list)
-                self.assertGreaterEqual(len(main_topic["sections"]), 1)
-                self.assertLessEqual(len(main_topic["sections"]), 10)
+            for subtopic in topic["subtopics"]:
+                self.assertTrue(subtopic["slug"])
+                self.assertTrue(subtopic["title"])
+                self.assertIsInstance(subtopic["snippets"], list)
 
-                seen_section_keys: set[str] = set()
-                for section in main_topic["sections"]:
-                    self.assertTrue(section["key"])
-                    self.assertTrue(section["title"])
-                    self.assertNotIn(section["key"], seen_section_keys)
-                    seen_section_keys.add(section["key"])
-                    self.assertGreaterEqual(section["initial_visible_count"], 1)
+                for snippet in subtopic["snippets"]:
+                    self.assertTrue(snippet["slug"])
+                    self.assertTrue(snippet["title"])
+                    self.assertIsInstance(snippet["keywords"], list)
+                    self.assertIsInstance(snippet["trap_slugs"], list)
+                    self.assertIsInstance(snippet["pieces"], list)
 
-                    for index, snippet in enumerate(section["snippets"], start=1):
-                        self.assertTrue(snippet["id"])
-                        self.assertTrue(snippet["title"])
-                        self.assertEqual(index, snippet["order"])
-                        self.assertEqual(parent_topic["title"], snippet["parent_topic"])
-                        self.assertEqual(main_topic["title"], snippet["main_topic"])
-                        self.assertIn(snippet["snippet_type"], {"general_snippet", "past_exam_question"})
-                        self.assertIn("source_refs", snippet)
+                    for piece in snippet["pieces"]:
+                        self.assertTrue(piece["piece_id"])
+                        self.assertNotIn(piece["piece_id"], seen_piece_ids)
+                        seen_piece_ids.add(piece["piece_id"])
+                        self.assertIn("body_markdown", piece)
+                        self.assertIsInstance(piece["body_blocks"], list)
+                        for block in piece["body_blocks"]:
+                            self.assertIn(block["type"], VALID_BLOCK_TYPES)
 
-                        for piece_index, piece in enumerate(snippet["pieces"], start=1):
-                            self.assertTrue(piece["id"])
-                            self.assertEqual(piece_index, piece["order"])
-                            self.assertIn(piece["piece_type"], VALID_PIECE_TYPES)
-                            self.assertNotIn(piece["id"], seen_piece_ids)
-                            seen_piece_ids.add(piece["id"])
-                            self.assertIn("source_refs", piece)
-
-    def test_score_driven_fields_are_not_required(self) -> None:
-        for parent_topic in self.payload["parent_topics"]:
-            for main_topic in parent_topic["main_topics"]:
-                for section in main_topic["sections"]:
-                    for snippet in section["snippets"]:
-                        self.assertNotIn("importance_bucket", snippet)
-                        self.assertNotIn("importance_score", snippet)
-                        self.assertNotIn("score_source", snippet)
-                        self.assertNotIn("manual_score_reason", snippet)
+    def test_trap_metadata_is_optional_but_valid(self) -> None:
+        for topic in self.payload["topics"]:
+            for subtopic in topic["subtopics"]:
+                for snippet in subtopic["snippets"]:
+                    for piece in snippet["pieces"]:
+                        if piece.get("role") == "trap":
+                            self.assertIsInstance(piece.get("trap_slugs"), list)
 
 
 if __name__ == "__main__":

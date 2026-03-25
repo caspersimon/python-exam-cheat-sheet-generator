@@ -75,15 +75,15 @@ function renderPreview() {
 
   previewEntries.forEach((entry) => {
     const li = document.createElement("li");
-    li.textContent = humanizeTopic(entry.card.topic);
+    li.textContent = `${entry.snippet.title} · ${entry.snippet.subtopicTitle}`;
     refs.previewOrderList.appendChild(li);
   });
 
-  const previewTopicCount = previewEntries.length;
-  const grid = getEffectiveGridSettings(previewTopicCount);
+  const previewCardCount = previewEntries.length;
+  const grid = getEffectiveGridSettings(previewCardCount);
   const capacityPerPage = Math.max(1, grid.columns * grid.rows);
 
-  if (!previewTopicCount) {
+  if (!previewCardCount) {
     state.previewEntries = {};
     prunePreviewCardLayouts(new Set());
     refs.page1Content.classList.add("is-empty");
@@ -120,10 +120,10 @@ function renderPreview() {
     refs.page2Content.innerHTML = `<div class="empty-state"><p>Page 2 is empty.</p></div>`;
   }
 
-  const overflowCards = Math.max(0, previewTopicCount - capacityPerPage * 2);
+  const overflowCards = Math.max(0, previewCardCount - capacityPerPage * 2);
   if (overflowCards > 0) {
     refs.overflowNotice.classList.remove("hidden");
-    refs.overflowNotice.textContent = `${overflowCards} selected topic card(s) exceed the default grid. They were added on page 2 and may overlap; drag or resize to arrange.`;
+    refs.overflowNotice.textContent = `${overflowCards} selected snippet card(s) exceed the default grid. They were added on page 2 and may overlap; drag or resize to arrange.`;
   } else {
     refs.overflowNotice.classList.add("hidden");
   }
@@ -145,16 +145,22 @@ function syncGridControls(effectiveGrid) {
 
 function buildMergedPreviewEntries() {
   return getSelectedPreviewEntries()
-    .map(({ card, selection }) => ({
-      previewId: card.id,
-      card,
-      cards: [card],
+    .map(({ snippet, selection }) => ({
+      previewId: snippet.id,
+      card: snippet,
+      snippet,
       selectionsByCard: {
-        [card.id]: selection,
+        [snippet.id]: selection,
       },
     }))
     .sort((a, b) => {
-      return humanizeTopic(a.card.topic).localeCompare(humanizeTopic(b.card.topic));
+      if (a.snippet.topicTitle !== b.snippet.topicTitle) {
+        return a.snippet.topicTitle.localeCompare(b.snippet.topicTitle);
+      }
+      if (a.snippet.subtopicTitle !== b.snippet.subtopicTitle) {
+        return a.snippet.subtopicTitle.localeCompare(b.snippet.subtopicTitle);
+      }
+      return a.snippet.sortOrder - b.snippet.sortOrder || a.snippet.title.localeCompare(b.snippet.title);
     });
 }
 
@@ -167,29 +173,7 @@ function getPreviewCardTitle(entry, layout) {
 }
 
 function derivePreviewCardTitle(entry) {
-  const firstContext = getFirstSelectedPieceContext(entry);
-  if (!firstContext) {
-    return humanizeTopic(entry.card.topic);
-  }
-
-  if (firstContext.snippet?.title) {
-    return summarizePreviewLabel(firstContext.snippet.title, humanizeTopic(entry.card.topic));
-  }
-  if (firstContext.piece?.title) {
-    return summarizePreviewLabel(firstContext.piece.title, humanizeTopic(entry.card.topic));
-  }
-  return humanizeTopic(entry.card.topic);
-}
-
-function getFirstSelectedPieceContext(entry) {
-  for (const sourceCard of entry.cards) {
-    const selection = entry.selectionsByCard[sourceCard.id];
-    const contexts = getSelectedPieceContexts(sourceCard, selection);
-    if (contexts.length) {
-      return contexts[0];
-    }
-  }
-  return null;
+  return summarizePreviewLabel(entry.snippet.title, entry.snippet.title);
 }
 
 function summarizePreviewLabel(text, fallback) {

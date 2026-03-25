@@ -1,0 +1,3 @@
+- `return value` immediately ends the function and sends `value` back.
+- If no `return` runs, Python returns `None`.
+- Many mutating methods return `None`, so `return lst.append(x)` is usually wrong.

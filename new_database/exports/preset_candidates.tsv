@@ -1,0 +1,47 @@
+preset_rank	snippet_slug	title	topic_slug	subtopic_slug	course_phase	default_priority	exam_family_count	question_ref_count	piece_count	recurrence_level
+1	types-none-bool-equality	Types, None, bool, equality	core-python	types-conditions	pre-midterm	5	5	15	3	signature
+2	zip-enumerate-core	zip() and enumerate() core patterns	core-python	lists-loops	pre-midterm	5	5	14	3	signature
+3	split-join-replace	split(), join(), replace()	strings	methods	post-midterm	5	5	12	3	signature
+4	datetime-strptime-strftime	strptime() and strftime()	datetime	parsing-formatting	post-midterm	5	5	12	3	signature
+5	dict-comprehension-patterns	Dictionary comprehension patterns	dicts-and-comprehensions	comprehensions	post-midterm	5	5	10	3	signature
+6	oop-init-self-defaults	__init__, self, defaults, attributes	oop	constructors-and-state	post-midterm	5	5	10	3	signature
+7	mcq-elimination-checklist	MCQ elimination checklist	survival	answering-strategy	mixed	5	5	8	3	signature
+8	list-comprehension-patterns	List comprehension patterns	dicts-and-comprehensions	comprehensions	post-midterm	5	5	7	3	signature
+9	local-vs-global-scope	Local vs global scope	functions-and-scope	returns-scope	pre-midterm	5	5	7	3	signature
+10	pandas-series-vs-dataframe	Series vs DataFrame	pandas	selection	post-midterm	5	5	7	3	signature
+11	datetime-timedelta-day-counts	timedelta and day counts	datetime	arithmetic-and-overlap	post-midterm	5	5	7	3	signature
+12	mutation-vs-return	Mutation vs return value	survival	cross-topic-traps	mixed	5	5	6	3	signature
+13	dict-build-count-aggregate	Build, count, and aggregate dictionaries	dicts-and-comprehensions	dicts	pre-midterm	5	4	11	3	very-common
+14	dict-iteration-equality	Dictionary iteration and equality	dicts-and-comprehensions	dicts	pre-midterm	5	4	9	3	very-common
+15	slicing-patterns	Slicing patterns	core-python	lists-loops	pre-midterm	5	4	9	3	very-common
+16	pandas-loc-iloc	loc vs iloc	pandas	selection	post-midterm	5	4	8	3	very-common
+17	pandas-map-vs-apply	map() vs apply()	pandas	transforms	post-midterm	5	4	7	3	very-common
+18	pandas-vectorized-new-columns	Vectorized new columns	pandas	transforms	post-midterm	5	3	7	3	common
+19	return-none-and-function-end	return, None, and function end	functions-and-scope	returns-scope	pre-midterm	5	3	6	3	common
+20	pandas-boolean-mask-and-indexing	Boolean masks and indexing	pandas	selection	post-midterm	5	3	5	3	common
+21	url-email-phone-parsing	URL, email, and phone parsing	strings	parsing	post-midterm	5	3	5	3	common
+22	args-and-kwargs	*args and **kwargs	functions-and-scope	parameters-flexible-args	pre-midterm	4	5	7	3	signature
+23	both-neither-all-meta-options	Both / neither / all-of-the-above patterns	survival	cross-topic-traps	mixed	4	5	7	3	signature
+24	oop-compare-and-report-patterns	Compare/report method patterns	oop	methods-and-comparison	post-midterm	4	5	7	3	signature
+25	oop-state-and-collection-attributes	Object state and collection attributes	oop	constructors-and-state	post-midterm	4	5	7	3	signature
+26	builtins-return-values	Built-ins and what they return	core-python	types-conditions	pre-midterm	4	4	11	3	very-common
+27	defaults-keyword-arguments	Defaults and keyword arguments	functions-and-scope	parameters-flexible-args	pre-midterm	4	4	7	3	very-common
+28	fstrings-and-format	f-strings and .format()	strings	formatting	post-midterm	4	4	7	3	very-common
+29	datetime-build-from-parts	Build datetimes from parts	datetime	parsing-formatting	post-midterm	4	4	6	3	very-common
+30	targeted-string-edit-patterns	Targeted string edits	strings	formatting	post-midterm	4	4	6	3	very-common
+31	loop-templates	Loop templates	core-python	lists-loops	pre-midterm	4	3	5	3	common
+32	membership-and-condition-logic	Membership and condition logic	core-python	types-conditions	pre-midterm	4	3	5	3	common
+33	find-index-count	find(), index(), count()	strings	methods	post-midterm	4	3	5	3	common
+34	datetime-sequence-generation	Date sequences	datetime	sequence-generation	post-midterm	4	3	4	3	common
+35	oop-method-calls-and-self	Method calls and self	oop	methods-and-comparison	post-midterm	4	3	4	3	common
+36	pandas-sort-index-vs-values	sort_index() vs sort_values()	pandas	construction-and-sorting	post-midterm	4	3	4	3	common
+37	higher-order-lambda	Higher-order functions and lambda	functions-and-scope	imports-lambda	pre-midterm	4	2	5	3	common
+38	nested-indexing-and-negative-indices	Nested indexing and negative indices	core-python	lists-loops	pre-midterm	4	2	3	3	occasional
+39	dict-running-totals-and-next-links	Running totals and next-link dictionaries	dicts-and-comprehensions	dicts	pre-midterm	4	2	3	3	occasional
+40	pandas-string-and-date-columns	String/date columns	pandas	transforms	post-midterm	4	2	3	3	occasional
+41	datetime-overlap-logic	Overlap logic	datetime	arithmetic-and-overlap	post-midterm	4	2	2	3	occasional
+42	list-selection-and-aggregation	List selection and aggregation	core-python	lists-loops	pre-midterm	3	4	6	3	very-common
+43	case-and-capitalization	Case methods and capitalization	strings	methods	post-midterm	3	3	5	2	common
+44	pandas-build-from-args	Build DataFrames from arguments	pandas	construction-and-sorting	post-midterm	3	1	2	2	rare
+45	imports-and-aliases	Imports and aliases	functions-and-scope	imports-lambda	pre-midterm	3	1	2	2	rare
+46	set-vs-list-vs-dict	Set vs list vs dict	dicts-and-comprehensions	comprehensions	post-midterm	3	1	2	2	rare

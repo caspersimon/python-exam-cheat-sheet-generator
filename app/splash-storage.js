@@ -1,5 +1,5 @@
 function setLoadingState() {
-  refs.cardHost.innerHTML = `<div class="empty-state"><p>Loading exam topic explorer...</p></div>`;
+  refs.cardHost.innerHTML = `<div class="empty-state"><p>Loading topic explorer...</p></div>`;
 }
 
 function maybeShowSplash() {
@@ -38,17 +38,13 @@ function hasSeenSplash() {
 function markSplashSeen() {
   try {
     window.localStorage.setItem(SPLASH_STORAGE_KEY, "1");
-  } catch {
-    // Ignore browsers that block storage.
-  }
+  } catch {}
 }
 
 function resetSplashIntro() {
   try {
     window.localStorage.removeItem(SPLASH_STORAGE_KEY);
-  } catch {
-    // Ignore browsers that block storage.
-  }
+  } catch {}
   maybeShowSplash();
 }
 
@@ -71,13 +67,12 @@ function resetAppProgress() {
 
   try {
     window.localStorage.removeItem(APP_STATE_STORAGE_KEY);
-  } catch {
-    // Ignore browsers that block storage.
-  }
+  } catch {}
   lastPersistedPayload = "";
 
   state.filters.search = "";
-  state.filters.weeks = new Set(CANONICAL_WEEK_ORDER);
+  state.filters.coursePhases = new Set(DEFAULT_COURSE_PHASES);
+  state.filters.recurrenceLevels = new Set(DEFAULT_RECURRENCE_LEVELS);
   state.drafts = {};
   state.navigation = buildDefaultNavigationState();
   state.previewHistory = [];
@@ -100,10 +95,10 @@ function resetAppProgress() {
     gridRows: 6,
   };
 
-  renderWeekFilterControls();
+  renderFilterControls(DEFAULT_COURSE_PHASES, DEFAULT_RECURRENCE_LEVELS);
   syncFilterControls();
   applyLayoutVariables();
-  ensureExplorerNavigation(getFilteredParentBundles());
+  ensureExplorerNavigation(getFilteredTopics());
   closeTopicSidebar();
   setView("swipe");
   renderAll();
@@ -116,9 +111,8 @@ function hydratePersistedState() {
     return;
   }
 
-  const cardIds = new Set(state.cards.map((card) => card.id));
-  const parentIds = new Set(state.parentTopics.map((parentTopic) => parentTopic.id));
-  const validWeeks = new Set(CANONICAL_WEEK_ORDER);
+  const snippetIds = new Set(state.snippets.map((snippet) => snippet.id));
+  const topicIds = new Set(state.topics.map((topic) => topic.id));
 
   if (raw.layout && typeof raw.layout === "object") {
     const fontAliases = new Map([
@@ -134,75 +128,61 @@ function hydratePersistedState() {
     if (hydratedFont) {
       state.layout.fontFamily = hydratedFont;
     }
-    if (Number.isFinite(raw.layout.fontSize)) {
-      state.layout.fontSize = clamp(Number(raw.layout.fontSize), 7, 14);
-    }
-    if (Number.isFinite(raw.layout.titleSize)) {
-      state.layout.titleSize = clamp(Number(raw.layout.titleSize), 4.8, 12);
-    }
-    if (Number.isFinite(raw.layout.lineHeight)) {
-      state.layout.lineHeight = clamp(Number(raw.layout.lineHeight), 0.9, 1.5);
-    }
-    if (Number.isFinite(raw.layout.letterSpacing)) {
+    if (Number.isFinite(raw.layout.fontSize)) state.layout.fontSize = clamp(Number(raw.layout.fontSize), 7, 14);
+    if (Number.isFinite(raw.layout.titleSize)) state.layout.titleSize = clamp(Number(raw.layout.titleSize), 4.8, 12);
+    if (Number.isFinite(raw.layout.lineHeight)) state.layout.lineHeight = clamp(Number(raw.layout.lineHeight), 0.9, 1.5);
+    if (Number.isFinite(raw.layout.letterSpacing))
       state.layout.letterSpacing = clamp(Number(raw.layout.letterSpacing), -0.2, 1.2);
-    }
-    if (Number.isFinite(raw.layout.cardGap)) {
-      state.layout.cardGap = clamp(Number(raw.layout.cardGap), 2, 18);
-    }
-    if (Number.isFinite(raw.layout.cardPadding)) {
-      state.layout.cardPadding = clamp(Number(raw.layout.cardPadding), 4, 16);
-    }
-    if (Number.isFinite(raw.layout.codeBlockPadding)) {
+    if (Number.isFinite(raw.layout.cardGap)) state.layout.cardGap = clamp(Number(raw.layout.cardGap), 2, 18);
+    if (Number.isFinite(raw.layout.cardPadding)) state.layout.cardPadding = clamp(Number(raw.layout.cardPadding), 4, 16);
+    if (Number.isFinite(raw.layout.codeBlockPadding))
       state.layout.codeBlockPadding = clamp(Number(raw.layout.codeBlockPadding), 2, 10);
-    }
-    if (Number.isFinite(raw.layout.codeBlockMargin)) {
+    if (Number.isFinite(raw.layout.codeBlockMargin))
       state.layout.codeBlockMargin = clamp(Number(raw.layout.codeBlockMargin), 0, 8);
-    }
-    if (typeof raw.layout.autoGrid === "boolean") {
-      state.layout.autoGrid = raw.layout.autoGrid;
-    }
-    if (Number.isFinite(raw.layout.gridColumns)) {
-      state.layout.gridColumns = clamp(Number(raw.layout.gridColumns), 1, 4);
-    }
-    if (Number.isFinite(raw.layout.gridRows)) {
-      state.layout.gridRows = clamp(Number(raw.layout.gridRows), 3, 14);
-    }
+    if (typeof raw.layout.autoGrid === "boolean") state.layout.autoGrid = raw.layout.autoGrid;
+    if (Number.isFinite(raw.layout.gridColumns)) state.layout.gridColumns = clamp(Number(raw.layout.gridColumns), 1, 4);
+    if (Number.isFinite(raw.layout.gridRows)) state.layout.gridRows = clamp(Number(raw.layout.gridRows), 3, 14);
   }
 
   if (raw.filters && typeof raw.filters === "object") {
     state.filters.search = typeof raw.filters.search === "string" ? raw.filters.search : state.filters.search;
-    if (Array.isArray(raw.filters.weeks)) {
-      const weeks = raw.filters.weeks
-        .map((value) => Number(value))
-        .filter((value) => validWeeks.has(value));
-      if (weeks.length) {
-        state.filters.weeks = new Set(weeks);
+    if (Array.isArray(raw.filters.coursePhases)) {
+      const values = raw.filters.coursePhases.map((value) => String(value || "").trim()).filter(Boolean);
+      if (values.length) {
+        state.filters.coursePhases = new Set(values);
+      }
+    }
+    if (Array.isArray(raw.filters.recurrenceLevels)) {
+      const values = raw.filters.recurrenceLevels.map((value) => String(value || "").trim()).filter(Boolean);
+      if (values.length) {
+        state.filters.recurrenceLevels = new Set(values);
       }
     }
   }
 
   if (raw.drafts && typeof raw.drafts === "object") {
     const hydratedDrafts = {};
-    Object.entries(raw.drafts).forEach(([cardId, draft]) => {
-      if (!cardIds.has(cardId) || !draft || typeof draft !== "object") {
+    Object.entries(raw.drafts).forEach(([snippetId, draft]) => {
+      if (!snippetIds.has(snippetId) || !draft || typeof draft !== "object") {
         return;
       }
 
-      const card = state.cards.find((entry) => entry.id === cardId);
-      const validPieceIds = new Set(getAllSelectablePieceIds(card));
+      const snippet = findSnippetById(snippetId);
+      const validPieceIds = new Set(getSnippetSelectablePieceIds(snippet));
       const selectedPieces = Array.isArray(draft.selected?.pieces)
         ? draft.selected.pieces.filter((pieceId) => validPieceIds.has(pieceId))
         : [];
-      hydratedDrafts[cardId] = {
-        ui: {
-          expandedSections: deepClone(draft.ui?.expandedSections || {}),
-        },
-        selected: {
-          pieces: [...new Set(selectedPieces)],
-        },
-        overrides: {
-          pieces: deepClone(draft.overrides?.pieces || {}),
-        },
+      const rawOverrides = draft.overrides?.pieces && typeof draft.overrides.pieces === "object" ? draft.overrides.pieces : {};
+      const cleanOverrides = {};
+      Object.entries(rawOverrides).forEach(([pieceId, value]) => {
+        if (validPieceIds.has(pieceId) && value && typeof value === "object") {
+          cleanOverrides[pieceId] = deepClone(value);
+        }
+      });
+
+      hydratedDrafts[snippetId] = {
+        selected: { pieces: [...new Set(selectedPieces)] },
+        overrides: { pieces: cleanOverrides },
       };
     });
     state.drafts = hydratedDrafts;
@@ -210,21 +190,9 @@ function hydratePersistedState() {
 
   if (raw.navigation && typeof raw.navigation === "object") {
     const nextNavigation = buildDefaultNavigationState();
-    const activeParentId = String(raw.navigation.activeParentId || "").trim();
-    if (parentIds.has(activeParentId)) {
-      nextNavigation.activeParentId = activeParentId;
-    }
     const activeTopicId = String(raw.navigation.activeTopicId || "").trim();
-    if (cardIds.has(activeTopicId)) {
+    if (topicIds.has(activeTopicId)) {
       nextNavigation.activeTopicId = activeTopicId;
-    }
-    if (raw.navigation.expandedParents && typeof raw.navigation.expandedParents === "object") {
-      state.parentTopics.forEach((parentTopic, index) => {
-        const fallbackValue = index === 0;
-        const persistedValue = raw.navigation.expandedParents[parentTopic.id];
-        nextNavigation.expandedParents[parentTopic.id] =
-          typeof persistedValue === "boolean" ? persistedValue : fallbackValue;
-      });
     }
     if (typeof raw.navigation.mobileSidebarOpen === "boolean") {
       nextNavigation.mobileSidebarOpen = raw.navigation.mobileSidebarOpen;
@@ -234,11 +202,11 @@ function hydratePersistedState() {
 
   if (raw.previewCards && typeof raw.previewCards === "object") {
     const hydratedLayouts = {};
-    Object.entries(raw.previewCards).forEach(([cardId, layout]) => {
-      if (!cardIds.has(cardId) || !layout || typeof layout !== "object") {
+    Object.entries(raw.previewCards).forEach(([snippetId, layout]) => {
+      if (!snippetIds.has(snippetId) || !layout || typeof layout !== "object") {
         return;
       }
-      hydratedLayouts[cardId] = {
+      hydratedLayouts[snippetId] = {
         page: layout.page === 2 ? 2 : 1,
         x: Number(layout.x) || 0,
         y: Number(layout.y) || 0,
@@ -271,9 +239,13 @@ function getPersistedRawState() {
 
 function syncFilterControls() {
   refs.searchInput.value = state.filters.search;
-  refs.weekFilterList?.querySelectorAll(".weekCheck").forEach((checkbox) => {
-    const week = Number(checkbox.value);
-    checkbox.checked = state.filters.weeks.has(week);
+  syncCheckboxFilterGroup(refs.coursePhaseFilterList, ".coursePhaseCheck", state.filters.coursePhases);
+  syncCheckboxFilterGroup(refs.recurrenceFilterList, ".recurrenceCheck", state.filters.recurrenceLevels);
+}
+
+function syncCheckboxFilterGroup(host, selector, selectedValues) {
+  host?.querySelectorAll(selector).forEach((checkbox) => {
+    checkbox.checked = selectedValues.has(checkbox.value);
   });
 }
 
@@ -288,13 +260,14 @@ function schedulePersistState() {
 }
 
 function persistAppState() {
-  if (!state.cards.length) {
+  if (!state.snippets.length) {
     return;
   }
   const payload = {
     filters: {
       search: state.filters.search,
-      weeks: [...state.filters.weeks],
+      coursePhases: [...state.filters.coursePhases],
+      recurrenceLevels: [...state.filters.recurrenceLevels],
     },
     drafts: state.drafts,
     navigation: state.navigation,
@@ -309,7 +282,5 @@ function persistAppState() {
   try {
     window.localStorage.setItem(APP_STATE_STORAGE_KEY, serialized);
     lastPersistedPayload = serialized;
-  } catch {
-    // Ignore storage quota/privacy mode errors.
-  }
+  } catch {}
 }

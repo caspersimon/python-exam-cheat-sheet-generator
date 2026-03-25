@@ -1,0 +1,21 @@
+subtopic_slug	topic_slug	title	sort_order	description	snippet_count
+types-conditions	core-python	Types & conditions	1	Truthiness, equality, membership, and built-ins.	3
+lists-loops	core-python	Lists, slicing & loops	2	Indexing, slicing, iteration templates, zip/enumerate.	5
+parsing-formatting	datetime	Parsing & formatting	1	strptime/strftime and building datetime objects.	2
+arithmetic-and-overlap	datetime	Arithmetic & overlap	2	timedelta, day counts, date windows, overlap logic.	2
+sequence-generation	datetime	Sequence generation	3	Build repeated date sequences from ranges or dicts.	1
+dicts	dicts-and-comprehensions	Dictionary patterns	1	Counting, aggregation, iteration, equality, running links.	3
+comprehensions	dicts-and-comprehensions	Comprehensions	2	List/dict/set comprehension construction and syntax placement.	3
+returns-scope	functions-and-scope	Returns & scope	1	Implicit None, local/global rules, and variable lifetime.	2
+parameters-flexible-args	functions-and-scope	Parameters & flexible args	2	Defaults, keyword binding, *args, **kwargs.	2
+imports-lambda	functions-and-scope	Imports & lambda	3	Import names, aliases, lambda, and call shapes.	2
+constructors-and-state	oop	Constructors & state	1	What goes in __init__, where state lives, collection attributes.	2
+methods-and-comparison	oop	Methods & comparison	2	self, method calls, comparison/reporting patterns.	2
+selection	pandas	Selection	1	Series/DataFrame, loc/iloc, masks, index alignment.	3
+transforms	pandas	Transforms	2	Vectorized columns, map/apply, string/date transforms.	3
+construction-and-sorting	pandas	Construction & sorting	3	Creating DataFrames and sorting them correctly.	2
+methods	strings	Methods	1	split/join/replace/find/count/case methods.	3
+formatting	strings	Formatting	2	f-strings, .format(), and targeted edits.	2
+parsing	strings	Parsing	3	URL, email, and phone parsing patterns.	1
+answering-strategy	survival	Answering strategy	1	Fast elimination and wording-decoder pieces.	1
+cross-topic-traps	survival	Cross-topic traps	2	Trap families that recur across multiple topic areas.	2

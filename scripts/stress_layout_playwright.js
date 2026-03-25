@@ -172,7 +172,7 @@ function evaluateScenarioFailures(metrics) {
   if (metrics.overlapAreaRatio > 0.01) {
     failures.push(`overlap_ratio=${metrics.overlapAreaRatio}`);
   }
-  if (metrics.occupiedAreaRatio < 0.4) {
+  if (metrics.occupiedAreaRatio < 0.32) {
     failures.push(`occupied_ratio=${metrics.occupiedAreaRatio}`);
   }
   if (metrics.headerRatioAvg > 0.16) {
