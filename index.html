@@ -20,23 +20,23 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260325a" />
-    <script defer src="./app/state-and-init.js?v=20260325a"></script>
-    <script defer src="./app/exam-builder-data.js?v=20260325a"></script>
-    <script defer src="./app/splash-storage.js?v=20260325a"></script>
+    <link rel="stylesheet" href="./styles.css?v=20260325b" />
+    <script defer src="./app/state-and-init.js?v=20260325b"></script>
+    <script defer src="./app/exam-builder-data.js?v=20260325b"></script>
+    <script defer src="./app/splash-storage.js?v=20260325b"></script>
     <script defer src="./app/preview-pointer.js?v=20260322h"></script>
-    <script defer src="./app/view-and-data.js?v=20260325a"></script>
-    <script defer src="./app/topic-selection.js?v=20260325a"></script>
+    <script defer src="./app/view-and-data.js?v=20260325b"></script>
+    <script defer src="./app/topic-selection.js?v=20260325b"></script>
     <script defer src="./app/topic-detail-subtopics.js?v=20260322h"></script>
-    <script defer src="./app/render-card-sections.js?v=20260325a"></script>
-    <script defer src="./app/text-render-utils.js?v=20260325a"></script>
+    <script defer src="./app/render-card-sections.js?v=20260325b"></script>
+    <script defer src="./app/text-render-utils.js?v=20260325b"></script>
     <script defer src="./app/code-render-utils.js?v=20260322h"></script>
-    <script defer src="./app/card-interactions.js?v=20260325a"></script>
-    <script defer src="./app/preview-render.js?v=20260325a"></script>
-    <script defer src="./app/preview-card-render.js?v=20260325a"></script>
+    <script defer src="./app/card-interactions.js?v=20260325b"></script>
+    <script defer src="./app/preview-render.js?v=20260325b"></script>
+    <script defer src="./app/preview-card-render.js?v=20260325b"></script>
     <script defer src="./app/preview-history.js?v=20260322h"></script>
     <script defer src="./app/preview-edit-modal.js?v=20260322h"></script>
-    <script defer src="./app/preview-editing.js?v=20260325a"></script>
+    <script defer src="./app/preview-editing.js?v=20260325b"></script>
     <script defer src="./app/layout-export-utils.js?v=20260322h"></script>
     <script defer src="./app/pdf-export-utils.js?v=20260322h"></script>
     <script defer src="./app/main.js?v=20260322h"></script>
@@ -62,6 +62,7 @@
           </div>
           <div id="swipeHeaderActions" class="header-mode-actions">
             <button id="openTopicSidebarBtn" class="ghost-btn mobile-only-btn" type="button">Topics</button>
+            <button id="openPresetsBtn" class="ghost-btn" type="button">Presets</button>
             <button id="openFiltersBtn" class="ghost-btn" type="button">Filters</button>
             <button id="openStatsBtn" class="ghost-btn" type="button">Selection</button>
             <button id="skipToPreviewBtn" class="solid-btn" type="button">Preview</button>
@@ -146,6 +147,16 @@
       </div>
     </aside>
 
+    <aside id="presetsDrawer" class="panel drawer hidden" aria-label="Presets">
+      <div class="drawer-head">
+        <h3>Presets</h3>
+        <button class="ghost-btn close-drawer-btn" data-close-drawer="presets" type="button">Close</button>
+      </div>
+
+      <p class="muted">Use a ready-made starting selection, then customize it however you like.</p>
+      <div id="presetList" class="preset-list"></div>
+    </aside>
+
     <aside id="statsDrawer" class="panel drawer hidden" aria-label="Selection stats">
       <div class="drawer-head">
         <h3>Selection</h3>
@@ -164,6 +175,10 @@
         <div>
           <p class="stat-label">Visible Topics</p>
           <p id="remainingCount" class="stat-value" aria-live="polite">0</p>
+        </div>
+        <div>
+          <p class="stat-label">Starting Preset</p>
+          <p id="activePresetName" class="stat-value" aria-live="polite">Custom</p>
         </div>
       </div>
 
@@ -258,12 +273,13 @@
         <p class="splash-lead">
           Browse by topic, open subtopics, pick the exact markdown-backed pieces you want, and export a compact 2-page A4 cheat sheet.
         </p>
+        <div id="splashPresetList" class="preset-list splash-preset-list"></div>
         <ul class="splash-points">
+          <li>Start from a preset if you want a fast, opinionated first draft.</li>
           <li>Use the topic sidebar to jump straight to the concept family you need.</li>
-          <li>Select only the exact snippet pieces worth precious cheat-sheet space.</li>
           <li>Preview, reorder, and export as PDF or PNG.</li>
         </ul>
-        <button id="getStartedBtn" class="solid-btn splash-start-btn" type="button">Get Started</button>
+        <button id="getStartedBtn" class="ghost-btn splash-start-btn" type="button">Browse manually instead</button>
       </div>
     </div>
 

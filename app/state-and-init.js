@@ -1,6 +1,6 @@
 const SPLASH_STORAGE_KEY = "python_midterm_splash_seen_v3";
-const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v10";
-const FRONTEND_BUNDLE_VERSION = "2026-03-25-new-database-hard-cut";
+const APP_STATE_STORAGE_KEY = "python_midterm_app_state_v11";
+const FRONTEND_BUNDLE_VERSION = "2026-03-25-new-database-hard-cut-presets";
 const FRONTEND_BUNDLE_PATH = "./new_database/exports/frontend_bundle.json";
 const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
@@ -18,6 +18,7 @@ const state = {
   topics: [],
   parentTopics: [],
   snippets: [],
+  presets: [],
   cards: [],
   filters: {
     search: "",
@@ -26,6 +27,7 @@ const state = {
   },
   drafts: {},
   navigation: buildDefaultNavigationState(),
+  selectedPresetId: "",
   previewHistory: [],
   view: "swipe",
   openDrawer: "",
@@ -61,12 +63,14 @@ const refs = {
 
   openTopicSidebarBtn: document.getElementById("openTopicSidebarBtn"),
   openFiltersBtn: document.getElementById("openFiltersBtn"),
+  openPresetsBtn: document.getElementById("openPresetsBtn"),
   openStatsBtn: document.getElementById("openStatsBtn"),
   openLayoutBtn: document.getElementById("openLayoutBtn"),
   openOrderBtn: document.getElementById("openOrderBtn"),
   previewUndoBtn: document.getElementById("previewUndoBtn"),
 
   filtersDrawer: document.getElementById("filtersDrawer"),
+  presetsDrawer: document.getElementById("presetsDrawer"),
   statsDrawer: document.getElementById("statsDrawer"),
   layoutDrawer: document.getElementById("layoutDrawer"),
   orderDrawer: document.getElementById("orderDrawer"),
@@ -78,8 +82,10 @@ const refs = {
   rejectedCount: document.getElementById("rejectedCount"),
   remainingCount: document.getElementById("remainingCount"),
   acceptedTopicsList: document.getElementById("acceptedTopicsList"),
+  activePresetName: document.getElementById("activePresetName"),
   coursePhaseFilterList: document.getElementById("coursePhaseFilterList"),
   recurrenceFilterList: document.getElementById("recurrenceFilterList"),
+  presetList: document.getElementById("presetList"),
 
   previewOrderList: document.getElementById("previewOrderList"),
   page1Content: document.getElementById("page1Content"),
@@ -120,11 +126,13 @@ const refs = {
   codeBlockPaddingValue: document.getElementById("codeBlockPaddingValue"),
   codeBlockMarginValue: document.getElementById("codeBlockMarginValue"),
   splashOverlay: document.getElementById("splashOverlay"),
+  splashPresetList: document.getElementById("splashPresetList"),
   getStartedBtn: document.getElementById("getStartedBtn"),
 };
 
 const drawerMap = {
   filters: refs.filtersDrawer,
+  presets: refs.presetsDrawer,
   stats: refs.statsDrawer,
   layout: refs.layoutDrawer,
   order: refs.orderDrawer,
@@ -167,10 +175,12 @@ async function init() {
     state.topics = normalized.topics;
     state.parentTopics = normalized.topics;
     state.snippets = normalized.snippets;
+    state.presets = normalized.presets;
     state.cards = normalized.snippets;
 
     renderFilterControls(normalized.availableCoursePhases, normalized.availableRecurrenceLevels);
     hydratePersistedState();
+    renderPresetSurfaces();
     ensureExplorerNavigation(getFilteredTopics());
     syncFilterControls();
     applyLayoutVariables();
@@ -216,6 +226,7 @@ function bindEvents() {
   });
 
   refs.openFiltersBtn.addEventListener("click", () => toggleDrawer("filters"));
+  refs.openPresetsBtn?.addEventListener("click", () => toggleDrawer("presets"));
   refs.openStatsBtn.addEventListener("click", () => toggleDrawer("stats"));
   refs.openLayoutBtn.addEventListener("click", () => toggleDrawer("layout"));
   refs.openOrderBtn.addEventListener("click", () => toggleDrawer("order"));

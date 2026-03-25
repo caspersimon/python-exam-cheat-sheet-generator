@@ -2,10 +2,17 @@ const VALID_PIECE_PRESENTATION_EMPHASIS = new Set(["trap"]);
 
 function normalizeSnippetBankPayload(payload) {
   const topics = Array.isArray(payload?.topics) ? payload.topics.map(normalizeTopic).filter(Boolean) : [];
+  const pieceIdToSnippetId = new Map();
   const snippets = topics.flatMap((topic) => topic.subtopics.flatMap((subtopic) => subtopic.snippets));
+  snippets.forEach((snippet) => {
+    snippet.pieces.forEach((piece) => {
+      pieceIdToSnippetId.set(piece.id, snippet.id);
+    });
+  });
   return {
     topics,
     snippets,
+    presets: Array.isArray(payload?.presets) ? payload.presets.map((preset) => normalizePreset(preset, pieceIdToSnippetId)).filter(Boolean) : [],
     availableCoursePhases: [...new Set(snippets.map((snippet) => snippet.coursePhase).filter(Boolean))],
     availableRecurrenceLevels: [...new Set(snippets.map((snippet) => snippet.recurrenceLevel).filter(Boolean))],
   };
@@ -111,9 +118,17 @@ function normalizeSnippet(topicSlug, topicTitle, subtopicSlug, subtopicTitle, sn
     examFamilyCount: Number(snippet.exam_family_count || 0),
     questionRefCount: Number(snippet.question_ref_count || 0),
     pieceCount: Number(snippet.piece_count || pieces.length),
+    defaultPieceCount: Number(snippet.default_piece_count || 0),
+    defaultCharCount: Number(snippet.default_char_count || 0),
+    totalCharCount: Number(snippet.total_char_count || 0),
     keywords,
     trapSlugs,
     trapLabels,
+    uiSectionSlug: String(snippet.ui_section_slug || "").trim(),
+    uiSectionTitle: String(snippet.ui_section_title || "").trim(),
+    uiSectionSortOrder: Number(snippet.ui_section_sort_order || 0),
+    uiCardOrder: Number(snippet.ui_card_order || 0),
+    isTrapHeavy: Boolean(snippet.is_trap_heavy),
     topicSlug,
     topicTitle,
     subtopicSlug,
@@ -122,6 +137,49 @@ function normalizeSnippet(topicSlug, topicTitle, subtopicSlug, subtopicTitle, sn
     contentDir: String(snippet.content_dir || "").trim(),
     pieces,
     searchText: searchBits.join(" ").toLowerCase(),
+  };
+}
+
+function normalizePreset(preset, pieceIdToSnippetId) {
+  if (!preset || typeof preset !== "object") {
+    return null;
+  }
+
+  const presetId = String(preset.preset_id || "").trim();
+  if (!presetId) {
+    return null;
+  }
+
+  const items = Array.isArray(preset.items)
+    ? preset.items
+        .map((item) => {
+          const pieceId = String(item?.piece_id || "").trim();
+          if (!pieceId || !pieceIdToSnippetId.has(pieceId)) {
+            return null;
+          }
+          return {
+            rank: Number(item.rank || 0),
+            pieceId,
+            snippetId: pieceIdToSnippetId.get(pieceId) || String(item.snippet_slug || "").trim(),
+            snippetSlug: String(item.snippet_slug || "").trim(),
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.rank - b.rank || a.pieceId.localeCompare(b.pieceId))
+    : [];
+
+  return {
+    id: presetId,
+    presetId,
+    title: String(preset.title || humanizeTopic(presetId)).trim(),
+    summary: String(preset.summary || "").trim(),
+    targetUser: String(preset.target_user || "").trim(),
+    notes: String(preset.notes || "").trim(),
+    sortOrder: Number(preset.sort_order || 0),
+    snippetCount: Number(preset.snippet_count || 0),
+    pieceCount: Number(preset.piece_count || items.length),
+    charCount: Number(preset.char_count || 0),
+    items,
   };
 }
 

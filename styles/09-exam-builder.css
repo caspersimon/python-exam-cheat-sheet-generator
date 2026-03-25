@@ -89,6 +89,23 @@
   background: linear-gradient(180deg, rgba(var(--topic-accent-rgb, 55, 108, 83), 0.1), rgba(244, 244, 239, 0.86));
 }
 
+.subtopic-card-sections {
+  display: grid;
+  gap: 18px;
+}
+
+.subtopic-card-section {
+  display: grid;
+  gap: 10px;
+}
+
+.subtopic-card-section-head h5 {
+  margin: 0;
+  color: var(--topic-accent-ink, var(--accent));
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+}
+
 .exam-snippet-card {
   gap: 14px;
 }
@@ -184,6 +201,66 @@
   color: #9a5718;
 }
 
+.preset-list {
+  display: grid;
+  gap: 12px;
+}
+
+.preset-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(6, 53, 46, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.preset-card.is-active {
+  border-color: rgba(55, 108, 83, 0.35);
+  box-shadow: 0 0 0 2px rgba(55, 108, 83, 0.08);
+}
+
+.preset-card.is-compact {
+  padding: 12px;
+  gap: 10px;
+}
+
+.preset-card-copy {
+  display: grid;
+  gap: 6px;
+}
+
+.preset-card-headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.preset-card-headline h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.preset-card-summary,
+.preset-card-target {
+  margin: 0;
+}
+
+.preset-tag-active {
+  background: rgba(55, 108, 83, 0.12);
+  color: #234438;
+}
+
+.preset-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.splash-preset-list {
+  margin: 18px 0 14px;
+}
+
 .exam-piece-row.is-trap {
   margin-inline: -4px;
   padding: 10px 10px 10px 14px;
@@ -216,5 +293,13 @@
   .exam-snippet-head {
     grid-template-columns: 1fr;
     display: grid;
+  }
+
+  .preset-card-actions {
+    justify-content: stretch;
+  }
+
+  .preset-card-actions .solid-btn {
+    width: 100%;
   }
 }

@@ -1,0 +1,46 @@
+topic_slug	subtopic_slug	ui_section_slug	ui_section_title	ui_section_sort_order	ui_card_order	sort_order	snippet_slug	title	default_priority	recurrence_level	default_piece_count	piece_count	question_ref_count	trap_count	course_phase
+core-python	lists-loops	start-here	Start here	1	1	1	zip-enumerate-core	zip() and enumerate() core patterns	5	signature	2	3	14	2	pre-midterm
+core-python	lists-loops	start-here	Start here	1	2	2	slicing-patterns	Slicing patterns	5	very-common	2	3	9	2	pre-midterm
+core-python	lists-loops	start-here	Start here	1	3	5	list-selection-and-aggregation	List selection and aggregation	3	very-common	2	3	6	2	pre-midterm
+core-python	lists-loops	add-next	Add next	2	1	3	loop-templates	Loop templates	4	common	2	3	5	2	pre-midterm
+core-python	lists-loops	add-next	Add next	2	2	4	nested-indexing-and-negative-indices	Nested indexing and negative indices	4	occasional	2	3	3	2	pre-midterm
+core-python	types-conditions	start-here	Start here	1	1	1	types-none-bool-equality	Types, None, bool, equality	5	signature	2	3	15	4	pre-midterm
+core-python	types-conditions	start-here	Start here	1	2	2	builtins-return-values	Built-ins and what they return	4	very-common	2	4	11	2	pre-midterm
+core-python	types-conditions	add-next	Add next	2	1	3	membership-and-condition-logic	Membership and condition logic	4	common	2	4	5	2	pre-midterm
+datetime	arithmetic-and-overlap	start-here	Start here	1	1	1	datetime-timedelta-day-counts	timedelta and day counts	5	signature	2	3	7	2	post-midterm
+datetime	arithmetic-and-overlap	add-next	Add next	2	1	2	datetime-overlap-logic	Overlap logic	4	occasional	3	3	2	2	post-midterm
+datetime	parsing-formatting	start-here	Start here	1	1	1	datetime-strptime-strftime	strptime() and strftime()	5	signature	2	3	12	2	post-midterm
+datetime	parsing-formatting	start-here	Start here	1	2	2	datetime-build-from-parts	Build datetimes from parts	4	very-common	2	3	6	2	post-midterm
+datetime	sequence-generation	add-next	Add next	2	1	1	datetime-sequence-generation	Date sequences	4	common	3	3	4	2	post-midterm
+dicts-and-comprehensions	comprehensions	start-here	Start here	1	1	1	dict-comprehension-patterns	Dictionary comprehension patterns	5	signature	2	3	10	2	post-midterm
+dicts-and-comprehensions	comprehensions	start-here	Start here	1	2	2	list-comprehension-patterns	List comprehension patterns	5	signature	2	3	7	1	post-midterm
+dicts-and-comprehensions	comprehensions	edge-cases	Edge cases / niche	3	1	3	set-vs-list-vs-dict	Set vs list vs dict	3	rare	1	2	2	2	post-midterm
+dicts-and-comprehensions	dicts	start-here	Start here	1	1	1	dict-build-count-aggregate	Build, count, and aggregate dictionaries	5	very-common	2	3	11	2	pre-midterm
+dicts-and-comprehensions	dicts	start-here	Start here	1	2	2	dict-iteration-equality	Dictionary iteration and equality	5	very-common	2	3	9	2	pre-midterm
+dicts-and-comprehensions	dicts	add-next	Add next	2	1	3	dict-running-totals-and-next-links	Running totals and next-link dictionaries	4	occasional	2	3	3	2	pre-midterm
+functions-and-scope	imports-lambda	add-next	Add next	2	1	1	higher-order-lambda	Higher-order functions and lambda	4	common	1	3	5	1	pre-midterm
+functions-and-scope	imports-lambda	edge-cases	Edge cases / niche	3	1	2	imports-and-aliases	Imports and aliases	3	rare	2	2	2	1	pre-midterm
+functions-and-scope	parameters-flexible-args	start-here	Start here	1	1	1	args-and-kwargs	*args and **kwargs	4	signature	2	3	7	2	pre-midterm
+functions-and-scope	parameters-flexible-args	start-here	Start here	1	2	2	defaults-keyword-arguments	Defaults and keyword arguments	4	very-common	2	3	7	2	pre-midterm
+functions-and-scope	returns-scope	start-here	Start here	1	1	1	local-vs-global-scope	Local vs global scope	5	signature	2	3	7	2	pre-midterm
+functions-and-scope	returns-scope	start-here	Start here	1	2	2	return-none-and-function-end	return, None, and function end	5	common	2	3	6	2	pre-midterm
+oop	constructors-and-state	start-here	Start here	1	1	1	oop-init-self-defaults	__init__, self, defaults, attributes	5	signature	3	3	10	4	post-midterm
+oop	constructors-and-state	start-here	Start here	1	2	2	oop-state-and-collection-attributes	Object state and collection attributes	4	signature	2	5	7	2	post-midterm
+oop	methods-and-comparison	start-here	Start here	1	1	1	oop-compare-and-report-patterns	Compare/report method patterns	4	signature	3	3	7	2	post-midterm
+oop	methods-and-comparison	add-next	Add next	2	1	2	oop-method-calls-and-self	Method calls and self	4	common	2	3	4	2	post-midterm
+pandas	construction-and-sorting	add-next	Add next	2	1	1	pandas-sort-index-vs-values	sort_index() vs sort_values()	4	common	2	3	4	1	post-midterm
+pandas	construction-and-sorting	edge-cases	Edge cases / niche	3	1	2	pandas-build-from-args	Build DataFrames from arguments	3	rare	2	2	2	1	post-midterm
+pandas	selection	start-here	Start here	1	1	1	pandas-series-vs-dataframe	Series vs DataFrame	5	signature	2	3	7	1	post-midterm
+pandas	selection	start-here	Start here	1	2	2	pandas-loc-iloc	loc vs iloc	5	very-common	2	3	8	2	post-midterm
+pandas	selection	start-here	Start here	1	3	3	pandas-boolean-mask-and-indexing	Boolean masks and indexing	5	common	2	3	5	2	post-midterm
+pandas	transforms	start-here	Start here	1	1	1	pandas-map-vs-apply	map() vs apply()	5	very-common	2	3	7	2	post-midterm
+pandas	transforms	start-here	Start here	1	2	2	pandas-vectorized-new-columns	Vectorized new columns	5	common	2	3	7	2	post-midterm
+pandas	transforms	add-next	Add next	2	1	3	pandas-string-and-date-columns	String/date columns	4	occasional	2	3	3	2	post-midterm
+strings	formatting	start-here	Start here	1	1	1	fstrings-and-format	f-strings and .format()	4	very-common	2	4	7	2	post-midterm
+strings	formatting	start-here	Start here	1	2	2	targeted-string-edit-patterns	Targeted string edits	4	very-common	2	3	6	2	post-midterm
+strings	methods	start-here	Start here	1	1	1	split-join-replace	split(), join(), replace()	5	signature	2	3	12	2	post-midterm
+strings	methods	add-next	Add next	2	1	2	find-index-count	find(), index(), count()	4	common	2	3	5	2	post-midterm
+strings	methods	add-next	Add next	2	2	3	case-and-capitalization	Case methods and capitalization	3	common	2	2	5	1	post-midterm
+strings	parsing	start-here	Start here	1	1	1	url-email-phone-parsing	URL, email, and phone parsing	5	common	2	3	5	2	post-midterm
+survival	answering-strategy	start-here	Start here	1	1	1	mcq-elimination-checklist	MCQ elimination checklist	5	signature	2	4	8	4	mixed
+survival	cross-topic-traps	start-here	Start here	1	1	1	mutation-vs-return	Mutation vs return value	5	signature	2	3	6	3	mixed

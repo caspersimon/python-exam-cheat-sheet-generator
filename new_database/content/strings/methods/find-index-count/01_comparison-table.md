@@ -1,5 +1,5 @@
-| Method | If found | If not found |
+| Call shape | If found | If not found |
 |---|---|---|
-| `s.find(sub)` | start index | `-1` |
-| `s.index(sub)` | start index | `ValueError` |
-| `s.count(sub)` | count | `0` |
+| `'banana'.find('na')` | start index such as `2` | `-1` |
+| `'banana'.index('na')` | start index such as `2` | `ValueError` |
+| `'banana'.count('na')` | count such as `2` | `0` |

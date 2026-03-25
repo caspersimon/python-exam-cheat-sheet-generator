@@ -9,7 +9,7 @@ import sys
 
 MAX_LINES = 500
 CODE_EXTENSIONS = {".py", ".js", ".css", ".html", ".mjs", ".cjs"}
-EXCLUDED_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv"}
+EXCLUDED_DIRS = {".git", ".claude", "node_modules", "__pycache__", ".venv", "venv"}
 
 
 @dataclass(frozen=True)

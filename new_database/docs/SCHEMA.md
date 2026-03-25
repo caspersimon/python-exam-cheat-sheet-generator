@@ -11,7 +11,7 @@ This solves two practical problems at once:
 ## 1. Directory layout
 
 ```text
-release/
+python_exam_snippet_bank_final/
 ├── README.md
 ├── db/
 │   └── snippet_bank.sqlite
@@ -27,17 +27,30 @@ release/
 │   ├── snippets.tsv
 │   ├── pieces.tsv
 │   ├── question_taxonomy.tsv
+│   ├── question_secondary_snippets.tsv
+│   ├── snippet_keywords.tsv
+│   ├── snippet_question_refs.tsv
+│   ├── snippet_traps.tsv
 │   ├── trap_catalog.tsv
+│   ├── question_stress_test.tsv
+│   ├── presets.tsv
+│   ├── preset_items.tsv
+│   ├── navigation_plan.tsv
 │   └── ...
 ├── docs/
 │   ├── WORKSPACE_NOTES.md
 │   ├── QUESTION_TAXONOMY.md
 │   ├── EXAM_COOKBOOK.md
 │   ├── SNIPPETS_CATALOG.md
+│   ├── STRESS_TEST_REPORT.md
+│   ├── PRESETS.md
+│   ├── NAVIGATION_PLAN.md
+│   ├── CHANGELOG.md
 │   ├── SCHEMA.md
 │   └── HANDOFF.md
 └── notes/
-    └── question_digest.md
+    ├── question_digest.md
+    └── SOURCE_BANK_NOTES.md
 ```
 
 ## 2. Content model
@@ -66,7 +79,7 @@ Keeping piece bodies in standalone `.md` files means the frontend can:
 - fetch/render them directly
 - precompile them
 - diff them cleanly
-- avoid the newline / escape-character issues that happen with a giant JSON field
+- avoid the newline / escape-character issues that happen with giant JSON fields
 
 ## 3. Main SQLite tables
 
@@ -111,6 +124,16 @@ Key fields:
 - `exam_family_count`
 - `question_ref_count`
 - `piece_count`
+- `default_piece_count`
+- `default_char_count`
+- `total_char_count`
+- `trap_count`
+- `keyword_count`
+- `is_trap_heavy`
+- `ui_section_slug`
+- `ui_section_title`
+- `ui_section_sort_order`
+- `ui_card_order`
 - `readme_path`
 - `content_dir`
 
@@ -138,6 +161,7 @@ Key fields:
 
 - `question_id`
 - `exam_id`
+- `exam_title`
 - `exam_family`
 - `question_number`
 - `raw_topic`
@@ -146,8 +170,11 @@ Key fields:
 - `subtopic`
 - `course_phase`
 - `question_form`
+- `question_form_title`
 - `primary_snippet_slug`
+- `primary_snippet_title`
 - `secondary_snippet_slugs`
+- `secondary_snippet_titles`
 
 ### Relation tables
 
@@ -164,6 +191,12 @@ Key fields:
 - `exam_families`
 - `exams`
 - `source_notes`
+
+### Finalization tables
+
+- `question_stress_test`
+- `presets`
+- `preset_items`
 
 ## 4. Important metadata conventions
 
@@ -182,9 +215,23 @@ Piece-level default.
 - `1` = should probably be selected in a balanced default pack
 - `0` = optional clarifier / expansion piece
 
-### `recurrence_level`
+### `ui_section_*`
 
-Derived from question-ref count and family coverage.
+These fields are frontend helpers for grouping snippet cards inside a subtopic.
+
+Current sections:
+
+- `start-here`
+- `add-next`
+- `edge-cases`
+
+Recommended rendering behavior:
+
+1. group by `ui_section_title`
+2. order groups by `ui_section_sort_order`
+3. order cards inside a group by `ui_card_order`
+
+### `recurrence_level`
 
 Current levels:
 
@@ -197,19 +244,70 @@ Current levels:
 ### `question_refs`
 
 Question references are strongest at the **snippet** level.
-Many pieces are synthetic, polished explanations of a recurring pattern rather than a direct copy of one option from one exam.
+Many pieces are synthesized from several past questions rather than copied from one option from one exam.
 
 That is intentional.
 
-## 5. Suggested import strategy for a frontend
+## 5. Preset model
+
+### `presets`
+One row per preset pack.
+
+Key fields:
+
+- `preset_id`
+- `title`
+- `summary`
+- `target_user`
+- `notes`
+- `sort_order`
+- `snippet_count`
+- `piece_count`
+- `char_count`
+
+### `preset_items`
+One row per included piece in a preset.
+
+Key fields:
+
+- `preset_id`
+- `rank`
+- `snippet_slug`
+- `piece_id`
+
+## 6. Stress-test model
+
+### `question_stress_test`
+One row per exam question.
+
+Key fields:
+
+- `question_id`
+- `exam_id`
+- `exam_title`
+- `question_number`
+- `cross_off_score`
+- `select_score`
+- `change_action`
+- `change_notes`
+- `primary_snippet_slug`
+- `primary_snippet_title`
+
+Scoring semantics:
+
+- `cross_off_score`: how many wrong answers the snippets let you confidently eliminate (`0`–`3`)
+- `select_score`: how confidently the snippets let you identify the correct answer (`0`–`3`)
+
+## 7. Suggested import strategy for a frontend
 
 ### Minimal strategy
 
 1. query `topics` and `subtopics` for navigation
 2. query `snippets` for card metadata
-3. query `pieces` for the selected snippet
-4. read the markdown file pointed to by `body_path`
-5. render markdown with code fences + tables enabled
+3. group snippet cards by `ui_section_title`
+4. query `pieces` for the selected snippet
+5. read the markdown file pointed to by `body_path`
+6. render markdown with code fences + tables enabled
 
 ### Better strategy
 
@@ -218,47 +316,4 @@ Precompile a lightweight frontend bundle that:
 - inlines the markdown bodies during build
 - keeps SQLite/TSV as the editable source of truth
 - derives search indexes from `title`, `summary`, `keywords`, and trap labels
-
-## 6. Why not JSON?
-
-> [!info] Explicit rationale
-> A single JSON export would be possible, but it is **not** the best source of truth here.
->
-> The bodies are exactly the kind of content that becomes annoying inside JSON:
-> - fenced code
-> - lots of backticks
-> - multiline tables
-> - escape-heavy diffs
-
-SQLite + markdown avoids that without making the data proprietary.
-
-## 7. Quick examples
-
-### Find all snippets in Pandas / selection
-
-```sql
-SELECT snippet_slug, title
-FROM snippets
-WHERE topic_slug = 'pandas'
-  AND subtopic_slug = 'selection'
-ORDER BY sort_order;
-```
-
-### Find all question refs for one snippet
-
-```sql
-SELECT question_id
-FROM snippet_question_refs
-WHERE snippet_slug = 'pandas-loc-iloc'
-ORDER BY question_id;
-```
-
-### Find all trap labels attached to one snippet
-
-```sql
-SELECT t.trap_slug, c.label, c.description
-FROM snippet_traps t
-LEFT JOIN trap_catalog c USING (trap_slug)
-WHERE t.snippet_slug = 'mutation-vs-return'
-ORDER BY t.trap_slug;
-```
+- materializes presets from `preset_items`

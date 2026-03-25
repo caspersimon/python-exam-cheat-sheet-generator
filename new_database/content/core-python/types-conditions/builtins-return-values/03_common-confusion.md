@@ -1,3 +1,4 @@
-- `sorted(x)` returns a value; `x.sort()` mutates and returns `None`.
-- `type(x)` is not a string like `'int'`; it is the class object `int`.
-- String methods such as `count` and `index` are called **on the string object**.
+- `sorted(x)` returns a value; `x.sort()` mutates the list and returns `None`.
+- `type(3)` is a class object: `type(3) == int` is `True`, but `type(3) == 'int'` is `False`.
+- `round(x, n)` returns a rounded number; it does not mutate anything.
+- Use method-call shapes that actually run: `'Amsterdam'.count('a')`, `'Amsterdam'.index('d')`.

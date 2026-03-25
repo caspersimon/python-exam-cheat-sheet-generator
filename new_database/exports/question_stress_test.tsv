@@ -1,0 +1,169 @@
+question_id	exam_id	exam_title	question_number	cross_off_score	select_score	change_action	change_notes	primary_snippet_slug	primary_snippet_title
+final-exam-solutions-for-python-programming-62oop21-q01	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	1	3	3	no		oop-method-calls-and-self	Method calls and self
+final-exam-solutions-for-python-programming-62oop21-q02	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	2	3	3	no		oop-compare-and-report-patterns	Compare/report method patterns
+final-exam-solutions-for-python-programming-62oop21-q03	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	3	3	3	no		url-email-phone-parsing	URL, email, and phone parsing
+final-exam-solutions-for-python-programming-62oop21-q04	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	4	3	3	no		targeted-string-edit-patterns	Targeted string edits
+final-exam-solutions-for-python-programming-62oop21-q05	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	5	3	3	no		pandas-map-vs-apply	map() vs apply()
+final-exam-solutions-for-python-programming-62oop21-q06	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	6	3	3	no		pandas-vectorized-new-columns	Vectorized new columns
+final-exam-solutions-for-python-programming-62oop21-q07	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	7	3	3	no		pandas-boolean-mask-and-indexing	Boolean masks and indexing
+final-exam-solutions-for-python-programming-62oop21-q08	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	8	3	3	no		pandas-sort-index-vs-values	sort_index() vs sort_values()
+final-exam-solutions-for-python-programming-62oop21-q09	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	9	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+final-exam-solutions-for-python-programming-62oop21-q10	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	10	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+final-exam-solutions-for-python-programming-62oop21-q11	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	11	3	3	no		datetime-strptime-strftime	strptime() and strftime()
+final-exam-solutions-for-python-programming-62oop21-q12	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	12	3	3	no		datetime-overlap-logic	Overlap logic
+final-exam-solutions-for-python-programming-62oop21-q13	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	13	3	3	no		nested-indexing-and-negative-indices	Nested indexing and negative indices
+final-exam-solutions-for-python-programming-62oop21-q14	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	14	3	3	no		loop-templates	Loop templates
+final-exam-solutions-for-python-programming-62oop21-q15	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	15	3	3	no		local-vs-global-scope	Local vs global scope
+final-exam-solutions-for-python-programming-62oop21-q16	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	16	3	3	no		dict-running-totals-and-next-links	Running totals and next-link dictionaries
+final-exam-solutions-for-python-programming-62oop21-q17	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	17	3	3	no		dict-iteration-equality	Dictionary iteration and equality
+final-exam-solutions-for-python-programming-62oop21-q18	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	18	3	3	no		dict-iteration-equality	Dictionary iteration and equality
+final-exam-solutions-for-python-programming-62oop21-q19	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	19	3	3	no		targeted-string-edit-patterns	Targeted string edits
+final-exam-solutions-for-python-programming-62oop21-q20	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	20	3	3	no		args-and-kwargs	*args and **kwargs
+final-exam-solutions-for-python-programming-62oop21-q21	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	21	3	3	no		return-none-and-function-end	return, None, and function end
+final-exam-solutions-for-python-programming-62oop21-q22	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	22	3	3	no		higher-order-lambda	Higher-order functions and lambda
+final-exam-solutions-for-python-programming-62oop21-q23	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	23	3	3	no		list-selection-and-aggregation	List selection and aggregation
+final-exam-solutions-for-python-programming-62oop21-q24	final-exam-solutions-for-python-programming-62oop21	2022 Final Exam	24	3	3	no		list-selection-and-aggregation	List selection and aggregation
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q01	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	1	3	3	no		nested-indexing-and-negative-indices	Nested indexing and negative indices
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q02	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	2	3	3	no		local-vs-global-scope	Local vs global scope
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q03	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	3	3	3	no		return-none-and-function-end	return, None, and function end
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q04	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	4	3	3	no		defaults-keyword-arguments	Defaults and keyword arguments
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q05	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	5	3	3	no		set-vs-list-vs-dict	Set vs list vs dict
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q06	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	6	3	3	no		args-and-kwargs	*args and **kwargs
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q07	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	7	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q08	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	8	3	3	no		dict-build-count-aggregate	Build, count, and aggregate dictionaries
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q09	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	9	3	3	no		dict-build-count-aggregate	Build, count, and aggregate dictionaries
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q10	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	10	3	3	no		case-and-capitalization	Case methods and capitalization
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q11	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	11	3	3	no		builtins-return-values	Built-ins and what they return
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q12	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	12	3	3	no		slicing-patterns	Slicing patterns
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q13	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	13	3	3	no		targeted-string-edit-patterns	Targeted string edits
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q14	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	14	3	3	no		fstrings-and-format	f-strings and .format()
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q15	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	15	3	3	no		pandas-build-from-args	Build DataFrames from arguments
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q16	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	16	3	3	no		oop-init-self-defaults	__init__, self, defaults, attributes
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q17	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	17	3	3	no		datetime-timedelta-day-counts	timedelta and day counts
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q18	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	18	3	3	no		pandas-loc-iloc	loc vs iloc
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q19	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	19	3	3	no		oop-method-calls-and-self	Method calls and self
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q20	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	20	3	3	no		oop-compare-and-report-patterns	Compare/report method patterns
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q21	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	21	3	3	no		datetime-sequence-generation	Date sequences
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q22	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	22	3	3	no		pandas-string-and-date-columns	String/date columns
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	23	3	3	no		pandas-boolean-mask-and-indexing	Boolean masks and indexing
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q24	resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023	2023 Resit Exam Guidelines	24	3	3	no		pandas-map-vs-apply	map() vs apply()
+resit-solutions-for-introduction-to-python-35761538-q01	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	1	3	3	no		nested-indexing-and-negative-indices	Nested indexing and negative indices
+resit-solutions-for-introduction-to-python-35761538-q02	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	2	3	3	no		local-vs-global-scope	Local vs global scope
+resit-solutions-for-introduction-to-python-35761538-q03	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	3	3	3	no		return-none-and-function-end	return, None, and function end
+resit-solutions-for-introduction-to-python-35761538-q04	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	4	3	3	no		defaults-keyword-arguments	Defaults and keyword arguments
+resit-solutions-for-introduction-to-python-35761538-q05	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	5	3	3	no		set-vs-list-vs-dict	Set vs list vs dict
+resit-solutions-for-introduction-to-python-35761538-q06	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	6	3	3	no		args-and-kwargs	*args and **kwargs
+resit-solutions-for-introduction-to-python-35761538-q07	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	7	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+resit-solutions-for-introduction-to-python-35761538-q08	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	8	3	3	no		dict-build-count-aggregate	Build, count, and aggregate dictionaries
+resit-solutions-for-introduction-to-python-35761538-q09	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	9	3	3	no		dict-build-count-aggregate	Build, count, and aggregate dictionaries
+resit-solutions-for-introduction-to-python-35761538-q10	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	10	3	3	no		case-and-capitalization	Case methods and capitalization
+resit-solutions-for-introduction-to-python-35761538-q11	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	11	3	3	no		builtins-return-values	Built-ins and what they return
+resit-solutions-for-introduction-to-python-35761538-q12	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	12	3	3	no		slicing-patterns	Slicing patterns
+resit-solutions-for-introduction-to-python-35761538-q13	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	13	3	3	no		targeted-string-edit-patterns	Targeted string edits
+resit-solutions-for-introduction-to-python-35761538-q14	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	14	3	3	no		fstrings-and-format	f-strings and .format()
+resit-solutions-for-introduction-to-python-35761538-q15	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	15	3	3	no		pandas-build-from-args	Build DataFrames from arguments
+resit-solutions-for-introduction-to-python-35761538-q16	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	16	3	3	no		oop-init-self-defaults	__init__, self, defaults, attributes
+resit-solutions-for-introduction-to-python-35761538-q17	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	17	3	3	no		datetime-timedelta-day-counts	timedelta and day counts
+resit-solutions-for-introduction-to-python-35761538-q18	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	18	3	3	no		pandas-loc-iloc	loc vs iloc
+resit-solutions-for-introduction-to-python-35761538-q19	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	19	3	3	no		oop-method-calls-and-self	Method calls and self
+resit-solutions-for-introduction-to-python-35761538-q20	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	20	3	3	no		oop-compare-and-report-patterns	Compare/report method patterns
+resit-solutions-for-introduction-to-python-35761538-q21	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	21	3	3	no		datetime-sequence-generation	Date sequences
+resit-solutions-for-introduction-to-python-35761538-q22	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	22	3	3	no		pandas-string-and-date-columns	String/date columns
+resit-solutions-for-introduction-to-python-35761538-q23	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	23	3	3	no		pandas-boolean-mask-and-indexing	Boolean masks and indexing
+resit-solutions-for-introduction-to-python-35761538-q24	resit-solutions-for-introduction-to-python-35761538	2023 Resit Solutions	24	3	3	no		pandas-map-vs-apply	map() vs apply()
+final-exam-study-guide-trial-python-basics-2023-q01	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	1	3	3	no		membership-and-condition-logic	Membership and condition logic
+final-exam-study-guide-trial-python-basics-2023-q02	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	2	3	3	no		local-vs-global-scope	Local vs global scope
+final-exam-study-guide-trial-python-basics-2023-q03	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	3	3	3	no		types-none-bool-equality	Types, None, bool, equality
+final-exam-study-guide-trial-python-basics-2023-q04	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	4	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+final-exam-study-guide-trial-python-basics-2023-q05	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	5	3	3	no		zip-enumerate-core	zip() and enumerate() core patterns
+final-exam-study-guide-trial-python-basics-2023-q06	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	6	3	2	no		dict-build-count-aggregate	Build, count, and aggregate dictionaries
+final-exam-study-guide-trial-python-basics-2023-q07	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	7	3	3	no		list-comprehension-patterns	List comprehension patterns
+final-exam-study-guide-trial-python-basics-2023-q08	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	8	3	3	no		zip-enumerate-core	zip() and enumerate() core patterns
+final-exam-study-guide-trial-python-basics-2023-q09	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	9	3	3	no		slicing-patterns	Slicing patterns
+final-exam-study-guide-trial-python-basics-2023-q10	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	10	3	3	no		return-none-and-function-end	return, None, and function end
+final-exam-study-guide-trial-python-basics-2023-q11	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	11	3	3	no		builtins-return-values	Built-ins and what they return
+final-exam-study-guide-trial-python-basics-2023-q12	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	12	3	3	no		args-and-kwargs	*args and **kwargs
+final-exam-study-guide-trial-python-basics-2023-q13	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	13	3	3	no		fstrings-and-format	f-strings and .format()
+final-exam-study-guide-trial-python-basics-2023-q14	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	14	3	3	no		pandas-series-vs-dataframe	Series vs DataFrame
+final-exam-study-guide-trial-python-basics-2023-q15	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	15	3	3	no		datetime-strptime-strftime	strptime() and strftime()
+final-exam-study-guide-trial-python-basics-2023-q16	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	16	3	3	no		oop-init-self-defaults	__init__, self, defaults, attributes
+final-exam-study-guide-trial-python-basics-2023-q17	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	17	3	3	no		split-join-replace	split(), join(), replace()
+final-exam-study-guide-trial-python-basics-2023-q18	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	18	3	3	no		split-join-replace	split(), join(), replace()
+final-exam-study-guide-trial-python-basics-2023-q19	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	19	3	3	no		pandas-boolean-mask-and-indexing	Boolean masks and indexing
+final-exam-study-guide-trial-python-basics-2023-q20	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	20	3	3	no		pandas-map-vs-apply	map() vs apply()
+final-exam-study-guide-trial-python-basics-2023-q21	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	21	3	3	no		datetime-sequence-generation	Date sequences
+final-exam-study-guide-trial-python-basics-2023-q22	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	22	3	3	no		datetime-build-from-parts	Build datetimes from parts
+final-exam-study-guide-trial-python-basics-2023-q23	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	23	3	3	no		oop-compare-and-report-patterns	Compare/report method patterns
+final-exam-study-guide-trial-python-basics-2023-q24	final-exam-study-guide-trial-python-basics-2023	2023 Trial Final Study Guide	24	3	3	yes I edited one snippet	Added a numbered-report-dictionary piece to the OOP collection-attributes snippet so the `enumerate(..., start=1)` garage-report pattern is explicit.	oop-state-and-collection-attributes	Object state and collection attributes
+introduction-to-python-trial-final-exam-solutions-py22-q01	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	1	3	3	no		membership-and-condition-logic	Membership and condition logic
+introduction-to-python-trial-final-exam-solutions-py22-q02	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	2	3	3	no		local-vs-global-scope	Local vs global scope
+introduction-to-python-trial-final-exam-solutions-py22-q03	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	3	3	3	no		types-none-bool-equality	Types, None, bool, equality
+introduction-to-python-trial-final-exam-solutions-py22-q04	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	4	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+introduction-to-python-trial-final-exam-solutions-py22-q05	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	5	3	3	no		zip-enumerate-core	zip() and enumerate() core patterns
+introduction-to-python-trial-final-exam-solutions-py22-q06	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	6	3	2	no		dict-build-count-aggregate	Build, count, and aggregate dictionaries
+introduction-to-python-trial-final-exam-solutions-py22-q07	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	7	3	3	no		list-comprehension-patterns	List comprehension patterns
+introduction-to-python-trial-final-exam-solutions-py22-q08	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	8	3	3	no		zip-enumerate-core	zip() and enumerate() core patterns
+introduction-to-python-trial-final-exam-solutions-py22-q09	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	9	3	3	no		slicing-patterns	Slicing patterns
+introduction-to-python-trial-final-exam-solutions-py22-q10	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	10	3	3	no		zip-enumerate-core	zip() and enumerate() core patterns
+introduction-to-python-trial-final-exam-solutions-py22-q11	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	11	3	3	no		builtins-return-values	Built-ins and what they return
+introduction-to-python-trial-final-exam-solutions-py22-q12	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	12	3	2	no		args-and-kwargs	*args and **kwargs
+introduction-to-python-trial-final-exam-solutions-py22-q13	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	13	3	3	no		fstrings-and-format	f-strings and .format()
+introduction-to-python-trial-final-exam-solutions-py22-q14	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	14	3	3	no		pandas-series-vs-dataframe	Series vs DataFrame
+introduction-to-python-trial-final-exam-solutions-py22-q15	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	15	3	3	no		datetime-timedelta-day-counts	timedelta and day counts
+introduction-to-python-trial-final-exam-solutions-py22-q16	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	16	3	3	no		oop-init-self-defaults	__init__, self, defaults, attributes
+introduction-to-python-trial-final-exam-solutions-py22-q17	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	17	3	3	no		split-join-replace	split(), join(), replace()
+introduction-to-python-trial-final-exam-solutions-py22-q18	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	18	3	3	no		targeted-string-edit-patterns	Targeted string edits
+introduction-to-python-trial-final-exam-solutions-py22-q19	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	19	3	3	no		pandas-string-and-date-columns	String/date columns
+introduction-to-python-trial-final-exam-solutions-py22-q20	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	20	3	3	no		pandas-map-vs-apply	map() vs apply()
+introduction-to-python-trial-final-exam-solutions-py22-q21	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	21	3	3	no		datetime-overlap-logic	Overlap logic
+introduction-to-python-trial-final-exam-solutions-py22-q22	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	22	3	3	no		datetime-sequence-generation	Date sequences
+introduction-to-python-trial-final-exam-solutions-py22-q23	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	23	3	2	no		oop-compare-and-report-patterns	Compare/report method patterns
+introduction-to-python-trial-final-exam-solutions-py22-q24	introduction-to-python-trial-final-exam-solutions-py22	2024 Trial Final	24	3	3	no		oop-method-calls-and-self	Method calls and self
+sample-final-plus-answers-q01	sample-final-plus-answers	2025 Sample Final Plus Answers	1	3	3	no		oop-init-self-defaults	__init__, self, defaults, attributes
+sample-final-plus-answers-q02	sample-final-plus-answers	2025 Sample Final Plus Answers	2	3	3	yes I edited multiple snippets	Added an average-rating OOP piece and added `round(x, n)` to the built-ins snippet so the rounded output 3.7 is directly supported.	oop-state-and-collection-attributes	Object state and collection attributes
+sample-final-plus-answers-q03	sample-final-plus-answers	2025 Sample Final Plus Answers	3	3	3	yes I edited one snippet	Expanded the f-strings snippet with a list-of-dicts print pattern and `:.1f` formatting so the correct loop/access pattern is explicit.	fstrings-and-format	f-strings and .format()
+sample-final-plus-answers-q04	sample-final-plus-answers	2025 Sample Final Plus Answers	4	3	3	no		split-join-replace	split(), join(), replace()
+sample-final-plus-answers-q05	sample-final-plus-answers	2025 Sample Final Plus Answers	5	3	3	no		pandas-loc-iloc	loc vs iloc
+sample-final-plus-answers-q06	sample-final-plus-answers	2025 Sample Final Plus Answers	6	3	3	no		pandas-sort-index-vs-values	sort_index() vs sort_values()
+sample-final-plus-answers-q07	sample-final-plus-answers	2025 Sample Final Plus Answers	7	3	3	no		datetime-strptime-strftime	strptime() and strftime()
+sample-final-plus-answers-q08	sample-final-plus-answers	2025 Sample Final Plus Answers	8	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+sample-final-plus-answers-q09	sample-final-plus-answers	2025 Sample Final Plus Answers	9	3	3	no		datetime-strptime-strftime	strptime() and strftime()
+sample-final-plus-answers-q10	sample-final-plus-answers	2025 Sample Final Plus Answers	10	3	3	no		datetime-timedelta-day-counts	timedelta and day counts
+sample-final-plus-answers-q11	sample-final-plus-answers	2025 Sample Final Plus Answers	11	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+sample-final-plus-answers-q12	sample-final-plus-answers	2025 Sample Final Plus Answers	12	3	3	no		list-comprehension-patterns	List comprehension patterns
+sample-final-plus-answers-q13	sample-final-plus-answers	2025 Sample Final Plus Answers	13	3	3	no		types-none-bool-equality	Types, None, bool, equality
+sample-final-plus-answers-q14	sample-final-plus-answers	2025 Sample Final Plus Answers	14	3	3	no		loop-templates	Loop templates
+sample-final-plus-answers-q15	sample-final-plus-answers	2025 Sample Final Plus Answers	15	3	3	no		local-vs-global-scope	Local vs global scope
+sample-final-plus-answers-q16	sample-final-plus-answers	2025 Sample Final Plus Answers	16	3	3	no		higher-order-lambda	Higher-order functions and lambda
+sample-final-plus-answers-q17	sample-final-plus-answers	2025 Sample Final Plus Answers	17	3	3	no		types-none-bool-equality	Types, None, bool, equality
+sample-final-plus-answers-q18	sample-final-plus-answers	2025 Sample Final Plus Answers	18	3	3	no		slicing-patterns	Slicing patterns
+sample-final-plus-answers-q19	sample-final-plus-answers	2025 Sample Final Plus Answers	19	3	3	no		dict-running-totals-and-next-links	Running totals and next-link dictionaries
+sample-final-plus-answers-q20	sample-final-plus-answers	2025 Sample Final Plus Answers	20	3	3	no		dict-iteration-equality	Dictionary iteration and equality
+sample-final-plus-answers-q21	sample-final-plus-answers	2025 Sample Final Plus Answers	21	3	3	no		dict-iteration-equality	Dictionary iteration and equality
+sample-final-plus-answers-q22	sample-final-plus-answers	2025 Sample Final Plus Answers	22	3	3	no		find-index-count	find(), index(), count()
+sample-final-plus-answers-q23	sample-final-plus-answers	2025 Sample Final Plus Answers	23	3	3	no		higher-order-lambda	Higher-order functions and lambda
+sample-final-plus-answers-q24	sample-final-plus-answers	2025 Sample Final Plus Answers	24	3	3	no		imports-and-aliases	Imports and aliases
+trial-final-exam-solutions-introduction-to-python-3077951-q01	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	1	3	3	no		oop-init-self-defaults	__init__, self, defaults, attributes
+trial-final-exam-solutions-introduction-to-python-3077951-q02	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	2	3	3	no		oop-state-and-collection-attributes	Object state and collection attributes
+trial-final-exam-solutions-introduction-to-python-3077951-q03	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	3	3	3	no		fstrings-and-format	f-strings and .format()
+trial-final-exam-solutions-introduction-to-python-3077951-q04	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	4	3	3	no		split-join-replace	split(), join(), replace()
+trial-final-exam-solutions-introduction-to-python-3077951-q05	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	5	3	3	no		pandas-loc-iloc	loc vs iloc
+trial-final-exam-solutions-introduction-to-python-3077951-q06	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	6	3	3	no		pandas-sort-index-vs-values	sort_index() vs sort_values()
+trial-final-exam-solutions-introduction-to-python-3077951-q07	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	7	3	3	no		datetime-strptime-strftime	strptime() and strftime()
+trial-final-exam-solutions-introduction-to-python-3077951-q08	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	8	3	2	no		dict-comprehension-patterns	Dictionary comprehension patterns
+trial-final-exam-solutions-introduction-to-python-3077951-q09	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	9	3	3	no		datetime-strptime-strftime	strptime() and strftime()
+trial-final-exam-solutions-introduction-to-python-3077951-q10	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	10	3	3	no		datetime-timedelta-day-counts	timedelta and day counts
+trial-final-exam-solutions-introduction-to-python-3077951-q11	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	11	3	3	no		dict-comprehension-patterns	Dictionary comprehension patterns
+trial-final-exam-solutions-introduction-to-python-3077951-q12	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	12	3	3	no		list-comprehension-patterns	List comprehension patterns
+trial-final-exam-solutions-introduction-to-python-3077951-q13	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	13	3	3	no		types-none-bool-equality	Types, None, bool, equality
+trial-final-exam-solutions-introduction-to-python-3077951-q14	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	14	3	3	no		loop-templates	Loop templates
+trial-final-exam-solutions-introduction-to-python-3077951-q15	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	15	3	3	no		local-vs-global-scope	Local vs global scope
+trial-final-exam-solutions-introduction-to-python-3077951-q16	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	16	3	3	no		higher-order-lambda	Higher-order functions and lambda
+trial-final-exam-solutions-introduction-to-python-3077951-q17	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	17	3	3	no		types-none-bool-equality	Types, None, bool, equality
+trial-final-exam-solutions-introduction-to-python-3077951-q18	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	18	3	3	no		slicing-patterns	Slicing patterns
+trial-final-exam-solutions-introduction-to-python-3077951-q19	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	19	3	3	no		dict-running-totals-and-next-links	Running totals and next-link dictionaries
+trial-final-exam-solutions-introduction-to-python-3077951-q20	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	20	3	3	no		dict-iteration-equality	Dictionary iteration and equality
+trial-final-exam-solutions-introduction-to-python-3077951-q21	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	21	3	3	no		dict-iteration-equality	Dictionary iteration and equality
+trial-final-exam-solutions-introduction-to-python-3077951-q22	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	22	3	3	no		find-index-count	find(), index(), count()
+trial-final-exam-solutions-introduction-to-python-3077951-q23	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	23	3	3	no		higher-order-lambda	Higher-order functions and lambda
+trial-final-exam-solutions-introduction-to-python-3077951-q24	trial-final-exam-solutions-introduction-to-python-3077951	Trial Final Later-Course Focus	24	3	3	no		imports-and-aliases	Imports and aliases

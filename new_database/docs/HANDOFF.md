@@ -1,38 +1,57 @@
 # HANDOFF.md
 
 > [!summary] Context for the next agent
-> This package is the **pre-stress-test review release**.
-> The taxonomy, cookbook, and snippet bank are in place.
-> The mandatory review gate happened here on purpose.
->
-> You should treat this as **version 0.9**, not final production data.
+> This package is the **final content release**.
+> It is post-review, post-stress-test, and ready for frontend integration.
 
 ## 1. What already exists
 
 - a normalized dataset in `db/snippet_bank.sqlite`
-- plain markdown piece bodies in `content/`
+- actual markdown piece bodies in `content/`
+- per-snippet `README.md` files in each content folder
 - TSV mirrors in `exports/`
-- documentation explaining the exam patterns and the schema
-- snippet metadata for:
-  - topic / subtopic placement
-  - question references
-  - trap slugs
-  - recurrence level
-  - default priority
-  - default-selected pieces
+- final presets in `presets` / `preset_items`
+- question stress-test results in `question_stress_test`
+- frontend-oriented snippet grouping fields:
+  - `ui_section_slug`
+  - `ui_section_title`
+  - `ui_section_sort_order`
+  - `ui_card_order`
 
-## 2. What does *not* exist yet
+## 2. The most important implementation rule
 
-The following are intentionally deferred until after human review:
+### Keep pieces selectable individually
 
-- the full step-8 stress-test matrix
-- final preset packs
-- final navigation curation / rebalancing
-- any frontend-specific static bundle generation
+The whole point of the dataset is modularity.
+Do **not** collapse a snippet into one indivisible blob in the UI.
 
-## 3. Implementation advice
+A good card flow is:
 
-### Render markdown properly
+1. show snippet cards in a subtopic grid
+2. group cards by `ui_section_title`
+3. open a card
+4. show summary + why it matters + badges
+5. let the user tick individual pieces inside it
+
+## 3. Recommended frontend data flow
+
+### Navigation
+
+- Sidebar uses `topics` and `subtopics`
+- Subtopic page queries `snippets`
+- Group snippet cards by `ui_section_title`
+- Sort sections by `ui_section_sort_order`
+- Sort cards inside sections by `ui_card_order`
+
+### Card metadata worth showing
+
+- recurrence badge (`signature`, `very-common`, etc.)
+- phase badge (`pre-midterm`, `post-midterm`, `mixed`)
+- optional “trap-heavy” badge from `is_trap_heavy`
+- default piece count / total piece count
+- estimated char count if you want a rough space-cost indicator
+
+### Piece rendering
 
 Do **not** treat piece bodies as plain text.
 They contain:
@@ -40,91 +59,78 @@ They contain:
 - fenced code blocks
 - markdown tables
 - inline code
-- compact comments that matter for meaning
+- short comments that matter for meaning
 
-The renderer must support tables and code fences at minimum.
+Use a renderer that supports tables + code fences at minimum.
 
-### Keep pieces selectable individually
+## 4. Presets are already ready
 
-The whole point of the dataset is modularity.
-Do not collapse a snippet into one indivisible blob in the UI.
+There are four final presets:
 
-A good card flow is:
+|   # | Preset              | Slug                |   Snippets |   Pieces |   Char count |
+|----:|:--------------------|:--------------------|-----------:|---------:|-------------:|
+|   1 | Balanced default    | balanced-default    |         40 |       90 |        21342 |
+|   2 | Post-midterm tilted | post-midterm-tilted |         31 |       73 |        17737 |
+|   3 | Ultra-dense core    | ultra-dense-core    |         21 |       43 |        10354 |
+|   4 | Trap hunter         | trap-hunter         |         20 |       46 |        11504 |
 
-1. snippet card in the grid
-2. expand/open card
-3. show summary + why it matters + trap badges
-4. let the user tick individual pieces inside it
+Implementation suggestion:
 
-### Use metadata, not just text search
+- load `presets`
+- when a user picks one, preselect the exact `piece_id`s from `preset_items`
+- still allow manual deselection afterward
 
-Good filters/searches should use:
+## 5. Search and filtering suggestions
 
-- `title`
-- `summary`
-- `keywords`
-- `trap_slugs`
-- `course_phase`
-- `recurrence_level`
-- `default_priority`
+Search over:
 
-### Respect the `default_selected` field
+- snippet `title`
+- snippet `summary`
+- `why`
+- keywords
+- trap labels
 
-This is the most useful first-pass signal for building a later “balanced starter cheat sheet.”
-Some pieces are intentionally extra clarifiers and should start deselected.
+Useful filters:
 
-## 4. Suggested frontend affordances
-
-### Card badges worth adding
-
-- **Signature / very common / common** recurrence badge
-- **Pre-midterm / post-midterm / mixed**
-- **Trap-heavy**
-- **Optional clarifier available**
-
-### Useful sort options
-
-- default priority
+- topic / subtopic
+- phase
 - recurrence
-- topic/subtopic
-- piece count
-- question coverage count
+- trap-heavy only
+- snippets with examples
+- preset membership
 
-### Useful filters
+## 6. Visual suggestion for optional arguments
 
-- only show post-midterm
-- only show signature/common snippets
-- only show pandas/datetime/OOP
-- only show snippets with trap badges
-- only show snippets with code examples
+Some pieces use docs-style optional-argument notation such as:
 
-## 5. Preset ideas for the next pass
+- `text.replace(old, new[, count])`
+- `text.find(value[, start[, end]])`
 
-Not implemented yet, but the metadata already supports them.
+If the renderer allows it, consider styling the square-bracketed optional parts slightly more subtly than the required arguments.
+That would match the content design intent without changing the underlying markdown.
 
-### Likely preset families
+## 7. Preset recommendation logic
 
-- **Balanced beginner preset** — high `default_priority`, broad topic spread
-- **Post-midterm heavy preset** — pandas, datetime, OOP, strings, but still some pre-midterm essentials
-- **Trap-hunter preset** — snippets with the most recurring trap coverage
-- **Pandas rescue preset** / **functions & scope rescue preset** / etc.
+If you need a default entry point in the UI:
 
-Use:
+- default preset = `balanced-default`
+- alternate compact preset = `ultra-dense-core`
 
-- `default_priority`
-- `exam_family_count`
-- `question_ref_count`
-- `default_selected`
-- `course_phase`
+### Suggested labels for end users
 
-## 6. Known source-bank caveats
+- `balanced-default` → “Start here”
+- `post-midterm-tilted` → “Later-course heavy”
+- `ultra-dense-core` → “Minimal space”
+- `trap-hunter` → “I mainly fall for traps”
+
+## 8. Known source-bank caveats
 
 - the sample final contains one exact duplicate question (`q08` = `q11`)
-- the resit pair should be deduped for analytics
-- the sample-final / later-course trial pair should also be deduped when measuring recurrence
-- piece-level question refs are intentionally sparse; snippet-level refs are the main coverage signal right now
+- the resit pair should be deduped for recurrence analytics
+- the sample-final / later-course trial pair should also be deduped for recurrence analytics
+- piece-level question refs are intentionally sparse; snippet-level refs are the main coverage signal
 
-## 7. If you need to regenerate or transform the data
+## 9. Source-of-truth order
 
 Treat these as the priority order of truth:
 
@@ -132,12 +138,13 @@ Treat these as the priority order of truth:
 2. `content/.../*.md`
 3. `exports/*.tsv`
 
-Do **not** rebuild from the giant question digest unless you are intentionally redoing the taxonomy.
+## 10. If you need one sanity-check query
 
-## 8. What to do after the human review
+The first integration smoke test should confirm that:
 
-1. apply feedback to snippets / taxonomy / structure
-2. run the step-8 stress test question by question
-3. patch any coverage gaps immediately
-4. only then generate presets and final nav curation
-5. freeze a production release
+- `balanced-default` exists in `presets`
+- every `preset_items.piece_id` exists in `pieces`
+- every `pieces.body_path` file exists
+- every `snippets.readme_path` file exists
+
+If that passes, the content bundle is structurally sound.

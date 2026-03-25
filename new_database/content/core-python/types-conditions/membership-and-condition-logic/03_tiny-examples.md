@@ -1,9 +1,9 @@
 ```python
-if x in [1, 3, 5, 7, 9]:
-    print("Odd number")
-else:
-    print("Even number")
+x = 7
+x % 2 != 0          # True  -> odd
 
-if destination in europe:
-    print("No passport needed")
+grades = {"Alice": 8, "Bob": 7}
+"Alice" in grades           # True  (key check)
+8 in grades                 # False (still checking keys)
+8 in grades.values()        # True  (value check)
 ```

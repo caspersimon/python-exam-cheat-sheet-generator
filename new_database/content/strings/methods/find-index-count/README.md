@@ -1,28 +1,40 @@
 # find(), index(), count()
 
-> [!summary] Snippet summary
+> [!summary] Summary
 > Search-like string methods: where something starts, how many times it occurs, and when you get `-1` versus an error.
 
 > [!info] Metadata
-> - Slug: `find-index-count`
-> - Topic: `Strings` (`strings`)
-> - Subtopic: `Methods` (`methods`)
-> - Course phase: `post-midterm`
+> - Snippet slug: `find-index-count`
+> - Topic: `strings` — Strings
+> - Subtopic: `methods` — Methods
+> - UI section: `add-next` — Add next
 > - Default priority: `4`
+> - Recurrence: `common` across `3` family/families and `5` question(s)
+> - Phase: `post-midterm`
 > - Difficulty: `beginner`
-> - Recurrence: `common` across `3` exam families / `5` referenced questions
-> - Keywords: `find`, `index`, `count`, `search`
-> - Trap slugs: `count_is_method`, `find_minus_one_index_valueerror`
+> - Default-selected pieces: `2/3`
+> - Estimated space: `424` chars selected / `692` chars total
+> - Trap count: `2`
+> - Included in presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`
 
-> [!tip] Why this exists
-> The bank uses these methods directly and also hides them inside “replace only the second occurrence” questions.
+**Why it matters.** The bank uses these methods directly and also hides them inside “replace only the second occurrence” questions.
 
-## Piece files
+## Piece index
 
-- `01_comparison-table.md` — **Comparison table** (`table` · `core` · `default`)
-- `02_second-occurrence-pattern.md` — **Second occurrence pattern** (`template` · `core` · `default`)
-- `03_method-call-reminder.md` — **Method call reminder** (`example` · `clarifier` · `optional`)
+| # | Piece title | kind | role | default selected | file |
+|---:|---|---|---|---|---|
+| 1 | Comparison table | `table` | `core` | yes | `01_comparison-table.md` |
+| 2 | Second occurrence pattern | `template` | `core` | yes | `02_second-occurrence-pattern.md` |
+| 3 | Method call reminder | `example` | `clarifier` | no | `03_method-call-reminder.md` |
 
-## Question references
+## Keywords
 
-`sample-final-plus-answers-q22`, `introduction-to-python-trial-final-exam-solutions-py22-q11`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q13`, `resit-solutions-for-introduction-to-python-35761538-q13`, `trial-final-exam-solutions-introduction-to-python-3077951-q22`
+`count`, `find`, `index`, `search`
+
+## Trap slugs
+
+`count_is_method`, `find_minus_one_index_valueerror`
+
+## Question refs
+
+`introduction-to-python-trial-final-exam-solutions-py22-q11`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q13`, `resit-solutions-for-introduction-to-python-35761538-q13`, `sample-final-plus-answers-q22`, `trial-final-exam-solutions-introduction-to-python-3077951-q22`

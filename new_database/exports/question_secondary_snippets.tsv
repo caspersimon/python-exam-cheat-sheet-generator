@@ -37,6 +37,7 @@ final-exam-study-guide-trial-python-basics-2023-q20	pandas-vectorized-new-column
 final-exam-study-guide-trial-python-basics-2023-q21	datetime-strptime-strftime	1
 final-exam-study-guide-trial-python-basics-2023-q22	oop-init-self-defaults	1
 final-exam-study-guide-trial-python-basics-2023-q23	fstrings-and-format	1
+final-exam-study-guide-trial-python-basics-2023-q24	zip-enumerate-core	1
 introduction-to-python-trial-final-exam-solutions-py22-q01	types-none-bool-equality	1
 introduction-to-python-trial-final-exam-solutions-py22-q03	builtins-return-values	1
 introduction-to-python-trial-final-exam-solutions-py22-q04	zip-enumerate-core	1
@@ -75,6 +76,7 @@ resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q20	oop-state-and
 resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q21	datetime-strptime-strftime	1
 resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q22	datetime-build-from-parts	1
 resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23	pandas-vectorized-new-columns	1
+resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23	builtins-return-values	2
 resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q24	pandas-vectorized-new-columns	1
 resit-solutions-for-introduction-to-python-35761538-q01	types-none-bool-equality	1
 resit-solutions-for-introduction-to-python-35761538-q02	return-none-and-function-end	1
@@ -95,10 +97,12 @@ resit-solutions-for-introduction-to-python-35761538-q20	oop-state-and-collection
 resit-solutions-for-introduction-to-python-35761538-q21	datetime-strptime-strftime	1
 resit-solutions-for-introduction-to-python-35761538-q22	datetime-build-from-parts	1
 resit-solutions-for-introduction-to-python-35761538-q23	pandas-vectorized-new-columns	1
+resit-solutions-for-introduction-to-python-35761538-q23	builtins-return-values	2
 resit-solutions-for-introduction-to-python-35761538-q24	pandas-vectorized-new-columns	1
 sample-final-plus-answers-q01	defaults-keyword-arguments	1
 sample-final-plus-answers-q02	oop-compare-and-report-patterns	1
-sample-final-plus-answers-q03	zip-enumerate-core	1
+sample-final-plus-answers-q02	builtins-return-values	2
+sample-final-plus-answers-q03	dict-iteration-equality	1
 sample-final-plus-answers-q04	mutation-vs-return	1
 sample-final-plus-answers-q04	url-email-phone-parsing	2
 sample-final-plus-answers-q05	pandas-series-vs-dataframe	1
@@ -111,11 +115,14 @@ sample-final-plus-answers-q20	zip-enumerate-core	1
 sample-final-plus-answers-q23	args-and-kwargs	1
 trial-final-exam-solutions-introduction-to-python-3077951-q01	defaults-keyword-arguments	1
 trial-final-exam-solutions-introduction-to-python-3077951-q02	oop-compare-and-report-patterns	1
-trial-final-exam-solutions-introduction-to-python-3077951-q03	zip-enumerate-core	1
+trial-final-exam-solutions-introduction-to-python-3077951-q02	builtins-return-values	2
+trial-final-exam-solutions-introduction-to-python-3077951-q03	dict-iteration-equality	1
 trial-final-exam-solutions-introduction-to-python-3077951-q04	mutation-vs-return	1
 trial-final-exam-solutions-introduction-to-python-3077951-q04	url-email-phone-parsing	2
-trial-final-exam-solutions-introduction-to-python-3077951-q05	pandas-series-vs-dataframe	1
-trial-final-exam-solutions-introduction-to-python-3077951-q06	pandas-loc-iloc	1
+trial-final-exam-solutions-introduction-to-python-3077951-q05	pandas-map-vs-apply	1
+trial-final-exam-solutions-introduction-to-python-3077951-q06	pandas-series-vs-dataframe	1
+trial-final-exam-solutions-introduction-to-python-3077951-q07	pandas-loc-iloc	1
+trial-final-exam-solutions-introduction-to-python-3077951-q08	split-join-replace	1
 trial-final-exam-solutions-introduction-to-python-3077951-q12	case-and-capitalization	1
 trial-final-exam-solutions-introduction-to-python-3077951-q17	membership-and-condition-logic	1
 trial-final-exam-solutions-introduction-to-python-3077951-q18	list-selection-and-aggregation	1

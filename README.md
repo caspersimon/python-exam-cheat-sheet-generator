@@ -6,6 +6,8 @@ This app is made for students. You open a topic, browse its subtopics, tick the 
 
 The website now loads from the new Markdown-first snippet bank in [`new_database/`](new_database), using a build-generated frontend bundle at [`new_database/exports/frontend_bundle.json`](new_database/exports/frontend_bundle.json).
 
+That bundle also carries the preset packs from the new database, so users can start from a ready-made selection instead of building from scratch every time.
+
 Right now the app includes:
 
 - `8` top-level topics

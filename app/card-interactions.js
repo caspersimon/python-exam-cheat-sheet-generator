@@ -44,6 +44,15 @@ function handleCardInputChange(event) {
 }
 
 function handleCardClick(event) {
+  const applyPresetTrigger = event.target.closest("[data-role='apply-preset']");
+  if (applyPresetTrigger) {
+    event.preventDefault();
+    applyPresetSelection(applyPresetTrigger.dataset.presetId || "", {
+      source: applyPresetTrigger.dataset.presetSource || "",
+    });
+    return;
+  }
+
   const openTopicTrigger = event.target.closest("[data-role='open-topic']");
   if (openTopicTrigger) {
     event.preventDefault();
@@ -165,3 +174,61 @@ function clearSnippetPieces(snippetId) {
 }
 
 function closeOpenInfoPopovers() {}
+
+function applyPresetSelection(presetId, { source = "" } = {}) {
+  const preset = getPresetById(presetId);
+  if (!preset) {
+    return;
+  }
+
+  const currentTotals = getSelectedItemTotals();
+  if (currentTotals.items > 0) {
+    const confirmed = window.confirm(
+      `Replace the current selection with the preset "${preset.title}"?\n\nThis clears the current staged pieces and applies the preset's recommended pieces.`
+    );
+    if (!confirmed) {
+      return;
+    }
+    pushPreviewHistorySnapshot(`Apply preset "${preset.title}"`);
+  }
+
+  const nextDrafts = {};
+  state.snippets.forEach((snippet) => {
+    nextDrafts[snippet.id] = {
+      selected: { pieces: [] },
+      overrides: { pieces: {} },
+    };
+  });
+
+  preset.items.forEach((item) => {
+    const snippet = findSnippetById(item.snippetId || item.snippetSlug);
+    if (!snippet) {
+      return;
+    }
+    if (!nextDrafts[snippet.id]) {
+      nextDrafts[snippet.id] = {
+        selected: { pieces: [] },
+        overrides: { pieces: {} },
+      };
+    }
+    if (getSnippetSelectablePieceIds(snippet).includes(item.pieceId)) {
+      nextDrafts[snippet.id].selected.pieces.push(item.pieceId);
+    }
+  });
+
+  Object.values(nextDrafts).forEach((draft) => {
+    draft.selected.pieces = [...new Set(draft.selected.pieces)];
+  });
+
+  state.drafts = nextDrafts;
+  state.selectedPresetId = preset.id;
+  state.previewCards = {};
+  state.previewEntries = {};
+  state.previewZCounter = 1;
+  closeDrawers();
+  dismissSplash();
+  if (source === "splash") {
+    setView("preview");
+  }
+  renderAll();
+}

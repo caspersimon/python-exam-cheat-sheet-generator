@@ -18,4 +18,4 @@ methods	strings	Methods	1	split/join/replace/find/count/case methods.	3
 formatting	strings	Formatting	2	f-strings, .format(), and targeted edits.	2
 parsing	strings	Parsing	3	URL, email, and phone parsing patterns.	1
 answering-strategy	survival	Answering strategy	1	Fast elimination and wording-decoder pieces.	1
-cross-topic-traps	survival	Cross-topic traps	2	Trap families that recur across multiple topic areas.	2
+cross-topic-traps	survival	Cross-topic traps	2	Trap families that recur across multiple topic areas.	1

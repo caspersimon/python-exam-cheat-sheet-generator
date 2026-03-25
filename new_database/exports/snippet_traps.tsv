@@ -1,7 +1,6 @@
 snippet_slug	trap_slug
 args-and-kwargs	args_tuple_shape
 args-and-kwargs	kwargs_values_not_keys
-both-neither-all-meta-options	both_neither_all_logic
 builtins-return-values	builtin_return_type
 builtins-return-values	sort_vs_sorted
 case-and-capitalization	case_method_pipeline

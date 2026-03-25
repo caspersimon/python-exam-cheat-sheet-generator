@@ -1,28 +1,40 @@
 # Compare/report method patterns
 
-> [!summary] Snippet summary
+> [!summary] Summary
 > How the bank writes comparison/report methods: use helper methods, compare object state carefully, then return a title/string/report.
 
 > [!info] Metadata
-> - Slug: `oop-compare-and-report-patterns`
-> - Topic: `OOP` (`oop`)
-> - Subtopic: `Methods & comparison` (`methods-and-comparison`)
-> - Course phase: `post-midterm`
+> - Snippet slug: `oop-compare-and-report-patterns`
+> - Topic: `oop` — OOP
+> - Subtopic: `methods-and-comparison` — Methods & comparison
+> - UI section: `start-here` — Start here
 > - Default priority: `4`
+> - Recurrence: `signature` across `5` family/families and `7` question(s)
+> - Phase: `post-midterm`
 > - Difficulty: `mixed`
-> - Recurrence: `signature` across `5` exam families / `7` referenced questions
-> - Keywords: `compare objects`, `report string`, `average score`, `overview`
-> - Trap slugs: `compare_both_directions`, `method_call_in_fstring`
+> - Default-selected pieces: `3/3`
+> - Estimated space: `863` chars selected / `863` chars total
+> - Trap count: `2`
+> - Included in presets: `balanced-default`, `post-midterm-tilted`
 
-> [!tip] Why this exists
-> These are common ‘long OOP’ questions. Once you see the pattern, they become template filling rather than full problem solving.
+**Why it matters.** These are common ‘long OOP’ questions. Once you see the pattern, they become template filling rather than full problem solving.
 
-## Piece files
+## Piece index
 
-- `01_comparison-template.md` — **Comparison template** (`template` · `core` · `default`)
-- `02_report-overview-template.md` — **Report / overview template** (`template` · `core` · `default`)
-- `03_common-traps.md` — **Common traps** (`rules` · `trap` · `default`)
+| # | Piece title | kind | role | default selected | file |
+|---:|---|---|---|---|---|
+| 1 | Comparison template | `template` | `core` | yes | `01_comparison-template.md` |
+| 2 | Report / overview template | `template` | `core` | yes | `02_report-overview-template.md` |
+| 3 | Common traps | `rules` | `trap` | yes | `03_common-traps.md` |
 
-## Question references
+## Keywords
 
-`sample-final-plus-answers-q02`, `final-exam-solutions-for-python-programming-62oop21-q02`, `final-exam-study-guide-trial-python-basics-2023-q23`, `introduction-to-python-trial-final-exam-solutions-py22-q23`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q20`, `resit-solutions-for-introduction-to-python-35761538-q20`, `trial-final-exam-solutions-introduction-to-python-3077951-q02`
+`average score`, `compare objects`, `overview`, `report string`
+
+## Trap slugs
+
+`compare_both_directions`, `method_call_in_fstring`
+
+## Question refs
+
+`final-exam-solutions-for-python-programming-62oop21-q02`, `final-exam-study-guide-trial-python-basics-2023-q23`, `introduction-to-python-trial-final-exam-solutions-py22-q23`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q20`, `resit-solutions-for-introduction-to-python-35761538-q20`, `sample-final-plus-answers-q02`, `trial-final-exam-solutions-introduction-to-python-3077951-q02`

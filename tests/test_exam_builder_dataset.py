@@ -58,6 +58,24 @@ class FrontendBundleTests(unittest.TestCase):
                         if piece.get("role") == "trap":
                             self.assertIsInstance(piece.get("trap_slugs"), list)
 
+    def test_presets_reference_real_bundle_pieces(self) -> None:
+        piece_ids = {
+            piece["piece_id"]
+            for topic in self.payload["topics"]
+            for subtopic in topic["subtopics"]
+            for snippet in subtopic["snippets"]
+            for piece in snippet["pieces"]
+        }
+        presets = self.payload.get("presets")
+        self.assertIsInstance(presets, list)
+        self.assertGreaterEqual(len(presets), 1)
+
+        for preset in presets:
+            self.assertTrue(preset["preset_id"])
+            self.assertIsInstance(preset["items"], list)
+            for item in preset["items"]:
+                self.assertIn(item["piece_id"], piece_ids)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -136,6 +136,7 @@ function renderSubtopicSection(subtopic) {
   const toggleRole = allSelected ? "clear-subtopic" : "select-all-subtopic";
   const toggleTitle = allSelected ? "Clear all" : "Select all";
   const toggleIcon = allSelected ? X_ICON : CHECK_ICON;
+  const groupedSections = groupSnippetsByUiSection(subtopic.snippets);
   return renderSubtopicRailGroup(
     subtopic,
     `
@@ -149,11 +150,49 @@ function renderSubtopicSection(subtopic) {
           <button type="button" class="ghost-btn icon-btn snippet-toggle-btn" data-role="${toggleRole}" data-subtopic-id="${escapeHtml(subtopic.id)}" title="${toggleTitle}" aria-label="${toggleTitle}">${toggleIcon}</button>
         </div>
       </div>
-      <div class="topic-rail">
-        ${subtopic.snippets.map((snippet) => renderSnippetCard(snippet)).join("")}
+      <div class="subtopic-card-sections">
+        ${groupedSections.map((section) => renderSnippetSectionRail(section)).join("")}
       </div>
     `
   );
+}
+
+function groupSnippetsByUiSection(snippets) {
+  const sections = new Map();
+  snippets.forEach((snippet, index) => {
+    const slug = snippet.uiSectionSlug || `section-${index}`;
+    if (!sections.has(slug)) {
+      sections.set(slug, {
+        id: slug,
+        title: snippet.uiSectionTitle || "More snippets",
+        sortOrder: Number.isFinite(snippet.uiSectionSortOrder) ? snippet.uiSectionSortOrder : 999,
+        snippets: [],
+      });
+    }
+    sections.get(slug).snippets.push(snippet);
+  });
+
+  return [...sections.values()]
+    .map((section) => ({
+      ...section,
+      snippets: section.snippets.sort(
+        (a, b) => a.uiCardOrder - b.uiCardOrder || a.sortOrder - b.sortOrder || a.title.localeCompare(b.title)
+      ),
+    }))
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title));
+}
+
+function renderSnippetSectionRail(section) {
+  return `
+    <section class="subtopic-card-section">
+      <header class="subtopic-card-section-head">
+        <h5>${escapeHtml(section.title)}</h5>
+      </header>
+      <div class="topic-rail">
+        ${section.snippets.map((snippet) => renderSnippetCard(snippet)).join("")}
+      </div>
+    </section>
+  `;
 }
 
 function renderSnippetCard(snippet) {
@@ -167,6 +206,7 @@ function renderSnippetCard(snippet) {
   const metadataBits = [
     snippet.recurrenceLevel ? humanizeTopic(snippet.recurrenceLevel) : "",
     snippet.coursePhase ? humanizeTopic(snippet.coursePhase) : "",
+    snippet.isTrapHeavy ? "Trap-heavy" : "",
     snippet.questionRefCount ? `${snippet.questionRefCount} q refs` : "",
   ].filter(Boolean);
 

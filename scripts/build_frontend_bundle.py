@@ -173,10 +173,12 @@ def load_bundle() -> dict:
         }
 
         pieces_by_snippet: dict[str, list[dict]] = {}
+        all_piece_ids: set[str] = set()
         for row in connection.execute("select * from pieces order by snippet_slug, sort_order, piece_id"):
             body_path = NEW_DB_ROOT / str(row["body_path"])
             body_markdown = read_markdown(body_path)
             piece_id = str(row["piece_id"])
+            all_piece_ids.add(piece_id)
             traps = piece_traps.get(piece_id, [])
             pieces_by_snippet.setdefault(str(row["snippet_slug"]), []).append(
                 {
@@ -218,9 +220,17 @@ def load_bundle() -> dict:
                     "exam_family_count": int(row["exam_family_count"] or 0),
                     "question_ref_count": int(row["question_ref_count"] or 0),
                     "piece_count": int(row["piece_count"] or len(pieces)),
+                    "default_piece_count": int(row["default_piece_count"] or 0),
+                    "default_char_count": int(row["default_char_count"] or 0),
+                    "total_char_count": int(row["total_char_count"] or 0),
                     "keywords": snippet_keywords.get(snippet_slug, []),
                     "trap_slugs": snippet_trap_slugs,
                     "trap_labels": [trap_labels.get(slug, slug.replace("-", " ")) for slug in snippet_trap_slugs],
+                    "ui_section_slug": str(row["ui_section_slug"] or "").strip(),
+                    "ui_section_title": str(row["ui_section_title"] or "").strip(),
+                    "ui_section_sort_order": int(row["ui_section_sort_order"] or 0),
+                    "ui_card_order": int(row["ui_card_order"] or 0),
+                    "is_trap_heavy": bool(int(row["is_trap_heavy"] or 0)),
                     "readme_path": str(row["readme_path"]),
                     "content_dir": str(row["content_dir"]),
                     "pieces": pieces,
@@ -254,6 +264,37 @@ def load_bundle() -> dict:
                 }
             )
 
+        presets_by_id: dict[str, dict] = {}
+        for row in connection.execute("select * from presets order by sort_order, preset_id"):
+            preset_id = str(row["preset_id"])
+            presets_by_id[preset_id] = {
+                "preset_id": preset_id,
+                "title": str(row["title"] or "").strip(),
+                "summary": str(row["summary"] or "").strip(),
+                "target_user": str(row["target_user"] or "").strip(),
+                "notes": str(row["notes"] or "").strip(),
+                "sort_order": int(row["sort_order"] or 0),
+                "snippet_count": int(row["snippet_count"] or 0),
+                "piece_count": int(row["piece_count"] or 0),
+                "char_count": int(row["char_count"] or 0),
+                "items": [],
+            }
+
+        for row in connection.execute("select * from preset_items order by preset_id, rank, piece_id"):
+            preset_id = str(row["preset_id"])
+            piece_id = str(row["piece_id"])
+            if preset_id not in presets_by_id:
+                raise ValueError(f"preset_items references missing preset_id: {preset_id}")
+            if piece_id not in all_piece_ids:
+                raise ValueError(f"preset_items references missing piece_id: {piece_id}")
+            presets_by_id[preset_id]["items"].append(
+                {
+                    "rank": int(row["rank"] or 0),
+                    "snippet_slug": str(row["snippet_slug"] or "").strip(),
+                    "piece_id": piece_id,
+                }
+            )
+
         return {
             "bundle_version": "new-database-v1",
             "source": {
@@ -261,6 +302,7 @@ def load_bundle() -> dict:
                 "content_root": str(CONTENT_ROOT.relative_to(ROOT)),
             },
             "topics": topics,
+            "presets": list(presets_by_id.values()),
         }
     finally:
         connection.close()
@@ -286,6 +328,11 @@ def validate_bundle(bundle: dict) -> None:
                         raise ValueError(f"Duplicate piece_id in bundle: {piece_id}")
                     seen_piece_ids.add(piece_id)
 
+    for preset in bundle.get("presets", []):
+        for item in preset.get("items", []):
+            if item["piece_id"] not in seen_piece_ids:
+                raise ValueError(f"Preset item references unknown piece_id: {item['piece_id']}")
+
     print(
         json.dumps(
             {
@@ -293,6 +340,7 @@ def validate_bundle(bundle: dict) -> None:
                 "subtopics": subtopic_count,
                 "snippets": snippet_count,
                 "pieces": piece_count,
+                "presets": len(bundle.get("presets", [])),
                 "bundle_path": str(BUNDLE_PATH.relative_to(ROOT)),
             },
             indent=2,

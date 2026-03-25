@@ -1,27 +1,39 @@
 # Imports and aliases
 
-> [!summary] Snippet summary
+> [!summary] Summary
 > Exact name rules for `import`, `from ... import ...`, and aliases.
 
 > [!info] Metadata
-> - Slug: `imports-and-aliases`
-> - Topic: `Functions & scope` (`functions-and-scope`)
-> - Subtopic: `Imports & lambda` (`imports-lambda`)
-> - Course phase: `pre-midterm`
+> - Snippet slug: `imports-and-aliases`
+> - Topic: `functions-and-scope` — Functions & scope
+> - Subtopic: `imports-lambda` — Imports & lambda
+> - UI section: `edge-cases` — Edge cases / niche
 > - Default priority: `3`
+> - Recurrence: `rare` across `1` family/families and `2` question(s)
+> - Phase: `pre-midterm`
 > - Difficulty: `beginner`
-> - Recurrence: `rare` across `1` exam families / `2` referenced questions
-> - Keywords: `import`, `alias`, `math`, `pi`
-> - Trap slugs: `import_alias_name_mismatch`
+> - Default-selected pieces: `2/2`
+> - Estimated space: `372` chars selected / `372` chars total
+> - Trap count: `1`
+> - Included in presets: _none_
 
-> [!tip] Why this exists
-> Import questions are easy to lose for a silly reason: you imported under one name but used another.
+**Why it matters.** Import questions are easy to lose for a silly reason: you imported under one name but used another.
 
-## Piece files
+## Piece index
 
-- `01_import-patterns.md` — **Import patterns** (`table` · `core` · `default`)
-- `02_immediate-exam-rule.md` — **Immediate exam rule** (`rules` · `core` · `default`)
+| # | Piece title | kind | role | default selected | file |
+|---:|---|---|---|---|---|
+| 1 | Import patterns | `table` | `core` | yes | `01_import-patterns.md` |
+| 2 | Immediate exam rule | `rules` | `core` | yes | `02_immediate-exam-rule.md` |
 
-## Question references
+## Keywords
+
+`alias`, `import`, `math`, `pi`
+
+## Trap slugs
+
+`import_alias_name_mismatch`
+
+## Question refs
 
 `sample-final-plus-answers-q24`, `trial-final-exam-solutions-introduction-to-python-3077951-q24`

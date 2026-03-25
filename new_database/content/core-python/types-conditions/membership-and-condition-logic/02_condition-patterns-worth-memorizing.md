@@ -1,4 +1,4 @@
-- Inside-Europe check: `if destination in europe: ...`
-- Odd/even check: `x % 2 == 0` for even, `x % 2 != 0` for odd.
-- When mixing `and`/`or`, add brackets if there is any doubt.
-- Prefer `if cond:` / `else:` over looping through every possible element unless the question explicitly needs a loop.
+- If the question is only checking whether one value belongs to a known collection, look for a direct membership test such as `item in allowed_values`.
+- Odd/even questions usually reduce to `x % 2 == 0` (even) or `x % 2 != 0` (odd).
+- When a condition mixes `and` and `or`, mentally evaluate the smaller comparisons first; many wrong options change the grouping.
+- For dictionaries, `x in d` checks **keys**; use `x in d.values()` only when the stem asks about values.

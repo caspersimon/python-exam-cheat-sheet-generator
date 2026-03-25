@@ -1,5 +1,8 @@
 # EXAM_COOKBOOK — how to write *this exact kind* of Python exam
 
+> [!info] Final-release note
+> This cookbook was built during the taxonomy pass and remained valid after the stress-test/finalization round.
+
 > [!summary] Audience
 > Imagine you are a teaching assistant who has been told:
 > “Please make a final exam for Intro to Python. It should feel familiar, a little evil, but still defensible when students complain.”

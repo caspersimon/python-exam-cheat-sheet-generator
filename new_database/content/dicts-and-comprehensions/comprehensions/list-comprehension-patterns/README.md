@@ -1,28 +1,40 @@
 # List comprehension patterns
 
-> [!summary] Snippet summary
+> [!summary] Summary
 > The two list-comprehension forms you actually need: filter-only and map-with-conditional-expression.
 
 > [!info] Metadata
-> - Slug: `list-comprehension-patterns`
-> - Topic: `Dictionaries & comprehensions` (`dicts-and-comprehensions`)
-> - Subtopic: `Comprehensions` (`comprehensions`)
-> - Course phase: `post-midterm`
+> - Snippet slug: `list-comprehension-patterns`
+> - Topic: `dicts-and-comprehensions` — Dictionaries & comprehensions
+> - Subtopic: `comprehensions` — Comprehensions
+> - UI section: `start-here` — Start here
 > - Default priority: `5`
+> - Recurrence: `signature` across `5` family/families and `7` question(s)
+> - Phase: `post-midterm`
 > - Difficulty: `beginner`
-> - Recurrence: `signature` across `5` exam families / `7` referenced questions
-> - Keywords: `list comprehension`, `if else`, `filter`
-> - Trap slugs: `comprehension_if_else_position`
+> - Default-selected pieces: `2/3`
+> - Estimated space: `316` chars selected / `501` chars total
+> - Trap count: `1`
+> - Included in presets: `balanced-default`, `ultra-dense-core`
 
-> [!tip] Why this exists
-> These appear repeatedly and are easy to compress into one mental template.
+**Why it matters.** These appear repeatedly and are easy to compress into one mental template.
 
-## Piece files
+## Piece index
 
-- `01_syntax-patterns.md` — **Syntax patterns** (`table` · `core` · `default`)
-- `02_examples-from-the-bank.md` — **Examples from the bank** (`example` · `clarifier` · `optional`)
-- `03_placement-trap.md` — **Placement trap** (`rules` · `trap` · `default`)
+| # | Piece title | kind | role | default selected | file |
+|---:|---|---|---|---|---|
+| 1 | Syntax patterns | `table` | `core` | yes | `01_syntax-patterns.md` |
+| 2 | Examples from the bank | `example` | `clarifier` | no | `02_examples-from-the-bank.md` |
+| 3 | Placement trap | `rules` | `trap` | yes | `03_placement-trap.md` |
 
-## Question references
+## Keywords
 
-`sample-final-plus-answers-q12`, `final-exam-solutions-for-python-programming-62oop21-q23`, `final-exam-study-guide-trial-python-basics-2023-q07`, `introduction-to-python-trial-final-exam-solutions-py22-q07`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q10`, `resit-solutions-for-introduction-to-python-35761538-q10`, `trial-final-exam-solutions-introduction-to-python-3077951-q12`
+`filter`, `if else`, `list comprehension`
+
+## Trap slugs
+
+`comprehension_if_else_position`
+
+## Question refs
+
+`final-exam-solutions-for-python-programming-62oop21-q23`, `final-exam-study-guide-trial-python-basics-2023-q07`, `introduction-to-python-trial-final-exam-solutions-py22-q07`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q10`, `resit-solutions-for-introduction-to-python-35761538-q10`, `sample-final-plus-answers-q12`, `trial-final-exam-solutions-introduction-to-python-3077951-q12`

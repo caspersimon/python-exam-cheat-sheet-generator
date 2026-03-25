@@ -15,6 +15,22 @@ function toggleDrawer(name) {
   state.openDrawer = name;
 }
 
+function getPresetById(presetId) {
+  return state.presets.find((preset) => preset.id === presetId) || null;
+}
+
+function getSelectedPreset() {
+  return getPresetById(state.selectedPresetId);
+}
+
+function formatCompactNumber(value) {
+  const number = Number(value || 0);
+  if (!Number.isFinite(number) || number <= 0) {
+    return "0";
+  }
+  return new Intl.NumberFormat(undefined).format(number);
+}
+
 function closeDrawers() {
   Object.values(drawerMap).forEach((drawer) => drawer?.classList.add("hidden"));
   refs.drawerBackdrop.classList.add("hidden");
@@ -46,6 +62,7 @@ function setView(viewName) {
 function renderAll() {
   renderSwipe();
   renderPreview();
+  renderPresetSurfaces();
 }
 
 function syncViewButtons() {
@@ -128,4 +145,52 @@ function getTopicSelectionSummary(topic) {
     snippets: selectedSnippets,
     items: selectedPieces,
   };
+}
+
+function renderPresetSurfaces() {
+  if (refs.presetList) {
+    refs.presetList.innerHTML = state.presets.length
+      ? state.presets.map((preset) => renderPresetCard(preset, { compact: false })).join("")
+      : `<div class="empty-state"><p>No presets found in the current database bundle.</p></div>`;
+  }
+
+  if (refs.splashPresetList) {
+    refs.splashPresetList.innerHTML = state.presets.length
+      ? state.presets.map((preset) => renderPresetCard(preset, { compact: true, splash: true })).join("")
+      : "";
+  }
+
+  if (refs.activePresetName) {
+    const selectedPreset = getSelectedPreset();
+    refs.activePresetName.textContent = selectedPreset ? selectedPreset.title : "Custom";
+  }
+}
+
+function renderPresetCard(preset, { compact = false, splash = false } = {}) {
+  const isActive = state.selectedPresetId === preset.id;
+  const actionLabel = splash ? "Use preset" : isActive ? "Reapply" : "Apply";
+  const metaBits = [
+    `${formatCompactNumber(preset.snippetCount)} snippets`,
+    `${formatCompactNumber(preset.pieceCount)} pieces`,
+    `${formatCompactNumber(preset.charCount)} chars`,
+  ];
+  return `
+    <article class="preset-card${compact ? " is-compact" : ""}${isActive ? " is-active" : ""}">
+      <div class="preset-card-copy">
+        <div class="preset-card-headline">
+          <h4>${escapeHtml(preset.title)}</h4>
+          ${isActive ? `<span class="snippet-tag preset-tag-active">Current start</span>` : ""}
+        </div>
+        ${preset.summary ? `<p class="preset-card-summary">${renderInlineCode(preset.summary)}</p>` : ""}
+        ${preset.targetUser ? `<p class="preset-card-target"><strong>Best for:</strong> ${renderInlineCode(preset.targetUser)}</p>` : ""}
+        <div class="exam-snippet-meta">${metaBits.map((bit) => `<span class="snippet-tag">${escapeHtml(bit)}</span>`).join("")}</div>
+        ${compact ? "" : preset.notes ? `<p class="muted">${renderInlineCode(preset.notes)}</p>` : ""}
+      </div>
+      <div class="preset-card-actions">
+        <button type="button" class="solid-btn" data-role="apply-preset" data-preset-id="${escapeHtml(preset.id)}" data-preset-source="${
+          splash ? "splash" : "drawer"
+        }">${escapeHtml(actionLabel)}</button>
+      </div>
+    </article>
+  `;
 }

@@ -4,10 +4,6 @@ args-and-kwargs	dict
 args-and-kwargs	flexible arguments
 args-and-kwargs	kwargs
 args-and-kwargs	tuple
-both-neither-all-meta-options	all of the above
-both-neither-all-meta-options	both
-both-neither-all-meta-options	meta options
-both-neither-all-meta-options	neither
 builtins-return-values	count
 builtins-return-values	index
 builtins-return-values	len

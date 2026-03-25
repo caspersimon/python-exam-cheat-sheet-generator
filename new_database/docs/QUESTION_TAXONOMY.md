@@ -1,5 +1,8 @@
 # Question taxonomy and exam-pattern analysis
 
+> [!info] Final-release note
+> The taxonomy remained stable through the final stress-test pass. Only some snippet mappings and coverage details were refined.
+
 > [!summary] Purpose
 > This document is the structured output of the first-pass close inspection.
 > It answers:

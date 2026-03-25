@@ -1,7 +1,10 @@
 ```python
 item = "laptop"; price = 1299.99
 "The {0} is priced at ${1}.".format(item, price)
-
-name = "Alice"; age = 25; country = "the USA"
-f"My name is {name}. I am {age} years old, and I am from {country}."
 ```
+
+```python
+for student in students:
+    print(f"{student['Name']} has received a grade of {student['Grade']:.1f}.")
+```
+Use `:.1f` when the stem explicitly asks for one decimal place.

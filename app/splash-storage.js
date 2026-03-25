@@ -74,6 +74,7 @@ function resetAppProgress() {
   state.filters.coursePhases = new Set(DEFAULT_COURSE_PHASES);
   state.filters.recurrenceLevels = new Set(DEFAULT_RECURRENCE_LEVELS);
   state.drafts = {};
+  state.selectedPresetId = "";
   state.navigation = buildDefaultNavigationState();
   state.previewHistory = [];
   state.openDrawer = "";
@@ -96,6 +97,7 @@ function resetAppProgress() {
   };
 
   renderFilterControls(DEFAULT_COURSE_PHASES, DEFAULT_RECURRENCE_LEVELS);
+  renderPresetSurfaces();
   syncFilterControls();
   applyLayoutVariables();
   ensureExplorerNavigation(getFilteredTopics());
@@ -200,6 +202,13 @@ function hydratePersistedState() {
     state.navigation = nextNavigation;
   }
 
+  if (typeof raw.selectedPresetId === "string") {
+    const presetId = raw.selectedPresetId.trim();
+    if (presetId && state.presets.some((preset) => preset.id === presetId)) {
+      state.selectedPresetId = presetId;
+    }
+  }
+
   if (raw.previewCards && typeof raw.previewCards === "object") {
     const hydratedLayouts = {};
     Object.entries(raw.previewCards).forEach(([snippetId, layout]) => {
@@ -271,6 +280,7 @@ function persistAppState() {
     },
     drafts: state.drafts,
     navigation: state.navigation,
+    selectedPresetId: state.selectedPresetId,
     layout: state.layout,
     previewCards: state.previewCards,
     previewZCounter: state.previewZCounter,

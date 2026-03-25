@@ -1,5 +1,5 @@
 topic_slug	title	sort_order	description	snippet_count
-survival	Exam survival	1	Cross-topic elimination tactics and the most repeated trick families.	3
+survival	Exam survival	1	Cross-topic elimination tactics and the most repeated trick families.	2
 core-python	Core Python	2	Types, truthiness, indexing, slicing, loops, and small built-ins.	8
 functions-and-scope	Functions & scope	3	Returns, parameters, scope, imports, and higher-order call patterns.	6
 strings	Strings	4	String methods, formatting, and parsing mini-problems.	6
