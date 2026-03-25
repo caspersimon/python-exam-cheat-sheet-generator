@@ -206,6 +206,98 @@ function rebalanceAutoLayoutDensity(layoutPlan, pageStates) {
   });
 }
 
+function buildAutoPageSpanVariants(entry, pageState) {
+  const maxSpan = Math.max(1, Math.min(pageState.columns, AUTO_MAX_CARD_SPAN));
+  const preferredSpan = estimatePreferredCardSpan(entry, pageState, maxSpan);
+  const spanSet = new Set([1, preferredSpan]);
+  if (preferredSpan > 1) {
+    spanSet.add(preferredSpan - 1);
+  }
+  if (preferredSpan < maxSpan) {
+    spanSet.add(preferredSpan + 1);
+  }
+  if (maxSpan >= 2) {
+    spanSet.add(2);
+  }
+
+  const variants = [...spanSet]
+    .filter((span) => Number.isFinite(span) && span >= 1 && span <= maxSpan)
+    .sort((a, b) => a - b)
+    .map((span) => {
+      const width = getAutoCardWidthForSpan(pageState, span);
+      const rawHeight = estimateCardHeight(entry, width);
+      const maxHeight = getAutoHeightCapForPage(pageState);
+      const packedHeight = getAutoCappedHeight(rawHeight, pageState, maxHeight);
+      return {
+        page: pageState.page,
+        span,
+        preferredSpan,
+        width,
+        rawHeight,
+        packedHeight,
+        maxHeight,
+      };
+    });
+
+  return variants.length ? variants : [{
+    page: pageState.page,
+    span: 1,
+    preferredSpan: 1,
+    width: pageState.columnWidth,
+    rawHeight: estimateCardHeight(entry, pageState.columnWidth),
+    packedHeight: getAutoCappedHeight(estimateCardHeight(entry, pageState.columnWidth), pageState, getAutoHeightCapForPage(pageState)),
+    maxHeight: getAutoHeightCapForPage(pageState),
+  }];
+}
+
+function compareAutoPlacementOption(a, b) {
+  const aOverflow = Boolean(a?.candidate?.isOverflow);
+  const bOverflow = Boolean(b?.candidate?.isOverflow);
+  if (aOverflow !== bOverflow) {
+    return aOverflow ? 1 : -1;
+  }
+
+  const ay = Number(a?.candidate?.y) || 0;
+  const by = Number(b?.candidate?.y) || 0;
+  if (ay !== by) {
+    return ay - by;
+  }
+
+  const apage = Number(a?.candidate?.page) || 1;
+  const bpage = Number(b?.candidate?.page) || 1;
+  if (apage !== bpage) {
+    return apage - bpage;
+  }
+
+  const aSpanPenalty = Math.abs((Number(a?.variant?.span) || 1) - (Number(a?.variant?.preferredSpan) || 1));
+  const bSpanPenalty = Math.abs((Number(b?.variant?.span) || 1) - (Number(b?.variant?.preferredSpan) || 1));
+  if (aSpanPenalty !== bSpanPenalty) {
+    return aSpanPenalty - bSpanPenalty;
+  }
+
+  const aCompression = (Number(a?.variant?.packedHeight) || 1) / Math.max(1, Number(a?.variant?.rawHeight) || 1);
+  const bCompression = (Number(b?.variant?.packedHeight) || 1) / Math.max(1, Number(b?.variant?.rawHeight) || 1);
+  if (aCompression !== bCompression) {
+    return bCompression - aCompression;
+  }
+
+  const aHeight = Number(a?.variant?.packedHeight) || 0;
+  const bHeight = Number(b?.variant?.packedHeight) || 0;
+  if (aHeight !== bHeight) {
+    return aHeight - bHeight;
+  }
+
+  const ax = Number(a?.candidate?.x) || 0;
+  const bx = Number(b?.candidate?.x) || 0;
+  if (ax !== bx) {
+    return ax - bx;
+  }
+
+  const aSpan = Number(a?.variant?.span) || 1;
+  const bSpan = Number(b?.variant?.span) || 1;
+  return aSpan - bSpan;
+}
+
 function buildAutoPreviewLayoutPlan(previewEntries, grid) {
   const gap = getAutoGridGap();
   const columns = Math.max(1, Number(grid.columns) || 1);
@@ -214,7 +306,6 @@ function buildAutoPreviewLayoutPlan(previewEntries, grid) {
     2: getAutoPageState(2, columns, gap),
   };
 
-  const minColumnWidth = Math.min(pageStates[1].columnWidth, pageStates[2].columnWidth);
   const layoutPlan = new Map();
   const candidateEntries = [];
 
@@ -224,30 +315,24 @@ function buildAutoPreviewLayoutPlan(previewEntries, grid) {
     const isLocked = Boolean(existing?.locked);
 
     if (!isLocked) {
-      const width1 = pageStates[1].columnWidth || minColumnWidth;
-      const width2 = pageStates[2].columnWidth || minColumnWidth;
-      const entryHeightOn1 = estimateCardHeight(entry, width1);
-      const entryHeightOn2 = estimateCardHeight(entry, width2);
-      const maxHeightOn1 = getAutoHeightCapForPage(pageStates[1]);
-      const maxHeightOn2 = getAutoHeightCapForPage(pageStates[2]);
-      const packedHeightOn1 = getAutoCappedHeight(entryHeightOn1, pageStates[1], maxHeightOn1);
-      const packedHeightOn2 = getAutoCappedHeight(entryHeightOn2, pageStates[2], maxHeightOn2);
+      const pageVariants = {
+        1: buildAutoPageSpanVariants(entry, pageStates[1]),
+        2: buildAutoPageSpanVariants(entry, pageStates[2]),
+      };
+      const sortKey = Math.max(
+        ...pageVariants[1].map((variant) => variant.rawHeight * variant.width),
+        ...pageVariants[2].map((variant) => variant.rawHeight * variant.width)
+      );
+      const densityWeight = Math.max(
+        ...pageVariants[1].map((variant) => variant.rawHeight * (1 + (variant.span - 1) * 0.35)),
+        ...pageVariants[2].map((variant) => variant.rawHeight * (1 + (variant.span - 1) * 0.35))
+      );
+
       candidateEntries.push({
         entry,
-        estimatedHeights: {
-          1: entryHeightOn1,
-          2: entryHeightOn2,
-        },
-        packedHeights: {
-          1: packedHeightOn1,
-          2: packedHeightOn2,
-        },
-        maxHeights: {
-          1: maxHeightOn1,
-          2: maxHeightOn2,
-        },
-        densityWeight: Math.max(1, Math.round(Math.max(entryHeightOn1, entryHeightOn2))),
-        sortKey: Math.max(entryHeightOn1, entryHeightOn2),
+        pageVariants,
+        densityWeight: Math.max(1, Math.round(densityWeight)),
+        sortKey,
       });
       return;
     }
@@ -262,28 +347,34 @@ function buildAutoPreviewLayoutPlan(previewEntries, grid) {
   candidateEntries.sort((a, b) => b.sortKey - a.sortKey || a.entry.previewId.localeCompare(b.entry.previewId));
 
   candidateEntries.forEach((item) => {
-    const heightOn1 = item.packedHeights[1];
-    const heightOn2 = item.packedHeights[2];
-    const rawHeightOn1 = item.estimatedHeights[1];
-    const rawHeightOn2 = item.estimatedHeights[2];
-    const candidate1 = getAutoPlacementCandidate(pageStates[1], heightOn1);
-    const candidate2 = getAutoPlacementCandidate(pageStates[2], heightOn2);
+    const collectPlacementOptions = (useOverflowFallback = false) => {
+      const options = [];
+      [1, 2].forEach((page) => {
+        const variants = item.pageVariants?.[page] || [];
+        variants.forEach((variant) => {
+          const candidate = getAutoPlacementCandidate(pageStates[page], variant.packedHeight, {
+            span: variant.span,
+            fallbackHeightRef: useOverflowFallback ? variant.rawHeight : null,
+          });
+          if (!candidate) {
+            return;
+          }
+          options.push({
+            candidate: {
+              ...candidate,
+              isOverflow: Boolean(candidate.isOverflow || useOverflowFallback),
+            },
+            variant,
+          });
+        });
+      });
+      return options;
+    };
 
-    let chosen = candidate1;
-    if (!chosen || (candidate2 && (candidate2.y < chosen.y || (candidate2.y === chosen.y && candidate2.col < chosen.col)))) {
-      chosen = candidate2;
-    }
+    const directOptions = collectPlacementOptions(false).sort(compareAutoPlacementOption);
+    const chosenOption = directOptions[0] || collectPlacementOptions(true).sort(compareAutoPlacementOption)[0] || null;
 
-    if (!chosen) {
-      const overflowCandidate2 = getAutoPlacementCandidate(pageStates[2], heightOn2, rawHeightOn2);
-      const overflowCandidate1 = getAutoPlacementCandidate(pageStates[1], heightOn1, rawHeightOn1);
-      chosen = overflowCandidate2 || overflowCandidate1;
-      if (chosen) {
-        chosen.isOverflow = true;
-      }
-    }
-
-    if (!chosen) {
+    if (!chosenOption) {
       const fallbackLayout = getDefaultPreviewLayout(layoutPlan.size, grid);
       const layout = ensurePreviewCardLayout(item.entry.previewId, fallbackLayout, {
         force: true,
@@ -296,6 +387,8 @@ function buildAutoPreviewLayoutPlan(previewEntries, grid) {
       reservePageIntervalForCard(pageStates[layout.page], layout);
       return;
     }
+    const chosen = chosenOption.candidate;
+    const chosenVariant = chosenOption.variant;
 
     const normalizedMinHeight = chosen.isOverflow
       ? 1
@@ -321,12 +414,18 @@ function buildAutoPreviewLayoutPlan(previewEntries, grid) {
     );
 
     reservePageIntervalForCard(pageStates[fitted.page], fitted);
+    const estimatedHeightPx = Math.max(1, Math.round(chosenVariant.rawHeight || chosen.height || 1));
+    const compressionRatio = Math.min(1, Math.max(0.35, fitted.height / estimatedHeightPx));
     layoutPlan.set(item.entry.previewId, {
       layout: fitted,
       isLocked: false,
       overflow: Boolean(chosen.isOverflow),
       densityWeight: Math.max(1, Math.round(item.densityWeight || item.sortKey || 1)),
-      maxHeightPx: chosen.page === 1 ? item.maxHeights[1] : item.maxHeights[2],
+      maxHeightPx: chosenVariant.maxHeight,
+      span: chosenVariant.span,
+      preferredSpan: chosenVariant.preferredSpan,
+      estimatedHeightPx,
+      compressionRatio,
     });
   });
 
@@ -338,6 +437,10 @@ function buildAutoPreviewLayoutPlan(previewEntries, grid) {
   };
 
   let overflowCardCount = 0;
+  let compressedCardCount = 0;
+  let wideCardCount = 0;
+  let compressionSum = 0;
+  let compressionCount = 0;
   layoutPlan.forEach((item) => {
     const layout = item.layout;
     if (!layout || !Number.isFinite(layout.x) || !Number.isFinite(layout.y) || !Number.isFinite(layout.width) || !Number.isFinite(layout.height)) {
@@ -359,7 +462,28 @@ function buildAutoPreviewLayoutPlan(previewEntries, grid) {
     if (item.overflow) {
       overflowCardCount += 1;
     }
+
+    if ((Number(item.span) || 1) > 1) {
+      wideCardCount += 1;
+    }
+
+    const estimatedHeight = Number(item.estimatedHeightPx);
+    if (Number.isFinite(estimatedHeight) && estimatedHeight > 0) {
+      const compressionRatio = Math.min(1, Math.max(0.35, layout.height / estimatedHeight));
+      item.compressionRatio = compressionRatio;
+      compressionSum += compressionRatio;
+      compressionCount += 1;
+      if (compressionRatio < 0.9) {
+        compressedCardCount += 1;
+      }
+    }
   });
 
-  return { layoutPlan, overflowCardCount };
+  return {
+    layoutPlan,
+    overflowCardCount,
+    compressedCardCount,
+    wideCardCount,
+    averageCompression: compressionCount > 0 ? compressionSum / compressionCount : 1,
+  };
 }

@@ -2,6 +2,7 @@ const AUTO_LAYOUT_TARGET_OCCUPIED_RATIO = 0.45;
 const AUTO_CARD_EXTREME_HEIGHT_RATIO = 0.78;
 const AUTO_RESIZE_ROOM_PX = 64;
 const AUTO_MIN_CARD_HEIGHT_PX = 130;
+const AUTO_MAX_CARD_SPAN = 3;
 
 function getAutoGridGap() {
   return clamp(Number(state.layout.cardGap) || 0, 0, 24);
@@ -39,6 +40,11 @@ function getAutoPageState(page, columns, gap) {
     columnWidth,
     columnIntervals,
   };
+}
+
+function getAutoCardWidthForSpan(pageState, span) {
+  const safeSpan = clamp(Math.floor(Number(span) || 1), 1, pageState.columns);
+  return Math.max(1, Math.round(pageState.columnWidth * safeSpan + pageState.gap * Math.max(0, safeSpan - 1)));
 }
 
 function getAutoColumnsForRect(pageState, layout) {
@@ -81,9 +87,8 @@ function addInterval(intervals, nextStart, nextEnd, pageHeight, gap) {
   return intervals;
 }
 
-function findFirstYInColumn(pageState, col, height) {
-  const intervals = pageState.columnIntervals[col] || [];
-  const maxY = pageState.pageHeight - Math.max(1, height);
+function findFirstYInIntervals(intervals, pageHeight, height) {
+  const maxY = pageHeight - Math.max(1, height);
   let cursorY = 0;
 
   for (let i = 0; i < intervals.length; i += 1) {
@@ -98,10 +103,57 @@ function findFirstYInColumn(pageState, col, height) {
     }
   }
 
-  if (cursorY + height <= pageState.pageHeight) {
+  if (cursorY + height <= pageHeight) {
     return cursorY;
   }
   return null;
+}
+
+function mergeSortedIntervals(intervals) {
+  if (!intervals.length) {
+    return [];
+  }
+  const merged = [[intervals[0][0], intervals[0][1]]];
+  for (let i = 1; i < intervals.length; i += 1) {
+    const current = intervals[i];
+    const last = merged[merged.length - 1];
+    if (current[0] <= last[1]) {
+      last[1] = Math.max(last[1], current[1]);
+    } else {
+      merged.push([current[0], current[1]]);
+    }
+  }
+  return merged;
+}
+
+function getMergedIntervalsForSpan(pageState, startCol, span) {
+  const safeSpan = clamp(Math.floor(Number(span) || 1), 1, pageState.columns);
+  const start = clamp(Math.floor(Number(startCol) || 0), 0, Math.max(0, pageState.columns - safeSpan));
+  const intervals = [];
+  for (let col = start; col < start + safeSpan; col += 1) {
+    const colIntervals = pageState.columnIntervals[col] || [];
+    for (let i = 0; i < colIntervals.length; i += 1) {
+      intervals.push([colIntervals[i][0], colIntervals[i][1]]);
+    }
+  }
+  if (!intervals.length) {
+    return [];
+  }
+  intervals.sort((a, b) => a[0] - b[0]);
+  return mergeSortedIntervals(intervals);
+}
+
+function findFirstYForSpan(pageState, startCol, span, height) {
+  const intervals = getMergedIntervalsForSpan(pageState, startCol, span);
+  return findFirstYInIntervals(intervals, pageState.pageHeight, height);
+}
+
+function getMaxOccupiedBottomForSpan(pageState, startCol, span) {
+  const intervals = getMergedIntervalsForSpan(pageState, startCol, span);
+  if (!intervals.length) {
+    return 0;
+  }
+  return intervals[intervals.length - 1][1];
 }
 
 function reservePageIntervalForCard(pageState, layout) {
@@ -120,29 +172,34 @@ function reservePageIntervalForCard(pageState, layout) {
   }
 }
 
-function getAutoPlacementCandidate(pageState, cardHeight, fallbackHeightRef = null) {
+function getAutoPlacementCandidate(pageState, cardHeight, options = {}) {
+  const span = clamp(Math.floor(Number(options.span) || 1), 1, pageState.columns);
+  const fallbackHeightRef = Number.isFinite(Number(options.fallbackHeightRef)) ? Number(options.fallbackHeightRef) : null;
   let best = null;
 
-  for (let col = 0; col < pageState.columns; col += 1) {
-    const y = findFirstYInColumn(pageState, col, cardHeight);
+  for (let col = 0; col <= pageState.columns - span; col += 1) {
+    const y = findFirstYForSpan(pageState, col, span, cardHeight);
     if (y !== null) {
       const candidate = {
         page: pageState.page,
         x: Math.round(col * (pageState.columnWidth + pageState.gap)),
         y: Math.round(y),
-        width: Math.max(1, pageState.columnWidth),
+        width: getAutoCardWidthForSpan(pageState, span),
         height: Math.round(cardHeight),
         z: 0,
       };
-      if (!best || candidate.y < best.y || (candidate.y === best.y && col < best.col)) {
-        best = { ...candidate, col };
+      if (
+        !best ||
+        candidate.y < best.y ||
+        (candidate.y === best.y && (col < best.col || (col === best.col && span < best.span)))
+      ) {
+        best = { ...candidate, col, span };
       }
       continue;
     }
 
     if (fallbackHeightRef !== null) {
-      const colIntervals = pageState.columnIntervals[col] || [];
-      const occupiedBottom = colIntervals.length ? colIntervals[colIntervals.length - 1][1] : 0;
+      const occupiedBottom = getMaxOccupiedBottomForSpan(pageState, col, span);
       const remaining = Math.max(0, pageState.pageHeight - occupiedBottom);
       if (remaining <= 0) {
         continue;
@@ -155,12 +212,16 @@ function getAutoPlacementCandidate(pageState, cardHeight, fallbackHeightRef = nu
         page: pageState.page,
         x: Math.round(col * (pageState.columnWidth + pageState.gap)),
         y: Math.round(occupiedBottom),
-        width: Math.max(1, pageState.columnWidth),
+        width: getAutoCardWidthForSpan(pageState, span),
         height: Math.round(height),
         z: 0,
       };
-      if (!best || candidate.y < best.y || (candidate.y === best.y && col < best.col)) {
-        best = { ...candidate, col, isOverflow: true };
+      if (
+        !best ||
+        candidate.y < best.y ||
+        (candidate.y === best.y && (col < best.col || (col === best.col && span < best.span)))
+      ) {
+        best = { ...candidate, col, span, isOverflow: true };
       }
     }
   }
@@ -178,6 +239,19 @@ function estimateTextLines(text, width, fontPx, fallbackLineHeight) {
   const charsPerLine = Math.max(12, Math.floor(Math.max(6, width) / avgCharWidth));
   const lineCount = Math.max(1, Math.ceil(normalized.length / charsPerLine));
   return lineCount * Math.max(1, fallbackLineHeight);
+}
+
+function estimateWrappedLineCountFromWidths(lines, maxCharsPerLine) {
+  if (!Array.isArray(lines) || !lines.length) {
+    return 1;
+  }
+  let wrapped = 0;
+  const safeChars = Math.max(6, Math.floor(maxCharsPerLine));
+  lines.forEach((line) => {
+    const value = String(line || "");
+    wrapped += Math.max(1, Math.ceil(Math.max(1, value.length) / safeChars));
+  });
+  return Math.max(1, wrapped);
 }
 
 function estimateBlockHeight(block, width, metrics) {
@@ -208,15 +282,46 @@ function estimateBlockHeight(block, width, metrics) {
 
   if (block.type === "code") {
     const source = String(block.code || "").replace(/\r\n/g, "\n");
-    const codeLines = source.trim() ? source.split("\n").filter((line) => line.length || line === "").length : 1;
-    return codeLines * metrics.codeLinePx + metrics.codeBlockPadding * 2 + 4;
+    const sourceLines = source.trim() ? source.split("\n") : [""];
+    const innerWidth = Math.max(24, width - metrics.codeBlockPadding * 2 - 6);
+    const codeAvgCharWidth = Math.max(2.4, metrics.codeFont * 0.58);
+    const codeCharsPerLine = Math.max(8, Math.floor(innerWidth / codeAvgCharWidth));
+    const wrappedCodeLines = estimateWrappedLineCountFromWidths(sourceLines, codeCharsPerLine);
+    return wrappedCodeLines * metrics.codeLinePx + metrics.codeBlockPadding * 2 + 4;
   }
 
   if (block.type === "table") {
     const headers = Array.isArray(block.headers) ? block.headers : [];
     const rows = Array.isArray(block.rows) ? block.rows : [];
-    const rowCount = Math.max(1, (headers.length ? 1 : 0) + Math.max(0, rows.length));
-    return rowCount * metrics.tableLinePx + metrics.tablePadding * 2;
+    const columnCount = Math.max(headers.length, ...rows.map((row) => (Array.isArray(row) ? row.length : 0)), 1);
+    const tableInnerWidth = Math.max(40, width - metrics.tablePadding * 2);
+    const columnWidth = Math.max(14, tableInnerWidth / columnCount);
+    const tableCharWidth = Math.max(2, metrics.tableFont * 0.55);
+    const charsPerCellLine = Math.max(6, Math.floor(columnWidth / tableCharWidth));
+    const estimateRowLines = (row) => {
+      if (!Array.isArray(row) || !row.length) {
+        return 1;
+      }
+      let maxLines = 1;
+      row.forEach((cell) => {
+        const cellText = sanitizeDisplayText(String(cell || "")).replace(/\s+/g, " ").trim();
+        if (!cellText) {
+          return;
+        }
+        maxLines = Math.max(maxLines, Math.ceil(cellText.length / charsPerCellLine));
+      });
+      return maxLines;
+    };
+
+    let totalRowLines = 0;
+    if (headers.length) {
+      totalRowLines += estimateRowLines(headers);
+    }
+    rows.forEach((row) => {
+      totalRowLines += estimateRowLines(row);
+    });
+    totalRowLines = Math.max(1, totalRowLines);
+    return totalRowLines * metrics.tableLinePx + metrics.tablePadding * 2;
   }
 
   return 0;
@@ -230,8 +335,10 @@ function estimateCardHeight(entry, cardWidth) {
     linePx: Math.max(6, (Number(state.layout.fontSize) || 8.5) * (Number(state.layout.lineHeight) || 1.0)),
     pieceFont: Number(state.layout.fontSize) || 8.5,
     pieceGap: Number(state.layout.pieceGap) || 2,
+    codeFont: Math.max(6, (Number(state.layout.fontSize) || 8.5) * 0.8),
     codeLinePx: Math.max(6, (Number(state.layout.fontSize) || 8.5) * 0.8 * 1.34),
     codeBlockPadding: Number(state.layout.codeBlockPadding) || 4,
+    tableFont: Number(state.layout.tableSize) || 7,
     tableLinePx: Math.max(6, (Number(state.layout.tableSize) || 7) * 1.22),
     tablePadding: Number(state.layout.cardPadding) || 5,
     summaryFontScale: 0.79,
@@ -239,11 +346,7 @@ function estimateCardHeight(entry, cardWidth) {
   };
 
   const snippet = entry.snippet;
-  const selection = entry.selectionsByCard?.[snippet.id] || {};
-  const selectedSet = new Set(selection?.selected?.pieces || []);
-  const pieces = Array.isArray(snippet.pieces)
-    ? snippet.pieces.filter((piece) => selectedSet.size === 0 || selectedSet.has(piece.id))
-    : [];
+  const pieces = getSelectedPiecesForEntry(entry);
 
   let estimated = 0;
   const headerHeight = Math.max(6, Number(state.layout.titleSize) || 9.5);
@@ -320,4 +423,3 @@ function collectAutoColumnCards(pageState, layoutPlan) {
 
   return columns;
 }
-

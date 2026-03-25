@@ -3,10 +3,10 @@
 ## Metadata
 
 - ID: `RM-001`
-- Status: `planned`
+- Status: `in_progress`
 - Priority: `High`
 - Owner: `unassigned`
-- Last Updated: `2026-02-27`
+- Last Updated: `2026-03-25`
 
 ## Problem
 
@@ -29,6 +29,8 @@ Cards can reserve more vertical space than their content requires. This creates 
 - Respect user-resized cards by storing a "manual size lock" flag per card.
 - Keep existing minimum size guardrails for usability/accessibility.
 - Re-run overlap detection after auto-fit and avoid introducing collisions.
+- Extend auto-fit with width-aware placement (multi-column spans) so code/table-heavy snippets can claim more width and reduce vertical clipping.
+- Let Smart Fit tune the full layout control surface (font/line-height/padding/gaps/table size/title spacing) via plan scoring instead of static thresholds.
 
 ## Implementation Plan
 
@@ -71,3 +73,4 @@ Cards can reserve more vertical space than their content requires. This creates 
 ## Open Questions
 
 - Should auto-fit be always on or user-toggleable?
+- Should we expose a "compact vs readable" Smart Fit intent toggle for users who prefer predictable density targets?

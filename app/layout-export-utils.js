@@ -184,101 +184,32 @@ async function renderExportPageToCanvas(page, options = {}) {
 
 function smartFitLayout() {
   const entries = buildMergedPreviewEntries();
-  const N = entries.length;
-  if (N === 0) {
+  if (entries.length === 0) {
     return;
   }
 
-  // Estimate content per card
-  let totalChars = 0;
-  entries.forEach(({ snippet, selectionsByCard }) => {
-    const selection = selectionsByCard[snippet.id];
-    const selectedSet = new Set(selection?.selected?.pieces || []);
-    snippet.pieces
-      .filter((p) => selectedSet.has(p.id))
-      .forEach((p) => {
-        totalChars += String(p.text || p.body || p.bodyMarkdown || p.summary || "").length;
-      });
-  });
-  const avgCharsPerCard = totalChars / N;
+  const contentProfile = getSmartFitContentProfile(entries);
+  const presets = buildSmartFitPresets(contentProfile);
+  const baseline = {
+    layout: deepClone(state.layout),
+    previewCards: deepClone(state.previewCards),
+    previewZCounter: state.previewZCounter,
+  };
 
-  // Get effective page dimensions (accounting for landscape)
-  const page1Landscape = Boolean(state.layout.page1Landscape);
-  const page2Landscape = Boolean(state.layout.page2Landscape);
-  const p1w = page1Landscape ? DEFAULT_PAGE_INNER_HEIGHT : DEFAULT_PAGE_INNER_WIDTH;
-  const p1h = page1Landscape ? DEFAULT_PAGE_INNER_WIDTH : DEFAULT_PAGE_INNER_HEIGHT;
-  const p2w = page2Landscape ? DEFAULT_PAGE_INNER_HEIGHT : DEFAULT_PAGE_INNER_WIDTH;
-  const p2h = page2Landscape ? DEFAULT_PAGE_INNER_WIDTH : DEFAULT_PAGE_INNER_HEIGHT;
-
-  // Find best grid: maximize cell area while fitting all cards in 2 pages
-  // Constraint: cell must be at least 80px tall and 100px wide to be readable
-  const MIN_CELL_HEIGHT = 80;
-  const MIN_CELL_WIDTH = 100;
-  const GAP = 4; // use tight gap for smart fit
-
-  let bestCols = 2;
-  let bestRows = 6;
-  let bestScore = -Infinity;
-
-  for (let cols = 1; cols <= 4; cols++) {
-    for (let rows = 3; rows <= 14; rows++) {
-      const capacity = cols * rows * 2;
-      if (capacity < N) {
-        continue;
-      }
-
-      // Check cell dimensions for both pages
-      const cellW1 = (p1w - GAP * (cols - 1)) / cols;
-      const cellH1 = (p1h - GAP * (rows - 1)) / rows;
-      const cellW2 = (p2w - GAP * (cols - 1)) / cols;
-      const cellH2 = (p2h - GAP * (rows - 1)) / rows;
-
-      if (cellH1 < MIN_CELL_HEIGHT || cellW1 < MIN_CELL_WIDTH) continue;
-      if (cellH2 < MIN_CELL_HEIGHT || cellW2 < MIN_CELL_WIDTH) continue;
-
-      // Score: prefer large cells, penalize wasted space
-      const avgCellArea = ((cellW1 * cellH1) + (cellW2 * cellH2)) / 2;
-      const waste = (capacity - N) / capacity;
-      const score = avgCellArea * (1 - waste * 0.3);
-
-      if (score > bestScore) {
-        bestScore = score;
-        bestCols = cols;
-        bestRows = rows;
-      }
+  let bestResult = null;
+  presets.forEach((preset) => {
+    const result = evaluateSmartFitPreset(entries, contentProfile, preset, baseline);
+    if (!bestResult || result.score > bestResult.score) {
+      bestResult = result;
     }
-  }
+  });
 
-  // Determine font size based on resulting cell height and content density
-  const avgCellH = ((p1h - GAP * (bestRows - 1)) / bestRows + (p2h - GAP * (bestRows - 1)) / bestRows) / 2;
-  // chars per pixel of cell height: higher = denser content
-  const contentDensity = avgCharsPerCard / avgCellH;
-
-  let fontSize, titleSize, cardPadding, codeBlockPadding, codeBlockMargin, lineHeight;
-
-  if (contentDensity < 1.5 && avgCellH > 180) {
-    fontSize = 9.5; titleSize = 10.5; cardPadding = 6; codeBlockPadding = 5; codeBlockMargin = 2; lineHeight = 1.1;
-  } else if (contentDensity < 2.5 && avgCellH > 130) {
-    fontSize = 9; titleSize = 10; cardPadding = 5; codeBlockPadding = 4; codeBlockMargin = 1; lineHeight = 1.08;
-  } else if (contentDensity < 4 || avgCellH > 100) {
-    fontSize = 8.5; titleSize = 9.5; cardPadding = 5; codeBlockPadding = 4; codeBlockMargin = 1; lineHeight = 1.08;
-  } else if (contentDensity < 6) {
-    fontSize = 8; titleSize = 9; cardPadding = 4; codeBlockPadding = 3; codeBlockMargin = 1; lineHeight = 1.06;
-  } else {
-    fontSize = 7.5; titleSize = 8.5; cardPadding = 4; codeBlockPadding = 2; codeBlockMargin = 1; lineHeight = 1.04;
-  }
-
-  state.layout.autoGrid = true;
-  state.layout.gridColumns = bestCols;
-  state.layout.gridRows = bestRows;
-  state.layout.fontSize = fontSize;
-  state.layout.titleSize = titleSize;
-  state.layout.cardGap = GAP;
-  state.layout.cardPadding = cardPadding;
-  state.layout.codeBlockPadding = codeBlockPadding;
-  state.layout.codeBlockMargin = codeBlockMargin;
-  state.layout.lineHeight = lineHeight;
-  state.layout.letterSpacing = 0;
+  const selected = bestResult?.preset || presets[0];
+  Object.assign(state.layout, selected, {
+    autoGrid: true,
+    gridColumns: bestResult?.grid?.columns || state.layout.gridColumns,
+    gridRows: bestResult?.grid?.rows || state.layout.gridRows,
+  });
 
   // Recompute only unlocked card geometry so locked cards remain stable anchors.
   clearUnlockedPreviewCardLayouts();
