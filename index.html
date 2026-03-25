@@ -20,8 +20,8 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Newsreader:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&family=Merriweather:wght@400;700&family=Lora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260325b" />
-    <script defer src="./app/state-and-init.js?v=20260325c"></script>
+    <link rel="stylesheet" href="./styles.css?v=20260325d" />
+    <script defer src="./app/state-and-init.js?v=20260325d"></script>
     <script defer src="./app/exam-builder-data.js?v=20260325b"></script>
     <script defer src="./app/splash-storage.js?v=20260325c"></script>
     <script defer src="./app/preview-pointer.js?v=20260322h"></script>
@@ -41,8 +41,8 @@
     <script defer src="./app/preview-edit-modal.js?v=20260322h"></script>
     <script defer src="./app/preview-editing.js?v=20260325b"></script>
     <script defer src="./app/smart-fit-utils.js?v=20260325c"></script>
-    <script defer src="./app/layout-export-utils.js?v=20260325c"></script>
-    <script defer src="./app/pdf-export-utils.js?v=20260322h"></script>
+    <script defer src="./app/layout-export-utils.js?v=20260325d"></script>
+    <script defer src="./app/pdf-export-utils.js?v=20260325d"></script>
     <script defer src="./app/main.js?v=20260322h"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
@@ -61,42 +61,33 @@
         </div>
         <div class="header-actions">
           <div class="header-nav-group">
-            <button id="goToSwipeBtn" class="header-view-btn is-active" type="button">Topic Explorer</button>
-            <button id="goToPreviewBtn" class="header-view-btn" type="button">Preview & Export</button>
+            <button id="goToSwipeBtn" class="header-view-btn is-active" type="button"><span class="btn-icon" aria-hidden="true">◧</span><span>Topic Explorer</span></button>
+            <button id="goToPreviewBtn" class="header-view-btn" type="button"><span class="btn-icon" aria-hidden="true">▤</span><span>Preview & Export</span></button>
           </div>
           <div id="swipeHeaderActions" class="header-mode-actions">
-            <button id="openTopicSidebarBtn" class="ghost-btn mobile-only-btn" type="button">Topics</button>
-            <button id="openPresetsBtn" class="ghost-btn" type="button">Presets</button>
-            <button id="openFiltersBtn" class="ghost-btn" type="button">Filters</button>
-            <button id="openStatsBtn" class="ghost-btn" type="button">Selection</button>
-            <button id="skipToPreviewBtn" class="solid-btn" type="button">Preview</button>
+            <button id="openTopicSidebarBtn" class="ghost-btn mobile-only-btn" type="button"><span class="btn-icon" aria-hidden="true">☰</span><span>Topics</span></button>
+            <button id="openPresetsBtn" class="ghost-btn" type="button"><span class="btn-icon" aria-hidden="true">◇</span><span>Presets</span></button>
+            <button id="openFiltersBtn" class="ghost-btn" type="button"><span class="btn-icon" aria-hidden="true">≡</span><span>Filters</span></button>
+            <button id="openStatsBtn" class="ghost-btn" type="button"><span class="btn-icon" aria-hidden="true">◎</span><span>Selection</span></button>
           </div>
           <div id="previewHeaderActions" class="header-mode-actions hidden">
-            <button id="openLayoutBtn" class="ghost-btn" type="button">Layout</button>
-            <button id="openOrderBtn" class="ghost-btn" type="button">Order</button>
+            <button id="openLayoutBtn" class="ghost-btn" type="button"><span class="btn-icon" aria-hidden="true">▧</span><span>Layout</span></button>
+            <button id="openOrderBtn" class="ghost-btn" type="button"><span class="btn-icon" aria-hidden="true">↕</span><span>Order</span></button>
             <button id="previewUndoBtn" class="ghost-btn" type="button" title="Undo preview edit/delete (Ctrl/Cmd+Z)">
-              Undo Edit
+              <span class="btn-icon" aria-hidden="true">↶</span><span>Undo Edit</span>
             </button>
-            <button id="printBtn" class="ghost-btn" type="button">Print</button>
-            <button id="exportPngBtn" class="ghost-btn" type="button">PNG</button>
-            <button id="exportPdfBtn" class="solid-btn" type="button">PDF</button>
+            <button id="printBtn" class="ghost-btn" type="button"><span class="btn-icon" aria-hidden="true">⎙</span><span>Print</span></button>
+            <button id="exportPngBtn" class="ghost-btn" type="button"><span class="btn-icon" aria-hidden="true">▣</span><span>PNG</span></button>
+            <button id="exportPdfBtn" class="solid-btn" type="button"><span class="btn-icon" aria-hidden="true">▥</span><span>PDF</span></button>
           </div>
           <div class="header-link-group">
-            <a
-              class="action-link github-link"
-              href="https://github.com/caspersimon/python-exam-cheat-sheet-generator"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
             <a
               class="action-link coffee-link"
               href="https://buymeacoffee.com/caspersimon"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Support the Builder
+              <span class="btn-icon" aria-hidden="true">☕</span><span>Support the Builder</span>
             </a>
           </div>
         </div>
@@ -116,14 +107,18 @@
           <p id="overflowNotice" class="warning hidden" role="alert" aria-live="assertive"></p>
 
           <div id="sheetStage" class="sheet-stage">
-            <article class="sheet-page" data-page="1">
+            <div class="sheet-page-stack" data-page="1">
               <header class="page-label">Page 1</header>
-              <div id="page1Content" class="page-content"></div>
-            </article>
-            <article class="sheet-page" data-page="2">
+              <article class="sheet-page" data-page="1">
+                <div id="page1Content" class="page-content"></div>
+              </article>
+            </div>
+            <div class="sheet-page-stack" data-page="2">
               <header class="page-label">Page 2</header>
-              <div id="page2Content" class="page-content"></div>
-            </article>
+              <article class="sheet-page" data-page="2">
+                <div id="page2Content" class="page-content"></div>
+              </article>
+            </div>
           </div>
         </section>
       </main>

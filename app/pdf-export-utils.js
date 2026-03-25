@@ -56,36 +56,45 @@ function isPdfExportReady() {
   return typeof window.html2canvas === "function" && !!window.jspdf && !!window.jspdf.jsPDF;
 }
 
+function getPdfPageRenderSpec(pageElement) {
+  const isLandscape = Boolean(pageElement?.classList?.contains("is-landscape"));
+  return isLandscape
+    ? { orientation: "landscape", widthMm: 297, heightMm: 210 }
+    : { orientation: "portrait", widthMm: 210, heightMm: 297 };
+}
+
 async function buildPdfDocumentFromPages(pages) {
   const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+  if (!Array.isArray(pages) || pages.length === 0) {
+    throw new Error("No pages available for PDF generation.");
+  }
+  const firstSpec = getPdfPageRenderSpec(pages[0]);
+  const pdf = new jsPDF({ orientation: firstSpec.orientation, unit: "mm", format: "a4" });
 
   for (let idx = 0; idx < pages.length; idx += 1) {
     const page = pages[idx];
+    const pageSpec = getPdfPageRenderSpec(page);
     const canvas = await renderExportPageToCanvas(page, { scale: PDF_EXPORT_SCALE });
     if (!canvas || canvas.width < 10 || canvas.height < 10) {
       throw new Error("Generated canvas is invalid.");
     }
     const imageData = canvas.toDataURL("image/png");
     if (idx > 0) {
-      pdf.addPage("a4", "portrait");
+      pdf.addPage("a4", pageSpec.orientation);
     }
-    pdf.addImage(imageData, "PNG", 0, 0, 210, 297, undefined, PDF_IMAGE_COMPRESSION);
+    pdf.addImage(imageData, "PNG", 0, 0, pageSpec.widthMm, pageSpec.heightMm, undefined, PDF_IMAGE_COMPRESSION);
   }
 
   return pdf;
 }
 
 function queueSupportPrompt() {
-  if (isSupportPromptSuppressed()) {
-    return;
-  }
   window.setTimeout(() => {
     if (typeof window.showSupportPrompt === "function") {
-      window.showSupportPrompt();
+      window.showSupportPrompt({ force: true });
       return;
     }
-    showSupportPrompt();
+    showSupportPrompt({ force: true });
   }, 260);
 }
 
@@ -307,9 +316,13 @@ function ensureSupportPromptModal() {
   return supportPromptState;
 }
 
-function showSupportPrompt() {
+function showSupportPrompt(options = {}) {
+  const force = Boolean(options?.force);
   const modal = ensureSupportPromptModal();
-  if (!modal || modal.active || isSupportPromptSuppressed()) {
+  if (!modal || modal.active) {
+    return;
+  }
+  if (!force && isSupportPromptSuppressed()) {
     return;
   }
 

@@ -271,9 +271,14 @@ h4 {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
+.sheet-page-stack {
+  flex: 0 0 auto;
+  display: grid;
+  gap: 8px;
+}
+
 .sheet-page {
   position: relative;
-  flex: 0 0 auto;
   width: var(--a4-width);
   height: var(--a4-height);
   overflow: hidden;
@@ -289,12 +294,9 @@ h4 {
 }
 
 .page-label {
-  position: absolute;
-  top: 12px;
-  left: 14px;
-  z-index: 2;
   display: inline-flex;
   align-items: center;
+  justify-self: start;
   min-height: 26px;
   padding: 0 10px;
   border-radius: 999px;

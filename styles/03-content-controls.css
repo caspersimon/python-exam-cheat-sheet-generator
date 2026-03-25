@@ -123,6 +123,12 @@ button,
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  gap: 7px;
+}
+
+.btn-icon {
+  font-size: 0.92em;
+  line-height: 1;
 }
 
 button:active:not(:disabled),
@@ -165,9 +171,9 @@ button:disabled {
 .header-view-btn {
   min-height: 36px;
   padding: 7px 16px;
-  background: rgba(255, 253, 247, 0.86);
-  color: var(--ink-2);
-  border: 1px solid var(--line);
+  background: var(--header-btn-bg, rgba(255, 253, 247, 0.86));
+  color: var(--header-btn-ink, var(--ink-2));
+  border: 1px solid var(--header-btn-border, var(--line));
   font-weight: 600;
   font-size: 0.86rem;
   letter-spacing: 0.005em;
@@ -184,6 +190,84 @@ button:disabled {
   color: #fff;
   border-color: var(--accent);
   box-shadow: 0 1px 4px rgba(24, 48, 31, 0.3);
+}
+
+#goToSwipeBtn {
+  --header-btn-bg: #e8f3ec;
+  --header-btn-ink: #1f5b40;
+  --header-btn-border: rgba(31, 91, 64, 0.2);
+}
+
+#goToPreviewBtn {
+  --header-btn-bg: #ecf2fb;
+  --header-btn-ink: #2c507d;
+  --header-btn-border: rgba(44, 80, 125, 0.24);
+}
+
+.header-mode-actions .ghost-btn {
+  background: var(--toolbar-btn-bg, rgba(255, 253, 247, 0.9));
+  color: var(--toolbar-btn-ink, var(--ink-1));
+  border-color: var(--toolbar-btn-border, var(--line));
+  box-shadow: 0 1px 2px rgba(44, 35, 20, 0.05);
+}
+
+.header-mode-actions .ghost-btn:hover {
+  border-color: var(--toolbar-btn-border, var(--line-strong));
+  box-shadow: 0 2px 5px rgba(44, 35, 20, 0.08);
+}
+
+#openTopicSidebarBtn {
+  --toolbar-btn-bg: #edf4f8;
+  --toolbar-btn-ink: #2c4d66;
+  --toolbar-btn-border: rgba(44, 77, 102, 0.2);
+}
+
+#openPresetsBtn {
+  --toolbar-btn-bg: #f2ecfb;
+  --toolbar-btn-ink: #5c3a85;
+  --toolbar-btn-border: rgba(92, 58, 133, 0.22);
+}
+
+#openFiltersBtn {
+  --toolbar-btn-bg: #e9f4f1;
+  --toolbar-btn-ink: #1f5f58;
+  --toolbar-btn-border: rgba(31, 95, 88, 0.2);
+}
+
+#openStatsBtn {
+  --toolbar-btn-bg: #f9f1e5;
+  --toolbar-btn-ink: #7d5425;
+  --toolbar-btn-border: rgba(125, 84, 37, 0.22);
+}
+
+#openLayoutBtn {
+  --toolbar-btn-bg: #eef4ff;
+  --toolbar-btn-ink: #2d4f80;
+  --toolbar-btn-border: rgba(45, 79, 128, 0.22);
+}
+
+#openOrderBtn {
+  --toolbar-btn-bg: #edf8f3;
+  --toolbar-btn-ink: #245e43;
+  --toolbar-btn-border: rgba(36, 94, 67, 0.22);
+}
+
+#previewUndoBtn {
+  --toolbar-btn-bg: #fdf0ef;
+  --toolbar-btn-ink: #8a3f38;
+  --toolbar-btn-border: rgba(138, 63, 56, 0.2);
+}
+
+#printBtn {
+  --toolbar-btn-bg: #eef3ea;
+  --toolbar-btn-ink: #3d5c32;
+  --toolbar-btn-border: rgba(61, 92, 50, 0.2);
+}
+
+#exportPngBtn {
+  --toolbar-btn-bg: #eef0fb;
+  --toolbar-btn-ink: #3a477f;
+  --toolbar-btn-border: rgba(58, 71, 127, 0.22);
 }
 
 .compact-btn {
@@ -206,12 +290,6 @@ button:disabled {
 
 .coffee-link:hover {
   background: #feeed2;
-}
-
-.github-link {
-  background: rgba(255, 253, 247, 0.86);
-  color: var(--ink-1);
-  border-color: var(--line);
 }
 
 .danger-btn {

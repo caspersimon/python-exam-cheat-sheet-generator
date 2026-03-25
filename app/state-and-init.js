@@ -256,7 +256,7 @@ function bindEvents() {
     renderAll();
   });
 
-  refs.skipToPreviewBtn.addEventListener("click", () => setView("preview"));
+  refs.skipToPreviewBtn?.addEventListener("click", () => setView("preview"));
   refs.goToSwipeBtn.addEventListener("click", () => setView("swipe"));
   refs.goToPreviewBtn.addEventListener("click", () => setView("preview"));
   refs.openTopicSidebarBtn?.addEventListener("click", () => {

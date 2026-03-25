@@ -199,7 +199,7 @@ body.export-snapshot-mode .preview-card .inline-code {
     overflow: hidden;
   }
 
-  .sheet-page:last-child {
+  .sheet-stage .sheet-page-stack:last-child .sheet-page {
     page-break-after: auto;
   }
 

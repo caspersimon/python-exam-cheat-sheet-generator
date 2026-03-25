@@ -62,6 +62,7 @@ async function exportPng() {
   refs.exportPngBtn.textContent = "Exporting...";
   refs.exportPngBtn.disabled = true;
 
+  let exported = false;
   try {
     for (let idx = 0; idx < pages.length; idx += 1) {
       const page = pages[idx];
@@ -73,9 +74,14 @@ async function exportPng() {
       link.download = `python-cheatsheet-page-${idx + 1}.png`;
       link.click();
     }
+    exported = true;
   } finally {
     refs.exportPngBtn.textContent = originalText;
     refs.exportPngBtn.disabled = false;
+  }
+
+  if (exported && typeof queueSupportPrompt === "function") {
+    queueSupportPrompt();
   }
 }
 
