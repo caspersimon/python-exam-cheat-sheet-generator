@@ -21,27 +21,27 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css?v=20260325b" />
-    <script defer src="./app/state-and-init.js?v=20260325b"></script>
+    <script defer src="./app/state-and-init.js?v=20260325c"></script>
     <script defer src="./app/exam-builder-data.js?v=20260325b"></script>
-    <script defer src="./app/splash-storage.js?v=20260325b"></script>
+    <script defer src="./app/splash-storage.js?v=20260325c"></script>
     <script defer src="./app/preview-pointer.js?v=20260322h"></script>
     <script defer src="./app/view-and-data.js?v=20260325b"></script>
     <script defer src="./app/topic-selection.js?v=20260325b"></script>
-    <script defer src="./app/topic-detail-subtopics.js?v=20260322h"></script>
+    <script defer src="./app/topic-detail-subtopics.js?v=20260325c"></script>
     <script defer src="./app/render-card-sections.js?v=20260325b"></script>
-    <script defer src="./app/text-render-utils.js?v=20260325b"></script>
+    <script defer src="./app/text-render-utils.js?v=20260325c"></script>
     <script defer src="./app/code-render-utils.js?v=20260322h"></script>
     <script defer src="./app/card-interactions.js?v=20260325b"></script>
     <script defer src="./app/preview-auto-layout-content-signals.js?v=20260325c"></script>
     <script defer src="./app/preview-auto-layout-helpers.js?v=20260325b"></script>
     <script defer src="./app/preview-auto-layout.js?v=20260325b"></script>
-    <script defer src="./app/preview-render.js?v=20260325b"></script>
+    <script defer src="./app/preview-render.js?v=20260325c"></script>
     <script defer src="./app/preview-card-render.js?v=20260325b"></script>
     <script defer src="./app/preview-history.js?v=20260322h"></script>
     <script defer src="./app/preview-edit-modal.js?v=20260322h"></script>
     <script defer src="./app/preview-editing.js?v=20260325b"></script>
     <script defer src="./app/smart-fit-utils.js?v=20260325c"></script>
-    <script defer src="./app/layout-export-utils.js?v=20260322h"></script>
+    <script defer src="./app/layout-export-utils.js?v=20260325c"></script>
     <script defer src="./app/pdf-export-utils.js?v=20260322h"></script>
     <script defer src="./app/main.js?v=20260322h"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -196,19 +196,14 @@
         <button class="ghost-btn close-drawer-btn" data-close-drawer="layout" type="button">Close</button>
       </div>
 
-      <label class="field inline-field">
-        <input id="autoGridToggle" type="checkbox" checked />
-        <span>Auto-scale rows/columns</span>
-      </label>
-
       <label class="field">
         <span>Columns per page: <strong id="gridColumnsValue">2</strong></span>
         <input id="gridColumnsRange" type="range" min="1" max="4" step="1" value="2" />
       </label>
 
       <label class="field">
-        <span>Rows per page: <strong id="gridRowsValue">6</strong></span>
-        <input id="gridRowsRange" type="range" min="3" max="14" step="1" value="6" />
+        <span>Rows per page: <strong id="gridRowsValue">4</strong></span>
+        <input id="gridRowsRange" type="range" min="3" max="14" step="1" value="4" />
       </label>
 
       <label class="field">

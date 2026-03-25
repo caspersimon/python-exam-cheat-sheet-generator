@@ -181,13 +181,23 @@ function renderPreview() {
 }
 
 function syncGridControls(effectiveGrid) {
-  refs.autoGridToggle.checked = state.layout.autoGrid;
-  refs.gridColumnsRange.disabled = state.layout.autoGrid;
-  refs.gridRowsRange.disabled = state.layout.autoGrid;
-  refs.gridColumnsRange.value = String(state.layout.gridColumns);
-  refs.gridRowsRange.value = String(state.layout.gridRows);
-  refs.gridColumnsValue.textContent = state.layout.autoGrid ? `${effectiveGrid.columns} (auto)` : String(state.layout.gridColumns);
-  refs.gridRowsValue.textContent = state.layout.autoGrid ? `${effectiveGrid.rows} (auto)` : String(state.layout.gridRows);
+  if (refs.autoGridToggle) {
+    refs.autoGridToggle.checked = Boolean(state.layout.autoGrid);
+  }
+  if (refs.gridColumnsRange) {
+    refs.gridColumnsRange.disabled = false;
+    refs.gridColumnsRange.value = String(state.layout.gridColumns);
+  }
+  if (refs.gridRowsRange) {
+    refs.gridRowsRange.disabled = false;
+    refs.gridRowsRange.value = String(state.layout.gridRows);
+  }
+  if (refs.gridColumnsValue) {
+    refs.gridColumnsValue.textContent = String(state.layout.gridColumns);
+  }
+  if (refs.gridRowsValue) {
+    refs.gridRowsValue.textContent = String(state.layout.gridRows);
+  }
 }
 
 function buildMergedPreviewEntries() {

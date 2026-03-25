@@ -63,9 +63,9 @@ const state = {
     tableSize: 7,
     pieceGap: 2,
     titleMargin: 1,
-    autoGrid: true,
+    autoGrid: false,
     gridColumns: 2,
-    gridRows: 6,
+    gridRows: 4,
     page1Landscape: false,
     page2Landscape: false,
   },
@@ -329,7 +329,7 @@ function bindEvents() {
     }
   });
 
-  refs.autoGridToggle.addEventListener("change", (event) => {
+  refs.autoGridToggle?.addEventListener("change", (event) => {
     state.layout.autoGrid = Boolean(event.target.checked);
     renderPreview();
   });

@@ -187,6 +187,10 @@ function smartFitLayout() {
   if (entries.length === 0) {
     return;
   }
+  const confirmed = window.confirm("Are you sure? Any current layout adjustments will be overridden.");
+  if (!confirmed) {
+    return;
+  }
 
   const contentProfile = getSmartFitContentProfile(entries);
   const presets = buildSmartFitPresets(contentProfile);
@@ -206,7 +210,7 @@ function smartFitLayout() {
 
   const selected = bestResult?.preset || presets[0];
   Object.assign(state.layout, selected, {
-    autoGrid: true,
+    autoGrid: false,
     gridColumns: bestResult?.grid?.columns || state.layout.gridColumns,
     gridRows: bestResult?.grid?.rows || state.layout.gridRows,
   });

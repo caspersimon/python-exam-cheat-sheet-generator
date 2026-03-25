@@ -91,9 +91,9 @@ function resetAppProgress() {
     cardPadding: 5,
     codeBlockPadding: 4,
     codeBlockMargin: 1,
-    autoGrid: true,
+    autoGrid: false,
     gridColumns: 2,
-    gridRows: 6,
+    gridRows: 4,
     page1Landscape: false,
     page2Landscape: false,
     tableSize: 7,
@@ -161,7 +161,7 @@ function hydratePersistedState() {
       state.layout.codeBlockPadding = clamp(Number(raw.layout.codeBlockPadding), 0, 20);
     if (Number.isFinite(raw.layout.codeBlockMargin))
       state.layout.codeBlockMargin = clamp(Number(raw.layout.codeBlockMargin), 0, 16);
-    if (typeof raw.layout.autoGrid === "boolean") state.layout.autoGrid = raw.layout.autoGrid;
+    state.layout.autoGrid = false;
     if (Number.isFinite(raw.layout.gridColumns)) state.layout.gridColumns = clamp(Number(raw.layout.gridColumns), 1, 4);
     if (Number.isFinite(raw.layout.gridRows)) state.layout.gridRows = clamp(Number(raw.layout.gridRows), 3, 14);
     if (typeof raw.layout.page1Landscape === "boolean") state.layout.page1Landscape = raw.layout.page1Landscape;

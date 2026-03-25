@@ -9,16 +9,16 @@ const ROOT = path.resolve(__dirname, "..");
 const ARTIFACT_DIR = path.join(ROOT, "data", "test_reports", "artifacts", "stress");
 
 const SCENARIOS = [
-  { name: "auto_default", autoGrid: true, fontSize: 9.5, lineHeight: 1.1, cardGap: 6, cardPadding: 7, letterSpacing: 0 },
-  { name: "auto_dense_small", autoGrid: true, fontSize: 8.0, lineHeight: 1.0, cardGap: 4, cardPadding: 5, letterSpacing: -0.05 },
-  { name: "auto_large_text", autoGrid: true, fontSize: 11.5, lineHeight: 1.3, cardGap: 5, cardPadding: 6, letterSpacing: 0.02 },
-  { name: "auto_tight_lines", autoGrid: true, fontSize: 9.0, lineHeight: 0.95, cardGap: 5, cardPadding: 6, letterSpacing: 0 },
-  { name: "auto_loose_lines", autoGrid: true, fontSize: 9.0, lineHeight: 1.35, cardGap: 5, cardPadding: 6, letterSpacing: 0 },
-  { name: "manual_2x3", autoGrid: false, columns: 2, rows: 3, fontSize: 9.0, lineHeight: 1.05, cardGap: 5, cardPadding: 6, letterSpacing: 0 },
-  { name: "manual_3x3", autoGrid: false, columns: 3, rows: 3, fontSize: 8.5, lineHeight: 1.0, cardGap: 4, cardPadding: 5, letterSpacing: 0 },
-  { name: "manual_2x4", autoGrid: false, columns: 2, rows: 4, fontSize: 8.5, lineHeight: 1.0, cardGap: 4, cardPadding: 5, letterSpacing: 0 },
-  { name: "manual_padding_high", autoGrid: false, columns: 2, rows: 3, fontSize: 9.0, lineHeight: 1.1, cardGap: 5, cardPadding: 12, letterSpacing: 0 },
-  { name: "manual_padding_low", autoGrid: false, columns: 2, rows: 3, fontSize: 9.0, lineHeight: 1.1, cardGap: 4, cardPadding: 4, letterSpacing: 0 },
+  { name: "manual_default_2x6", columns: 2, rows: 6, fontSize: 9.5, lineHeight: 1.1, cardGap: 6, cardPadding: 7, letterSpacing: 0 },
+  { name: "manual_dense_3x4", columns: 3, rows: 4, fontSize: 8.0, lineHeight: 1.0, cardGap: 4, cardPadding: 5, letterSpacing: -0.05 },
+  { name: "manual_large_text_2x5", columns: 2, rows: 5, fontSize: 11.5, lineHeight: 1.3, cardGap: 5, cardPadding: 6, letterSpacing: 0.02 },
+  { name: "manual_tight_lines_3x4", columns: 3, rows: 4, fontSize: 9.0, lineHeight: 0.95, cardGap: 5, cardPadding: 6, letterSpacing: 0 },
+  { name: "manual_loose_lines_2x6", columns: 2, rows: 6, fontSize: 9.0, lineHeight: 1.35, cardGap: 5, cardPadding: 6, letterSpacing: 0 },
+  { name: "manual_2x3", columns: 2, rows: 3, fontSize: 9.0, lineHeight: 1.05, cardGap: 5, cardPadding: 6, letterSpacing: 0 },
+  { name: "manual_3x3", columns: 3, rows: 3, fontSize: 8.5, lineHeight: 1.0, cardGap: 4, cardPadding: 5, letterSpacing: 0 },
+  { name: "manual_2x4", columns: 2, rows: 4, fontSize: 8.5, lineHeight: 1.0, cardGap: 4, cardPadding: 5, letterSpacing: 0 },
+  { name: "manual_padding_high", columns: 2, rows: 3, fontSize: 9.0, lineHeight: 1.1, cardGap: 5, cardPadding: 12, letterSpacing: 0 },
+  { name: "manual_padding_low", columns: 2, rows: 3, fontSize: 9.0, lineHeight: 1.1, cardGap: 4, cardPadding: 4, letterSpacing: 0 },
 ];
 
 async function applyScenario(page, scenario) {
@@ -31,20 +31,8 @@ async function applyScenario(page, scenario) {
       element.value = String(value);
       element.dispatchEvent(new Event("input", { bubbles: true }));
     };
-    const setToggle = (id, checked) => {
-      const element = document.getElementById(id);
-      if (!element) {
-        return;
-      }
-      element.checked = Boolean(checked);
-      element.dispatchEvent(new Event("change", { bubbles: true }));
-    };
-
-    setToggle("autoGridToggle", cfg.autoGrid);
-    if (!cfg.autoGrid) {
-      setRange("gridColumnsRange", cfg.columns || 2);
-      setRange("gridRowsRange", cfg.rows || 3);
-    }
+    setRange("gridColumnsRange", cfg.columns || 2);
+    setRange("gridRowsRange", cfg.rows || 3);
     setRange("fontSizeRange", cfg.fontSize);
     setRange("lineHeightRange", cfg.lineHeight);
     setRange("cardGapRange", cfg.cardGap);
@@ -152,7 +140,7 @@ async function collectLayoutMetrics(page) {
       headerRatioAvg: Number((metrics.headerRatioSum / Math.max(1, metrics.headerRatioSamples)).toFixed(4)),
       editChromeVisible: anyVisible(".preview-item-actions,.preview-card-head-actions"),
       activeControls: {
-        autoGrid: document.getElementById("autoGridToggle")?.checked ?? null,
+        autoGrid: typeof state === "object" && state?.layout ? Boolean(state.layout.autoGrid) : null,
         gridColumnsLabel: document.getElementById("gridColumnsValue")?.textContent?.trim() || "",
         gridRowsLabel: document.getElementById("gridRowsValue")?.textContent?.trim() || "",
         fontSize: document.getElementById("fontSizeValue")?.textContent?.trim() || "",
