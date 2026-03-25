@@ -82,18 +82,23 @@ function resetAppProgress() {
   state.previewEntries = {};
   state.previewZCounter = 1;
   state.layout = {
-    fontFamily: "'Manrope', sans-serif",
-    fontSize: 9.5,
-    titleSize: 6.8,
-    lineHeight: 1.1,
+    fontFamily: DEFAULT_FONT_FAMILY,
+    fontSize: 8.5,
+    titleSize: 9.5,
+    lineHeight: 1.08,
     letterSpacing: 0,
-    cardGap: 6,
-    cardPadding: 7,
-    codeBlockPadding: 8,
-    codeBlockMargin: 2,
+    cardGap: 4,
+    cardPadding: 5,
+    codeBlockPadding: 4,
+    codeBlockMargin: 1,
     autoGrid: true,
     gridColumns: 2,
     gridRows: 6,
+    page1Landscape: false,
+    page2Landscape: false,
+    tableSize: 7,
+    pieceGap: 2,
+    titleMargin: 1,
   };
 
   renderFilterControls(DEFAULT_COURSE_PHASES, DEFAULT_RECURRENCE_LEVELS);
@@ -118,32 +123,52 @@ function hydratePersistedState() {
 
   if (raw.layout && typeof raw.layout === "object") {
     const fontAliases = new Map([
-      ["'Space Grotesk', sans-serif", "'Manrope', sans-serif"],
-      ["'DM Sans', sans-serif", "'Manrope', sans-serif"],
-      ["'Inter', sans-serif", "'Manrope', sans-serif"],
-      ["'IBM Plex Sans', sans-serif", "'Manrope', sans-serif"],
       ["'Manrope', sans-serif", "'Manrope', sans-serif"],
-      ["'Newsreader', serif", "'Manrope', sans-serif"],
-      ["'Source Serif 4', serif", "'Manrope', sans-serif"],
+      ["'Inter', sans-serif", "'Inter', sans-serif"],
+      ["'Space Grotesk', sans-serif", "'Space Grotesk', sans-serif"],
+      ["'DM Sans', sans-serif", "'DM Sans', sans-serif"],
+      ["'Public Sans', sans-serif", "'Public Sans', sans-serif"],
+      ["'IBM Plex Sans', sans-serif", "'IBM Plex Sans', sans-serif"],
+      ["'Source Sans 3', sans-serif", "'Source Sans 3', sans-serif"],
+      ["'Work Sans', sans-serif", "'Work Sans', sans-serif"],
+      ["'Newsreader', serif", "'Newsreader', serif"],
+      ["'Source Serif 4', serif", "'Source Serif 4', serif"],
+      ["'Merriweather', serif", "'Merriweather', serif"],
+      ["'Lora', serif", "'Lora', serif"],
     ]);
-    const hydratedFont = fontAliases.get(raw.layout.fontFamily);
-    if (hydratedFont) {
+    const rawFontFamily = typeof raw.layout.fontFamily === "string" ? raw.layout.fontFamily : "";
+    const hydratedFont = fontAliases.get(rawFontFamily) ?? rawFontFamily;
+    if (FONT_FAMILY_VALUES.has(hydratedFont)) {
       state.layout.fontFamily = hydratedFont;
+    } else {
+      state.layout.fontFamily = DEFAULT_FONT_FAMILY;
     }
-    if (Number.isFinite(raw.layout.fontSize)) state.layout.fontSize = clamp(Number(raw.layout.fontSize), 7, 14);
-    if (Number.isFinite(raw.layout.titleSize)) state.layout.titleSize = clamp(Number(raw.layout.titleSize), 4.8, 12);
-    if (Number.isFinite(raw.layout.lineHeight)) state.layout.lineHeight = clamp(Number(raw.layout.lineHeight), 0.9, 1.5);
+    if (Number.isFinite(raw.layout.fontSize)) state.layout.fontSize = clamp(Number(raw.layout.fontSize), 4, 20);
+    if (Number.isFinite(raw.layout.titleSize)) {
+      let titleSize = clamp(Number(raw.layout.titleSize), 4, 20);
+      // Migrate: old default had titleSize < fontSize which is visually wrong
+      if (titleSize < state.layout.fontSize * 0.9) {
+        titleSize = Math.round(state.layout.fontSize * 1.12 * 10) / 10;
+      }
+      state.layout.titleSize = titleSize;
+    }
+    if (Number.isFinite(raw.layout.lineHeight)) state.layout.lineHeight = clamp(Number(raw.layout.lineHeight), 0.2, 3);
     if (Number.isFinite(raw.layout.letterSpacing))
-      state.layout.letterSpacing = clamp(Number(raw.layout.letterSpacing), -0.2, 1.2);
-    if (Number.isFinite(raw.layout.cardGap)) state.layout.cardGap = clamp(Number(raw.layout.cardGap), 2, 18);
-    if (Number.isFinite(raw.layout.cardPadding)) state.layout.cardPadding = clamp(Number(raw.layout.cardPadding), 4, 16);
+      state.layout.letterSpacing = clamp(Number(raw.layout.letterSpacing), -1, 3);
+    if (Number.isFinite(raw.layout.cardGap)) state.layout.cardGap = clamp(Number(raw.layout.cardGap), 0, 30);
+    if (Number.isFinite(raw.layout.cardPadding)) state.layout.cardPadding = clamp(Number(raw.layout.cardPadding), 0, 30);
     if (Number.isFinite(raw.layout.codeBlockPadding))
-      state.layout.codeBlockPadding = clamp(Number(raw.layout.codeBlockPadding), 2, 10);
+      state.layout.codeBlockPadding = clamp(Number(raw.layout.codeBlockPadding), 0, 20);
     if (Number.isFinite(raw.layout.codeBlockMargin))
-      state.layout.codeBlockMargin = clamp(Number(raw.layout.codeBlockMargin), 0, 8);
+      state.layout.codeBlockMargin = clamp(Number(raw.layout.codeBlockMargin), 0, 16);
     if (typeof raw.layout.autoGrid === "boolean") state.layout.autoGrid = raw.layout.autoGrid;
     if (Number.isFinite(raw.layout.gridColumns)) state.layout.gridColumns = clamp(Number(raw.layout.gridColumns), 1, 4);
     if (Number.isFinite(raw.layout.gridRows)) state.layout.gridRows = clamp(Number(raw.layout.gridRows), 3, 14);
+    if (typeof raw.layout.page1Landscape === "boolean") state.layout.page1Landscape = raw.layout.page1Landscape;
+    if (typeof raw.layout.page2Landscape === "boolean") state.layout.page2Landscape = raw.layout.page2Landscape;
+    if (Number.isFinite(raw.layout.tableSize)) state.layout.tableSize = clamp(Number(raw.layout.tableSize), 5, 12);
+    if (Number.isFinite(raw.layout.pieceGap)) state.layout.pieceGap = clamp(Number(raw.layout.pieceGap), 0, 10);
+    if (Number.isFinite(raw.layout.titleMargin)) state.layout.titleMargin = clamp(Number(raw.layout.titleMargin), 0, 8);
   }
 
   if (raw.filters && typeof raw.filters === "object") {
@@ -224,6 +249,7 @@ function hydratePersistedState() {
         z: Number(layout.z) || 1,
         locked: Boolean(layout.locked),
         title: typeof layout.title === "string" ? layout.title.trim() : "",
+        ...(layout.summaryOverride !== undefined ? { summaryOverride: String(layout.summaryOverride) } : {}),
       };
     });
     state.previewCards = hydratedLayouts;

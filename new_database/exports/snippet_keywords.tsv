@@ -13,13 +13,20 @@ builtins-return-values	sorted
 builtins-return-values	sum
 builtins-return-values	type
 case-and-capitalization	capitalize
+case-and-capitalization	isdigit
 case-and-capitalization	islower
 case-and-capitalization	isupper
 case-and-capitalization	lower
+case-and-capitalization	lstrip
+case-and-capitalization	rstrip
+case-and-capitalization	strip
 case-and-capitalization	upper
 datetime-build-from-parts	datetime constructor
 datetime-build-from-parts	day month year
 datetime-build-from-parts	hour minute
+datetime-build-from-parts	replace
+datetime-build-from-parts	weekday
+datetime-build-from-parts	year month day
 datetime-overlap-logic	interval
 datetime-overlap-logic	meeting
 datetime-overlap-logic	overlap
@@ -29,14 +36,18 @@ datetime-sequence-generation	weekly dates
 datetime-sequence-generation	weeks
 datetime-strptime-strftime	datetime
 datetime-strptime-strftime	format directives
+datetime-strptime-strftime	object vs string
+datetime-strptime-strftime	parse vs format
 datetime-strptime-strftime	strftime
 datetime-strptime-strftime	strptime
 datetime-timedelta-day-counts	days
 datetime-timedelta-day-counts	difference
 datetime-timedelta-day-counts	timedelta
 datetime-timedelta-day-counts	weeks
+defaults-keyword-arguments	None sentinel
 defaults-keyword-arguments	default parameter
 defaults-keyword-arguments	keyword argument
+defaults-keyword-arguments	mutable default
 defaults-keyword-arguments	optional
 defaults-keyword-arguments	parameter binding
 dict-build-count-aggregate	aggregate
@@ -60,10 +71,12 @@ find-index-count	count
 find-index-count	find
 find-index-count	index
 find-index-count	search
+fstrings-and-format	debug f-string
 fstrings-and-format	f-string
 fstrings-and-format	format
 fstrings-and-format	placeholder
 fstrings-and-format	printing
+fstrings-and-format	var=
 higher-order-lambda	function argument
 higher-order-lambda	higher-order
 higher-order-lambda	lambda
@@ -86,6 +99,12 @@ local-vs-global-scope	global
 local-vs-global-scope	local
 local-vs-global-scope	scope
 local-vs-global-scope	shadowing
+loop-control-and-iterators	StopIteration
+loop-control-and-iterators	break
+loop-control-and-iterators	continue
+loop-control-and-iterators	iter
+loop-control-and-iterators	iterator
+loop-control-and-iterators	next
 loop-templates	for
 loop-templates	inclusive
 loop-templates	previous
@@ -99,10 +118,13 @@ mcq-elimination-checklist	traps
 mcq-elimination-checklist	works
 membership-and-condition-logic	and
 membership-and-condition-logic	conditions
+membership-and-condition-logic	if elif else
 membership-and-condition-logic	in
 membership-and-condition-logic	membership
+membership-and-condition-logic	mixed-type comparison
 membership-and-condition-logic	not in
 membership-and-condition-logic	or
+membership-and-condition-logic	ternary
 mutation-vs-return	append
 mutation-vs-return	immutable
 mutation-vs-return	mutation
@@ -110,14 +132,33 @@ mutation-vs-return	replace
 mutation-vs-return	returns none
 mutation-vs-return	shuffle
 mutation-vs-return	sort
+names-aliasing-and-copies	aliasing
+names-aliasing-and-copies	copy
+names-aliasing-and-copies	identity
+names-aliasing-and-copies	mutable
+names-aliasing-and-copies	name binding
+names-aliasing-and-copies	slicing copy
 nested-indexing-and-negative-indices	indexing
 nested-indexing-and-negative-indices	negative index
 nested-indexing-and-negative-indices	nested lists
 nested-indexing-and-negative-indices	tuples
+numeric-corner-cases	arithmetic operators
+numeric-corner-cases	float precision
+numeric-corner-cases	floor division
+numeric-corner-cases	identity
+numeric-corner-cases	modulo
+numeric-corner-cases	order-sensitive
+numeric-corner-cases	power
+numeric-corner-cases	sets
 oop-compare-and-report-patterns	average score
 oop-compare-and-report-patterns	compare objects
 oop-compare-and-report-patterns	overview
 oop-compare-and-report-patterns	report string
+oop-inheritance-core	inheritance
+oop-inheritance-core	isinstance
+oop-inheritance-core	parent class
+oop-inheritance-core	subclass
+oop-inheritance-core	super
 oop-init-self-defaults	__init__
 oop-init-self-defaults	default attribute
 oop-init-self-defaults	instance attribute
@@ -126,7 +167,9 @@ oop-method-calls-and-self	instance method
 oop-method-calls-and-self	method call
 oop-method-calls-and-self	self
 oop-state-and-collection-attributes	append
+oop-state-and-collection-attributes	class attribute
 oop-state-and-collection-attributes	garage
+oop-state-and-collection-attributes	instance attribute
 oop-state-and-collection-attributes	list attribute
 oop-state-and-collection-attributes	reviews
 oop-state-and-collection-attributes	state
@@ -145,6 +188,12 @@ pandas-map-vs-apply	apply
 pandas-map-vs-apply	axis=1
 pandas-map-vs-apply	map
 pandas-map-vs-apply	rowwise
+pandas-missing-values-alignment	NaN
+pandas-missing-values-alignment	dropna
+pandas-missing-values-alignment	fillna
+pandas-missing-values-alignment	index alignment
+pandas-missing-values-alignment	missing values
+pandas-missing-values-alignment	pandas
 pandas-series-vs-dataframe	DataFrame
 pandas-series-vs-dataframe	Series
 pandas-series-vs-dataframe	shape
@@ -176,6 +225,12 @@ split-join-replace	join
 split-join-replace	replace
 split-join-replace	split
 split-join-replace	strings
+syntax-fragments-escapes-raw-strings	backslash
+syntax-fragments-escapes-raw-strings	comment
+syntax-fragments-escapes-raw-strings	escape sequence
+syntax-fragments-escapes-raw-strings	logical line
+syntax-fragments-escapes-raw-strings	raw string
+syntax-fragments-escapes-raw-strings	syntax
 targeted-string-edit-patterns	anagram
 targeted-string-edit-patterns	replace count
 targeted-string-edit-patterns	second occurrence

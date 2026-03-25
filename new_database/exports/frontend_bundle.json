@@ -360,14 +360,358 @@
       "title": "Core Python",
       "description": "Types, truthiness, indexing, slicing, loops, and small built-ins.",
       "sort_order": 2,
-      "snippet_count": 8,
+      "snippet_count": 12,
       "subtopics": [
+        {
+          "slug": "syntax-basics",
+          "title": "Syntax basics",
+          "description": "Tiny syntax fragments, raw strings, escape sequences, comments, and line continuation.",
+          "sort_order": 1,
+          "snippet_count": 1,
+          "snippets": [
+            {
+              "slug": "syntax-fragments-escapes-raw-strings",
+              "title": "Syntax fragments, escapes, and raw strings",
+              "summary": "Low-level syntax reminders for comments, logical lines, backslashes, raw strings, and tiny escape-sequence questions.",
+              "why": "These are low-frequency compared with pandas or strings, but when they do appear the whole question can collapse to one exact syntax fact.",
+              "default_priority": 4,
+              "difficulty": "beginner",
+              "course_phase": "pre-midterm",
+              "recurrence_level": "rare",
+              "exam_family_count": 0,
+              "question_ref_count": 0,
+              "piece_count": 3,
+              "default_piece_count": 2,
+              "default_char_count": 792,
+              "total_char_count": 1154,
+              "keywords": [
+                "backslash",
+                "comment",
+                "escape sequence",
+                "logical line",
+                "raw string",
+                "syntax"
+              ],
+              "trap_slugs": [
+                "comment_ignores_rest_of_line",
+                "escape_sequence_meaning",
+                "raw_string_backslashes"
+              ],
+              "trap_labels": [
+                "Comment Ignores Rest Of Line",
+                "Escape Sequence Meaning",
+                "Raw String Backslashes"
+              ],
+              "ui_section_slug": "start-here",
+              "ui_section_title": "Start here",
+              "ui_section_sort_order": 1,
+              "ui_card_order": 1,
+              "is_trap_heavy": true,
+              "readme_path": "content/core-python/syntax-basics/syntax-fragments-escapes-raw-strings/README.md",
+              "content_dir": "content/core-python/syntax-basics/syntax-fragments-escapes-raw-strings",
+              "pieces": [
+                {
+                  "piece_id": "syntax-fragments-escapes-raw-strings__01__syntax-rules-mini-table",
+                  "piece_slug": "syntax-rules-mini-table",
+                  "sort_order": 1,
+                  "title": "Syntax rules mini-table",
+                  "kind": "table",
+                  "role": "core",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Pattern | What Python does | Example |\n|---|---|---|\n| `# comment` | ignores everything after `#` on that logical line | `x = 3  # ignored text` |\n| open brackets `() [] {}` | statement can continue across physical lines | `nums = [\\n  1,\\n  2\\n]` |\n| trailing backslash `\\` | explicitly continues one statement onto the next line | `a = 'hi' + \\\\\\n    ' there'` |\n| raw string `r'...'` | keeps backslashes literally; quotes still must close normally | `r'c:\\temp\\file.txt'` |\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Pattern",
+                        "What Python does",
+                        "Example"
+                      ],
+                      "rows": [
+                        [
+                          "`# comment`",
+                          "ignores everything after `#` on that logical line",
+                          "`x = 3  # ignored text`"
+                        ],
+                        [
+                          "open brackets `() [] {}`",
+                          "statement can continue across physical lines",
+                          "`nums = [\\n  1,\\n  2\\n]`"
+                        ],
+                        [
+                          "trailing backslash `\\`",
+                          "explicitly continues one statement onto the next line",
+                          "`a = 'hi' + \\\\\\n    ' there'`"
+                        ],
+                        [
+                          "raw string `r'...'`",
+                          "keeps backslashes literally; quotes still must close normally",
+                          "`r'c:\\temp\\file.txt'`"
+                        ]
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/syntax-basics/syntax-fragments-escapes-raw-strings/01_syntax-rules-mini-table.md"
+                },
+                {
+                  "piece_id": "syntax-fragments-escapes-raw-strings__02__escapes-and-quotes",
+                  "piece_slug": "escapes-and-quotes",
+                  "sort_order": 2,
+                  "title": "Escapes and quote choices",
+                  "kind": "table",
+                  "role": "core",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Pattern | Meaning / output |\n|---|---|\n| `\\n` | newline |\n| `\\t` | tab |\n| `\\\\` | one literal backslash |\n| `\\\"` / `\\'` | literal quote inside the same quote style |\n| `\"it's\"` or `'He said \"hi\"'` | often easier than escaping both quotes |\n| `r\"C:\\new\\text.txt\"` | raw string keeps backslashes; handy for paths |\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Pattern",
+                        "Meaning / output"
+                      ],
+                      "rows": [
+                        [
+                          "`\\n`",
+                          "newline"
+                        ],
+                        [
+                          "`\\t`",
+                          "tab"
+                        ],
+                        [
+                          "`\\\\`",
+                          "one literal backslash"
+                        ],
+                        [
+                          "`\\\"` / `\\'`",
+                          "literal quote inside the same quote style"
+                        ],
+                        [
+                          "`\"it's\"` or `'He said \"hi\"'`",
+                          "often easier than escaping both quotes"
+                        ],
+                        [
+                          "`r\"C:\\new\\text.txt\"`",
+                          "raw string keeps backslashes; handy for paths"
+                        ]
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/syntax-basics/syntax-fragments-escapes-raw-strings/02_escapes-and-quotes.md"
+                },
+                {
+                  "piece_id": "syntax-fragments-escapes-raw-strings__03__tiny-fragments",
+                  "piece_slug": "tiny-fragments",
+                  "sort_order": 3,
+                  "title": "Tiny fragments to read literally",
+                  "kind": "example",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\nx = 3  # comment does not execute\nprint(x)                  # 3\n```\n\n```python\nmessage = (\n    \"Hello \"\n    \"world\"\n)\nprint(message)            # Hello world\n```\n\n```python\npath = r\"C:\\temp\\new_folder\"\nprint(path)               # C:\\temp\\new_folder\n```\n\nExam habit: trace the exact tokens Python sees; do not infer extra intent that is not in the code.\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "x = 3  # comment does not execute\nprint(x)                  # 3"
+                    },
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "message = (\n    \"Hello \"\n    \"world\"\n)\nprint(message)            # Hello world"
+                    },
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "path = r\"C:\\temp\\new_folder\"\nprint(path)               # C:\\temp\\new_folder"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "Exam habit: trace the exact tokens Python sees; do not infer extra intent that is not in the code."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/syntax-basics/syntax-fragments-escapes-raw-strings/03_tiny-fragments.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "objects-names",
+          "title": "Objects & names",
+          "description": "Name binding, aliasing, copies, equality versus identity.",
+          "sort_order": 2,
+          "snippet_count": 1,
+          "snippets": [
+            {
+              "slug": "names-aliasing-and-copies",
+              "title": "Names, aliasing, and copies",
+              "summary": "How Python names bind to objects, when two names share one mutable object, and how to tell aliasing from copying.",
+              "why": "A lot of “why did this value change?” explanations reduce to one question: do these names point at the same list, or at different objects?",
+              "default_priority": 4,
+              "difficulty": "mixed",
+              "course_phase": "pre-midterm",
+              "recurrence_level": "occasional",
+              "exam_family_count": 0,
+              "question_ref_count": 0,
+              "piece_count": 3,
+              "default_piece_count": 2,
+              "default_char_count": 590,
+              "total_char_count": 889,
+              "keywords": [
+                "aliasing",
+                "copy",
+                "identity",
+                "mutable",
+                "name binding",
+                "slicing copy"
+              ],
+              "trap_slugs": [
+                "alias_vs_copy",
+                "identity_vs_equality",
+                "slice_copy_vs_alias"
+              ],
+              "trap_labels": [
+                "Alias Versus Copy",
+                "Identity Versus Equality",
+                "Slice Copy Versus Alias"
+              ],
+              "ui_section_slug": "start-here",
+              "ui_section_title": "Start here",
+              "ui_section_sort_order": 1,
+              "ui_card_order": 1,
+              "is_trap_heavy": true,
+              "readme_path": "content/core-python/objects-names/names-aliasing-and-copies/README.md",
+              "content_dir": "content/core-python/objects-names/names-aliasing-and-copies",
+              "pieces": [
+                {
+                  "piece_id": "names-aliasing-and-copies__01__binding-and-copy-table",
+                  "piece_slug": "binding-and-copy-table",
+                  "sort_order": 1,
+                  "title": "Binding and copy table",
+                  "kind": "table",
+                  "role": "core",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Pattern | What it means |\n|---|---|\n| `b = a` | `b` is another name for the **same** object |\n| `b = a[:]` | for a list, `b` is a **new outer list** with the same elements |\n| `b = list(a)` | another common shallow-copy pattern for a list |\n| `a = a + [4]` | builds a **new** list and rebinds `a` |\n| `a.append(4)` | mutates the existing list in place |\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Pattern",
+                        "What it means"
+                      ],
+                      "rows": [
+                        [
+                          "`b = a`",
+                          "`b` is another name for the **same** object"
+                        ],
+                        [
+                          "`b = a[:]`",
+                          "for a list, `b` is a **new outer list** with the same elements"
+                        ],
+                        [
+                          "`b = list(a)`",
+                          "another common shallow-copy pattern for a list"
+                        ],
+                        [
+                          "`a = a + [4]`",
+                          "builds a **new** list and rebinds `a`"
+                        ],
+                        [
+                          "`a.append(4)`",
+                          "mutates the existing list in place"
+                        ]
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/objects-names/names-aliasing-and-copies/01_binding-and-copy-table.md"
+                },
+                {
+                  "piece_id": "names-aliasing-and-copies__02__aliasing-example",
+                  "piece_slug": "aliasing-example",
+                  "sort_order": 2,
+                  "title": "Aliasing versus slicing copy",
+                  "kind": "example",
+                  "role": "core",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\nl1 = [1, 2, 3]\nl2 = l1\nl3 = l1[:]\n\nl1[0] = 99\n\nprint(l2)   # [99, 2, 3]  -> same list as l1\nprint(l3)   # [1, 2, 3]   -> separate outer list\n```\nUse this pattern whenever the exam asks why one variable changed “unexpectedly”.\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "l1 = [1, 2, 3]\nl2 = l1\nl3 = l1[:]\n\nl1[0] = 99\n\nprint(l2)   # [99, 2, 3]  -> same list as l1\nprint(l3)   # [1, 2, 3]   -> separate outer list"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "Use this pattern whenever the exam asks why one variable changed “unexpectedly”."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/objects-names/names-aliasing-and-copies/02_aliasing-example.md"
+                },
+                {
+                  "piece_id": "names-aliasing-and-copies__03__equality-vs-identity",
+                  "piece_slug": "equality-vs-identity",
+                  "sort_order": 3,
+                  "title": "Equality versus identity",
+                  "kind": "table",
+                  "role": "trap",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Expression | Checks | Typical use |\n|---|---|---|\n| `a == b` | same value/content | normal equality questions |\n| `a is b` | same object in memory | identity / singleton checks such as `x is None` |\n\nIf the question is not explicitly about object identity, `==` is usually the intended comparison.\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Expression",
+                        "Checks",
+                        "Typical use"
+                      ],
+                      "rows": [
+                        [
+                          "`a == b`",
+                          "same value/content",
+                          "normal equality questions"
+                        ],
+                        [
+                          "`a is b`",
+                          "same object in memory",
+                          "identity / singleton checks such as `x is None`"
+                        ]
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "If the question is not explicitly about object identity, `==` is usually the intended comparison."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/objects-names/names-aliasing-and-copies/03_equality-vs-identity.md"
+                }
+              ]
+            }
+          ]
+        },
         {
           "slug": "types-conditions",
           "title": "Types & conditions",
           "description": "Truthiness, equality, membership, and built-ins.",
-          "sort_order": 1,
-          "snippet_count": 3,
+          "sort_order": 3,
+          "snippet_count": 4,
           "snippets": [
             {
               "slug": "types-none-bool-equality",
@@ -559,7 +903,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/core-python/types-conditions/builtins-return-values/README.md",
               "content_dir": "content/core-python/types-conditions/builtins-return-values",
               "pieces": [
@@ -715,31 +1059,40 @@
               "recurrence_level": "common",
               "exam_family_count": 3,
               "question_ref_count": 5,
-              "piece_count": 4,
+              "piece_count": 5,
               "default_piece_count": 2,
               "default_char_count": 632,
-              "total_char_count": 1131,
+              "total_char_count": 1491,
               "keywords": [
                 "and",
                 "conditions",
+                "if elif else",
                 "in",
                 "membership",
+                "mixed-type comparison",
                 "not in",
-                "or"
+                "or",
+                "ternary"
               ],
               "trap_slugs": [
                 "condition_precedence_brackets",
-                "membership_checks_keys"
+                "filter_condition_applies_to_each_item",
+                "membership_checks_keys",
+                "mixed_type_compare_without_conversion",
+                "ternary_branch_order"
               ],
               "trap_labels": [
                 "Condition Precedence Brackets",
-                "Membership Checks Keys"
+                "Filter Condition Applies To Each Item",
+                "Membership Checks Keys",
+                "Mixed-Type Compare Without Conversion",
+                "Ternary Branch Order"
               ],
               "ui_section_slug": "add-next",
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/core-python/types-conditions/membership-and-condition-logic/README.md",
               "content_dir": "content/core-python/types-conditions/membership-and-condition-logic",
               "pieces": [
@@ -855,6 +1208,238 @@
                   "trap_slugs": [],
                   "trap_labels": [],
                   "body_path": "content/core-python/types-conditions/membership-and-condition-logic/04_membership-with-real-context.md"
+                },
+                {
+                  "piece_id": "membership-and-condition-logic__05__branch-order-and-ternary",
+                  "piece_slug": "branch-order-and-ternary",
+                  "sort_order": 5,
+                  "title": "Branch order, ternary, and per-element filtering",
+                  "kind": "rules",
+                  "role": "trap",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "- In an `if / elif / else` chain, put the most specific or highest-threshold branch first.\n- Ternary form is `value_if_true if condition else value_if_false`.\n- When filtering a collection, apply the condition to **each element**:\n  ```python\n  [x for x in nums if x > 0]\n  ```\n  not `if nums > 0`.\n- Convert before comparing mixed types such as `'3'` and `3`.\n",
+                  "body_blocks": [
+                    {
+                      "type": "list",
+                      "ordered": false,
+                      "items": [
+                        "In an `if / elif / else` chain, put the most specific or highest-threshold branch first.",
+                        "Ternary form is `value_if_true if condition else value_if_false`.",
+                        "When filtering a collection, apply the condition to **each element**:\n```python\n[x for x in nums if x > 0]\n```\nnot `if nums > 0`.",
+                        "Convert before comparing mixed types such as `'3'` and `3`."
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/types-conditions/membership-and-condition-logic/05_branch-order-and-ternary.md"
+                }
+              ]
+            },
+            {
+              "slug": "numeric-corner-cases",
+              "title": "Numeric corner cases",
+              "summary": "Compact backup for negative floor division, modulo with negatives, float precision, and order-sensitive versus order-insensitive equality.",
+              "why": "These are not the most frequent exam themes, but they are classic one-line gotchas: exact float equality, negative `//`, and assuming every container equality check cares about order.",
+              "default_priority": 3,
+              "difficulty": "mixed",
+              "course_phase": "pre-midterm",
+              "recurrence_level": "rare",
+              "exam_family_count": 0,
+              "question_ref_count": 0,
+              "piece_count": 4,
+              "default_piece_count": 1,
+              "default_char_count": 213,
+              "total_char_count": 1129,
+              "keywords": [
+                "arithmetic operators",
+                "float precision",
+                "floor division",
+                "identity",
+                "modulo",
+                "order-sensitive",
+                "power",
+                "sets"
+              ],
+              "trap_slugs": [
+                "float_precision_exact_compare",
+                "floor_division_floors_down",
+                "set_equality_ignores_order"
+              ],
+              "trap_labels": [
+                "Float Precision Exact Compare",
+                "Floor Division Floors Down",
+                "Set Equality Ignores Order"
+              ],
+              "ui_section_slug": "edge-cases",
+              "ui_section_title": "Edge cases",
+              "ui_section_sort_order": 3,
+              "ui_card_order": 1,
+              "is_trap_heavy": true,
+              "readme_path": "content/core-python/types-conditions/numeric-corner-cases/README.md",
+              "content_dir": "content/core-python/types-conditions/numeric-corner-cases",
+              "pieces": [
+                {
+                  "piece_id": "numeric-corner-cases__01__negative-division-and-modulo",
+                  "piece_slug": "negative-division-and-modulo",
+                  "sort_order": 1,
+                  "title": "Negative `//` and `%`",
+                  "kind": "table",
+                  "role": "core",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Expression | Result | Why |\n|---|---:|---|\n| `-5 // 3` | `-2` | `//` floors downward, not toward zero |\n| `-5 % 3` | `1` | remainder keeps the divisor’s sign |\n| `-5 // 2` | `-3` | still floors downward |\n| `-5 % 2` | `1` | paired with the floored quotient |\n\nUseful check: `a == (a // b) * b + (a % b)`.\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Expression",
+                        "Result",
+                        "Why"
+                      ],
+                      "rows": [
+                        [
+                          "`-5 // 3`",
+                          "`-2`",
+                          "`//` floors downward, not toward zero"
+                        ],
+                        [
+                          "`-5 % 3`",
+                          "`1`",
+                          "remainder keeps the divisor’s sign"
+                        ],
+                        [
+                          "`-5 // 2`",
+                          "`-3`",
+                          "still floors downward"
+                        ],
+                        [
+                          "`-5 % 2`",
+                          "`1`",
+                          "paired with the floored quotient"
+                        ]
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "Useful check: `a == (a // b) * b + (a % b)`."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/types-conditions/numeric-corner-cases/01_negative-division-and-modulo.md"
+                },
+                {
+                  "piece_id": "numeric-corner-cases__02__precision-and-order",
+                  "piece_slug": "precision-and-order",
+                  "sort_order": 2,
+                  "title": "Float precision and order-sensitive equality",
+                  "kind": "example",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\nprint(1.1 + 2.2 == 3.3)   # False\nprint([1, 2] == [2, 1])   # False\nprint({1, 2} == {2, 1})   # True\n```\n\n- exact float equality can fail because decimal fractions are stored approximately\n- lists / tuples / strings care about order\n- sets do not care about insertion order when testing equality\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "print(1.1 + 2.2 == 3.3)   # False\nprint([1, 2] == [2, 1])   # False\nprint({1, 2} == {2, 1})   # True"
+                    },
+                    {
+                      "type": "list",
+                      "ordered": false,
+                      "items": [
+                        "exact float equality can fail because decimal fractions are stored approximately",
+                        "lists / tuples / strings care about order",
+                        "sets do not care about insertion order when testing equality"
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/types-conditions/numeric-corner-cases/02_precision-and-order.md"
+                },
+                {
+                  "piece_id": "numeric-corner-cases__03__fast-rules",
+                  "piece_slug": "fast-rules",
+                  "sort_order": 3,
+                  "title": "Fast rules",
+                  "kind": "rules",
+                  "role": "trap",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "- With negative numbers, `//` means **floor**, not truncate-toward-zero.\n- Be suspicious of `1.1 + 2.2 == 3.3`-style options.\n- Ordered containers compare ordered content; sets compare members regardless of order.\n",
+                  "body_blocks": [
+                    {
+                      "type": "list",
+                      "ordered": false,
+                      "items": [
+                        "With negative numbers, `//` means **floor**, not truncate-toward-zero.",
+                        "Be suspicious of `1.1 + 2.2 == 3.3`-style options.",
+                        "Ordered containers compare ordered content; sets compare members regardless of order."
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/types-conditions/numeric-corner-cases/03_fast-rules.md"
+                },
+                {
+                  "piece_id": "numeric-corner-cases__04__operator-mini-table",
+                  "piece_slug": "operator-mini-table",
+                  "sort_order": 4,
+                  "title": "Operator mini-table",
+                  "kind": "table",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Operator | Meaning | Example |\n|---|---|---|\n| `+` | addition / concatenation | `2 + 3`, `'a' + 'b'` |\n| `-` | subtraction | `7 - 2` |\n| `*` | multiplication / repetition | `3 * 4`, `'ha' * 2` |\n| `**` | power | `2 ** 3` |\n| `//` | floor division | `7 // 2` -> `3` |\n| `%` | remainder | `7 % 2` -> `1` |\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Operator",
+                        "Meaning",
+                        "Example"
+                      ],
+                      "rows": [
+                        [
+                          "`+`",
+                          "addition / concatenation",
+                          "`2 + 3`, `'a' + 'b'`"
+                        ],
+                        [
+                          "`-`",
+                          "subtraction",
+                          "`7 - 2`"
+                        ],
+                        [
+                          "`*`",
+                          "multiplication / repetition",
+                          "`3 * 4`, `'ha' * 2`"
+                        ],
+                        [
+                          "`**`",
+                          "power",
+                          "`2 ** 3`"
+                        ],
+                        [
+                          "`//`",
+                          "floor division",
+                          "`7 // 2` -> `3`"
+                        ],
+                        [
+                          "`%`",
+                          "remainder",
+                          "`7 % 2` -> `1`"
+                        ]
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/types-conditions/numeric-corner-cases/04_operator-mini-table.md"
                 }
               ]
             }
@@ -864,8 +1449,8 @@
           "slug": "lists-loops",
           "title": "Lists, slicing & loops",
           "description": "Indexing, slicing, iteration templates, zip/enumerate.",
-          "sort_order": 2,
-          "snippet_count": 5,
+          "sort_order": 4,
+          "snippet_count": 6,
           "snippets": [
             {
               "slug": "zip-enumerate-core",
@@ -900,7 +1485,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/core-python/lists-loops/zip-enumerate-core/README.md",
               "content_dir": "content/core-python/lists-loops/zip-enumerate-core",
               "pieces": [
@@ -1024,7 +1609,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/core-python/lists-loops/slicing-patterns/README.md",
               "content_dir": "content/core-python/lists-loops/slicing-patterns",
               "pieces": [
@@ -1151,7 +1736,7 @@
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/core-python/lists-loops/loop-templates/README.md",
               "content_dir": "content/core-python/lists-loops/loop-templates",
               "pieces": [
@@ -1266,7 +1851,7 @@
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/core-python/lists-loops/nested-indexing-and-negative-indices/README.md",
               "content_dir": "content/core-python/lists-loops/nested-indexing-and-negative-indices",
               "pieces": [
@@ -1397,7 +1982,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 3,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/core-python/lists-loops/list-selection-and-aggregation/README.md",
               "content_dir": "content/core-python/lists-loops/list-selection-and-aggregation",
               "pieces": [
@@ -1477,6 +2062,140 @@
                   "body_path": "content/core-python/lists-loops/list-selection-and-aggregation/03_max-sum-trap.md"
                 }
               ]
+            },
+            {
+              "slug": "loop-control-and-iterators",
+              "title": "Loop control and iterators",
+              "summary": "Backup material for `break`, `continue`, `iter()`, `next()`, and “what happens on the next iteration?” style questions.",
+              "why": "These patterns are less common than slicing or `range`, but when they do appear they are usually testing one exact control-flow fact.",
+              "default_priority": 3,
+              "difficulty": "mixed",
+              "course_phase": "pre-midterm",
+              "recurrence_level": "rare",
+              "exam_family_count": 0,
+              "question_ref_count": 0,
+              "piece_count": 3,
+              "default_piece_count": 1,
+              "default_char_count": 237,
+              "total_char_count": 716,
+              "keywords": [
+                "StopIteration",
+                "break",
+                "continue",
+                "iter",
+                "iterator",
+                "next"
+              ],
+              "trap_slugs": [
+                "break_vs_continue",
+                "iter_next_progress",
+                "stopiteration_after_exhaustion"
+              ],
+              "trap_labels": [
+                "Break Versus Continue",
+                "Iter Next Progress",
+                "StopIteration After Exhaustion"
+              ],
+              "ui_section_slug": "edge-cases",
+              "ui_section_title": "Edge cases",
+              "ui_section_sort_order": 3,
+              "ui_card_order": 1,
+              "is_trap_heavy": true,
+              "readme_path": "content/core-python/lists-loops/loop-control-and-iterators/README.md",
+              "content_dir": "content/core-python/lists-loops/loop-control-and-iterators",
+              "pieces": [
+                {
+                  "piece_id": "loop-control-and-iterators__01__control-table",
+                  "piece_slug": "control-table",
+                  "sort_order": 1,
+                  "title": "`break`, `continue`, `iter`, `next`",
+                  "kind": "table",
+                  "role": "core",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Form | Effect |\n|---|---|\n| `break` | exit the loop immediately |\n| `continue` | skip the rest of the current iteration and go to the next one |\n| `it = iter(values)` | build an iterator object |\n| `next(it)` | return the next value and advance the iterator |\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Form",
+                        "Effect"
+                      ],
+                      "rows": [
+                        [
+                          "`break`",
+                          "exit the loop immediately"
+                        ],
+                        [
+                          "`continue`",
+                          "skip the rest of the current iteration and go to the next one"
+                        ],
+                        [
+                          "`it = iter(values)`",
+                          "build an iterator object"
+                        ],
+                        [
+                          "`next(it)`",
+                          "return the next value and advance the iterator"
+                        ]
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/lists-loops/loop-control-and-iterators/01_control-table.md"
+                },
+                {
+                  "piece_id": "loop-control-and-iterators__02__iterator-example",
+                  "piece_slug": "iterator-example",
+                  "sort_order": 2,
+                  "title": "Iterator example",
+                  "kind": "example",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\nit = iter([10, 20])\n\nprint(next(it))   # 10\nprint(next(it))   # 20\n# next(it)        # StopIteration: no values left\n```\n\nAn iterator remembers where it is. `next(it)` does **not** restart from the beginning.\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "it = iter([10, 20])\n\nprint(next(it))   # 10\nprint(next(it))   # 20\n# next(it)        # StopIteration: no values left"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "An iterator remembers where it is. `next(it)` does **not** restart from the beginning."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/lists-loops/loop-control-and-iterators/02_iterator-example.md"
+                },
+                {
+                  "piece_id": "loop-control-and-iterators__03__control-reminders",
+                  "piece_slug": "control-reminders",
+                  "sort_order": 3,
+                  "title": "Control-flow reminders",
+                  "kind": "rules",
+                  "role": "trap",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "- `break` ends the loop; `continue` only skips the current pass.\n- If a value is appended **after** a `continue`, that line is skipped for that iteration.\n- Iterators are consumed as you call `next(...)`; they do not automatically reset.\n",
+                  "body_blocks": [
+                    {
+                      "type": "list",
+                      "ordered": false,
+                      "items": [
+                        "`break` ends the loop; `continue` only skips the current pass.",
+                        "If a value is appended **after** a `continue`, that line is skipped for that iteration.",
+                        "Iterators are consumed as you call `next(...)`; they do not automatically reset."
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/core-python/lists-loops/loop-control-and-iterators/03_control-reminders.md"
+                }
+              ]
             }
           ]
         }
@@ -1531,7 +2250,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/functions-and-scope/returns-scope/local-vs-global-scope/README.md",
               "content_dir": "content/functions-and-scope/returns-scope/local-vs-global-scope",
               "pieces": [
@@ -1661,7 +2380,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/functions-and-scope/returns-scope/return-none-and-function-end/README.md",
               "content_dir": "content/functions-and-scope/returns-scope/return-none-and-function-end",
               "pieces": [
@@ -1786,7 +2505,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/functions-and-scope/parameters-flexible-args/args-and-kwargs/README.md",
               "content_dir": "content/functions-and-scope/parameters-flexible-args/args-and-kwargs",
               "pieces": [
@@ -1899,29 +2618,33 @@
               "recurrence_level": "very-common",
               "exam_family_count": 4,
               "question_ref_count": 7,
-              "piece_count": 3,
+              "piece_count": 4,
               "default_piece_count": 2,
               "default_char_count": 378,
-              "total_char_count": 572,
+              "total_char_count": 824,
               "keywords": [
+                "None sentinel",
                 "default parameter",
                 "keyword argument",
+                "mutable default",
                 "optional",
                 "parameter binding"
               ],
               "trap_slugs": [
                 "default_arg_optional",
-                "keyword_binding_by_name"
+                "keyword_binding_by_name",
+                "mutable_default_shared_state"
               ],
               "trap_labels": [
                 "Default Arg Optional",
-                "Keyword Binding By Name"
+                "Keyword Binding By Name",
+                "Mutable Default Shared State"
               ],
               "ui_section_slug": "start-here",
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/functions-and-scope/parameters-flexible-args/defaults-keyword-arguments/README.md",
               "content_dir": "content/functions-and-scope/parameters-flexible-args/defaults-keyword-arguments",
               "pieces": [
@@ -2010,6 +2733,40 @@
                   "trap_slugs": [],
                   "trap_labels": [],
                   "body_path": "content/functions-and-scope/parameters-flexible-args/defaults-keyword-arguments/03_elimination-hint.md"
+                },
+                {
+                  "piece_id": "defaults-keyword-arguments__04__mutable-default-trap",
+                  "piece_slug": "mutable-default-trap",
+                  "sort_order": 4,
+                  "title": "Mutable default trap",
+                  "kind": "example",
+                  "role": "trap",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\ndef add_tag(tag, tags=[]):\n    tags.append(tag)\n    return tags\n```\n\nThat same list is reused across calls.\n\nSafer pattern:\n```python\ndef add_tag(tag, tags=None):\n    if tags is None:\n        tags = []\n    tags.append(tag)\n    return tags\n```\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "def add_tag(tag, tags=[]):\n    tags.append(tag)\n    return tags"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "That same list is reused across calls."
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "Safer pattern:"
+                    },
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "def add_tag(tag, tags=None):\n    if tags is None:\n        tags = []\n    tags.append(tag)\n    return tags"
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/functions-and-scope/parameters-flexible-args/defaults-keyword-arguments/04_mutable-default-trap.md"
                 }
               ]
             }
@@ -2300,7 +3057,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/strings/methods/split-join-replace/README.md",
               "content_dir": "content/strings/methods/split-join-replace",
               "pieces": [
@@ -2435,7 +3192,7 @@
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/strings/methods/find-index-count/README.md",
               "content_dir": "content/strings/methods/find-index-count",
               "pieces": [
@@ -2552,28 +3309,36 @@
               "recurrence_level": "common",
               "exam_family_count": 3,
               "question_ref_count": 5,
-              "piece_count": 2,
+              "piece_count": 3,
               "default_piece_count": 2,
               "default_char_count": 520,
-              "total_char_count": 520,
+              "total_char_count": 864,
               "keywords": [
                 "capitalize",
+                "isdigit",
                 "islower",
                 "isupper",
                 "lower",
+                "lstrip",
+                "rstrip",
+                "strip",
                 "upper"
               ],
               "trap_slugs": [
-                "case_method_pipeline"
+                "case_method_pipeline",
+                "string_predicate_nonletters",
+                "strip_edges_only"
               ],
               "trap_labels": [
-                "Case Method Pipeline"
+                "Case Method Pipeline",
+                "String Predicate Nonletters",
+                "Strip Edges Only"
               ],
               "ui_section_slug": "add-next",
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/strings/methods/case-and-capitalization/README.md",
               "content_dir": "content/strings/methods/case-and-capitalization",
               "pieces": [
@@ -2657,6 +3422,57 @@
                   "trap_slugs": [],
                   "trap_labels": [],
                   "body_path": "content/strings/methods/case-and-capitalization/02_swap-case-comprehension.md"
+                },
+                {
+                  "piece_id": "case-and-capitalization__03__strip-and-predicate-extras",
+                  "piece_slug": "strip-and-predicate-extras",
+                  "sort_order": 3,
+                  "title": "Whitespace and predicate extras",
+                  "kind": "table",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Call | Result | Reminder |\n|---|---|---|\n| `'  abc  '.strip()` | `'abc'` | removes leading and trailing whitespace only |\n| `'  abc  '.lstrip()` | `'abc  '` | left side only |\n| `'  abc  '.rstrip()` | `'  abc'` | right side only |\n| `'123'.isdigit()` | `True` | digits only |\n| `'123'.islower()` | `False` | digits are not lowercase letters |\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Call",
+                        "Result",
+                        "Reminder"
+                      ],
+                      "rows": [
+                        [
+                          "`'  abc  '.strip()`",
+                          "`'abc'`",
+                          "removes leading and trailing whitespace only"
+                        ],
+                        [
+                          "`'  abc  '.lstrip()`",
+                          "`'abc  '`",
+                          "left side only"
+                        ],
+                        [
+                          "`'  abc  '.rstrip()`",
+                          "`'  abc'`",
+                          "right side only"
+                        ],
+                        [
+                          "`'123'.isdigit()`",
+                          "`True`",
+                          "digits only"
+                        ],
+                        [
+                          "`'123'.islower()`",
+                          "`False`",
+                          "digits are not lowercase letters"
+                        ]
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/strings/methods/case-and-capitalization/03_strip-and-predicate-extras.md"
                 }
               ]
             }
@@ -2680,21 +3496,25 @@
               "recurrence_level": "very-common",
               "exam_family_count": 4,
               "question_ref_count": 7,
-              "piece_count": 4,
+              "piece_count": 5,
               "default_piece_count": 2,
               "default_char_count": 444,
-              "total_char_count": 1040,
+              "total_char_count": 1222,
               "keywords": [
+                "debug f-string",
                 "f-string",
                 "format",
                 "placeholder",
-                "printing"
+                "printing",
+                "var="
               ],
               "trap_slugs": [
+                "debug_fstring_name_value",
                 "format_placeholder_mismatch",
                 "misspelled_variable_name"
               ],
               "trap_labels": [
+                "Debug F-String Name Value",
                 "Format Placeholder Mismatch",
                 "Misspelled Variable Name"
               ],
@@ -2702,7 +3522,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/strings/formatting/fstrings-and-format/README.md",
               "content_dir": "content/strings/formatting/fstrings-and-format",
               "pieces": [
@@ -2822,6 +3642,31 @@
                   "trap_slugs": [],
                   "trap_labels": [],
                   "body_path": "content/strings/formatting/fstrings-and-format/04_list-of-dicts-print-pattern.md"
+                },
+                {
+                  "piece_id": "fstrings-and-format__05__debug-fstring",
+                  "piece_slug": "debug-fstring",
+                  "sort_order": 5,
+                  "title": "Debug output with `f'{var=}'`",
+                  "kind": "example",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\nval = 10\nprint(f'{val=}')   # val=10\n```\n\nThis prints both the variable name and its current value, which can look unfamiliar if you have only practiced ordinary f-strings.\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "val = 10\nprint(f'{val=}')   # val=10"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "This prints both the variable name and its current value, which can look unfamiliar if you have only practiced ordinary f-strings."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/strings/formatting/fstrings-and-format/05_debug-fstring.md"
                 }
               ]
             },
@@ -2858,7 +3703,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/strings/formatting/targeted-string-edit-patterns/README.md",
               "content_dir": "content/strings/formatting/targeted-string-edit-patterns",
               "pieces": [
@@ -2986,7 +3831,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/strings/parsing/url-email-phone-parsing/README.md",
               "content_dir": "content/strings/parsing/url-email-phone-parsing",
               "pieces": [
@@ -3122,7 +3967,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/dicts-and-comprehensions/dicts/dict-build-count-aggregate/README.md",
               "content_dir": "content/dicts-and-comprehensions/dicts/dict-build-count-aggregate",
               "pieces": [
@@ -3233,7 +4078,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/dicts-and-comprehensions/dicts/dict-iteration-equality/README.md",
               "content_dir": "content/dicts-and-comprehensions/dicts/dict-iteration-equality",
               "pieces": [
@@ -3351,7 +4196,7 @@
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/dicts-and-comprehensions/dicts/dict-running-totals-and-next-links/README.md",
               "content_dir": "content/dicts-and-comprehensions/dicts/dict-running-totals-and-next-links",
               "pieces": [
@@ -3479,7 +4324,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/dicts-and-comprehensions/comprehensions/dict-comprehension-patterns/README.md",
               "content_dir": "content/dicts-and-comprehensions/comprehensions/dict-comprehension-patterns",
               "pieces": [
@@ -3719,7 +4564,7 @@
               "ui_section_title": "Edge cases / niche",
               "ui_section_sort_order": 3,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/dicts-and-comprehensions/comprehensions/set-vs-list-vs-dict/README.md",
               "content_dir": "content/dicts-and-comprehensions/comprehensions/set-vs-list-vs-dict",
               "pieces": [
@@ -3804,7 +4649,7 @@
       "title": "OOP",
       "description": "Constructors, state, methods, and object comparison/reporting patterns.",
       "sort_order": 6,
-      "snippet_count": 4,
+      "snippet_count": 5,
       "subtopics": [
         {
           "slug": "constructors-and-state",
@@ -3959,22 +4804,26 @@
               "recurrence_level": "signature",
               "exam_family_count": 5,
               "question_ref_count": 7,
-              "piece_count": 5,
+              "piece_count": 6,
               "default_piece_count": 2,
               "default_char_count": 503,
-              "total_char_count": 1281,
+              "total_char_count": 1613,
               "keywords": [
                 "append",
+                "class attribute",
                 "garage",
+                "instance attribute",
                 "list attribute",
                 "reviews",
                 "state"
               ],
               "trap_slugs": [
+                "class_vs_instance_attribute",
                 "mutable_default_list",
                 "state_stored_on_instance"
               ],
               "trap_labels": [
+                "Class Versus Instance Attribute",
                 "Mutable Default List",
                 "State Stored On Instance"
               ],
@@ -3982,7 +4831,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/oop/constructors-and-state/oop-state-and-collection-attributes/README.md",
               "content_dir": "content/oop/constructors-and-state/oop-state-and-collection-attributes",
               "pieces": [
@@ -4112,6 +4961,35 @@
                   "trap_slugs": [],
                   "trap_labels": [],
                   "body_path": "content/oop/constructors-and-state/oop-state-and-collection-attributes/05_numbered-report-dict.md"
+                },
+                {
+                  "piece_id": "oop-state-and-collection-attributes__06__class-vs-instance-attribute",
+                  "piece_slug": "class-vs-instance-attribute",
+                  "sort_order": 6,
+                  "title": "Class attribute versus instance attribute",
+                  "kind": "example",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\nclass Counter:\n    total_created = 0          # class attribute: shared default\n\n    def __init__(self):\n        self.count = 0         # instance attribute: one per object\n        Counter.total_created += 1\n```\n\n- `self.x` belongs to one object\n- `ClassName.x` is shared until an instance shadows it with its own `self.x`\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "class Counter:\n    total_created = 0          # class attribute: shared default\n\n    def __init__(self):\n        self.count = 0         # instance attribute: one per object\n        Counter.total_created += 1"
+                    },
+                    {
+                      "type": "list",
+                      "ordered": false,
+                      "items": [
+                        "`self.x` belongs to one object",
+                        "`ClassName.x` is shared until an instance shadows it with its own `self.x`"
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/oop/constructors-and-state/oop-state-and-collection-attributes/06_class-vs-instance-attribute.md"
                 }
               ]
             }
@@ -4157,7 +5035,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/oop/methods-and-comparison/oop-compare-and-report-patterns/README.md",
               "content_dir": "content/oop/methods-and-comparison/oop-compare-and-report-patterns",
               "pieces": [
@@ -4266,7 +5144,7 @@
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/oop/methods-and-comparison/oop-method-calls-and-self/README.md",
               "content_dir": "content/oop/methods-and-comparison/oop-method-calls-and-self",
               "pieces": [
@@ -4356,6 +5234,144 @@
               ]
             }
           ]
+        },
+        {
+          "slug": "inheritance",
+          "title": "Inheritance",
+          "description": "Subclass syntax, super(), inherited methods, and parent/child relationships.",
+          "sort_order": 3,
+          "snippet_count": 1,
+          "snippets": [
+            {
+              "slug": "oop-inheritance-core",
+              "title": "Inheritance core patterns",
+              "summary": "Compact backup for subclass syntax, `super()`, inherited methods, and parent/child type relationships.",
+              "why": "Inheritance was covered in the older dataset and is still worth one clean reference card, even though it is not a dominant pattern in the past final-bank questions.",
+              "default_priority": 3,
+              "difficulty": "mixed",
+              "course_phase": "post-midterm",
+              "recurrence_level": "rare",
+              "exam_family_count": 0,
+              "question_ref_count": 0,
+              "piece_count": 3,
+              "default_piece_count": 2,
+              "default_char_count": 573,
+              "total_char_count": 821,
+              "keywords": [
+                "inheritance",
+                "isinstance",
+                "parent class",
+                "subclass",
+                "super"
+              ],
+              "trap_slugs": [
+                "child_is_instance_of_parent",
+                "inheritance_super_init",
+                "parent_setup_lost"
+              ],
+              "trap_labels": [
+                "Child Is Instance Of Parent",
+                "Inheritance Super Init",
+                "Parent Setup Lost"
+              ],
+              "ui_section_slug": "start-here",
+              "ui_section_title": "Start here",
+              "ui_section_sort_order": 1,
+              "ui_card_order": 1,
+              "is_trap_heavy": true,
+              "readme_path": "content/oop/inheritance/oop-inheritance-core/README.md",
+              "content_dir": "content/oop/inheritance/oop-inheritance-core",
+              "pieces": [
+                {
+                  "piece_id": "oop-inheritance-core__01__inheritance-template",
+                  "piece_slug": "inheritance-template",
+                  "sort_order": 1,
+                  "title": "Subclass template",
+                  "kind": "template",
+                  "role": "core",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\nclass Dog(Animal):\n    def __init__(self, name, breed):\n        super().__init__(name)\n        self.breed = breed\n```\n\nUse `class Child(Parent):` to inherit.\nUse `super().__init__(...)` when the child should keep the parent’s setup logic.\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "class Dog(Animal):\n    def __init__(self, name, breed):\n        super().__init__(name)\n        self.breed = breed"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "Use `class Child(Parent):` to inherit.\nUse `super().__init__(...)` when the child should keep the parent’s setup logic."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/oop/inheritance/oop-inheritance-core/01_inheritance-template.md"
+                },
+                {
+                  "piece_id": "oop-inheritance-core__02__parent-child-rules",
+                  "piece_slug": "parent-child-rules",
+                  "sort_order": 2,
+                  "title": "Parent/child rules",
+                  "kind": "table",
+                  "role": "core",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Fact | Meaning |\n|---|---|\n| child inherits parent methods | child objects can use parent behavior unless it is overridden |\n| `isinstance(child, Parent)` | `True` for a child instance |\n| `super().__init__(...)` | runs the parent constructor inside the child constructor |\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Fact",
+                        "Meaning"
+                      ],
+                      "rows": [
+                        [
+                          "child inherits parent methods",
+                          "child objects can use parent behavior unless it is overridden"
+                        ],
+                        [
+                          "`isinstance(child, Parent)`",
+                          "`True` for a child instance"
+                        ],
+                        [
+                          "`super().__init__(...)`",
+                          "runs the parent constructor inside the child constructor"
+                        ]
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/oop/inheritance/oop-inheritance-core/02_parent-child-rules.md"
+                },
+                {
+                  "piece_id": "oop-inheritance-core__03__fast-traps",
+                  "piece_slug": "fast-traps",
+                  "sort_order": 3,
+                  "title": "Fast traps",
+                  "kind": "rules",
+                  "role": "trap",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "- The child should usually **add** child-specific fields, not erase the parent setup.\n- If the parent constructor already does shared work, forgetting `super().__init__(...)` often leaves important attributes missing.\n- A child object still “counts as” the parent type where the parent is accepted.\n",
+                  "body_blocks": [
+                    {
+                      "type": "list",
+                      "ordered": false,
+                      "items": [
+                        "The child should usually **add** child-specific fields, not erase the parent setup.",
+                        "If the parent constructor already does shared work, forgetting `super().__init__(...)` often leaves important attributes missing.",
+                        "A child object still “counts as” the parent type where the parent is accepted."
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/oop/inheritance/oop-inheritance-core/03_fast-traps.md"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -4384,29 +5400,33 @@
               "recurrence_level": "signature",
               "exam_family_count": 5,
               "question_ref_count": 12,
-              "piece_count": 3,
+              "piece_count": 4,
               "default_piece_count": 2,
               "default_char_count": 372,
-              "total_char_count": 628,
+              "total_char_count": 819,
               "keywords": [
                 "datetime",
                 "format directives",
+                "object vs string",
+                "parse vs format",
                 "strftime",
                 "strptime"
               ],
               "trap_slugs": [
                 "date_directive_order",
+                "datetime_object_vs_string",
                 "strptime_vs_strftime"
               ],
               "trap_labels": [
                 "Date Directive Order",
+                "Datetime Object Versus String",
                 "Strptime Vs Strftime"
               ],
               "ui_section_slug": "start-here",
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/datetime/parsing-formatting/datetime-strptime-strftime/README.md",
               "content_dir": "content/datetime/parsing-formatting/datetime-strptime-strftime",
               "pieces": [
@@ -4520,6 +5540,31 @@
                   "trap_slugs": [],
                   "trap_labels": [],
                   "body_path": "content/datetime/parsing-formatting/datetime-strptime-strftime/03_exam-style-examples.md"
+                },
+                {
+                  "piece_id": "datetime-strptime-strftime__04__object-vs-string",
+                  "piece_slug": "object-vs-string",
+                  "sort_order": 4,
+                  "title": "Object versus string mental model",
+                  "kind": "rules",
+                  "role": "trap",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "- `datetime.strptime(...)` returns a **datetime object**.\n- `dt.strftime(...)` returns a **string**.\n- Add/subtract/compare while you still have datetimes; format to a string only at the end.\n",
+                  "body_blocks": [
+                    {
+                      "type": "list",
+                      "ordered": false,
+                      "items": [
+                        "`datetime.strptime(...)` returns a **datetime object**.",
+                        "`dt.strftime(...)` returns a **string**.",
+                        "Add/subtract/compare while you still have datetimes; format to a string only at the end."
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/datetime/parsing-formatting/datetime-strptime-strftime/04_object-vs-string.md"
                 }
               ]
             },
@@ -4534,28 +5579,33 @@
               "recurrence_level": "very-common",
               "exam_family_count": 4,
               "question_ref_count": 6,
-              "piece_count": 3,
+              "piece_count": 4,
               "default_piece_count": 2,
               "default_char_count": 343,
-              "total_char_count": 564,
+              "total_char_count": 759,
               "keywords": [
                 "datetime constructor",
                 "day month year",
-                "hour minute"
+                "hour minute",
+                "replace",
+                "weekday",
+                "year month day"
               ],
               "trap_slugs": [
                 "datetime_arg_order",
+                "datetime_replace_returns_new",
                 "string_not_datetime"
               ],
               "trap_labels": [
                 "Datetime Arg Order",
+                "Datetime Replace Returns New",
                 "String Not Datetime"
               ],
               "ui_section_slug": "start-here",
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/datetime/parsing-formatting/datetime-build-from-parts/README.md",
               "content_dir": "content/datetime/parsing-formatting/datetime-build-from-parts",
               "pieces": [
@@ -4637,6 +5687,36 @@
                   "trap_slugs": [],
                   "trap_labels": [],
                   "body_path": "content/datetime/parsing-formatting/datetime-build-from-parts/03_from-dataframe-columns.md"
+                },
+                {
+                  "piece_id": "datetime-build-from-parts__04__attributes-and-replace",
+                  "piece_slug": "attributes-and-replace",
+                  "sort_order": 4,
+                  "title": "Direct attributes and `replace()`",
+                  "kind": "example",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\ndt.year\ndt.month\ndt.day\ndt.weekday()\n```\n\n```python\nnew_dt = dt.replace(year=2025, month=1)\n```\n\n`replace(...)` returns a **new datetime**; it does not mutate the original one in place.\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "dt.year\ndt.month\ndt.day\ndt.weekday()"
+                    },
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "new_dt = dt.replace(year=2025, month=1)"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "`replace(...)` returns a **new datetime**; it does not mutate the original one in place."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/datetime/parsing-formatting/datetime-build-from-parts/04_attributes-and-replace.md"
                 }
               ]
             }
@@ -4682,7 +5762,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/datetime/arithmetic-and-overlap/datetime-timedelta-day-counts/README.md",
               "content_dir": "content/datetime/arithmetic-and-overlap/datetime-timedelta-day-counts",
               "pieces": [
@@ -4806,7 +5886,7 @@
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/datetime/arithmetic-and-overlap/datetime-overlap-logic/README.md",
               "content_dir": "content/datetime/arithmetic-and-overlap/datetime-overlap-logic",
               "pieces": [
@@ -4933,7 +6013,7 @@
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/datetime/sequence-generation/datetime-sequence-generation/README.md",
               "content_dir": "content/datetime/sequence-generation/datetime-sequence-generation",
               "pieces": [
@@ -5014,7 +6094,7 @@
       "title": "Pandas",
       "description": "Selection, transforms, boolean masks, construction, and sorting.",
       "sort_order": 8,
-      "snippet_count": 8,
+      "snippet_count": 9,
       "subtopics": [
         {
           "slug": "selection",
@@ -5197,7 +6277,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/pandas/selection/pandas-loc-iloc/README.md",
               "content_dir": "content/pandas/selection/pandas-loc-iloc",
               "pieces": [
@@ -5315,7 +6395,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 3,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/pandas/selection/pandas-boolean-mask-and-indexing/README.md",
               "content_dir": "content/pandas/selection/pandas-boolean-mask-and-indexing",
               "pieces": [
@@ -5415,7 +6495,7 @@
           "title": "Transforms",
           "description": "Vectorized columns, map/apply, string/date transforms.",
           "sort_order": 2,
-          "snippet_count": 3,
+          "snippet_count": 4,
           "snippets": [
             {
               "slug": "pandas-map-vs-apply",
@@ -5450,7 +6530,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/pandas/transforms/pandas-map-vs-apply/README.md",
               "content_dir": "content/pandas/transforms/pandas-map-vs-apply",
               "pieces": [
@@ -5588,7 +6668,7 @@
               "ui_section_title": "Start here",
               "ui_section_sort_order": 1,
               "ui_card_order": 2,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/pandas/transforms/pandas-vectorized-new-columns/README.md",
               "content_dir": "content/pandas/transforms/pandas-vectorized-new-columns",
               "pieces": [
@@ -5697,7 +6777,7 @@
               "ui_section_title": "Add next",
               "ui_section_sort_order": 2,
               "ui_card_order": 1,
-              "is_trap_heavy": false,
+              "is_trap_heavy": true,
               "readme_path": "content/pandas/transforms/pandas-string-and-date-columns/README.md",
               "content_dir": "content/pandas/transforms/pandas-string-and-date-columns",
               "pieces": [
@@ -5762,6 +6842,141 @@
                   "trap_slugs": [],
                   "trap_labels": [],
                   "body_path": "content/pandas/transforms/pandas-string-and-date-columns/03_trap-hint.md"
+                }
+              ]
+            },
+            {
+              "slug": "pandas-missing-values-alignment",
+              "title": "Missing values and index alignment",
+              "summary": "Backup pandas reference for `fillna`, `dropna`, and the label-alignment behavior that can create `NaN` unexpectedly.",
+              "why": "These are classic pandas gotchas: keeping the table shape versus dropping rows, and assuming row-by-row arithmetic when pandas is actually aligning on index labels.",
+              "default_priority": 3,
+              "difficulty": "mixed",
+              "course_phase": "post-midterm",
+              "recurrence_level": "rare",
+              "exam_family_count": 0,
+              "question_ref_count": 0,
+              "piece_count": 3,
+              "default_piece_count": 1,
+              "default_char_count": 311,
+              "total_char_count": 722,
+              "keywords": [
+                "NaN",
+                "dropna",
+                "fillna",
+                "index alignment",
+                "missing values",
+                "pandas"
+              ],
+              "trap_slugs": [
+                "fillna_vs_dropna",
+                "pandas_aligns_on_labels",
+                "unexpected_nan_from_alignment"
+              ],
+              "trap_labels": [
+                "Fillna Versus Dropna",
+                "Pandas Aligns On Labels",
+                "Unexpected NaN From Alignment"
+              ],
+              "ui_section_slug": "edge-cases",
+              "ui_section_title": "Edge cases",
+              "ui_section_sort_order": 3,
+              "ui_card_order": 1,
+              "is_trap_heavy": true,
+              "readme_path": "content/pandas/transforms/pandas-missing-values-alignment/README.md",
+              "content_dir": "content/pandas/transforms/pandas-missing-values-alignment",
+              "pieces": [
+                {
+                  "piece_id": "pandas-missing-values-alignment__01__fillna-vs-dropna",
+                  "piece_slug": "fillna-vs-dropna",
+                  "sort_order": 1,
+                  "title": "`fillna` versus `dropna`",
+                  "kind": "table",
+                  "role": "core",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "| Goal | Pattern | Shape preserved? |\n|---|---|---:|\n| replace missing values | `df.fillna('No value')` | Yes |\n| remove incomplete rows | `df.dropna()` | No |\n| remove incomplete columns | `df.dropna(axis=1)` | No |\n",
+                  "body_blocks": [
+                    {
+                      "type": "table",
+                      "headers": [
+                        "Goal",
+                        "Pattern",
+                        "Shape preserved?"
+                      ],
+                      "rows": [
+                        [
+                          "replace missing values",
+                          "`df.fillna('No value')`",
+                          "Yes"
+                        ],
+                        [
+                          "remove incomplete rows",
+                          "`df.dropna()`",
+                          "No"
+                        ],
+                        [
+                          "remove incomplete columns",
+                          "`df.dropna(axis=1)`",
+                          "No"
+                        ]
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/pandas/transforms/pandas-missing-values-alignment/01_fillna-vs-dropna.md"
+                },
+                {
+                  "piece_id": "pandas-missing-values-alignment__02__alignment-example",
+                  "piece_slug": "alignment-example",
+                  "sort_order": 2,
+                  "title": "Alignment creates `NaN` by labels",
+                  "kind": "example",
+                  "role": "clarifier",
+                  "default_selected": false,
+                  "question_ref_count": 0,
+                  "body_markdown": "```python\ns1 = pd.Series([10, 20], index=['A', 'B'])\ns2 = pd.Series([1, 2], index=['B', 'C'])\n\ns1 + s2\n# A    NaN\n# B   21.0\n# C    NaN\n```\n\nPandas aligns by **index label**, not by row position.\n",
+                  "body_blocks": [
+                    {
+                      "type": "code",
+                      "language": "python",
+                      "code": "s1 = pd.Series([10, 20], index=['A', 'B'])\ns2 = pd.Series([1, 2], index=['B', 'C'])\n\ns1 + s2\n# A    NaN\n# B   21.0\n# C    NaN"
+                    },
+                    {
+                      "type": "paragraph",
+                      "text": "Pandas aligns by **index label**, not by row position."
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/pandas/transforms/pandas-missing-values-alignment/02_alignment-example.md"
+                },
+                {
+                  "piece_id": "pandas-missing-values-alignment__03__alignment-rules",
+                  "piece_slug": "alignment-rules",
+                  "sort_order": 3,
+                  "title": "Fast rules",
+                  "kind": "rules",
+                  "role": "trap",
+                  "default_selected": true,
+                  "question_ref_count": 0,
+                  "body_markdown": "- Use `fillna(...)` when you want to keep the table and replace blanks.\n- Use `dropna()` when incomplete rows/columns should disappear.\n- Arithmetic on Series/DataFrames aligns labels first; mismatched labels can produce `NaN`.\n- A `DatetimeIndex` matters only if the **index itself** actually stores datetimes.\n",
+                  "body_blocks": [
+                    {
+                      "type": "list",
+                      "ordered": false,
+                      "items": [
+                        "Use `fillna(...)` when you want to keep the table and replace blanks.",
+                        "Use `dropna()` when incomplete rows/columns should disappear.",
+                        "Arithmetic on Series/DataFrames aligns labels first; mismatched labels can produce `NaN`.",
+                        "A `DatetimeIndex` matters only if the **index itself** actually stores datetimes."
+                      ]
+                    }
+                  ],
+                  "trap_slugs": [],
+                  "trap_labels": [],
+                  "body_path": "content/pandas/transforms/pandas-missing-values-alignment/03_alignment-rules.md"
                 }
               ]
             }
@@ -5996,9 +7211,9 @@
       "target_user": "minimal prior knowledge, wants broad coverage",
       "notes": "Includes most high-priority snippets, all default-selected pieces, and a few clarifiers for recurring exact exam patterns.",
       "sort_order": 1,
-      "snippet_count": 40,
-      "piece_count": 90,
-      "char_count": 21342,
+      "snippet_count": 42,
+      "piece_count": 94,
+      "char_count": 22724,
       "items": [
         {
           "rank": 1,
@@ -6449,6 +7664,26 @@
           "rank": 90,
           "snippet_slug": "mutation-vs-return",
           "piece_id": "mutation-vs-return__03__fast-trap-signals"
+        },
+        {
+          "rank": 91,
+          "snippet_slug": "syntax-fragments-escapes-raw-strings",
+          "piece_id": "syntax-fragments-escapes-raw-strings__01__syntax-rules-mini-table"
+        },
+        {
+          "rank": 92,
+          "snippet_slug": "syntax-fragments-escapes-raw-strings",
+          "piece_id": "syntax-fragments-escapes-raw-strings__02__escapes-and-quotes"
+        },
+        {
+          "rank": 93,
+          "snippet_slug": "names-aliasing-and-copies",
+          "piece_id": "names-aliasing-and-copies__01__binding-and-copy-table"
+        },
+        {
+          "rank": 94,
+          "snippet_slug": "names-aliasing-and-copies",
+          "piece_id": "names-aliasing-and-copies__02__aliasing-example"
         }
       ]
     },
@@ -6459,9 +7694,9 @@
       "target_user": "expects the final to skew toward later-course material",
       "notes": "Good default when space is tight but you still want coverage for the most likely post-midterm traps.",
       "sort_order": 2,
-      "snippet_count": 31,
-      "piece_count": 73,
-      "char_count": 17737,
+      "snippet_count": 32,
+      "piece_count": 75,
+      "char_count": 18239,
       "items": [
         {
           "rank": 1,
@@ -6827,6 +8062,16 @@
           "rank": 73,
           "snippet_slug": "mutation-vs-return",
           "piece_id": "mutation-vs-return__03__fast-trap-signals"
+        },
+        {
+          "rank": 74,
+          "snippet_slug": "datetime-strptime-strftime",
+          "piece_id": "datetime-strptime-strftime__04__object-vs-string"
+        },
+        {
+          "rank": 75,
+          "snippet_slug": "pandas-missing-values-alignment",
+          "piece_id": "pandas-missing-values-alignment__03__alignment-rules"
         }
       ]
     },
@@ -7065,9 +8310,9 @@
       "target_user": "knows the material somewhat, mainly loses points to subtle distractors",
       "notes": "Emphasizes mutation-vs-return, pandas shape traps, scope, parse/format, and method-call gotchas.",
       "sort_order": 4,
-      "snippet_count": 20,
-      "piece_count": 46,
-      "char_count": 11504,
+      "snippet_count": 23,
+      "piece_count": 51,
+      "char_count": 12831,
       "items": [
         {
           "rank": 1,
@@ -7298,6 +8543,629 @@
           "rank": 46,
           "snippet_slug": "pandas-sort-index-vs-values",
           "piece_id": "pandas-sort-index-vs-values__03__trap-hint"
+        },
+        {
+          "rank": 47,
+          "snippet_slug": "numeric-corner-cases",
+          "piece_id": "numeric-corner-cases__03__fast-rules"
+        },
+        {
+          "rank": 48,
+          "snippet_slug": "pandas-missing-values-alignment",
+          "piece_id": "pandas-missing-values-alignment__03__alignment-rules"
+        },
+        {
+          "rank": 49,
+          "snippet_slug": "defaults-keyword-arguments",
+          "piece_id": "defaults-keyword-arguments__04__mutable-default-trap"
+        },
+        {
+          "rank": 50,
+          "snippet_slug": "datetime-strptime-strftime",
+          "piece_id": "datetime-strptime-strftime__04__object-vs-string"
+        },
+        {
+          "rank": 51,
+          "snippet_slug": "membership-and-condition-logic",
+          "piece_id": "membership-and-condition-logic__05__branch-order-and-ternary"
+        }
+      ]
+    },
+    {
+      "preset_id": "max-coverage-v2",
+      "title": "Max coverage V2",
+      "summary": "Broadest pack: high-yield core plus the legacy backup material integrated in V2.",
+      "target_user": "wants the fullest reference pack, including lower-frequency corner cases",
+      "notes": "Includes all default-selected pieces plus selected backup clarifiers from the legacy dataset integration pass.",
+      "sort_order": 5,
+      "snippet_count": 51,
+      "piece_count": 117,
+      "char_count": 28315,
+      "items": [
+        {
+          "rank": 1,
+          "snippet_slug": "dict-build-count-aggregate",
+          "piece_id": "dict-build-count-aggregate__01__core-templates"
+        },
+        {
+          "rank": 2,
+          "snippet_slug": "dict-comprehension-patterns",
+          "piece_id": "dict-comprehension-patterns__01__core-shape"
+        },
+        {
+          "rank": 3,
+          "snippet_slug": "split-join-replace",
+          "piece_id": "split-join-replace__01__method-table"
+        },
+        {
+          "rank": 4,
+          "snippet_slug": "url-email-phone-parsing",
+          "piece_id": "url-email-phone-parsing__01__three-common-pipelines"
+        },
+        {
+          "rank": 5,
+          "snippet_slug": "pandas-map-vs-apply",
+          "piece_id": "pandas-map-vs-apply__01__decision-table"
+        },
+        {
+          "rank": 6,
+          "snippet_slug": "datetime-sequence-generation",
+          "piece_id": "datetime-sequence-generation__01__list-of-weekly-dates"
+        },
+        {
+          "rank": 7,
+          "snippet_slug": "types-none-bool-equality",
+          "piece_id": "types-none-bool-equality__01__equality-truthiness-mini-table"
+        },
+        {
+          "rank": 8,
+          "snippet_slug": "mcq-elimination-checklist",
+          "piece_id": "mcq-elimination-checklist__01__10-second-elimination-flow"
+        },
+        {
+          "rank": 9,
+          "snippet_slug": "fstrings-and-format",
+          "piece_id": "fstrings-and-format__01__formatting-patterns"
+        },
+        {
+          "rank": 10,
+          "snippet_slug": "datetime-strptime-strftime",
+          "piece_id": "datetime-strptime-strftime__01__parse-vs-format"
+        },
+        {
+          "rank": 11,
+          "snippet_slug": "higher-order-lambda",
+          "piece_id": "higher-order-lambda__01__core-forms"
+        },
+        {
+          "rank": 12,
+          "snippet_slug": "mutation-vs-return",
+          "piece_id": "mutation-vs-return__01__mutate-return-object-after-call"
+        },
+        {
+          "rank": 13,
+          "snippet_slug": "oop-init-self-defaults",
+          "piece_id": "oop-init-self-defaults__01__constructor-checklist"
+        },
+        {
+          "rank": 14,
+          "snippet_slug": "local-vs-global-scope",
+          "piece_id": "local-vs-global-scope__01__scope-rules"
+        },
+        {
+          "rank": 15,
+          "snippet_slug": "oop-compare-and-report-patterns",
+          "piece_id": "oop-compare-and-report-patterns__01__comparison-template"
+        },
+        {
+          "rank": 16,
+          "snippet_slug": "zip-enumerate-core",
+          "piece_id": "zip-enumerate-core__01__what-they-produce"
+        },
+        {
+          "rank": 17,
+          "snippet_slug": "pandas-series-vs-dataframe",
+          "piece_id": "pandas-series-vs-dataframe__01__one-column-selection-shapes"
+        },
+        {
+          "rank": 18,
+          "snippet_slug": "datetime-timedelta-day-counts",
+          "piece_id": "datetime-timedelta-day-counts__01__core-formulas"
+        },
+        {
+          "rank": 19,
+          "snippet_slug": "pandas-sort-index-vs-values",
+          "piece_id": "pandas-sort-index-vs-values__01__sorting-table"
+        },
+        {
+          "rank": 20,
+          "snippet_slug": "args-and-kwargs",
+          "piece_id": "args-and-kwargs__01__args-kwargs-cheat-table"
+        },
+        {
+          "rank": 21,
+          "snippet_slug": "url-email-phone-parsing",
+          "piece_id": "url-email-phone-parsing__02__why-some-url-options-fail"
+        },
+        {
+          "rank": 22,
+          "snippet_slug": "datetime-sequence-generation",
+          "piece_id": "datetime-sequence-generation__02__dataframe-weekly-index"
+        },
+        {
+          "rank": 23,
+          "snippet_slug": "zip-enumerate-core",
+          "piece_id": "zip-enumerate-core__02__useful-templates"
+        },
+        {
+          "rank": 24,
+          "snippet_slug": "fstrings-and-format",
+          "piece_id": "fstrings-and-format__02__exam-like-reminders"
+        },
+        {
+          "rank": 25,
+          "snippet_slug": "mcq-elimination-checklist",
+          "piece_id": "mcq-elimination-checklist__02__question-wording-decoder"
+        },
+        {
+          "rank": 26,
+          "snippet_slug": "args-and-kwargs",
+          "piece_id": "args-and-kwargs__02__two-exam-templates"
+        },
+        {
+          "rank": 27,
+          "snippet_slug": "types-none-bool-equality",
+          "piece_id": "types-none-bool-equality__02__chains-and-booleans"
+        },
+        {
+          "rank": 28,
+          "snippet_slug": "datetime-strptime-strftime",
+          "piece_id": "datetime-strptime-strftime__02__directive-mini-table"
+        },
+        {
+          "rank": 29,
+          "snippet_slug": "oop-init-self-defaults",
+          "piece_id": "oop-init-self-defaults__02__canonical-template"
+        },
+        {
+          "rank": 30,
+          "snippet_slug": "oop-compare-and-report-patterns",
+          "piece_id": "oop-compare-and-report-patterns__02__report-overview-template"
+        },
+        {
+          "rank": 31,
+          "snippet_slug": "split-join-replace",
+          "piece_id": "split-join-replace__03__join-trap"
+        },
+        {
+          "rank": 32,
+          "snippet_slug": "local-vs-global-scope",
+          "piece_id": "local-vs-global-scope__03__fast-elimination-hint"
+        },
+        {
+          "rank": 33,
+          "snippet_slug": "pandas-sort-index-vs-values",
+          "piece_id": "pandas-sort-index-vs-values__03__trap-hint"
+        },
+        {
+          "rank": 34,
+          "snippet_slug": "datetime-timedelta-day-counts",
+          "piece_id": "datetime-timedelta-day-counts__03__type-trap"
+        },
+        {
+          "rank": 35,
+          "snippet_slug": "oop-init-self-defaults",
+          "piece_id": "oop-init-self-defaults__03__common-wrong-answers"
+        },
+        {
+          "rank": 36,
+          "snippet_slug": "dict-build-count-aggregate",
+          "piece_id": "dict-build-count-aggregate__03__fast-reminder"
+        },
+        {
+          "rank": 37,
+          "snippet_slug": "oop-compare-and-report-patterns",
+          "piece_id": "oop-compare-and-report-patterns__03__common-traps"
+        },
+        {
+          "rank": 38,
+          "snippet_slug": "mutation-vs-return",
+          "piece_id": "mutation-vs-return__03__fast-trap-signals"
+        },
+        {
+          "rank": 39,
+          "snippet_slug": "pandas-map-vs-apply",
+          "piece_id": "pandas-map-vs-apply__03__common-wrong-patterns"
+        },
+        {
+          "rank": 40,
+          "snippet_slug": "dict-comprehension-patterns",
+          "piece_id": "dict-comprehension-patterns__03__high-frequency-mistake"
+        },
+        {
+          "rank": 41,
+          "snippet_slug": "pandas-series-vs-dataframe",
+          "piece_id": "pandas-series-vs-dataframe__03__datatype-difference-trap"
+        },
+        {
+          "rank": 42,
+          "snippet_slug": "datetime-sequence-generation",
+          "piece_id": "datetime-sequence-generation__03__most-common-mistake"
+        },
+        {
+          "rank": 43,
+          "snippet_slug": "datetime-strptime-strftime",
+          "piece_id": "datetime-strptime-strftime__04__object-vs-string"
+        },
+        {
+          "rank": 44,
+          "snippet_slug": "fstrings-and-format",
+          "piece_id": "fstrings-and-format__05__debug-fstring"
+        },
+        {
+          "rank": 45,
+          "snippet_slug": "slicing-patterns",
+          "piece_id": "slicing-patterns__01__slice-syntax-table"
+        },
+        {
+          "rank": 46,
+          "snippet_slug": "targeted-string-edit-patterns",
+          "piece_id": "targeted-string-edit-patterns__01__single-occurrence-replace-rule"
+        },
+        {
+          "rank": 47,
+          "snippet_slug": "dict-iteration-equality",
+          "piece_id": "dict-iteration-equality__01__two-must-know-facts"
+        },
+        {
+          "rank": 48,
+          "snippet_slug": "oop-state-and-collection-attributes",
+          "piece_id": "oop-state-and-collection-attributes__01__safe-patterns-for-collection-attributes"
+        },
+        {
+          "rank": 49,
+          "snippet_slug": "pandas-vectorized-new-columns",
+          "piece_id": "pandas-vectorized-new-columns__01__vectorized-patterns"
+        },
+        {
+          "rank": 50,
+          "snippet_slug": "datetime-overlap-logic",
+          "piece_id": "datetime-overlap-logic__01__overlap-rule"
+        },
+        {
+          "rank": 51,
+          "snippet_slug": "oop-method-calls-and-self",
+          "piece_id": "oop-method-calls-and-self__01__definition-vs-call"
+        },
+        {
+          "rank": 52,
+          "snippet_slug": "datetime-build-from-parts",
+          "piece_id": "datetime-build-from-parts__01__constructor-order"
+        },
+        {
+          "rank": 53,
+          "snippet_slug": "find-index-count",
+          "piece_id": "find-index-count__01__comparison-table"
+        },
+        {
+          "rank": 54,
+          "snippet_slug": "return-none-and-function-end",
+          "piece_id": "return-none-and-function-end__01__three-rules"
+        },
+        {
+          "rank": 55,
+          "snippet_slug": "imports-and-aliases",
+          "piece_id": "imports-and-aliases__01__import-patterns"
+        },
+        {
+          "rank": 56,
+          "snippet_slug": "list-comprehension-patterns",
+          "piece_id": "list-comprehension-patterns__01__syntax-patterns"
+        },
+        {
+          "rank": 57,
+          "snippet_slug": "pandas-build-from-args",
+          "piece_id": "pandas-build-from-args__01__template"
+        },
+        {
+          "rank": 58,
+          "snippet_slug": "defaults-keyword-arguments",
+          "piece_id": "defaults-keyword-arguments__01__binding-rules"
+        },
+        {
+          "rank": 59,
+          "snippet_slug": "pandas-loc-iloc",
+          "piece_id": "pandas-loc-iloc__01__loc-vs-iloc"
+        },
+        {
+          "rank": 60,
+          "snippet_slug": "builtins-return-values",
+          "piece_id": "builtins-return-values__01__built-ins-at-a-glance"
+        },
+        {
+          "rank": 61,
+          "snippet_slug": "datetime-build-from-parts",
+          "piece_id": "datetime-build-from-parts__02__from-date-string-and-time-string"
+        },
+        {
+          "rank": 62,
+          "snippet_slug": "pandas-build-from-args",
+          "piece_id": "pandas-build-from-args__02__why-some-options-fail"
+        },
+        {
+          "rank": 63,
+          "snippet_slug": "datetime-overlap-logic",
+          "piece_id": "datetime-overlap-logic__02__lunch-meeting-pattern"
+        },
+        {
+          "rank": 64,
+          "snippet_slug": "pandas-vectorized-new-columns",
+          "piece_id": "pandas-vectorized-new-columns__02__scalar-series-is-fine"
+        },
+        {
+          "rank": 65,
+          "snippet_slug": "find-index-count",
+          "piece_id": "find-index-count__02__second-occurrence-pattern"
+        },
+        {
+          "rank": 66,
+          "snippet_slug": "oop-state-and-collection-attributes",
+          "piece_id": "oop-state-and-collection-attributes__02__add-capacity-logic"
+        },
+        {
+          "rank": 67,
+          "snippet_slug": "imports-and-aliases",
+          "piece_id": "imports-and-aliases__02__immediate-exam-rule"
+        },
+        {
+          "rank": 68,
+          "snippet_slug": "builtins-return-values",
+          "piece_id": "builtins-return-values__03__common-confusion"
+        },
+        {
+          "rank": 69,
+          "snippet_slug": "dict-iteration-equality",
+          "piece_id": "dict-iteration-equality__03__odd-one-out-pattern"
+        },
+        {
+          "rank": 70,
+          "snippet_slug": "targeted-string-edit-patterns",
+          "piece_id": "targeted-string-edit-patterns__03__normalize-before-comparing-strings"
+        },
+        {
+          "rank": 71,
+          "snippet_slug": "return-none-and-function-end",
+          "piece_id": "return-none-and-function-end__03__what-to-check-in-options"
+        },
+        {
+          "rank": 72,
+          "snippet_slug": "slicing-patterns",
+          "piece_id": "slicing-patterns__03__chunking-pattern"
+        },
+        {
+          "rank": 73,
+          "snippet_slug": "oop-method-calls-and-self",
+          "piece_id": "oop-method-calls-and-self__03__attribute-access-rule"
+        },
+        {
+          "rank": 74,
+          "snippet_slug": "defaults-keyword-arguments",
+          "piece_id": "defaults-keyword-arguments__03__elimination-hint"
+        },
+        {
+          "rank": 75,
+          "snippet_slug": "datetime-overlap-logic",
+          "piece_id": "datetime-overlap-logic__03__trap-hints"
+        },
+        {
+          "rank": 76,
+          "snippet_slug": "list-comprehension-patterns",
+          "piece_id": "list-comprehension-patterns__03__placement-trap"
+        },
+        {
+          "rank": 77,
+          "snippet_slug": "pandas-loc-iloc",
+          "piece_id": "pandas-loc-iloc__03__fast-warning"
+        },
+        {
+          "rank": 78,
+          "snippet_slug": "datetime-build-from-parts",
+          "piece_id": "datetime-build-from-parts__04__attributes-and-replace"
+        },
+        {
+          "rank": 79,
+          "snippet_slug": "defaults-keyword-arguments",
+          "piece_id": "defaults-keyword-arguments__04__mutable-default-trap"
+        },
+        {
+          "rank": 80,
+          "snippet_slug": "oop-state-and-collection-attributes",
+          "piece_id": "oop-state-and-collection-attributes__06__class-vs-instance-attribute"
+        },
+        {
+          "rank": 81,
+          "snippet_slug": "pandas-string-and-date-columns",
+          "piece_id": "pandas-string-and-date-columns__01__common-column-transforms"
+        },
+        {
+          "rank": 82,
+          "snippet_slug": "dict-running-totals-and-next-links",
+          "piece_id": "dict-running-totals-and-next-links__01__next-link-dictionary"
+        },
+        {
+          "rank": 83,
+          "snippet_slug": "set-vs-list-vs-dict",
+          "piece_id": "set-vs-list-vs-dict__01__one-line-facts"
+        },
+        {
+          "rank": 84,
+          "snippet_slug": "loop-templates",
+          "piece_id": "loop-templates__01__core-templates"
+        },
+        {
+          "rank": 85,
+          "snippet_slug": "case-and-capitalization",
+          "piece_id": "case-and-capitalization__01__quick-reference"
+        },
+        {
+          "rank": 86,
+          "snippet_slug": "membership-and-condition-logic",
+          "piece_id": "membership-and-condition-logic__01__membership-semantics"
+        },
+        {
+          "rank": 87,
+          "snippet_slug": "pandas-boolean-mask-and-indexing",
+          "piece_id": "pandas-boolean-mask-and-indexing__01__correct-mask-syntax"
+        },
+        {
+          "rank": 88,
+          "snippet_slug": "dict-running-totals-and-next-links",
+          "piece_id": "dict-running-totals-and-next-links__02__running-total-dictionary"
+        },
+        {
+          "rank": 89,
+          "snippet_slug": "case-and-capitalization",
+          "piece_id": "case-and-capitalization__02__swap-case-comprehension"
+        },
+        {
+          "rank": 90,
+          "snippet_slug": "membership-and-condition-logic",
+          "piece_id": "membership-and-condition-logic__02__condition-patterns-worth-memorizing"
+        },
+        {
+          "rank": 91,
+          "snippet_slug": "pandas-boolean-mask-and-indexing",
+          "piece_id": "pandas-boolean-mask-and-indexing__02__what-is-invalid"
+        },
+        {
+          "rank": 92,
+          "snippet_slug": "pandas-string-and-date-columns",
+          "piece_id": "pandas-string-and-date-columns__02__date-column-from-day-month-year"
+        },
+        {
+          "rank": 93,
+          "snippet_slug": "loop-templates",
+          "piece_id": "loop-templates__03__trap-checklist"
+        },
+        {
+          "rank": 94,
+          "snippet_slug": "case-and-capitalization",
+          "piece_id": "case-and-capitalization__03__strip-and-predicate-extras"
+        },
+        {
+          "rank": 95,
+          "snippet_slug": "membership-and-condition-logic",
+          "piece_id": "membership-and-condition-logic__05__branch-order-and-ternary"
+        },
+        {
+          "rank": 96,
+          "snippet_slug": "nested-indexing-and-negative-indices",
+          "piece_id": "nested-indexing-and-negative-indices__01__index-rules"
+        },
+        {
+          "rank": 97,
+          "snippet_slug": "nested-indexing-and-negative-indices",
+          "piece_id": "nested-indexing-and-negative-indices__03__fast-check"
+        },
+        {
+          "rank": 98,
+          "snippet_slug": "list-selection-and-aggregation",
+          "piece_id": "list-selection-and-aggregation__01__keep-elements-equal-to-their-index"
+        },
+        {
+          "rank": 99,
+          "snippet_slug": "list-selection-and-aggregation",
+          "piece_id": "list-selection-and-aggregation__02__pick-the-sub-list-with-the-highest-sum"
+        },
+        {
+          "rank": 100,
+          "snippet_slug": "syntax-fragments-escapes-raw-strings",
+          "piece_id": "syntax-fragments-escapes-raw-strings__01__syntax-rules-mini-table"
+        },
+        {
+          "rank": 101,
+          "snippet_slug": "syntax-fragments-escapes-raw-strings",
+          "piece_id": "syntax-fragments-escapes-raw-strings__02__escapes-and-quotes"
+        },
+        {
+          "rank": 102,
+          "snippet_slug": "syntax-fragments-escapes-raw-strings",
+          "piece_id": "syntax-fragments-escapes-raw-strings__03__tiny-fragments"
+        },
+        {
+          "rank": 103,
+          "snippet_slug": "names-aliasing-and-copies",
+          "piece_id": "names-aliasing-and-copies__01__binding-and-copy-table"
+        },
+        {
+          "rank": 104,
+          "snippet_slug": "names-aliasing-and-copies",
+          "piece_id": "names-aliasing-and-copies__02__aliasing-example"
+        },
+        {
+          "rank": 105,
+          "snippet_slug": "names-aliasing-and-copies",
+          "piece_id": "names-aliasing-and-copies__03__equality-vs-identity"
+        },
+        {
+          "rank": 106,
+          "snippet_slug": "numeric-corner-cases",
+          "piece_id": "numeric-corner-cases__01__negative-division-and-modulo"
+        },
+        {
+          "rank": 107,
+          "snippet_slug": "numeric-corner-cases",
+          "piece_id": "numeric-corner-cases__02__precision-and-order"
+        },
+        {
+          "rank": 108,
+          "snippet_slug": "numeric-corner-cases",
+          "piece_id": "numeric-corner-cases__03__fast-rules"
+        },
+        {
+          "rank": 109,
+          "snippet_slug": "loop-control-and-iterators",
+          "piece_id": "loop-control-and-iterators__01__control-table"
+        },
+        {
+          "rank": 110,
+          "snippet_slug": "loop-control-and-iterators",
+          "piece_id": "loop-control-and-iterators__02__iterator-example"
+        },
+        {
+          "rank": 111,
+          "snippet_slug": "loop-control-and-iterators",
+          "piece_id": "loop-control-and-iterators__03__control-reminders"
+        },
+        {
+          "rank": 112,
+          "snippet_slug": "pandas-missing-values-alignment",
+          "piece_id": "pandas-missing-values-alignment__01__fillna-vs-dropna"
+        },
+        {
+          "rank": 113,
+          "snippet_slug": "pandas-missing-values-alignment",
+          "piece_id": "pandas-missing-values-alignment__02__alignment-example"
+        },
+        {
+          "rank": 114,
+          "snippet_slug": "pandas-missing-values-alignment",
+          "piece_id": "pandas-missing-values-alignment__03__alignment-rules"
+        },
+        {
+          "rank": 115,
+          "snippet_slug": "oop-inheritance-core",
+          "piece_id": "oop-inheritance-core__01__inheritance-template"
+        },
+        {
+          "rank": 116,
+          "snippet_slug": "oop-inheritance-core",
+          "piece_id": "oop-inheritance-core__02__parent-child-rules"
+        },
+        {
+          "rank": 117,
+          "snippet_slug": "oop-inheritance-core",
+          "piece_id": "oop-inheritance-core__03__fast-traps"
         }
       ]
     }

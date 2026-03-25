@@ -27,6 +27,20 @@ function handlePreviewEditingClick(event) {
     return;
   }
 
+  const deleteSummaryBtn = event.target.closest("[data-role='preview-delete-summary']");
+  if (deleteSummaryBtn) {
+    event.preventDefault();
+    deletePreviewSummary(deleteSummaryBtn.dataset.cardId || "");
+    return;
+  }
+
+  const editSummaryBtn = event.target.closest("[data-role='preview-edit-summary']");
+  if (editSummaryBtn) {
+    event.preventDefault();
+    void editPreviewSummary(editSummaryBtn.dataset.cardId || "");
+    return;
+  }
+
   const deleteItemBtn = event.target.closest("[data-role='preview-delete-item']");
   if (deleteItemBtn) {
     event.preventDefault();
@@ -213,4 +227,47 @@ function buildPieceOverrideFromValues(piece, values) {
     bodyMarkdown: nextBodyMarkdown,
     bodyBlocks: compileMarkdownBodyBlocks(nextBodyMarkdown),
   };
+}
+
+function deletePreviewSummary(cardId) {
+  if (!cardId) {
+    return;
+  }
+  const layout = state.previewCards[cardId];
+  if (!layout) {
+    return;
+  }
+  pushPreviewHistorySnapshot("Hide summary text");
+  layout.summaryOverride = "";
+  renderPreview();
+}
+
+async function editPreviewSummary(cardId) {
+  if (!cardId) {
+    return;
+  }
+  const layout = state.previewCards[cardId];
+  if (!layout) {
+    return;
+  }
+  const entry = getPreviewEntry(cardId);
+  const currentText = layout.summaryOverride !== undefined ? layout.summaryOverride : (entry?.snippet?.summary || "");
+  const values = await requestPreviewEditValues({
+    title: "Edit Summary Text",
+    subtitle: entry ? `${entry.snippet.topicTitle} · ${entry.snippet.subtopicTitle}` : cardId,
+    fields: [
+      {
+        id: "summary",
+        label: "Summary text",
+        prompt: "Edit summary text:",
+        value: currentText,
+      },
+    ],
+  });
+  if (!values) {
+    return;
+  }
+  pushPreviewHistorySnapshot("Edit summary text");
+  layout.summaryOverride = String(values.summary || "").trim();
+  renderPreview();
 }

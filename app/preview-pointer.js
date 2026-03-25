@@ -40,7 +40,12 @@ function sanitizePreviewCardLayout(rawLayout, fallback = {}) {
   const z = clamp(Number.isFinite(zRaw) ? zRaw : 1, 1, 9999);
   const locked = Boolean(rawLayout?.locked ?? fallback.locked ?? false);
   const title = String(rawLayout?.title ?? fallback.title ?? "").trim();
-  return { page, x, y, width, height, z, locked, title };
+  const summaryOverride = 'summaryOverride' in (rawLayout || {}) ? rawLayout.summaryOverride : ('summaryOverride' in (fallback || {}) ? fallback.summaryOverride : undefined);
+  const result = { page, x, y, width, height, z, locked, title };
+  if (summaryOverride !== undefined) {
+    result.summaryOverride = summaryOverride;
+  }
+  return result;
 }
 
 function ensurePreviewCardLayout(cardId, fallback) {

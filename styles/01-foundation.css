@@ -200,6 +200,7 @@ h4 {
 #previewView.view.active {
   gap: 12px;
   padding: 12px 18px 18px;
+  grid-template-rows: auto minmax(0, 1fr);
 }
 
 .compact-toolbar {
@@ -257,11 +258,10 @@ h4 {
 .sheet-stage {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: safe center;
   gap: 24px;
   align-items: flex-start;
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow: auto;
   padding: 22px;
   border-radius: var(--radius-lg);
   background:
@@ -281,6 +281,11 @@ h4 {
   border: 1px solid rgba(129, 118, 97, 0.18);
   border-radius: 12px;
   box-shadow: var(--shadow-paper);
+}
+
+.sheet-page.is-landscape {
+  width: var(--a4-height);
+  height: var(--a4-width);
 }
 
 .page-label {
@@ -305,6 +310,7 @@ h4 {
   position: relative;
   width: 100%;
   height: 100%;
+  isolation: isolate;
 }
 
 .drawer {
@@ -391,4 +397,10 @@ h4 {
 
 .hidden {
   display: none !important;
+}
+
+.layout-section-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 6px 0;
 }

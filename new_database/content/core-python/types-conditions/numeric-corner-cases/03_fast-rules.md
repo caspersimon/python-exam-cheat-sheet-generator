@@ -1,0 +1,3 @@
+- With negative numbers, `//` means **floor**, not truncate-toward-zero.
+- Be suspicious of `1.1 + 2.2 == 3.3`-style options.
+- Ordered containers compare ordered content; sets compare members regardless of order.

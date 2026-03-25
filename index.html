@@ -14,10 +14,10 @@
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Newsreader:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&family=Merriweather:wght@400;700&family=Lora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Newsreader:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&family=Merriweather:wght@400;700&family=Lora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css?v=20260325b" />
@@ -211,48 +211,90 @@
         <span>Font family</span>
         <select id="fontFamilySelect">
           <option value="'Manrope', sans-serif">Manrope</option>
+          <option value="'Inter', sans-serif">Inter</option>
+          <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+          <option value="'DM Sans', sans-serif">DM Sans</option>
+          <option value="'Public Sans', sans-serif">Public Sans</option>
+          <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+          <option value="'Source Sans 3', sans-serif">Source Sans 3</option>
+          <option value="'Work Sans', sans-serif">Work Sans</option>
+          <option value="'Newsreader', serif">Newsreader</option>
+          <option value="'Source Serif 4', serif">Source Serif 4</option>
+          <option value="'Merriweather', serif">Merriweather</option>
+          <option value="'Lora', serif">Lora</option>
         </select>
       </label>
 
       <label class="field">
-        <span>Base font size: <strong id="fontSizeValue">9.5</strong>px</span>
-        <input id="fontSizeRange" type="range" min="7" max="14" step="0.5" value="9.5" />
+        <span>Base font size: <strong id="fontSizeValue">8.5</strong>px</span>
+        <input id="fontSizeRange" type="range" min="4" max="20" step="0.5" value="8.5" />
       </label>
 
       <label class="field">
-        <span>Title size: <strong id="titleSizeValue">6.8</strong>px</span>
-        <input id="titleSizeRange" type="range" min="4.8" max="12" step="0.2" value="6.8" />
+        <span>Title size: <strong id="titleSizeValue">9.5</strong>px</span>
+        <input id="titleSizeRange" type="range" min="4" max="20" step="0.2" value="9.5" />
       </label>
 
       <label class="field">
-        <span>Line height: <strong id="lineHeightValue">1.1</strong></span>
-        <input id="lineHeightRange" type="range" min="0.9" max="1.5" step="0.05" value="1.1" />
+        <span>Line height: <strong id="lineHeightValue">0.9</strong></span>
+        <input id="lineHeightRange" type="range" min="0.2" max="3" step="0.05" value="0.9" />
       </label>
 
       <label class="field">
         <span>Letter spacing: <strong id="letterSpacingValue">0</strong>px</span>
-        <input id="letterSpacingRange" type="range" min="-0.2" max="1.2" step="0.05" value="0" />
+        <input id="letterSpacingRange" type="range" min="-1" max="3" step="0.05" value="0" />
       </label>
 
       <label class="field">
-        <span>Card gap: <strong id="cardGapValue">6</strong>px</span>
-        <input id="cardGapRange" type="range" min="2" max="18" step="1" value="6" />
+        <span>Card gap: <strong id="cardGapValue">4</strong>px</span>
+        <input id="cardGapRange" type="range" min="0" max="30" step="1" value="4" />
       </label>
 
       <label class="field">
-        <span>Card padding: <strong id="cardPaddingValue">7</strong>px</span>
-        <input id="cardPaddingRange" type="range" min="4" max="16" step="1" value="7" />
+        <span>Card padding: <strong id="cardPaddingValue">5</strong>px</span>
+        <input id="cardPaddingRange" type="range" min="0" max="30" step="1" value="5" />
       </label>
 
       <label class="field">
-        <span>Code block padding: <strong id="codeBlockPaddingValue">8</strong>px</span>
-        <input id="codeBlockPaddingRange" type="range" min="2" max="10" step="1" value="8" />
+        <span>Code block padding: <strong id="codeBlockPaddingValue">4</strong>px</span>
+        <input id="codeBlockPaddingRange" type="range" min="0" max="20" step="1" value="4" />
       </label>
 
       <label class="field">
-        <span>Code block margin: <strong id="codeBlockMarginValue">2</strong>px</span>
-        <input id="codeBlockMarginRange" type="range" min="0" max="8" step="1" value="2" />
+        <span>Code block margin: <strong id="codeBlockMarginValue">1</strong>px</span>
+        <input id="codeBlockMarginRange" type="range" min="0" max="16" step="1" value="1" />
       </label>
+
+      <label class="field">
+        <span>Table font size: <strong id="tableSizeValue">7</strong>px</span>
+        <input id="tableSizeRange" type="range" min="4" max="20" step="0.5" value="7" />
+      </label>
+
+      <label class="field">
+        <span>Space between pieces: <strong id="pieceGapValue">2</strong>px</span>
+        <input id="pieceGapRange" type="range" min="0" max="20" step="1" value="2" />
+      </label>
+
+      <label class="field">
+        <span>Piece title margin: <strong id="titleMarginValue">1</strong>px</span>
+        <input id="titleMarginRange" type="range" min="0" max="16" step="1" value="1" />
+      </label>
+
+      <div class="layout-section-divider"></div>
+
+      <label class="field inline-field">
+        <input id="page1LandscapeToggle" type="checkbox" />
+        <span>Page 1 landscape</span>
+      </label>
+
+      <label class="field inline-field">
+        <input id="page2LandscapeToggle" type="checkbox" />
+        <span>Page 2 landscape</span>
+      </label>
+
+      <div class="layout-section-divider"></div>
+
+      <button id="smartFitBtn" class="solid-btn" type="button" style="width:100%">Smart Fit layout</button>
     </aside>
 
     <aside id="orderDrawer" class="panel drawer hidden" aria-label="Card order">
@@ -269,17 +311,20 @@
 
     <div id="splashOverlay" class="splash-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="splashTitle">
       <div class="splash-card">
+        <p class="splash-eyebrow">Python Exam Prep</p>
         <h2 id="splashTitle">Build Your Exam Cheat Sheet In Minutes</h2>
         <p class="splash-lead">
           Browse by topic, open subtopics, pick the exact markdown-backed pieces you want, and export a compact 2-page A4 cheat sheet.
         </p>
         <div id="splashPresetList" class="preset-list splash-preset-list"></div>
-        <ul class="splash-points">
-          <li>Start from a preset if you want a fast, opinionated first draft.</li>
-          <li>Use the topic sidebar to jump straight to the concept family you need.</li>
-          <li>Preview, reorder, and export as PDF or PNG.</li>
-        </ul>
-        <button id="getStartedBtn" class="ghost-btn splash-start-btn" type="button">Browse manually instead</button>
+        <div class="splash-footer">
+          <ul class="splash-points">
+            <li>Start from a preset if you want a fast, opinionated first draft.</li>
+            <li>Use the topic sidebar to jump straight to the concept family you need.</li>
+            <li>Preview, reorder, and export as PDF or PNG.</li>
+          </ul>
+          <button id="getStartedBtn" class="ghost-btn splash-start-btn" type="button">Browse manually instead</button>
+        </div>
       </div>
     </div>
 

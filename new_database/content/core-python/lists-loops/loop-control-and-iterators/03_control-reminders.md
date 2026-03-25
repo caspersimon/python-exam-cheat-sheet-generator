@@ -1,0 +1,3 @@
+- `break` ends the loop; `continue` only skips the current pass.
+- If a value is appended **after** a `continue`, that line is skipped for that iteration.
+- Iterators are consumed as you call `next(...)`; they do not automatically reset.

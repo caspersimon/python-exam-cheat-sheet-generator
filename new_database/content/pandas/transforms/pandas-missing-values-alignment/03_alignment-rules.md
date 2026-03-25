@@ -1,0 +1,4 @@
+- Use `fillna(...)` when you want to keep the table and replace blanks.
+- Use `dropna()` when incomplete rows/columns should disappear.
+- Arithmetic on Series/DataFrames aligns labels first; mismatched labels can produce `NaN`.
+- A `DatetimeIndex` matters only if the **index itself** actually stores datetimes.

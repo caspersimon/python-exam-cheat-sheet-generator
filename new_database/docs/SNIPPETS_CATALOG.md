@@ -1,19 +1,19 @@
 # Snippets catalog
 
 > [!summary] What this is
-> Human-readable final copy of the snippet bank.
+> Human-readable V2 copy of the snippet bank.
 > Each snippet is shown with its metadata and all of its pieces.
 
 ## Topic index
 
 - **Exam survival** (`survival`) — 2 snippets
-- **Core Python** (`core-python`) — 8 snippets
+- **Core Python** (`core-python`) — 12 snippets
 - **Functions & scope** (`functions-and-scope`) — 6 snippets
 - **Strings** (`strings`) — 6 snippets
 - **Dictionaries & comprehensions** (`dicts-and-comprehensions`) — 6 snippets
-- **OOP** (`oop`) — 4 snippets
+- **OOP** (`oop`) — 5 snippets
 - **Datetime** (`datetime`) — 5 snippets
-- **Pandas** (`pandas`) — 8 snippets
+- **Pandas** (`pandas`) — 9 snippets
 
 # Exam survival
 
@@ -43,7 +43,7 @@
 > - Keywords: `does not work`, `elimination`, `mcq`, `strategy`, `traps`, `works`
 > - Trap slugs: `loc_vs_iloc`, `local_scope_nameerror`, `method_returns_none`, `string_immutable_reassign`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q03`, `final-exam-solutions-for-python-programming-62oop21-q07`, `final-exam-study-guide-trial-python-basics-2023-q19`, `introduction-to-python-trial-final-exam-solutions-py22-q14`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q18`, `sample-final-plus-answers-q04`, `sample-final-plus-answers-q06`, `sample-final-plus-answers-q15`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > The bank repeatedly rewards fast shape-checking: type, mutation, labels vs positions, parse vs format, and whether code actually returns/prints what the stem asks.
@@ -130,7 +130,7 @@ total               # NameError: total only exists inside build_total
 > - Keywords: `append`, `immutable`, `mutation`, `replace`, `returns none`, `shuffle`, `sort`
 > - Trap slugs: `method_returns_none`, `shuffle_sort_in_place`, `string_immutable_reassign`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q04`, `final-exam-solutions-for-python-programming-62oop21-q19`, `final-exam-study-guide-trial-python-basics-2023-q17`, `introduction-to-python-trial-final-exam-solutions-py22-q17`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q21`, `sample-final-plus-answers-q04`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > A large share of wrong options fail because the code forgets that strings are immutable, that `append`/`sort`/`shuffle` mutate in place, or that some expressions return `None`.
@@ -185,13 +185,162 @@ _kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
 
 > [!info] Topic note
 > Types, truthiness, indexing, slicing, loops, and small built-ins.
-> Snippets in this topic: **8**
+> Snippets in this topic: **12**
+
+## Syntax basics
+
+> [!tip] Subtopic note
+> Tiny syntax fragments, raw strings, escape sequences, comments, and line continuation.
+> Snippets in this subtopic: **1**
+
+### Start here
+
+#### Syntax fragments, escapes, and raw strings
+
+> [!abstract] Snippet metadata
+> - Slug: `syntax-fragments-escapes-raw-strings`
+> - Phase: `pre-midterm`
+> - Default priority: `4`
+> - Difficulty: `beginner`
+> - Recurrence: `rare` across `0` families / `0` questions
+> - UI section: `start-here` — Start here
+> - Default-selected pieces: `2/3`
+> - Estimated space: `792` chars selected / `1154` chars total
+> - Keywords: `backslash`, `comment`, `escape sequence`, `logical line`, `raw string`, `syntax`
+> - Trap slugs: `comment_ignores_rest_of_line`, `escape_sequence_meaning`, `raw_string_backslashes`
+> - Question refs: `none`
+> - Presets: `Balanced default`, `Max coverage V2`
+
+> [!summary] Why it matters
+> These are low-frequency compared with pandas or strings, but when they do appear the whole question can collapse to one exact syntax fact.
+
+**Summary.** Low-level syntax reminders for comments, logical lines, backslashes, raw strings, and tiny escape-sequence questions.
+
+##### Piece 1 — Syntax rules mini-table
+
+_kind:_ `table` · _role:_ `core` · _default selected:_ `yes`
+
+| Pattern | What Python does | Example |
+|---|---|---|
+| `# comment` | ignores everything after `#` on that logical line | `x = 3  # ignored text` |
+| open brackets `() [] {}` | statement can continue across physical lines | `nums = [\n  1,\n  2\n]` |
+| trailing backslash `\` | explicitly continues one statement onto the next line | `a = 'hi' + \\\n    ' there'` |
+| raw string `r'...'` | keeps backslashes literally; quotes still must close normally | `r'c:\temp\file.txt'` |
+
+##### Piece 2 — Escapes and quote choices
+
+_kind:_ `table` · _role:_ `core` · _default selected:_ `yes`
+
+| Pattern | Meaning / output |
+|---|---|
+| `\n` | newline |
+| `\t` | tab |
+| `\\` | one literal backslash |
+| `\"` / `\'` | literal quote inside the same quote style |
+| `"it's"` or `'He said "hi"'` | often easier than escaping both quotes |
+| `r"C:\new\text.txt"` | raw string keeps backslashes; handy for paths |
+
+##### Piece 3 — Tiny fragments to read literally
+
+_kind:_ `example` · _role:_ `clarifier` · _default selected:_ `no`
+
+```python
+x = 3  # comment does not execute
+print(x)                  # 3
+```
+
+```python
+message = (
+    "Hello "
+    "world"
+)
+print(message)            # Hello world
+```
+
+```python
+path = r"C:\temp\new_folder"
+print(path)               # C:\temp\new_folder
+```
+
+Exam habit: trace the exact tokens Python sees; do not infer extra intent that is not in the code.
+
+---
+
+## Objects & names
+
+> [!tip] Subtopic note
+> Name binding, aliasing, copies, equality versus identity.
+> Snippets in this subtopic: **1**
+
+### Start here
+
+#### Names, aliasing, and copies
+
+> [!abstract] Snippet metadata
+> - Slug: `names-aliasing-and-copies`
+> - Phase: `pre-midterm`
+> - Default priority: `4`
+> - Difficulty: `mixed`
+> - Recurrence: `occasional` across `0` families / `0` questions
+> - UI section: `start-here` — Start here
+> - Default-selected pieces: `2/3`
+> - Estimated space: `590` chars selected / `889` chars total
+> - Keywords: `aliasing`, `copy`, `identity`, `mutable`, `name binding`, `slicing copy`
+> - Trap slugs: `alias_vs_copy`, `identity_vs_equality`, `slice_copy_vs_alias`
+> - Question refs: `none`
+> - Presets: `Balanced default`, `Max coverage V2`
+
+> [!summary] Why it matters
+> A lot of “why did this value change?” explanations reduce to one question: do these names point at the same list, or at different objects?
+
+**Summary.** How Python names bind to objects, when two names share one mutable object, and how to tell aliasing from copying.
+
+##### Piece 1 — Binding and copy table
+
+_kind:_ `table` · _role:_ `core` · _default selected:_ `yes`
+
+| Pattern | What it means |
+|---|---|
+| `b = a` | `b` is another name for the **same** object |
+| `b = a[:]` | for a list, `b` is a **new outer list** with the same elements |
+| `b = list(a)` | another common shallow-copy pattern for a list |
+| `a = a + [4]` | builds a **new** list and rebinds `a` |
+| `a.append(4)` | mutates the existing list in place |
+
+##### Piece 2 — Aliasing versus slicing copy
+
+_kind:_ `example` · _role:_ `core` · _default selected:_ `yes`
+
+```python
+l1 = [1, 2, 3]
+l2 = l1
+l3 = l1[:]
+
+l1[0] = 99
+
+print(l2)   # [99, 2, 3]  -> same list as l1
+print(l3)   # [1, 2, 3]   -> separate outer list
+```
+Use this pattern whenever the exam asks why one variable changed “unexpectedly”.
+
+##### Piece 3 — Equality versus identity
+
+_kind:_ `table` · _role:_ `trap` · _default selected:_ `no`
+
+| Expression | Checks | Typical use |
+|---|---|---|
+| `a == b` | same value/content | normal equality questions |
+| `a is b` | same object in memory | identity / singleton checks such as `x is None` |
+
+If the question is not explicitly about object identity, `==` is usually the intended comparison.
+
+---
 
 ## Types & conditions
 
 > [!tip] Subtopic note
 > Truthiness, equality, membership, and built-ins.
-> Snippets in this subtopic: **3**
+> Snippets in this subtopic: **4**
 
 ### Start here
 
@@ -209,7 +358,7 @@ _kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
 > - Keywords: `None`, `bool`, `comparison`, `equality`, `truthiness`, `type`
 > - Trap slugs: `bool_sum_counts_true`, `comparison_chain`, `float_int_string_equality`, `implicit_return_none`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q10`, `final-exam-solutions-for-python-programming-62oop21-q13`, `final-exam-solutions-for-python-programming-62oop21-q18`, `final-exam-study-guide-trial-python-basics-2023-q03`, `introduction-to-python-trial-final-exam-solutions-py22-q01`, `introduction-to-python-trial-final-exam-solutions-py22-q03`, `introduction-to-python-trial-final-exam-solutions-py22-q24`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q01`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q03`, `resit-solutions-for-introduction-to-python-35761538-q01`, `resit-solutions-for-introduction-to-python-35761538-q03`, `sample-final-plus-answers-q13`, `sample-final-plus-answers-q17`, `trial-final-exam-solutions-introduction-to-python-3077951-q13`, `trial-final-exam-solutions-introduction-to-python-3077951-q17`
-> - Presets: `balanced-default`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > Basic-looking MCQs often hide one decisive fact: `'3' != 3`, `3 == 3.0`, empty containers are falsey, and reaching the end of a function returns `None`.
@@ -269,7 +418,7 @@ print(bool([1]))     # True
 > - Keywords: `count`, `index`, `len`, `max`, `ord`, `sorted`, `sum`, `type`
 > - Trap slugs: `builtin_return_type`, `sort_vs_sorted`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q24`, `final-exam-study-guide-trial-python-basics-2023-q03`, `final-exam-study-guide-trial-python-basics-2023-q04`, `final-exam-study-guide-trial-python-basics-2023-q11`, `introduction-to-python-trial-final-exam-solutions-py22-q03`, `introduction-to-python-trial-final-exam-solutions-py22-q06`, `introduction-to-python-trial-final-exam-solutions-py22-q11`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q05`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q11`, `resit-solutions-for-introduction-to-python-35761538-q05`, `resit-solutions-for-introduction-to-python-35761538-q11`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`
 
 > [!summary] Why it matters
 > A surprising number of MCQs are really about remembering one built-in exactly: `len`, `sorted`, `sum`, `max`, `ord`, `type`, `count`, `index`.
@@ -336,12 +485,12 @@ type(3) == 'int'     # False
 > - Difficulty: `beginner`
 > - Recurrence: `common` across `3` families / `5` questions
 > - UI section: `add-next` — Add next
-> - Default-selected pieces: `2/4`
-> - Estimated space: `632` chars selected / `1131` chars total
-> - Keywords: `and`, `conditions`, `in`, `membership`, `not in`, `or`
-> - Trap slugs: `condition_precedence_brackets`, `membership_checks_keys`
+> - Default-selected pieces: `2/5`
+> - Estimated space: `632` chars selected / `1491` chars total
+> - Keywords: `and`, `conditions`, `if elif else`, `in`, `membership`, `mixed-type comparison`, `not in`, `or`, `ternary`
+> - Trap slugs: `condition_precedence_brackets`, `filter_condition_applies_to_each_item`, `membership_checks_keys`, `mixed_type_compare_without_conversion`, `ternary_branch_order`
 > - Question refs: `final-exam-study-guide-trial-python-basics-2023-q01`, `introduction-to-python-trial-final-exam-solutions-py22-q01`, `introduction-to-python-trial-final-exam-solutions-py22-q10`, `sample-final-plus-answers-q17`, `trial-final-exam-solutions-introduction-to-python-3077951-q17`
-> - Presets: `balanced-default`, `trap-hunter`
+> - Presets: `Balanced default`, `Max coverage V2`, `Trap hunter`
 
 > [!summary] Why it matters
 > Several questions are solved by recognizing that membership is checked against the right object, and that condition precedence can make a nearly-correct answer wrong.
@@ -395,13 +544,99 @@ destination in {"Spain", "Italy"}    # False
 ```
 This is the pattern behind many “is this value allowed / included?” answers.
 
+##### Piece 5 — Branch order, ternary, and per-element filtering
+
+_kind:_ `rules` · _role:_ `trap` · _default selected:_ `no`
+
+- In an `if / elif / else` chain, put the most specific or highest-threshold branch first.
+- Ternary form is `value_if_true if condition else value_if_false`.
+- When filtering a collection, apply the condition to **each element**:
+  ```python
+  [x for x in nums if x > 0]
+  ```
+  not `if nums > 0`.
+- Convert before comparing mixed types such as `'3'` and `3`.
+
+---
+
+### Edge cases
+
+#### Numeric corner cases
+
+> [!abstract] Snippet metadata
+> - Slug: `numeric-corner-cases`
+> - Phase: `pre-midterm`
+> - Default priority: `3`
+> - Difficulty: `mixed`
+> - Recurrence: `rare` across `0` families / `0` questions
+> - UI section: `edge-cases` — Edge cases
+> - Default-selected pieces: `1/4`
+> - Estimated space: `213` chars selected / `1129` chars total
+> - Keywords: `arithmetic operators`, `float precision`, `floor division`, `identity`, `modulo`, `order-sensitive`, `power`, `sets`
+> - Trap slugs: `float_precision_exact_compare`, `floor_division_floors_down`, `set_equality_ignores_order`
+> - Question refs: `none`
+> - Presets: `Max coverage V2`, `Trap hunter`
+
+> [!summary] Why it matters
+> These are not the most frequent exam themes, but they are classic one-line gotchas: exact float equality, negative `//`, and assuming every container equality check cares about order.
+
+**Summary.** Compact backup for negative floor division, modulo with negatives, float precision, and order-sensitive versus order-insensitive equality.
+
+##### Piece 1 — Negative `//` and `%`
+
+_kind:_ `table` · _role:_ `core` · _default selected:_ `no`
+
+| Expression | Result | Why |
+|---|---:|---|
+| `-5 // 3` | `-2` | `//` floors downward, not toward zero |
+| `-5 % 3` | `1` | remainder keeps the divisor’s sign |
+| `-5 // 2` | `-3` | still floors downward |
+| `-5 % 2` | `1` | paired with the floored quotient |
+
+Useful check: `a == (a // b) * b + (a % b)`.
+
+##### Piece 2 — Float precision and order-sensitive equality
+
+_kind:_ `example` · _role:_ `clarifier` · _default selected:_ `no`
+
+```python
+print(1.1 + 2.2 == 3.3)   # False
+print([1, 2] == [2, 1])   # False
+print({1, 2} == {2, 1})   # True
+```
+
+- exact float equality can fail because decimal fractions are stored approximately
+- lists / tuples / strings care about order
+- sets do not care about insertion order when testing equality
+
+##### Piece 3 — Fast rules
+
+_kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
+
+- With negative numbers, `//` means **floor**, not truncate-toward-zero.
+- Be suspicious of `1.1 + 2.2 == 3.3`-style options.
+- Ordered containers compare ordered content; sets compare members regardless of order.
+
+##### Piece 4 — Operator mini-table
+
+_kind:_ `table` · _role:_ `clarifier` · _default selected:_ `no`
+
+| Operator | Meaning | Example |
+|---|---|---|
+| `+` | addition / concatenation | `2 + 3`, `'a' + 'b'` |
+| `-` | subtraction | `7 - 2` |
+| `*` | multiplication / repetition | `3 * 4`, `'ha' * 2` |
+| `**` | power | `2 ** 3` |
+| `//` | floor division | `7 // 2` -> `3` |
+| `%` | remainder | `7 % 2` -> `1` |
+
 ---
 
 ## Lists, slicing & loops
 
 > [!tip] Subtopic note
 > Indexing, slicing, iteration templates, zip/enumerate.
-> Snippets in this subtopic: **5**
+> Snippets in this subtopic: **6**
 
 ### Start here
 
@@ -419,7 +654,7 @@ This is the pattern behind many “is this value allowed / included?” answers.
 > - Keywords: `enumerate`, `index value`, `pairing`, `zip`
 > - Trap slugs: `enumerate_gives_index_value`, `zip_pairs_positionally`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q16`, `final-exam-solutions-for-python-programming-62oop21-q23`, `final-exam-study-guide-trial-python-basics-2023-q05`, `final-exam-study-guide-trial-python-basics-2023-q08`, `introduction-to-python-trial-final-exam-solutions-py22-q04`, `introduction-to-python-trial-final-exam-solutions-py22-q05`, `introduction-to-python-trial-final-exam-solutions-py22-q08`, `introduction-to-python-trial-final-exam-solutions-py22-q10`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q11`, `resit-solutions-for-introduction-to-python-35761538-q11`, `sample-final-plus-answers-q03`, `sample-final-plus-answers-q20`, `trial-final-exam-solutions-introduction-to-python-3077951-q03`, `trial-final-exam-solutions-introduction-to-python-3077951-q20`
-> - Presets: `balanced-default`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > These two functions recur in list, dict, and output questions. Students often mix up index/value order or forget that `enumerate(..., start=1)` shifts numbering.
@@ -491,7 +726,7 @@ for i, (g1, g2, g3) in enumerate(zip(player1, player2, player3), start=1):
 > - Keywords: `chunking`, `every third`, `reverse`, `slice`, `start stop step`
 > - Trap slugs: `negative_step_direction`, `slice_stop_exclusive`
 > - Question refs: `final-exam-study-guide-trial-python-basics-2023-q09`, `final-exam-study-guide-trial-python-basics-2023-q11`, `introduction-to-python-trial-final-exam-solutions-py22-q09`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q05`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q12`, `resit-solutions-for-introduction-to-python-35761538-q05`, `resit-solutions-for-introduction-to-python-35761538-q12`, `sample-final-plus-answers-q18`, `trial-final-exam-solutions-introduction-to-python-3077951-q18`
-> - Presets: `balanced-default`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > Slice blanks and list-construction questions are common, and the distractors usually differ by one subtle issue: start, stop, step, or stop-exclusivity.
@@ -550,7 +785,7 @@ chunks = [x[i:i+3] for i in range(0, len(x), 3)]
 > - Keywords: `equal to index`, `filter`, `max`, `sublist`, `sum`
 > - Trap slugs: `append_index_vs_value`, `lexicographic_vs_sum`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q23`, `final-exam-solutions-for-python-programming-62oop21-q24`, `final-exam-study-guide-trial-python-basics-2023-q08`, `introduction-to-python-trial-final-exam-solutions-py22-q08`, `sample-final-plus-answers-q18`, `trial-final-exam-solutions-introduction-to-python-3077951-q18`
-> - Presets: _none_
+> - Presets: `Max coverage V2`
 
 > [!summary] Why it matters
 > The bank includes questions where the real task is not syntax but choosing the right selection criterion: equal to index, largest sum, or another derived property.
@@ -610,7 +845,7 @@ If the criterion is **sum**, compute the sums explicitly.
 > - Keywords: `for`, `inclusive`, `previous`, `range`, `while`
 > - Trap slugs: `range_stop_exclusive`, `while_condition_off_by_one`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q14`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q04`, `resit-solutions-for-introduction-to-python-35761538-q04`, `sample-final-plus-answers-q14`, `trial-final-exam-solutions-introduction-to-python-3077951-q14`
-> - Presets: `balanced-default`
+> - Presets: `Balanced default`, `Max coverage V2`
 
 > [!summary] Why it matters
 > The loop questions are rarely deep; they reward knowing a few exact templates and noticing inclusive vs exclusive bounds.
@@ -672,7 +907,7 @@ _kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
 > - Keywords: `indexing`, `negative index`, `nested lists`, `tuples`
 > - Trap slugs: `negative_indices`, `nested_index_order`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q13`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q01`, `resit-solutions-for-introduction-to-python-35761538-q01`
-> - Presets: `balanced-default`
+> - Presets: `Balanced default`, `Max coverage V2`
 
 > [!summary] Why it matters
 > Several “easy” questions are solved by correctly evaluating expressions like `x[0][1]`, `x[-3][0]`, or by knowing exactly what `-1` and `-2` mean.
@@ -716,6 +951,64 @@ For negative indices, count from the end: `-1` last, `-2` second-last, etc.
 
 ---
 
+### Edge cases
+
+#### Loop control and iterators
+
+> [!abstract] Snippet metadata
+> - Slug: `loop-control-and-iterators`
+> - Phase: `pre-midterm`
+> - Default priority: `3`
+> - Difficulty: `mixed`
+> - Recurrence: `rare` across `0` families / `0` questions
+> - UI section: `edge-cases` — Edge cases
+> - Default-selected pieces: `1/3`
+> - Estimated space: `237` chars selected / `716` chars total
+> - Keywords: `StopIteration`, `break`, `continue`, `iter`, `iterator`, `next`
+> - Trap slugs: `break_vs_continue`, `iter_next_progress`, `stopiteration_after_exhaustion`
+> - Question refs: `none`
+> - Presets: `Max coverage V2`
+
+> [!summary] Why it matters
+> These patterns are less common than slicing or `range`, but when they do appear they are usually testing one exact control-flow fact.
+
+**Summary.** Backup material for `break`, `continue`, `iter()`, `next()`, and “what happens on the next iteration?” style questions.
+
+##### Piece 1 — `break`, `continue`, `iter`, `next`
+
+_kind:_ `table` · _role:_ `core` · _default selected:_ `no`
+
+| Form | Effect |
+|---|---|
+| `break` | exit the loop immediately |
+| `continue` | skip the rest of the current iteration and go to the next one |
+| `it = iter(values)` | build an iterator object |
+| `next(it)` | return the next value and advance the iterator |
+
+##### Piece 2 — Iterator example
+
+_kind:_ `example` · _role:_ `clarifier` · _default selected:_ `no`
+
+```python
+it = iter([10, 20])
+
+print(next(it))   # 10
+print(next(it))   # 20
+# next(it)        # StopIteration: no values left
+```
+
+An iterator remembers where it is. `next(it)` does **not** restart from the beginning.
+
+##### Piece 3 — Control-flow reminders
+
+_kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
+
+- `break` ends the loop; `continue` only skips the current pass.
+- If a value is appended **after** a `continue`, that line is skipped for that iteration.
+- Iterators are consumed as you call `next(...)`; they do not automatically reset.
+
+---
+
 # Functions & scope
 
 > [!info] Topic note
@@ -744,7 +1037,7 @@ For negative indices, count from the end: `-1` last, `-2` second-last, etc.
 > - Keywords: `NameError`, `UnboundLocalError`, `global`, `local`, `scope`, `shadowing`
 > - Trap slugs: `assignment_makes_local`, `local_scope_nameerror`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q15`, `final-exam-study-guide-trial-python-basics-2023-q02`, `introduction-to-python-trial-final-exam-solutions-py22-q02`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q02`, `resit-solutions-for-introduction-to-python-35761538-q02`, `sample-final-plus-answers-q15`, `trial-final-exam-solutions-introduction-to-python-3077951-q15`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > Scope questions recur in almost every exam family: a local variable is used outside its function, or assignment inside a function makes Python treat the name as local.
@@ -803,7 +1096,7 @@ If the answer choices talk about invalid operators or bad formatting, but the co
 > - Keywords: `None`, `append`, `function end`, `return`
 > - Trap slugs: `implicit_return_none`, `method_returns_none`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q21`, `final-exam-study-guide-trial-python-basics-2023-q10`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q02`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q03`, `resit-solutions-for-introduction-to-python-35761538-q02`, `resit-solutions-for-introduction-to-python-35761538-q03`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > Questions on missing `return` and accidental `None` are everywhere, especially in function-definition items.
@@ -871,7 +1164,7 @@ _kind:_ `checklist` · _role:_ `trap` · _default selected:_ `yes`
 > - Keywords: `args`, `dict`, `flexible arguments`, `kwargs`, `tuple`
 > - Trap slugs: `args_tuple_shape`, `kwargs_values_not_keys`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q20`, `final-exam-study-guide-trial-python-basics-2023-q12`, `introduction-to-python-trial-final-exam-solutions-py22-q12`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q06`, `resit-solutions-for-introduction-to-python-35761538-q06`, `sample-final-plus-answers-q23`, `trial-final-exam-solutions-introduction-to-python-3077951-q23`
-> - Presets: `balanced-default`, `post-midterm-tilted`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > Flexible-argument questions recur: sum keyword values, compute multiple outputs from any number of integers, or iterate over keyword names in insertion order.
@@ -937,12 +1230,12 @@ The values `'e'` and `'d'` do not matter there; only the **keyword names** matte
 > - Difficulty: `beginner`
 > - Recurrence: `very-common` across `4` families / `7` questions
 > - UI section: `start-here` — Start here
-> - Default-selected pieces: `2/3`
-> - Estimated space: `378` chars selected / `572` chars total
-> - Keywords: `default parameter`, `keyword argument`, `optional`, `parameter binding`
-> - Trap slugs: `default_arg_optional`, `keyword_binding_by_name`
+> - Default-selected pieces: `2/4`
+> - Estimated space: `378` chars selected / `824` chars total
+> - Keywords: `None sentinel`, `default parameter`, `keyword argument`, `mutable default`, `optional`, `parameter binding`
+> - Trap slugs: `default_arg_optional`, `keyword_binding_by_name`, `mutable_default_shared_state`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q20`, `final-exam-solutions-for-python-programming-62oop21-q21`, `final-exam-study-guide-trial-python-basics-2023-q10`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q04`, `resit-solutions-for-introduction-to-python-35761538-q04`, `sample-final-plus-answers-q01`, `trial-final-exam-solutions-introduction-to-python-3077951-q01`
-> - Presets: `balanced-default`
+> - Presets: `Balanced default`, `Max coverage V2`, `Trap hunter`
 
 > [!summary] Why it matters
 > Questions often hide the whole answer in one tiny detail: a default makes the second argument optional, or a keyword call binds by name instead of position.
@@ -983,6 +1276,27 @@ _kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
 
 If the stem calls `main(1)` and the function is `def main(x, y=11):`, reject every option that claims “missing argument”.
 
+##### Piece 4 — Mutable default trap
+
+_kind:_ `example` · _role:_ `trap` · _default selected:_ `no`
+
+```python
+def add_tag(tag, tags=[]):
+    tags.append(tag)
+    return tags
+```
+
+That same list is reused across calls.
+
+Safer pattern:
+```python
+def add_tag(tag, tags=None):
+    if tags is None:
+        tags = []
+    tags.append(tag)
+    return tags
+```
+
 ---
 
 ## Imports & lambda
@@ -1007,7 +1321,7 @@ If the stem calls `main(1)` and the function is `def main(x, y=11):`, reject eve
 > - Keywords: `function argument`, `higher-order`, `lambda`, `map`
 > - Trap slugs: `lambda_call_shape`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q22`, `sample-final-plus-answers-q16`, `sample-final-plus-answers-q23`, `trial-final-exam-solutions-introduction-to-python-3077951-q16`, `trial-final-exam-solutions-introduction-to-python-3077951-q23`
-> - Presets: `balanced-default`, `post-midterm-tilted`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > Lambda questions are usually short but high-yield: once you know the call shape, they become free points.
@@ -1065,7 +1379,7 @@ If the exam prints a `map(...)` object directly, remember that raw `map` is not 
 > - Keywords: `alias`, `import`, `math`, `pi`
 > - Trap slugs: `import_alias_name_mismatch`
 > - Question refs: `sample-final-plus-answers-q24`, `trial-final-exam-solutions-introduction-to-python-3077951-q24`
-> - Presets: _none_
+> - Presets: `Max coverage V2`
 
 > [!summary] Why it matters
 > Import questions are easy to lose for a silly reason: you imported under one name but used another.
@@ -1124,7 +1438,7 @@ print(math.pi * r**2)        # wrong here
 > - Keywords: `join`, `replace`, `split`, `strings`
 > - Trap slugs: `join_called_on_separator`, `string_immutable_reassign`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q03`, `final-exam-solutions-for-python-programming-62oop21-q04`, `final-exam-solutions-for-python-programming-62oop21-q09`, `final-exam-solutions-for-python-programming-62oop21-q19`, `final-exam-study-guide-trial-python-basics-2023-q17`, `final-exam-study-guide-trial-python-basics-2023-q18`, `introduction-to-python-trial-final-exam-solutions-py22-q17`, `introduction-to-python-trial-final-exam-solutions-py22-q18`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q14`, `resit-solutions-for-introduction-to-python-35761538-q14`, `sample-final-plus-answers-q04`, `trial-final-exam-solutions-introduction-to-python-3077951-q04`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > These methods power URL/email/phone parsing, sentence shuffling, capitalization fixes, and many distractors.
@@ -1187,7 +1501,7 @@ words.join('-')    # wrong
 > - Keywords: `count`, `find`, `index`, `search`
 > - Trap slugs: `count_is_method`, `find_minus_one_index_valueerror`
 > - Question refs: `introduction-to-python-trial-final-exam-solutions-py22-q11`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q13`, `resit-solutions-for-introduction-to-python-35761538-q13`, `sample-final-plus-answers-q22`, `trial-final-exam-solutions-introduction-to-python-3077951-q22`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`
 
 > [!summary] Why it matters
 > The bank uses these methods directly and also hides them inside “replace only the second occurrence” questions.
@@ -1241,12 +1555,12 @@ Docs-style optional-argument reminder:
 > - Difficulty: `beginner`
 > - Recurrence: `common` across `3` families / `5` questions
 > - UI section: `add-next` — Add next
-> - Default-selected pieces: `2/2`
-> - Estimated space: `520` chars selected / `520` chars total
-> - Keywords: `capitalize`, `islower`, `isupper`, `lower`, `upper`
-> - Trap slugs: `case_method_pipeline`
+> - Default-selected pieces: `2/3`
+> - Estimated space: `520` chars selected / `864` chars total
+> - Keywords: `capitalize`, `isdigit`, `islower`, `isupper`, `lower`, `lstrip`, `rstrip`, `strip`, `upper`
+> - Trap slugs: `case_method_pipeline`, `string_predicate_nonletters`, `strip_edges_only`
 > - Question refs: `introduction-to-python-trial-final-exam-solutions-py22-q18`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q10`, `resit-solutions-for-introduction-to-python-35761538-q10`, `sample-final-plus-answers-q12`, `trial-final-exam-solutions-introduction-to-python-3077951-q12`
-> - Presets: `post-midterm-tilted`
+> - Presets: `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > Case conversion appears in list comprehensions, proper-noun cleanup, and string-validation distractors.
@@ -1279,6 +1593,18 @@ for word in names:
     sentence = sentence.replace(word, word.capitalize())
 ```
 
+##### Piece 3 — Whitespace and predicate extras
+
+_kind:_ `table` · _role:_ `clarifier` · _default selected:_ `no`
+
+| Call | Result | Reminder |
+|---|---|---|
+| `'  abc  '.strip()` | `'abc'` | removes leading and trailing whitespace only |
+| `'  abc  '.lstrip()` | `'abc  '` | left side only |
+| `'  abc  '.rstrip()` | `'  abc'` | right side only |
+| `'123'.isdigit()` | `True` | digits only |
+| `'123'.islower()` | `False` | digits are not lowercase letters |
+
 ---
 
 ## Formatting
@@ -1298,12 +1624,12 @@ for word in names:
 > - Difficulty: `beginner`
 > - Recurrence: `very-common` across `4` families / `7` questions
 > - UI section: `start-here` — Start here
-> - Default-selected pieces: `2/4`
-> - Estimated space: `444` chars selected / `1040` chars total
-> - Keywords: `f-string`, `format`, `placeholder`, `printing`
-> - Trap slugs: `format_placeholder_mismatch`, `misspelled_variable_name`
+> - Default-selected pieces: `2/5`
+> - Estimated space: `444` chars selected / `1222` chars total
+> - Keywords: `debug f-string`, `f-string`, `format`, `placeholder`, `printing`, `var=`
+> - Trap slugs: `debug_fstring_name_value`, `format_placeholder_mismatch`, `misspelled_variable_name`
 > - Question refs: `final-exam-study-guide-trial-python-basics-2023-q13`, `final-exam-study-guide-trial-python-basics-2023-q23`, `introduction-to-python-trial-final-exam-solutions-py22-q13`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q14`, `resit-solutions-for-introduction-to-python-35761538-q14`, `sample-final-plus-answers-q03`, `trial-final-exam-solutions-introduction-to-python-3077951-q03`
-> - Presets: `balanced-default`, `post-midterm-tilted`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > Formatting questions are usually won by reading placeholders carefully and spotting spelling/placeholder mismatches.
@@ -1355,6 +1681,17 @@ for student in students:
 ```
 If `students` is a **list**, do not call `.items()` on it. Iterate through the list first, then index each dictionary.
 
+##### Piece 5 — Debug output with `f'{var=}'`
+
+_kind:_ `example` · _role:_ `clarifier` · _default selected:_ `no`
+
+```python
+val = 10
+print(f'{val=}')   # val=10
+```
+
+This prints both the variable name and its current value, which can look unfamiliar if you have only practiced ordinary f-strings.
+
 ---
 
 #### Targeted string edits
@@ -1371,7 +1708,7 @@ If `students` is a **list**, do not call `.items()` on it. Iterate through the l
 > - Keywords: `anagram`, `replace count`, `second occurrence`, `swap`
 > - Trap slugs: `replace_count_order`, `string_immutable_reassign`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q04`, `final-exam-solutions-for-python-programming-62oop21-q19`, `final-exam-study-guide-trial-python-basics-2023-q18`, `introduction-to-python-trial-final-exam-solutions-py22-q18`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q13`, `resit-solutions-for-introduction-to-python-35761538-q13`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`
 
 > [!summary] Why it matters
 > These questions reward knowing the exact order of operations, especially because strings are immutable and `replace(..., count)` works left-to-right.
@@ -1435,7 +1772,7 @@ def is_anagram(word_1, word_2):
 > - Keywords: `email`, `parse`, `phone`, `split`, `url`
 > - Trap slugs: `parse_host_before_extension`, `string_immutable_reassign`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q03`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q15`, `resit-solutions-for-introduction-to-python-35761538-q15`, `sample-final-plus-answers-q04`, `trial-final-exam-solutions-introduction-to-python-3077951-q04`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > The exam likes “extract piece X from string Y” questions. They are easiest when you think in short pipelines.
@@ -1502,7 +1839,7 @@ email.split("@")[1]   # 'uva.nl'
 > - Keywords: `aggregate`, `count`, `dict`, `values`, `zip`
 > - Trap slugs: `dict_counting_pattern`, `keys_vs_values`
 > - Question refs: `final-exam-study-guide-trial-python-basics-2023-q05`, `final-exam-study-guide-trial-python-basics-2023-q06`, `final-exam-study-guide-trial-python-basics-2023-q12`, `introduction-to-python-trial-final-exam-solutions-py22-q05`, `introduction-to-python-trial-final-exam-solutions-py22-q06`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q08`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q09`, `resit-solutions-for-introduction-to-python-35761538-q08`, `resit-solutions-for-introduction-to-python-35761538-q09`, `sample-final-plus-answers-q19`, `trial-final-exam-solutions-introduction-to-python-3077951-q19`
-> - Presets: `balanced-default`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > Dictionary construction and counting are a core pre-midterm pattern that still shows up in finals and resits.
@@ -1567,7 +1904,7 @@ _kind:_ `rules` · _role:_ `core` · _default selected:_ `yes`
 > - Keywords: `dict equality`, `items`, `keys`, `values`
 > - Trap slugs: `dict_iterates_keys`, `dict_order_not_equality`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q17`, `final-exam-solutions-for-python-programming-62oop21-q18`, `final-exam-study-guide-trial-python-basics-2023-q06`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q09`, `resit-solutions-for-introduction-to-python-35761538-q09`, `sample-final-plus-answers-q20`, `sample-final-plus-answers-q21`, `trial-final-exam-solutions-introduction-to-python-3077951-q20`, `trial-final-exam-solutions-introduction-to-python-3077951-q21`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > This is one of the most repeated distractor families in the bank.
@@ -1626,7 +1963,7 @@ If three options sum or multiply dict values correctly and one uses `for key, va
 > - Keywords: `cumulative`, `next item`, `running total`, `zip`
 > - Trap slugs: `sorted_running_total_shape`, `zip_next_link`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q16`, `sample-final-plus-answers-q19`, `trial-final-exam-solutions-introduction-to-python-3077951-q19`
-> - Presets: `balanced-default`
+> - Presets: `Balanced default`, `Max coverage V2`
 
 > [!summary] Why it matters
 > These are a little more “algorithmic” than the average MCQ, so having the exact templates saves space and time.
@@ -1695,7 +2032,7 @@ for key in sorted(d):
 > - Keywords: `dict comprehension`, `len`, `ord`, `zip`
 > - Trap slugs: `bool_sum_counts_true`, `dict_comp_key_value_order`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q09`, `final-exam-solutions-for-python-programming-62oop21-q10`, `final-exam-study-guide-trial-python-basics-2023-q04`, `introduction-to-python-trial-final-exam-solutions-py22-q04`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q07`, `resit-solutions-for-introduction-to-python-35761538-q07`, `sample-final-plus-answers-q08`, `sample-final-plus-answers-q11`, `trial-final-exam-solutions-introduction-to-python-3077951-q08`, `trial-final-exam-solutions-introduction-to-python-3077951-q11`
-> - Presets: `balanced-default`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > This is one of the most repeated patterns across the exams.
@@ -1752,7 +2089,7 @@ Check the direction:
 > - Keywords: `filter`, `if else`, `list comprehension`
 > - Trap slugs: `comprehension_if_else_position`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q23`, `final-exam-study-guide-trial-python-basics-2023-q07`, `introduction-to-python-trial-final-exam-solutions-py22-q07`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q10`, `resit-solutions-for-introduction-to-python-35761538-q10`, `sample-final-plus-answers-q12`, `trial-final-exam-solutions-introduction-to-python-3077951-q12`
-> - Presets: `balanced-default`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > These appear repeatedly and are easy to compress into one mental template.
@@ -1807,7 +2144,7 @@ _kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
 > - Keywords: `duplicates`, `membership`, `set`, `sorting`
 > - Trap slugs: `membership_checks_keys`, `set_removes_duplicates`
 > - Question refs: `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q05`, `resit-solutions-for-introduction-to-python-35761538-q05`
-> - Presets: _none_
+> - Presets: `Max coverage V2`
 
 > [!summary] Why it matters
 > A few deceptively simple options rely on knowing that sets remove duplicates and that dict membership checks keys, not values.
@@ -1841,7 +2178,7 @@ Different route, same output.
 
 > [!info] Topic note
 > Constructors, state, methods, and object comparison/reporting patterns.
-> Snippets in this topic: **4**
+> Snippets in this topic: **5**
 
 ## Constructors & state
 
@@ -1865,7 +2202,7 @@ Different route, same output.
 > - Keywords: `__init__`, `default attribute`, `instance attribute`, `self`
 > - Trap slugs: `attribute_not_on_self`, `default_arg_optional`, `missing_self`, `return_in_init`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q01`, `final-exam-study-guide-trial-python-basics-2023-q16`, `final-exam-study-guide-trial-python-basics-2023-q22`, `introduction-to-python-trial-final-exam-solutions-py22-q16`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q16`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q19`, `resit-solutions-for-introduction-to-python-35761538-q16`, `resit-solutions-for-introduction-to-python-35761538-q19`, `sample-final-plus-answers-q01`, `trial-final-exam-solutions-introduction-to-python-3077951-q01`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > The most repeated OOP pattern in the bank is a class definition where one option forgets `self`, forgets a default, or forgets to save attributes on the instance.
@@ -1915,12 +2252,12 @@ _kind:_ `table` · _role:_ `trap` · _default selected:_ `yes`
 > - Difficulty: `mixed`
 > - Recurrence: `signature` across `5` families / `7` questions
 > - UI section: `start-here` — Start here
-> - Default-selected pieces: `2/5`
-> - Estimated space: `503` chars selected / `1281` chars total
-> - Keywords: `append`, `garage`, `list attribute`, `reviews`, `state`
-> - Trap slugs: `mutable_default_list`, `state_stored_on_instance`
+> - Default-selected pieces: `2/6`
+> - Estimated space: `503` chars selected / `1613` chars total
+> - Keywords: `append`, `class attribute`, `garage`, `instance attribute`, `list attribute`, `reviews`, `state`
+> - Trap slugs: `class_vs_instance_attribute`, `mutable_default_list`, `state_stored_on_instance`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q02`, `final-exam-study-guide-trial-python-basics-2023-q24`, `introduction-to-python-trial-final-exam-solutions-py22-q16`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q20`, `resit-solutions-for-introduction-to-python-35761538-q20`, `sample-final-plus-answers-q02`, `trial-final-exam-solutions-introduction-to-python-3077951-q02`
-> - Presets: `balanced-default`, `post-midterm-tilted`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > Many class questions are about an internal list attribute that grows over time, or capacity/state logic that depends on it.
@@ -2001,6 +2338,22 @@ def check_garage(self):
 ```
 Use `enumerate(..., start=1)` when the output dictionary must start its keys at `1`.
 
+##### Piece 6 — Class attribute versus instance attribute
+
+_kind:_ `example` · _role:_ `clarifier` · _default selected:_ `no`
+
+```python
+class Counter:
+    total_created = 0          # class attribute: shared default
+
+    def __init__(self):
+        self.count = 0         # instance attribute: one per object
+        Counter.total_created += 1
+```
+
+- `self.x` belongs to one object
+- `ClassName.x` is shared until an instance shadows it with its own `self.x`
+
 ---
 
 ## Methods & comparison
@@ -2025,7 +2378,7 @@ Use `enumerate(..., start=1)` when the output dictionary must start its keys at 
 > - Keywords: `average score`, `compare objects`, `overview`, `report string`
 > - Trap slugs: `compare_both_directions`, `method_call_in_fstring`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q02`, `final-exam-study-guide-trial-python-basics-2023-q23`, `introduction-to-python-trial-final-exam-solutions-py22-q23`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q20`, `resit-solutions-for-introduction-to-python-35761538-q20`, `sample-final-plus-answers-q02`, `trial-final-exam-solutions-introduction-to-python-3077951-q02`
-> - Presets: `balanced-default`, `post-midterm-tilted`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > These are common ‘long OOP’ questions. Once you see the pattern, they become template filling rather than full problem solving.
@@ -2086,7 +2439,7 @@ _kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
 > - Keywords: `instance method`, `method call`, `self`
 > - Trap slugs: `missing_self`, `self_passed_twice`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q01`, `introduction-to-python-trial-final-exam-solutions-py22-q24`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q19`, `resit-solutions-for-introduction-to-python-35761538-q19`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`
 
 > [!summary] Why it matters
 > A classic exam trap is an otherwise-correct method call that passes the object twice.
@@ -2125,6 +2478,69 @@ Bare names like `reviews`, `legs`, or `sound` are usually wrong unless they were
 
 ---
 
+## Inheritance
+
+> [!tip] Subtopic note
+> Subclass syntax, super(), inherited methods, and parent/child relationships.
+> Snippets in this subtopic: **1**
+
+### Start here
+
+#### Inheritance core patterns
+
+> [!abstract] Snippet metadata
+> - Slug: `oop-inheritance-core`
+> - Phase: `post-midterm`
+> - Default priority: `3`
+> - Difficulty: `mixed`
+> - Recurrence: `rare` across `0` families / `0` questions
+> - UI section: `start-here` — Start here
+> - Default-selected pieces: `2/3`
+> - Estimated space: `573` chars selected / `821` chars total
+> - Keywords: `inheritance`, `isinstance`, `parent class`, `subclass`, `super`
+> - Trap slugs: `child_is_instance_of_parent`, `inheritance_super_init`, `parent_setup_lost`
+> - Question refs: `none`
+> - Presets: `Max coverage V2`
+
+> [!summary] Why it matters
+> Inheritance was covered in the older dataset and is still worth one clean reference card, even though it is not a dominant pattern in the past final-bank questions.
+
+**Summary.** Compact backup for subclass syntax, `super()`, inherited methods, and parent/child type relationships.
+
+##### Piece 1 — Subclass template
+
+_kind:_ `template` · _role:_ `core` · _default selected:_ `no`
+
+```python
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)
+        self.breed = breed
+```
+
+Use `class Child(Parent):` to inherit.
+Use `super().__init__(...)` when the child should keep the parent’s setup logic.
+
+##### Piece 2 — Parent/child rules
+
+_kind:_ `table` · _role:_ `core` · _default selected:_ `yes`
+
+| Fact | Meaning |
+|---|---|
+| child inherits parent methods | child objects can use parent behavior unless it is overridden |
+| `isinstance(child, Parent)` | `True` for a child instance |
+| `super().__init__(...)` | runs the parent constructor inside the child constructor |
+
+##### Piece 3 — Fast traps
+
+_kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
+
+- The child should usually **add** child-specific fields, not erase the parent setup.
+- If the parent constructor already does shared work, forgetting `super().__init__(...)` often leaves important attributes missing.
+- A child object still “counts as” the parent type where the parent is accepted.
+
+---
+
 # Datetime
 
 > [!info] Topic note
@@ -2148,12 +2564,12 @@ Bare names like `reviews`, `legs`, or `sound` are usually wrong unless they were
 > - Difficulty: `mixed`
 > - Recurrence: `signature` across `5` families / `12` questions
 > - UI section: `start-here` — Start here
-> - Default-selected pieces: `2/3`
-> - Estimated space: `372` chars selected / `628` chars total
-> - Keywords: `datetime`, `format directives`, `strftime`, `strptime`
-> - Trap slugs: `date_directive_order`, `strptime_vs_strftime`
+> - Default-selected pieces: `2/4`
+> - Estimated space: `372` chars selected / `819` chars total
+> - Keywords: `datetime`, `format directives`, `object vs string`, `parse vs format`, `strftime`, `strptime`
+> - Trap slugs: `date_directive_order`, `datetime_object_vs_string`, `strptime_vs_strftime`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q11`, `final-exam-study-guide-trial-python-basics-2023-q15`, `final-exam-study-guide-trial-python-basics-2023-q21`, `introduction-to-python-trial-final-exam-solutions-py22-q15`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q17`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q21`, `resit-solutions-for-introduction-to-python-35761538-q17`, `resit-solutions-for-introduction-to-python-35761538-q21`, `sample-final-plus-answers-q07`, `sample-final-plus-answers-q09`, `trial-final-exam-solutions-introduction-to-python-3077951-q07`, `trial-final-exam-solutions-introduction-to-python-3077951-q09`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > Datetime questions often look harder than they are; most boil down to one directive string and knowing whether you are parsing or formatting.
@@ -2197,6 +2613,14 @@ datetime.strptime("03-02-2013", "%d-%m-%Y").month   # 2
 datetime.strptime("03/02/2013", "%m/%d/%Y").month   # 3
 ```
 
+##### Piece 4 — Object versus string mental model
+
+_kind:_ `rules` · _role:_ `trap` · _default selected:_ `no`
+
+- `datetime.strptime(...)` returns a **datetime object**.
+- `dt.strftime(...)` returns a **string**.
+- Add/subtract/compare while you still have datetimes; format to a string only at the end.
+
 ---
 
 #### Build datetimes from parts
@@ -2208,12 +2632,12 @@ datetime.strptime("03/02/2013", "%m/%d/%Y").month   # 3
 > - Difficulty: `mixed`
 > - Recurrence: `very-common` across `4` families / `6` questions
 > - UI section: `start-here` — Start here
-> - Default-selected pieces: `2/3`
-> - Estimated space: `343` chars selected / `564` chars total
-> - Keywords: `datetime constructor`, `day month year`, `hour minute`
-> - Trap slugs: `datetime_arg_order`, `string_not_datetime`
+> - Default-selected pieces: `2/4`
+> - Estimated space: `343` chars selected / `759` chars total
+> - Keywords: `datetime constructor`, `day month year`, `hour minute`, `replace`, `weekday`, `year month day`
+> - Trap slugs: `datetime_arg_order`, `datetime_replace_returns_new`, `string_not_datetime`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q12`, `final-exam-study-guide-trial-python-basics-2023-q22`, `introduction-to-python-trial-final-exam-solutions-py22-q21`, `introduction-to-python-trial-final-exam-solutions-py22-q22`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q22`, `resit-solutions-for-introduction-to-python-35761538-q22`
-> - Presets: `balanced-default`, `post-midterm-tilted`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > This shows up in both OOP and pandas questions where day/month/year or hour/minute arrive separately.
@@ -2254,6 +2678,23 @@ df['Date'] = pd.Series([
 ```
 Note the constructor order is `(year, month, day)`, not `(day, month, year)`.
 
+##### Piece 4 — Direct attributes and `replace()`
+
+_kind:_ `example` · _role:_ `clarifier` · _default selected:_ `no`
+
+```python
+dt.year
+dt.month
+dt.day
+dt.weekday()
+```
+
+```python
+new_dt = dt.replace(year=2025, month=1)
+```
+
+`replace(...)` returns a **new datetime**; it does not mutate the original one in place.
+
 ---
 
 ## Arithmetic & overlap
@@ -2278,7 +2719,7 @@ Note the constructor order is `(year, month, day)`, not `(day, month, year)`.
 > - Keywords: `days`, `difference`, `timedelta`, `weeks`
 > - Trap slugs: `inclusive_plus_one`, `timedelta_requires_datetime`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q11`, `final-exam-study-guide-trial-python-basics-2023-q15`, `introduction-to-python-trial-final-exam-solutions-py22-q15`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q17`, `resit-solutions-for-introduction-to-python-35761538-q17`, `sample-final-plus-answers-q10`, `trial-final-exam-solutions-introduction-to-python-3077951-q10`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > This snippet covers day-of-year, day differences, one-week jumps, and inclusive counting questions.
@@ -2331,7 +2772,7 @@ Keep values as datetimes while computing; convert to strings only at the end.
 > - Keywords: `interval`, `meeting`, `overlap`
 > - Trap slugs: `overlap_is_not_nonoverlap`, `string_not_datetime`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q12`, `introduction-to-python-trial-final-exam-solutions-py22-q21`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`
 
 > [!summary] Why it matters
 > Meeting/lunch-overlap questions recur and are surprisingly template-like.
@@ -2392,7 +2833,7 @@ _kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
 > - Keywords: `sequence`, `strftime`, `weekly dates`, `weeks`
 > - Trap slugs: `format_too_early`, `timedelta_requires_datetime`
 > - Question refs: `final-exam-study-guide-trial-python-basics-2023-q21`, `introduction-to-python-trial-final-exam-solutions-py22-q22`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q21`, `resit-solutions-for-introduction-to-python-35761538-q21`
-> - Presets: `balanced-default`, `post-midterm-tilted`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > The bank uses both list-based and DataFrame-based weekly-date generation tasks.
@@ -2439,7 +2880,7 @@ If you store strings too early, the next line `previous_date + timedelta(...)` f
 
 > [!info] Topic note
 > Selection, transforms, boolean masks, construction, and sorting.
-> Snippets in this topic: **8**
+> Snippets in this topic: **9**
 
 ## Selection
 
@@ -2463,7 +2904,7 @@ If you store strings too early, the next line `previous_date + timedelta(...)` f
 > - Keywords: `DataFrame`, `Series`, `shape`, `single column`
 > - Trap slugs: `series_vs_dataframe_shape`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q07`, `final-exam-study-guide-trial-python-basics-2023-q14`, `introduction-to-python-trial-final-exam-solutions-py22-q14`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q18`, `resit-solutions-for-introduction-to-python-35761538-q18`, `sample-final-plus-answers-q05`, `trial-final-exam-solutions-introduction-to-python-3077951-q05`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > Several pandas questions are solved instantly once you know whether an option returns a Series or a DataFrame.
@@ -2524,7 +2965,7 @@ When multiple lines “make the same selection”, check whether one of them cha
 > - Keywords: `iloc`, `labels`, `loc`, `positions`
 > - Trap slugs: `custom_index_not_zero_based`, `loc_vs_iloc`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q07`, `introduction-to-python-trial-final-exam-solutions-py22-q14`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q18`, `resit-solutions-for-introduction-to-python-35761538-q18`, `sample-final-plus-answers-q05`, `sample-final-plus-answers-q06`, `trial-final-exam-solutions-introduction-to-python-3077951-q05`, `trial-final-exam-solutions-introduction-to-python-3077951-q06`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > The exams repeatedly mix DataFrames with row labels starting at 1 and positional indexing starting at 0.
@@ -2576,7 +3017,7 @@ If the index shown in the printed DataFrame starts at `1`, then `loc[2]` means l
 > - Keywords: `and`, `boolean mask`, `filter rows`, `or`
 > - Trap slugs: `boolean_mask_parentheses`, `invalid_dataframe_tuple_index`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q07`, `final-exam-solutions-for-python-programming-62oop21-q08`, `final-exam-study-guide-trial-python-basics-2023-q19`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23`, `resit-solutions-for-introduction-to-python-35761538-q23`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > This is one of the highest-frequency pandas skills in the bank.
@@ -2617,7 +3058,7 @@ _kind:_ `rules` · _role:_ `core` · _default selected:_ `no`
 
 > [!tip] Subtopic note
 > Vectorized columns, map/apply, string/date transforms.
-> Snippets in this subtopic: **3**
+> Snippets in this subtopic: **4**
 
 ### Start here
 
@@ -2635,7 +3076,7 @@ _kind:_ `rules` · _role:_ `core` · _default selected:_ `no`
 > - Keywords: `apply`, `axis=1`, `map`, `rowwise`
 > - Trap slugs: `map_element_only_vs_apply_row`, `map_expression_not_function`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q05`, `final-exam-study-guide-trial-python-basics-2023-q19`, `final-exam-study-guide-trial-python-basics-2023-q20`, `introduction-to-python-trial-final-exam-solutions-py22-q19`, `introduction-to-python-trial-final-exam-solutions-py22-q20`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q24`, `resit-solutions-for-introduction-to-python-35761538-q24`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > This is the main pandas trap family: elementwise vs rowwise reasoning.
@@ -2694,7 +3135,7 @@ _kind:_ `table` · _role:_ `trap` · _default selected:_ `yes`
 > - Keywords: `column arithmetic`, `new column`, `vectorized`
 > - Trap slugs: `broadcast_shape_mismatch`, `vectorized_ops_vs_map`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q05`, `final-exam-solutions-for-python-programming-62oop21-q06`, `final-exam-study-guide-trial-python-basics-2023-q20`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q24`, `resit-solutions-for-introduction-to-python-35761538-q23`, `resit-solutions-for-introduction-to-python-35761538-q24`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `ultra-dense-core`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Ultra-dense core`
 
 > [!summary] Why it matters
 > Many pandas questions are easiest because the answer is just `df['new'] = df['A'] - df['B']` or a similar vectorized expression.
@@ -2747,7 +3188,7 @@ If you can already express the desired result as column arithmetic, prefer that 
 > - Keywords: `date column`, `map`, `pandas strings`, `replace`
 > - Trap slugs: `column_transform_assignment`, `datetime_arg_order`
 > - Question refs: `introduction-to-python-trial-final-exam-solutions-py22-q19`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q22`, `resit-solutions-for-introduction-to-python-35761538-q22`
-> - Presets: `balanced-default`, `post-midterm-tilted`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > These questions look varied but collapse to a few short patterns.
@@ -2786,6 +3227,66 @@ If you call `.map(...)` but never assign the result back to the column, the Data
 
 ---
 
+### Edge cases
+
+#### Missing values and index alignment
+
+> [!abstract] Snippet metadata
+> - Slug: `pandas-missing-values-alignment`
+> - Phase: `post-midterm`
+> - Default priority: `3`
+> - Difficulty: `mixed`
+> - Recurrence: `rare` across `0` families / `0` questions
+> - UI section: `edge-cases` — Edge cases
+> - Default-selected pieces: `1/3`
+> - Estimated space: `311` chars selected / `722` chars total
+> - Keywords: `NaN`, `dropna`, `fillna`, `index alignment`, `missing values`, `pandas`
+> - Trap slugs: `fillna_vs_dropna`, `pandas_aligns_on_labels`, `unexpected_nan_from_alignment`
+> - Question refs: `none`
+> - Presets: `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`
+
+> [!summary] Why it matters
+> These are classic pandas gotchas: keeping the table shape versus dropping rows, and assuming row-by-row arithmetic when pandas is actually aligning on index labels.
+
+**Summary.** Backup pandas reference for `fillna`, `dropna`, and the label-alignment behavior that can create `NaN` unexpectedly.
+
+##### Piece 1 — `fillna` versus `dropna`
+
+_kind:_ `table` · _role:_ `core` · _default selected:_ `no`
+
+| Goal | Pattern | Shape preserved? |
+|---|---|---:|
+| replace missing values | `df.fillna('No value')` | Yes |
+| remove incomplete rows | `df.dropna()` | No |
+| remove incomplete columns | `df.dropna(axis=1)` | No |
+
+##### Piece 2 — Alignment creates `NaN` by labels
+
+_kind:_ `example` · _role:_ `clarifier` · _default selected:_ `no`
+
+```python
+s1 = pd.Series([10, 20], index=['A', 'B'])
+s2 = pd.Series([1, 2], index=['B', 'C'])
+
+s1 + s2
+# A    NaN
+# B   21.0
+# C    NaN
+```
+
+Pandas aligns by **index label**, not by row position.
+
+##### Piece 3 — Fast rules
+
+_kind:_ `rules` · _role:_ `trap` · _default selected:_ `yes`
+
+- Use `fillna(...)` when you want to keep the table and replace blanks.
+- Use `dropna()` when incomplete rows/columns should disappear.
+- Arithmetic on Series/DataFrames aligns labels first; mismatched labels can produce `NaN`.
+- A `DatetimeIndex` matters only if the **index itself** actually stores datetimes.
+
+---
+
 ## Construction & sorting
 
 > [!tip] Subtopic note
@@ -2808,7 +3309,7 @@ If you call `.map(...)` but never assign the result back to the column, the Data
 > - Keywords: `ascending`, `sort_index`, `sort_values`
 > - Trap slugs: `sort_index_vs_sort_values`
 > - Question refs: `final-exam-solutions-for-python-programming-62oop21-q08`, `introduction-to-python-trial-final-exam-solutions-py22-q20`, `sample-final-plus-answers-q06`, `trial-final-exam-solutions-introduction-to-python-3077951-q06`
-> - Presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`
+> - Presets: `Balanced default`, `Max coverage V2`, `Post-midterm tilted`, `Trap hunter`
 
 > [!summary] Why it matters
 > Several pandas reverse-engineering questions depend on this distinction.
@@ -2863,7 +3364,7 @@ If the printed output changes row order because of a column’s numbers, `sort_i
 > - Keywords: `*args`, `DataFrame constructor`, `lists as columns`
 > - Trap slugs: `dataframe_column_lists_same_length`
 > - Question refs: `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q15`, `resit-solutions-for-introduction-to-python-35761538-q15`
-> - Presets: `post-midterm-tilted`
+> - Presets: `Max coverage V2`, `Post-midterm tilted`
 
 > [!summary] Why it matters
 > The email-address question is a pure template once you know the shape.

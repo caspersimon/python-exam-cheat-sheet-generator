@@ -1,9 +1,9 @@
 topic_slug	title	sort_order	description	snippet_count
 survival	Exam survival	1	Cross-topic elimination tactics and the most repeated trick families.	2
-core-python	Core Python	2	Types, truthiness, indexing, slicing, loops, and small built-ins.	8
+core-python	Core Python	2	Types, truthiness, indexing, slicing, loops, and small built-ins.	12
 functions-and-scope	Functions & scope	3	Returns, parameters, scope, imports, and higher-order call patterns.	6
 strings	Strings	4	String methods, formatting, and parsing mini-problems.	6
 dicts-and-comprehensions	Dictionaries & comprehensions	5	Building mappings, comprehension syntax, sets, and dict iteration.	6
-oop	OOP	6	Constructors, state, methods, and object comparison/reporting patterns.	4
+oop	OOP	6	Constructors, state, methods, and object comparison/reporting patterns.	5
 datetime	Datetime	7	Parsing, formatting, date arithmetic, overlap logic, and date sequences.	5
-pandas	Pandas	8	Selection, transforms, boolean masks, construction, and sorting.	8
+pandas	Pandas	8	Selection, transforms, boolean masks, construction, and sorting.	9

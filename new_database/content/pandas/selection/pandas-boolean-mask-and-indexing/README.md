@@ -3,38 +3,23 @@
 > [!summary] Summary
 > Filter rows with boolean conditions and combine conditions safely.
 
-> [!info] Metadata
-> - Snippet slug: `pandas-boolean-mask-and-indexing`
-> - Topic: `pandas` — Pandas
-> - Subtopic: `selection` — Selection
-> - UI section: `start-here` — Start here
-> - Default priority: `5`
-> - Recurrence: `common` across `3` family/families and `5` question(s)
-> - Phase: `post-midterm`
-> - Difficulty: `mixed`
-> - Default-selected pieces: `2/3`
-> - Estimated space: `434` chars selected / `651` chars total
-> - Trap count: `2`
-> - Included in presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> [!tip] Why this snippet matters
+> This is one of the highest-frequency pandas skills in the bank.
 
-**Why it matters.** This is one of the highest-frequency pandas skills in the bank.
+## Metadata
 
-## Piece index
+- slug: `pandas-boolean-mask-and-indexing`
+- topic: `pandas`
+- subtopic: `selection`
+- course phase: `post-midterm`
+- default priority: `5`
+- difficulty: `mixed`
+- recurrence: `common`
+- question refs: `5`
+- traps: `2`
 
-| # | Piece title | kind | role | default selected | file |
-|---:|---|---|---|---|---|
-| 1 | Correct mask syntax | `template` | `core` | yes | `01_correct-mask-syntax.md` |
-| 2 | What is invalid | `table` | `trap` | yes | `02_what-is-invalid.md` |
-| 3 | Mask + keep all columns / some columns | `rules` | `core` | no | `03_mask-keep-all-columns-some-columns.md` |
+## Pieces
 
-## Keywords
-
-`and`, `boolean mask`, `filter rows`, `or`
-
-## Trap slugs
-
-`boolean_mask_parentheses`, `invalid_dataframe_tuple_index`
-
-## Question refs
-
-`final-exam-solutions-for-python-programming-62oop21-q07`, `final-exam-solutions-for-python-programming-62oop21-q08`, `final-exam-study-guide-trial-python-basics-2023-q19`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q23`, `resit-solutions-for-introduction-to-python-35761538-q23`
+- `01` **Correct mask syntax** — `template` / `core` / default `yes`
+- `02` **What is invalid** — `table` / `trap` / default `yes`
+- `03` **Mask + keep all columns / some columns** — `rules` / `core` / default `no`

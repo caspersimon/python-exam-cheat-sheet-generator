@@ -1,3 +1,38 @@
+function renderPreviewSummaryBlock(previewCardId, snippet) {
+  if (!snippet.summary) {
+    return "";
+  }
+  const layout = state.previewCards[previewCardId];
+  const override = layout?.summaryOverride;
+  const text = override !== undefined ? override : snippet.summary;
+  if (text === "") {
+    return "";
+  }
+  return `
+    <div class="preview-item-block preview-summary-block">
+      <div class="preview-item-actions">
+        <button
+          type="button"
+          class="preview-mini-btn icon-only"
+          data-role="preview-edit-summary"
+          data-card-id="${escapeHtml(previewCardId)}"
+          title="Edit summary"
+          aria-label="Edit summary"
+        ><span aria-hidden="true">&#9998;</span></button>
+        <button
+          type="button"
+          class="preview-mini-btn danger icon-only"
+          data-role="preview-delete-summary"
+          data-card-id="${escapeHtml(previewCardId)}"
+          title="Hide summary"
+          aria-label="Hide summary"
+        ><span aria-hidden="true">&#10005;</span></button>
+      </div>
+      <p class="preview-item-note">${renderInlineCode(text)}</p>
+    </div>
+  `;
+}
+
 function buildPreviewCard(entry, layout) {
   const { previewId, snippet, selectionsByCard } = entry;
   const selection = selectionsByCard[snippet.id];
@@ -65,7 +100,7 @@ function buildPreviewCard(entry, layout) {
     </div>
     <div class="preview-body">
       <p class="preview-source-title"><strong>${renderInlineCode(snippet.subtopicTitle)}</strong></p>
-      ${snippet.summary ? `<p class="preview-item-note">${renderInlineCode(snippet.summary)}</p>` : ""}
+      ${renderPreviewSummaryBlock(previewId, snippet)}
       ${selectedPieces.map((piece) => renderPreviewPiece(previewId, snippet, selection, piece)).join("")}
     </div>
     <button type="button" class="preview-resize-bottom" data-role="preview-resize-bottom" aria-label="Resize card height"></button>

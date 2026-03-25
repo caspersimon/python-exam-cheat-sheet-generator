@@ -3,38 +3,23 @@
 > [!summary] Summary
 > Remember what `return` does, what happens without `return`, and why `return some_mutating_method(...)` is often wrong.
 
-> [!info] Metadata
-> - Snippet slug: `return-none-and-function-end`
-> - Topic: `functions-and-scope` — Functions & scope
-> - Subtopic: `returns-scope` — Returns & scope
-> - UI section: `start-here` — Start here
-> - Default priority: `5`
-> - Recurrence: `common` across `3` family/families and `6` question(s)
-> - Phase: `pre-midterm`
-> - Difficulty: `beginner`
-> - Default-selected pieces: `2/3`
-> - Estimated space: `337` chars selected / `570` chars total
-> - Trap count: `2`
-> - Included in presets: `balanced-default`, `post-midterm-tilted`, `trap-hunter`, `ultra-dense-core`
+> [!tip] Why this snippet matters
+> Questions on missing `return` and accidental `None` are everywhere, especially in function-definition items.
 
-**Why it matters.** Questions on missing `return` and accidental `None` are everywhere, especially in function-definition items.
+## Metadata
 
-## Piece index
+- slug: `return-none-and-function-end`
+- topic: `functions-and-scope`
+- subtopic: `returns-scope`
+- course phase: `pre-midterm`
+- default priority: `5`
+- difficulty: `beginner`
+- recurrence: `common`
+- question refs: `6`
+- traps: `2`
 
-| # | Piece title | kind | role | default selected | file |
-|---:|---|---|---|---|---|
-| 1 | Three rules | `rules` | `core` | yes | `01_three-rules.md` |
-| 2 | Exam-style examples | `example` | `clarifier` | no | `02_exam-style-examples.md` |
-| 3 | What to check in options | `checklist` | `trap` | yes | `03_what-to-check-in-options.md` |
+## Pieces
 
-## Keywords
-
-`None`, `append`, `function end`, `return`
-
-## Trap slugs
-
-`implicit_return_none`, `method_returns_none`
-
-## Question refs
-
-`final-exam-solutions-for-python-programming-62oop21-q21`, `final-exam-study-guide-trial-python-basics-2023-q10`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q02`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q03`, `resit-solutions-for-introduction-to-python-35761538-q02`, `resit-solutions-for-introduction-to-python-35761538-q03`
+- `01` **Three rules** — `rules` / `core` / default `yes`
+- `02` **Exam-style examples** — `example` / `clarifier` / default `no`
+- `03` **What to check in options** — `checklist` / `trap` / default `yes`

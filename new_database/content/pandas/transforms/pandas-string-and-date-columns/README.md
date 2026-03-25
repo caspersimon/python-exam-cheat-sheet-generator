@@ -3,38 +3,23 @@
 > [!summary] Summary
 > Common column transforms on strings and dates: abbreviations, suffixes, replacements, and building date strings.
 
-> [!info] Metadata
-> - Snippet slug: `pandas-string-and-date-columns`
-> - Topic: `pandas` — Pandas
-> - Subtopic: `transforms` — Transforms
-> - UI section: `add-next` — Add next
-> - Default priority: `4`
-> - Recurrence: `occasional` across `2` family/families and `3` question(s)
-> - Phase: `post-midterm`
-> - Difficulty: `mixed`
-> - Default-selected pieces: `2/3`
-> - Estimated space: `426` chars selected / `528` chars total
-> - Trap count: `2`
-> - Included in presets: `balanced-default`, `post-midterm-tilted`
+> [!tip] Why this snippet matters
+> These questions look varied but collapse to a few short patterns.
 
-**Why it matters.** These questions look varied but collapse to a few short patterns.
+## Metadata
 
-## Piece index
+- slug: `pandas-string-and-date-columns`
+- topic: `pandas`
+- subtopic: `transforms`
+- course phase: `post-midterm`
+- default priority: `4`
+- difficulty: `mixed`
+- recurrence: `occasional`
+- question refs: `3`
+- traps: `2`
 
-| # | Piece title | kind | role | default selected | file |
-|---:|---|---|---|---|---|
-| 1 | Common column transforms | `template` | `core` | yes | `01_common-column-transforms.md` |
-| 2 | Date column from Day/Month/Year | `example` | `core` | yes | `02_date-column-from-day-month-year.md` |
-| 3 | Trap hint | `rules` | `trap` | no | `03_trap-hint.md` |
+## Pieces
 
-## Keywords
-
-`date column`, `map`, `pandas strings`, `replace`
-
-## Trap slugs
-
-`column_transform_assignment`, `datetime_arg_order`
-
-## Question refs
-
-`introduction-to-python-trial-final-exam-solutions-py22-q19`, `resit-exam-guidelines-for-intro-to-python-6013b0470y-july-2023-q22`, `resit-solutions-for-introduction-to-python-35761538-q22`
+- `01` **Common column transforms** — `template` / `core` / default `yes`
+- `02` **Date column from Day/Month/Year** — `example` / `core` / default `yes`
+- `03` **Trap hint** — `rules` / `trap` / default `no`

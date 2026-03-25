@@ -6,6 +6,22 @@ const DEFAULT_PAGE_INNER_WIDTH = 758;
 const DEFAULT_PAGE_INNER_HEIGHT = 1079;
 const DEFAULT_COURSE_PHASES = ["pre-midterm", "post-midterm", "mixed"];
 const DEFAULT_RECURRENCE_LEVELS = ["signature", "very-common", "common", "occasional", "rare"];
+const DEFAULT_FONT_FAMILY = "'Manrope', sans-serif";
+const FONT_FAMILY_OPTIONS = Object.freeze([
+  { label: "Manrope", value: "'Manrope', sans-serif" },
+  { label: "Inter", value: "'Inter', sans-serif" },
+  { label: "Space Grotesk", value: "'Space Grotesk', sans-serif" },
+  { label: "DM Sans", value: "'DM Sans', sans-serif" },
+  { label: "Public Sans", value: "'Public Sans', sans-serif" },
+  { label: "IBM Plex Sans", value: "'IBM Plex Sans', sans-serif" },
+  { label: "Source Sans 3", value: "'Source Sans 3', sans-serif" },
+  { label: "Work Sans", value: "'Work Sans', sans-serif" },
+  { label: "Newsreader", value: "'Newsreader', serif" },
+  { label: "Source Serif 4", value: "'Source Serif 4', serif" },
+  { label: "Merriweather", value: "'Merriweather', serif" },
+  { label: "Lora", value: "'Lora', serif" },
+]);
+const FONT_FAMILY_VALUES = new Set(FONT_FAMILY_OPTIONS.map((option) => option.value));
 
 function buildDefaultNavigationState() {
   return {
@@ -35,18 +51,23 @@ const state = {
   previewEntries: {},
   previewZCounter: 1,
   layout: {
-    fontFamily: "'Manrope', sans-serif",
-    fontSize: 9.5,
-    titleSize: 6.8,
-    lineHeight: 1.1,
+    fontFamily: DEFAULT_FONT_FAMILY,
+    fontSize: 8.5,
+    titleSize: 9.5,
+    lineHeight: 0.9,
     letterSpacing: 0,
-    cardGap: 6,
-    cardPadding: 7,
-    codeBlockPadding: 8,
-    codeBlockMargin: 2,
+    cardGap: 4,
+    cardPadding: 5,
+    codeBlockPadding: 4,
+    codeBlockMargin: 1,
+    tableSize: 7,
+    pieceGap: 2,
+    titleMargin: 1,
     autoGrid: true,
     gridColumns: 2,
     gridRows: 6,
+    page1Landscape: false,
+    page2Landscape: false,
   },
 };
 
@@ -117,6 +138,12 @@ const refs = {
   cardPaddingRange: document.getElementById("cardPaddingRange"),
   codeBlockPaddingRange: document.getElementById("codeBlockPaddingRange"),
   codeBlockMarginRange: document.getElementById("codeBlockMarginRange"),
+  tableSizeRange: document.getElementById("tableSizeRange"),
+  pieceGapRange: document.getElementById("pieceGapRange"),
+  titleMarginRange: document.getElementById("titleMarginRange"),
+  tableSizeValue: document.getElementById("tableSizeValue"),
+  pieceGapValue: document.getElementById("pieceGapValue"),
+  titleMarginValue: document.getElementById("titleMarginValue"),
   fontSizeValue: document.getElementById("fontSizeValue"),
   titleSizeValue: document.getElementById("titleSizeValue"),
   lineHeightValue: document.getElementById("lineHeightValue"),
@@ -128,6 +155,9 @@ const refs = {
   splashOverlay: document.getElementById("splashOverlay"),
   splashPresetList: document.getElementById("splashPresetList"),
   getStartedBtn: document.getElementById("getStartedBtn"),
+  page1LandscapeToggle: document.getElementById("page1LandscapeToggle"),
+  page2LandscapeToggle: document.getElementById("page2LandscapeToggle"),
+  smartFitBtn: document.getElementById("smartFitBtn"),
 };
 
 const drawerMap = {
@@ -157,6 +187,7 @@ const previewPointerState = {
 };
 
 async function init() {
+  populateFontFamilyOptions();
   bindEvents();
   bindPreviewEditingEvents();
   syncViewButtons();
@@ -195,6 +226,15 @@ async function init() {
       <p>Rebuild the bundle with <code>python3 scripts/build_frontend_bundle.py</code>, then serve the repo with <code>python3 -m http.server 4173</code>.</p>
     </div>`;
   }
+}
+
+function populateFontFamilyOptions() {
+  if (!refs.fontFamilySelect) {
+    return;
+  }
+  refs.fontFamilySelect.innerHTML = FONT_FAMILY_OPTIONS.map(
+    (option) => `<option value="${option.value}">${option.label}</option>`
+  ).join("");
 }
 
 function readClampedRangeValue(rangeInput) {
@@ -247,6 +287,7 @@ function bindEvents() {
   }
   if (refs.splashOverlay) {
     refs.splashOverlay.addEventListener("click", (event) => {
+      handleCardClick(event);
       if (event.target === refs.splashOverlay) {
         dismissSplash();
       }
@@ -255,6 +296,7 @@ function bindEvents() {
 
   refs.selectionShell?.addEventListener("change", handleCardInputChange);
   refs.selectionShell?.addEventListener("click", handleCardClick);
+  refs.presetsDrawer?.addEventListener("click", handleCardClick);
   refs.selectionShell?.addEventListener("mouseover", handleCardMouseOver);
   document.addEventListener("click", (event) => {
     if (event.target.closest("#selectionShell .info-chip")) {
@@ -355,6 +397,33 @@ function bindEvents() {
     applyLayoutVariables();
     renderPreview();
   });
+
+  refs.tableSizeRange?.addEventListener("input", (event) => {
+    state.layout.tableSize = readClampedRangeValue(event.target);
+    applyLayoutVariables();
+  });
+
+  refs.pieceGapRange?.addEventListener("input", (event) => {
+    state.layout.pieceGap = readClampedRangeValue(event.target);
+    applyLayoutVariables();
+  });
+
+  refs.titleMarginRange?.addEventListener("input", (event) => {
+    state.layout.titleMargin = readClampedRangeValue(event.target);
+    applyLayoutVariables();
+  });
+
+  refs.page1LandscapeToggle?.addEventListener("change", (event) => {
+    state.layout.page1Landscape = Boolean(event.target.checked);
+    applyLayoutVariables();
+    renderPreview();
+  });
+  refs.page2LandscapeToggle?.addEventListener("change", (event) => {
+    state.layout.page2Landscape = Boolean(event.target.checked);
+    applyLayoutVariables();
+    renderPreview();
+  });
+  refs.smartFitBtn?.addEventListener("click", smartFitLayout);
 
   refs.printBtn.addEventListener("click", printGeneratedPdf);
   refs.previewUndoBtn?.addEventListener("click", () => undoLastPreviewChange());

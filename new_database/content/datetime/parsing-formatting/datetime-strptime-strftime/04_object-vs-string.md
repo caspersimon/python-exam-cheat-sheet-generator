@@ -1,0 +1,3 @@
+- `datetime.strptime(...)` returns a **datetime object**.
+- `dt.strftime(...)` returns a **string**.
+- Add/subtract/compare while you still have datetimes; format to a string only at the end.

@@ -1,0 +1,3 @@
+- The child should usually **add** child-specific fields, not erase the parent setup.
+- If the parent constructor already does shared work, forgetting `super().__init__(...)` often leaves important attributes missing.
+- A child object still “counts as” the parent type where the parent is accepted.

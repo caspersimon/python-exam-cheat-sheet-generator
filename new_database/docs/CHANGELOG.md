@@ -1,34 +1,32 @@
-# CHANGELOG
+# V2 changelog
 
-## Review package -> final package
+> [!summary] Goal
+> Integrate the strongest content from the older dataset **without** falling back into a bloated or redundant structure.
 
-### Structural changes
-- Removed snippet: `both-neither-all-meta-options`
-- Added preset tables and preset exports
-- Added question stress-test table and report
-- Added actual `content/` markdown files for every piece
-- Added frontend-oriented snippet grouping fields: `ui_section_slug`, `ui_section_title`, `ui_section_sort_order`, `ui_card_order`
+## New snippets
 
-### Feedback-driven content changes
-- Rewrote method-heavy snippets to use realistic call syntax with `()`
-- Added explicit outputs to high-value reference tables where that materially improved clarity
-- Split the scope / `NameError` example into its own piece
-- Reworked membership examples to use concrete containers and variables
-- Shortened the chunking example
-- Expanded the `zip()` / `enumerate()` example with clearer context
-- Polished later unreviewed snippets in the same style
+| Snippet | Why it was added |
+|---|---|
+| `syntax-fragments-escapes-raw-strings` | restores exact-syntax reminders for comments, raw strings, escapes, and tiny fragment-reading questions |
+| `names-aliasing-and-copies` | restores name-binding / aliasing / copy logic that explains many “why did this change?” mistakes |
+| `numeric-corner-cases` | restores negative `//`, `%`, float precision, and order-sensitive equality edge cases |
+| `loop-control-and-iterators` | restores `break`, `continue`, `iter()`, and `next()` backup coverage |
+| `pandas-missing-values-alignment` | restores `fillna`, `dropna`, and index-alignment gotchas |
+| `oop-inheritance-core` | restores inheritance / `super()` / parent-child type relationships |
 
-### Stress-test-triggered snippet edits
-| Question ID                                         | Exam                           |   Q# | Primary snippet                        | Action                         | Change notes                                                                                                                                          |
-|:----------------------------------------------------|:-------------------------------|-----:|:---------------------------------------|:-------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
-| final-exam-study-guide-trial-python-basics-2023-q24 | 2023 Trial Final Study Guide   |   24 | Object state and collection attributes | yes I edited one snippet       | Added a numbered-report-dictionary piece to the OOP collection-attributes snippet so the `enumerate(..., start=1)` garage-report pattern is explicit. |
-| sample-final-plus-answers-q02                       | 2025 Sample Final Plus Answers |    2 | Object state and collection attributes | yes I edited multiple snippets | Added an average-rating OOP piece and added `round(x, n)` to the built-ins snippet so the rounded output 3.7 is directly supported.                   |
-| sample-final-plus-answers-q03                       | 2025 Sample Final Plus Answers |    3 | f-strings and .format()                | yes I edited one snippet       | Expanded the f-strings snippet with a list-of-dicts print pattern and `:.1f` formatting so the correct loop/access pattern is explicit.               |
+## Existing snippets extended
 
-### Final counts
-- Topics: **8**
-- Subtopics: **20**
-- Snippets: **45**
-- Pieces: **137**
-- Trap slugs: **75**
-- Questions stress-tested: **168**
+- `membership-and-condition-logic` — ternary / branch-order / per-element filtering / mixed-type compare reminder
+- `defaults-keyword-arguments` — mutable default trap piece
+- `case-and-capitalization` — `strip`, `lstrip`, `rstrip`, `isdigit` reminder
+- `fstrings-and-format` — debug `f'{var=}'` piece
+- `datetime-strptime-strftime` — object-vs-string mental model
+- `datetime-build-from-parts` — direct attributes plus `replace()` returns new datetime
+- `oop-state-and-collection-attributes` — class vs instance attribute piece
+
+## Structural upgrades
+
+- the package now ships the actual `content/` markdown files for every piece
+- added a `max-coverage-v2` preset
+- added a `legacy_integration_map.tsv` export and `LEGACY_INTEGRATION.md`
+- expanded exports to include topics, subtopics, keywords, traps, and navigation plan
