@@ -4,16 +4,22 @@
 
 .subtopic-overview-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
 }
 
 .subtopic-overview-item {
   display: grid;
   gap: 5px;
-  padding: 12px;
-  background: rgba(244, 244, 239, 0.82);
+  padding: 13px 14px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(80, 74, 58, 0.09);
   border-radius: var(--radius-md);
+  transition: background 120ms ease;
+}
+
+.subtopic-overview-item:hover {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .subtopic-overview-item strong {

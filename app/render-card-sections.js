@@ -126,9 +126,16 @@ function renderTopicDetail(topic) {
   `;
 }
 
+const CHECK_ICON = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7l3.5 3.5L11.5 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const X_ICON = `<svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2.5 2.5l8 8M10.5 2.5l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+
 function renderSubtopicSection(subtopic) {
   const selectedCount = subtopic.snippets.reduce((sum, snippet) => sum + getSelectionCounts(snippet).total, 0);
   const totalCount = getSubtopicSelectablePieceIds(subtopic).length;
+  const allSelected = totalCount > 0 && selectedCount === totalCount;
+  const toggleRole = allSelected ? "clear-subtopic" : "select-all-subtopic";
+  const toggleTitle = allSelected ? "Clear all" : "Select all";
+  const toggleIcon = allSelected ? X_ICON : CHECK_ICON;
   return renderSubtopicRailGroup(
     subtopic,
     `
@@ -138,13 +145,8 @@ function renderSubtopicSection(subtopic) {
           ${subtopic.description ? `<p class="muted">${renderInlineCode(subtopic.description)}</p>` : ""}
         </div>
         <div class="topic-section-actions">
-          <span class="topic-section-count">${escapeHtml(`${selectedCount}/${totalCount} selected`)}</span>
-          <button type="button" class="ghost-btn compact-btn" data-role="select-all-subtopic" data-subtopic-id="${escapeHtml(
-            subtopic.id
-          )}">Select all</button>
-          <button type="button" class="ghost-btn compact-btn" data-role="clear-subtopic" data-subtopic-id="${escapeHtml(
-            subtopic.id
-          )}">Clear</button>
+          <span class="topic-section-count">${escapeHtml(`${selectedCount}/${totalCount}`)}</span>
+          <button type="button" class="ghost-btn icon-btn snippet-toggle-btn" data-role="${toggleRole}" data-subtopic-id="${escapeHtml(subtopic.id)}" title="${toggleTitle}" aria-label="${toggleTitle}">${toggleIcon}</button>
         </div>
       </div>
       <div class="topic-rail">
@@ -157,6 +159,11 @@ function renderSubtopicSection(subtopic) {
 function renderSnippetCard(snippet) {
   const draft = ensureDraft(snippet);
   const selectedCount = getSelectionCounts(snippet, draft).total;
+  const totalPieces = getSnippetSelectablePieceIds(snippet).length;
+  const allSelected = totalPieces > 0 && selectedCount === totalPieces;
+  const toggleRole = allSelected ? "clear-snippet" : "select-all-snippet";
+  const toggleTitle = allSelected ? "Clear" : "Select all";
+  const toggleIcon = allSelected ? X_ICON : CHECK_ICON;
   const metadataBits = [
     snippet.recurrenceLevel ? humanizeTopic(snippet.recurrenceLevel) : "",
     snippet.coursePhase ? humanizeTopic(snippet.coursePhase) : "",
@@ -169,23 +176,13 @@ function renderSnippetCard(snippet) {
     )}">
       <div class="exam-snippet-head">
         <div class="exam-snippet-copy">
-          <div class="exam-snippet-meta">
-            ${metadataBits.map((bit) => `<span class="topic-course-chip subtle">${escapeHtml(bit)}</span>`).join("")}
-            ${snippet.trapSlugs.length ? `<span class="topic-course-chip subtle">Trap-aware</span>` : ""}
-          </div>
+          ${metadataBits.length ? `<div class="exam-snippet-meta">${metadataBits.map((bit) => `<span class="snippet-tag">${escapeHtml(bit)}</span>`).join("")}</div>` : ""}
           <h5>${renderInlineCode(snippet.title)}</h5>
           ${snippet.summary ? `<p class="muted">${renderInlineCode(snippet.summary)}</p>` : ""}
           ${snippet.why ? `<p class="muted">${renderInlineCode(snippet.why)}</p>` : ""}
-          <p class="muted">${escapeHtml(`${selectedCount}/${getSnippetSelectablePieceIds(snippet).length} pieces selected`)}</p>
+          <p class="snippet-piece-count">${escapeHtml(`${selectedCount}/${totalPieces} pieces`)}</p>
         </div>
-        <div class="topic-section-actions">
-          <button type="button" class="ghost-btn compact-btn" data-role="select-all-snippet" data-snippet-id="${escapeHtml(
-            snippet.id
-          )}">Select all</button>
-          <button type="button" class="ghost-btn compact-btn" data-role="clear-snippet" data-snippet-id="${escapeHtml(
-            snippet.id
-          )}">Clear</button>
-        </div>
+        <button type="button" class="ghost-btn icon-btn snippet-toggle-btn" data-role="${toggleRole}" data-snippet-id="${escapeHtml(snippet.id)}" title="${toggleTitle}" aria-label="${toggleTitle}">${toggleIcon}</button>
       </div>
       <div class="rail-card-body">
         ${snippet.pieces.map((piece) => renderPieceSelector(snippet, draft, piece)).join("")}

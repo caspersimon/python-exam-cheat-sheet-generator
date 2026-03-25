@@ -9,10 +9,9 @@
 }
 
 .code-block {
-  padding: 10px 12px;
+  padding: 11px 14px;
   background:
-    linear-gradient(180deg, rgba(255, 252, 245, 0.96), rgba(244, 236, 223, 0.96)),
-    linear-gradient(90deg, rgba(157, 108, 41, 0.08), rgba(157, 108, 41, 0));
+    linear-gradient(160deg, rgba(255, 252, 244, 0.98), rgba(242, 234, 218, 0.97));
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   word-break: normal;

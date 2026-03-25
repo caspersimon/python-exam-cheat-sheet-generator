@@ -207,3 +207,15 @@ body.export-snapshot-mode .preview-card .inline-code {
     padding: 0;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  button,
+  .action-link,
+  .info-popover {
+    transition: none;
+  }
+
+  .topic-sidebar {
+    transition: none;
+  }
+}
