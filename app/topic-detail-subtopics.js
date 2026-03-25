@@ -51,7 +51,12 @@ function renderMiniTable(table) {
 
   const headHtml = headers.map((header) => `<th>${renderInlineCode(header)}</th>`).join("");
   const rowsHtml = rows
-    .map((row) => `<tr>${(Array.isArray(row) ? row : []).map((cell) => `<td>${renderInlineRichText(cell, { preserveNewlines: true })}</td>`).join("")}</tr>`)
+    .map(
+      (row) =>
+        `<tr>${(Array.isArray(row) ? row : [])
+          .map((cell) => `<td>${renderInlineRichText(cell, { preserveNewlines: true, decodeEscapes: false })}</td>`)
+          .join("")}</tr>`
+    )
     .join("");
   return `
     <div class="kp-mini-table-wrap">

@@ -221,8 +221,9 @@ function decodeDisplayEscapes(text) {
     .replace(/\\t/g, "\t");
 }
 
-function renderInlineRichText(text, { preserveNewlines = false } = {}) {
-  const value = preserveNewlines ? decodeDisplayEscapes(text) : String(text || "");
+function renderInlineRichText(text, { preserveNewlines = false, decodeEscapes = preserveNewlines } = {}) {
+  const rawValue = String(text || "");
+  const value = decodeEscapes ? decodeDisplayEscapes(rawValue) : normalizeNewlines(rawValue);
   const lines = normalizeNewlines(value).split("\n");
   return lines.map((line) => renderInlineCode(line)).join("<br>");
 }
