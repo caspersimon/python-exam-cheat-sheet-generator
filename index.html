@@ -12,6 +12,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
@@ -48,7 +53,7 @@
         <div class="app-header-main">
           <h1>Python Exam Cheat Sheet Builder</h1>
           <p class="subtitle">Browse the new markdown-first snippet bank, select exact pieces, and compress them into a clean two-page A4 cheat sheet.</p>
-          <p id="progressText" class="header-status-text muted"></p>
+          <p id="progressText" class="header-status-text muted" aria-live="polite"></p>
         </div>
         <div class="header-actions">
           <div class="header-nav-group">
@@ -103,7 +108,7 @@
 
         <section id="previewView" class="view" aria-labelledby="previewHeading">
           <h2 id="previewHeading" class="sr-only">Preview and Export Workspace</h2>
-          <p id="overflowNotice" class="warning hidden"></p>
+          <p id="overflowNotice" class="warning hidden" role="alert" aria-live="assertive"></p>
 
           <div id="sheetStage" class="sheet-stage">
             <article class="sheet-page" data-page="1">
@@ -127,7 +132,7 @@
 
       <label class="field">
         <span>Search snippets</span>
-        <input id="searchInput" type="text" placeholder="e.g. slicing, scope, args, trap" />
+        <input id="searchInput" type="text" autocomplete="off" placeholder="e.g. slicing, scope, args, trap" />
       </label>
 
       <div class="field week-filter">
@@ -150,15 +155,15 @@
       <div class="stat-grid">
         <div>
           <p class="stat-label">Selected Snippets</p>
-          <p id="acceptedCount" class="stat-value">0</p>
+          <p id="acceptedCount" class="stat-value" aria-live="polite">0</p>
         </div>
         <div>
           <p class="stat-label">Selected Pieces</p>
-          <p id="rejectedCount" class="stat-value">0</p>
+          <p id="rejectedCount" class="stat-value" aria-live="polite">0</p>
         </div>
         <div>
           <p class="stat-label">Visible Topics</p>
-          <p id="remainingCount" class="stat-value">0</p>
+          <p id="remainingCount" class="stat-value" aria-live="polite">0</p>
         </div>
       </div>
 

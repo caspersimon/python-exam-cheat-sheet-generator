@@ -33,13 +33,7 @@ function renderSubtopicOverview(subtopics) {
 function renderSubtopicRailGroup(subtopicGroup, innerHtml) {
   return `
     <section class="rail-subtopic-group" data-subtopic-id="${escapeHtml(subtopicGroup.id)}">
-      <div class="rail-subtopic-head">
-        <h5>${escapeHtml(subtopicGroup.title)}</h5>
-        ${subtopicGroup.summary ? `<p>${renderInlineCode(truncateText(subtopicGroup.summary, 180))}</p>` : ""}
-      </div>
-      <div class="rail-subtopic-items">
-        ${innerHtml}
-      </div>
+      ${innerHtml}
     </section>
   `;
 }
