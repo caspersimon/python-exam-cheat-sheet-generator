@@ -16,6 +16,10 @@ Right now the app includes:
 - `134` individually selectable markdown-backed pieces
 - built-in preview, edit, undo, print, PNG, and PDF export tools
 
+Export note:
+- PDF and PNG downloads are rendered from a frozen A4 preview snapshot at 300 DPI for closer visual parity with the on-screen layout. The PDF is intentionally raster/image-based rather than text-selectable.
+- `Print / PDF` now opens a dedicated clean print view and uses the browser print dialog as the highest-fidelity export path. Logical landscape pages are rotated inside a standard A4 print sheet so mixed page layouts still fit a single print job more reliably.
+
 ## What You Can Do
 
 - browse topics and subtopics in the sidebar

@@ -316,29 +316,7 @@ function bindEvents() {
     closeOpenInfoPopovers();
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (isSplashVisible()) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        dismissSplash();
-      }
-      return;
-    }
-
-    if (event.key === "Escape") {
-      closeOpenInfoPopovers();
-      closeDrawers();
-      return;
-    }
-
-    if ((event.metaKey || event.ctrlKey) && !event.shiftKey && !event.altKey && event.key.toLowerCase() === "z") {
-      if (isEditableKeyTarget(event.target) || isPreviewEditModalOpen()) {
-        return;
-      }
-      event.preventDefault();
-      undoLastPreviewChange();
-    }
-  });
+  bindGlobalKeyboardShortcuts();
 
   refs.autoGridToggle?.addEventListener("change", (event) => {
     state.layout.autoGrid = Boolean(event.target.checked);
@@ -436,7 +414,7 @@ function bindEvents() {
   });
   refs.smartFitBtn?.addEventListener("click", smartFitLayout);
 
-  refs.printBtn.addEventListener("click", printGeneratedPdf);
+  refs.printBtn.addEventListener("click", openPrintView);
   refs.previewUndoBtn?.addEventListener("click", () => undoLastPreviewChange());
   refs.exportPngBtn.addEventListener("click", exportPng);
   refs.exportPdfBtn.addEventListener("click", exportPdf);
@@ -486,15 +464,4 @@ function renderCheckboxFilterGroup(host, inputClass, values, selectedSet, filter
       renderAll();
     });
   });
-}
-
-function isEditableKeyTarget(target) {
-  if (!(target instanceof Element)) {
-    return false;
-  }
-  return Boolean(target.closest("input, textarea, select, [contenteditable='true']"));
-}
-
-function isPreviewEditModalOpen() {
-  return document.body.classList.contains("preview-edit-modal-open");
 }

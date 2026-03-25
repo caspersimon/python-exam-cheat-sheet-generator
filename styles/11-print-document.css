@@ -1,0 +1,159 @@
+:root {
+  --print-page-width: 794px;
+  --print-page-height: 1123px;
+}
+
+html,
+body.print-document-body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #ece7db;
+  color: #1a1d17;
+  overflow: auto;
+}
+
+.print-document-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.print-document-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(86, 80, 65, 0.12);
+  background: rgba(255, 252, 245, 0.96);
+}
+
+.print-document-banner h1 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+}
+
+.print-document-banner p {
+  margin: 0;
+  color: #666f67;
+  font-size: 0.92rem;
+}
+
+.print-document-host {
+  display: grid;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px;
+}
+
+.print-sheet {
+  position: relative;
+  width: var(--print-page-width);
+  height: var(--print-page-height);
+  overflow: hidden;
+  background: #fffefb;
+  box-shadow: 0 20px 48px rgba(38, 30, 18, 0.14);
+}
+
+.print-sheet:last-child {
+  break-after: auto;
+}
+
+.print-sheet__viewport {
+  position: relative;
+  width: var(--print-page-width);
+  height: var(--print-page-height);
+  overflow: hidden;
+  background: #fffefb;
+}
+
+.print-sheet__viewport.is-logical-landscape {
+  isolation: isolate;
+}
+
+.print-sheet__rotated {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+.print-sheet__rotated > .sheet-page.is-landscape {
+  transform-origin: top left;
+  transform: translateX(var(--print-rotate-shift, 794px)) rotate(90deg);
+}
+
+.print-sheet .sheet-page {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  background: #fffefb;
+}
+
+.print-sheet .page-content {
+  overflow: hidden;
+}
+
+.print-sheet .preview-card-head-actions,
+.print-sheet .preview-item-actions,
+.print-sheet .preview-resize-bottom,
+.print-sheet .preview-resize-corner,
+.print-sheet .preview-drag-hint,
+.print-sheet .page-label {
+  display: none !important;
+}
+
+.print-sheet .preview-card-head {
+  cursor: default;
+}
+
+.print-sheet .preview-body {
+  overflow: hidden;
+}
+
+.print-document-shell.is-ready .print-document-status--fallback {
+  display: inline;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body.print-document-body {
+    background: #fff;
+    overflow: visible;
+  }
+
+  .print-document-shell {
+    display: block;
+    min-height: auto;
+  }
+
+  .print-document-banner {
+    display: none !important;
+  }
+
+  .print-document-host {
+    display: block;
+    padding: 0;
+  }
+
+  .print-sheet {
+    width: 210mm;
+    height: 297mm;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .print-sheet:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}

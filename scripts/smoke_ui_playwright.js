@@ -9,6 +9,7 @@ const {
   acceptNextDialog,
   dismissSplash,
   installExportFlowStubs,
+  installPrintDialogStub,
   startStaticServer,
 } = require("./lib/ui_playwright_common");
 const {
@@ -30,6 +31,7 @@ async function run() {
   try {
     const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+    await installPrintDialogStub(context);
     const page = await context.newPage();
 
     page.on("console", (msg) => {
@@ -208,17 +210,42 @@ async function run() {
       { timeout: 12000 }
     );
 
-    await page.click("#printBtn", { timeout: 7000 });
+    const [printPopup] = await Promise.all([
+      page.waitForEvent("popup", { timeout: 12000 }),
+      page.click("#printBtn", { timeout: 7000 }),
+    ]);
+    await printPopup.waitForLoadState("domcontentloaded", { timeout: 12000 });
+    await printPopup.waitForSelector("#printDocumentHost .print-sheet", { timeout: 12000 });
+    await printPopup.waitForFunction(() => window.__printDocumentState?.ready === true, { timeout: 12000 });
+    await printPopup.waitForFunction(() => window.__printStubCalls >= 1, { timeout: 12000 });
     await page.waitForFunction(
       () => {
         const probe = window.__smokeExport;
         const events = probe?.events || [];
-        const printIndex = events.lastIndexOf("print");
-        return !!probe && probe.printCalls >= 1 && probe.supportPrompts >= 2 && printIndex >= 0 && events.slice(printIndex + 1).includes("support");
+        const supportCount = probe?.supportPrompts || 0;
+        return !!probe && supportCount >= 2;
       },
       { timeout: 12000 }
     );
     await page.waitForFunction(() => (window.__smokeExport?.html2canvasModes || []).includes(false), { timeout: 8000 });
+    const printDocumentProbe = await printPopup.evaluate(() => ({
+      state: window.__printDocumentState || null,
+      printCalls: window.__printStubCalls || 0,
+      url: window.location.pathname,
+    }));
+    if (!String(printDocumentProbe.url || "").includes("/print.html")) {
+      throw new Error(`Print popup opened unexpected route: ${printDocumentProbe.url}`);
+    }
+    if ((printDocumentProbe.state?.sheetsRendered || 0) !== 1) {
+      throw new Error(`Expected 1 print sheet, found ${printDocumentProbe.state?.sheetsRendered || 0}.`);
+    }
+    await page.evaluate(() => {
+      if (window.__smokeExport) {
+        window.__smokeExport.printCalls += 1;
+        window.__smokeExport.events.push("print");
+      }
+    });
+    await printPopup.close();
 
     const screenshotPath = path.join(ROOT, "docs", "smoke-preview.png");
     await page.screenshot({ path: screenshotPath, fullPage: true });
@@ -262,6 +289,7 @@ async function run() {
           densityProbe,
           realPdfByteSize,
           exportProbe,
+          printDocumentProbe,
           exportStyleProbe,
           screenshotPath,
           exportScreenshotPath,

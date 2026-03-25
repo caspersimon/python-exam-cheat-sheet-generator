@@ -66,7 +66,7 @@ async function exportPng() {
   try {
     for (let idx = 0; idx < pages.length; idx += 1) {
       const page = pages[idx];
-      const canvas = await renderExportPageToCanvas(page);
+      const canvas = await renderExportPageToCanvas(page, { targetDpi: EXPORT_TARGET_DPI });
 
       const url = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -164,28 +164,6 @@ function clearUnlockedPreviewCardLayouts() {
       delete state.previewCards[cardId];
     }
   });
-}
-
-async function renderExportPageToCanvas(page, options = {}) {
-  if (!page) {
-    throw new Error("Export page element is missing.");
-  }
-  if (typeof window.html2canvas !== "function") {
-    throw new Error("html2canvas is not available.");
-  }
-
-  // Prefer raster mode for stable full-page captures. ForeignObject mode can
-  // clip tall content in some browser/PDF combinations.
-  const primary = await window.html2canvas(page, getExportRenderOptions({ ...options, useForeignObject: false }));
-  if (!isCanvasLikelyBlank(primary)) {
-    return primary;
-  }
-
-  const fallback = await window.html2canvas(page, getExportRenderOptions({ ...options, useForeignObject: true }));
-  if (isCanvasLikelyBlank(fallback)) {
-    throw new Error("Export rendering resulted in a blank page.");
-  }
-  return fallback;
 }
 
 function smartFitLayout() {

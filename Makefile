@@ -1,4 +1,4 @@
-.PHONY: build-frontend-bundle check-js check-py check-lines test setup-playwright smoke-ui full-ui stress-layout-ui export-canvas-guard-ui gemini-ui-protocol gemini-benchmark gemini-prompt-experiments gemini-health quality-dashboard maintenance-audit leave-better leave-better-ui validate
+.PHONY: build-frontend-bundle check-js check-py check-lines test setup-playwright smoke-ui full-ui stress-layout-ui export-canvas-guard-ui print-document-ui gemini-ui-protocol gemini-benchmark gemini-prompt-experiments gemini-health quality-dashboard maintenance-audit leave-better leave-better-ui validate
 
 PW_TMP := /tmp/pwtmp
 PW_NODE_PATH := $(PW_TMP)/node_modules
@@ -10,6 +10,7 @@ build-frontend-bundle:
 check-js:
 	node --check app/state-and-init.js
 	node --check app/splash-storage.js
+	node --check app/keyboard-shortcuts.js
 	node --check app/preview-pointer.js
 	node --check app/view-and-data.js
 	node --check app/render-card-sections.js
@@ -21,10 +22,15 @@ check-js:
 	node --check app/preview-history.js
 	node --check app/preview-edit-modal.js
 	node --check app/preview-editing.js
+	node --check app/print-export-utils.js
+	node --check app/print-document.js
+	node --check app/export-raster-freeze-utils.js
+	node --check app/export-raster-utils.js
 	node --check app/layout-export-utils.js
 	node --check app/pdf-export-utils.js
 	node --check app/main.js
 	node --check scripts/export_canvas_guard_playwright.js
+	node --check scripts/print_document_playwright.js
 	node --check scripts/smoke_ui_playwright.js
 	node --check scripts/full_ui_playwright.js
 	node --check scripts/stress_layout_playwright.js
@@ -57,6 +63,9 @@ stress-layout-ui: build-frontend-bundle setup-playwright
 export-canvas-guard-ui: build-frontend-bundle setup-playwright
 	NODE_PATH=$(PW_NODE_PATH) node scripts/export_canvas_guard_playwright.js
 
+print-document-ui: build-frontend-bundle setup-playwright
+	NODE_PATH=$(PW_NODE_PATH) node scripts/print_document_playwright.js
+
 gemini-ui-protocol:
 	python3 scripts/gemini_test_protocol.py --canvas-cmd "make export-canvas-guard-ui" --full-cmd "make full-ui"
 
@@ -77,6 +86,6 @@ maintenance-audit:
 
 leave-better: validate
 
-leave-better-ui: validate full-ui smoke-ui stress-layout-ui maintenance-audit
+leave-better-ui: validate full-ui smoke-ui stress-layout-ui export-canvas-guard-ui print-document-ui maintenance-audit
 
 validate: check-js check-py check-lines test maintenance-audit

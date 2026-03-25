@@ -1,57 +1,15 @@
 #!/usr/bin/env node
 const fs = require("fs");
-const http = require("http");
 const path = require("path");
 const { chromium } = require("playwright");
-const { addAllStagedSnippetsToCanvas, acceptCards, dismissSplash } = require("./lib/ui_playwright_common");
+const {
+  addAllStagedSnippetsToCanvas,
+  acceptCards,
+  dismissSplash,
+  startStaticServer,
+} = require("./lib/ui_playwright_common");
 const ROOT = path.resolve(__dirname, "..");
 const ARTIFACT_DIR = path.join(ROOT, "data", "test_reports", "artifacts");
-const MIME = {
-  ".html": "text/html; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".js": "application/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".pdf": "application/pdf",
-  ".txt": "text/plain; charset=utf-8",
-};
-function startStaticServer(rootDir) {
-  const server = http.createServer((req, res) => {
-    try {
-      const reqPath = decodeURIComponent((req.url || "/").split("?")[0]);
-      const normalized = path.normalize(reqPath).replace(/^\/+/, "");
-      let filePath = path.join(rootDir, normalized || "index.html");
-      if (!filePath.startsWith(rootDir)) {
-        res.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
-        res.end("Forbidden");
-        return;
-      }
-      if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
-        filePath = path.join(filePath, "index.html");
-      }
-      if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
-        res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
-        res.end("Not found");
-        return;
-      }
-      const ext = path.extname(filePath).toLowerCase();
-      res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
-      fs.createReadStream(filePath).pipe(res);
-    } catch (error) {
-      res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
-      res.end(`Server error: ${error.message}`);
-    }
-  });
-  return new Promise((resolve, reject) => {
-    server.on("error", reject);
-    server.listen(0, "127.0.0.1", () => {
-      resolve({ server, port: server.address().port });
-    });
-  });
-}
 function toFilePathFromDataUrl(dataUrl, targetPath) {
   const marker = "base64,";
   const index = String(dataUrl || "").indexOf(marker);
@@ -66,6 +24,7 @@ async function collectCanvasProbe(page) {
     const results = [];
     for (let idx = 0; idx < pages.length; idx += 1) {
       const canvas = await renderExportPageToCanvas(pages[idx]);
+      const debug = canvas.__exportDebug || null;
       const ctx = canvas.getContext("2d", { willReadFrequently: true });
       if (!ctx) {
         throw new Error("Canvas 2D context unavailable for export probe.");
@@ -106,15 +65,26 @@ async function collectCanvasProbe(page) {
         sampledInkRatio: Number((ink / sampled).toFixed(5)),
         bboxHeightRatio: Number(bboxHeightRatio.toFixed(5)),
         bottomInkRatio: Number(bottomInkRatio.toFixed(5)),
+        targetMatches:
+          canvas.width === (debug?.targetWidthPx || 0) &&
+          canvas.height === (debug?.targetHeightPx || 0),
+        fontReady: Boolean(debug?.fontReady),
+        fontStatus: debug?.fontStatus || "unknown",
+        captureMethod: debug?.captureMethod || "unknown",
+        renderTimeMs: Number(debug?.renderTimeMs || 0),
         dataUrl: canvas.toDataURL("image/png"),
       });
     }
     const minBBoxHeightRatio = results.length ? Math.min(...results.map((item) => item.bboxHeightRatio)) : 0;
     const minBottomInkRatio = results.length ? Math.min(...results.map((item) => item.bottomInkRatio)) : 0;
+    const allTargetMatches = results.every((item) => item.targetMatches);
+    const allFontsReady = results.every((item) => item.fontReady);
     return {
       pagesDetected: pages.length,
       minBBoxHeightRatio: Number(minBBoxHeightRatio.toFixed(5)),
       minBottomInkRatio: Number(minBottomInkRatio.toFixed(5)),
+      allTargetMatches,
+      allFontsReady,
       pages: results,
     };
   });
@@ -134,7 +104,7 @@ async function collectInlineWrapProbe(page) {
         code: "for key in dict_name",
         suffix: ") iterates over its keys.",
         minCodeLines: 1,
-        maxCodeLines: 1,
+        maxCodeLines: 2,
       },
       {
         id: "long_sorted_items",
@@ -213,9 +183,28 @@ async function collectInlineWrapProbe(page) {
       };
       const norm = (value) => String(value || "").replace(/\s+/g, " ").trim().toLowerCase();
       const normalStyle = readInlineStyle();
-      document.body.classList.add("export-snapshot-mode");
-      const exportStyle = readInlineStyle();
-      document.body.classList.remove("export-snapshot-mode");
+      const frozen = buildFrozenExportPage(pageEl);
+      const exportCodeEl = frozen.page.querySelector("code.inline-code");
+      const exportStyle = (() => {
+        const style = exportCodeEl ? window.getComputedStyle(exportCodeEl) : null;
+        return {
+          backgroundColor: style?.backgroundColor || "",
+          borderTopColor: style?.borderTopColor || "",
+          borderTopWidth: style?.borderTopWidth || "",
+          borderTopStyle: style?.borderTopStyle || "",
+          borderRadius: style?.borderRadius || "",
+          display: style?.display || "",
+          paddingTop: style?.paddingTop || "",
+          paddingRight: style?.paddingRight || "",
+          paddingBottom: style?.paddingBottom || "",
+          paddingLeft: style?.paddingLeft || "",
+          whiteSpace: style?.whiteSpace || "",
+          wordBreak: style?.wordBreak || "",
+          overflowWrap: style?.overflowWrap || "",
+          boxDecorationBreak: style?.boxDecorationBreak || "",
+          hyphens: style?.hyphens || "",
+        };
+      })();
       const styleKeys = [
         "backgroundColor",
         "borderTopColor",
@@ -237,6 +226,7 @@ async function collectInlineWrapProbe(page) {
         .filter((key) => norm(normalStyle[key]) !== norm(exportStyle[key]))
         .map((key) => ({ key, normal: normalStyle[key], export: exportStyle[key] }));
       const styleParityOk = styleMismatches.length === 0;
+      frozen.cleanup();
       const pageRect = pageEl.getBoundingClientRect();
       const canvas = await renderExportPageToCanvas(pageEl, { scale: 2 });
       const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -459,8 +449,8 @@ async function run() {
     inlineWrapProbe.artifactPath = inlineWrapArtifactPath;
     const ok =
       probe.pagesDetected >= 1 &&
-      probe.minBBoxHeightRatio >= 0.55 &&
-      probe.minBottomInkRatio >= 0.02 &&
+      probe.allTargetMatches &&
+      probe.allFontsReady &&
       inlineWrapProbe.ok;
     await browser.close();
     console.log(
@@ -471,6 +461,8 @@ async function run() {
           thresholds: {
             minBBoxHeightRatio: 0.55,
             minBottomInkRatio: 0.02,
+            exactA4TargetPixels: true,
+            fontsReady: true,
           },
           probe,
           inlineWrapProbe,

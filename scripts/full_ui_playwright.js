@@ -9,6 +9,7 @@ const {
   acceptNextDialog,
   dismissSplash,
   installExportFlowStubs,
+  installPrintDialogStub,
   startStaticServer,
 } = require("./lib/ui_playwright_common");
 const {
@@ -38,6 +39,7 @@ async function run() {
   try {
     const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+    await installPrintDialogStub(context);
     const page = await context.newPage();
 
     page.on("console", (msg) => {
@@ -262,7 +264,32 @@ async function run() {
       { timeout: 12000 }
     );
 
-    await page.click("#printBtn", { timeout: 7000 });
+    const [printPopup] = await Promise.all([
+      page.waitForEvent("popup", { timeout: 12000 }),
+      page.click("#printBtn", { timeout: 7000 }),
+    ]);
+    await printPopup.waitForLoadState("domcontentloaded", { timeout: 12000 });
+    await printPopup.waitForSelector("#printDocumentHost .print-sheet", { timeout: 12000 });
+    await printPopup.waitForFunction(() => window.__printDocumentState?.ready === true, { timeout: 12000 });
+    await printPopup.waitForFunction(() => window.__printStubCalls >= 1, { timeout: 12000 });
+    const printDocumentProbe = await printPopup.evaluate(() => ({
+      state: window.__printDocumentState || null,
+      printCalls: window.__printStubCalls || 0,
+      url: window.location.pathname,
+    }));
+    if (!String(printDocumentProbe.url || "").includes("/print.html")) {
+      throw new Error(`Print popup opened unexpected route: ${printDocumentProbe.url}`);
+    }
+    if ((printDocumentProbe.state?.sheetsRendered || 0) < 1) {
+      throw new Error("Print popup did not render any printable sheets.");
+    }
+    await page.evaluate(() => {
+      if (window.__fullUiExport) {
+        window.__fullUiExport.printCalls += 1;
+        window.__fullUiExport.events.push("print");
+      }
+    });
+    await printPopup.close();
     await page.waitForFunction(
       () => {
         const probe = window.__fullUiExport;
@@ -335,6 +362,7 @@ async function run() {
           legibilityProbe,
           realPdfByteSize,
           exportProbe,
+          printDocumentProbe,
           exportStyleProbe,
           previewArtifactPath,
           exportArtifactPath,

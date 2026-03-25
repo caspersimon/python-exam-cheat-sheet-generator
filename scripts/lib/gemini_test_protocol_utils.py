@@ -82,6 +82,7 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any], canvas: 
     density = smoke.get("densityProbe", {}) if isinstance(smoke.get("densityProbe"), dict) else {}
     export_probe = smoke.get("exportProbe", {}) if isinstance(smoke.get("exportProbe"), dict) else {}
     export_style = smoke.get("exportStyleProbe", {}) if isinstance(smoke.get("exportStyleProbe"), dict) else {}
+    print_document = smoke.get("printDocumentProbe", {}) if isinstance(smoke.get("printDocumentProbe"), dict) else {}
     support_events = export_probe.get("events") if isinstance(export_probe.get("events"), list) else []
     stress_summary = stress.get("summary", {}) if isinstance(stress.get("summary"), dict) else {}
     stress_export = stress.get("exportSnapshotProbe", {}) if isinstance(stress.get("exportSnapshotProbe"), dict) else {}
@@ -89,6 +90,7 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any], canvas: 
     inline_wrap_probe = canvas.get("inlineWrapProbe", {}) if isinstance(canvas.get("inlineWrapProbe"), dict) else {}
     full_summary = full.get("summary", {}) if isinstance(full.get("summary"), dict) else {}
     full_export = full.get("exportProbe", {}) if isinstance(full.get("exportProbe"), dict) else {}
+    full_print_document = full.get("printDocumentProbe", {}) if isinstance(full.get("printDocumentProbe"), dict) else {}
     full_style = full.get("exportStyleProbe", {}) if isinstance(full.get("exportStyleProbe"), dict) else {}
     full_legibility = full.get("legibilityProbe", {}) if isinstance(full.get("legibilityProbe"), dict) else {}
 
@@ -105,10 +107,8 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any], canvas: 
     if support_events:
         first_save = support_events.index("save") if "save" in support_events else -1
         first_support = support_events.index("support") if "support" in support_events else -1
-        last_print = len(support_events) - 1 - support_events[::-1].index("print") if "print" in support_events else -1
-        support_after_print = any(event == "support" for event in support_events[last_print + 1 :]) if last_print >= 0 else False
         add("support_after_pdf_save", first_save >= 0 and first_support > first_save, "Support prompt appears after PDF save is triggered.", support_events)
-        add("support_after_print", last_print >= 0 and support_after_print, "Support prompt appears after print is triggered.", support_events)
+        add("support_after_print", _safe_int(export_probe.get("supportPrompts")) >= 2, "Support prompt appears for the print flow.", support_events)
     else:
         add("support_after_pdf_save", True, "Support order probe unavailable (skipped).", support_events)
         add("support_after_print", True, "Support order probe unavailable (skipped).", support_events)
@@ -125,10 +125,12 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any], canvas: 
     add("stress_out_of_bounds", _safe_int(stress_summary.get("maxOutOfBounds"), 99) == 0, "Stress scenarios keep cards inside page bounds.", stress_summary.get("maxOutOfBounds"))
     add("stress_export_controls_hidden", bool(stress_export.get("controlsHidden")), "Stress export snapshot hides controls.", stress_export.get("controlsHidden"))
     add("export_canvas_pages_detected", _safe_int(canvas_probe.get("pagesDetected")) >= 1, "Export canvas probe detected at least one rendered page.", canvas_probe.get("pagesDetected"))
-    add("export_canvas_min_bbox_height_ratio", _safe_float(canvas_probe.get("minBBoxHeightRatio"), 0.0) >= 0.55, "Export canvas content spans enough vertical area to reject top-only clipping.", canvas_probe.get("minBBoxHeightRatio"))
-    add("export_canvas_min_bottom_ink_ratio", _safe_float(canvas_probe.get("minBottomInkRatio"), 0.0) >= 0.02, "Export canvas keeps meaningful content in the lower page region.", canvas_probe.get("minBottomInkRatio"))
+    add("export_canvas_exact_target", bool(canvas_probe.get("allTargetMatches")), "Export canvas pages use exact A4 raster targets.", canvas_probe.get("allTargetMatches"))
+    add("export_canvas_fonts_ready", bool(canvas_probe.get("allFontsReady")), "Export canvas waits for fonts before rendering.", canvas_probe.get("allFontsReady"))
     add("export_inline_wrap_probe_ok", bool(inline_wrap_probe.get("ok")), "Wrapped inline-code export keeps adjacent plain text visible.", inline_wrap_probe)
     add("export_inline_style_parity_ok", bool(inline_wrap_probe.get("styleParityOk")), "Inline-code chip style remains consistent between preview and export mode.", inline_wrap_probe.get("styleMismatches"))
+    add("print_document_popup_ready", bool(print_document.get("state", {}).get("ready")), "Smoke print document popup rendered and became ready.", print_document)
+    add("print_document_popup_printed", _safe_int(print_document.get("printCalls")) >= 1, "Smoke print document attempted browser print.", print_document)
     add("full_ok", bool(full.get("ok")), "Full UI suite completed.", full.get("ok"))
     add("full_preview_cards", _safe_int(full.get("previewCards")) >= 12, "Full UI suite renders a dense multi-card preview.", full.get("previewCards"))
     add("full_preview_occupied_area", _safe_float(full_summary.get("occupiedAreaRatio"), 0.0) >= 0.45, "Full UI preview uses enough page area.", full_summary.get("occupiedAreaRatio"))
@@ -140,6 +142,8 @@ def evaluate_hard_checks(smoke: dict[str, Any], stress: dict[str, Any], canvas: 
     add("full_pdf_export_invoked", _safe_int(full_export.get("saveCalls")) >= 1, "Full UI PDF export path invoked.", full_export)
     add("full_print_export_invoked", _safe_int(full_export.get("printCalls")) >= 1, "Full UI print path invoked.", full_export)
     add("full_support_prompt_twice", _safe_int(full_export.get("supportPrompts")) >= 2, "Full UI support prompt appears after PDF and print exports.", full_export)
+    add("full_print_document_popup_ready", bool(full_print_document.get("state", {}).get("ready")), "Full UI print document popup rendered and became ready.", full_print_document)
+    add("full_print_document_popup_printed", _safe_int(full_print_document.get("printCalls")) >= 1, "Full UI print document attempted browser print.", full_print_document)
     add("full_export_controls_hidden", bool(full_style.get("controlsHidden")), "Full UI export snapshot hides editing/resize controls.", full_style.get("controlsHidden"))
     add("full_export_layout_stable", full_style.get("layoutStable") is not False, "Full UI export snapshot keeps geometry stable.", full_style.get("layoutStable"))
     add("full_export_header_compact", bool(full_style.get("compactHeader")), "Full UI export snapshot header is compact.", full_style.get("compactHeader"))

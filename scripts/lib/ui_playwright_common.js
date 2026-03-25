@@ -213,6 +213,18 @@ async function installExportFlowStubs(page, namespace, options = {}) {
   );
 }
 
+async function installPrintDialogStub(context) {
+  await context.addInitScript(() => {
+    window.__printStubCalls = 0;
+    const originalPrint = window.print ? window.print.bind(window) : null;
+    window.print = function patchedPrint() {
+      window.__printStubCalls += 1;
+      return undefined;
+    };
+    window.__originalPrintForTests = originalPrint;
+  });
+}
+
 module.exports = {
   addAllStagedSnippetsToCanvas,
   acceptCards,
@@ -220,6 +232,7 @@ module.exports = {
   dismissSplash,
   expandAllWeeks,
   installExportFlowStubs,
+  installPrintDialogStub,
   openTopicAtIndex,
   selectItemsInCurrentTopic,
   startStaticServer,

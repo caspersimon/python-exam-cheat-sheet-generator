@@ -157,40 +157,63 @@ async function probeExportSnapshotLayout(page) {
     };
 
     const before = measure();
-    document.body.classList.add("export-snapshot-mode");
-    const isVisible = (element) => {
-      if (!element) return false;
-      const style = window.getComputedStyle(element);
-      return style.display !== "none" && style.visibility !== "hidden" && Number(style.opacity || "1") > 0;
-    };
-    const hasVisible = (selector) => Array.from(document.querySelectorAll(selector)).some(isVisible);
-    const head = document.querySelector(".preview-card-head");
-    const card = document.querySelector(".preview-card");
-    const body = document.querySelector(".preview-body");
-    const after = measure();
-    const headStyle = head ? window.getComputedStyle(head) : null;
-    const headRect = head?.getBoundingClientRect();
-    const cardRect = card?.getBoundingClientRect();
-    return {
-      controlsHidden:
-        !hasVisible(".preview-card-head-actions") &&
-        !hasVisible(".preview-item-actions") &&
-        !hasVisible(".preview-resize-bottom") &&
-        !hasVisible(".preview-resize-corner"),
-      layoutStable:
-        Math.abs(after.cardHeightPx - before.cardHeightPx) <= 0.5 &&
-        Math.abs(after.cardWidthPx - before.cardWidthPx) <= 0.5 &&
-        Math.abs(after.headHeightPx - before.headHeightPx) <= 0.5,
-      cardHeightDeltaPx: Number((after.cardHeightPx - before.cardHeightPx).toFixed(2)),
-      cardWidthDeltaPx: Number((after.cardWidthPx - before.cardWidthPx).toFixed(2)),
-      headHeightDeltaPx: Number((after.headHeightPx - before.headHeightPx).toFixed(2)),
-      compactHeader:
-        Number.parseFloat(headStyle?.paddingTop || "99") <= 2.5 &&
-        Number.parseFloat(headStyle?.paddingBottom || "99") <= 2.5 &&
-        Number.parseFloat(headStyle?.borderBottomWidth || "99") <= 0.5,
-      headerRatio: Number(((headRect?.height || 0) / Math.max(1, cardRect?.height || 1)).toFixed(4)),
-      bodyPaddingTopPx: Number.parseFloat(window.getComputedStyle(body || document.body).paddingTop || "0"),
-    };
+    const sourcePage = document.querySelector(".sheet-page");
+    if (!sourcePage || typeof buildFrozenExportPage !== "function") {
+      return {
+        controlsHidden: false,
+        layoutStable: false,
+        cardHeightDeltaPx: 0,
+        cardWidthDeltaPx: 0,
+        headHeightDeltaPx: 0,
+        compactHeader: false,
+        headerRatio: 0,
+        bodyPaddingTopPx: 0,
+      };
+    }
+
+    const frozen = buildFrozenExportPage(sourcePage);
+    try {
+      const isVisible = (element) => {
+        if (!element) return false;
+        const style = window.getComputedStyle(element);
+        return style.display !== "none" && style.visibility !== "hidden" && Number(style.opacity || "1") > 0;
+      };
+      const hasVisible = (root, selector) => Array.from(root.querySelectorAll(selector)).some(isVisible);
+      const card = frozen.page.querySelector(".preview-card");
+      const head = card?.querySelector(".preview-card-head");
+      const body = card?.querySelector(".preview-body");
+      const cardRect = card?.getBoundingClientRect();
+      const headRect = head?.getBoundingClientRect();
+      const after = {
+        cardHeightPx: Number((cardRect?.height || 0).toFixed(2)),
+        cardWidthPx: Number((cardRect?.width || 0).toFixed(2)),
+        headHeightPx: Number((headRect?.height || 0).toFixed(2)),
+        bodyHeightPx: Number((body?.getBoundingClientRect?.().height || 0).toFixed(2)),
+      };
+      const headStyle = head ? window.getComputedStyle(head) : null;
+      return {
+        controlsHidden:
+          !hasVisible(frozen.page, ".preview-card-head-actions") &&
+          !hasVisible(frozen.page, ".preview-item-actions") &&
+          !hasVisible(frozen.page, ".preview-resize-bottom") &&
+          !hasVisible(frozen.page, ".preview-resize-corner"),
+        layoutStable:
+          Math.abs(after.cardHeightPx - before.cardHeightPx) <= 0.5 &&
+          Math.abs(after.cardWidthPx - before.cardWidthPx) <= 0.5 &&
+          Math.abs(after.headHeightPx - before.headHeightPx) <= 0.5,
+        cardHeightDeltaPx: Number((after.cardHeightPx - before.cardHeightPx).toFixed(2)),
+        cardWidthDeltaPx: Number((after.cardWidthPx - before.cardWidthPx).toFixed(2)),
+        headHeightDeltaPx: Number((after.headHeightPx - before.headHeightPx).toFixed(2)),
+        compactHeader:
+          Number.parseFloat(headStyle?.paddingTop || "99") <= 2.5 &&
+          Number.parseFloat(headStyle?.paddingBottom || "99") <= 2.5 &&
+          Number.parseFloat(headStyle?.borderBottomWidth || "99") <= 0.5,
+        headerRatio: Number(((headRect?.height || 0) / Math.max(1, cardRect?.height || 1)).toFixed(4)),
+        bodyPaddingTopPx: Number.parseFloat(window.getComputedStyle(body || document.body).paddingTop || "0"),
+      };
+    } finally {
+      frozen.cleanup();
+    }
   });
 }
 

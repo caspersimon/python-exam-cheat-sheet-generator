@@ -2,7 +2,6 @@ const SUPPORT_PAGE_URL =
   "https://buymeacoffee.com/caspersimon/?utm_source=cheatsheet_app&utm_medium=support_prompt&utm_campaign=post_export_support";
 const SUPPORT_PROMPT_SNOOZE_KEY = "python_midterm_support_prompt_snooze_v1";
 const SUPPORT_PROMPT_SNOOZE_DAYS = 14;
-const PDF_EXPORT_SCALE = 3;
 const PDF_IMAGE_COMPRESSION = "MEDIUM";
 
 const supportPromptState = {
@@ -67,13 +66,14 @@ async function buildPdfDocumentFromPages(pages) {
   if (!Array.isArray(pages) || pages.length === 0) {
     throw new Error("No pages available for PDF generation.");
   }
-  const firstSpec = getPdfPageRenderSpec(pages[0]);
+  const renderedPages = await renderExportPagesToCanvases(pages, { targetDpi: EXPORT_TARGET_DPI });
+  const firstSpec = renderedPages[0]?.pageSpec || getPdfPageRenderSpec(pages[0]);
   const pdf = new jsPDF({ orientation: firstSpec.orientation, unit: "mm", format: "a4" });
 
-  for (let idx = 0; idx < pages.length; idx += 1) {
-    const page = pages[idx];
-    const pageSpec = getPdfPageRenderSpec(page);
-    const canvas = await renderExportPageToCanvas(page, { scale: PDF_EXPORT_SCALE });
+  for (let idx = 0; idx < renderedPages.length; idx += 1) {
+    const rendered = renderedPages[idx];
+    const pageSpec = rendered.pageSpec || getPdfPageRenderSpec(rendered.page);
+    const canvas = rendered.canvas;
     if (!canvas || canvas.width < 10 || canvas.height < 10) {
       throw new Error("Generated canvas is invalid.");
     }

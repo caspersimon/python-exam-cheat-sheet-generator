@@ -61,6 +61,8 @@ Legacy materialization (`topic_cards.json`) in this repo is currently:
 - smart layout toggles (`auto grid`, manual columns/rows, page landscape controls)
 - built-in preset packs and preset switching
 - export flows: PDF, PNG, and generated-PDF print
+- PDF/PNG export now uses a frozen preview clone rasterized to exact A4 300 DPI targets for closer on-screen fidelity; generated PDFs are image-based by design
+- `Print / PDF` now opens `print.html`, a dedicated print-only document that reuses the arranged preview DOM and rotates logical landscape pages inside portrait A4 sheets to avoid mixed-orientation browser-print instability
 - first-open splash with starter presets and `Reset intro` action
 - progress persistence in browser storage
 
@@ -94,6 +96,7 @@ Validation / QA tooling:
 - `scripts/full_ui_playwright.js`
 - `scripts/stress_layout_playwright.js`
 - `scripts/export_canvas_guard_playwright.js`
+- `scripts/print_document_playwright.js`
 - `scripts/gemini_test_protocol.py`
 - `scripts/gemini_capability_benchmark.py`
 - `scripts/gemini_prompt_experiments.py`
@@ -326,7 +329,7 @@ PY
 7. Drag snippet from staged to preview and resize/reposition card.
 8. Edit/delete/undo on preview are coherent.
 9. Detached piece flow can create and remove stand-alone cards.
-10. Export PDF/PNG/Print works; print uses generated PDF flow.
+10. Export PDF/PNG/Print works; PDF/PNG should use the high-fidelity 300 DPI frozen-preview raster path, and `Print / PDF` should open the dedicated print document route with exact one-or-two-sheet output.
 11. `data/test_reports/gemini_ui_test_report.json` should be clean after full protocol runs.
 
 ## Contributor Notes

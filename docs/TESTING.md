@@ -30,6 +30,7 @@ make gemini-benchmark
 make gemini-prompt-experiments
 make gemini-health
 make quality-dashboard
+make print-document-ui
 python3 scripts/exam_coverage_audit.py prepare
 python3 scripts/exam_coverage_audit.py summary
 ```
@@ -221,7 +222,7 @@ This runs `scripts/gemini_test_protocol.py`:
 1. Runs `make smoke-ui` to generate deterministic UI/export probes and screenshots.
 2. Runs `make stress-layout-ui` to execute exhaustive layout scenarios (auto/manual grid + typography/spacing extremes).
 3. Runs `make export-canvas-guard-ui` to render real export canvases and detect clipping/top-only capture regressions.
-4. Applies hard pass/fail gates (export chrome hidden, compact header, support prompt hook, print/export flow invoked, stress overlap/bounds/utilization checks, export-canvas vertical coverage/bottom-ink checks).
+4. Applies hard pass/fail gates (export chrome hidden, compact header, support prompt hook, print/export flow invoked, stress overlap/bounds/utilization checks, exact A4 raster dimensions, web-font readiness before capture, and export-canvas inline-wrap parity).
 5. Runs multiple small Gemini micro-audits (strict JSON schema per check):
    - `density_auditor`
    - `export_cleanliness_auditor`
@@ -270,6 +271,9 @@ This runs `scripts/smoke_ui_playwright.js` in an isolated temporary Playwright e
 - real generated PDF blob is non-empty (guards blank export regressions)
 - PDF export button flow + support prompt callback (must trigger after save path)
 - generated-PDF print flow + support prompt callback (must trigger after print path)
+- dedicated `print.html` popup opens from the preview `Print / PDF` button
+- print popup auto-attempts browser print after fonts/layout are ready
+- print popup renders the expected number of physical sheets
 - export snapshot hides edit/resize controls
 - export snapshot uses compact card headers (space-efficient)
 - preview contains only topics with selected content and does not render empty fallback cards
@@ -299,10 +303,25 @@ make export-canvas-guard-ui
 This runs `scripts/export_canvas_guard_playwright.js` and hard-fails when rendered export canvases indicate clipping:
 
 - detects non-empty export pages
-- verifies minimum vertical content coverage on each rendered export canvas
-- verifies non-trivial lower-page content presence (bottom-ink ratio)
+- verifies exact A4 raster targets (`2480x3508` portrait, `3508x2480` landscape)
+- verifies export waits for browser fonts before capture
 - verifies wrapped inline-code export keeps surrounding plain text visible
 - writes canvas artifacts to `data/test_reports/artifacts/export-canvas-page-*.png`
+
+## Print Document Guard (Headless)
+
+```bash
+make print-document-ui
+```
+
+This runs `scripts/print_document_playwright.js` and validates the browser-native print route:
+
+- the `Print / PDF` button opens `print.html`
+- the print document becomes ready before attempting `window.print()`
+- exactly 2 physical sheets render for a mixed portrait/landscape scenario
+- one logical landscape page is rotated inside the print document
+- edit/resize controls do not appear in the print DOM
+- a mixed-orientation artifact screenshot is written to `data/test_reports/artifacts/print-document/`
 
 ## Playwright Workaround Protocol (No Project Node Setup Required)
 
