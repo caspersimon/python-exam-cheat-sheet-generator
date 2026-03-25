@@ -1,5 +1,24 @@
 const MIN_PREVIEW_CARD_WIDTH = 56;
 const MIN_PREVIEW_CARD_HEIGHT = 130;
+const MIN_DETACHED_PREVIEW_CARD_HEIGHT = 64;
+
+function isDetachedPreviewCard(cardId) {
+  if (!cardId) {
+    return false;
+  }
+  if (String(cardId).startsWith("detached__")) {
+    return true;
+  }
+  return state.previewEntries?.[cardId]?.entryType === "detached-piece";
+}
+
+function getMinimumPreviewCardHeight(cardId, baseMinHeight = MIN_PREVIEW_CARD_HEIGHT) {
+  const normalizedBase = Number.isFinite(Number(baseMinHeight)) ? Math.max(1, Number(baseMinHeight)) : MIN_PREVIEW_CARD_HEIGHT;
+  if (!isDetachedPreviewCard(cardId)) {
+    return normalizedBase;
+  }
+  return Math.min(normalizedBase, MIN_DETACHED_PREVIEW_CARD_HEIGHT);
+}
 
 function getPreviewPageContent(page) {
   return page === 2 ? refs.page2Content : refs.page1Content;
@@ -26,14 +45,16 @@ function getPreviewPageSize(page) {
 }
 
 function sanitizePreviewCardLayout(rawLayout, fallback = {}, options = {}) {
+  const cardId = String(options.cardId || rawLayout?.id || fallback?.id || "");
   const page = rawLayout?.page === 2 ? 2 : 1;
   const pageSize = getPreviewPageSize(page);
   const sanitizeMinWidth = Number.isFinite(Number(options.minWidth))
     ? Math.max(1, Number(options.minWidth))
     : MIN_PREVIEW_CARD_WIDTH;
-  const sanitizeMinHeight = Number.isFinite(Number(options.minHeight))
+  const requestedMinHeight = Number.isFinite(Number(options.minHeight))
     ? Math.max(1, Number(options.minHeight))
     : MIN_PREVIEW_CARD_HEIGHT;
+  const sanitizeMinHeight = getMinimumPreviewCardHeight(cardId, requestedMinHeight);
   const widthRaw = Number(rawLayout?.width ?? fallback.width ?? 160);
   const heightRaw = Number(rawLayout?.height ?? fallback.height ?? 220);
   const width = clamp(Number.isFinite(widthRaw) ? widthRaw : 160, sanitizeMinWidth, pageSize.width);
@@ -56,7 +77,7 @@ function sanitizePreviewCardLayout(rawLayout, fallback = {}, options = {}) {
 
 function ensurePreviewCardLayout(cardId, fallback, options = {}) {
   const force = Boolean(options.force);
-  const sanitizeOptions = options.sanitizeOptions || {};
+  const sanitizeOptions = { ...(options.sanitizeOptions || {}), cardId };
   const existing = state.previewCards[cardId];
   if (existing && (!force || existing.locked)) {
     const sanitized = sanitizePreviewCardLayout(existing, fallback, sanitizeOptions);
@@ -214,15 +235,16 @@ function handlePreviewPointerMove(event) {
   const pageSize = getPreviewPageSize(layout.page);
   const dx = event.clientX - previewPointerState.startX;
   const dy = event.clientY - previewPointerState.startY;
+  const minHeight = getMinimumPreviewCardHeight(previewPointerState.cardId);
 
   if (previewPointerState.mode === "resize-corner") {
     const maxWidth = Math.max(MIN_PREVIEW_CARD_WIDTH, pageSize.width - layout.x);
-    const maxHeight = Math.max(MIN_PREVIEW_CARD_HEIGHT, pageSize.height - layout.y);
+    const maxHeight = Math.max(minHeight, pageSize.height - layout.y);
     layout.width = clamp(previewPointerState.startWidth + dx, MIN_PREVIEW_CARD_WIDTH, maxWidth);
-    layout.height = clamp(previewPointerState.startHeight + dy, MIN_PREVIEW_CARD_HEIGHT, maxHeight);
+    layout.height = clamp(previewPointerState.startHeight + dy, minHeight, maxHeight);
   } else if (previewPointerState.mode === "resize-bottom") {
-    const maxHeight = Math.max(MIN_PREVIEW_CARD_HEIGHT, pageSize.height - layout.y);
-    layout.height = clamp(previewPointerState.startHeight + dy, MIN_PREVIEW_CARD_HEIGHT, maxHeight);
+    const maxHeight = Math.max(minHeight, pageSize.height - layout.y);
+    layout.height = clamp(previewPointerState.startHeight + dy, minHeight, maxHeight);
   }
 
   applyPreviewCardLayout(cardElement, layout);

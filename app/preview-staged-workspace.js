@@ -75,13 +75,14 @@ function detachPieceFromSnippet(snippetId, pieceId) {
 
   const grid = getEffectiveGridSettings(Math.max(1, buildMergedPreviewEntries().length + 1));
   const fallback = getDefaultPreviewLayout(buildMergedPreviewEntries().length, grid);
+  const detachedMinHeight = getMinimumPreviewCardHeight(detachedId, MIN_PREVIEW_CARD_HEIGHT);
   const detachedLayout = sourceLayout
     ? {
         page: sourceLayout.page,
         x: sourceLayout.x + 14,
         y: sourceLayout.y + 14,
         width: Math.max(MIN_PREVIEW_CARD_WIDTH, Math.round(sourceLayout.width * 0.76)),
-        height: Math.max(MIN_PREVIEW_CARD_HEIGHT, Math.round(sourceLayout.height * 0.72)),
+        height: Math.max(detachedMinHeight, Math.round(sourceLayout.height * 0.72)),
         z: state.previewZCounter,
       }
     : {
@@ -90,8 +91,9 @@ function detachPieceFromSnippet(snippetId, pieceId) {
       };
 
   state.previewCards[detachedId] = sanitizePreviewCardLayout(detachedLayout, fallback, {
+    cardId: detachedId,
     minWidth: MIN_PREVIEW_CARD_WIDTH,
-    minHeight: MIN_PREVIEW_CARD_HEIGHT,
+    minHeight: detachedMinHeight,
   });
   state.previewZCounter = Math.max(state.previewZCounter, (state.previewCards[detachedId]?.z || 1) + 1);
 
@@ -292,7 +294,7 @@ function addSnippetToPreview(snippetId, options = {}) {
         z: state.previewZCounter,
       },
       fallback,
-      { minHeight: MIN_PREVIEW_CARD_HEIGHT, minWidth: MIN_PREVIEW_CARD_WIDTH }
+      { cardId: snippetId, minHeight: MIN_PREVIEW_CARD_HEIGHT, minWidth: MIN_PREVIEW_CARD_WIDTH }
     );
     state.previewCards[snippetId] = layout;
     state.previewZCounter = Math.max(state.previewZCounter, layout.z + 1);
@@ -382,7 +384,7 @@ function addDetachedPieceBackToParent(detachedId) {
         z: state.previewZCounter,
       },
       parentLayout,
-      { minWidth: MIN_PREVIEW_CARD_WIDTH, minHeight: MIN_PREVIEW_CARD_HEIGHT }
+      { cardId: snippet.id, minWidth: MIN_PREVIEW_CARD_WIDTH, minHeight: MIN_PREVIEW_CARD_HEIGHT }
     );
     state.previewZCounter = Math.max(state.previewZCounter, (state.previewCards[snippet.id]?.z || 1) + 1);
   }
