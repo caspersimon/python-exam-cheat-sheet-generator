@@ -27,7 +27,7 @@ jobs:
         run: |
           mkdir -p dist
           mkdir -p dist/new_database/exports
-          cp index.html styles.css topic_cards.json dist/
+          cp index.html print.html styles.css topic_cards.json dist/
           cp -R app styles dist/
           cp new_database/exports/frontend_bundle.json dist/new_database/exports/
           if [ -f app.js ]; then cp app.js dist/; fi
